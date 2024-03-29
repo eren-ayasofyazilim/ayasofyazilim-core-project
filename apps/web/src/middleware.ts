@@ -20,11 +20,13 @@ const locales = [
 ];
 
 // Get the preferred locale, similar to the above or using a library
-function getLocale(request: any) {
-  let headers = { "accept-language": "en-US,en;q=0.5" };
-  let languages = new Negotiator({ headers }).languages();
+function getLocale(request: NextRequest) {
   let defaultLocale = "tr";
-
+  let languages = new Negotiator({
+    headers: {
+      "accept-language": request.headers.get("accept-language") || defaultLocale,
+    }
+  }).languages();
   const locale = match(languages, locales, defaultLocale);
   return locale;
 }
