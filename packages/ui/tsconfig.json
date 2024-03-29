@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/react-library.json",
+  "include": ["."],
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../../apps/web/src/app/*", "../../ayasofyazilim-ui/src/*"]
+    }
+  },
+  "exclude": ["dist", "build", "node_modules"]
+}
