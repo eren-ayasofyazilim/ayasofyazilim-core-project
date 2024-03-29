@@ -1,16 +1,16 @@
-import { ReactNode } from "react";
+'use client';
+import { JSXElementConstructor, ReactElement, ReactNode } from "react";
+import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
 import "./../../globals.css";
-import { Button } from "@/components/ui/button";
 
 export default async function Layout({
-  children,
+    children,
 }: {
-  children: ReactNode;
-}): Promise<JSX.Element> {
-  return (
-    <>
-    <Button>Test</Button>
-    {children}
-    </>
-  );
+    children: ReactElement<any, string | JSXElementConstructor<any>>;
+}) {
+    return (
+        <Mainlayout>
+            {children}
+        </Mainlayout>
+    );
 }

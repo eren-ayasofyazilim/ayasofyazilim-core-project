@@ -1,7 +1,10 @@
 "use client";
 
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
-import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto, Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "ayasofyazilim-saas";
+import {
+  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto,
+  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
+} from "ayasofyazilim-saas";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -49,14 +52,15 @@ export const LocaleProvider = ({
 
   const pathname = usePathname();
   async function changeLocale(cultureName: string) {
-    // split based on - 
+    // split based on -
     if (cultureName.includes("-")) {
       console.log("cultureName ", cultureName);
       cultureName = cultureName.split("-")[0];
     }
     setIsLoading(true);
-    let resource = await fetch('./api/?lang=' + cultureName);
-    let responce = await resource.json() as Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
+    let resource = await fetch("/api/?lang=" + cultureName);
+    let responce =
+      (await resource.json()) as Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
     if (responce) {
       setCultureName(cultureName);
       setResources(responce.resources);
