@@ -1,0 +1,1 @@
+# ayasofyazilim-core-project
