@@ -13,7 +13,7 @@
     "@formatjs/intl-localematcher": "^0.5.4",
     "@repo/ayasofyazilim-ui": "workspace:^",
     "@repo/ui": "workspace:*",
-    "ayasofyazilim-saas": "^0.0.10",
+    "ayasofyazilim-saas": "^0.0.16",
     "lucide-react": "^0.363.0",
     "negotiator": "^0.6.3",
     "next": "^14.1.1",

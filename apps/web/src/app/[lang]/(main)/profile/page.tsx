@@ -1,9 +1,9 @@
 "use server";
 
-import { getAppClient } from "src/lib";
+import { getAccountServiceClient } from "src/lib";
 
 export default async function Page() {
-  const client = getAppClient();
+  const client = getAccountServiceClient();
   const userData = await client.profile.getApiAccountMyProfile();
 
   if (!userData) {

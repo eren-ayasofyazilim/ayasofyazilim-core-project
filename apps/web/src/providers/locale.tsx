@@ -4,7 +4,8 @@ import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
 import {
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
-} from "ayasofyazilim-saas";
+} from "ayasofyazilim-saas/AccountService";
+
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 

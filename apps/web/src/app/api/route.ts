@@ -1,6 +1,6 @@
-import { AppClient } from "ayasofyazilim-saas";
+import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
 
-const appClient = new AppClient({
+const appClient = new AccountServiceClient({
   BASE: "http://192.168.1.37:44399",
 });
 
