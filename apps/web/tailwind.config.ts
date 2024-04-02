@@ -3,7 +3,7 @@
 import sharedConfig from "@repo/tailwind-config";
 import type { Config } from "tailwindcss";
 
-const config: Pick<Config, "content" | "presets" | "theme"> = {
+const config: Config = {
   content: [
     "./src/app/**/*.tsx",
     "./src/components/**/*.tsx",
@@ -76,6 +76,7 @@ const config: Pick<Config, "content" | "presets" | "theme"> = {
       },
     },
   },
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 };
 
 export default config;
