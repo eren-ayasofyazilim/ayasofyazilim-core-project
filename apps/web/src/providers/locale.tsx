@@ -5,28 +5,30 @@ import {
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "ayasofyazilim-saas";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
-export const LocaleContext = createContext<{
+interface ILocaleContext {
   cultureName: string | undefined;
+  changeLocale: (cultureName: string) => void;
   resources:
     | Record<
         string,
         Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto
       >
-    | undefined
-    | null;
-  changeLocale: (cultureName: string) => void;
-}>({
+    | null
+    | undefined;
+}
+export const LocaleContext = createContext<ILocaleContext>({
   cultureName: undefined,
-  changeLocale: (cultureName: string) => {},
+  changeLocale: () => {},
   resources: undefined,
 });
 
 export const useLocale = () => {
   return useContext(LocaleContext);
 };
+
 export const LocaleProvider = ({
   children,
   lang,
@@ -34,40 +36,60 @@ export const LocaleProvider = ({
   children: React.ReactNode;
   lang: string;
 }) => {
-  const [cultureName, setCultureName] = useState<string | undefined>(lang);
-  const [resources, setResources] = useState<
-    | Record<
-        string,
-        Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto
-      >
-    | undefined
-    | null
-  >();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const router = useRouter();
+  const [cultureName, setCultureName] =
+    useState<ILocaleContext["cultureName"]>(lang);
+  const [resources, setResources] = useState<ILocaleContext["resources"]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const pathname = usePathname();
 
   useEffect(() => {
+    const localeFromLocalStorage = localStorage.getItem("locale");
+    if (localeFromLocalStorage) {
+      const locale = JSON.parse(localeFromLocalStorage);
+      setCultureName(locale.cultureName);
+      setResources(locale.resources);
+      return;
+    }
     changeLocale(lang);
   }, []);
 
-  const pathname = usePathname();
+  async function getLocale(cultureName: string) {
+    try {
+      const response = await fetch(`/api/?lang=${cultureName}`);
+      const data =
+        (await response.json()) as Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
+      if (data) {
+        setCultureName(cultureName);
+        setResources(data.resources);
+        localStorage.setItem(
+          "locale",
+          JSON.stringify({
+            cultureName,
+            resources: data.resources,
+            version: 0.1,
+          })
+        );
+        return true;
+      }
+      // later: try getting default language, if it not works then show error
+    } catch (error) {
+      console.error(error);
+    }
+    return false;
+  }
+
   async function changeLocale(cultureName: string) {
-    // split based on -
-    if (cultureName.includes("-")) {
-      console.log("cultureName ", cultureName);
-      cultureName = cultureName.split("-")[0];
+    if (cultureName) {
+      if (cultureName.includes("-")) {
+        cultureName = cultureName.split("-")[0];
+      }
+      if (await getLocale(cultureName)) {
+        setIsLoading(true);
+        const newPath = pathname.split("/").slice(2).join("/");
+        window.history.pushState(null, "", `/${cultureName}/${newPath}`);
+        setIsLoading(false);
+      }
     }
-    setIsLoading(true);
-    let resource = await fetch("/api/?lang=" + cultureName);
-    let responce =
-      (await resource.json()) as Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
-    if (responce) {
-      setCultureName(cultureName);
-      setResources(responce.resources);
-      const newPath = pathname.split("/").slice(2).join("/");
-      window.history.pushState(null, "", `/${cultureName}/${newPath}`);
-    }
-    setIsLoading(false);
   }
 
   return (
