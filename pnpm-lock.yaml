@@ -85,8 +85,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       ayasofyazilim-saas:
-        specifier: ^0.0.10
-        version: 0.0.10
+        specifier: ^0.0.16
+        version: 0.0.16
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@18.2.0)
@@ -7508,8 +7508,8 @@ packages:
       dequal: 2.0.3
     dev: true
 
-  /ayasofyazilim-saas@0.0.10:
-    resolution: {integrity: sha512-+8BXXIJlZ7TNH/C8nh/znzVb8fmKebPQhkKfYK7zwC6+maNNiLlsveL7hBn4u1w9dfRIfaxbQ9YIpoF/a6lQzg==}
+  /ayasofyazilim-saas@0.0.16:
+    resolution: {integrity: sha512-bssaaEvJC4BHIbG+tpoI9kuCZjoqqlOJNyAl/AaLCN1LScshMJ2s4VEkZOl/XV+aKg6mmcIsMdwgVKYRjh6XgQ==}
     dev: false
 
   /babel-core@7.0.0-bridge.0(@babel/core@7.24.0):
