@@ -17,7 +17,7 @@ export default function Page(): JSX.Element {
 
   const onSubmitFunction = (values: LoginFormDataType): Promise<string> => {
     return new Promise(async (resolve, reject) => {
-      const responce = await fetch('./api/auth', {
+      const responce = await fetch("./api/auth/login", {
         method: "POST",
         body: JSON.stringify(values),
       });
