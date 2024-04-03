@@ -117,7 +117,7 @@ export default function Layout({ children }: LayoutProps) {
         ],
         logoutFunction: async () => {
             let result = await fetch('/api/auth/logout');
-            if (result.status !== 200) {
+            if (result.ok === false) {
                 console.error('Failed to logout');
                 return;
             }
