@@ -33,17 +33,16 @@ type Submenu = {
 export default function Layout({ children }: LayoutProps) {
 
     const { cultureName, resources, changeLocale } = useLocale();
-
-    let resourcesMap = {
+    const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
         profile: "Profile",
         dashboard: "Dashboard",
-    }
+    });
     
     useEffect(() => {
-        resourcesMap = {
+        setResourcesMap({
             profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
             dashboard: resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
-        }
+        });
     }, [cultureName]);
 
     const router = useRouter();
