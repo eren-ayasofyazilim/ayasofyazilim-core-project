@@ -31,12 +31,21 @@ type Submenu = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-     
+
     const { cultureName, resources, changeLocale } = useLocale();
+
     let resourcesMap = {
-        profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
-        dashboard: resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
+        profile: "Profile",
+        dashboard: "Dashboard",
     }
+    
+    useEffect(() => {
+        resourcesMap = {
+            profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
+            dashboard: resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
+        }
+    }, [cultureName]);
+
     const router = useRouter();
     const navigationLinks = [
         {
