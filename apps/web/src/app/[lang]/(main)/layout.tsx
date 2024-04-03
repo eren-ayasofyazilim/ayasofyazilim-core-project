@@ -31,12 +31,20 @@ type Submenu = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-     
+
     const { cultureName, resources, changeLocale } = useLocale();
-    let resourcesMap = {
-        profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
-        dashboard: resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
-    }
+    const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
+        profile: "Profile",
+        dashboard: "Dashboard",
+    });
+    
+    useEffect(() => {
+        setResourcesMap({
+            profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
+            dashboard: resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
+        });
+    }, [cultureName]);
+
     const router = useRouter();
     const navigationLinks = [
         {
@@ -109,7 +117,7 @@ export default function Layout({ children }: LayoutProps) {
         ],
         logoutFunction: async () => {
             let result = await fetch('/api/auth/logout');
-            if (result.status !== 200) {
+            if (result.ok === false) {
                 console.error('Failed to logout');
                 return;
             }
