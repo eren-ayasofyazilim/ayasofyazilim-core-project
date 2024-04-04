@@ -1,5 +1,11 @@
 "use client";
-import { SquareStack, User } from "lucide-react";
+import {
+  CountrySelector,
+  lang,
+} from "@repo/ayasofyazilim-ui/organisms/country-selector";
+import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
+import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
+import { Presentation, SquareStack, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   JSXElementConstructor,
@@ -8,16 +14,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import Mainlayout, {
-  mainLayoutProps,
-} from "@repo/ayasofyazilim-ui/templates/mainlayout";
-import "./../../globals.css";
-import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas";
 import { useLocale } from "src/providers/locale";
-import {
-  CountrySelector,
-  lang,
-} from "@repo/ayasofyazilim-ui/organisms/country-selector";
+import "./../../globals.css";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -90,6 +88,12 @@ export default function Layout({ children }: LayoutProps) {
       name: resourcesMap.dashboard,
       icon: <SquareStack size={15} className="mr-2" />,
       href: "dashboard",
+    },
+    {
+      label: "Pages",
+      name: "Projects",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: "projects",
     },
   ];
   let [user, setUser] = useState<Volo_Abp_Account_ProfileDto | null>({});
