@@ -16,6 +16,7 @@ import {
 } from "react";
 import { useLocale } from "src/providers/locale";
 import "./../../globals.css";
+import LanguageSelector from "components/language-selector";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -36,7 +37,7 @@ type Submenu = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const { cultureName, resources, changeLocale } = useLocale();
+  const { cultureName, resources } = useLocale();
   const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
     profile: "Profile",
     dashboard: "Dashboard",
@@ -140,14 +141,7 @@ export default function Layout({ children }: LayoutProps) {
       menus={exampleMenus}
       userNav={userNavigation}
       navMenu={navigationLinks}
-      extraMenu={
-        <CountrySelector
-          menuAlign="end"
-          countries={lang.countries}
-          defaultValue={cultureName}
-          onValueChange={changeLocale}
-        />
-      }
+      extraMenu={<LanguageSelector />}
     >
       <>{children}</>
     </Mainlayout>
