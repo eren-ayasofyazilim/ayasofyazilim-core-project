@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const i18n = {
   defaultLocale: "en",
   locales: [
-    "de-DE",
+    "de-de",
     "en",
     "es",
     "fi",
@@ -17,8 +17,8 @@ export const i18n = {
     "tr",
     "ru",
     "ar",
-    "zh-Hans",
-    "zh-Hant",
+    "zh-hans",
+    "zh-hant",
   ],
 };
 
