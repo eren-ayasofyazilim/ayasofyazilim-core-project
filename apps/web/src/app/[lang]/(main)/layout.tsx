@@ -142,6 +142,7 @@ export default function Layout({ children }: LayoutProps) {
       userNav={userNavigation}
       navMenu={navigationLinks}
       extraMenu={<LanguageSelector />}
+      navMenuLocation="left"
     >
       <>{children}</>
     </Mainlayout>
