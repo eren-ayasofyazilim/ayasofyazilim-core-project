@@ -1,4 +1,6 @@
+"use server";
 import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
+import { cookies } from "next/headers";
 
 const appClient = new AccountServiceClient({
   BASE: "http://192.168.1.37:44399",
@@ -13,6 +15,9 @@ export async function GET(request: Request) {
     await appClient.abpApplicationLocalization.getApiAbpApplicationLocalization(
       lang
     );
+
+  // set cookie
+  cookies().set("locale", lang);
   // return response as json
   return new Response(JSON.stringify(response));
 }
