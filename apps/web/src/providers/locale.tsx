@@ -5,7 +5,6 @@ import {
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "ayasofyazilim-saas/AccountService";
-
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -20,6 +19,7 @@ interface ILocaleContext {
     | null
     | undefined;
 }
+
 export const LocaleContext = createContext<ILocaleContext>({
   cultureName: undefined,
   changeLocale: () => {},
@@ -72,7 +72,7 @@ export const LocaleProvider = ({
         );
         return true;
       }
-      // later: try getting default language, if it not works then show error
+      // later: if error then try getting default language
     } catch (error) {
       console.error(error);
     }
@@ -81,15 +81,12 @@ export const LocaleProvider = ({
 
   async function changeLocale(cultureName: string) {
     if (cultureName) {
-      if (cultureName.includes("-")) {
-        cultureName = cultureName.split("-")[0];
-      }
+      setIsLoading(true);
       if (await getLocale(cultureName)) {
-        setIsLoading(true);
         const newPath = pathname.split("/").slice(2).join("/");
         window.history.pushState(null, "", `/${cultureName}/${newPath}`);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     }
   }
 
