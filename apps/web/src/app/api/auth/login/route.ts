@@ -2,26 +2,27 @@
 import { LoginFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/login-form";
 import { NextRequest } from "next/server";
 
-export async function POST(reqest : NextRequest) {
-  const { userIdentifier, password, tenantId } = await reqest.json() as LoginFormDataType;
+export async function POST(reqest: NextRequest) {
+  const { userIdentifier, password, tenantId } =
+    (await reqest.json()) as LoginFormDataType;
 
-  // get request body 
+  // get request body
   const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("X-Requested-With", "XMLHttpRequest");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
-    const raw = JSON.stringify({
-        "userNameOrEmailAddress": userIdentifier,
-        "password": password,
-        "rememberMe": false,
-        "tenanId": tenantId
-    });
+  const raw = JSON.stringify({
+    userNameOrEmailAddress: userIdentifier,
+    password: password,
+    rememberMe: false,
+    tenanId: tenantId,
+  });
 
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-    };
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+  };
 
-    return fetch("http://192.168.1.37:44399/api/account/login", requestOptions);
+  return fetch(`${process.env.BASE_URL}/api/account/login`, requestOptions);
 }

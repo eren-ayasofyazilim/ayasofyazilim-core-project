@@ -3,7 +3,7 @@ import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
 import { cookies } from "next/headers";
 
 const appClient = new AccountServiceClient({
-  BASE: "http://192.168.1.37:44399",
+  BASE: process.env.BASE_URL,
 });
 
 export async function GET(request: Request) {

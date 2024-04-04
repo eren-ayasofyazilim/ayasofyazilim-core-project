@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 export function getAccountServiceClient(): AccountServiceClient {
   const cookieStore = cookies();
   return new AccountServiceClient({
-    BASE: "http://192.168.1.37:44399",
+    BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       Cookie: cookieStore.toString(),
@@ -15,7 +15,7 @@ export function getAccountServiceClient(): AccountServiceClient {
 export function getProjectServiceClient(): ProjectServiceClient {
   const cookieStore = cookies();
   return new ProjectServiceClient({
-    BASE: "http://192.168.1.37:44399",
+    BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       Cookie: cookieStore.toString(),
