@@ -12,8 +12,7 @@ export async function POST(reqest: NextRequest) {
 
   const raw = JSON.stringify({
     email: email,
-    appName: "MVC",
-    returnUrl: "http://localhost:3000/",
+    appName: process.env.APP_NAME,
   });
 
   const requestOptions = {
@@ -23,7 +22,7 @@ export async function POST(reqest: NextRequest) {
   };
 
   return fetch(
-    "http://192.168.1.37:44399/api/account/send-password-reset-code",
+    `${process.env.BASE_URL}/api/account/send-password-reset-code`,
     requestOptions
   );
 }
