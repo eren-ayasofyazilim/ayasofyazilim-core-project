@@ -20,7 +20,7 @@ export default function LanguageSelector(): JSX.Element {
           changeLocale(value);
         }}
       />
-      {resources?.LeptonX.texts?.Welcome}
+      {resources?.AbpUi.texts?.Welcome}
     </div>
   );
 }
