@@ -1,4 +1,4 @@
-"use server";
+//"use client";
 
 import { getAccountServiceClient } from "src/lib";
 
@@ -11,9 +11,8 @@ export default async function Page() {
   }
 
   return (
-    <div className="bg-zinc-800 flex flex-auto flex-col justify-center items-start h-screen text-white text-xl">
-      <h1 className="text-2xl">Selamun aleyküm!</h1>
-      <br />
+    <div className="grid gap-6">
+      general
       {Object.keys(userData).map((key) => {
         if (key === "extraProperties") return;
         return (
