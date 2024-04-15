@@ -39,15 +39,26 @@ function getLocaleFromCookies(request: NextRequest) {
 }
 
 function isAutherized(request: NextRequest) {
-  const isLogged = request.cookies.get(".AspNetCore.Identity.Application") ? true : false;
-  const publicURLs = ["/", "login", "register", "forgot-password", "reset-password", "404", "500", "api"];
+  const isLogged = request.cookies.get(".AspNetCore.Identity.Application")
+    ? true
+    : false;
+  const publicURLs = [
+    "/",
+    "login",
+    "register",
+    "forgot-password",
+    "reset-password",
+    "404",
+    "500",
+    "api",
+  ];
   const pathName = request.nextUrl.pathname.split("/")[2] || "/";
-  if (publicURLs.includes(pathName)){
+  if (publicURLs.includes(pathName)) {
     return true;
   }
   if (!isLogged && !publicURLs.includes(pathName)) {
     return false;
-  } 
+  }
   return isLogged;
 }
 
@@ -64,7 +75,7 @@ export function middleware(request: NextRequest) {
     const defaultLocale = getLocaleFromBrowser(request);
     return NextResponse.redirect(
       new URL(
-        `/${defaultLocale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+        `/${defaultLocale}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
         request.url
       )
     );
@@ -74,7 +85,7 @@ export function middleware(request: NextRequest) {
   if (localeFromCookies && !localeFromPathname) {
     return NextResponse.redirect(
       new URL(
-        `/${localeFromCookies}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+        `/${localeFromCookies}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
         request.url
       )
     );
@@ -93,7 +104,7 @@ export function middleware(request: NextRequest) {
       )
     );
   }
-    // check .AspNetCore.Identity.Application cookie from the request
+  // check .AspNetCore.Identity.Application cookie from the request
   if (!isAutherized(request)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
