@@ -1,5 +1,11 @@
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
 
 export default function Loading() {
-  return <Spinner className=" stroke-purple-900 " />;
+  return (
+    <Spinner
+      className=" stroke-purple-900 "
+      variant="transparent"
+      fullScreen={false}
+    />
+  );
 }

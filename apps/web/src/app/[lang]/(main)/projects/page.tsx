@@ -3,6 +3,7 @@ import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import DetailsCard, {
   IDetailsCardProps,
 } from "@repo/ayasofyazilim-ui/organisms/details-card";
+
 const currencyFormatter = new Intl.NumberFormat("tr", {
   style: "currency",
   currency: "TRY",
@@ -16,7 +17,7 @@ const defaultProps1: IDetailsCardProps = {
     title: "Clevetura Devices LLC",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   },
-  link: "#",
+  link: "projects/1",
   title: "CLVX 1 - Keyboard Gives More",
   description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   tags: ["Teknoloji", "Yazılım"],
