@@ -1,5 +1,3 @@
-//"use client";
-
 import { getAccountServiceClient } from "src/lib";
 
 export default async function Page() {
@@ -17,7 +15,7 @@ export default async function Page() {
         if (key === "extraProperties") return;
         return (
           <div>
-            {key}:{userData[key]}
+            {key}:{(userData as any)[key]}
           </div>
         );
       })}
