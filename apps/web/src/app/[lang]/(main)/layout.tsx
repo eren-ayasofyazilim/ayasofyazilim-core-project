@@ -1,8 +1,5 @@
 "use client";
-import {
-  CountrySelector,
-  lang,
-} from "@repo/ayasofyazilim-ui/organisms/country-selector";
+import { MenuProps } from "@repo/ayasofyazilim-ui/molecules/side-bar";
 import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
 import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
 import LanguageSelector from "components/language-selector";
@@ -21,14 +18,6 @@ import "./../../globals.css";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
-};
-
-type MenuProps = {
-  href: string;
-  icon: ReactNode;
-  label: string;
-  name: string;
-  submenu?: Submenu[];
 };
 
 type Submenu = {
