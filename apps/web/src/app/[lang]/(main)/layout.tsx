@@ -5,6 +5,7 @@ import {
 } from "@repo/ayasofyazilim-ui/organisms/country-selector";
 import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
 import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
+import LanguageSelector from "components/language-selector";
 import { Presentation, SquareStack, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
@@ -15,8 +16,8 @@ import {
   useState,
 } from "react";
 import { useLocale } from "src/providers/locale";
+import { getBaseLink } from "src/utils";
 import "./../../globals.css";
-import LanguageSelector from "components/language-selector";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -82,19 +83,19 @@ export default function Layout({ children }: LayoutProps) {
       label: "Pages",
       name: resourcesMap.profile,
       icon: <User size={15} className="mr-2" />,
-      href: "profile",
+      href: getBaseLink("profile", cultureName),
     },
     {
       label: "Pages",
       name: resourcesMap.dashboard,
       icon: <SquareStack size={15} className="mr-2" />,
-      href: "dashboard",
+      href: getBaseLink("dashboard", cultureName),
     },
     {
       label: "Pages",
       name: "Projects",
       icon: <Presentation size={15} className="mr-2" />,
-      href: "projects",
+      href: getBaseLink("projects", cultureName),
     },
   ];
   let [user, setUser] = useState<Volo_Abp_Account_ProfileDto | null>({});
