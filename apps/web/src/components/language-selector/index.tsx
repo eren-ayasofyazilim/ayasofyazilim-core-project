@@ -29,6 +29,7 @@ export default function LanguageSelector({
             defaultValue={cultureName}
             countries={countries}
             onValueChange={(value: string) => {
+              if (value === cultureName) return;
               changeLocale(value);
             }}
           />
