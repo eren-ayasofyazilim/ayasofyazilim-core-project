@@ -91,7 +91,7 @@ export default function Layout({ children }: LayoutProps) {
   // use effect to fetch the user from the server
   useEffect(() => {
     async function getUser() {
-      let fetchedUser = await fetch("api/profile/myprofile");
+      let fetchedUser = await fetch("/api/profile/myprofile");
       let userData = (await fetchedUser.json()) as Volo_Abp_Account_ProfileDto;
       console.log(userData);
       setUser(userData);
