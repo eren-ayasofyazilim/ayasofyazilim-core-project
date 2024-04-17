@@ -5,7 +5,7 @@ import {
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "ayasofyazilim-saas/AccountService";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface ILocaleContext {
@@ -42,6 +42,7 @@ export const LocaleProvider = ({
   const [resources, setResources] = useState<ILocaleContext["resources"]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const localeFromLocalStorage = localStorage.getItem("locale");
@@ -84,7 +85,11 @@ export const LocaleProvider = ({
       setIsLoading(true);
       if (await getLocale(cultureName)) {
         const newPath = pathname.split("/").slice(2).join("/");
-        window.history.pushState(null, "", `/${cultureName}/${newPath}`);
+        window.history.pushState(
+          null,
+          "",
+          `/${cultureName}/${newPath}?${searchParams.toString()}`
+        );
       }
       setIsLoading(false);
     }
