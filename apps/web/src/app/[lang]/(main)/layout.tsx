@@ -8,13 +8,13 @@ import { useRouter } from "next/navigation";
 import {
   JSXElementConstructor,
   ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
+  ReactNode, useEffect,
+  useState
 } from "react";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import "./../../globals.css";
+import { useConfig } from "src/providers/configuration";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -27,6 +27,7 @@ type Submenu = {
 };
 
 export default function Layout({ children }: LayoutProps) {
+  const { config, setConfig } = useConfig();
   const { cultureName, resources } = useLocale();
   const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
     profile: "Profile",
@@ -96,7 +97,14 @@ export default function Layout({ children }: LayoutProps) {
       console.log(userData);
       setUser(userData);
     }
+    async function getConfig() {
+      let fetchedConfig = await fetch("api/config");
+      let configData = await fetchedConfig.json();
+      console.log(configData);
+      setConfig(configData);
+    }
     getUser();
+    getConfig();
   }, []);
   const userNavigation = {
     username: user?.name,
