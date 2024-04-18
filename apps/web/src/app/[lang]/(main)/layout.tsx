@@ -93,6 +93,12 @@ export default function Layout({ children }: LayoutProps) {
       icon: <Presentation size={15} className="mr-2" />,
       href: getBaseLink("projects", cultureName),
     },
+    {
+      label: "Settings",
+      name: "Settings",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink("settings/profile", cultureName),
+    },
   ];
   const userNavigation = {
     username: user?.name,
