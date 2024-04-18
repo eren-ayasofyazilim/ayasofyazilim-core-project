@@ -104,7 +104,7 @@ export default function Layout({ children }: LayoutProps) {
     username: user?.name,
     initials: user?.name?.substring(0, 2).toUpperCase(),
     email: user?.email,
-    imageURL: "https://github.com/a0m0rajab.png",
+    imageURL: "https://github.com/shadcn.png",
     menuLinks: [
       {
         href: "profile",
