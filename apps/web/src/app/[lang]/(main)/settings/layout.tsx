@@ -46,27 +46,21 @@ export default function Layout({ children }: LayoutProps) {
   }, []);
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-      <nav className="grid gap-4 text-sm text-muted-foreground">
-        {navbarItems.map((item) => (
-          <Link
-            href={"/settings/" + (item.path ?? "")}
-            className={item.path === path ? "font-semibold text-primary" : ""}
-            key={item.name}
-          >
-            {item.name}
-          </Link>
-        ))}
-      </nav>
-      <div className="grid gap-6">
-        <div className="grid gap-6 lg:max-w-2xl">
-          <Card>
-            <CardContent className="pt-4">
-              <>{children}</>
-            </CardContent>
-          </Card>
-        </div>
+    <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] gap-4 p-4 md:gap-8 md:p-10">
+      <div className="mx-auto w-full flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-3">
+        <nav className="grid gap-4 text-sm text-muted-foreground pb-5 border-b md:border-0 text-center md:text-left">
+          {navbarItems.map((item) => (
+            <Link
+              href={"/settings/" + (item.path ?? "")}
+              className={item.path === path ? "font-semibold text-primary" : ""}
+              key={item.name}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+        <>{children}</>
       </div>
-    </div>
+    </main>
   );
 }

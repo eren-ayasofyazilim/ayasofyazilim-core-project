@@ -12,7 +12,7 @@ export default function Page() {
       {Object.keys(user).map((key) => {
         if (key === "extraProperties") return;
         return (
-          <div>
+          <div key={key}>
             {key}:{(user as any)[key]}
           </div>
         );
