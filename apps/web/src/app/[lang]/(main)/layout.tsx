@@ -1,38 +1,44 @@
 "use client";
 import { MenuProps } from "@repo/ayasofyazilim-ui/molecules/side-bar";
 import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
-import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
 import LanguageSelector from "components/language-selector";
 import { Presentation, SquareStack, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   JSXElementConstructor,
   ReactElement,
-  ReactNode, useEffect,
-  useState
+  useEffect,
+  useState,
 } from "react";
+import { useConfig } from "src/providers/configuration";
 import { useLocale } from "src/providers/locale";
+import { useUser } from "src/providers/user";
 import { getBaseLink } from "src/utils";
 import "./../../globals.css";
-import { useConfig } from "src/providers/configuration";
 
 type LayoutProps = {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
 };
 
-type Submenu = {
-  href: string;
-  icon: ReactNode;
-  name: string;
-};
-
 export default function Layout({ children }: LayoutProps) {
+  const { user, getUser } = useUser();
   const { config, setConfig } = useConfig();
   const { cultureName, resources } = useLocale();
   const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
     profile: "Profile",
     dashboard: "Dashboard",
   });
+
+  useEffect(() => {
+    async function getConfig() {
+      let fetchedConfig = await fetch("api/config");
+      let configData = await fetchedConfig.json();
+      console.log(configData);
+      setConfig(configData);
+    }
+    getUser();
+    getConfig();
+  }, []);
 
   useEffect(() => {
     setResourcesMap({
@@ -88,24 +94,6 @@ export default function Layout({ children }: LayoutProps) {
       href: getBaseLink("projects", cultureName),
     },
   ];
-  let [user, setUser] = useState<Volo_Abp_Account_ProfileDto | null>({});
-  // use effect to fetch the user from the server
-  useEffect(() => {
-    async function getUser() {
-      let fetchedUser = await fetch("/api/profile/myprofile");
-      let userData = (await fetchedUser.json()) as Volo_Abp_Account_ProfileDto;
-      console.log(userData);
-      setUser(userData);
-    }
-    async function getConfig() {
-      let fetchedConfig = await fetch("api/config");
-      let configData = await fetchedConfig.json();
-      console.log(configData);
-      setConfig(configData);
-    }
-    getUser();
-    getConfig();
-  }, []);
   const userNavigation = {
     username: user?.name,
     initials: user?.name?.substring(0, 2).toUpperCase(),
