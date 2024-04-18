@@ -46,6 +46,7 @@ function isAutherized(request: NextRequest) {
     "/",
     "login",
     "register",
+    "projects",
     "forgot-password",
     "reset-password",
     "404",
@@ -63,14 +64,13 @@ function isAutherized(request: NextRequest) {
 function localeFromPathname(request: NextRequest) {
   const pathname = request.nextUrl.pathname + "/";
   let returnLocale = i18n.defaultLocale;
-  const isLocaleProvided = i18n.locales.find((locale) =>{
-    if(pathname.startsWith(`/${locale}/`)){
+  const isLocaleProvided = i18n.locales.find((locale) => {
+    if (pathname.startsWith(`/${locale}/`)) {
       returnLocale = locale;
       return locale;
     }
-  }
-  );
-  console.log("locale provided", isLocaleProvided)
+  });
+  console.log("locale provided", isLocaleProvided);
   if (isLocaleProvided) {
     return returnLocale;
   }
@@ -78,7 +78,11 @@ function localeFromPathname(request: NextRequest) {
 }
 
 function getLocale(request: NextRequest) {
-  return getLocaleFromCookies(request) || localeFromPathname(request) || getLocaleFromBrowser(request);
+  return (
+    getLocaleFromCookies(request) ||
+    localeFromPathname(request) ||
+    getLocaleFromBrowser(request)
+  );
 }
 
 export function middleware(request: NextRequest) {
@@ -89,7 +93,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if ( !pathname.startsWith(`/${locale}/`) ){
+  if (!pathname.startsWith(`/${locale}/`)) {
     return NextResponse.redirect(
       new URL(
         `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
@@ -97,7 +101,6 @@ export function middleware(request: NextRequest) {
       )
     );
   }
-  
 }
 
 export const config = {
