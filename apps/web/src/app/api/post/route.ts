@@ -15,6 +15,5 @@ export async function POST(reqest: NextRequest) {
     headers: headers,
     body: JSON.stringify(body),
   };
-  console.log(url, body);
   return fetch(`${process.env.BASE_URL}/api/${url}`, requestOptions);
 }

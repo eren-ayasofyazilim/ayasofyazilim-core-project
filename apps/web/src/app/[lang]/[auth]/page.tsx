@@ -141,7 +141,6 @@ export default function Page(): JSX.Element {
               url: "account/verify-password-reset-token",
             }),
           });
-          console.log(response);
           if (response.status > 199 && response.status < 300) {
             let res = await response.json();
             if (!res) {

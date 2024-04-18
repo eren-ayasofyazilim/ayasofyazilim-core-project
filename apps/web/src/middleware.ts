@@ -70,7 +70,6 @@ function localeFromPathname(request: NextRequest) {
       return locale;
     }
   });
-  console.log("locale provided", isLocaleProvided);
   if (isLocaleProvided) {
     return returnLocale;
   }
