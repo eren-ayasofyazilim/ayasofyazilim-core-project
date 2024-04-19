@@ -1,37 +1,38 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
+import SectionLayout, {
+  SectionContent,
+} from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname, useRouter } from "next/navigation";
 import { JSXElementConstructor, ReactElement, useEffect } from "react";
 
 const navbarItems = [
   {
     name: "Profil",
-    path: "profile",
+    id: "profile",
   },
   {
     name: "Hesap Ayarları",
-    path: "test",
+    id: "test",
   },
   {
     name: "Ödeme Yöntemleri",
-    path: "test2",
+    id: "test2",
   },
   {
     name: "Bildirim Tercihleri",
-    path: "test3",
+    id: "test3",
   },
   {
     name: "İşlem Geçmişi",
-    path: "test4",
+    id: "test4",
   },
 ];
 function isPathValid(path: string) {
   return path === "profile" || path === "test" || path === undefined;
 }
 type LayoutProps = {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: JSX.Element;
 };
 
 export default function Layout({ children }: LayoutProps) {
@@ -46,21 +47,16 @@ export default function Layout({ children }: LayoutProps) {
   }, []);
 
   return (
-    <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] gap-4 p-4 md:gap-8 md:p-10">
-      <div className="mx-auto w-full flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-3">
-        <nav className="grid gap-4 text-sm text-muted-foreground pb-5 border-b md:border-0 text-center md:text-left">
-          {navbarItems.map((item) => (
-            <Link
-              href={"/settings/" + (item.path ?? "")}
-              className={item.path === path ? "font-semibold text-primary" : ""}
-              key={item.name}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-        <>{children}</>
-      </div>
-    </main>
+    <SectionLayout
+      sections={navbarItems}
+      activeSectionId={path}
+      openOnNewPage={true}
+    >
+      <>
+        <SectionContent className="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center">
+          <>{children}</>
+        </SectionContent>
+      </>
+    </SectionLayout>
   );
 }

@@ -49,7 +49,7 @@ export default function Page() {
     );
   }
   return (
-    <div className="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center">
+    <>
       <div className="basis-2/4">
         <div className="grid w-full items-center gap-3 mt-4">
           <Label htmlFor="picture">Kullanıcı adı</Label>
@@ -127,7 +127,7 @@ export default function Page() {
           <Button onClick={onSaveClick}>Güncelle</Button>
         </div>
       </div>
-      <div className="basis-1/4 min-w-[200px]">
+      <div className="basis-1/4 min-w-[100px]">
         <div className="rounded-full relative max-w-[250px] m-auto">
           <img
             src="https://github.com/shadcn.png"
@@ -141,6 +141,6 @@ export default function Page() {
         </div>
         <Input id="picture" placeholder="John" type="file" className="hidden" />
       </div>
-    </div>
+    </>
   );
 }
