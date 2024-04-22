@@ -70,12 +70,12 @@ export default async function Page() {
   //   </div>
   // );
   return (
-    <>
+    <div>
       <div className="flex flex-row flex-wrap justify-center gap-5 mt-10">
         <DetailsCard {...defaultProps1} />
         <DetailsCard {...defaultProps1} />
         <DetailsCard {...defaultProps1} />
       </div>
-    </>
+    </div>
   );
 }
