@@ -1,10 +1,8 @@
 "use client";
 
-import SectionLayout, {
-  SectionContent,
-} from "@repo/ayasofyazilim-ui/templates/section-layout";
+import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname, useRouter } from "next/navigation";
-import { JSXElementConstructor, ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 
 const navbarItems = [
   {
@@ -51,12 +49,8 @@ export default function Layout({ children }: LayoutProps) {
       sections={navbarItems}
       activeSectionId={path}
       openOnNewPage={true}
-    >
-      <>
-        <SectionContent className="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center">
-          <>{children}</>
-        </SectionContent>
-      </>
-    </SectionLayout>
+      content={children}
+      contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center"
+    />
   );
 }

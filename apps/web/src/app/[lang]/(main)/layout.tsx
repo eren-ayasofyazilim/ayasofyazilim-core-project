@@ -17,7 +17,7 @@ import { getBaseLink } from "src/utils";
 import "./../../globals.css";
 
 type LayoutProps = {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: JSX.Element;
 };
 
 export default function Layout({ children }: LayoutProps) {
@@ -136,9 +136,7 @@ export default function Layout({ children }: LayoutProps) {
       extraMenu={<LanguageSelector />}
       navMenuLocation="left"
     >
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] gap-4 p-4 md:gap-8 md:p-10">
-        {children}
-      </main>
+      {children}
     </Mainlayout>
   );
 }
