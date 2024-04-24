@@ -1,15 +1,17 @@
 "use client";
 
-import Link from "next/link";
+import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname, useRouter } from "next/navigation";
-import { JSXElementConstructor, ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 
 const navbarItems = [
   {
+    id: "General",
     name: "General",
     path: undefined,
   },
   {
+    id: "Test",
     name: "Test",
     path: "test",
   },
@@ -18,7 +20,7 @@ function isPathValid(path: string) {
   return path === "" || path === "test" || path === undefined;
 }
 type LayoutProps = {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: JSX.Element;
 };
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
@@ -31,23 +33,11 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, []);
   return (
-    <div className="mx-auto flex w-full max-w-6xl items-start gap-6 ">
-      <nav className="grid gap-4 text-sm text-muted-foreground">
-        {navbarItems.map((item) => (
-          <Link
-            href={"/profile/" + (item.path ?? "")}
-            className={item.path === path ? "font-semibold text-primary" : ""}
-            key={item.name}
-          >
-            {item.name}
-          </Link>
-        ))}
-        <Link href="#">Integrations</Link>
-        <Link href="#">Support</Link>
-        <Link href="#">Organizations</Link>
-        <Link href="#">Advanced</Link>
-      </nav>
-      <div className="grid gap-6">{children}</div>
-    </div>
+    <SectionLayout
+      sections={navbarItems}
+      activeSectionId={path}
+      openOnNewPage={true}
+      content={children}
+    />
   );
 }

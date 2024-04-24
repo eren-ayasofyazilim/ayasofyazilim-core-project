@@ -7,7 +7,7 @@ export default function Page() {
   if (!user) return null;
 
   return (
-    <div className="grid gap-6">
+    <div className="flex-1">
       general
       {Object.keys(user).map((key) => {
         if (key === "extraProperties") return;
