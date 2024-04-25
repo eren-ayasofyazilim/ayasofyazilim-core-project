@@ -29,10 +29,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   async function getUser() {
     try {
       setIsLoading(true);
-      // const fetchedUser = await fetch("/api/profile/myprofile");
-      // const userData =
-      //   (await fetchedUser.json()) as Volo_Abp_Account_ProfileDto;
-      // setUser(userData);
+      const fetchedUser = await fetch("/api/profile/myprofile");
+      const userData =
+        (await fetchedUser.json()) as Volo_Abp_Account_ProfileDto;
+      setUser(userData);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

@@ -17,7 +17,7 @@ export const options: AuthOptions = {
             // You can specify which fields should be submitted, by adding keys to the `credentials` object.
             // e.g. domain, username, password, 2FA token, etc.
             credentials: {
-                email: { label: "Username", type: "text", placeholder: "test@test.com" },
+                email: { label: "Email", type: "text", placeholder: "test@test.com" },
                 password: { label: "Password", type: "password" }
             },
             
@@ -35,7 +35,7 @@ export const options: AuthOptions = {
                 urlencoded.append("client_id", "Angular");
                 urlencoded.append("username", credentials.email as string);
                 urlencoded.append("password", credentials.password as string);
-                urlencoded.append("scope", "phone roles profile address email offline_access");
+                urlencoded.append("scope", "AccountService phone roles profile address email offline_access");
 
                 const requestOptions = {
                     method: "POST",
@@ -109,10 +109,10 @@ export const options: AuthOptions = {
                 }
             }
         },
-        async session({ session, token }) {
-            console.log("session called", session, token)
+        async session({ session, token , user, trigger}) {
+            console.log("session called", session, token, user, trigger)
             session.error = token.error
-            return session
+            return {...session, accessToken: token.access_token}
         },
     },
 };

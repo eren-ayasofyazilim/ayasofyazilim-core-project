@@ -51,8 +51,8 @@ export default function Page(): JSX.Element {
   };
   const onLoginSubmit = (values: LoginFormDataType): Promise<string> => {
     return new Promise(async (resolve, reject) => {
-      const { password, userIdentifier: username } = values;
-      await signIn("credentials", { username, password, redirect:false} );
+      const { password, userIdentifier: email } = values;
+      await signIn("credentials", { email, password, redirect:false} );
       const response = await fetch("./api/auth/login", {
         method: "POST",
         body: JSON.stringify(values),
