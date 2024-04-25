@@ -1,9 +1,7 @@
 import Credentials from "next-auth/providers/credentials"
-import { type TokenSet } from "next-auth/types"
-import NextAuth, { AuthOptions } from "next-auth"
-import { JWT } from "next-auth/jwt";
+import NextAuth, { NextAuthConfig } from "next-auth"
 
-export const options: AuthOptions = {
+export const options: NextAuthConfig  = {
     debug: true,
     secret: process.env.AUTH_SECRET,
     session: {
@@ -116,6 +114,8 @@ export const options: AuthOptions = {
         },
     },
 };
+
+export const { auth, handlers, signIn, signOut } = NextAuth(options);
 
 declare module "next-auth" {
     interface Session {

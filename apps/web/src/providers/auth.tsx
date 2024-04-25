@@ -5,7 +5,7 @@ import { getBaseLink } from "src/utils";
 export default function AuthSession({children}: {children: JSX.Element}) {
     return (
         <>
-      <SessionProvider basePath={getBaseLink("api/auth")}>
+      <SessionProvider basePath={window.location.origin + "/api/auth"}>
         {children}
       </SessionProvider>
       </>
