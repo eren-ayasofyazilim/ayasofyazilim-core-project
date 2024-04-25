@@ -12,7 +12,7 @@ export default function Page(): JSX.Element {
 
       <Link href={"login"}>Login</Link>
       <Button onClick={async () => {
-        await signIn("credentials", { password: process.env.PASSWORD , email: process.env.USERNAME, redirect:false} );
+        await signIn("credentials", { password: "123Aa!" , email: "admin", redirect:false} );
       }} >Hello world</Button>
     </div>
   );

@@ -4,6 +4,7 @@ import NextAuth from "next-auth"
 import { JWT } from "next-auth/jwt";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    debug: true,
     secret: process.env.AUTH_SECRET,
     session: {
         strategy: 'jwt'
@@ -64,6 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async jwt({ user , account, token}) {
             if (account) {
                 // Save the access token and refresh token in the JWT on the initial login
+                console.log("Account ", account, user)
                 return {
                     access_token: user.access_token,
                     expires_at: Math.floor(Date.now() / 1000 + user.expires_in),
@@ -108,6 +110,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
         },
         async session({ session, token }) {
+            console.log("session called", session, token)
             session.error = token.error
             return session
         },
