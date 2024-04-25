@@ -1,9 +1,9 @@
 import Credentials from "next-auth/providers/credentials"
 import { type TokenSet } from "next-auth/types"
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 import { JWT } from "next-auth/jwt";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const options: AuthOptions = {
     debug: true,
     secret: process.env.AUTH_SECRET,
     session: {
@@ -17,8 +17,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // You can specify which fields should be submitted, by adding keys to the `credentials` object.
             // e.g. domain, username, password, 2FA token, etc.
             credentials: {
-                email: {},
-                password: {},
+                email: { label: "Username", type: "text", placeholder: "test@test.com" },
+                password: { label: "Password", type: "password" }
             },
             
             authorize: async (credentials, request) => {
@@ -115,7 +115,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return session
         },
     },
-})
+};
 
 declare module "next-auth" {
     interface Session {

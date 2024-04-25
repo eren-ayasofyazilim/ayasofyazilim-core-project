@@ -1,7 +1,6 @@
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { NextRequest, NextResponse } from "next/server";
-export { auth as middleware } from "../auth"
 
 export const i18n = {
   defaultLocale: "en",
@@ -92,24 +91,24 @@ function getLocale(request: NextRequest) {
 //   return new Response("Unauthorized", { status: 401 });
 // })
 
-// export function middleware(request: NextRequest) {
-//   let auth =  (authMiddleware as any)(request)
-//   const pathname = request.nextUrl.pathname + "/";
-//   const locale = getLocale(request);
-//   // check .AspNetCore.Identity.Application cookie from the request
-//   if (!isAutherized(request)) {
-//     return NextResponse.redirect(new URL("/login", request.url));
-//   }
+export function middleware(request: NextRequest) {
+  // let auth =  (authMiddleware as any)(request)
+  const pathname = request.nextUrl.pathname + "/";
+  const locale = getLocale(request);
+  // check .AspNetCore.Identity.Application cookie from the request
+  if (!isAutherized(request)) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 
-//   if (!pathname.startsWith(`/${locale}/`)) {
-//     return NextResponse.redirect(
-//       new URL(
-//         `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
-//         request.url
-//       )
-//     );
-//   }
-// }
+  if (!pathname.startsWith(`/${locale}/`)) {
+    return NextResponse.redirect(
+      new URL(
+        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
+        request.url
+      )
+    );
+  }
+}
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],

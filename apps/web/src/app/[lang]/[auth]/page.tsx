@@ -9,6 +9,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
 
 
 export default function Page(): JSX.Element {
@@ -50,6 +51,8 @@ export default function Page(): JSX.Element {
   };
   const onLoginSubmit = (values: LoginFormDataType): Promise<string> => {
     return new Promise(async (resolve, reject) => {
+      const { password, userIdentifier: username } = values;
+      await signIn("credentials", { username, password, redirect:false} );
       const response = await fetch("./api/auth/login", {
         method: "POST",
         body: JSON.stringify(values),

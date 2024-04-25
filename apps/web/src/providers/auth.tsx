@@ -1,9 +1,9 @@
+"use client"
 import { SessionProvider } from "next-auth/react"
-import { auth } from "../../auth"
 
-
-export default  async function AuthSession({children}: {children: JSX.Element}) {
-    const session = await auth();
+export default function AuthSession({children}: {children: JSX.Element}) {
+    // const session = await auth();
+    const session = null;
     if (session?.user) {
       // TODO: Look into https://react.dev/reference/react/experimental_taintObjectReference
       // filter out sensitive data before passing to client.
@@ -16,7 +16,7 @@ export default  async function AuthSession({children}: {children: JSX.Element}) 
 
     return (
         <>
-      <SessionProvider  basePath={"/auth"} session={session}>
+      <SessionProvider basePath={"api/auth"} session={session}>
         {children}
       </SessionProvider>
       </>

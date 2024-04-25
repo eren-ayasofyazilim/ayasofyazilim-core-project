@@ -1,9 +1,9 @@
-import { auth, signIn } from "../../../../auth"
+// import { auth, signIn } from "../../../../auth"
  
 export default async function UserAvatar() {
   let login = await signIn("credentials", { password: process.env.PASSWORD , email: process.env.USERNAME, redirect:false} );
-  const session = await auth();
- 
+  // const session = await auth();
+  const session = null;
   if (!session?.user) return null
     console.log("session ",session)
   return (
