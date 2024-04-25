@@ -9,18 +9,9 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { z } from "zod";
-import { useSession } from "next-auth/react"
 
 
 export default function Page(): JSX.Element {
-  const session = useSession()
-  useEffect(() => {
-    console.log("Effect ");
-    async function getSession(){
-      console.log("session from effect",session)
-    }
-    getSession();
-  }, []);
 
   const { cultureName, resources, changeLocale } = useLocale();
   const router = useRouter();
