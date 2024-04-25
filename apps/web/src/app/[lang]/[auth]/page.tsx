@@ -3,13 +3,26 @@ import { ForgotPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/for
 import { LoginFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/login-form";
 import { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
 import { Auth, authTypes, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
+import { auth } from "../../../../auth";
 import Error from "next/error";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { z } from "zod";
 
 export default function Page(): JSX.Element {
+  let session;
+
+  useEffect(() => {
+    console.log("Effect ");
+
+    async function getSession(){
+      session = await auth();
+      console.log("session ",session)
+    }
+    getSession();
+  }, []);
+
   const { cultureName, resources, changeLocale } = useLocale();
   const router = useRouter();
   const params = useParams();
