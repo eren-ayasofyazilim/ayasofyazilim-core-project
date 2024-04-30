@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { ConfigProvider } from "./configuration";
 import { LocaleProvider } from "./locale";
 import { UserProvider } from "./user";
+import AuthSession from "./auth";
 
 export default function Providers({
   children,
@@ -15,13 +16,15 @@ export default function Providers({
   const lang = params?.lang?.toString() || "en";
   return (
     <div>
-      <ConfigProvider>
-        <TooltipProvider>
-          <UserProvider>
-            <LocaleProvider lang={lang}>{children}</LocaleProvider>
-          </UserProvider>
-        </TooltipProvider>
-      </ConfigProvider>
+      <AuthSession>
+        <ConfigProvider>
+          <TooltipProvider>
+            <UserProvider>
+              <LocaleProvider lang={lang}>{children}</LocaleProvider>
+            </UserProvider>
+          </TooltipProvider>
+        </ConfigProvider>
+      </AuthSession>
     </div>
   );
 }

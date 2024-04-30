@@ -11,11 +11,6 @@ export default function Page(): JSX.Element {
       <LanguageSelector />
 
       <Link href={"login"}>Login</Link>
-      <Button onClick={async () => {
-        console.log("Hello world");
-        
-        await signIn("credentials", { password: "123Aa!" , email: "admin", redirect:false} );
-      }} >Hello world</Button>
     </div>
   );
 }

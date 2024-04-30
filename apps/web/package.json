@@ -10,6 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@auth/core": "^0.30.0",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@repo/ayasofyazilim-ui": "workspace:^",
     "@repo/ui": "workspace:*",

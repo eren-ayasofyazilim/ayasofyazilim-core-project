@@ -15,7 +15,6 @@ import { useLocale } from "src/providers/locale";
 import { useUser } from "src/providers/user";
 import { getBaseLink } from "src/utils";
 import "./../../globals.css";
-import AuthSession from "src/providers/auth";
 
 type LayoutProps = {
   children: JSX.Element;
@@ -128,7 +127,6 @@ export default function Layout({ children }: LayoutProps) {
     },
   };
   return (
-    <AuthSession>
     <Mainlayout
       logo="https://github.com/ayasofyazilim-clomerce.png"
       title="ayasofya"
@@ -140,6 +138,5 @@ export default function Layout({ children }: LayoutProps) {
     >
       {children}
     </Mainlayout>
-    </AuthSession>
   );
 }

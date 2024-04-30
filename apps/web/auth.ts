@@ -1,7 +1,8 @@
 import Credentials from "next-auth/providers/credentials"
 import NextAuth, { NextAuthConfig } from "next-auth"
+import { TokenSet } from "@auth/core/types"
 
-export const options: NextAuthConfig  = {
+export const options: NextAuthConfig = {
     debug: true,
     secret: process.env.AUTH_SECRET,
     session: {
@@ -18,28 +19,27 @@ export const options: NextAuthConfig  = {
                 email: { label: "Email", type: "text", placeholder: "test@test.com" },
                 password: { label: "Password", type: "password" }
             },
-            
+
             authorize: async (credentials, request) => {
                 let user = null;
                 let token = null;
                 const myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json, text/plain, */*");
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
                 myHeaders.append("X-Requested-With", "XMLHttpRequest");
-                myHeaders.append("Cookie", ".AspNetCore.Culture=c%3Den%7Cuic%3Den; XSRF-TOKEN=CfDJ8OyfMHGfHwNJtH6UZDFgfuTimCE-AnctMN5wtqvo1LX9qUCkz_YELuFDC-WEllMjy71uAE3zeSzCIqztfaySQvvWYu9FYteBgZnCoZongigYh6y-jsDeksGY9TCWvG7mNgRYj4_1mTQi7PbUaEs7NlU");
-                console.log(credentials.email, credentials.password)
                 const urlencoded = new URLSearchParams();
-                urlencoded.append("grant_type", "password");
-                urlencoded.append("client_id", "Angular");
-                urlencoded.append("username", credentials.email as string);
-                urlencoded.append("password", credentials.password as string);
-                urlencoded.append("scope", "AccountService phone roles profile address email offline_access");
+                const urlEncodedContent: Record<string, string> = {
+                    grant_type: "password",
+                    client_id: "Angular",
+                    username: credentials.email as string,
+                    password: credentials.password as string,
+                    scope: "AccountService phone roles profile address email offline_access",
+                };
+                Object.keys(urlEncodedContent).forEach(key => urlencoded.append(key, urlEncodedContent[key]));
 
                 const requestOptions = {
                     method: "POST",
                     headers: myHeaders,
                     body: urlencoded,
-                    redirect: "follow"
                 };
                 let result;
                 try {
@@ -55,21 +55,21 @@ export const options: NextAuthConfig  = {
                     name: "admin",
                     email: "admin",
                 };
-                return {...user, ...token};
+                return { ...user, ...token };
             },
         }),
     ],
     callbacks: {
-        async jwt({ user , account, token}) {
+        async jwt({ user, account, token }) {
             if (account) {
                 // Save the access token and refresh token in the JWT on the initial login
-                console.log("Account ", account, user)
+                //console.log("Account ", account, user, token)
                 return {
                     access_token: user.access_token,
-                    expires_at: Math.floor(Date.now() / 1000 + user.expires_in),
+                    expires_at: Math.floor(Date.now() / 1000 + (user.expires_in || 0)),
                     refresh_token: user.refresh_token,
                 }
-            } else if (Date.now() < token.expires_at * 1000) {
+            } else if (Date.now() < (token?.exp || 0) * 1000) {
                 // If the access token has not expired yet, return it
                 return token
             } else {
@@ -83,7 +83,7 @@ export const options: NextAuthConfig  = {
                         body: new URLSearchParams({
                             client_id: "Angular",
                             grant_type: "refresh_token",
-                            refresh_token: token.refresh_token,
+                            refresh_token: token.refresh_token as string,
                         }),
                         method: "POST",
                     })
@@ -107,10 +107,9 @@ export const options: NextAuthConfig  = {
                 }
             }
         },
-        async session({ session, token , user, trigger}) {
-            console.log("session called", session, token, user, trigger)
+        async session({ session, token, user, trigger }) {
             session.error = token.error
-            return {...session, accessToken: token.access_token}
+            return { ...session, accessToken: token.access_token }
         },
     },
 };
