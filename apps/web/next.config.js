@@ -10,6 +10,10 @@ module.exports = {
     ];
   },
   reactStrictMode: true,
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    AUTH_SECRET: process.env.AUTH_SECRET,
+  },
   transpilePackages: ["@repo/ui"],
 };
 

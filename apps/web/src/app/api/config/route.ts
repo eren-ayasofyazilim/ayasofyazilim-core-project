@@ -1,9 +1,8 @@
 import { getAccountServiceClient } from "src/lib";
 
 export async function GET(request: Request) {
-  const client = getAccountServiceClient();
-
-  const config =
-    await client.abpApplicationConfiguration.getApiAbpApplicationConfiguration();
-  return new Response(JSON.stringify(config));
+  const client = await getAccountServiceClient();
+  const result =
+    await client.abpApplicationConfiguration.getApiAbpApplicationConfiguration(false);
+  return new Response(JSON.stringify({ message: result.currentUser }));
 }

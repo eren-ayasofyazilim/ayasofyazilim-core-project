@@ -84,7 +84,15 @@ function getLocale(request: NextRequest) {
   );
 }
 
+// const authMiddleware = auth((req) => {
+//   // private routes here
+//   const session = req.auth
+//   console.log("session ", session)
+//   return new Response("Unauthorized", { status: 401 });
+// })
+
 export function middleware(request: NextRequest) {
+  // let auth =  (authMiddleware as any)(request)
   const pathname = request.nextUrl.pathname + "/";
   const locale = getLocale(request);
   // check .AspNetCore.Identity.Application cookie from the request
