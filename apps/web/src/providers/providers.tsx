@@ -9,7 +9,7 @@ import AuthSession from "./auth";
 export default function Providers({
   children,
 }: {
-  children: React.ReactNode;
+  children: JSX.Element;
 }): JSX.Element {
   const params = useParams();
 

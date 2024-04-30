@@ -8,16 +8,23 @@ import {
 import { usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface ILocaleContext {
+// To prevent long lines
+type ResourceDto =
+  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
+type LocalizationDto =
+  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
+
+interface ILocaleProvider {
+  children: JSX.Element;
+  lang: string;
+}
+interface ILocaleData {
+  resources: Record<string, ResourceDto> | undefined | null;
   cultureName: string | undefined;
+  version?: number;
+}
+interface ILocaleContext extends ILocaleData {
   changeLocale: (cultureName: string) => void;
-  resources:
-    | Record<
-        string,
-        Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto
-      >
-    | null
-    | undefined;
 }
 
 export const LocaleContext = createContext<ILocaleContext>({
@@ -30,73 +37,66 @@ export const useLocale = () => {
   return useContext(LocaleContext);
 };
 
-export const LocaleProvider = ({
-  children,
-  lang,
-}: {
-  children: React.ReactNode;
-  lang: string;
-}) => {
-  const [cultureName, setCultureName] =
-    useState<ILocaleContext["cultureName"]>(lang);
-  const [resources, setResources] = useState<ILocaleContext["resources"]>();
+export const LocaleProvider = ({ children, lang }: ILocaleProvider) => {
+  // If its exist in localeStorage set it directly, no need to set state later.
+  const [localeData, setLocaleData] = useState<ILocaleData>(() => {
+    const localeFromLocalStorage = localStorage?.getItem("locale");
+    if (localeFromLocalStorage) {
+      const locale = JSON.parse(localeFromLocalStorage);
+      return locale;
+    }
+    return { resources: undefined, lang: lang };
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const localeFromLocalStorage = localStorage.getItem("locale");
-    if (localeFromLocalStorage) {
-      const locale = JSON.parse(localeFromLocalStorage);
-      setCultureName(locale.cultureName);
-      setResources(locale.resources);
-      return;
+    // LocalStorage is empty, get default lang
+    if (!localeData?.resources) {
+      changeLocale(lang);
     }
-    changeLocale(lang);
-  }, []);
+  }, [localeData]);
 
-  async function getLocale(cultureName: string) {
+  async function getLocaleData(cultureName: string) {
     try {
       const response = await fetch(`/api/?lang=${cultureName}`);
-      const data =
-        (await response.json()) as Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
-      if (data) {
-        setCultureName(cultureName);
-        setResources(data.resources);
-        localStorage.setItem(
-          "locale",
-          JSON.stringify({
-            cultureName,
-            resources: data.resources,
-            version: 0.1,
-          })
-        );
-        return true;
+      const data = (await response.json()) as LocalizationDto;
+      if (!data?.resources) {
+        throw new Error("Can't get the languge data");
       }
-      // later: if error then try getting default language
+      const localeData = {
+        cultureName,
+        resources: data.resources,
+        version: 0.1,
+      };
+      setLocaleData(localeData);
+      localStorage.setItem("locale", JSON.stringify(localeData));
     } catch (error) {
       console.error(error);
+      return false;
     }
-    return false;
+    return true;
   }
 
   async function changeLocale(cultureName: string) {
-    if (cultureName) {
-      setIsLoading(true);
-      if (await getLocale(cultureName)) {
-        const newPath = pathname.split("/").slice(2).join("/");
-        window.history.pushState(
-          null,
-          "",
-          `/${cultureName}/${newPath}?${searchParams.toString()}`
-        );
-      }
-      setIsLoading(false);
-    }
+    if (!cultureName) return;
+
+    setIsLoading(true);
+    const isSuccess = await getLocaleData(cultureName);
+    setIsLoading(false);
+    if (!isSuccess) return;
+
+    const newPath = pathname.split("/").slice(2).join("/");
+    window.history.pushState(
+      null,
+      "",
+      `/${cultureName}/${newPath}?${searchParams.toString()}`
+    );
   }
 
   return (
-    <LocaleContext.Provider value={{ cultureName, changeLocale, resources }}>
+    <LocaleContext.Provider value={{ changeLocale, ...localeData }}>
       {isLoading && <Spinner size="lg" />}
       {children}
     </LocaleContext.Provider>
