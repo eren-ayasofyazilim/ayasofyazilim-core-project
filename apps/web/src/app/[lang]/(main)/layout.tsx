@@ -30,14 +30,7 @@ export default function Layout({ children }: LayoutProps) {
   });
 
   useEffect(() => {
-    async function getConfig() {
-      let fetchedConfig = await fetch(getBaseLink("api/config"));
-      let configData = await fetchedConfig.json();
-      console.log(configData);
-      setConfig(configData);
-    }
     getUser();
-    getConfig();
   }, []);
 
   useEffect(() => {
