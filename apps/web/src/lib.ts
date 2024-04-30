@@ -2,12 +2,13 @@ import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
 import { ProjectServiceClient } from "ayasofyazilim-saas/ProjectService";
 import { cookies } from "next/headers";
 
-export function getAccountServiceClient(token:string): AccountServiceClient {
+export function getAccountServiceClient(token:string = ""): AccountServiceClient {
   return new AccountServiceClient({
-    TOKEN: token.replace("Bearer ", ""),
+    TOKEN: token?.replace("Bearer ", "") || "",
     BASE: process.env.AUTH_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
+      "Cookie": cookies().toString(),
     },
   });
 }
