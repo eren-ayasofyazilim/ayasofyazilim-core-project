@@ -9,6 +9,7 @@ const config: Config = {
     "./src/components/**/*.tsx",
     "./node_modules/@repo/ayasofyazilim-ui/src/**/*.{ts,tsx}",
     "./node_modules/@repo/ayasofyazilim-ui/@/**/*.{ts,tsx}",
+    "./node_modules/@repo/ayasofyazilim-ui/tiptap/**/*.{ts,tsx}",
   ],
   presets: [sharedConfig],
   theme: {
@@ -76,7 +77,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
 
 export default config;

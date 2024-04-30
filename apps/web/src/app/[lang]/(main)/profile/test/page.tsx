@@ -1,8 +1,8 @@
+import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
 export default async function Page() {
-  let x = 0;
-  //for delay
-  while (x < 1000000000) {
-    x++;
-  }
-  return <div className="grid gap-6">test</div>;
+  return (
+    <div className="flex-1 p-2 border">
+      <TipTapEditor />
+    </div>
+  );
 }

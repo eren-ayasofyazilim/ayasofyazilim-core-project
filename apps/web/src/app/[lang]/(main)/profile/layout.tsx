@@ -3,17 +3,16 @@
 import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { getBaseLink } from "src/utils";
 
 const navbarItems = [
   {
-    id: "General",
+    id: getBaseLink("/profile"),
     name: "General",
-    path: undefined,
   },
   {
-    id: "Test",
-    name: "Test",
-    path: "test",
+    id: getBaseLink("profile/test"),
+    name: "Tiptap",
   },
 ];
 function isPathValid(path: string) {
@@ -22,16 +21,18 @@ function isPathValid(path: string) {
 type LayoutProps = {
   children: JSX.Element;
 };
+
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
-
   const path = pathname.split("profile/")?.[1];
+
   useEffect(() => {
     if (!path || isPathValid(path) === false) {
       router.push("/profile");
     }
   }, []);
+
   return (
     <SectionLayout
       sections={navbarItems}
