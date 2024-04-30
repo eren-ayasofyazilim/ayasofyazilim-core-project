@@ -19,13 +19,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<Volo_Abp_Account_ProfileDto | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (user) {
-      return;
-    }
-    getUser();
-  }, []);
-
   async function getUser() {
     try {
       setIsLoading(true);

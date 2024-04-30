@@ -14,6 +14,7 @@
     "@formatjs/intl-localematcher": "^0.5.4",
     "@repo/ayasofyazilim-ui": "workspace:^",
     "@repo/ui": "workspace:*",
+    "@vercel/blob": "^0.22.1",
     "ayasofyazilim-saas": "^0.0.16",
     "lucide-react": "^0.363.0",
     "negotiator": "^0.6.3",
