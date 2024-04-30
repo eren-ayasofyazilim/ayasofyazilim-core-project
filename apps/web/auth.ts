@@ -1,7 +1,8 @@
 import Credentials from "next-auth/providers/credentials"
 import NextAuth, { NextAuthConfig } from "next-auth"
 import { TokenSet } from "@auth/core/types"
-
+const BASE_URL = process.env.AUTH_URL;
+const TOKEN_URL = BASE_URL + "/connect/token";
 export const options: NextAuthConfig = {
     debug: true,
     secret: process.env.AUTH_SECRET,
@@ -43,7 +44,7 @@ export const options: NextAuthConfig = {
                 };
                 let result;
                 try {
-                    const response = await fetch("http://192.168.1.38:44322/connect/token", requestOptions);
+                    const response = await fetch(TOKEN_URL, requestOptions);
                     result = await response.json();
                     token = result;
                 } catch (error) {
@@ -78,7 +79,7 @@ export const options: NextAuthConfig = {
                     // https://accounts.google.com/.well-known/openid-configuration
                     // We need the `token_endpoint`.
                     console.log("Fetch refresh token", token.refresh_token, token);
-                    const response = await fetch("http://192.168.1.38:44322/connect/token", {
+                    const response = await fetch(TOKEN_URL, {
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
                         body: new URLSearchParams({
                             client_id: "Angular",
