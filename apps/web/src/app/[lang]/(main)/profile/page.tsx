@@ -15,11 +15,7 @@ export default function Page() {
       if (session.status !== "authenticated") return;
       console.log("session from effect",session , " Token ", session.data?.accessToken)
       if(!!session.data?.accessToken){
-        let fetchConfig = await fetch(getBaseLink("api/config"), {
-          headers: {
-            Authorization: `Bearer ${session.data?.accessToken}`,
-          },
-        }); 
+        let fetchConfig = await fetch(getBaseLink("api/config"));
         let config = await fetchConfig.json();
         console.log ("Config ", config.message);
       }
