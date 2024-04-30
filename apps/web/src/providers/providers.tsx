@@ -8,7 +8,7 @@ import { UserProvider } from "./user";
 export default function Providers({
   children,
 }: {
-  children: React.ReactNode;
+  children: JSX.Element;
 }): JSX.Element {
   const params = useParams();
 
