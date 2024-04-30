@@ -3,10 +3,9 @@ import { ForgotPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/for
 import { LoginFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/login-form";
 import { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
 import { Auth, authTypes, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
-import { auth } from "../../../../auth";
 import Error from "next/error";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
