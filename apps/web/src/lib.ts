@@ -3,15 +3,12 @@ import { ProjectServiceClient } from "ayasofyazilim-saas/ProjectService";
 import { cookies } from "next/headers";
 
 export function getAccountServiceClient(token:string): AccountServiceClient {
-  const cookieStore = cookies();
-  console.log("Lib Token ", token)
+  console.log("Lib Token ", token, process.env.BASE_URL)
   return new AccountServiceClient({
-    BASE: process.env.BASE_URL,
+    TOKEN: token.replace("Bearer ", ""),
+    BASE: "http://192.168.1.38:44322",
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
-      Cookie: cookieStore.toString(),
-      "Authorization": `${token}`,
-      "RequestVerificationToken": cookieStore.get("next-auth.csrf-token")?.value || "",
     },
   });
 }
