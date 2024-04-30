@@ -1,7 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { getAccountServiceClient } from "src/lib";
 import { useUser } from "src/providers/user";
 import { getBaseLink } from "src/utils";
 
@@ -14,11 +13,9 @@ export default function Page() {
     async function getSession(){
       if (session.status !== "authenticated") return;
       console.log("session from effect",session , " Token ", session.data?.accessToken)
-      if(!!session.data?.accessToken){
-        let fetchConfig = await fetch(getBaseLink("api/config"));
-        let config = await fetchConfig.json();
-        console.log ("Config ", config.message);
-      }
+      let fetchConfig = await fetch(getBaseLink("api/config"));
+      let config = await fetchConfig.json();
+      console.log ("Config ", config.message);
     }
     console.log(!!session.data)
     if (!!session.data) getSession();

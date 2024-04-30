@@ -3,7 +3,6 @@ import NextAuth, { NextAuthConfig } from "next-auth"
 import { TokenSet } from "@auth/core/types"
 const BASE_URL = process.env.AUTH_URL;
 const TOKEN_URL = BASE_URL + "/connect/token";
-
 export const options: NextAuthConfig = {
     debug: true,
     secret: process.env.AUTH_SECRET,
@@ -23,8 +22,7 @@ export const options: NextAuthConfig = {
             },
 
             authorize: async (credentials, request) => {
-                let user = null;
-                let token = null;
+                let user = null, token = null;
                 const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
                 myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -43,11 +41,9 @@ export const options: NextAuthConfig = {
                     headers: myHeaders,
                     body: urlencoded,
                 };
-                let result;
                 try {
                     const response = await fetch(TOKEN_URL, requestOptions);
-                    result = await response.json();
-                    token = result;
+                    token = await response.json();
                 } catch (error) {
                     console.error(error);
                 };
