@@ -13,6 +13,6 @@ export default function Page(): JSX.Element {
         };
     });
     return (
-        <Dashboard cards={rolesCards} data={data.items} columns={columns} />
+        <Dashboard filterBy="name" cards={rolesCards} data={data.items} columns={columns} />
     );
 }
