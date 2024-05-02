@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { Label } from "@/components/ui/label";
@@ -8,12 +7,16 @@ import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "src/providers/user";
+import Button from "@repo/ayasofyazilim-ui/molecules/button";
+import { Toaster, toast } from "@/components/ui/sonner";
 
 export default function Page() {
   const { user: userData } = useUser();
   const [userDataForm, setUserDataForm] = useState<
     Volo_Abp_Account_ProfileDto | undefined
   >();
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (userData) {
@@ -21,18 +24,28 @@ export default function Page() {
     }
   }, [userData]);
 
-  function onSaveClick() {
+  useEffect(() => {
     if (JSON.stringify(userDataForm) === JSON.stringify(userData)) {
-      // no changes
+      setIsSubmitDisabled(true);
       return;
     }
+    setIsSubmitDisabled(false);
+  }, [userDataForm]);
+
+  function onSaveClick() {
+    if (isSubmitDisabled) {
+      return;
+    }
+    setIsLoading(true);
     fetch("/api/settings/profile", {
       method: "PUT",
-      body: JSON.stringify({
-        userName: "eren1",
-        email: "asd@asd.com",
-        name: "erennnn",
-      }),
+      body: JSON.stringify(userDataForm),
+    }).then((i) => {
+      if (i.ok) {
+        toast.success("Başarılı.");
+        setIsSubmitDisabled(true);
+        setIsLoading(false);
+      }
     });
   }
 
@@ -119,12 +132,14 @@ export default function Page() {
             Telefon numaranız.
           </p>
         </div>
-        <div className="grid w-full items-center gap-3 mt-4">
-          {/* <Separator /> */}
-        </div>
         <div className="w-full flex-row flex items-end gap-3 mt-4 justify-end">
-          <Button variant={"outline"}>İptal</Button>
-          <Button onClick={onSaveClick}>Güncelle</Button>
+          <Button
+            disabled={isSubmitDisabled}
+            isLoading={isLoading}
+            title="Güncelle"
+            onSubmitFunction={onSaveClick}
+            className=" w-[120px] text-white"
+          />
         </div>
       </div>
       <div className="basis-1/4 min-w-[100px]">
@@ -141,6 +156,7 @@ export default function Page() {
         </div>
         <Input id="picture" placeholder="John" type="file" className="hidden" />
       </div>
+      <Toaster richColors />
     </>
   );
 }
