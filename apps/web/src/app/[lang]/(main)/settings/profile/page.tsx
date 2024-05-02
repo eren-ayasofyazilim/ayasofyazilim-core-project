@@ -7,8 +7,8 @@ import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "src/providers/user";
-import toast, { Toaster } from "react-hot-toast";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
+import { Toaster, toast } from "@/components/ui/sonner";
 
 export default function Page() {
   const { user: userData } = useUser();
@@ -156,7 +156,7 @@ export default function Page() {
         </div>
         <Input id="picture" placeholder="John" type="file" className="hidden" />
       </div>
-      <Toaster />
+      <Toaster richColors />
     </>
   );
 }
