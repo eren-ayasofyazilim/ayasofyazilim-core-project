@@ -157,6 +157,9 @@ importers:
       '@auth/core':
         specifier: ^0.30.0
         version: 0.30.0
+      '@ayasofyazilim/saas':
+        specifier: ^0.0.10
+        version: 0.0.10
       '@formatjs/intl-localematcher':
         specifier: ^0.5.4
         version: 0.5.4
@@ -175,9 +178,6 @@ importers:
       '@vercel/blob':
         specifier: ^0.22.1
         version: 0.22.1
-      ayasofyazilim-saas:
-        specifier: ^0.0.16
-        version: 0.0.16
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@18.2.0)
@@ -8196,10 +8196,6 @@ packages:
     dependencies:
       dequal: 2.0.3
     dev: true
-
-  /ayasofyazilim-saas@0.0.16:
-    resolution: {integrity: sha512-bssaaEvJC4BHIbG+tpoI9kuCZjoqqlOJNyAl/AaLCN1LScshMJ2s4VEkZOl/XV+aKg6mmcIsMdwgVKYRjh6XgQ==}
-    dev: false
 
   /babel-core@7.0.0-bridge.0(@babel/core@7.24.0):
     resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
