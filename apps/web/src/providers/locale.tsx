@@ -40,7 +40,10 @@ export const useLocale = () => {
 export const LocaleProvider = ({ children, lang }: ILocaleProvider) => {
   // If its exist in localeStorage set it directly, no need to set state later.
   const [localeData, setLocaleData] = useState<ILocaleData>(() => {
-    const localeFromLocalStorage = localStorage?.getItem("locale");
+    const localeFromLocalStorage =
+      typeof localStorage !== "undefined"
+        ? localStorage.getItem("locale")
+        : false;
     if (localeFromLocalStorage) {
       const locale = JSON.parse(localeFromLocalStorage);
       return locale;
