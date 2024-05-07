@@ -1,8 +1,11 @@
-"use client";
+"use server";
+import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
+import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import DetailsCard, {
   IDetailsCardProps,
 } from "@repo/ayasofyazilim-ui/organisms/details-card";
+import { getProjectServiceClient } from "src/lib";
 
 const currencyFormatter = new Intl.NumberFormat("tr", {
   style: "currency",
@@ -54,27 +57,76 @@ const defaultProps1: IDetailsCardProps = {
     <Progress value={20} containerClassName="h-3" className={`bg-green-300`} />
   ),
 };
+function tableProps(data: any) {
+  return [
+    {
+      title: "Proje Tipi",
+      value:
+        data.fundCollectionType === "SHRE" ? "Paya Dayalı" : "Borca Dayalı",
+    },
+    { title: "Pay Arz Oranı", value: "%8" },
+    {
+      title: "Başlangıç Tarihi",
+      value: new Date(data.projectStartDate).toLocaleDateString(),
+    },
+    {
+      title: "Bitiş Tarihi",
+      value: new Date(data.projectEndDate).toLocaleDateString(),
+    },
+  ];
+}
+function tableProps2Col(data: any) {
+  return [
+    [
+      {
+        title: currencyFormatter
+          .format(data.fundNominalAmount)
+          .replace(/\s/g, " "),
+        value: "Gerçekleşen Yatırım",
+      },
+      {
+        title: currencyFormatter
+          .format(data.fundableAmount)
+          .replace(/\s/g, " "),
+        value: "Hedeflenen Yatırım",
+      },
+    ],
+  ] as [ICardTableProps, ICardTableProps][];
+}
+
+const images = {
+  "806816b3-122c-2f67-95d1-3a125f4bee0f":
+    "https://kapilendo-public.imgix.net/files/projects/bamboologic/8e0aa153-e311-47f9-9563-1aa44c05a3fe_01_Project-Header-1920x1080px.png?auto=compress&auto=format&maxdpr=3&w=750&fit=crop&dpr=1.5",
+  "9c169fdc-f218-ad06-e277-3a125f8b51f7":
+    "https://kapilendo-public.imgix.net/files/projects/riverrecycle-oy/aa36f9b8-c668-4ab3-959a-79cbf2933be4_RR-Project-Header-1920x1080px-2.png?auto=compress&auto=format&maxdpr=3&w=750&fit=crop&dpr=1.5",
+  default: "https://templates.tiptap.dev/placeholder-image.jpg",
+};
 
 export default async function Page() {
-  // const client = getProjectServiceClient();
-  // const projectData = await client.project.getApiProjectServiceProject();
-  // if (!projectData) {
-  //   return <div>No data</div>;
-  // }
+  const projectData =
+    (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
+  if (!projectData) return null;
 
-  // return (
-  //   <div className="bg-zinc-800 flex flex-auto flex-col justify-center items-start h-screen text-white text-xl">
-  //     <h1 className="text-2xl">Projects:</h1>
-  //     <br />
-  //     <div>{projectData?.items && JSON.stringify(projectData.items[0])}</div>
-  //   </div>
-  // );
   return (
     <div>
       <div className="flex flex-row flex-wrap justify-center gap-5 mt-10">
-        <DetailsCard {...defaultProps1} />
-        <DetailsCard {...defaultProps1} />
-        <DetailsCard {...defaultProps1} />
+        {projectData?.items?.map((project) => (
+          <DetailsCard
+            variant="compact"
+            cardProps={{
+              IAboutCardProps: defaultProps1.IAboutCardProps,
+              image: images?.[(project.id ?? "default") as keyof typeof images],
+              tags: defaultProps1.tags,
+              link: "projects/" + (project.id ?? ""),
+              title: project.projectName ?? "",
+              description: project.projectDefinition ?? "",
+              tableProps: tableProps(project),
+              tableProps2Col: tableProps2Col(project),
+              cardTagTitle: "Devam Ediyor",
+              cardTagVariant: "warning",
+            }}
+          />
+        ))}
       </div>
     </div>
   );
