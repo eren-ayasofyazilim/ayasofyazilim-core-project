@@ -1,7 +1,7 @@
 "use client";
 
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
-import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
+import { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IUserContext {

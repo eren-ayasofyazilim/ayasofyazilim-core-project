@@ -78,6 +78,9 @@ importers:
       '@auth/core':
         specifier: ^0.30.0
         version: 0.30.0
+      '@ayasofyazilim/saas':
+        specifier: ^0.0.10
+        version: 0.0.10
       '@formatjs/intl-localematcher':
         specifier: ^0.5.4
         version: 0.5.4
@@ -96,9 +99,6 @@ importers:
       '@vercel/blob':
         specifier: ^0.22.1
         version: 0.22.1
-      ayasofyazilim-saas:
-        specifier: ^0.0.16
-        version: 0.0.16
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@18.2.0)
@@ -736,6 +736,12 @@ packages:
     dependencies:
       default-browser-id: 3.0.0
     dev: true
+
+  /@ayasofyazilim/saas@0.0.10:
+    resolution: {integrity: sha512-GVko43JX/Hy3zCrmhJpXEgJPMPSsXpeNxg3/iGqF4QicTzLoTBx/vrFBvur/aopfrfyKk/Q1m/MYk3Zcb/+2qA==}
+    dependencies:
+      typescript: 5.4.5
+    dev: false
 
   /@babel/code-frame@7.23.4:
     resolution: {integrity: sha512-r1IONyb6Ia+jYR2vvIDhdWdlTGhqbBoFqLTQidzZ4kepUFH15ejXvFHxCVbtl7BOXIudsIubf4E81xeA3h3IXA==}
@@ -7843,10 +7849,6 @@ packages:
     dependencies:
       dequal: 2.0.3
     dev: true
-
-  /ayasofyazilim-saas@0.0.16:
-    resolution: {integrity: sha512-bssaaEvJC4BHIbG+tpoI9kuCZjoqqlOJNyAl/AaLCN1LScshMJ2s4VEkZOl/XV+aKg6mmcIsMdwgVKYRjh6XgQ==}
-    dev: false
 
   /babel-core@7.0.0-bridge.0(@babel/core@7.24.0):
     resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
@@ -16034,6 +16036,12 @@ packages:
     resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  /typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false
 
   /uc.micro@2.1.0:
     resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
