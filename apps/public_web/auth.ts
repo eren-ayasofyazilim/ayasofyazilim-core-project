@@ -4,7 +4,7 @@ import { TokenSet } from "@auth/core/types";
 const BASE_URL = process.env.AUTH_URL;
 const TOKEN_URL = BASE_URL + "/connect/token";
 export const options: NextAuthConfig = {
-  debug: true,
+  debug: false,
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
