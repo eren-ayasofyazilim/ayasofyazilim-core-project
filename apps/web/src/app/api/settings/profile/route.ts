@@ -1,4 +1,4 @@
-import { Volo_Abp_Account_UpdateProfileDto } from "ayasofyazilim-saas/AccountService";
+import { Volo_Abp_Account_UpdateProfileDto } from "@ayasofyazilim/saas/AccountService";
 import { getAccountServiceClient } from "src/lib";
 
 export async function PUT(request: Request) {

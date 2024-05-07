@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 
 import { Label } from "@/components/ui/label";
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
-import { Volo_Abp_Account_ProfileDto } from "ayasofyazilim-saas/AccountService";
+import { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "src/providers/user";

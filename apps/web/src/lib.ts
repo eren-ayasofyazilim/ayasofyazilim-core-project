@@ -1,6 +1,5 @@
-import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
-import { ProjectServiceClient } from "ayasofyazilim-saas/ProjectService";
-import { cookies } from "next/headers";
+import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
+import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { auth } from "auth";
 
 export async function getAccountServiceClient(): AccountServiceClient {
@@ -16,12 +15,20 @@ export async function getAccountServiceClient(): AccountServiceClient {
   });
 }
 export function getProjectServiceClient(): ProjectServiceClient {
-  const cookieStore = cookies();
   return new ProjectServiceClient({
-    BASE: process.env.BASE_URL,
+    BASE: process.env.PROJECT_SERVICE_URL ?? "",
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
-      Cookie: cookieStore.toString(),
+      "Content-Type": "application/json",
+    },
+  });
+}
+export function getProjectServiceDetailClient(): ProjectServiceClient {
+  return new ProjectServiceClient({
+    BASE: process.env.PROJECT_SERVICE_URL ?? "",
+    HEADERS: {
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Type": "application/json",
     },
   });
 }
