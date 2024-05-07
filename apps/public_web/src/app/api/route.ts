@@ -1,5 +1,5 @@
 "use server";
-import { AccountServiceClient } from "ayasofyazilim-saas/AccountService";
+import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { cookies } from "next/headers";
 
 const appClient = new AccountServiceClient({
