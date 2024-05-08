@@ -32,7 +32,7 @@ export default async function Page({ params }: any) {
       <div className="h-[1000px] w-full">scroll down</div>
       <SectionLayout
         sections={sectionsData ?? []}
-        defaultActiveSectionId={sectionsData?.[0].id ?? ""}
+        defaultActiveSectionId={sectionsData?.[0]?.id ?? ""}
         openOnNewPage={false}
       />
     </div>
