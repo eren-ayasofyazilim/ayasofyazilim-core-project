@@ -12,7 +12,6 @@ export default async function Page({ params }: any) {
 
   // burada array gelmeyecek şekilde api güncellenecek
   const projectData = client?.items?.find((i) => i.id === projectId);
-
   if (!projectData) {
     return null;
   }
@@ -28,13 +27,12 @@ export default async function Page({ params }: any) {
       />
     ),
   }));
-
   return (
     <div className="flex flex-col w-full">
-      <div className="h-[1000px] w-full"></div>
+      <div className="h-[1000px] w-full">scroll down</div>
       <SectionLayout
         sections={sectionsData ?? []}
-        defaultActiveSectionId={sectionsData?.[0].id ?? ""}
+        defaultActiveSectionId={sectionsData?.[0]?.id ?? ""}
         openOnNewPage={false}
       />
     </div>

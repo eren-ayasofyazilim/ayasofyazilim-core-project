@@ -136,7 +136,7 @@ export default async function Page() {
                 />
               ),
               ActionComponent: (
-                <Button asChild customVariant="primary">
+                <Button customVariant="primary">
                   <Link href={"projects/" + (project.id ?? "")}>
                     Proje Detayı
                   </Link>

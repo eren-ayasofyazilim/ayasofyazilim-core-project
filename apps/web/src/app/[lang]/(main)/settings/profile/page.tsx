@@ -69,7 +69,7 @@ export default function Page() {
           <Input
             id="picture"
             value={userDataForm?.userName || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setUserDataForm({ ...userDataForm, userName: e.target.value })
             }
           />
@@ -82,7 +82,7 @@ export default function Page() {
           <Input
             id="picture"
             value={userDataForm?.name || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setUserDataForm({ ...userDataForm, name: e.target.value })
             }
           />
@@ -93,7 +93,7 @@ export default function Page() {
           <Input
             id="picture"
             value={userDataForm?.surname || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setUserDataForm({ ...userDataForm, surname: e.target.value })
             }
           />
@@ -106,7 +106,7 @@ export default function Page() {
           <Input
             id="picture"
             value={userDataForm?.email || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setUserDataForm({ ...userDataForm, email: e.target.value })
             }
             disabled
@@ -124,7 +124,7 @@ export default function Page() {
             value={userDataForm?.phoneNumber || ""}
             type="tel"
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-            onChange={(e) =>
+            onChange={(e: any) =>
               setUserDataForm({ ...userDataForm, phoneNumber: e.target.value })
             }
           />
