@@ -5,6 +5,15 @@ import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
 import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { getProjectServiceClient } from "src/lib";
 
+import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
+import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
+import {
+  defaultDataForSectionLayout,
+  defaultProps1,
+  defaultContentProps,
+} from "../demo-data";
+import ContentList from "components/content";
+
 export default async function Page({ params }: any) {
   const { projectId } = params;
   const client =
@@ -30,13 +39,16 @@ export default async function Page({ params }: any) {
   }));
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="h-[1000px] w-full"></div>
-      <SectionLayout
-        sections={sectionsData ?? []}
-        defaultActiveSectionId={sectionsData?.[0].id ?? ""}
-        openOnNewPage={false}
-      />
-    </div>
+    <ScrollArea>
+      <div className="flex flex-col gap-40">
+        <DetailsCard variant="full-page" cardProps={defaultProps1} />
+        <ContentList {...defaultContentProps} />
+        <SectionLayout
+          sections={sectionsData ?? []}
+          defaultActiveSectionId={sectionsData?.[0].id ?? ""}
+          openOnNewPage={false}
+        />
+      </div>
+    </ScrollArea>
   );
 }
