@@ -12,8 +12,9 @@ export default function Providers({
   children: JSX.Element;
 }): JSX.Element {
   const params = useParams();
+  const lang = params?.lang?.toString();
+  if (!lang) return <></>;
 
-  const lang = params?.lang?.toString() || "en";
   return (
     <div>
       <AuthSession>
