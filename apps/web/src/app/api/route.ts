@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   // Use the client instance to make the API call
   const response =
     await appClient.abpApplicationLocalization.getApiAbpApplicationLocalization(
-      lang
+      { cultureName: lang }
     );
 
   // set cookie
