@@ -15,7 +15,7 @@ export const useUser = () => {
   return useContext(UserContext);
 };
 
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserProvider = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<Volo_Abp_Account_ProfileDto | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

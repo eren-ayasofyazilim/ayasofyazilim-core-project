@@ -9,24 +9,14 @@ import { useContext, useEffect } from "react";
 import { LocaleContext } from "src/providers/locale";
 import countries from "./data";
 
-import {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-  CommandSeparator,
-} from "@repo/ayasofyazilim-ui/atoms/command";
 export default function LanguageSelector({
   menuAlign,
 }: {
   menuAlign?: "start" | "center" | "end";
 }): JSX.Element {
   const { cultureName, resources, changeLocale } = useContext(LocaleContext);
-  useEffect(() => {}, [cultureName]);
+  if (!cultureName) return <></>;
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>

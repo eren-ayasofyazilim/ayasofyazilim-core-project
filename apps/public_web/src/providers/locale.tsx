@@ -42,7 +42,7 @@ export const LocaleProvider = ({ children, lang }: ILocaleProvider) => {
   const [localeData, setLocaleData] = useState<ILocaleData>(() => {
     const localeFromLocalStorage =
       typeof localStorage !== "undefined"
-        ? localStorage?.getItem("locale")
+        ? localStorage.getItem("locale")
         : false;
     if (localeFromLocalStorage) {
       const locale = JSON.parse(localeFromLocalStorage);
