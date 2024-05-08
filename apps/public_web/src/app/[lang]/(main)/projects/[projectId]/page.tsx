@@ -11,6 +11,7 @@ import {
   defaultDataForSectionLayout,
   defaultProps1,
   defaultContentProps,
+  images,
 } from "../demo-data";
 import ContentList from "components/content";
 
@@ -41,7 +42,13 @@ export default async function Page({ params }: any) {
   return (
     <ScrollArea>
       <div className="flex flex-col gap-40">
-        <DetailsCard variant="full-page" cardProps={defaultProps1} />
+        <DetailsCard
+          variant="full-page"
+          cardProps={{
+            ...defaultProps1,
+            image: images?.[(projectId ?? "default") as keyof typeof images],
+          }}
+        />
         <ContentList {...defaultContentProps} />
         <SectionLayout
           sections={sectionsData ?? []}

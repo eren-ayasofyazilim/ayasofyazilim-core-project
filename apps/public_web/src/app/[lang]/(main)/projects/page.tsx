@@ -1,12 +1,13 @@
-"use client";
-import { ScrollArea } from "@/components/ui/scroll-area";
+"use server";
+
+import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import { LayoutIcon, ViewHorizontalIcon } from "@radix-ui/react-icons";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@repo/ayasofyazilim-ui/atoms/tabs";
+} from "@repo/ayasofyazilim-ui/molecules/tabs";
 
 import {
   Pagination,
@@ -16,17 +17,29 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@repo/ayasofyazilim-ui/atoms/pagination";
+} from "@repo/ayasofyazilim-ui/molecules/pagination";
 import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
 import { Filter } from "components/filter";
 import {
   cardProps,
   categoryOptions,
+  images,
   sectorOptions,
   statusOptions,
+  tableProps,
+  tableProps2Col,
 } from "./demo-data";
+import { getProjectServiceClient } from "src/lib";
+import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
+import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
+import Button from "@repo/ayasofyazilim-ui/molecules/button";
+import Link from "next/link";
 
-export default function Page() {
+export default async function Page() {
+  const projectData =
+    (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
+  if (!projectData) return null;
+
   return (
     <Tabs
       defaultValue="1"
@@ -50,28 +63,76 @@ export default function Page() {
       <ScrollArea className="p-2 pt-0">
         <TabsContent value="1">
           <div className="w-full flex flex-wrap gap-5 overflow-auto h-full">
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
-            <DetailsCard cardProps={cardProps} variant="compact-vertical" />
+            {projectData?.items?.map((project) => (
+              <DetailsCard
+                key={project.id}
+                cardProps={{
+                  IAboutCardProps: cardProps.IAboutCardProps,
+                  image:
+                    images?.[(project.id ?? "default") as keyof typeof images],
+                  tags: cardProps.tags,
+                  link: "projects/" + (project.id ?? ""),
+                  title: project.projectName ?? "",
+                  description: project.projectDefinition ?? "",
+                  tableProps: tableProps(project),
+                  tableProps2Col: tableProps2Col(project),
+                  cardTagTitle: "Devam Ediyor",
+                  cardTagVariant: "primary",
+                  BeforeCardContentComponent: (
+                    <Progress
+                      value={20}
+                      containerClassName="h-3"
+                      variant="primary"
+                    />
+                  ),
+                  ActionComponent: (
+                    <Button customVariant="primary">
+                      <Link href={"projects/" + (project.id ?? "")}>
+                        Proje Detayı
+                      </Link>
+                    </Button>
+                  ),
+                }}
+                variant="compact-vertical"
+              />
+            ))}
           </div>
         </TabsContent>
         <TabsContent value="2">
           <div className="flex flex-row w-full flex-wrap justify-center gap-5 col-span-10 overflow-auto h-full">
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
-            <DetailsCard cardProps={cardProps} variant="compact" />
+            {projectData?.items?.map((project) => (
+              <DetailsCard
+                key={project.id}
+                cardProps={{
+                  IAboutCardProps: cardProps.IAboutCardProps,
+                  image:
+                    images?.[(project.id ?? "default") as keyof typeof images],
+                  tags: cardProps.tags,
+                  link: "projects/" + (project.id ?? ""),
+                  title: project.projectName ?? "",
+                  description: project.projectDefinition ?? "",
+                  tableProps: tableProps(project),
+                  tableProps2Col: tableProps2Col(project),
+                  cardTagTitle: "Devam Ediyor",
+                  cardTagVariant: "primary",
+                  BeforeCardContentComponent: (
+                    <Progress
+                      value={20}
+                      containerClassName="h-3"
+                      variant="primary"
+                    />
+                  ),
+                  ActionComponent: (
+                    <Button customVariant="primary">
+                      <Link href={"projects/" + (project.id ?? "")}>
+                        Proje Detayı
+                      </Link>
+                    </Button>
+                  ),
+                }}
+                variant="compact"
+              />
+            ))}
           </div>
         </TabsContent>
       </ScrollArea>
@@ -82,12 +143,12 @@ export default function Page() {
               <PaginationPrevious href="#" />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
+              <PaginationLink href="#" isActive>
+                1
+              </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
+              <PaginationLink href="#">2</PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink href="#">3</PaginationLink>
