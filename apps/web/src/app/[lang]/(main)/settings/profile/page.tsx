@@ -136,10 +136,11 @@ export default function Page() {
           <Button
             disabled={isSubmitDisabled}
             isLoading={isLoading}
-            title="Güncelle"
             onSubmitFunction={onSaveClick}
             className=" w-[120px] text-white"
-          />
+          >
+            Güncelle
+          </Button>
         </div>
       </div>
       <div className="basis-1/4 min-w-[100px]">

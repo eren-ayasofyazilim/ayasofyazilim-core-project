@@ -15,7 +15,8 @@ export default function LanguageSelector({
   menuAlign?: "start" | "center" | "end";
 }): JSX.Element {
   const { cultureName, resources, changeLocale } = useContext(LocaleContext);
-  useEffect(() => {}, [cultureName]);
+  if (!cultureName) return <></>;
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
