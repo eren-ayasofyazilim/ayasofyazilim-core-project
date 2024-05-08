@@ -1,10 +1,13 @@
 "use server";
+
 import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
+import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import DetailsCard, {
   IDetailsCardProps,
 } from "@repo/ayasofyazilim-ui/organisms/details-card";
+import Link from "next/link";
 import { getProjectServiceClient } from "src/lib";
 
 const currencyFormatter = new Intl.NumberFormat("tr", {
@@ -52,7 +55,7 @@ const defaultProps1: IDetailsCardProps = {
     ],
   ],
   cardTagTitle: "Başarılı",
-  cardTagVariant: "success",
+  cardTagVariant: "primary",
   BeforeCardContentComponent: (
     <Progress value={20} containerClassName="h-3" className={`bg-green-300`} />
   ),
@@ -112,6 +115,7 @@ export default async function Page() {
       <div className="flex flex-row flex-wrap justify-center gap-5 mt-10">
         {projectData?.items?.map((project) => (
           <DetailsCard
+            key={project.id}
             variant="compact"
             cardProps={{
               IAboutCardProps: defaultProps1.IAboutCardProps,
@@ -123,7 +127,21 @@ export default async function Page() {
               tableProps: tableProps(project),
               tableProps2Col: tableProps2Col(project),
               cardTagTitle: "Devam Ediyor",
-              cardTagVariant: "warning",
+              cardTagVariant: "primary",
+              BeforeCardContentComponent: (
+                <Progress
+                  value={20}
+                  containerClassName="h-3"
+                  variant="primary"
+                />
+              ),
+              ActionComponent: (
+                <Button asChild customVariant="primary">
+                  <Link href={"projects/" + (project.id ?? "")}>
+                    Proje Detayı
+                  </Link>
+                </Button>
+              ),
             }}
           />
         ))}
