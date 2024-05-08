@@ -30,11 +30,13 @@ export default async function Page({ params }: any) {
   }));
 
   return (
-    <SectionLayout
-      sections={sectionsData ?? []}
-      activeSectionId={"about-the-project-0"}
-      //setActiveSectionId={setActiveSectionId}
-      openOnNewPage={false}
-    />
+    <div className="flex flex-col w-full">
+      <div className="h-[1000px] w-full"></div>
+      <SectionLayout
+        sections={sectionsData ?? []}
+        defaultActiveSectionId={sectionsData?.[0].id ?? ""}
+        openOnNewPage={false}
+      />
+    </div>
   );
 }
