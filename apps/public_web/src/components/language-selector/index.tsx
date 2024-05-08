@@ -5,7 +5,8 @@ import {
   TooltipTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/tooltip";
 import { CountrySelector } from "@repo/ayasofyazilim-ui/organisms/country-selector";
-import { useContext, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useContext } from "react";
 import { LocaleContext } from "src/providers/locale";
 import countries from "./data";
 
@@ -14,8 +15,9 @@ export default function LanguageSelector({
 }: {
   menuAlign?: "start" | "center" | "end";
 }): JSX.Element {
-  const { cultureName, resources, changeLocale } = useContext(LocaleContext);
-  if (!cultureName) return <></>;
+  const params = useParams();
+  const lang = params?.lang?.toString();
+  const { resources, changeLocale } = useContext(LocaleContext);
 
   return (
     <Tooltip>
@@ -27,10 +29,10 @@ export default function LanguageSelector({
               resources?.AbpExceptionHandling?.texts?.DefaultErrorMessage404
             }
             menuAlign={menuAlign}
-            defaultValue={cultureName}
+            defaultValue={lang}
             countries={countries}
             onValueChange={(value: string) => {
-              if (value === cultureName) return;
+              if (value === lang) return;
               changeLocale(value);
             }}
           />
