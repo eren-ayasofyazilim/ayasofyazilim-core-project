@@ -31,7 +31,7 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     if (!path || isPathValid(path) === false) {
-      router.push("/profile");
+      router.push(getBaseLink("profile", true));
     }
   }, []);
 

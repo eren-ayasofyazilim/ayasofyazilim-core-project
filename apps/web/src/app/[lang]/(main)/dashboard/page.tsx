@@ -32,7 +32,7 @@ export default function Page(): JSX.Element {
     description: "Create a new role for users",
     autoFormArgs,
     callback: (e) => {
-      fetch(getBaseLink("/api/admin"), {
+      fetch(getBaseLink("api/admin"), {
         method: "POST",
         body: JSON.stringify(e),
       })
@@ -44,7 +44,7 @@ export default function Page(): JSX.Element {
     },
   };
   useEffect(() => {
-    fetch(getBaseLink("/api/admin"))
+    fetch(getBaseLink("api/admin"))
       .then((res) => res.json())
       .then((data) => {
         setRoles(data);
