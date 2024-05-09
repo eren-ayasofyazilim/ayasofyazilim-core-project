@@ -74,25 +74,25 @@ export default function Layout({ children }: LayoutProps) {
       label: "Pages",
       name: resourcesMap.profile,
       icon: <User size={15} className="mr-2" />,
-      href: getBaseLink("profile", cultureName),
+      href: getBaseLink("profile", true),
     },
     {
       label: "Pages",
       name: resourcesMap.dashboard,
       icon: <SquareStack size={15} className="mr-2" />,
-      href: getBaseLink("dashboard", cultureName),
+      href: getBaseLink("dashboard", true),
     },
     {
       label: "Pages",
       name: "Projects",
       icon: <Presentation size={15} className="mr-2" />,
-      href: getBaseLink("projects", cultureName),
+      href: getBaseLink("projects", true),
     },
     {
       label: "Settings",
       name: "Settings",
       icon: <Presentation size={15} className="mr-2" />,
-      href: getBaseLink("settings/profile", cultureName),
+      href: getBaseLink("settings/profile", true),
     },
   ];
   const userNavigation = {

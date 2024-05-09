@@ -7,11 +7,11 @@ import { getBaseLink } from "src/utils";
 
 const navbarItems = [
   {
-    id: getBaseLink("/profile"),
+    id: getBaseLink("/profile", true),
     name: "General",
   },
   {
-    id: getBaseLink("profile/test"),
+    id: getBaseLink("profile/test", true),
     name: "Tiptap",
   },
 ];
