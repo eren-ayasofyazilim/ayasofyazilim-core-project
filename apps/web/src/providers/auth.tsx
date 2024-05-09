@@ -1,10 +1,10 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
-import { getBaseLinkWithoutLocale } from "src/utils";
+import { getBaseLink } from "src/utils";
 
 export default function AuthSession({ children }: { children: JSX.Element }) {
   return (
-    <SessionProvider basePath={getBaseLinkWithoutLocale("api/auth")}>
+    <SessionProvider basePath={getBaseLink("api/auth", false)}>
       {children}
     </SessionProvider>
   );
