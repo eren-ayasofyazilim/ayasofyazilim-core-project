@@ -7,11 +7,13 @@ import { getBaseLink } from "src/utils";
 
 const navbarItems = [
   {
-    id: getBaseLink("/profile"),
+    id: "profile",
+    link: getBaseLink("profile", true),
     name: "General",
   },
   {
-    id: getBaseLink("profile/test"),
+    id: "test",
+    link: getBaseLink("profile/test", true),
     name: "Tiptap",
   },
 ];
@@ -25,20 +27,21 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const path = pathname.split("profile/")?.[1];
+  const path = pathname.split("profile/")?.[1] ?? "profile";
 
   useEffect(() => {
     if (!path || isPathValid(path) === false) {
-      router.push("/profile");
+      router.push(getBaseLink("profile", true));
     }
   }, []);
 
   return (
     <SectionLayout
       sections={navbarItems}
-      activeSectionId={path}
+      defaultActiveSectionId={path}
       openOnNewPage={true}
       content={children}
+      vertical={true}
     />
   );
 }
