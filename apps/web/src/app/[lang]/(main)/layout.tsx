@@ -4,12 +4,8 @@ import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
 import LanguageSelector from "components/language-selector";
 import { Presentation, SquareStack, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import {
-  JSXElementConstructor,
-  ReactElement,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
+import { logoutAction } from "src/app/actions";
 import { useConfig } from "src/providers/configuration";
 import { useLocale } from "src/providers/locale";
 import { useUser } from "src/providers/user";
@@ -111,12 +107,7 @@ export default function Layout({ children }: LayoutProps) {
       },
     ],
     logoutFunction: async () => {
-      let result = await fetch("/api/auth/logout");
-      if (result.ok === false) {
-        console.error("Failed to logout");
-        return;
-      }
-      router.push("/");
+      logoutAction();
     },
   };
   return (
