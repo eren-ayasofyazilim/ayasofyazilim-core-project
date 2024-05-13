@@ -1,8 +1,7 @@
 "use client";
 
 import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getBaseLink } from "src/utils";
 
 const navbarItems = [
@@ -17,23 +16,10 @@ const navbarItems = [
     name: "Tiptap",
   },
 ];
-function isPathValid(path: string) {
-  return path === "" || path === "test" || path === undefined;
-}
-type LayoutProps = {
-  children: JSX.Element;
-};
 
-export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
+export default function Layout({ children }: { children: JSX.Element }) {
   const pathname = usePathname();
   const path = pathname.split("profile/")?.[1] ?? "profile";
-
-  useEffect(() => {
-    if (!path || isPathValid(path) === false) {
-      router.push(getBaseLink("profile", true));
-    }
-  }, []);
 
   return (
     <SectionLayout
