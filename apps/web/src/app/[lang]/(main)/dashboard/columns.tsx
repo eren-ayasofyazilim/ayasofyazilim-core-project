@@ -83,7 +83,7 @@ function generateColumns(tableType: any, excludeList: string[] = []) {
 }
 
 
-export function columnsGenerator(callback: any, autoFormArgs: any, tableType: any, excludeList: string[] = []) {
+export function columnsGenerator(callback: any, autoFormArgs: any, tableType: any, excludeList: string[] = [], onEdit: (e: any, originalRow: any) => void, onDelete: (e: any, originalRow: any) => void ){
   const columns: ColumnDef<typeof data.items>[] = [
     {
       id: 'select',
@@ -112,7 +112,7 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => {
-        const role = row.original;
+        const originalRow = row.original;
         const [values, setValues] = useState<z.infer<typeof autoFormArgs.formSchema>>();
         const [open, setOpen] = useState(false);
 
@@ -128,19 +128,7 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
                   <AutoForm
                     {...autoFormArgs}
                     onSubmit={(e) => {
-                      fetch(getBaseLink("/api/admin"), {
-                        method: 'PUT',
-                        body: JSON.stringify({
-                          id: role.id,
-                          requestBody: JSON.stringify(e)
-                        })
-                      }).then(response => response.json()) // Parse the response as JSON
-                        .then(data => {
-                          callback();
-                        }) // Do something with the response data
-                        .catch((error) => {
-                          console.error('Error:', error); // Handle any errors
-                        });
+                      onEdit(e, originalRow)
                     }}
                     values={values}
                   >
@@ -164,7 +152,7 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
                   // @ts-ignore
-                  onClick={() => navigator.clipboard.writeText(role.id)}
+                  onClick={() => navigator.clipboard.writeText(originalRow.id)}
                 >
                   Copy ID
                 </DropdownMenuItem>
@@ -172,22 +160,14 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
                 <DropdownMenuItem
                   onClick={(e) => {
                     console.log(e)
-                    fetch(getBaseLink("/api/admin"), {
-                      method: 'DELETE',
-                      body: JSON.stringify(role.id)
-                    }).then(response => response.json()) // Parse the response as JSON
-                      .then(data => {
-                        console.log(data)
-                        callback();
-                      }) // Do something with the response data
-                      .catch((error) => {
-                        console.error('Error:', error); // Handle any errors
-                      });
-                  }}
+                    onDelete(e, originalRow);
+                  }
+                }
                 >Delete role</DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => {
-                  console.log(role)
-                  setValues(role);
+                  console.log(e)
+                  console.log(originalRow)
+                  setValues(originalRow);
                   // get data
                   setOpen(true);
                 }}>

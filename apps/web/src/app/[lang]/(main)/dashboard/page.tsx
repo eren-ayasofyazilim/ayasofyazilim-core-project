@@ -80,13 +80,41 @@ export default function Page(): JSX.Element {
     });
 
     const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
+    const onEdit = (data: any, row: any) => {
+        fetch(getBaseLink("/api/admin"), {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: row.id,
+                requestBody: JSON.stringify(data)
+            })
+        }).then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                getRoles();
+            }) // Do something with the response data
+            .catch((error) => {
+                console.error('Error:', error); // Handle any errors
+            });
+    }
+    const onDelete = (e: any, row: any) => {
+        fetch(getBaseLink("/api/admin"), {
+            method: 'DELETE',
+            body: JSON.stringify(row.id)
+        }).then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                console.log(data)
+                getRoles();
+            }) // Do something with the response data
+            .catch((error) => {
+                console.error('Error:', error); // Handle any errors
+            });
+    }
 
     return (
         <Dashboard
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columns={columnsGenerator(getRoles, autoFormArgs, tableType, excludeList)}
+            columns={columnsGenerator(getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete)}
             action={action}
         />
     );
