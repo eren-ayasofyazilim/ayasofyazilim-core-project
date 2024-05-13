@@ -1,5 +1,5 @@
 'use client';
-
+import { $Volo_Abp_Identity_IdentityRoleDto as tableType } from "@ayasofyazilim/saas/IdentityService"
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -31,8 +31,17 @@ const formSchema = z.object({
   }).optional().nullable()
 })
 
-function readOnlyCheckbox(row: any,value: string){
+function readOnlyCheckbox(row: any, value: string) {
   return <Checkbox checked={row.getValue(value)} disabled={true} />
+}
+function normalizeName(name: string) {
+  // remove is from the begining of the string if it exists
+  if (name.startsWith('is')) {
+    name = name.slice(2);
+  }
+  // make first letter uppercase
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  return name;
 }
 
 const generatedTableColumns = []
@@ -44,14 +53,30 @@ console.log(formSchemaKeys, formSchemaValues, formSchema.shape)
 for (let i = 0; i < formSchemaKeys.length; i++) {
   const key = formSchemaKeys[i];
   const value = formSchemaValues[i];
-  console.log(key, value)
-  generatedTableColumns.push({
-    accessorKey: key,
-    header: key,
-    cell: ({ row }) => {
-      return <div>{row.getValue(key)}</div>
-    }
-  })
+  let accessorKey = key;
+  let header = normalizeName(key);
+
+  if (formSchema.shape[key]._def.typeName === "ZodOptional") {
+    console.log(key, value)
+    generatedTableColumns.push({
+      accessorKey,
+      header,
+      cell: ({ row }) => {
+        return readOnlyCheckbox(row, key);
+      }
+    })
+  }
+
+  if (formSchema.shape[key]._def.typeName === "ZodString") {
+    console.log(key, value)
+    generatedTableColumns.push({
+      accessorKey,
+      header,
+    })
+  }
+  
+
+
 }
 console.log(generatedTableColumns)
 
@@ -98,26 +123,10 @@ export function columnsGenerator(callback: any) {
       cell: ({ row }) => <div className="lowercase">{row.getValue('name')}</div>,
       enableSorting: true,
     },
-    {
-      accessorKey: 'isDefault',
-      header: 'Default',
-      cell: ({ row }) => (
-        readOnlyCheckbox(row,'isDefault')
-      ),
-    },
-    {
-      accessorKey: 'isPublic',
-      header: 'Public',
-      cell: ({ row }) => (
-        readOnlyCheckbox(row,'isPublic')
-      ),
-    },
+    ...generatedTableColumns,
     {
       accessorKey: 'userCount',
       header: 'User Count',
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('userCount')}</div>
-      ),
     },
     {
       id: 'actions',
