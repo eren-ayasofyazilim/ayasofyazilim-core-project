@@ -26,3 +26,14 @@ export async function DELETE(request: Request) {
 
   return new Response(JSON.stringify(retVal));
 }
+
+export async function PUT(request: Request) {
+  const client = await getIdentityServiceClient();
+  const requestBody = await request.json();
+  const roles = await client.role.putApiIdentityRolesById({
+    id: requestBody.id,
+    requestBody: JSON.parse(requestBody.requestBody)
+  });
+
+  return new Response(JSON.stringify(roles));
+}

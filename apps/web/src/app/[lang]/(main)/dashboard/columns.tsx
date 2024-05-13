@@ -76,7 +76,7 @@ export const columns: ColumnDef<typeof data.items>[] = [
     accessorKey: 'isDefault',
     header: 'Default',
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('isDefault') + ""}</div>
+      <Checkbox checked={row.getValue('isDefault')} disabled={true}/>
     ),
   },
   {
@@ -105,8 +105,19 @@ export const columns: ColumnDef<typeof data.items>[] = [
               <div className="grid gap-4 py-4">
                 <AutoForm
                   {...autoFormArgs}
-                  onParsedValuesChange={(e) => {
-                    setValues(e);
+                  onSubmit={(e) => {
+                    fetch(getBaseLink("/api/admin"), {
+                      method: 'PUT',
+                      body: JSON.stringify({
+                        id: role.id,
+                        requestBody: JSON.stringify(e)
+                      })
+                  }).then(response => response.json()) // Parse the response as JSON
+                  .then(data =>{
+                  }) // Do something with the response data
+                  .catch((error) => {
+                    console.error('Error:', error); // Handle any errors
+                  });
                   }}
                   values={values}
                 >
@@ -151,6 +162,9 @@ export const columns: ColumnDef<typeof data.items>[] = [
                 }}
               >Delete role</DropdownMenuItem>
               <DropdownMenuItem onClick={(e) => {
+                console.log(role)
+                setValues(role);
+                // get data
                 setOpen(true);
               }}>
                 Edit
