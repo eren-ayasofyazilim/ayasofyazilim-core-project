@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "src/providers/user";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import { Toaster, toast } from "@/components/ui/sonner";
+import { getBaseLink } from "src/utils";
 
 export default function Page() {
   const { user: userData } = useUser();
@@ -37,7 +38,8 @@ export default function Page() {
       return;
     }
     setIsLoading(true);
-    fetch("/api/settings/profile", {
+
+    fetch(getBaseLink("api/settings/profile", false), {
       method: "PUT",
       body: JSON.stringify(userDataForm),
     }).then((i) => {
