@@ -3,7 +3,7 @@ import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
 import { data } from './data';
 import { columns } from './columns';
 import { useEffect, useState } from 'react';
-import { getBaseLink, getBaseLinkWithoutLocale } from 'src/utils';
+import { getBaseLink } from 'src/utils';
 import { z } from 'zod';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 import { Volo_Abp_Identity_IdentityRoleCreateDto } from "@ayasofyazilim/saas/IdentityService"
@@ -19,7 +19,7 @@ export default function Page(): JSX.Element {
     }
 
     const formSchema = z.object({
-        name: z.string().max(256).min(0).optional(), // Assuming `name` is optional as it's not in the required list
+        name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
         isDefault: z.boolean().optional(),
         isPublic: z.boolean().optional(),
         extraProperties: z.object({
@@ -40,7 +40,7 @@ export default function Page(): JSX.Element {
         description: "Create a new role for users",
         autoFormArgs,
         callback: (e) => {
-            fetch(getBaseLinkWithoutLocale("/api/admin"), {
+            fetch(getBaseLink("/api/admin"), {
                 method: 'POST',
                 body: JSON.stringify(e)
             }).then(response => response.json()) // Parse the response as JSON

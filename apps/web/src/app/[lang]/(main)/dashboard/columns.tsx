@@ -14,6 +14,27 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { data } from './data';
+import { getBaseLink } from 'src/utils';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import AutoForm, { AutoFormSubmit } from '@repo/ayasofyazilim-ui/organisms/auto-form';
+import { useState } from 'react';
+import { set, z } from 'zod';
+const formSchema = z.object({
+  name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
+  isDefault: z.boolean().optional(),
+  isPublic: z.boolean().optional(),
+  extraProperties: z.object({
+    // Assuming any additional properties are of type `unknown`
+    additionalProperties: z.unknown().optional(),
+    nullable: z.boolean().optional(),
+    readOnly: z.boolean().optional()
+  }).optional().nullable()
+})
+
+
+const autoFormArgs = {
+  formSchema,
+};
 
 export const columns: ColumnDef<typeof data.items>[] = [
   {
@@ -70,28 +91,76 @@ export const columns: ColumnDef<typeof data.items>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const role = row.original;
+      const [values, setValues] = useState<z.infer<typeof autoFormArgs.formSchema>>();
+      const [open, setOpen] = useState(false);
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-             // @ts-ignore
-              onClick={() => navigator.clipboard.writeText(role.id)}
-            >
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View role</DropdownMenuItem>
-            <DropdownMenuItem>View role details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{"test"}</DialogTitle>
+                <DialogDescription>{"test"}</DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <AutoForm
+                  {...autoFormArgs}
+                  onParsedValuesChange={(e) => {
+                    setValues(e);
+                  }}
+                  values={values}
+                >
+                  {autoFormArgs?.children}
+                  <AutoFormSubmit className='float-right'>Send now</AutoFormSubmit>
+                </AutoForm>
+              </div>
+              <DialogFooter>
+               
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                // @ts-ignore
+                onClick={() => navigator.clipboard.writeText(role.id)}
+              >
+                Copy ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={(e) => {
+                  console.log(e)
+                  fetch(getBaseLink("/api/admin"), {
+                    method: 'DELETE',
+                    body: JSON.stringify(role.id)
+                  }).then(response => response.json()) // Parse the response as JSON
+                    .then(data => {
+                      console.log(data)
+                    }) // Do something with the response data
+                    .catch((error) => {
+                      console.error('Error:', error); // Handle any errors
+                    });
+                }}
+              >Delete role</DropdownMenuItem>
+              <DropdownMenuItem onClick={(e) => {
+                setOpen(true);
+              }}>
+                Edit
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+
+        </>
+
       );
     },
   },
