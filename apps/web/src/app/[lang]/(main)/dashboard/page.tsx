@@ -1,16 +1,16 @@
 "use client";
 import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
+import { $Volo_Abp_Identity_IdentityRoleDto as tableType } from "@ayasofyazilim/saas/IdentityService"
 import { data } from './data';
 import { columnsGenerator } from './columns';
 import { useEffect, useState } from 'react';
 import { getBaseLink } from 'src/utils';
 import { z } from 'zod';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
-import { Volo_Abp_Identity_IdentityRoleCreateDto } from "@ayasofyazilim/saas/IdentityService"
 
 export default function Page(): JSX.Element {
     const [roles, setRoles] = useState<any>();
-    function getRoles(){
+    function getRoles() {
         fetch(getBaseLink("/api/admin"))
             .then((res) => res.json())
             .then((data) => {
@@ -29,7 +29,7 @@ export default function Page(): JSX.Element {
             readOnly: z.boolean().optional()
         }).optional().nullable()
     })
-    
+
 
     const autoFormArgs = {
         formSchema,
@@ -44,14 +44,29 @@ export default function Page(): JSX.Element {
                 method: 'POST',
                 body: JSON.stringify(e)
             }).then(response => response.json()) // Parse the response as JSON
-            .then(data =>{
-                getRoles();
-            }) // Do something with the response data
-            .catch((error) => {
-              console.error('Error:', error); // Handle any errors
-            });
-        } 
+                .then(data => {
+                    getRoles();
+                }) // Do something with the response data
+                .catch((error) => {
+                    console.error('Error:', error); // Handle any errors
+                });
+        }
     };
+    const tableHeaders = [
+        {
+            name: "name",
+            isSortable: true,
+        },
+        {
+            name: "isDefault",
+        },
+        {
+            name: "isPublic",
+        },
+        {
+            name: "userCount"
+        }
+    ]
     useEffect(() => {
         getRoles();
     }, [])
@@ -63,12 +78,15 @@ export default function Page(): JSX.Element {
             footer: item.isPublic ? "Public" : "Not Public",
         };
     });
+
+    const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
+
     return (
         <Dashboard
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columns={columnsGenerator(getRoles, autoFormArgs)}
+            columns={columnsGenerator(getRoles, autoFormArgs, tableType, excludeList)}
             action={action}
         />
     );

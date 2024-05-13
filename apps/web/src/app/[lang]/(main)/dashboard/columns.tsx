@@ -1,5 +1,4 @@
 'use client';
-import { $Volo_Abp_Identity_IdentityRoleDto as tableType } from "@ayasofyazilim/saas/IdentityService"
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -18,29 +17,18 @@ import { getBaseLink } from 'src/utils';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import AutoForm, { AutoFormSubmit } from '@repo/ayasofyazilim-ui/organisms/auto-form';
 import { useState } from 'react';
-import { set, z } from 'zod';
-const formSchema = z.object({
-  name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
-  isDefault: z.boolean().optional(),
-  isPublic: z.boolean().optional(),
-  extraProperties: z.object({
-    // Assuming any additional properties are of type `unknown`
-    additionalProperties: z.unknown().optional(),
-    nullable: z.boolean().optional(),
-    readOnly: z.boolean().optional()
-  }).optional().nullable()
-})
+
 function createSortableHeader(column: any, name: string) {
   return (
-        <Button
-          className='p-0'
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          {name}
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
+    <Button
+      className='p-0'
+      variant="ghost"
+      onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+    >
+      {name}
+      <CaretSortIcon className="ml-2 h-4 w-4" />
+    </Button>
+  )
 }
 function readOnlyCheckbox(row: any, value: string) {
   return <Checkbox checked={row.getValue(value)} disabled={true} />
@@ -57,81 +45,45 @@ function normalizeName(name: string) {
   return name;
 }
 
-const generatedTableColumns = []
-// loop over formSchema 
-window.formSchema = formSchema;
-const formSchemaKeys = Object.keys(formSchema.shape);
-const formSchemaValues = Object.values(formSchema.shape);
-console.log(formSchemaKeys, formSchemaValues, formSchema.shape)
-// for (let i = 0; i < formSchemaKeys.length; i++) {
-//   const key = formSchemaKeys[i];
-//   const value = formSchemaValues[i];
-//   let accessorKey = key;
-//   let header = normalizeName(key);
+function generateColumns(tableType: any, excludeList: string[] = []) {
+  const generatedTableColumns: any = [];
+  Object.keys(tableType.properties).forEach((key) => {
+    let accessorKey = key;
+    let header = normalizeName(key);
+    let value = tableType.properties[key];
+    if (excludeList.includes(key)) {
+      return;
+    }
+    if (value.type === 'boolean') {
+      generatedTableColumns.push({
+        accessorKey,
+        header,
+        cell: ({ row }) => {
+          return readOnlyCheckbox(row, key);
+        }
+      })
+    }
+    if (value.type === 'string') {
+      generatedTableColumns.push({
+        accessorKey,
+        header: ({ column }: { column: any }) => (
+          createSortableHeader(column, header)
+        ),
+      })
+    }
+    if (value.type === 'integer') {
+      generatedTableColumns.push({
+        accessorKey,
+        header,
+      })
+    }
+  });
 
-//   if (formSchema.shape[key]._def.typeName === "ZodOptional") {
-//     console.log(key, value)
-//     generatedTableColumns.push({
-//       accessorKey,
-//       header,
-//       cell: ({ row }) => {
-//         return readOnlyCheckbox(row, key);
-//       }
-//     })
-//   }
-
-//   if (formSchema.shape[key]._def.typeName === "ZodString") {
-//     console.log(key, value)
-//     generatedTableColumns.push({
-//       accessorKey,
-//       header: ({ column }: { column: any }) => (
-//         createSortableHeader(column, header)
-//       ),
-//     })
-//   }
-  
-
-
-// }
-// console.log(generatedTableColumns)
-
-// create exclude list 
-const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
-
-Object.keys(tableType.properties).forEach((key) => {
-  let accessorKey = key;
-  let header = normalizeName(key);
-  let value = tableType.properties[key];
-  if (excludeList.includes(key)) {
-    return;
-  }
-  if (value.type === 'boolean') {
-    generatedTableColumns.push({
-      accessorKey,
-      header,
-      cell: ({ row }) => {
-        return readOnlyCheckbox(row, key);
-      }
-    })
-  }
-  if (value.type === 'string') {
-    generatedTableColumns.push({
-      accessorKey,
-      header: ({ column }: { column: any }) => (
-        createSortableHeader(column, header)
-      ),
-    })
-  }
-  if (value.type === 'integer') {
-    generatedTableColumns.push({
-      accessorKey,
-      header,
-    })
-  }
-});
+  return generatedTableColumns;
+}
 
 
-export function columnsGenerator(callback: any, autoFormArgs: any) {
+export function columnsGenerator(callback: any, autoFormArgs: any, tableType: any, excludeList: string[] = []) {
   const columns: ColumnDef<typeof data.items>[] = [
     {
       id: 'select',
@@ -155,7 +107,7 @@ export function columnsGenerator(callback: any, autoFormArgs: any) {
       enableSorting: false,
       enableHiding: false,
     },
-    ...generatedTableColumns,
+    ...generateColumns(tableType, excludeList),
     {
       id: 'actions',
       enableHiding: false,
