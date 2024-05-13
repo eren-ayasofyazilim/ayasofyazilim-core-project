@@ -2,6 +2,8 @@ import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { auth } from "auth";
+import { NextAuthRequest } from "node_modules/next-auth/lib";
 
 export const i18n = {
   defaultLocale: "en",
@@ -22,22 +24,8 @@ export const i18n = {
     "zh-hant",
   ],
 };
-const publicURLs = [
-  "/",
-  "login",
-  "register",
-  "forgot-password",
-  "reset-password",
-  "404",
-  "500",
-  "api",
-];
-const unauthorizedPages = [
-  "login",
-  "register",
-  "forgot-password",
-  "reset-password",
-];
+const publicURLs = ["/", "404", "500", "api"];
+const authPages = ["login", "register", "forgot-password", "reset-password"];
 function getLocaleFromBrowser(request: NextRequest) {
   const negotiatorHeaders: { [key: string]: string } = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
@@ -77,36 +65,32 @@ function getLocale(request: NextRequest) {
   );
 }
 
-export async function middleware(request: NextRequest) {
-  async function isUserAuthorized(request: NextRequest) {
-    // @ts-ignore -> salt is missing error
-    const isAuth = await getToken({
-      req: request,
-      secret: process.env.AUTH_SECRET ?? "",
-    });
-    if (!isAuth) return false;
-
-    return isAuth?.expires_at > Date.now() / 1000;
+export const middleware = auth(async (request: NextAuthRequest) => {
+  function isUserAuthorized(request: NextAuthRequest) {
+    return !!request.auth;
   }
   function isPathHasLocale(path: string) {
     return i18n.locales.includes(path.split("/")[1]);
   }
   function redirectToLogin(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+    return NextResponse.redirect(
+      new URL(`/${locale}/login`, process.env.PROJECT_BASE_URL)
+    );
   }
   function redirectToProfile(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/profile`, request.url));
+    return NextResponse.redirect(
+      new URL(`/${locale}/profile`, process.env.PROJECT_BASE_URL)
+    );
   }
-  console.log("middleware", request.nextUrl.pathname);
 
-  const isAuthorized = await isUserAuthorized(request);
+  const isAuthorized = isUserAuthorized(request);
   const locale = getLocale(request);
   const pathName = request.nextUrl.pathname.split("/")[2] || "/";
 
   // If the user is authorized
   if (isAuthorized) {
     // If the user is authorized and the path is unauthorized specific, redirect to profile
-    if (unauthorizedPages.includes(pathName)) {
+    if (authPages.includes(pathName)) {
       return redirectToProfile(locale);
     }
 
@@ -114,24 +98,30 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, request.url)
+      new URL(
+        `/${locale}${request.nextUrl.pathname}`,
+        process.env.PROJECT_BASE_URL
+      )
     );
   }
 
   // If the user is not authorized and the path is public, continue
-  if (publicURLs.includes(pathName)) {
+  if (publicURLs.includes(pathName) || authPages.includes(pathName)) {
     if (isPathHasLocale(request.nextUrl.pathname)) {
       return NextResponse.next();
     }
 
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, request.url)
+      new URL(
+        `/${locale}${request.nextUrl.pathname}`,
+        process.env.PROJECT_BASE_URL
+      )
     );
   }
 
   // If the user is not authorized and the path is authorized specific, redirect to login
   return redirectToLogin(locale);
-}
+});
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
