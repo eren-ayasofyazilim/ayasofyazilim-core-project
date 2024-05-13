@@ -61,14 +61,49 @@ window.formSchema = formSchema;
 const formSchemaKeys = Object.keys(formSchema.shape);
 const formSchemaValues = Object.values(formSchema.shape);
 console.log(formSchemaKeys, formSchemaValues, formSchema.shape)
-for (let i = 0; i < formSchemaKeys.length; i++) {
-  const key = formSchemaKeys[i];
-  const value = formSchemaValues[i];
+// for (let i = 0; i < formSchemaKeys.length; i++) {
+//   const key = formSchemaKeys[i];
+//   const value = formSchemaValues[i];
+//   let accessorKey = key;
+//   let header = normalizeName(key);
+
+//   if (formSchema.shape[key]._def.typeName === "ZodOptional") {
+//     console.log(key, value)
+//     generatedTableColumns.push({
+//       accessorKey,
+//       header,
+//       cell: ({ row }) => {
+//         return readOnlyCheckbox(row, key);
+//       }
+//     })
+//   }
+
+//   if (formSchema.shape[key]._def.typeName === "ZodString") {
+//     console.log(key, value)
+//     generatedTableColumns.push({
+//       accessorKey,
+//       header: ({ column }: { column: any }) => (
+//         createSortableHeader(column, header)
+//       ),
+//     })
+//   }
+  
+
+
+// }
+// console.log(generatedTableColumns)
+
+// create exclude list 
+const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
+
+Object.keys(tableType.properties).forEach((key) => {
   let accessorKey = key;
   let header = normalizeName(key);
-
-  if (formSchema.shape[key]._def.typeName === "ZodOptional") {
-    console.log(key, value)
+  let value = tableType.properties[key];
+  if (excludeList.includes(key)) {
+    return;
+  }
+  if (value.type === 'boolean') {
     generatedTableColumns.push({
       accessorKey,
       header,
@@ -77,9 +112,7 @@ for (let i = 0; i < formSchemaKeys.length; i++) {
       }
     })
   }
-
-  if (formSchema.shape[key]._def.typeName === "ZodString") {
-    console.log(key, value)
+  if (value.type === 'string') {
     generatedTableColumns.push({
       accessorKey,
       header: ({ column }: { column: any }) => (
@@ -87,11 +120,7 @@ for (let i = 0; i < formSchemaKeys.length; i++) {
       ),
     })
   }
-  
-
-
-}
-console.log(generatedTableColumns)
+});
 
 const autoFormArgs = {
   formSchema,
