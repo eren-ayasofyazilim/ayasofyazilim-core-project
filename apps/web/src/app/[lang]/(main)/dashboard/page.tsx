@@ -1,7 +1,7 @@
 "use client";
 import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
 import { data } from './data';
-import { columns } from './columns';
+import { columnsGenerator } from './columns';
 import { useEffect, useState } from 'react';
 import { getBaseLink } from 'src/utils';
 import { z } from 'zod';
@@ -68,7 +68,7 @@ export default function Page(): JSX.Element {
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columns={columns}
+            columns={columnsGenerator(getRoles)}
             action={action}
         />
     );
