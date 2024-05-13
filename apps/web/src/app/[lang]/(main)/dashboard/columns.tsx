@@ -30,7 +30,18 @@ const formSchema = z.object({
     readOnly: z.boolean().optional()
   }).optional().nullable()
 })
-
+function createSortableHeader(column: any, name: string) {
+  return (
+        <Button
+          className='p-0'
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          {name}
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+}
 function readOnlyCheckbox(row: any, value: string) {
   return <Checkbox checked={row.getValue(value)} disabled={true} />
 }
@@ -71,7 +82,9 @@ for (let i = 0; i < formSchemaKeys.length; i++) {
     console.log(key, value)
     generatedTableColumns.push({
       accessorKey,
-      header,
+      header: ({ column }: { column: any }) => (
+        createSortableHeader(column, header)
+      ),
     })
   }
   
@@ -107,21 +120,6 @@ export function columnsGenerator(callback: any) {
       ),
       enableSorting: false,
       enableHiding: false,
-    },
-    {
-      accessorKey: 'name',
-      header: ({ column }) => (
-        <Button
-          className='p-0'
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-      cell: ({ row }) => <div className="lowercase">{row.getValue('name')}</div>,
-      enableSorting: true,
     },
     ...generatedTableColumns,
     {
