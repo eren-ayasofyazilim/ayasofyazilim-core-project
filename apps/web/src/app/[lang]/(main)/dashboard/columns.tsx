@@ -50,6 +50,8 @@ function normalizeName(name: string) {
   if (name.startsWith('is')) {
     name = name.slice(2);
   }
+  // seperate camelCase
+  name = name.replace(/([A-Z])/g, ' $1');
   // make first letter uppercase
   name = name.charAt(0).toUpperCase() + name.slice(1);
   return name;
@@ -120,13 +122,16 @@ Object.keys(tableType.properties).forEach((key) => {
       ),
     })
   }
+  if (value.type === 'integer') {
+    generatedTableColumns.push({
+      accessorKey,
+      header,
+    })
+  }
 });
 
-const autoFormArgs = {
-  formSchema,
-};
 
-export function columnsGenerator(callback: any) {
+export function columnsGenerator(callback: any, autoFormArgs: any) {
   const columns: ColumnDef<typeof data.items>[] = [
     {
       id: 'select',
@@ -152,10 +157,6 @@ export function columnsGenerator(callback: any) {
     },
     ...generatedTableColumns,
     {
-      accessorKey: 'userCount',
-      header: 'User Count',
-    },
-    {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => {
@@ -168,8 +169,8 @@ export function columnsGenerator(callback: any) {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>{"test"}</DialogTitle>
-                  <DialogDescription>{"test"}</DialogDescription>
+                  <DialogTitle>{"Edit the role"}</DialogTitle>
+                  <DialogDescription>{"Edit the role"}</DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <AutoForm

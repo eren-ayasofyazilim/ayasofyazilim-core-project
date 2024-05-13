@@ -68,7 +68,7 @@ export default function Page(): JSX.Element {
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columns={columnsGenerator(getRoles)}
+            columns={columnsGenerator(getRoles, autoFormArgs)}
             action={action}
         />
     );
