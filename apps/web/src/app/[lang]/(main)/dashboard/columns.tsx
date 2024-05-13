@@ -31,6 +31,29 @@ const formSchema = z.object({
   }).optional().nullable()
 })
 
+function readOnlyCheckbox(row: any,value: string){
+  return <Checkbox checked={row.getValue(value)} disabled={true} />
+}
+
+const generatedTableColumns = []
+// loop over formSchema 
+window.formSchema = formSchema;
+const formSchemaKeys = Object.keys(formSchema.shape);
+const formSchemaValues = Object.values(formSchema.shape);
+console.log(formSchemaKeys, formSchemaValues, formSchema.shape)
+for (let i = 0; i < formSchemaKeys.length; i++) {
+  const key = formSchemaKeys[i];
+  const value = formSchemaValues[i];
+  console.log(key, value)
+  generatedTableColumns.push({
+    accessorKey: key,
+    header: key,
+    cell: ({ row }) => {
+      return <div>{row.getValue(key)}</div>
+    }
+  })
+}
+console.log(generatedTableColumns)
 
 const autoFormArgs = {
   formSchema,
@@ -79,14 +102,14 @@ export function columnsGenerator(callback: any) {
       accessorKey: 'isDefault',
       header: 'Default',
       cell: ({ row }) => (
-        <Checkbox checked={row.getValue('isDefault')} disabled={true} />
+        readOnlyCheckbox(row,'isDefault')
       ),
     },
     {
       accessorKey: 'isPublic',
       header: 'Public',
       cell: ({ row }) => (
-        <Checkbox checked={row.getValue('isPublic')} disabled={true} />
+        readOnlyCheckbox(row,'isPublic')
       ),
     },
     {
