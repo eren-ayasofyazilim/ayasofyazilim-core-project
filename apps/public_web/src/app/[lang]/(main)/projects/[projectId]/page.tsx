@@ -18,26 +18,29 @@ import ContentList from "components/content";
 export default async function Page({ params }: any) {
   const { projectId } = params;
   const client =
-    (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
+    await getProjectServiceClient().project.getApiProjectServiceProjectsById({
+      id: projectId,
+    });
 
-  // burada array gelmeyecek şekilde api güncellenecek
-  const projectData = client?.items?.find((i) => i.id === projectId);
-
+  const projectData = client;
   if (!projectData) {
     return null;
   }
-
-  const sectionsData = projectData.projectSectionRelations?.map((section) => ({
-    key: section.name ?? "",
-    id: section.name ?? "",
-    name: section.name ?? "",
-    value: (
-      <TipTapEditor
-        editorContent={JSON.parse(section.value ?? "{}")}
-        editable={false}
-      />
-    ),
-  }));
+  //demo sonrası: saas güncellenecek
+  // @ts-ignore
+  const sectionsData = projectData.projectSectionRelationDetails?.map(
+    (section: any) => ({
+      key: section.name ?? "",
+      id: section.sectionId ?? "",
+      name: section.name ?? "",
+      value: (
+        <TipTapEditor
+          editorContent={JSON.parse(section.value ?? "{}")}
+          canEditable={false}
+        />
+      ),
+    })
+  );
 
   return (
     <ScrollArea>
