@@ -1,9 +1,36 @@
 "use server";
 
-import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
 import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { getProjectServiceClient } from "src/lib";
+
+export async function saveProjectSectionRelation(
+  id: string,
+  value: string
+): Promise<string> {
+  return new Promise(async (resolve) => {
+    try {
+      const client = getProjectServiceClient();
+      const data =
+        await client.projectSectionRelation.getApiProjectSectionRelationServiceProjectSectionRelationById(
+          {
+            id: id,
+          }
+        );
+      data.value = value;
+
+      await client.projectSectionRelation.putApiProjectSectionRelationServiceProjectSectionRelationById(
+        {
+          id: id,
+          requestBody: data,
+        }
+      );
+      resolve("OK");
+    } catch (error: any) {
+      resolve(error?.body?.error?.message);
+    }
+  });
+}
 
 export default async function Page({ params }: any) {
   const { projectId } = params;
@@ -16,8 +43,7 @@ export default async function Page({ params }: any) {
   if (!projectData) {
     return null;
   }
-  //demo sonrası: saas güncellenecek
-  // @ts-ignore
+  // @ts-ignore ->demo sonrası: saas güncellenecek
   const sectionsData = projectData.projectSectionRelationDetails?.map(
     (section: any) => ({
       key: section.name ?? "",
@@ -27,6 +53,8 @@ export default async function Page({ params }: any) {
         <TipTapEditor
           editorContent={JSON.parse(section.value ?? "{}")}
           canEditable={true}
+          onSaveFunction={saveProjectSectionRelation}
+          editorId={section.id ?? ""}
         />
       ),
     })
