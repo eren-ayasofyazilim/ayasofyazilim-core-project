@@ -2,7 +2,7 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-function getLocale(locale?: string){
+function getLocale(locale?: string) {
   if (isServerSide()) {
     const cookieStore = require("next/headers").cookies();
     locale = cookieStore.get("locale")?.value ?? "en";
@@ -14,8 +14,14 @@ function getLocale(locale?: string){
   return locale;
 }
 
-export function getBaseLink(location: string,withLocale?:boolean, locale?: string) {
-  const origin = isServerSide() ? process.env.PROJECT_BASE_URL : window.location.origin;
+export function getBaseLink(
+  location: string,
+  withLocale?: boolean,
+  locale?: string
+) {
+  const origin = isServerSide()
+    ? process.env.PROJECT_BASE_URL
+    : window.location.origin;
   const localePath = withLocale ? getLocale(locale) + "/" : "";
-  return `${origin}/${localePath}/${location}`;
+  return `${origin}/${localePath}${location}`;
 }
