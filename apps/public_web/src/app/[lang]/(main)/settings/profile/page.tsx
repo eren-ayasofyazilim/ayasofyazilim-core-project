@@ -8,6 +8,7 @@ import { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService"
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "src/providers/user";
+import { getBaseLink } from "src/utils";
 
 export default function Page() {
   const { user: userData } = useUser();
@@ -26,7 +27,7 @@ export default function Page() {
       // no changes
       return;
     }
-    fetch("/api/settings/profile", {
+    fetch(getBaseLink("api/settings/profile", false), {
       method: "PUT",
       body: JSON.stringify({
         userName: "eren1",

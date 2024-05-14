@@ -1,6 +1,9 @@
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import { auth } from "auth";
+import { NextAuthRequest } from "node_modules/next-auth/lib";
 
 export const i18n = {
   defaultLocale: "en",
@@ -21,7 +24,8 @@ export const i18n = {
     "zh-hant",
   ],
 };
-
+const publicURLs = ["/", "404", "500", "api"];
+const authPages = ["login", "register", "forgot-password", "reset-password"];
 function getLocaleFromBrowser(request: NextRequest) {
   const negotiatorHeaders: { [key: string]: string } = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
@@ -36,29 +40,6 @@ function getLocaleFromCookies(request: NextRequest) {
   if (cookieLocale && i18n.locales.includes(cookieLocale)) {
     return cookieLocale;
   }
-}
-
-function isAutherized(request: NextRequest) {
-  const isLogged = request.cookies.get(".AspNetCore.Identity.Application")
-    ? true
-    : false;
-  const publicURLs = [
-    "/",
-    "login",
-    "register",
-    "projects",
-    "forgot-password",
-    "reset-password",
-    "404",
-    "500",
-    "api",
-  ];
-  const pathName = request.nextUrl.pathname.split("/")[2] || "/";
-  if (publicURLs.includes(pathName) || isLogged) {
-    return true;
-  }
-
-  return false;
 }
 
 function localeFromPathname(request: NextRequest) {
@@ -84,31 +65,63 @@ function getLocale(request: NextRequest) {
   );
 }
 
-// const authMiddleware = auth((req) => {
-//   // private routes here
-//   const session = req.auth
-//   console.log("session ", session)
-//   return new Response("Unauthorized", { status: 401 });
-// })
-
-export function middleware(request: NextRequest) {
-  // let auth =  (authMiddleware as any)(request)
-  const pathname = request.nextUrl.pathname + "/";
-  const locale = getLocale(request);
-  // check .AspNetCore.Identity.Application cookie from the request
-  if (!isAutherized(request)) {
-    return NextResponse.redirect(new URL("/login", request.url));
+export const middleware = auth(async (request: NextAuthRequest) => {
+  function isUserAuthorized(request: NextAuthRequest) {
+    return !!request.auth;
+  }
+  function isPathHasLocale(path: string) {
+    return i18n.locales.includes(path.split("/")[1]);
+  }
+  function redirectToLogin(locale: string) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/login`, process.env.PROJECT_BASE_URL)
+    );
+  }
+  function redirectToProfile(locale: string) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/profile`, process.env.PROJECT_BASE_URL)
+    );
   }
 
-  if (!pathname.startsWith(`/${locale}/`)) {
+  const isAuthorized = isUserAuthorized(request);
+  const locale = getLocale(request);
+  const pathName = request.nextUrl.pathname.split("/")[2] || "/";
+
+  // If the user is authorized
+  if (isAuthorized) {
+    // If the user is authorized and the path is unauthorized specific, redirect to profile
+    if (authPages.includes(pathName)) {
+      return redirectToProfile(locale);
+    }
+
+    if (isPathHasLocale(request.nextUrl.pathname)) {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(
       new URL(
-        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}${request.nextUrl.search}`,
-        request.url
+        `/${locale}${request.nextUrl.pathname}`,
+        process.env.PROJECT_BASE_URL
       )
     );
   }
-}
+
+  // If the user is not authorized and the path is public, continue
+  if (publicURLs.includes(pathName) || authPages.includes(pathName)) {
+    if (isPathHasLocale(request.nextUrl.pathname)) {
+      return NextResponse.next();
+    }
+
+    return NextResponse.redirect(
+      new URL(
+        `/${locale}${request.nextUrl.pathname}`,
+        process.env.PROJECT_BASE_URL
+      )
+    );
+  }
+
+  // If the user is not authorized and the path is authorized specific, redirect to login
+  return redirectToLogin(locale);
+});
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],

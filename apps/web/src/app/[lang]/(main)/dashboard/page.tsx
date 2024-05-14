@@ -31,9 +31,9 @@ export default function Page(): JSX.Element {
     })
 
 
-    const autoFormArgs = {
-        formSchema,
-    };
+  const autoFormArgs = {
+    formSchema,
+  };
 
     const action: tableAction = {
         cta: "New Role",

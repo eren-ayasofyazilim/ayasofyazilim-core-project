@@ -7,11 +7,11 @@ import { getBaseLink } from "src/utils";
 
 const navbarItems = [
   {
-    id: getBaseLink("/profile"),
+    id: getBaseLink("profile", true),
     name: "General",
   },
   {
-    id: getBaseLink("profile/test"),
+    id: getBaseLink("profile/test", true),
     name: "Tiptap",
   },
 ];
@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <SectionLayout
       sections={navbarItems}
-      activeSectionId={path}
+      defaultActiveSectionId={path}
       openOnNewPage={true}
       content={children}
     />

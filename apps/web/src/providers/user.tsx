@@ -3,6 +3,7 @@
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
 import { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getBaseLink } from "src/utils";
 
 interface IUserContext {
   user: Volo_Abp_Account_ProfileDto | undefined;
@@ -22,7 +23,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   async function getUser() {
     try {
       setIsLoading(true);
-      const fetchedUser = await fetch("/api/profile/myprofile");
+      const fetchedUser = await fetch(
+        getBaseLink("api/profile/myprofile", false)
+      );
       const userData =
         (await fetchedUser.json()) as Volo_Abp_Account_ProfileDto;
       setUser(userData);

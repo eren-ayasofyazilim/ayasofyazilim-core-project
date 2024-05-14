@@ -9,15 +9,11 @@ export default function Page() {
   const session = useSession();
 
   useEffect(() => {
-    //console.log("Effect ", session);
     async function getSession() {
       if (session.status !== "authenticated") return;
-      //console.log("session from effect",session , " Token ", session.data?.accessToken)
       let fetchConfig = await fetch(getBaseLink("api/config"));
       let config = await fetchConfig.json();
-      //console.log ("Config ", config.message);
     }
-    //console.log(!!session.data)
     if (!!session.data) getSession();
   }, [session.data]);
 
