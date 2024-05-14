@@ -4,6 +4,7 @@ import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
+import CardList from "@repo/ayasofyazilim-ui/organisms/card-list";
 import DetailsCard, {
   IDetailsCardProps,
 } from "@repo/ayasofyazilim-ui/organisms/details-card";
@@ -110,13 +111,45 @@ export default async function Page() {
     (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
   if (!projectData) return null;
 
+  const data = [
+    {
+      title: "Aktif Projeler",
+      content: projectData?.totalCount?.toString() ?? "0",
+      description: "Aktif olarak yatırım toplayan projeler",
+      footer: "",
+    },
+    {
+      title: "Tamamlanmış Projeler",
+      content: "0",
+      description: "Başarılı olan projeler",
+      footer: "",
+    },
+    {
+      title: "Başarısız Projeler",
+      content: "0",
+      description: "Başarılı olmayan projeler",
+      footer: "",
+    },
+    {
+      title: "Taslak Projeler",
+      content: "0",
+      description: "Hazırlanmakta olan projeler",
+      footer: "",
+    },
+  ];
+
   return (
-    <div>
-      <div className="flex flex-row flex-wrap justify-center gap-5 mt-10">
+    <div className="w-full">
+      <div className="flex flex-col items-center justify-start mb-8">
+        <div className="flex-row p-4 w-10/12">
+          <CardList cards={data} />
+        </div>
+      </div>
+      <div className="container flex flex-row flex-wrap justify-center gap-5">
         {projectData?.items?.map((project) => (
           <DetailsCard
             key={project.id}
-            variant="compact"
+            variant="compact-vertical"
             cardProps={{
               IAboutCardProps: defaultProps1.IAboutCardProps,
               image: images?.[(project.id ?? "default") as keyof typeof images],
