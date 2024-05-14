@@ -109,12 +109,17 @@ export default function Page(): JSX.Element {
             });
     }
 
+    const columnsData = {
+        type:"Auto", 
+        data:{getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete}
+    }
+
     return (
         <Dashboard
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columns={columnsGenerator(getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete)}
+            columnsData= {columnsData}
             action={action}
         />
     );
