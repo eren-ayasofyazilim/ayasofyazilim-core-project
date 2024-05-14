@@ -66,6 +66,8 @@ function getLocale(request: NextRequest) {
 }
 
 export const middleware = auth(async (request: NextAuthRequest) => {
+  const hostURL = "http://" + request.headers.get("host") || "";
+  
   function isUserAuthorized(request: NextAuthRequest) {
     return !!request.auth;
   }
@@ -74,12 +76,12 @@ export const middleware = auth(async (request: NextAuthRequest) => {
   }
   function redirectToLogin(locale: string) {
     return NextResponse.redirect(
-      new URL(`/${locale}/login`, process.env.PROJECT_BASE_URL)
+      new URL(`/${locale}/login`, hostURL)
     );
   }
   function redirectToProfile(locale: string) {
     return NextResponse.redirect(
-      new URL(`/${locale}/profile`, process.env.PROJECT_BASE_URL)
+      new URL(`/${locale}/profile`, hostURL)
     );
   }
 
@@ -100,7 +102,7 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     return NextResponse.redirect(
       new URL(
         `/${locale}${request.nextUrl.pathname}`,
-        process.env.PROJECT_BASE_URL
+        hostURL
       )
     );
   }
@@ -114,7 +116,7 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     return NextResponse.redirect(
       new URL(
         `/${locale}${request.nextUrl.pathname}`,
-        process.env.PROJECT_BASE_URL
+        hostURL
       )
     );
   }
