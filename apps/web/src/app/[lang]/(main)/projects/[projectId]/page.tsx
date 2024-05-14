@@ -34,20 +34,27 @@ export async function saveProjectSectionRelation(
 
 export default async function Page({ params }: any) {
   const { projectId } = params;
-  const client =
-    await getProjectServiceClient().project.getApiProjectServiceProjectsById({
-      id: projectId,
-    });
 
-  const projectData = client;
+  async function getData() {
+    "use server";
+    const client =
+      await getProjectServiceClient().project.getApiProjectServiceProjectsById({
+        id: projectId,
+      });
+
+    return client;
+  }
+  const projectData = await getData();
+
   if (!projectData) {
     return null;
   }
+
   // @ts-ignore ->demo sonrası: saas güncellenecek
   const sectionsData = projectData.projectSectionRelationDetails?.map(
     (section: any) => ({
       key: section.name ?? "",
-      id: section.sectionId ?? "",
+      id: section.name ?? "",
       name: section.name ?? "",
       value: (
         <TipTapEditor
@@ -59,6 +66,7 @@ export default async function Page({ params }: any) {
       ),
     })
   );
+
   return (
     <div className="flex flex-col w-full">
       <SectionLayout
