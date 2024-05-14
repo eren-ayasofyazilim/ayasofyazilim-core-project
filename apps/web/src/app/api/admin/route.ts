@@ -14,3 +14,26 @@ export async function POST(request: Request) {
 
   return new Response(JSON.stringify(roles));
 }
+
+
+export async function DELETE(request: Request) {
+  let retVal =  "something went wrong";
+  const client = await getIdentityServiceClient();
+  const id = await request.json();
+  console.log("id from reqest ", id)
+  const deleteById = await client.role.deleteApiIdentityRolesById({ id })
+  if(deleteById === undefined) retVal = "successfull"
+
+  return new Response(JSON.stringify(retVal));
+}
+
+export async function PUT(request: Request) {
+  const client = await getIdentityServiceClient();
+  const requestBody = await request.json();
+  const roles = await client.role.putApiIdentityRolesById({
+    id: requestBody.id,
+    requestBody: JSON.parse(requestBody.requestBody)
+  });
+
+  return new Response(JSON.stringify(roles));
+}
