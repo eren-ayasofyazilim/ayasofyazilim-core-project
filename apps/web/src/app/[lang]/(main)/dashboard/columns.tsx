@@ -13,10 +13,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { data } from './data';
-import { getBaseLink } from 'src/utils';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import AutoForm, { AutoFormSubmit } from '@repo/ayasofyazilim-ui/organisms/auto-form';
 import { useState } from 'react';
+import AutoformDialog from '@repo/ayasofyazilim-ui/molecules/dialog';
 
 function createSortableHeader(column: any, name: string) {
   return (
@@ -83,8 +81,8 @@ function generateColumns(tableType: any, excludeList: string[] = []) {
 }
 
 
-export function columnsGenerator(callback: any, autoFormArgs: any, tableType: any, excludeList: string[] = [], onEdit: (e: any, originalRow: any) => void, onDelete: (e: any, originalRow: any) => void ){
-  const columns: ColumnDef<typeof data.items>[] = [
+export function columnsGenerator(callback: any, autoFormArgs: any, tableType: any, excludeList: string[] = [], onEdit: (e: any, originalRow: any) => void, onDelete: (e: any, originalRow: any) => void) {
+  const columns: ColumnDef<any, any>[] = [
     {
       id: 'select',
       header: ({ table }) => (
@@ -118,29 +116,13 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
 
         return (
           <>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>{"Edit the role"}</DialogTitle>
-                  <DialogDescription>{"Edit the role"}</DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <AutoForm
-                    {...autoFormArgs}
-                    onSubmit={(e) => {
-                      onEdit(e, originalRow)
-                    }}
-                    values={values}
-                  >
-                    {autoFormArgs?.children}
-                    <AutoFormSubmit className='float-right'>Send now</AutoFormSubmit>
-                  </AutoForm>
-                </div>
-                <DialogFooter>
-
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <AutoformDialog
+              open={open}
+              onOpenChange={setOpen}
+              action={{ autoFormArgs, callback:onEdit, cta: 'Edit the role', description: 'Edit the role' }
+              }
+              triggerData={originalRow}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -162,7 +144,7 @@ export function columnsGenerator(callback: any, autoFormArgs: any, tableType: an
                     console.log(e)
                     onDelete(e, originalRow);
                   }
-                }
+                  }
                 >Delete role</DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => {
                   console.log(e)
