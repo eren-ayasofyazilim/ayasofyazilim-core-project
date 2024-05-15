@@ -18,7 +18,10 @@ export default function Header({
         {user ? (
           <Link href="/">Home</Link>
         ) : (
-          <Link href="/register">Register</Link>
+          <>
+            <Link href="/register">Register</Link>
+            <Link href="/login">Login</Link>
+          </>
         )}
         <LanguageSelector menuAlign={menuAlign} />
       </div>
