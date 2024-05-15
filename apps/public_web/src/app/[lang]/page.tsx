@@ -1,12 +1,5 @@
-"use client";
-import LanguageSelector from "components/language-selector";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Page(): JSX.Element {
-  return (
-    <div>
-      <LanguageSelector />
-      <Link href={"login"}>Login</Link>
-    </div>
-  );
+  redirect("/tr/projects");
 }
