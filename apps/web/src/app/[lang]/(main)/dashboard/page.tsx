@@ -1,8 +1,6 @@
 "use client";
 import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
 import { $Volo_Abp_Identity_IdentityRoleDto as tableType } from "@ayasofyazilim/saas/IdentityService"
-import { data } from './data';
-import { columnsGenerator } from './columns';
 import { useEffect, useState } from 'react';
 import { getBaseLink } from 'src/utils';
 import { z } from 'zod';
@@ -10,11 +8,15 @@ import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 
 export default function Page(): JSX.Element {
     const [roles, setRoles] = useState<any>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     function getRoles() {
-        fetch(getBaseLink("/api/admin"))
+        let baseLink = getBaseLink("/api/admin");
+        console.log(baseLink)
+        fetch(baseLink)
             .then((res) => res.json())
             .then((data) => {
                 setRoles(data);
+                setIsLoading(false);
             });
     }
 
@@ -68,6 +70,7 @@ export default function Page(): JSX.Element {
         }
     ]
     useEffect(() => {
+        setIsLoading(true);
         getRoles();
     }, [])
     const rolesCards = roles?.items.slice(-4).map((item: any) => {
@@ -116,6 +119,9 @@ export default function Page(): JSX.Element {
 
     return (
         <Dashboard
+            withCards = {true}
+            withTable = {true}
+            isLoading={isLoading}
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
