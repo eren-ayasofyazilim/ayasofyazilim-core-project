@@ -19,6 +19,10 @@ export function getBaseLink(
   withLocale?: boolean,
   locale?: string
 ) {
+  // check if location first character is a slash
+  if (location.charAt(0) === "/") {
+    location = location.slice(1);
+  }
   const origin = isServerSide()
     ? process.env.PROJECT_BASE_URL
     : window.location.origin;
