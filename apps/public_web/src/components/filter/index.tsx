@@ -48,7 +48,7 @@ export function Filter({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Button asChild variant="outline" size="sm" className="h-8 border">
+        <Button variant="outline" size="sm" className="h-8 border" asChild>
           <div className="flex items-center">
             <PlusCircledIcon className="mr-2 h-4 w-4" />
             {title}
@@ -106,7 +106,7 @@ export function Filter({
                     //@ts-ignore
                     <CommandItem
                       key={option.value}
-                      value={option.value}
+                      value={option.label}
                       onSelect={() => {
                         if (selectedValues.has(option.value)) {
                           selectedValues.delete(option.value);
