@@ -2,12 +2,18 @@ import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService"
 import { auth } from "auth";
+import { NextRequest } from "next/server";
+import { getToken } from "@auth/core/jwt";
 
-export async function getIdentityServiceClient(): IdentityServiceClient {
-  const session = await auth();
-  const token = session?.accessToken || "";
+export async function getIdentityServiceClient(request:NextRequest): IdentityServiceClient {
+   const JWT_Token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET ?? "",
+  });
+  const token = JWT_Token?.access_token || "";
+  console.log("JWT token Identity", JWT_Token)
   return new IdentityServiceClient({
-    TOKEN: token,
+    TOKEN: token as string,
     BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
@@ -16,11 +22,14 @@ export async function getIdentityServiceClient(): IdentityServiceClient {
   });
 }
 
-export async function getAccountServiceClient(): AccountServiceClient {
-  const session = await auth();
-  const token = session?.accessToken || "";
+export async function getAccountServiceClient(request:NextRequest): AccountServiceClient {
+  const JWT_Token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET ?? "",
+  });
+  const token = JWT_Token?.access_token || "";
   return new AccountServiceClient({
-    TOKEN: token,
+    TOKEN: token as string,
     BASE: process.env.AUTH_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
