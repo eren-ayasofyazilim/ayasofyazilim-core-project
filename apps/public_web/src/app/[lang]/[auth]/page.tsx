@@ -51,16 +51,8 @@ export default function Page(): JSX.Element {
     return new Promise(async (resolve, reject) => {
       const { password, userIdentifier: email } = values;
       await signIn("credentials", { email, password, redirect: false });
-      const response = await fetch(getBaseLink("./api/auth/login"), {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
-      let result = await response.json();
-      if (result.description !== "Success") {
-        return reject(result);
-      }
-      resolve(result);
-      router.push("/profile");
+      resolve("ok");
+      router.push("/projects");
     });
   };
   const loginFormSchema = z.object({
@@ -179,7 +171,9 @@ export default function Page(): JSX.Element {
     >
       <div className="bg-zinc-800 flex flex-auto justify-center items-center">
         <div>
-          <img src="https://i.imgur.com/z5WQB9B.png" alt="logo" />
+          <span className="tracking-widest text-2xl font-bold text-white">
+            UPWITHCROWD
+          </span>
         </div>
       </div>
     </Auth>
