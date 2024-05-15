@@ -5,136 +5,119 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarSub,
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import Navigation from "@repo/ayasofyazilim-ui/molecules/navigation-menu";
+import Link from "next/link";
 import { useConfig } from "src/providers/configuration";
 import { useUser } from "src/providers/user";
 
+export type link = {
+  text: string;
+  href?: string;
+  submenu?: Array<link>;
+};
+export type linksProp = Array<link>;
+export const defaultLinks = [
+  {
+    href: "/projects",
+    text: "Projects",
+  },
+];
 export default function Navbar({
-  menuAlign,
+  links = defaultLinks,
 }: {
-  menuAlign?: "start" | "center" | "end";
+  links?: linksProp;
 }): JSX.Element {
-  const { user, getUser } = useUser();
-  const { config, setConfig } = useConfig();
-  const navigationLinks = [
-    {
-      href: "/docs",
-      text: "Documentation",
-    },
-    {
-      href: "/blog",
-      text: "Blog",
-    },
-    {
-      href: "/blog",
-      text: "Blog",
-    },
-    {
-      href: "/blog",
-      text: "Blog",
-    },
-    {
-      href: "/blog",
-      text: "Blog",
-    },
-    {
-      title: "List",
-      submenu: [
-        {
-          title: "Tooltip",
-          href: "/docs/primitives/tooltip",
-          description:
-            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-        },
-        {
-          title: "Tooltip",
-          href: "/docs/primitives/tooltip",
-          description:
-            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-        },
-        {
-          title: "Tooltip",
-          href: "/docs/primitives/tooltip",
-          description:
-            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-        },
-      ],
-    },
-    {
-      href: "/about",
-      text: "About",
-    },
-  ];
-
   return (
     <div className="bg-white p-4">
       <div className="container flex gap-4 justify-between flex-wrap">
         <span className="tracking-widest text-2xl font-bold">UPWITHCROWD</span>
-
         <Menubar className="border-0 h-full shadow-none p-none">
-          <MenubarMenu>
-            <MenubarTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary">
-              Invest
-            </MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem className="hover:text-primary focus:text-primary">
-                Investment opportunities
-              </MenubarItem>
-              <MenubarSub>
-                <MenubarSubTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary">
-                  Invest in companies
-                </MenubarSubTrigger>
-                <MenubarSubContent>
-                  <MenubarItem className="hover:text-primary focus:text-primary">
-                    Equity investments
-                  </MenubarItem>
-                  <MenubarItem className="hover:text-primary focus:text-primary">
-                    Fixed income
-                  </MenubarItem>
-                  <MenubarItem className="hover:text-primary focus:text-primary">
-                    Renewable Energy
-                  </MenubarItem>
-                </MenubarSubContent>
-              </MenubarSub>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary">
-              Raise funding
-            </MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary">
-              Knowledge
-            </MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem className="hover:text-primary focus:text-primary">
-                Academy
-              </MenubarItem>
-              <MenubarItem className="hover:text-primary focus:text-primary">
-                Blog
-              </MenubarItem>
-              <MenubarItem className="hover:text-primary focus:text-primary">
-                Newsletter
-              </MenubarItem>
-              <MenubarItem className="hover:text-primary focus:text-primary">
-                Support Center
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger className="hover:text-primary focus:text-primary active:text-primary  data-[state=open]:text-primary">
-              About us
-            </MenubarTrigger>
-          </MenubarMenu>
+          {links.map((link) => MenuCreator(link))}
         </Menubar>
       </div>
     </div>
   );
+}
+
+function MenuItemCreator(link: link): JSX.Element {
+  return (
+    <MenubarItem
+      key={link.text}
+      className="hover:text-primary focus:text-primary cursor-pointer"
+      asChild
+    >
+      <Link href={link.href || ""}>{link.text}</Link>
+    </MenubarItem>
+  );
+}
+function MenuCreator(link: link): JSX.Element {
+  if (link.submenu) {
+    return (
+      <MenubarMenu key={link.text}>
+        <MenubarTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary cursor-pointer">
+          {link.text}
+        </MenubarTrigger>
+        <MenubarContent>
+          {link.submenu.map((subLink) => {
+            if (subLink.submenu) {
+              return SubMenuCreator(subLink);
+            } else {
+              return MenuItemCreator(subLink);
+            }
+          })}
+        </MenubarContent>
+      </MenubarMenu>
+    );
+  } else {
+    return (
+      <MenubarMenu>
+        <MenubarTrigger
+          className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
+          asChild
+        >
+          <Link href={link.href || ""} className="cursor-pointer">
+            {link.text}
+          </Link>
+        </MenubarTrigger>
+      </MenubarMenu>
+    );
+  }
+  return <></>;
+}
+function SubMenuCreator(link: link): JSX.Element {
+  if (link.submenu) {
+    return (
+      <MenubarSub>
+        <MenubarSubTrigger className="hover:text-primary focus:text-primary data-[state=open]:text-primary cursor-pointer">
+          {link.text}
+        </MenubarSubTrigger>
+        <MenubarSubContent>
+          {link.submenu.map((subLink) => {
+            if (subLink.submenu) {
+              return SubMenuCreator(subLink);
+            } else {
+              return MenuItemCreator(subLink);
+            }
+          })}
+        </MenubarSubContent>
+      </MenubarSub>
+    );
+  } else {
+    return (
+      <MenubarSub>
+        <MenubarSubTrigger
+          className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
+          asChild
+        >
+          <Link href={link.href || ""} className="cursor-pointer">
+            {link.text}
+          </Link>
+        </MenubarSubTrigger>
+      </MenubarSub>
+    );
+  }
 }
