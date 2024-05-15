@@ -15,5 +15,10 @@ module.exports = {
     AUTH_SECRET: process.env.AUTH_SECRET,
   },
   transpilePackages: ["@repo/ui"],
+  experimental: {
+    serverActions: {
+      allowedOrigins: [ "localhost:3000", "*.devtunnels.ms:3000"  ],
+    }
+  }
 };
 
