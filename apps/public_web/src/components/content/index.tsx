@@ -14,8 +14,11 @@ export default function ContentList({
   list,
 }: ContentListProps): JSX.Element {
   return (
-    <div className="flex-grow h-full flex flex-col gap-8 bg-white shadow-lg p-4 m-2">
+    <div className="flex-grow h-full flex flex-col gap-8 bg-slate-50 px-4 py-20 relative">
       <h3 className="text-3xl font-bold text-primary mx-auto">{title}</h3>
+      <h3 className="text-[120px] font-bold text-primary mx-auto absolute top-[-60px] left-0 whitespace-nowrap w-full text-center text-transparent pointer-events-none ">
+        {title}
+      </h3>
       {subTitle && <p className="text-sm">{subTitle}</p>}
       {list.map(({ paragraph, icon }, index) => (
         <div

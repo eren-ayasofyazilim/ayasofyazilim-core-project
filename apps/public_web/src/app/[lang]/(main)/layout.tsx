@@ -115,7 +115,7 @@ export default function Layout({ children }: LayoutProps) {
         <Header />
         <Navbar />
       </div>
-      <div className="container overflow-hidden flex">{children}</div>
+      <div className="overflow-hidden flex h-full">{children}</div>
       {/* h-full removed */}
     </div>
   );
