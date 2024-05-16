@@ -4,12 +4,30 @@ import { $Volo_Abp_Identity_IdentityRoleDto as tableType, $Volo_Abp_Identity_Ide
 import { useEffect, useState } from 'react';
 import { createZodObject, getBaseLink } from 'src/utils';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
-
+const dataConfig: Record<string,any> = {
+    role : {
+        formSchema: roleCreate,
+        formPositions: ["name", "isDefault", "isPublic"],
+        excludeList: ['id', 'extraProperties', 'concurrencyStamp'],
+        cards: (items:any) => {
+            return items?.slice(-4).map((item: any) => {
+                return {
+                    title: item.name,
+                    content: item.userCount,
+                    description: "Users",
+                    footer: item.isPublic ? "Public" : "Not Public",
+                };
+            });
+        }
+    }
+}
 export default function Page({ params }: { params: { data: string } }): JSX.Element {
     const [roles, setRoles] = useState<any>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const fetchLink = getBaseLink("/api/admin/" + params.data);
-    console.log(fetchLink);
+    const { formSchema: schema, formPositions, excludeList, cards } = dataConfig[params.data];
+    const rolesCards = cards(roles?.items);
+
     function getRoles() {
         fetch(fetchLink)
             .then((res) => res.json())
@@ -18,15 +36,14 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
                 setIsLoading(false);
             });
     }
-    const formPositions = ["name", "isDefault", "isPublic"];
-    const formSchema = createZodObject(roleCreate, formPositions)
+    const formSchema = createZodObject(schema, formPositions)
     const autoFormArgs = {
         formSchema,
     };
 
     const action: tableAction = {
-        cta: "New Role",
-        description: "Create a new role for users",
+        cta: "New " + params.data,
+        description: "Create a new " + params.data,
         autoFormArgs,
         callback: (e) => {
             fetch(fetchLink, {
@@ -60,16 +77,6 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
         setIsLoading(true);
         getRoles();
     }, [])
-    const rolesCards = roles?.items.slice(-4).map((item: any) => {
-        return {
-            title: item.name,
-            content: item.userCount,
-            description: "Users",
-            footer: item.isPublic ? "Public" : "Not Public",
-        };
-    });
-
-    const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
     const onEdit = (data: any, row: any) => {
         fetch(fetchLink, {
             method: 'PUT',
