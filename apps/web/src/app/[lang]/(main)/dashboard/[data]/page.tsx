@@ -6,13 +6,13 @@ import { getBaseLink } from 'src/utils';
 import { z } from 'zod';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 
-export default function Page(): JSX.Element {
+export default function Page({ params }: { params: { data: string }}): JSX.Element {
     const [roles, setRoles] = useState<any>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const fetchLink = getBaseLink("/api/admin/" + params.data);
+    console.log(fetchLink);
     function getRoles() {
-        let baseLink = getBaseLink("/api/admin/role");
-        console.log(baseLink)
-        fetch(baseLink)
+        fetch(fetchLink)
             .then((res) => res.json())
             .then((data) => {
                 setRoles(data);
@@ -42,7 +42,7 @@ export default function Page(): JSX.Element {
         description: "Create a new role for users",
         autoFormArgs,
         callback: (e) => {
-            fetch(getBaseLink("/api/admin/role"), {
+            fetch(fetchLink, {
                 method: 'POST',
                 body: JSON.stringify(e)
             }).then(response => response.json()) // Parse the response as JSON
@@ -84,7 +84,7 @@ export default function Page(): JSX.Element {
 
     const excludeList = ['id', 'extraProperties', 'concurrencyStamp']
     const onEdit = (data: any, row: any) => {
-        fetch(getBaseLink("/api/admin/role"), {
+        fetch(fetchLink, {
             method: 'PUT',
             body: JSON.stringify({
                 id: row.id,
@@ -99,7 +99,7 @@ export default function Page(): JSX.Element {
             });
     }
     const onDelete = (e: any, row: any) => {
-        fetch(getBaseLink("/api/admin/role"), {
+        fetch(fetchLink, {
             method: 'DELETE',
             body: JSON.stringify(row.id)
         }).then(response => response.json()) // Parse the response as JSON
