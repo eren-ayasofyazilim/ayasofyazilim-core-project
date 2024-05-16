@@ -32,7 +32,7 @@ export function getBaseLink(
   return `${origin}/${localePath}${location}`;
 }
 
-export function JsonSchemaToZod(schema: any):ZodSchema<any> {
+export function JsonSchemaToZod(schema: any): ZodSchema<any> {
   const zodObject = z.object({});
   for (const key in schema.properties) {
     const property = schema.properties[key];
@@ -47,7 +47,7 @@ export function JsonSchemaToZod(schema: any):ZodSchema<any> {
 }
 
 type JsonSchema = {
-  type: 'string' | 'boolean';
+  type: 'string' | 'boolean' | 'object';
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
@@ -55,20 +55,38 @@ type JsonSchema = {
   format?: 'date-time';
 }
 
-type SchemaType = Record<string, JsonSchema>;
+type SchemaType = {
+  required: ReadonlyArray<string>,
+  type: String,
+  properties: Record<string, JsonSchema>,
+  additionalProperties: Boolean
+};
 
-export function createZodObject(schema: SchemaType,positions: Array<any>): ZodSchema<any> {
-  const zodSchema = {};
+export function createZodObject(schema: SchemaType, positions: Array<any>): ZodSchema<any> {
+  const zodSchema: Record<string,ZodSchema> = {};
   positions.forEach((element: string) => {
     const props = schema.properties[element];
-    const isRequired = schema.required.includes[element];
+    const isRequired = schema.required.includes(element);
     let zodType = createZodType(props, isRequired);
     zodSchema[element] = zodType;
   });
   return z.object(zodSchema);
 }
 
-function createZodType(schema:JsonSchema, isRequired:boolean): ZodSchema<any>{
+// TODO: Handle object case and add related data and example is 
+// $Volo_Abp_Identity_IdentityRoleCreateDto
+// const formSchema = z.object({
+//     name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
+//     isDefault: z.boolean().optional(),
+//     isPublic: z.boolean().optional(),
+//     extraProperties: z.object({
+//         // Assuming any additional properties are of type `unknown`
+//         additionalProperties: z.unknown().optional(),
+//         nullable: z.boolean().optional(),
+//         readOnly: z.boolean().optional()
+//     }).optional().nullable()
+// })
+function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema<any> {
   let zodType;
   switch (schema.type) {
     case 'string':
@@ -82,6 +100,6 @@ function createZodType(schema:JsonSchema, isRequired:boolean): ZodSchema<any>{
     default:
       zodType = z.unknown();
   }
-  if (isRequired) zodType = zodType.optional();
+  if (!isRequired) zodType = zodType.optional();
   return zodType;
 }

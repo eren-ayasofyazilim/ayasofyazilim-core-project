@@ -1,12 +1,11 @@
 "use client";
 import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
-import { $Volo_Abp_Identity_IdentityRoleDto as tableType, $Volo_Abp_Identity_IdentityRoleCreateDto as roleCreate} from "@ayasofyazilim/saas/IdentityService"
+import { $Volo_Abp_Identity_IdentityRoleDto as tableType, $Volo_Abp_Identity_IdentityRoleCreateDto as roleCreate } from "@ayasofyazilim/saas/IdentityService"
 import { useEffect, useState } from 'react';
 import { createZodObject, getBaseLink } from 'src/utils';
-import { z } from 'zod';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 
-export default function Page({ params }: { params: { data: string }}): JSX.Element {
+export default function Page({ params }: { params: { data: string } }): JSX.Element {
     const [roles, setRoles] = useState<any>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const fetchLink = getBaseLink("/api/admin/" + params.data);
@@ -19,22 +18,11 @@ export default function Page({ params }: { params: { data: string }}): JSX.Eleme
                 setIsLoading(false);
             });
     }
-    const formPositions = ["name", "isDefault", "isPublic", "extraProperties"];
-    // const formSchema = z.object({
-    //     name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
-    //     isDefault: z.boolean().optional(),
-    //     isPublic: z.boolean().optional(),
-    //     extraProperties: z.object({
-    //         // Assuming any additional properties are of type `unknown`
-    //         additionalProperties: z.unknown().optional(),
-    //         nullable: z.boolean().optional(),
-    //         readOnly: z.boolean().optional()
-    //     }).optional().nullable()
-    // })
+    const formPositions = ["name", "isDefault", "isPublic"];
     const formSchema = createZodObject(roleCreate, formPositions)
-  const autoFormArgs = {
-    formSchema,
-  };
+    const autoFormArgs = {
+        formSchema,
+    };
 
     const action: tableAction = {
         cta: "New Role",
@@ -112,19 +100,19 @@ export default function Page({ params }: { params: { data: string }}): JSX.Eleme
     }
 
     const columnsData = {
-        type:"Auto", 
-        data:{getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete}
+        type: "Auto",
+        data: { getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete }
     }
 
     return (
         <Dashboard
-            withCards = {true}
-            withTable = {true}
+            withCards={true}
+            withTable={true}
             isLoading={isLoading}
             filterBy="name"
             cards={rolesCards}
             data={roles?.items}
-            columnsData= {columnsData}
+            columnsData={columnsData}
             action={action}
         />
     );
