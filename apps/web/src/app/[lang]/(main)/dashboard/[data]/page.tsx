@@ -1,8 +1,8 @@
 "use client";
 import Dashboard from '@repo/ayasofyazilim-ui/templates/dashboard';
-import { $Volo_Abp_Identity_IdentityRoleDto as tableType } from "@ayasofyazilim/saas/IdentityService"
+import { $Volo_Abp_Identity_IdentityRoleDto as tableType, $Volo_Abp_Identity_IdentityRoleCreateDto as roleCreate} from "@ayasofyazilim/saas/IdentityService"
 import { useEffect, useState } from 'react';
-import { getBaseLink } from 'src/utils';
+import { createZodObject, getBaseLink } from 'src/utils';
 import { z } from 'zod';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 
@@ -19,20 +19,19 @@ export default function Page({ params }: { params: { data: string }}): JSX.Eleme
                 setIsLoading(false);
             });
     }
-
-    const formSchema = z.object({
-        name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
-        isDefault: z.boolean().optional(),
-        isPublic: z.boolean().optional(),
-        extraProperties: z.object({
-            // Assuming any additional properties are of type `unknown`
-            additionalProperties: z.unknown().optional(),
-            nullable: z.boolean().optional(),
-            readOnly: z.boolean().optional()
-        }).optional().nullable()
-    })
-
-
+    const formPositions = ["name", "isDefault", "isPublic", "extraProperties"];
+    // const formSchema = z.object({
+    //     name: z.string().max(256).min(0), // Assuming `name` is optional as it's not in the required list
+    //     isDefault: z.boolean().optional(),
+    //     isPublic: z.boolean().optional(),
+    //     extraProperties: z.object({
+    //         // Assuming any additional properties are of type `unknown`
+    //         additionalProperties: z.unknown().optional(),
+    //         nullable: z.boolean().optional(),
+    //         readOnly: z.boolean().optional()
+    //     }).optional().nullable()
+    // })
+    const formSchema = createZodObject(roleCreate, formPositions)
   const autoFormArgs = {
     formSchema,
   };
