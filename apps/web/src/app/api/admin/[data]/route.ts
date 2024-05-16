@@ -20,12 +20,18 @@ const clients: Clients = {
 }
 
 export async function GET(request: NextRequest, { params }: { params: { data: string }   }) {
+    if(!clients[params.data]){
+        return new Response(JSON.stringify("Invalid data type"));
+    }
     const client = await clients[params.data](request);
     const data = await client.get();
     return new Response(JSON.stringify(data));
 }
 
 export async function POST(request: NextRequest, { params }: { params: { data: string }   }) {
+    if(!clients[params.data]){
+        return new Response(JSON.stringify("Invalid data type"));
+    }
     const client = await clients[params.data](request);
     const requestBody = await request.json();
     const roles = await client.post(requestBody)
@@ -35,6 +41,9 @@ export async function POST(request: NextRequest, { params }: { params: { data: s
 
 
 export async function DELETE(request: NextRequest, { params }: { params: { data: string }   }) {
+    if(!clients[params.data]){
+        return new Response(JSON.stringify("Invalid data type"));
+    }
     let retVal = "something went wrong";
     const client = await clients[params.data](request);
     const id = await request.json();
@@ -45,6 +54,9 @@ export async function DELETE(request: NextRequest, { params }: { params: { data:
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { data: string }   }) {
+    if(!clients[params.data]){
+        return new Response(JSON.stringify("Invalid data type"));
+    }
     const client = await clients[params.data](request);
     const requestBody = await request.json();
     const roles = await client.put({
