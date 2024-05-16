@@ -32,20 +32,6 @@ export function getBaseLink(
   return `${origin}/${localePath}${location}`;
 }
 
-export function JsonSchemaToZod(schema: any): ZodSchema<any> {
-  const zodObject = z.object({});
-  for (const key in schema.properties) {
-    const property = schema.properties[key];
-    // switch for props type
-    if (property.type === "object") {
-      zodObject[key] = JsonSchemaToZod(property);
-    } else {
-      zodObject[key] = property.type;
-    }
-  }
-  return zodObject;
-}
-
 type JsonSchema = {
   type: 'string' | 'boolean' | 'object';
   isRequired?: boolean;
