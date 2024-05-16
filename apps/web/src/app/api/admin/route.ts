@@ -2,29 +2,30 @@ import { Volo_Abp_Identity_IdentityRoleCreateDto, Volo_Abp_Identity_IdentityRole
 import { NextRequest } from "next/server";
 import { getIdentityServiceClient } from "src/lib";
 
-const config = {
-  role: {
-    client: async (req: NextRequest) => getIdentityServiceClient(req),
-    get: async (req: NextRequest) => (await config.role.client(req)).role.getApiIdentityRolesAll(),
-    put: (req: NextRequest, id: string, requestBody: Volo_Abp_Identity_IdentityRoleUpdateDto | undefined) => getIdentityServiceClient(req).role.putApiIdentityRolesById({
-      id: id,
-      requestBody: requestBody
-    }),
-    post: (req: NextRequest, requestBody: Volo_Abp_Identity_IdentityRoleCreateDto | undefined) => getIdentityServiceClient(req).role.postApiIdentityRoles({ requestBody }),
-    delete: (req: NextRequest, id: string) => getIdentityServiceClient(req).role.deleteApiIdentityRolesById({ id })
+
+const clients = {
+  role: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const role = client.role;
+    return {
+      get: async () => role.getApiIdentityRolesAll(),
+      post: async (requestBody: Volo_Abp_Identity_IdentityRoleCreateDto) => role.postApiIdentityRoles({ requestBody }),
+      put: async (id: string, requestBody: Volo_Abp_Identity_IdentityRoleUpdateDto) => role.putApiIdentityRolesById({ id, requestBody }),
+      delete: async (id: string) => role.deleteApiIdentityRolesById({ id })
+    }
   }
 }
 
 export async function GET(request: NextRequest) {
-  const roles = await config["role"].get(request);
-  console.log("roles from get ", roles);
-  return new Response(JSON.stringify(roles));
+  const client = await clients["role"](request);
+  const data = await client.get();
+  return new Response(JSON.stringify(data));
 }
 
 export async function POST(request: NextRequest) {
-  const client = await getIdentityServiceClient(request);
+  const client = await clients["role"](request);
   const requestBody = await request.json();
-  const roles = await client.role.postApiIdentityRoles({ requestBody })
+  const roles = await client.post(requestBody)
 
   return new Response(JSON.stringify(roles));
 }
