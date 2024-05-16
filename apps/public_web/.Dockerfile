@@ -21,6 +21,7 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN npm install pnpm --global
 RUN pnpm install
  
 # Build the project
