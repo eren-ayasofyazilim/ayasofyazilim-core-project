@@ -5,7 +5,7 @@ services:
     container_name: public_web
     build:
       context: .
-      dockerfile: ./apps/public_web/Dockerfile
+      dockerfile: ./apps/public_web/.Dockerfile
     restart: always
     ports:
       - 3001:3001
