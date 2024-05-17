@@ -6,13 +6,15 @@ import { useEffect, useState } from 'react';
 import { createZodObject, getBaseLink } from 'src/utils';
 import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 import { $Volo_Abp_Identity_IdentityUserDto } from '@ayasofyazilim/saas/AccountService';
-const dataConfig: Record<string,any> = {
-    role : {
+import { toast } from "@/components/ui/sonner";
+
+const dataConfig: Record<string, any> = {
+    role: {
         formSchema: $Volo_Abp_Identity_IdentityRoleCreateDto,
         tableSchema: $Volo_Abp_Identity_IdentityRoleDto,
         formPositions: ["name", "isDefault", "isPublic"],
         excludeList: ['id', 'extraProperties', 'concurrencyStamp'],
-        cards: (items:any) => {
+        cards: (items: any) => {
             return items?.slice(-4).map((item: any) => {
                 return {
                     title: item.name,
@@ -23,12 +25,12 @@ const dataConfig: Record<string,any> = {
             });
         }
     },
-    user : {
+    user: {
         formSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
         tableSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
         formPositions: ['email', 'password', 'userName'],
         excludeList: ['password'],
-        cards: (items:any) => {
+        cards: (items: any) => {
             return items?.slice(-4).map((item: any) => {
                 return {
                     title: item.name,
@@ -44,7 +46,7 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
     const [roles, setRoles] = useState<any>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const fetchLink = getBaseLink("/api/admin/" + params.data);
-    const { formSchema: schema, formPositions, excludeList, cards, tableSchema:tableType } = dataConfig[params.data];
+    const { formSchema: schema, formPositions, excludeList, cards, tableSchema: tableType } = dataConfig[params.data];
     const rolesCards = cards(roles?.items);
 
     function getRoles() {
@@ -68,9 +70,20 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
             fetch(fetchLink, {
                 method: 'POST',
                 body: JSON.stringify(e)
-            }).then(response => response.json()) // Parse the response as JSON
+            }).then(async response => {
+                return {
+                    json: await response.json(),
+                    ok: response.ok
+                }
+            }) // Parse the response as JSON
                 .then(data => {
-                    getRoles();
+                    if (!data.ok) {
+                        console.log(data.json)
+                        toast.error(data.json.message);
+                    } else {
+                        getRoles();
+                        toast.success("Added Successfully");
+                    }
                 }) // Do something with the response data
                 .catch((error) => {
                     console.error('Error:', error); // Handle any errors
@@ -106,6 +119,7 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
         }).then(response => response.json()) // Parse the response as JSON
             .then(data => {
                 getRoles();
+                toast.success("Updated Successfully");
             }) // Do something with the response data
             .catch((error) => {
                 console.error('Error:', error); // Handle any errors
@@ -119,6 +133,7 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
             .then(data => {
                 console.log(data)
                 getRoles();
+                toast.success("Deleted Successfully");
             }) // Do something with the response data
             .catch((error) => {
                 console.error('Error:', error); // Handle any errors
