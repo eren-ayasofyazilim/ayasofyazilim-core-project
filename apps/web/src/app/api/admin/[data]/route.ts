@@ -42,8 +42,18 @@ export async function GET(request: NextRequest, { params }: { params: { data: st
         return errorResponse("Invalid data type");
     }
     const client = await clients[params.data](request);
-    const data = await client.get();
-    return new Response(JSON.stringify(data));
+    try {
+        const data = await client.get();
+        return new Response(JSON.stringify(data));
+    } catch (error: unknown) {
+        if (isApiError(error)) {
+            console.log(error);  
+            const body = error?.body as Volo_Abp_Http_RemoteServiceErrorResponse;
+            const message = body?.error?.message || error.statusText;
+            return errorResponse(message, error.status);
+        }
+        return errorResponse("Something went wrong");
+    }
 }
 
 export async function POST(request: NextRequest, { params }: { params: { data: string } }) {

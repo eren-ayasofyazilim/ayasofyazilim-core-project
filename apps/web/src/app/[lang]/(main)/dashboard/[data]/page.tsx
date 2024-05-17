@@ -13,14 +13,14 @@ async function controlledFetch(url: string, options: RequestInit, onSuccess: (da
         const getData = await fetch(url, options);
         if (!getData.ok) {
             const body = await getData.json();
-            showToast && toast.error(body.message);
+            toast.error(body.message);
         } else {
             const data = await getData.json();
             onSuccess(data);
             showToast && toast.success(successMessage);
         }
     } catch (error) {
-        showToast && toast.success("Something went wrong");
+        toast.error("Something went wrong");
     }
 }
 
