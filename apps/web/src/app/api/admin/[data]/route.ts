@@ -6,6 +6,8 @@ type Clients = {
     [key: string]: any;
 };
 
+const errorResponse = (message: string) => new Response(JSON.stringify({ message }), { status: 400 });
+
 const clients: Clients = {
     role: async (req: NextRequest) => {
         const client = await getIdentityServiceClient(req);
@@ -16,12 +18,23 @@ const clients: Clients = {
             put: async ({ id, requestBody }: { id: string, requestBody: Volo_Abp_Identity_IdentityRoleUpdateDto }) => role.putApiIdentityRolesById({ id, requestBody }),
             delete: async (id: string) => role.deleteApiIdentityRolesById({ id })
         }
+    },
+    user: async (req: NextRequest) => {
+        const client = await getIdentityServiceClient(req);
+        const user = client.user;
+        return {
+            get: async () => user.getApiIdentityUsers(),
+            post: async (requestBody: any) => user.postApiIdentityUsers({ requestBody }),
+            put: async ({ id, requestBody }: { id: string, requestBody: any }) => user.putApiIdentityUsersById({ id, requestBody }),
+            delete: async (id: string) => user.deleteApiIdentityUsersById({ id })
+        }
     }
 }
 
 export async function GET(request: NextRequest, { params }: { params: { data: string }   }) {
     if(!clients[params.data]){
-        return new Response(JSON.stringify("Invalid data type"));
+        // return status 404
+        return errorResponse("Invalid data type");
     }
     const client = await clients[params.data](request);
     const data = await client.get();
@@ -30,7 +43,7 @@ export async function GET(request: NextRequest, { params }: { params: { data: st
 
 export async function POST(request: NextRequest, { params }: { params: { data: string }   }) {
     if(!clients[params.data]){
-        return new Response(JSON.stringify("Invalid data type"));
+        return errorResponse("Invalid data type");
     }
     const client = await clients[params.data](request);
     const requestBody = await request.json();
@@ -42,7 +55,7 @@ export async function POST(request: NextRequest, { params }: { params: { data: s
 
 export async function DELETE(request: NextRequest, { params }: { params: { data: string }   }) {
     if(!clients[params.data]){
-        return new Response(JSON.stringify("Invalid data type"));
+        return errorResponse("Invalid data type");
     }
     let retVal = "something went wrong";
     const client = await clients[params.data](request);
@@ -55,7 +68,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { data:
 
 export async function PUT(request: NextRequest, { params }: { params: { data: string }   }) {
     if(!clients[params.data]){
-        return new Response(JSON.stringify("Invalid data type"));
+        return errorResponse("Invalid data type");
     }
     const client = await clients[params.data](request);
     const requestBody = await request.json();
