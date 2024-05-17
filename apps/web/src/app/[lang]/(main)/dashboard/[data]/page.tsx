@@ -8,18 +8,19 @@ import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 import { $Volo_Abp_Identity_IdentityUserDto } from '@ayasofyazilim/saas/AccountService';
 import { toast } from "@/components/ui/sonner";
 
-async function controlledFetch(url: string, options: RequestInit, onSuccess: () => void, successMessage: string = "Successfull") {
+async function controlledFetch(url: string, options: RequestInit, onSuccess: (data?: any) => void, successMessage: string = "Successfull", showToast: boolean = true) {
     try {
         const getData = await fetch(url, options);
         if (!getData.ok) {
             const body = await getData.json();
-            toast.error(body.message);
+            showToast && toast.error(body.message);
         } else {
-            onSuccess();
-            toast.success(successMessage);
+            const data = await getData.json();
+            onSuccess(data);
+            showToast && toast.success(successMessage);
         }
     } catch (error) {
-        toast.success("Something went wrong");
+        showToast && toast.success("Something went wrong");
     }
 }
 
@@ -65,12 +66,13 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
     const rolesCards = cards(roles?.items);
 
     function getRoles() {
-        fetch(fetchLink)
-            .then((res) => res.json())
-            .then((data) => {
-                setRoles(data);
-                setIsLoading(false);
-            });
+        function onData(data: any) {
+            setRoles(data);
+            setIsLoading(false);
+        }
+        controlledFetch(fetchLink, {
+            method: 'GET'
+        } as RequestInit, onData, "", false);
     }
     const formSchema = createZodObject(schema, formPositions)
     const autoFormArgs = {
