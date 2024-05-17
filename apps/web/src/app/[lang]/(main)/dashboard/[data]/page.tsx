@@ -8,6 +8,21 @@ import { tableAction } from '@repo/ayasofyazilim-ui/molecules/tables';
 import { $Volo_Abp_Identity_IdentityUserDto } from '@ayasofyazilim/saas/AccountService';
 import { toast } from "@/components/ui/sonner";
 
+async function controlledFetch(url: string, options: RequestInit, onSuccess: () => void, successMessage: string = "Successfull") {
+    try {
+        const getData = await fetch(url, options);
+        if (!getData.ok) {
+            const body = await getData.json();
+            toast.error(body.message);
+        } else {
+            onSuccess();
+            toast.success(successMessage);
+        }
+    } catch (error) {
+        toast.success("Something went wrong");
+    }
+}
+
 const dataConfig: Record<string, any> = {
     role: {
         formSchema: $Volo_Abp_Identity_IdentityRoleCreateDto,
@@ -66,28 +81,11 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
         cta: "New " + params.data,
         description: "Create a new " + params.data,
         autoFormArgs,
-        callback: (e) => {
-            fetch(fetchLink, {
+        callback: async (e) => {
+            await controlledFetch(fetchLink, {
                 method: 'POST',
                 body: JSON.stringify(e)
-            }).then(async response => {
-                return {
-                    json: await response.json(),
-                    ok: response.ok
-                }
-            }) // Parse the response as JSON
-                .then(data => {
-                    if (!data.ok) {
-                        console.log(data.json)
-                        toast.error(data.json.message);
-                    } else {
-                        getRoles();
-                        toast.success("Added Successfully");
-                    }
-                }) // Do something with the response data
-                .catch((error) => {
-                    console.error('Error:', error); // Handle any errors
-                });
+            }, getRoles);
         }
     };
     const tableHeaders = [
@@ -110,34 +108,19 @@ export default function Page({ params }: { params: { data: string } }): JSX.Elem
         getRoles();
     }, [])
     const onEdit = (data: any, row: any) => {
-        fetch(fetchLink, {
+        controlledFetch(fetchLink, {
             method: 'PUT',
             body: JSON.stringify({
                 id: row.id,
                 requestBody: JSON.stringify(data)
             })
-        }).then(response => response.json()) // Parse the response as JSON
-            .then(data => {
-                getRoles();
-                toast.success("Updated Successfully");
-            }) // Do something with the response data
-            .catch((error) => {
-                console.error('Error:', error); // Handle any errors
-            });
+        }, getRoles, "Updated Successfully");
     }
     const onDelete = (e: any, row: any) => {
-        fetch(fetchLink, {
+        controlledFetch(fetchLink, {
             method: 'DELETE',
             body: JSON.stringify(row.id)
-        }).then(response => response.json()) // Parse the response as JSON
-            .then(data => {
-                console.log(data)
-                getRoles();
-                toast.success("Deleted Successfully");
-            }) // Do something with the response data
-            .catch((error) => {
-                console.error('Error:', error); // Handle any errors
-            });
+        }, getRoles, "Deleted Successfully")
     }
 
     const columnsData = {
