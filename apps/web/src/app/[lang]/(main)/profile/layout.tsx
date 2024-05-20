@@ -1,6 +1,4 @@
 "use client";
-
-
 import  SectionLayout  from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname } from "next/navigation";
 import { getBaseLink } from "src/utils";

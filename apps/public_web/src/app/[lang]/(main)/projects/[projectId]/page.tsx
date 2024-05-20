@@ -1,7 +1,7 @@
 "use server";
 
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
-import SectionLayout from "@repo/ayasofyazilim-ui/templates/section-layout";
+import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { getProjectServiceClient } from "src/lib";
 
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
@@ -17,7 +17,11 @@ import {
   numberFormatter,
 } from "../demo-data";
 
-export default async function Page({ params }: any) {
+export default async function Page({
+  params,
+}: {
+  params: { projectId: string };
+}) {
   const { projectId } = params;
   const client =
     await getProjectServiceClient().project.getApiProjectServiceProjectsById({
