@@ -4,6 +4,7 @@ import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService"
 import { auth } from "auth";
 import { NextRequest } from "next/server";
 import { getToken } from "@auth/core/jwt";
+import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 
 export async function getIdentityServiceClient(request:NextRequest): IdentityServiceClient {
    const JWT_Token = await getToken({
@@ -11,7 +12,6 @@ export async function getIdentityServiceClient(request:NextRequest): IdentitySer
     secret: process.env.AUTH_SECRET ?? "",
   });
   const token = JWT_Token?.access_token || "";
-  console.log("JWT token Identity", JWT_Token)
   return new IdentityServiceClient({
     TOKEN: token as string,
     BASE: process.env.BASE_URL,
@@ -37,6 +37,7 @@ export async function getAccountServiceClient(request:NextRequest): AccountServi
     },
   });
 }
+
 export function getProjectServiceClient(): ProjectServiceClient {
   return new ProjectServiceClient({
     BASE: process.env.PROJECT_SERVICE_URL ?? "",
@@ -46,6 +47,8 @@ export function getProjectServiceClient(): ProjectServiceClient {
     },
   });
 }
+
+
 export function getProjectServiceDetailClient(): ProjectServiceClient {
   return new ProjectServiceClient({
     BASE: process.env.PROJECT_SERVICE_URL ?? "",
@@ -54,4 +57,24 @@ export function getProjectServiceDetailClient(): ProjectServiceClient {
       "Content-Type": "application/json",
     },
   });
+}
+
+
+
+
+
+export async function getSaasServiceClient(request:NextRequest): SaasServiceClient {
+  const JWT_Token = await getToken({
+   req: request,
+   secret: process.env.AUTH_SECRET ?? "",
+ });
+ const token = JWT_Token?.access_token || "";
+ return new SaasServiceClient({
+   TOKEN: token as string,
+   BASE: process.env.BASE_URL,
+   HEADERS: {
+     "X-Requested-With": "XMLHttpRequest",
+     "Content-Type": "application/json",
+   },
+ });
 }
