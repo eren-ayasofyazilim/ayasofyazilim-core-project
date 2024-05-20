@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  web:
+  public_web:
     container_name: public_web
     build:
       context: .
