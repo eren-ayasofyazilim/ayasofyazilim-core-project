@@ -1,26 +1,26 @@
 "use client";
-import { MenuProps } from "@repo/ayasofyazilim-ui/molecules/side-bar";
+import type { MenuProps } from "@repo/ayasofyazilim-ui/molecules/side-bar";
 import Mainlayout from "@repo/ayasofyazilim-ui/templates/mainlayout";
-import LanguageSelector from "components/language-selector";
 import { Presentation, SquareStack, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import LanguageSelector from "components/language-selector";
 import { logoutAction } from "src/app/actions";
 import { useConfig } from "src/providers/configuration";
 import { useLocale } from "src/providers/locale";
 import { useUser } from "src/providers/user";
 import { getBaseLink } from "src/utils";
-import "./../../globals.css";
+import "../../globals.css";
 
-type LayoutProps = {
+interface LayoutProps {
   children: JSX.Element;
-};
+}
 
 export default function Layout({ children }: LayoutProps) {
   const { user, getUser } = useUser();
   const { config, setConfig } = useConfig();
   const { cultureName, resources } = useLocale();
-  const [resourcesMap, setResourcesMap] = useState<{ [key: string]: string }>({
+  const [resourcesMap, setResourcesMap] = useState<Record<string, string>>({
     profile: "Profile",
     dashboard: "Dashboard",
   });
@@ -67,7 +67,7 @@ export default function Layout({ children }: LayoutProps) {
     {
       label: "Pages",
       name: resourcesMap.profile,
-      icon: <User size={15} className="mr-2" />,
+      icon: <User className="mr-2" size={15} />,
       href: getBaseLink("profile", true),
     },
     {
@@ -76,16 +76,24 @@ export default function Layout({ children }: LayoutProps) {
       icon: <SquareStack size={15} className="mr-2" />,
       href: getBaseLink("dashboard/role", true),
     },
+
+    {
+      label: "Pages",
+      name: "Tenant Data",
+      icon: <SquareStack className="mr-2" size={15} />,
+      href: getBaseLink("tenant", true),
+    },
+
     {
       label: "Pages",
       name: "Projects",
-      icon: <Presentation size={15} className="mr-2" />,
+      icon: <Presentation className="mr-2" size={15} />,
       href: getBaseLink("projects", true),
     },
     {
       label: "Settings",
       name: "Settings",
-      icon: <Presentation size={15} className="mr-2" />,
+      icon: <Presentation className="mr-2" size={15} />,
       href: getBaseLink("settings/profile", true),
     },
   ];
@@ -112,13 +120,13 @@ export default function Layout({ children }: LayoutProps) {
   };
   return (
     <Mainlayout
-      logo="https://github.com/ayasofyazilim-clomerce.png"
-      title="ayasofya"
-      menus={exampleMenus}
-      userNav={userNavigation}
-      navMenu={navigationLinks}
       extraMenu={<LanguageSelector />}
+      logo="https://github.com/ayasofyazilim-clomerce.png"
+      menus={exampleMenus}
+      navMenu={navigationLinks}
       navMenuLocation="left"
+      title="ayasofya"
+      userNav={userNavigation}
     >
       {children}
     </Mainlayout>

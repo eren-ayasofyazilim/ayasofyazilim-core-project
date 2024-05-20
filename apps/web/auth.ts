@@ -34,7 +34,7 @@ export const options: NextAuthConfig = {
           username: credentials.email as string,
           password: credentials.password as string,
           scope:
-            "AccountService IdentityService phone roles profile address email offline_access",
+            "AccountService IdentityService SaasService phone roles profile address email offline_access",
         };
         Object.keys(urlEncodedContent).forEach((key) =>
           urlencoded.append(key, urlEncodedContent[key])
