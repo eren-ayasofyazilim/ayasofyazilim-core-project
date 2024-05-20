@@ -5,6 +5,7 @@
     "dev:all": "turbo dev",
     "dev": "turbo dev --filter web",
     "pub": "turbo dev --filter public_web",
+    "docs": "turbo dev --filter docs",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
