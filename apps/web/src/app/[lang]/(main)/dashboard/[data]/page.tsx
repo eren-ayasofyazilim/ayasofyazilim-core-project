@@ -171,7 +171,7 @@ export default function Page({
 
   return (
     <Dashboard
-      withCards={true}
+      withCards={false}
       withTable={true}
       isLoading={isLoading}
       filterBy="name"
