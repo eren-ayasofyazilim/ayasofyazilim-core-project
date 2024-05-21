@@ -3,6 +3,7 @@ import { ZodSchema, z } from "zod";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
+export type ResourcesDto = LocalizationDto["resources"];
 
 export function isServerSide() {
   return typeof window === "undefined";

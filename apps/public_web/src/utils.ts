@@ -5,6 +5,7 @@ export function isServerSide() {
 }
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
+export type ResourcesDto = LocalizationDto["resources"];
 
 export async function getLocalizationResources(languageCode: string) {
   const response = await fetch(
