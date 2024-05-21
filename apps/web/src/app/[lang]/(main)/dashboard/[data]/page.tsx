@@ -10,6 +10,7 @@ import { createZodObject, getBaseLink } from "src/utils";
 import { tableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { toast } from "@/components/ui/sonner";
+import { $Volo_Saas_Host_Dtos_EditionCreateDto } from "@ayasofyazilim/saas/SaasService";
 
 async function controlledFetch(
   url: string,
@@ -29,6 +30,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
+    console.error(error)
     toast.error("Something went wrong");
   }
 }
@@ -38,6 +40,7 @@ const dataConfig: Record<string, any> = {
     formSchema: $Volo_Abp_Identity_IdentityRoleCreateDto,
     tableSchema: $Volo_Abp_Identity_IdentityRoleDto,
     formPositions: ["name", "isDefault", "isPublic"],
+    filterBy: "name",
     excludeList: ["id", "extraProperties", "concurrencyStamp"],
     cards: (items: any) => {
       return items?.slice(-4).map((item: any) => {
@@ -53,8 +56,26 @@ const dataConfig: Record<string, any> = {
   user: {
     formSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
     tableSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
+    filterBy: "email",
     formPositions: ["email", "password", "userName"],
     excludeList: ["password"],
+    cards: (items: any) => {
+      return items?.slice(-4).map((item: any) => {
+        return {
+          title: item.name,
+          content: item.userCount,
+          description: "Users",
+          footer: item.isPublic ? "Public" : "Not Public",
+        };
+      });
+    },
+  },
+  edition: {
+    filterBy: "displayName",
+    formSchema: $Volo_Saas_Host_Dtos_EditionCreateDto,
+    tableSchema: $Volo_Saas_Host_Dtos_EditionCreateDto,
+    formPositions: ["displayName"],
+    excludeList: ["planId"],
     cards: (items: any) => {
       return items?.slice(-4).map((item: any) => {
         return {
@@ -81,12 +102,20 @@ export default function Page({
     excludeList,
     cards,
     tableSchema: tableType,
+    filterBy,
   } = dataConfig[params.data];
   const rolesCards = cards(roles?.items);
 
   function getRoles() {
     function onData(data: any) {
-      setRoles(data);
+      let returnData = data;
+      if (!data?.items) {
+        returnData = {
+          totalCount: data.length,
+          items: data
+        };
+      };
+      setRoles(returnData);
       setIsLoading(false);
     }
     controlledFetch(
@@ -168,13 +197,12 @@ export default function Page({
     type: "Auto",
     data: { getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete },
   };
-
   return (
     <Dashboard
       withCards={false}
       withTable={true}
       isLoading={isLoading}
-      filterBy="name"
+      filterBy={filterBy}
       cards={rolesCards}
       data={roles?.items}
       // @ts-ignore
