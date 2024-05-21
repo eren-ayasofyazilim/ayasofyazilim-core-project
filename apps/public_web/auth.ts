@@ -5,6 +5,7 @@ const BASE_URL = process.env.AUTH_URL;
 const TOKEN_URL = BASE_URL + "/connect/token";
 export const options: NextAuthConfig = {
   debug: false,
+  trustHost: true,
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
