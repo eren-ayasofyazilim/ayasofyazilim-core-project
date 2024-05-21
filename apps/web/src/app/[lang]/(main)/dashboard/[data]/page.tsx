@@ -7,7 +7,7 @@ import {
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
-import { tableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import { columnsType, tableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { toast } from "@/components/ui/sonner";
 
@@ -164,9 +164,9 @@ export default function Page({
     );
   };
 
-  const columnsData = {
+  const columnsData: columnsType = {
     type: "Auto",
-    data: { getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete },
+    data: { callback:getRoles, autoFormArgs, tableType, excludeList, onEdit, onDelete },
   };
 
   return (
@@ -177,7 +177,6 @@ export default function Page({
       filterBy="name"
       cards={rolesCards}
       data={roles?.items}
-      // @ts-ignore
       columnsData={columnsData}
       action={action}
     />
