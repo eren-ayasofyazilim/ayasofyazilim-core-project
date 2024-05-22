@@ -10,9 +10,7 @@ export function isServerSide() {
 }
 
 export async function getLocalizationResources(languageCode: string) {
-  const response = await fetch(
-    getBaseLink(`/api/?lang=${languageCode}`, false)
-  );
+  const response = await fetch(getBaseLink(`api/?lang=${languageCode}`, false));
   return ((await response.json()) as LocalizationDto).resources;
 }
 
@@ -38,7 +36,7 @@ export function getBaseLink(
     location = location.slice(1);
   }
   const origin = isServerSide()
-    ? `${process.env.HOSTNAME}:${process.env.PORT}`
+    ? `http://${process.env.HOSTNAME}:${process.env.PORT}`
     : window.location.origin;
   const localePath = withLocale ? getLocale(locale) + "/" : "";
   return `${origin}/${localePath}${location}`;
