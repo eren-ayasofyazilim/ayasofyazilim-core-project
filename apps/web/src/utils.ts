@@ -38,7 +38,7 @@ export function getBaseLink(
     location = location.slice(1);
   }
   const origin = isServerSide()
-    ? process.env.PROJECT_BASE_URL
+    ? `${process.env.HOSTNAME}:${process.env.PORT}`
     : window.location.origin;
   const localePath = withLocale ? getLocale(locale) + "/" : "";
   return `${origin}/${localePath}${location}`;
