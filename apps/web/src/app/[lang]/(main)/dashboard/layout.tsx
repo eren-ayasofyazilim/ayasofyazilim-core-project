@@ -12,10 +12,14 @@ const navbarItems = [
   {
     name: "Users",
     id: "user",
+  },
+  {
+    name: "Editions",
+    id: "edition",
   }
 ];
 function isPathValid(path: string) {
-  return path === "role" || path === "user" || path === undefined;
+  return path === "role" || path === "user" || path==="edition" ||path === undefined;
 }
 type LayoutProps = {
   children: JSX.Element;
