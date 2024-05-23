@@ -51,6 +51,7 @@ type JsonSchema = {
   maxLength?: number;
   pattern?: RegExp;
   format?: "date-time";
+  nullable?: boolean;
 };
 
 type SchemaType = {
@@ -105,5 +106,6 @@ function createZodType(
       zodType = z.unknown();
   }
   if (!isRequired) zodType = zodType.optional();
+  if (schema.nullable) zodType = zodType.nullable();
   return zodType;
 }
