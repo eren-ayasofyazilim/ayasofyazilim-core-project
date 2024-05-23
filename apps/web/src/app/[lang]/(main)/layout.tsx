@@ -7,7 +7,7 @@ import MainLayout from "@repo/ayasofyazilim-ui/templates/main-layout";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import LanguageSelector from "components/language-selector";
-import { Presentation, SquareStack, User } from "lucide-react";
+import { Presentation, SquareStack, User, Users, FileBadge } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 
 type LayoutProps = {
@@ -59,10 +59,16 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink("profile", true),
     },
     {
-      label: "Pages",
-      name: resourcesMap.dashboard,
+      label: "Identity",
+      name: "Role",
       icon: <SquareStack size={15} className="mr-2" />,
       href: getBaseLink("dashboard/role", true),
+    },
+    {
+      label: "Identity",
+      name: "Users",
+      icon: <Users size={15} className="mr-2" />,
+      href: getBaseLink("dashboard/user", true),
     },
     {
       label: "Pages",

@@ -1,7 +1,7 @@
 import { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
 import { ApiError, Volo_Abp_Identity_IdentityRoleCreateDto, Volo_Abp_Identity_IdentityRoleUpdateDto } from "@ayasofyazilim/saas/IdentityService";
 import { NextRequest } from "next/server";
-import { getIdentityServiceClient } from "src/lib";
+import { getIdentityServiceClient, getSaasServiceClient } from "src/lib";
 
 type Clients = {
     [key: string]: any;
@@ -33,6 +33,16 @@ const clients: Clients = {
             put: async ({ id, requestBody }: { id: string, requestBody: any }) => user.putApiIdentityUsersById({ id, requestBody }),
             delete: async (id: string) => user.deleteApiIdentityUsersById({ id })
         }
+    },
+    edition: async (req: NextRequest) => {
+        const client = await getSaasServiceClient(req);
+        const edition = client.edition;
+        return {
+            get: async () => edition.getApiSaasEditionsAll(),
+            post: async (requestBody: any) => edition.postApiSaasEditions({ requestBody }),
+            put: async ({ id, requestBody }: { id: string, requestBody: any }) => edition.putApiSaasEditionsById({ id, requestBody }),
+            delete: async (id: string) => edition.deleteApiSaasEditionsById({ id })
+        }
     }
 }
 
@@ -52,7 +62,8 @@ export async function GET(request: NextRequest, { params }: { params: { data: st
             const message = body?.error?.message || error.statusText;
             return errorResponse(message, error.status);
         }
-        return errorResponse("Something went wrong");
+        let errorText = (error as any)?.statusText + " " + (error as any)?.status ;
+        return errorResponse(errorText, (error as any)?.status);
     }
 }
 
