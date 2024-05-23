@@ -48,6 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.error = token.error;
       const userData = (await getMyProfile(token.access_token)) as any;
       session.user = userData;
+      session.access_token = token.access_token;
       return session;
     },
     async jwt({ token, user }) {
