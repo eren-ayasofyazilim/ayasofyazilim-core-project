@@ -78,7 +78,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
   ];
   const userNavigation: userNavTypes = {
-    username: user?.name ?? undefined,
+    username: user?.userName ?? undefined,
     initials: user?.name?.substring(0, 2).toUpperCase(),
     email: user?.email ?? undefined,
     imageURL: "https://github.com/shadcn.png",
