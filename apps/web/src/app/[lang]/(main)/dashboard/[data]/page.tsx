@@ -8,7 +8,6 @@ import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/Id
 import { useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
 import { tableAction , columnsType  } from "@repo/ayasofyazilim-ui/molecules/tables";
-import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { toast } from "@/components/ui/sonner";
 import { $Volo_Saas_Host_Dtos_EditionCreateDto } from "@ayasofyazilim/saas/SaasService";
 import { $Volo_Saas_Host_Dtos_SaasTenantCreateDto, $Volo_Saas_Host_Dtos_SaasTenantDto } from "@ayasofyazilim/saas/SaasService";
@@ -96,6 +95,18 @@ const dataConfig: Record<string, any> = {
     filterBy: "name",
     excludeList: ["id", "concurrencyStamp"],
     FormType:"zod",
+    schema: {
+      name: z.string().max(64).min(0),
+      editionId: z.string().uuid().nullable().optional(),
+      adminEmailAddress: z.string().email().max(256).min(0),
+      adminPassword: z.string().max(128).min(0),
+      activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
+    },
+    editformSchema : z.object({
+      name: z.string().max(64).min(0),
+      editionId: z.string().uuid().nullable().optional(),
+      activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
+    }),
     enumFields: {
       activationState: ["Active", "Active with limited time", "Passive"],
     },
@@ -179,22 +190,8 @@ export default function Page({
 
 
   const formSchema = dataConfig[params.data].FormType === "zod"
-  ? z.object({
-      name: z.string().max(64).min(0),
-      editionId: z.string().uuid().nullable().optional(),
-      adminEmailAddress: z.string().email().max(256).min(0),
-      adminPassword: z.string().max(128).min(0),
-      activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
-    })
-  : createZodObject(schema, formPositions);
-
-
-  const editformSchema = z.object({
-    name: z.string().max(64).min(0),
-    editionId: z.string().uuid().nullable().optional(),
-    activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
-  });
-   
+  ? z.object(dataConfig[params.data].schema)
+  : createZodObject(schema, dataConfig[params.data].formPositions);
 
   const autoFormArgs = { formSchema };
 
@@ -267,7 +264,7 @@ export default function Page({
 
   const getCustomFormArgs = () => {
     if (dataConfig[params.data].FormType === "zod") {
-      return { formSchema: editformSchema };
+      return { formSchema: dataConfig[params.data].editformSchema};
     }
     return { formSchema };
   };
