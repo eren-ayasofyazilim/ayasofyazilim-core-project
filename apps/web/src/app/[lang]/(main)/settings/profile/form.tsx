@@ -9,7 +9,7 @@ import {
 } from "@ayasofyazilim/saas/AccountService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { editMyProfileServer } from "action";
+import { updateUserProfileServer } from "action";
 import { EditIcon } from "lucide-react";
 import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { useEffect, useState } from "react";
@@ -51,7 +51,7 @@ export default function ProfileForm({
     }
     setIsLoading(true);
 
-    editMyProfileServer(userDataForm as any).then((i) => {
+    updateUserProfileServer(userDataForm as any).then((i) => {
       if (i.status === 200) {
         toast.success("Başarılı.");
         setIsSubmitDisabled(true);
