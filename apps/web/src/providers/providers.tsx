@@ -6,6 +6,7 @@ import { LocaleProvider } from "./locale";
 import { UserProvider } from "./user";
 import AuthSession from "./auth";
 import { Toaster } from "@/components/ui/sonner";
+import { PermissionProvider } from "./permissions";
 
 export default function Providers({
   children,
@@ -20,11 +21,13 @@ export default function Providers({
     <div>
       <Toaster richColors />
       <AuthSession>
+      <PermissionProvider>
         <ConfigProvider>
           <TooltipProvider>
             <LocaleProvider lang={lang}>{children}</LocaleProvider>
           </TooltipProvider>
         </ConfigProvider>
+      </PermissionProvider>
       </AuthSession>
     </div>
   );
