@@ -1,6 +1,7 @@
 "use server";
 import { Volo_Abp_Account_UpdateProfileDto } from "@ayasofyazilim/saas/AccountService";
-import { getAccountServiceClient } from "src/lib";
+import { AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto } from "@ayasofyazilim/saas/ProjectService";
+import { getAccountServiceClient, getProjectServiceClient } from "src/lib";
 
 export async function updateUserProfileServer(
   body: Volo_Abp_Account_UpdateProfileDto
@@ -15,6 +16,27 @@ export async function updateUserProfileServer(
     return {
       status: 200,
       userData: response,
+    };
+  } catch (error: any) {
+    return {
+      status: error.status,
+      message: error?.body?.error?.details,
+    };
+  }
+}
+export async function createUpdateProjectServer(
+  body: AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto
+) {
+  "use server";
+  try {
+    const client = await getProjectServiceClient();
+    const response = await client.project.postApiProjectServiceProjects({
+      requestBody: body,
+    });
+
+    return {
+      status: 200,
+      projectData: response,
     };
   } catch (error: any) {
     return {
