@@ -7,12 +7,17 @@ import {
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
-import { tableAction , columnsType  } from "@repo/ayasofyazilim-ui/molecules/tables";
+import {
+  tableAction,
+  columnsType,
+} from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import { $Volo_Saas_Host_Dtos_EditionCreateDto } from "@ayasofyazilim/saas/SaasService";
-import { $Volo_Saas_Host_Dtos_SaasTenantCreateDto, $Volo_Saas_Host_Dtos_SaasTenantDto } from "@ayasofyazilim/saas/SaasService";
+import {
+  $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
+  $Volo_Saas_Host_Dtos_SaasTenantDto,
+} from "@ayasofyazilim/saas/SaasService";
 import { z } from "zod";
-
 
 async function controlledFetch(
   url: string,
@@ -32,7 +37,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     toast.error("Something went wrong");
   }
 }
@@ -94,18 +99,26 @@ const dataConfig: Record<string, any> = {
     tableSchema: $Volo_Saas_Host_Dtos_SaasTenantDto,
     filterBy: "name",
     excludeList: ["id", "concurrencyStamp"],
-    FormType:"zod",
+    FormType: "zod",
     schema: {
       name: z.string().max(64).min(0),
       editionId: z.string().uuid().nullable().optional(),
       adminEmailAddress: z.string().email().max(256).min(0),
       adminPassword: z.string().max(128).min(0),
-      activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
+      activationState: z.enum([
+        "Active",
+        "Active with limited time",
+        "Passive",
+      ]),
     },
-    editformSchema : z.object({
+    editformSchema: z.object({
       name: z.string().max(64).min(0),
       editionId: z.string().uuid().nullable().optional(),
-      activationState: z.enum(['Active', 'Active with limited time', 'Passive']),
+      activationState: z.enum([
+        "Active",
+        "Active with limited time",
+        "Passive",
+      ]),
     }),
     enumFields: {
       activationState: ["Active", "Active with limited time", "Passive"],
@@ -123,7 +136,10 @@ const dataConfig: Record<string, any> = {
   },
 };
 
-function convertEnumField(value: string | number, enumArray: string[]): string | number {
+function convertEnumField(
+  value: string | number,
+  enumArray: string[]
+): string | number {
   if (typeof value === "number") {
     return enumArray[value];
   } else {
@@ -131,19 +147,15 @@ function convertEnumField(value: string | number, enumArray: string[]): string |
   }
 }
 
-
-function transformData(data: any, dataType: string, direction: "toServer" | "toClient") {
+function transformData(data: any, dataType: string) {
   const { enumFields } = dataConfig[dataType] || {};
   if (enumFields) {
-    Object.entries(enumFields)
-      .filter(([field]) => data[field] !== undefined)
-      .forEach(([field, enumArray]) => {
-        data[field] = convertEnumField(data[field], enumArray as string[]);
-      });
+    Object.entries(enumFields).forEach(([field, enumArray]) => {
+      data[field] = convertEnumField(data[field], enumArray as string[]);
+    });
   }
   return data;
 }
-
 
 export default function Page({
   params,
@@ -170,11 +182,13 @@ export default function Page({
       if (!data?.items) {
         returnData = {
           totalCount: data.length,
-          items: data
+          items: data,
         };
-      };
-      const transformedData = returnData.items.map((item: { activationState: number }) => transformData(item, params.data, "toClient"));
-      setRoles({...returnData, items: transformedData });
+      }
+      const transformedData = returnData.items.map(
+        (item: { activationState: number }) => transformData(item, params.data)
+      );
+      setRoles({ ...returnData, items: transformedData });
       setIsLoading(false);
     }
     controlledFetch(
@@ -188,10 +202,10 @@ export default function Page({
     );
   }
 
-
-  const formSchema = dataConfig[params.data].FormType === "zod"
-  ? z.object(dataConfig[params.data].schema)
-  : createZodObject(schema, dataConfig[params.data].formPositions);
+  const formSchema =
+    dataConfig[params.data].FormType === "zod"
+      ? z.object(dataConfig[params.data].schema)
+      : createZodObject(schema, dataConfig[params.data].formPositions);
 
   const autoFormArgs = { formSchema };
 
@@ -200,7 +214,7 @@ export default function Page({
     description: "Create a new " + params.data,
     autoFormArgs,
     callback: async (e) => {
-      const transformedData = transformData(e, params.data, "toServer");
+      const transformedData = transformData(e, params.data);
       await controlledFetch(
         fetchLink,
         {
@@ -235,7 +249,7 @@ export default function Page({
   }, []);
 
   const onEdit = (data: any, row: any) => {
-    const transformedData = transformData(data, params.data, "toServer");
+    const transformedData = transformData(data, params.data);
     controlledFetch(
       fetchLink,
       {
@@ -264,14 +278,21 @@ export default function Page({
 
   const getCustomFormArgs = () => {
     if (dataConfig[params.data].FormType === "zod") {
-      return { formSchema: dataConfig[params.data].editformSchema};
+      return { formSchema: dataConfig[params.data].editformSchema };
     }
     return { formSchema };
   };
 
   const columnsData: columnsType = {
     type: "Auto",
-    data: { callback:getRoles, autoFormArgs: getCustomFormArgs(), tableType, excludeList, onEdit, onDelete },
+    data: {
+      callback: getRoles,
+      autoFormArgs: getCustomFormArgs(),
+      tableType,
+      excludeList,
+      onEdit,
+      onDelete,
+    },
   };
 
   return (
