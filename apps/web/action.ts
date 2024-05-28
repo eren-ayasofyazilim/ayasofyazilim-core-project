@@ -19,7 +19,7 @@ export async function updateUserProfileServer(
   } catch (error: any) {
     return {
       status: error.status,
-      message: error?.body?.error?.message,
+      message: error?.body?.error?.details,
     };
   }
 }
