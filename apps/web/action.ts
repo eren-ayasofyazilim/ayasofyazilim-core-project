@@ -2,7 +2,7 @@
 import { Volo_Abp_Account_UpdateProfileDto } from "@ayasofyazilim/saas/AccountService";
 import { getAccountServiceClient } from "src/lib";
 
-export async function editMyProfileServer(
+export async function updateUserProfileServer(
   body: Volo_Abp_Account_UpdateProfileDto
 ) {
   "use server";
