@@ -40,16 +40,17 @@ export default function Page() {
       fundableAmount: 0,
     });
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [error, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [projectId, setProjectId] = useState<string>();
 
   async function createNewProject() {
-    setFormSubmitted(true);
     setLoading(true);
     const response = await createUpdateProjectServer(formValues);
     if (response && response.status === 200 && response?.projectData) {
       setProjectId(response?.projectData?.id);
+    } else {
+      setError(response?.message);
     }
     setLoading(false);
   }
@@ -267,15 +268,16 @@ export default function Page() {
                   </CustomButton>
                 </div>
               )}
-              {formSubmitted && !loading && !projectId && (
+              {error && (
                 <div className="flex flex-col items-center">
                   <CircleXIcon size={120} color="#fe1265" />
                   <h3 className="mt-2">
                     Proje oluşturulurken bir hata oluştu.
                   </h3>
+                  <p className="text-sm text-muted-foreground">{error}</p>
                 </div>
               )}
-              {((formSubmitted && loading) || !formSubmitted) && (
+              {!projectId && !error && (
                 <>
                   <div className="flex flex-col gap-4 bg-white p-4">
                     <div className="flex items-end justify-between gap-4 w-full items-center">
