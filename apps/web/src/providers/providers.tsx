@@ -1,8 +1,6 @@
 "use client";
-import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useParams } from "next/navigation";
-import AuthSession from "./auth";
 import { ConfigProvider } from "./configuration";
 import { LocaleProvider } from "./locale";
 import AuthSession from "./auth";
