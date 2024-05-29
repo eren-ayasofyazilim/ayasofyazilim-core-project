@@ -1,5 +1,5 @@
 import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
-import { ZodSchema, z } from "zod";
+import { ZodSchema, ZodType, z } from "zod";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
@@ -45,13 +45,14 @@ export function getBaseLink(
 }
 
 type JsonSchema = {
-  type: "string" | "boolean" | "object";
+  type: "string" | "boolean" | "object" | "integer" | "number" | "array";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
   pattern?: RegExp;
-  format?: "date-time";
+  format?: "date-time" | "email" | "uuid" ;
   nullable?: boolean;
+  enum?: ReadonlyArray<string | number>;
 };
 
 type SchemaType = {
@@ -63,13 +64,21 @@ type SchemaType = {
 
 export function createZodObject(
   schema: SchemaType,
-  positions: Array<any>
-): ZodSchema<any> {
+  positions: Array<any>,
+  convertors?: Record<string, any>
+): ZodType {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
     const props = schema.properties[element];
     const isRequired = schema.required.includes(element);
-    let zodType = createZodType(props, isRequired);
+    let zodType;
+    if (convertors && Object.keys(convertors).includes(element)) {
+      const newProps = props;
+      newProps.enum = convertors[element];
+      zodType = createZodType(newProps, isRequired);
+    } else {
+      zodType = createZodType(props, isRequired);
+    }
     zodSchema[element] = zodType;
   });
   return z.object(zodSchema);
@@ -90,7 +99,7 @@ export function createZodObject(
 // })
 function createZodType(
   schema: JsonSchema,
-  isRequired: boolean
+  isRequired: boolean,
 ): ZodSchema<any> {
   let zodType;
   switch (schema.type) {
@@ -98,9 +107,19 @@ function createZodType(
       zodType = z.string();
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
       if (schema.pattern) zodType = zodType.regex(schema.pattern);
+      if (schema.format === "email") zodType = zodType.email();
+      if (schema.format === "date-time") zodType = z.date();
       break;
     case "boolean":
       zodType = z.boolean();
+      break;
+    case "integer":
+      if(schema.enum) {
+        let stringEnums = schema.enum.map((e) => e.toString());
+        zodType = z.enum(stringEnums as [string, ...string[]]);
+        break;
+      }
+      zodType = z.number().int();
       break;
     default:
       zodType = z.unknown();
