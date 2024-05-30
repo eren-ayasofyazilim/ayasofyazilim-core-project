@@ -229,7 +229,7 @@ export default function Page({
 
   function parseFormValues(schema: formModifier,data: any) {
     const newSchema = createZodObject(schema.schema, schema.formPositions || [], schema.convertors || {})  
-    if (!schema.convertors) return newSchema
+    if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
       const returnObject = { ...val };
       if (!schema.convertors) return returnObject;
