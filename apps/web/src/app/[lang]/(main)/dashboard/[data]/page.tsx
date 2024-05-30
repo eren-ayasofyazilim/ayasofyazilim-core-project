@@ -14,13 +14,19 @@ import {
   columnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-import { $Volo_Saas_Host_Dtos_EditionCreateDto, $Volo_Saas_Host_Dtos_EditionDto, $Volo_Saas_Host_Dtos_EditionUpdateDto, $Volo_Saas_Host_Dtos_SaasTenantUpdateDto } from "@ayasofyazilim/saas/SaasService";
+import {
+  $Volo_Saas_Host_Dtos_EditionCreateDto,
+  $Volo_Saas_Host_Dtos_EditionDto,
+  $Volo_Saas_Host_Dtos_EditionUpdateDto,
+  $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
+} from "@ayasofyazilim/saas/SaasService";
 import {
   $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
   $Volo_Saas_Host_Dtos_SaasTenantDto,
 } from "@ayasofyazilim/saas/SaasService";
 import { z } from "zod";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
+import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 
 async function controlledFetch(
   url: string,
@@ -50,14 +56,20 @@ type formModifier = {
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-}
+  dependencies?: Array<{
+    sourceField: string;
+    type: DependencyType;
+    targetField: string;
+    when: (value: any) => boolean;
+  }>;
+};
 
 type tableData = {
-  createFormSchema: formModifier,
-  editFormSchema: formModifier,
-  tableSchema: formModifier,
-  filterBy: string,
-}
+  createFormSchema: formModifier;
+  editFormSchema: formModifier;
+  tableSchema: formModifier;
+  filterBy: string;
+};
 
 const dataConfig: Record<string, tableData> = {
   role: {
@@ -108,11 +120,27 @@ const dataConfig: Record<string, tableData> = {
   tenant: {
     filterBy: "name",
     createFormSchema: {
-      formPositions: ["name", "editionId", "adminEmailAddress", "adminPassword", "activationState", "activationEndDate"],
+      formPositions: [
+        "name",
+        "editionId",
+        "adminEmailAddress",
+        "adminPassword",
+        "activationState",
+        "activationEndDate",
+      ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
       convertors: {
         activationState: ["Active", "Active with limited time", "Passive"],
       },
+      dependencies: [
+        {
+          sourceField: "activationState",
+          type: DependencyType.HIDES,
+          targetField: "activationEndDate",
+          when: (activationState: string) =>
+            activationState !== "Active with limited time",
+        },
+      ],
     },
     tableSchema: {
       schema: $Volo_Saas_Host_Dtos_SaasTenantDto,
@@ -122,11 +150,26 @@ const dataConfig: Record<string, tableData> = {
       },
     },
     editFormSchema: {
-      formPositions: ["name", "editionId", "activationState"],
+      formPositions: [
+        "name",
+        "editionId",
+        "activationState",
+        "activationEndDate",
+      ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
       convertors: {
         activationState: ["Active", "Active with limited time", "Passive"],
       },
+
+      dependencies: [
+        {
+          sourceField: "activationState",
+          type: DependencyType.HIDES,
+          targetField: "activationEndDate",
+          when: (activationState: string) =>
+            activationState !== "Active with limited time",
+        },
+      ],
     },
   },
 };
@@ -162,7 +205,7 @@ export default function Page({
       }
       const dataConvertors = dataConfig[params.data].tableSchema.convertors;
       let transformedData = returnData.items;
-      if(dataConvertors){
+      if (dataConvertors) {
         transformedData = returnData.items.map((item: any) => {
           const returnObject = { ...item };
           Object.entries(dataConvertors).forEach(([key, value]) => {
@@ -189,7 +232,12 @@ export default function Page({
     cta: "New " + params.data,
     description: "Create a new " + params.data,
     autoFormArgs: {
-      formSchema: createZodObject(createFormSchema.schema, createFormSchema.formPositions || [], createFormSchema.convertors || {}),
+      formSchema: createZodObject(
+        createFormSchema.schema,
+        createFormSchema.formPositions || [],
+        createFormSchema.convertors || {}
+      ),
+      dependencies: createFormSchema.dependencies,
     },
     callback: async (e) => {
       const transformedData = parseFormValues(createFormSchema, e);
@@ -226,9 +274,12 @@ export default function Page({
     getRoles();
   }, []);
 
-
-  function parseFormValues(schema: formModifier,data: any) {
-    const newSchema = createZodObject(schema.schema, schema.formPositions || [], schema.convertors || {})  
+  function parseFormValues(schema: formModifier, data: any) {
+    const newSchema = createZodObject(
+      schema.schema,
+      schema.formPositions || [],
+      schema.convertors || {}
+    );
     if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
       const returnObject = { ...val };
@@ -238,14 +289,14 @@ export default function Page({
       });
 
       return returnObject;
-    })
-    const parsed = transformedSchema.parse(data)
-    return parsed
-  };
+    });
+    const parsed = transformedSchema.parse(data);
+    return parsed;
+  }
 
   const onEdit = (data: any, row: any, editFormSchema: any) => {
-    const parsedData = parseFormValues(editFormSchema,data);
-    console.log(parsedData)
+    const parsedData = parseFormValues(editFormSchema, data);
+    console.log(parsedData);
     controlledFetch(
       fetchLink,
       {
@@ -272,12 +323,16 @@ export default function Page({
     );
   };
 
-  function convertZod (schema: formModifier) {
-    const newSchema = createZodObject(schema.schema, schema.formPositions || [], schema.convertors || {})
-    return newSchema
+  function convertZod(schema: formModifier) {
+    const newSchema = createZodObject(
+      schema.schema,
+      schema.formPositions || [],
+      schema.convertors || {}
+    );
+    return newSchema;
   }
-  const editFormSchema =dataConfig[params.data].editFormSchema
-  const editFormSchemaZod = convertZod(editFormSchema)
+  const editFormSchema = dataConfig[params.data].editFormSchema;
+  const editFormSchemaZod = convertZod(editFormSchema);
 
   const columnsData: columnsType = {
     type: "Auto",
@@ -285,10 +340,11 @@ export default function Page({
       callback: getRoles,
       autoFormArgs: {
         formSchema: editFormSchemaZod,
+        dependencies: dataConfig[params.data].editFormSchema.dependencies,
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],
-      onEdit: (data,row) => onEdit(data,row, editFormSchema),
+      onEdit: (data, row) => onEdit(data, row, editFormSchema),
       onDelete,
     },
   };
