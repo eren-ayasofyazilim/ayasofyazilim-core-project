@@ -8,7 +8,7 @@ import { getPermission } from "action";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import LanguageSelector from "components/language-selector";
-import { Presentation, SquareStack, User, Users, FileBadge } from "lucide-react";
+import { Presentation, SquareStack, User, Users } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 
 type LayoutProps = {
@@ -21,7 +21,6 @@ export default async function Layout({ children, params }: LayoutProps) {
   const resources = await getLocalizationResources(params.lang);
   const session = await auth();
   const user = session?.user;
-
   const resourcesMap = {
     profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
     dashboard:
@@ -58,36 +57,36 @@ export default async function Layout({ children, params }: LayoutProps) {
       label: "Pages",
       name: resourcesMap.profile,
       icon: <User size={15} className="mr-2" />,
-      href: getBaseLink("profile", true),
+      href: getBaseLink("profile", true, params.lang),
       permission: true,
     },
     {
       label: "Identity",
       name: "Role",
       icon: <SquareStack size={15} className="mr-2" />,
-      href: getBaseLink("dashboard/role", true),
+      href: getBaseLink("dashboard/role", true, params.lang),
       permission: "AbpIdentity.Roles",
     },
     {
       label: "Identity",
       name: "Users",
       icon: <Users size={15} className="mr-2" />,
-      href: getBaseLink("dashboard/user", true),
+      href: getBaseLink("dashboard/user", true, params.lang),
       permission: "AbpIdentity.Users",
     },
     {
       label: "Pages",
       name: "Projects",
       icon: <Presentation size={15} className="mr-2" />,
-      href: getBaseLink("projects", true),
-      permission: true
+      href: getBaseLink("projects", true, params.lang),
+      permission: true,
     },
     {
       label: "Settings",
       name: "Settings",
       icon: <Presentation size={15} className="mr-2" />,
-      href: getBaseLink("settings/profile", true),
-      permission: true
+      href: getBaseLink("settings/profile", true, params.lang),
+      permission: true,
     },
   ];
   const exampleMenus = exampleMenusFull.filter((menu) => {
@@ -95,8 +94,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       if (typeof menu.permission === "boolean") {
         return menu.permission;
       }
-      if (permission)
-        return permission[menu.permission] || false;
+      if (permission) return permission[menu.permission] || false;
     }
     return false;
   });
