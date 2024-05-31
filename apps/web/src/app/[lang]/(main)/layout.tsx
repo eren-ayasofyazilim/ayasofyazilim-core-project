@@ -82,6 +82,17 @@ export default async function Layout({ children, params }: LayoutProps) {
       permission: true,
     },
     {
+      label: "Projects",
+      name: "Sample Project",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink(
+        "projects/cb682186-91fb-623c-e9d6-3a12e0a6dd9a",
+        true,
+        params.lang
+      ),
+      permission: true,
+    },
+    {
       label: "Settings",
       name: "Settings",
       icon: <Presentation size={15} className="mr-2" />,
