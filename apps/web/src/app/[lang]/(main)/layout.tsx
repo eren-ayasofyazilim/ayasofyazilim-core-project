@@ -75,10 +75,10 @@ export default async function Layout({ children, params }: LayoutProps) {
       permission: "AbpIdentity.Users",
     },
     {
-      label: "Pages",
-      name: "Projects",
+      label: "Projects",
+      name: "New Project",
       icon: <Presentation size={15} className="mr-2" />,
-      href: getBaseLink("projects", true, params.lang),
+      href: getBaseLink("projects/new", true, params.lang),
       permission: true,
     },
     {
