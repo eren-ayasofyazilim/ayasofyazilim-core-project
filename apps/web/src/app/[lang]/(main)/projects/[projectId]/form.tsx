@@ -98,7 +98,6 @@ export default function ProjectForm({
       projectResource["AdditionalFundingRateInfo"] ||
       "The rate of additional funding that will be collected in case your project is overfunded.",
   };
-  console.log(projectData);
   return (
     <Accordion
       type="single"

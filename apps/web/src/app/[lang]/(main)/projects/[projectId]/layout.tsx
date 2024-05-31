@@ -1,7 +1,6 @@
 "use client";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname } from "next/navigation";
-import React from "react";
 import { getBaseLink } from "src/utils";
 
 const navbarItems = [
@@ -20,7 +19,6 @@ const navbarItems = [
 export default function Layout({ children }: { children: JSX.Element }) {
   const pathname = usePathname();
   const path = pathname.split("profile/")?.[1] ?? "profile";
-
   return (
     <SectionLayout
       sections={navbarItems}

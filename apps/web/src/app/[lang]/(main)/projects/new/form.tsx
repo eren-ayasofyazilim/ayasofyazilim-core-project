@@ -26,7 +26,7 @@ import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
 import { createUpdateProjectServer } from "action";
-import { CircleCheckBigIcon, CircleXIcon, PlusIcon } from "lucide-react";
+import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";

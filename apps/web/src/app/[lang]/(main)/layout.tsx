@@ -76,6 +76,13 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
     {
       label: "Projects",
+      name: "Projects",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink("projects", true, params.lang),
+      permission: true,
+    },
+    {
+      label: "Projects",
       name: "New Project",
       icon: <Presentation size={15} className="mr-2" />,
       href: getBaseLink("projects/new", true, params.lang),
