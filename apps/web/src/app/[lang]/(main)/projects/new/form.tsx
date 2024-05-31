@@ -226,7 +226,7 @@ export default function NewProjectForm({ resources }: INewProjectFormProps) {
             <div className="relative">
               <NumericInput
                 id="fundableAmount"
-                label={languageData["AdditionalFunding"]}
+                label={languageData["FundableAmount"]}
                 max={1000000}
                 min={0}
                 subLabel={""}
@@ -238,7 +238,7 @@ export default function NewProjectForm({ resources }: INewProjectFormProps) {
                 }}
               />
               <p className="text-[0.8rem] text-muted-foreground mt-2">
-                {languageData["AdditionalFundingInfo"]}
+                {languageData["FundableAmountInfo"]}
               </p>
             </div>
           </div>

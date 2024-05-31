@@ -1,8 +1,8 @@
 "use server";
 
-import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { getProjectServiceClient } from "src/lib";
+import { getLocalizationResources } from "src/utils";
+import ProjectForm from "./form";
 
 async function saveProjectSectionRelation(
   id: string,
@@ -34,7 +34,8 @@ async function saveProjectSectionRelation(
 
 export default async function Page({ params }: any) {
   const { projectId } = params;
-
+  const resources = await getLocalizationResources(params.lang);
+  if (!resources?.["ProjectService"].texts) return null;
   async function getData() {
     "use server";
     const client =
@@ -49,31 +50,13 @@ export default async function Page({ params }: any) {
   if (!projectData) {
     return null;
   }
-
-  // @ts-ignore ->demo sonrası: saas güncellenecek
-  const sectionsData = projectData.projectSectionRelationDetails?.map(
-    (section: any) => ({
-      key: section.name ?? "",
-      id: section.name ?? "",
-      name: section.name ?? "",
-      value: (
-        <TipTapEditor
-          editorContent={JSON.parse(section.value ?? "{}")}
-          canEditable={true}
-          onSaveFunction={saveProjectSectionRelation}
-          editorId={section.id ?? ""}
-        />
-      ),
-    })
-  );
+  const projectResource = resources["ProjectService"]?.texts;
+  const uiResource = resources["AbpUi"]?.texts;
+  if (!projectResource || !uiResource) return;
 
   return (
-    <div className="flex flex-col w-full">
-      <SectionLayout
-        sections={sectionsData ?? []}
-        defaultActiveSectionId={sectionsData?.[0]?.id ?? ""}
-        openOnNewPage={false}
-      />
+    <div className="relative w-full container" id="details">
+      <ProjectForm resources={resources} projectData={projectData} />
     </div>
   );
 }
