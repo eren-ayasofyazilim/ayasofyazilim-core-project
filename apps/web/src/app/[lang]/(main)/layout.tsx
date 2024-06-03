@@ -131,6 +131,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       icon: <FileBadge className="text-slate-500 w-4" />,
     },
     {
+      key: "Details",
+      title: "Details",
+      href: "/details",
+      icon: <FileBadge className="text-slate-500 w-4" />,
+    },
+    {
       key: "Companies",
       title: "Companies",
       href: "/Companies",
