@@ -60,7 +60,7 @@ export type JsonSchema = {
   format?: "date-time" | "email" | "uuid";
   description?: string | undefined;
   nullable?: boolean;
-  enum?: ReadonlyArray<string | number>;
+  enum?: any;
   default?: any;
   properties?: Record<string, JsonSchema>;
   displayName: string;
@@ -138,9 +138,8 @@ function createZodType(
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
       if (schema.pattern) zodType = zodType.regex(schema.pattern);
       if (schema.format === "email") zodType = zodType.email();
-      if (schema.format === "date-time") zodType = z.coerce.date();
-
       if (schema.default) zodType = zodType.default(schema.default);
+      if (schema.format === "date-time") zodType = z.coerce.date();
       break;
     case "select":
       zodType = z.enum(schema.enum);
@@ -152,7 +151,7 @@ function createZodType(
       break;
     case "integer":
       if (schema.enum) {
-        let stringEnums = schema.enum.map((e) => e.toString());
+        let stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
       }
@@ -160,7 +159,7 @@ function createZodType(
       break;
     case "integer":
       if (schema.enum) {
-        let stringEnums = schema.enum.map((e) => e.toString());
+        let stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
       }
