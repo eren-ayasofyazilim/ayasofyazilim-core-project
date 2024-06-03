@@ -68,7 +68,6 @@ function getLocale(request: NextRequest) {
 export const middleware = auth(async (request: NextAuthRequest) => {
   const hostURL = "http://" + request.headers.get("host") || "";
 
-
   function isUserAuthorized(request: NextAuthRequest) {
     return !!request.auth;
   }
@@ -77,10 +76,12 @@ export const middleware = auth(async (request: NextAuthRequest) => {
   }
   function redirectToLogin(locale: string) {
     return NextResponse.redirect(new URL(`/${locale}/login`, hostURL));
-    return NextResponse.redirect(new URL(`/${locale}/login`, hostURL));
   }
   function redirectToProfile(locale: string) {
     return NextResponse.redirect(new URL(`/${locale}/profile`, hostURL));
+  }
+  function redirectToRoot(locale: string) {
+    return NextResponse.redirect(new URL(`/${locale}/`, hostURL));
   }
   function allowURL(locale: string, request: NextRequest) {
     const response = NextResponse.next();
@@ -98,14 +99,13 @@ export const middleware = auth(async (request: NextAuthRequest) => {
   if (isAuthorized) {
     // If the user is authorized and the path is unauthorized specific, redirect to profile
     if (authPages.includes(pathName)) {
-      return redirectToHome(locale);
+      return redirectToRoot(locale);
     }
 
     if (isPathHasLocale(request.nextUrl.pathname)) {
       return allowURL(locale, request);
     }
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
     );
   }
@@ -117,7 +117,6 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     }
 
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
     );
   }
