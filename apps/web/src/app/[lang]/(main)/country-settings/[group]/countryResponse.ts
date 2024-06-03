@@ -44,7 +44,13 @@ export const countrySettingsResponse: CountrySettingDto = {
               parentName: null,
               value: null,
               defaultValue: null,
-              bonds: [],
+              bonds: [
+                {
+                  key: "ChildToggle",
+                  pattern: "^false$",
+                  type: "DISABLES",
+                },
+              ],
               subItems: [
                 {
                   isEnabled: true,
