@@ -1,7 +1,5 @@
-"use server";
-
 import type { Metadata } from "next";
-import { getLocalizationResources } from "src/utils";
+import { Inter } from "next/font/google";
 import Providers from "../../providers/providers";
 import "./../globals.css";
 
@@ -10,12 +8,12 @@ interface IRootLayoutProps {
   children: JSX.Element;
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: IRootLayoutProps) {
-  const resources = await getLocalizationResources(params.lang);
-  if (!resources) return <></>;
-
-  return <Providers resources={resources}>{children}</Providers>;
+export default function RootLayout({ children, params }: IRootLayoutProps) {
+  return (
+    <html>
+      <body className={inter.className}>
+        <Providers lang={params.lang}>{children}</Providers>
+      </body>
+    </html>
+  );
 }

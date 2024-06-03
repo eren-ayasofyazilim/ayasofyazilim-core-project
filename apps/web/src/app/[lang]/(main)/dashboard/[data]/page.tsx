@@ -3,6 +3,8 @@ import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import {
   $Volo_Abp_Identity_IdentityRoleDto,
   $Volo_Abp_Identity_IdentityRoleCreateDto,
+  $Volo_Abp_Identity_IdentityRoleUpdateDto,
+  $Volo_Abp_Identity_IdentityUserUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -12,12 +14,19 @@ import {
   columnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-import { $Volo_Saas_Host_Dtos_EditionCreateDto } from "@ayasofyazilim/saas/SaasService";
+import {
+  $Volo_Saas_Host_Dtos_EditionCreateDto,
+  $Volo_Saas_Host_Dtos_EditionDto,
+  $Volo_Saas_Host_Dtos_EditionUpdateDto,
+  $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
+} from "@ayasofyazilim/saas/SaasService";
 import {
   $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
   $Volo_Saas_Host_Dtos_SaasTenantDto,
 } from "@ayasofyazilim/saas/SaasService";
 import { z } from "zod";
+import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
+import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 
 async function controlledFetch(
   url: string,
@@ -38,100 +47,129 @@ async function controlledFetch(
     }
   } catch (error) {
     console.error(error);
-    toast.error("Something went wrong");
+    toast.error("Something went wrong 3 ");
   }
 }
 
-const dataConfig: Record<string, any> = {
+type formModifier = {
+  formPositions?: string[];
+  excludeList?: string[];
+  schema: any;
+  convertors?: Record<string, any>;
+  dependencies?: Array<{
+    sourceField: string;
+    type: DependencyType;
+    targetField: string;
+    when: (value: any) => boolean;
+  }>;
+};
+
+type tableData = {
+  createFormSchema: formModifier;
+  editFormSchema: formModifier;
+  tableSchema: formModifier;
+  filterBy: string;
+};
+
+const dataConfig: Record<string, tableData> = {
   role: {
-    formSchema: $Volo_Abp_Identity_IdentityRoleCreateDto,
-    tableSchema: $Volo_Abp_Identity_IdentityRoleDto,
-    formPositions: ["name", "isDefault", "isPublic"],
-    filterBy: "name",
-    excludeList: ["id", "extraProperties", "concurrencyStamp"],
-    cards: (items: any) => {
-      return items?.slice(-4).map((item: any) => {
-        return {
-          title: item.name,
-          content: item.userCount,
-          description: "Users",
-          footer: item.isPublic ? "Public" : "Not Public",
-        };
-      });
+    createFormSchema: {
+      formPositions: ["name", "isDefault", "isPublic"],
+      schema: $Volo_Abp_Identity_IdentityRoleCreateDto,
     },
+    editFormSchema: {
+      formPositions: ["name", "isDefault", "isPublic"],
+      schema: $Volo_Abp_Identity_IdentityRoleUpdateDto,
+    },
+    tableSchema: {
+      excludeList: ["id", "extraProperties", "concurrencyStamp"],
+      schema: $Volo_Abp_Identity_IdentityRoleDto,
+    },
+    filterBy: "name",
   },
   user: {
-    formSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
-    tableSchema: $Volo_Abp_Identity_IdentityUserCreateDto,
-    filterBy: "email",
-    formPositions: ["email", "password", "userName"],
-    excludeList: ["password"],
-    cards: (items: any) => {
-      return items?.slice(-4).map((item: any) => {
-        return {
-          title: item.name,
-          content: item.userCount,
-          description: "Users",
-          footer: item.isPublic ? "Public" : "Not Public",
-        };
-      });
+    createFormSchema: {
+      formPositions: ["email", "password", "userName"],
+      schema: $Volo_Abp_Identity_IdentityUserCreateDto,
     },
+    editFormSchema: {
+      formPositions: ["email", "userName"],
+      schema: $Volo_Abp_Identity_IdentityUserUpdateDto,
+    },
+    tableSchema: {
+      excludeList: ["id", "extraProperties", "concurrencyStamp"],
+      schema: $Volo_Abp_Identity_IdentityUserDto,
+    },
+    filterBy: "email",
   },
   edition: {
     filterBy: "displayName",
-    formSchema: $Volo_Saas_Host_Dtos_EditionCreateDto,
-    tableSchema: $Volo_Saas_Host_Dtos_EditionCreateDto,
-    formPositions: ["displayName"],
-    excludeList: ["planId"],
-    cards: (items: any) => {
-      return items?.slice(-4).map((item: any) => {
-        return {
-          title: item.name,
-          content: item.userCount,
-          description: "Users",
-          footer: item.isPublic ? "Public" : "Not Public",
-        };
-      });
+    createFormSchema: {
+      formPositions: ["displayName"],
+      schema: $Volo_Saas_Host_Dtos_EditionCreateDto,
+    },
+    editFormSchema: {
+      formPositions: ["displayName"],
+      schema: $Volo_Saas_Host_Dtos_EditionUpdateDto,
+    },
+    tableSchema: {
+      excludeList: ["planId", "id", "planId", "concurrencyStamp"],
+      schema: $Volo_Saas_Host_Dtos_EditionDto,
     },
   },
   tenant: {
-    formSchema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
-    tableSchema: $Volo_Saas_Host_Dtos_SaasTenantDto,
     filterBy: "name",
-    excludeList: ["id", "concurrencyStamp"],
-    FormType: "zod",
-    schema: {
-      name: z.string().max(64).min(0),
-      editionId: z.string().uuid().nullable().optional(),
-      adminEmailAddress: z.string().email().max(256).min(0),
-      adminPassword: z.string().max(128).min(0),
-      activationState: z.enum([
-        "Active",
-        "Active with limited time",
-        "Passive",
-      ]),
+    createFormSchema: {
+      formPositions: [
+        "name",
+        "editionId",
+        "adminEmailAddress",
+        "adminPassword",
+        "activationState",
+        "activationEndDate",
+      ],
+      schema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
+      convertors: {
+        activationState: ["Active", "Active with limited time", "Passive"],
+      },
+      dependencies: [
+        {
+          sourceField: "activationState",
+          type: DependencyType.HIDES,
+          targetField: "activationEndDate",
+          when: (activationState: string) =>
+            activationState !== "Active with limited time",
+        },
+      ],
     },
-    editformSchema: z.object({
-      name: z.string().max(64).min(0),
-      editionId: z.string().uuid().nullable().optional(),
-      activationState: z.enum([
-        "Active",
-        "Active with limited time",
-        "Passive",
-      ]),
-    }),
-    enumFields: {
-      activationState: ["Active", "Active with limited time", "Passive"],
+    tableSchema: {
+      schema: $Volo_Saas_Host_Dtos_SaasTenantDto,
+      excludeList: ["id", "concurrencyStamp", "editionId"],
+      convertors: {
+        activationState: ["Active", "Active with limited time", "Passive"],
+      },
     },
-    cards: (items: any) => {
-      return items?.slice(-4).map((item: any) => {
-        return {
-          title: item.name,
-          content: item.userCount,
-          description: "Users",
-          footer: item.isPublic ? "Public" : "Not Public",
-        };
-      });
+    editFormSchema: {
+      formPositions: [
+        "name",
+        "editionId",
+        "activationState",
+        "activationEndDate",
+      ],
+      schema: $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
+      convertors: {
+        activationState: ["Active", "Active with limited time", "Passive"],
+      },
+
+      dependencies: [
+        {
+          sourceField: "activationState",
+          type: DependencyType.HIDES,
+          targetField: "activationEndDate",
+          when: (activationState: string) =>
+            activationState !== "Active with limited time",
+        },
+      ],
     },
   },
 };
@@ -147,16 +185,6 @@ function convertEnumField(
   }
 }
 
-function transformData(data: any, dataType: string) {
-  const { enumFields } = dataConfig[dataType] || {};
-  if (enumFields) {
-    Object.entries(enumFields).forEach(([field, enumArray]) => {
-      data[field] = convertEnumField(data[field], enumArray as string[]);
-    });
-  }
-  return data;
-}
-
 export default function Page({
   params,
 }: {
@@ -165,16 +193,6 @@ export default function Page({
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
-  const {
-    formSchema: schema,
-    formPositions,
-    excludeList,
-    cards,
-    tableSchema: tableType,
-    filterBy,
-  } = dataConfig[params.data];
-
-  const rolesCards = cards(roles?.items);
 
   function getRoles() {
     function onData(data: any) {
@@ -185,9 +203,17 @@ export default function Page({
           items: data,
         };
       }
-      const transformedData = returnData.items.map(
-        (item: { activationState: number }) => transformData(item, params.data)
-      );
+      const dataConvertors = dataConfig[params.data].tableSchema.convertors;
+      let transformedData = returnData.items;
+      if (dataConvertors) {
+        transformedData = returnData.items.map((item: any) => {
+          const returnObject = { ...item };
+          Object.entries(dataConvertors).forEach(([key, value]) => {
+            returnObject[key] = convertEnumField(returnObject[key], value);
+          });
+          return returnObject;
+        });
+      }
       setRoles({ ...returnData, items: transformedData });
       setIsLoading(false);
     }
@@ -201,20 +227,20 @@ export default function Page({
       false
     );
   }
-
-  const formSchema =
-    dataConfig[params.data].FormType === "zod"
-      ? z.object(dataConfig[params.data].schema)
-      : createZodObject(schema, dataConfig[params.data].formPositions);
-
-  const autoFormArgs = { formSchema };
-
+  const createFormSchema = dataConfig[params.data].createFormSchema;
   const action: tableAction = {
     cta: "New " + params.data,
     description: "Create a new " + params.data,
-    autoFormArgs,
+    autoFormArgs: {
+      formSchema: createZodObject(
+        createFormSchema.schema,
+        createFormSchema.formPositions || [],
+        createFormSchema.convertors || {}
+      ),
+      dependencies: createFormSchema.dependencies,
+    },
     callback: async (e) => {
-      const transformedData = transformData(e, params.data);
+      const transformedData = parseFormValues(createFormSchema, e);
       await controlledFetch(
         fetchLink,
         {
@@ -248,15 +274,36 @@ export default function Page({
     getRoles();
   }, []);
 
-  const onEdit = (data: any, row: any) => {
-    const transformedData = transformData(data, params.data);
+  function parseFormValues(schema: formModifier, data: any) {
+    const newSchema = createZodObject(
+      schema.schema,
+      schema.formPositions || [],
+      schema.convertors || {}
+    );
+    if (!schema.convertors) return newSchema.parse(data);
+    const transformedSchema = newSchema.transform((val) => {
+      const returnObject = { ...val };
+      if (!schema.convertors) return returnObject;
+      Object.entries(schema.convertors).forEach(([key, value]) => {
+        returnObject[key] = convertEnumField(returnObject[key], value);
+      });
+
+      return returnObject;
+    });
+    const parsed = transformedSchema.parse(data);
+    return parsed;
+  }
+
+  const onEdit = (data: any, row: any, editFormSchema: any) => {
+    const parsedData = parseFormValues(editFormSchema, data);
+    console.log(parsedData);
     controlledFetch(
       fetchLink,
       {
         method: "PUT",
         body: JSON.stringify({
           id: row.id,
-          requestBody: JSON.stringify(transformedData),
+          requestBody: JSON.stringify(parsedData),
         }),
       },
       getRoles,
@@ -276,21 +323,28 @@ export default function Page({
     );
   };
 
-  const getCustomFormArgs = () => {
-    if (dataConfig[params.data].FormType === "zod") {
-      return { formSchema: dataConfig[params.data].editformSchema };
-    }
-    return { formSchema };
-  };
+  function convertZod(schema: formModifier) {
+    const newSchema = createZodObject(
+      schema.schema,
+      schema.formPositions || [],
+      schema.convertors || {}
+    );
+    return newSchema;
+  }
+  const editFormSchema = dataConfig[params.data].editFormSchema;
+  const editFormSchemaZod = convertZod(editFormSchema);
 
   const columnsData: columnsType = {
     type: "Auto",
     data: {
       callback: getRoles,
-      autoFormArgs: getCustomFormArgs(),
-      tableType,
-      excludeList,
-      onEdit,
+      autoFormArgs: {
+        formSchema: editFormSchemaZod,
+        dependencies: dataConfig[params.data].editFormSchema.dependencies,
+      },
+      tableType: dataConfig[params.data].tableSchema.schema,
+      excludeList: dataConfig[params.data].tableSchema.excludeList || [],
+      onEdit: (data, row) => onEdit(data, row, editFormSchema),
       onDelete,
     },
   };
@@ -300,8 +354,8 @@ export default function Page({
       withCards={false}
       withTable={true}
       isLoading={isLoading}
-      filterBy={filterBy}
-      cards={rolesCards}
+      filterBy={dataConfig[params.data].filterBy}
+      cards={[]}
       data={roles?.items}
       columnsData={columnsData}
       action={action}
