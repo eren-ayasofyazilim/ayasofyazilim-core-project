@@ -25,6 +25,8 @@ export default async function Layout({ children, params }: LayoutProps) {
     profile: resources?.AbpUi?.texts?.PersonalInfo || "Profile",
     dashboard:
       resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
+    Companies:
+      resources?.AbpForDeploy?.texts?.["Menu:Companies"] || "Companies",
   };
 
   const navigationLinks = [
@@ -33,8 +35,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       text: resourcesMap.profile,
     },
     {
-      href: "/dashboard",
+      href: "/dashboard/role",
       text: resourcesMap.dashboard,
+    },
+    {
+      href: "/Companies/Merchants",
+      text: resourcesMap.Companies,
     },
     {
       title: "Pages",
@@ -43,6 +49,11 @@ export default async function Layout({ children, params }: LayoutProps) {
           title: resourcesMap.dashboard,
           href: "/dashboard",
           description: "Show the user dashboard.",
+        },
+        {
+          title: resourcesMap.Companies,
+          href: "/Companies",
+          description: "Show the user Companies.",
         },
         {
           title: resourcesMap.profile,
@@ -112,6 +123,11 @@ export default async function Layout({ children, params }: LayoutProps) {
       {
         href: "dashboard",
         text: resourcesMap.dashboard,
+        shortcut: "⌘D",
+      },
+      {
+        href: "dashboardd",
+        text: resourcesMap.Companies,
         shortcut: "⌘D",
       },
     ],
