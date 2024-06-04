@@ -29,15 +29,10 @@ const navbarItems = [
   },
 ];
 function isPathValid(path: string) {
-  return (
-    path === "merchants" ||
-    path === "refund_points" ||
-    path === "customs" ||
-    path === "tax_free" ||
-    path === "tax_offices" ||
-    path === undefined
-  );
+  const validPaths = navbarItems.map((item) => item.id);
+  return validPaths.includes(path) || path === undefined;
 }
+
 type LayoutProps = {
   children: JSX.Element;
 };
