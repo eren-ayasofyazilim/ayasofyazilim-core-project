@@ -1,6 +1,6 @@
 "use client";
 
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-company";
+import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -29,15 +29,10 @@ const navbarItems = [
   },
 ];
 function isPathValid(path: string) {
-  return (
-    path === "merchants" ||
-    path === "refund_points" ||
-    path === "customs" ||
-    path === "tax_free" ||
-    path === "tax_offices" ||
-    path === undefined
-  );
+  const validPaths = navbarItems.map((item) => item.id);
+  return validPaths.includes(path) || path === undefined;
 }
+
 type LayoutProps = {
   children: JSX.Element;
 };
