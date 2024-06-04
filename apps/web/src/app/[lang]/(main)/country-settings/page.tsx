@@ -1,8 +1,8 @@
-import { redirect } from "next/navigation";
+"use server";
+
+import { RedirectType, permanentRedirect, redirect } from "next/navigation";
 import { getBaseLink } from "src/utils";
 
-export default function Page() {
-  redirect(
-    getBaseLink("/country-settings/CountryManagement.IssuingFieldManagement")
-  );
+export default async function Page() {
+  permanentRedirect(getBaseLink("country-settings/home"), RedirectType.push);
 }
