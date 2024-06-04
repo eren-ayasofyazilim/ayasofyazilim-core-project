@@ -104,7 +104,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     imageURL: "https://github.com/shadcn.png",
     menuLinks: [
       {
-        href: "settings",
+        href: "settings/test",
         title: resourcesMap.settings,
       },
       {
@@ -146,6 +146,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       key: "countrySettings",
       title: "Country Settings",
       href: "/country-settings",
+      icon: <SlidersHorizontal className="text-slate-500 w-4" />,
+    },
+    {
+      key: "settings",
+      title: "Settings",
+      href: "/settings",
       icon: <SlidersHorizontal className="text-slate-500 w-4" />,
     },
   ];
