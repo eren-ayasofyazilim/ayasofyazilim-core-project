@@ -110,12 +110,7 @@ export function createZodObject(
         newProps.enum = convertors[element].data;
         console.log("New Props: ", newProps, " element", element);
         if (typeof newProps.enum === "function") {
-          newProps.enum = newProps.enum().then((data: any) => data.json()).then((data: any) => { 
-            console.log("Data from function", data);
-            newProps.enum = data.map((e: any) => e.id);
-          }
-          );
-          console.log("Data after call", newProps.enum);
+          console.log("Function");
         }
         zodType = createZodType(newProps, isRequired);
       } else {

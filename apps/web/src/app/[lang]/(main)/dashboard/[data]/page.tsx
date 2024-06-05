@@ -136,7 +136,7 @@ const dataConfig: Record<string, tableData> = {
         },
         editionId: {
           data: () => {
-            return fetch(getBaseLink("api/admin/edition")).then((data) => data.json()).then((data) => data.map((e: any) => e.id));
+            return fetch(getBaseLink("api/admin/edition")).then((data) => data.json());
           },
           get: "displayName",
           post: "id",
@@ -163,7 +163,7 @@ const dataConfig: Record<string, tableData> = {
         },
         editionId: {
           data: async () => {
-            return await fetch(getBaseLink("api/admin/edition")).then((data) => data.json()).then((data) => data.map((e: any) => e.id));
+            return await fetch(getBaseLink("api/admin/edition")).then((data) => data.json());
           },
           get: "displayName",
           post: "id",
@@ -211,14 +211,16 @@ function convertEnumField(
   }
 }
 
-async function convertAsyncField(value: object) {
+async function convertAsyncField(value: object, formData: any) {
   if (typeof value.data === "function") {
     console.log("function called");
     const response = await value.data();
     const data = await response.json();
     value.data = data;
   }
-  return [12,123,123]
+  console.log("convertAsyncField ", value);
+  console.log("convertAsyncField called page ", formData)
+  return 123124;
 }
 
 export default   function Page({
@@ -227,22 +229,29 @@ export default   function Page({
   params: { data: string };
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
-  const [serverData, setServerData] = useState<Record<string, any>>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
+  const [formData, setFormData] = useState<tableData>(dataConfig[params.data]);
   async function processConvertors(){
-    const dataConvertors = dataConfig[params.data].createFormSchema.convertors;
+    let tempData = formData;
+    const dataConvertors = tempData.createFormSchema.convertors;
     if(dataConvertors){
       for (const [key, value] of Object.entries(dataConvertors)) {
         if (value.type === "async") {
           console.log("Async called page for of", key, value);
           let tempValue = await value.data();
-          if (dataConfig[params.data].createFormSchema.convertors) {
-            dataConfig[params.data].createFormSchema.convertors[key] = tempValue
+          console.log("Temp Value before value.get", tempValue, key, value.get)
+          tempValue = await tempValue.map((item: any) => item[value.get]);
+          console.log("Temp Value after", tempValue, key, value)
+          if (tempData.createFormSchema.convertors) {
+            tempData.createFormSchema.convertors[key].data = tempValue
+            tempData.createFormSchema.convertors[key].type = "async"
           }
 
         }
       }
+      console.log("Temp Data", tempData)
+      setFormData(tempData);
     }
   } 
 
@@ -255,7 +264,7 @@ export default   function Page({
           items: data,
         };
       }
-      const dataConvertors = dataConfig[params.data].tableSchema.convertors;
+      const dataConvertors = formData.tableSchema.convertors;
       let transformedData = returnData.items;
       if (dataConvertors) {
         transformedData = returnData.items.map((item: any) => {
@@ -265,9 +274,6 @@ export default   function Page({
             if (value.type === "enum") {
               console.log("Enum called", value, key, returnObject[key]);
               returnObject[key] = convertEnumField(returnObject[key], value);
-            }
-            if (value.type === "async") {
-              returnObject[key] = convertAsyncField(value);
             }
           });
           return returnObject;
@@ -286,7 +292,7 @@ export default   function Page({
       false
     );
   }
-  const createFormSchema = dataConfig[params.data].createFormSchema;
+  const createFormSchema = formData.createFormSchema;
   const action: tableAction = {
     cta: "New " + params.data,
     description: "Create a new " + params.data,
@@ -299,6 +305,7 @@ export default   function Page({
       dependencies: createFormSchema.dependencies,
     },
     callback: async (e) => {
+      console.log("pre-transformed data", e);
       const transformedData = parseFormValues(createFormSchema, e);
       await controlledFetch(
         fetchLink,
@@ -345,7 +352,12 @@ export default   function Page({
       const returnObject = { ...val };
       if (!schema.convertors) return returnObject;
       Object.entries(schema.convertors).forEach(([key, value]) => {
-        returnObject[key] = convertEnumField(returnObject[key], value);
+        console.log("Value ", value, key, returnObject[key])
+        if (value.type === "enum") {
+          returnObject[key] = convertEnumField(returnObject[key], value);
+        } else if (value.type === "async") {
+          returnObject[key] = convertAsyncField(value, formData);
+        }
       });
 
       return returnObject;
@@ -391,7 +403,7 @@ export default   function Page({
     );
     return newSchema;
   }
-  const editFormSchema = dataConfig[params.data].editFormSchema;
+  const editFormSchema = formData.editFormSchema;
   const editFormSchemaZod = convertZod(editFormSchema);
 
   const columnsData: columnsType = {
@@ -400,10 +412,10 @@ export default   function Page({
       callback: getRoles,
       autoFormArgs: {
         formSchema: editFormSchemaZod,
-        dependencies: dataConfig[params.data].editFormSchema.dependencies,
+        dependencies: formData.editFormSchema.dependencies,
       },
-      tableType: dataConfig[params.data].tableSchema.schema,
-      excludeList: dataConfig[params.data].tableSchema.excludeList || [],
+      tableType: formData.tableSchema.schema,
+      excludeList: formData.tableSchema.excludeList || [],
       onEdit: (data, row) => onEdit(data, row, editFormSchema),
       onDelete,
     },
@@ -414,7 +426,7 @@ export default   function Page({
       withCards={false}
       withTable={true}
       isLoading={isLoading}
-      filterBy={dataConfig[params.data].filterBy}
+      filterBy={formData.filterBy}
       cards={[]}
       data={roles?.items}
       columnsData={columnsData}
