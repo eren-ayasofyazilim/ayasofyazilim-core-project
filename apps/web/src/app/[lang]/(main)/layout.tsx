@@ -26,78 +26,97 @@ export default async function Layout({ children, params }: LayoutProps) {
     settings: resources?.AbpSettingManagement?.texts?.Settings || "Settings",
     Companies: resources?.AbpSettingManagement?.texts?.Settings || "Companies",
   };
-  // const navigationLinks = [
-  //   {
-  //     href: "/profile",
-  //     text: resourcesMap.profile,
-  //   },
-  //   {
-  //     href: "/dashboard",
-  //     text: resourcesMap.dashboard,
-  //   },
-  //   {
-  //     title: "Pages",
-  //     submenu: [
-  //       {
-  //         title: resourcesMap.dashboard,
-  //         href: "/dashboard",
-  //         description: "Show the user dashboard.",
-  //       },
-  //       {
-  //         title: resourcesMap.profile,
-  //         href: "/profile",
-  //         description: "Show the user profile",
-  //       },
-  //     ],
-  //   },
-  // ];
-  // const exampleMenusFull: MenuProps[] = [
-  //   {
-  //     label: "Pages",
-  //     name: resourcesMap.profile,
-  //     icon: <User size={15} className="mr-2" />,
-  //     href: getBaseLink("profile", true),
-  //     permission: true,
-  //   },
-  //   {
-  //     label: "Identity",
-  //     name: "Role",
-  //     icon: <SquareStack size={15} className="mr-2" />,
-  //     href: getBaseLink("dashboard/role", true),
-  //     permission: "AbpIdentity.Roles",
-  //   },
-  //   {
-  //     label: "Identity",
-  //     name: "Users",
-  //     icon: <Users size={15} className="mr-2" />,
-  //     href: getBaseLink("dashboard/user", true),
-  //     permission: "AbpIdentity.Users",
-  //   },
-  //   {
-  //     label: "Pages",
-  //     name: "Projects",
-  //     icon: <Presentation size={15} className="mr-2" />,
-  //     href: getBaseLink("projects", true),
-  //     permission: true,
-  //   },
-  //   {
-  //     label: "Settings",
-  //     name: "Settings",
-  //     icon: <Presentation size={15} className="mr-2" />,
-  //     href: getBaseLink("settings/profile", true),
-  //     permission: true,
-  //   },
-  // ];
-  // const exampleMenus = exampleMenusFull.filter((menu) => {
-  //   if (menu.permission) {
-  //     if (typeof menu.permission === "boolean") {
-  //       return menu.permission;
-  //     }
-  //     if (permission) return permission[menu.permission] || false;
-  //   }
-  //   return false;
-  // });
-  const userNavigation: ProfileMenuProps = {
+
+  const navigationLinks = [
+    {
+      href: "/profile",
+      text: resourcesMap.profile,
+    },
+    {
+      href: "/dashboard",
+      text: resourcesMap.dashboard,
+    },
+    {
+      title: "Pages",
+      submenu: [
+        {
+          title: resourcesMap.dashboard,
+          href: "/dashboard",
+          description: "Show the user dashboard.",
+        },
+        {
+          title: resourcesMap.profile,
+          href: "/profile",
+          description: "Show the user profile",
+        },
+      ],
+    },
+  ];
+  const exampleMenusFull: MenuProps[] = [
+    {
+      label: "Pages",
+      name: resourcesMap.profile,
+      icon: <User size={15} className="mr-2" />,
+      href: getBaseLink("profile", true, params.lang),
+      permission: true,
+    },
+    {
+      label: "Identity",
+      name: "Role",
+      icon: <SquareStack size={15} className="mr-2" />,
+      href: getBaseLink("dashboard/role", true, params.lang),
+      permission: "AbpIdentity.Roles",
+    },
+    {
+      label: "Identity",
+      name: "Users",
+      icon: <Users size={15} className="mr-2" />,
+      href: getBaseLink("dashboard/user", true, params.lang),
+      permission: "AbpIdentity.Users",
+    },
+    {
+      label: "Projects",
+      name: "Projects",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink("projects", true, params.lang),
+      permission: true,
+    },
+    {
+      label: "Projects",
+      name: "New Project",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink("projects/new", true, params.lang),
+      permission: true,
+    },
+    {
+      label: "Projects",
+      name: "Sample Project",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink(
+        "projects/cb682186-91fb-623c-e9d6-3a12e0a6dd9a",
+        true,
+        params.lang
+      ),
+      permission: true,
+    },
+    {
+      label: "Settings",
+      name: "Settings",
+      icon: <Presentation size={15} className="mr-2" />,
+      href: getBaseLink("settings/profile", true, params.lang),
+      permission: true,
+    },
+  ];
+  const exampleMenus = exampleMenusFull.filter((menu) => {
+    if (menu.permission) {
+      if (typeof menu.permission === "boolean") {
+        return menu.permission;
+      }
+      if (permission) return permission[menu.permission] || false;
+    }
+    return false;
+  });
+  const userNavigation: userNavTypes = {
     username: user?.userName ?? undefined,
     initials: user?.name?.substring(0, 2).toUpperCase(),
     email: user?.email ?? undefined,

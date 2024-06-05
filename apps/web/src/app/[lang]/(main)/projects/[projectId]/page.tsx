@@ -1,8 +1,11 @@
 "use server";
 
-import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import { redirect } from "next/navigation";
 import { getProjectServiceClient } from "src/lib";
+import { getLocalizationResources } from "src/utils";
+import ProjectForm from "./form";
+import { deleteProjectServer } from "../action";
 
 async function saveProjectSectionRelation(
   id: string,
@@ -34,46 +37,47 @@ async function saveProjectSectionRelation(
 
 export default async function Page({ params }: any) {
   const { projectId } = params;
-
+  const resources = await getLocalizationResources(params.lang);
+  if (!resources?.["ProjectService"].texts) return null;
   async function getData() {
     "use server";
-    const client =
-      await getProjectServiceClient().project.getApiProjectServiceProjectsById({
-        id: projectId,
-      });
-
-    return client;
+    try {
+      const client =
+        await getProjectServiceClient().project.getApiProjectServiceProjectsById(
+          {
+            id: projectId,
+          }
+        );
+      return client;
+    } catch (error) {}
+    return null;
   }
   const projectData = await getData();
 
   if (!projectData) {
-    return null;
+    redirect("/projects");
   }
-
-  // @ts-ignore ->demo sonrası: saas güncellenecek
-  const sectionsData = projectData.projectSectionRelationDetails?.map(
-    (section: any) => ({
-      key: section.name ?? "",
-      id: section.name ?? "",
-      name: section.name ?? "",
-      value: (
-        <TipTapEditor
-          editorContent={JSON.parse(section.value ?? "{}")}
-          canEditable={true}
-          onSaveFunction={saveProjectSectionRelation}
-          editorId={section.id ?? ""}
-        />
-      ),
-    })
-  );
+  const projectResource = resources["ProjectService"]?.texts;
+  const uiResource = resources["AbpUi"]?.texts;
+  if (!projectResource || !uiResource) return;
 
   return (
-    <div className="flex flex-col w-full">
-      <SectionLayout
-        sections={sectionsData ?? []}
-        defaultActiveSectionId={sectionsData?.[0]?.id ?? ""}
-        openOnNewPage={false}
-      />
+    <div className="relative w-full container" id="details">
+      <div className="flex flex-row flex-wrap justify-between mb-8">
+        <div></div>
+        <div className="">
+          <form
+            action={async () => {
+              "use server";
+              await deleteProjectServer({ id: projectId });
+              redirect("/projects");
+            }}
+          >
+            <CustomButton variant="destructive">Delete Project</CustomButton>
+          </form>
+        </div>
+      </div>
+      <ProjectForm resources={resources} projectData={projectData} />
     </div>
   );
 }

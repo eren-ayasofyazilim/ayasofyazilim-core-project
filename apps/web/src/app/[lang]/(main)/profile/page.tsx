@@ -15,5 +15,5 @@ export default function Page() {
     if (!!session.data) getSession();
   }, [session.data]);
 
-  return <div className="flex-1">general</div>;
+  return <div className="flex-1">profil</div>;
 }
