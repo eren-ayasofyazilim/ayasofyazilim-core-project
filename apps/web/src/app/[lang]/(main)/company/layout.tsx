@@ -6,22 +6,26 @@ import { useEffect } from "react";
 
 const navbarItems = [
   {
-    name: "Roles",
-    id: "role",
+    name: "Merchants",
+    id: "merchants",
   },
 
   {
-    name: "Users",
-    id: "user",
+    name: "Refund Points",
+    id: "refund_points",
   },
   {
-    name: "Editions",
-    id: "edition",
+    name: "Customs",
+    id: "customs",
   },
 
   {
-    name: "Tenants",
-    id: "tenant",
+    name: "Tax Free",
+    id: "tax_free",
+  },
+  {
+    name: "Tax Offices",
+    id: "tax_offices",
   },
 ];
 function isPathValid(path: string) {
@@ -36,21 +40,23 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const path = pathname.split("dashboard/")?.[1];
+  const path = pathname.split("company/")?.[1];
 
   useEffect(() => {
     if (!path || isPathValid(path) === false) {
-      router.push("dashboard/role");
+      router.push("company/merchants");
     }
   }, []);
 
   return (
-    <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={path}
-      openOnNewPage={true}
-      content={children}
-      contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center w-[80vw]"
-    />
+    <div>
+      <SectionLayout
+        sections={navbarItems}
+        defaultActiveSectionId={path}
+        openOnNewPage={true}
+        content={children}
+        contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center w-[80vw]"
+      />
+    </div>
   );
 }

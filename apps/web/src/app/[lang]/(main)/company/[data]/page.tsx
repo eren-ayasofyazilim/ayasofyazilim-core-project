@@ -1,12 +1,6 @@
 "use client";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
-import {
-  $Volo_Abp_Identity_IdentityRoleDto,
-  $Volo_Abp_Identity_IdentityRoleCreateDto,
-  $Volo_Abp_Identity_IdentityRoleUpdateDto,
-  $Volo_Abp_Identity_IdentityUserUpdateDto,
-} from "@ayasofyazilim/saas/IdentityService";
-import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
+
 import { useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
 import {
@@ -14,19 +8,22 @@ import {
   columnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-import {
-  $Volo_Saas_Host_Dtos_EditionCreateDto,
-  $Volo_Saas_Host_Dtos_EditionDto,
-  $Volo_Saas_Host_Dtos_EditionUpdateDto,
-  $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
-} from "@ayasofyazilim/saas/SaasService";
-import {
-  $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
-  $Volo_Saas_Host_Dtos_SaasTenantDto,
-} from "@ayasofyazilim/saas/SaasService";
-import { z } from "zod";
-import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
+
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import {
+  $createCustoms,
+  $createMerchants,
+  $createRefund_points,
+  $createTax_free,
+  $editCustoms,
+  $editMerchants,
+  $editRefund_points,
+  $editTax_free,
+  $showCustoms,
+  $showMerchants,
+  $showRefund_points,
+  $showTax_free,
+} from "./schemas.gen";
 
 async function controlledFetch(
   url: string,
@@ -72,104 +69,83 @@ type tableData = {
 };
 
 const dataConfig: Record<string, tableData> = {
-  role: {
+  merchants: {
+    filterBy: "Company",
     createFormSchema: {
-      formPositions: ["name", "isDefault", "isPublic"],
-      schema: $Volo_Abp_Identity_IdentityRoleCreateDto,
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $createMerchants,
     },
     editFormSchema: {
-      formPositions: ["name", "isDefault", "isPublic"],
-      schema: $Volo_Abp_Identity_IdentityRoleUpdateDto,
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $editMerchants,
     },
     tableSchema: {
-      excludeList: ["id", "extraProperties", "concurrencyStamp"],
-      schema: $Volo_Abp_Identity_IdentityRoleDto,
-    },
-    filterBy: "name",
-  },
-  user: {
-    createFormSchema: {
-      formPositions: ["email", "password", "userName"],
-      schema: $Volo_Abp_Identity_IdentityUserCreateDto,
-    },
-    editFormSchema: {
-      formPositions: ["email", "userName"],
-      schema: $Volo_Abp_Identity_IdentityUserUpdateDto,
-    },
-    tableSchema: {
-      excludeList: ["id", "extraProperties", "concurrencyStamp"],
-      schema: $Volo_Abp_Identity_IdentityUserDto,
-    },
-    filterBy: "email",
-  },
-  edition: {
-    filterBy: "displayName",
-    createFormSchema: {
-      formPositions: ["displayName"],
-      schema: $Volo_Saas_Host_Dtos_EditionCreateDto,
-    },
-    editFormSchema: {
-      formPositions: ["displayName"],
-      schema: $Volo_Saas_Host_Dtos_EditionUpdateDto,
-    },
-    tableSchema: {
-      excludeList: ["planId", "id", "planId", "concurrencyStamp"],
-      schema: $Volo_Saas_Host_Dtos_EditionDto,
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $showMerchants,
     },
   },
-  tenant: {
-    filterBy: "name",
-    createFormSchema: {
-      formPositions: [
-        "name",
-        "editionId",
-        "adminEmailAddress",
-        "adminPassword",
-        "activationState",
-        "activationEndDate",
-      ],
-      schema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
-      convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
-      },
-      dependencies: [
-        {
-          sourceField: "activationState",
-          type: DependencyType.HIDES,
-          targetField: "activationEndDate",
-          when: (activationState: string) =>
-            activationState !== "Active with limited time",
-        },
-      ],
-    },
-    tableSchema: {
-      schema: $Volo_Saas_Host_Dtos_SaasTenantDto,
-      excludeList: ["id", "concurrencyStamp", "editionId"],
-      convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
-      },
-    },
-    editFormSchema: {
-      formPositions: [
-        "name",
-        "editionId",
-        "activationState",
-        "activationEndDate",
-      ],
-      schema: $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
-      convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
-      },
 
-      dependencies: [
-        {
-          sourceField: "activationState",
-          type: DependencyType.HIDES,
-          targetField: "activationEndDate",
-          when: (activationState: string) =>
-            activationState !== "Active with limited time",
-        },
-      ],
+  refund_points: {
+    createFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $createRefund_points,
+    },
+    editFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $editRefund_points,
+    },
+    tableSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $showRefund_points,
+    },
+    filterBy: "Company",
+  },
+
+  customs: {
+    createFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $createCustoms,
+    },
+    editFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $editCustoms,
+    },
+    tableSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $showCustoms,
+    },
+    filterBy: "Company",
+  },
+
+  tax_free: {
+    filterBy: "Company",
+    createFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $createTax_free,
+    },
+    editFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $editTax_free,
+    },
+    tableSchema: {
+      schema: $showTax_free,
+      excludeList: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+    },
+  },
+
+  tax_offices: {
+    filterBy: "Company",
+    createFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $createTax_free,
+    },
+    editFormSchema: {
+      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      schema: $editTax_free,
+    },
+    tableSchema: {
+      schema: $showTax_free,
+      excludeList: ["id", "concurrencyStamp", "editionId"],
     },
   },
 };
@@ -192,7 +168,7 @@ export default function Page({
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink("/api/admin/" + params.data);
+  const fetchLink = getBaseLink("/api/company/" + params.data);
 
   function getRoles() {
     function onData(data: any) {
