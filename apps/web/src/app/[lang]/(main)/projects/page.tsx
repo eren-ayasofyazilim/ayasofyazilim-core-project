@@ -3,25 +3,25 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import Link from "next/link";
-import { getProjectServiceClient } from "src/lib";
 import { getBaseLink, getLocalizationResources } from "src/utils";
+import { getProjectsServer } from "./action";
+import { Card } from "@/components/ui/card";
 
 export default async function Page({ params }: { params: { lang: string } }) {
-  const projectData =
-    (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
-  if (!projectData) return null;
+  const projectData = await getProjectsServer();
+  if (!projectData?.items?.length) return <>No data</>;
+
   const resources = await getLocalizationResources(params.lang);
   const projectResource = resources?.["ProjectService"]?.texts;
   const uiResource = resources?.["AbpUi"]?.texts;
+
   if (!projectResource || !uiResource) return;
   const languageData = {
     Next: uiResource["PagerNext"] || "Next",
@@ -73,6 +73,47 @@ export default async function Page({ params }: { params: { lang: string } }) {
       projectResource["AdditionalFundingRateInfo"] ||
       "The rate of additional funding that will be collected in case your project is overfunded.",
   };
+
+  return (
+    <div className="relative w-full container mt-8">
+      <Card className="p-6 w-full">
+        <div className=" flex flex-row flex-wrap justify-between gap-5 mb-8">
+          <div />
+          <div>
+            <Link href={getBaseLink("projects/new", true)}>
+              <CustomButton variant="destructive">New Project</CustomButton>
+            </Link>
+          </div>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[200px]">Name</TableHead>
+              <TableHead>Definition</TableHead>
+              <TableHead className="text-right">Fund Type</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {projectData?.items?.map((project) => (
+              <TableRow key={project.id}>
+                <TableCell className="font-medium">
+                  <Link href={getBaseLink("projects/" + project.id, true)}>
+                    {project.projectName}
+                  </Link>
+                </TableCell>
+                <TableCell>{project.projectDefinition}</TableCell>
+                <TableCell className="text-right">
+                  {project.fundCollectionType === "SHRE"
+                    ? languageData["FundCollectionTypeSHRE"]
+                    : languageData["FundCollectionTypeDBIT"]}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
+    </div>
+  );
   return (
     <div className="w-full">
       <div className="flex flex-col items-center justify-start">
@@ -81,36 +122,11 @@ export default async function Page({ params }: { params: { lang: string } }) {
       <div className=" flex flex-row flex-wrap justify-between gap-5 mb-8">
         <div></div>
         <div className="">
-          <CustomButton variant="destructive">New Project</CustomButton>
+          <Link href={getBaseLink("projects/new", true)}>
+            <CustomButton variant="destructive">New Project</CustomButton>
+          </Link>
         </div>
       </div>
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Name</TableHead>
-            <TableHead>Definition</TableHead>
-            <TableHead className="text-right">Fund Type</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {projectData?.items?.map((project) => (
-            <TableRow key={project.id}>
-              <TableCell className="font-medium">
-                <Link href={getBaseLink("projects/" + project.id, true)}>
-                  {project.projectName}
-                </Link>
-              </TableCell>
-              <TableCell>{project.projectDefinition}</TableCell>
-              <TableCell className="text-right">
-                {project.fundCollectionType === "SHRE"
-                  ? languageData["FundCollectionTypeSHRE"]
-                  : languageData["FundCollectionTypeDBIT"]}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
     </div>
   );
 }

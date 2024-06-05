@@ -2,16 +2,44 @@
 import {
   AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto,
   DeleteApiProjectServiceProjectsByIdData,
+  Volo_Abp_Application_Dtos_PagedResultDto_13,
 } from "@ayasofyazilim/saas/ProjectService";
 import { getProjectServiceClient } from "src/lib";
 
-export async function createUpdateProjectServer(
+export async function getProjectsServer() {
+  "use server";
+  return (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
+}
+export async function createNewProjectServer(
   body: AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto
 ) {
   "use server";
   try {
     const client = await getProjectServiceClient();
     const response = await client.project.postApiProjectServiceProjects({
+      requestBody: body,
+    });
+
+    return {
+      status: 200,
+      projectData: response,
+    };
+  } catch (error: any) {
+    return {
+      status: error.status,
+      message: error?.body?.error?.details,
+    };
+  }
+}
+export async function updateProjectServer(
+  id: string,
+  body: AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto
+) {
+  "use server";
+  try {
+    const client = await getProjectServiceClient();
+    const response = await client.project.putApiProjectServiceProjectsById({
+      id: id,
       requestBody: body,
     });
 
