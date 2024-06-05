@@ -122,7 +122,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   //   }
   //   return false;
   // });
-  const userNavigation: userNavTypes = {
+  const userNavigation = {
     username: user?.userName ?? undefined,
     initials: user?.name?.substring(0, 2).toUpperCase(),
     email: user?.email ?? undefined,
