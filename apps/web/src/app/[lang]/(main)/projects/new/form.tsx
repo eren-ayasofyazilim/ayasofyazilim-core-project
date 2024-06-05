@@ -25,11 +25,11 @@ import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
-import { createUpdateProjectServer } from "action";
 import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";
+import { createNewProjectServer } from "../action";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
@@ -111,7 +111,7 @@ export default function NewProjectForm({ resources }: INewProjectFormProps) {
 
   async function createNewProject() {
     setLoading(true);
-    const response = await createUpdateProjectServer(formValues);
+    const response = await createNewProjectServer(formValues);
     if (response && response.status === 200 && response?.projectData) {
       setProjectId(response?.projectData?.id);
     } else {
