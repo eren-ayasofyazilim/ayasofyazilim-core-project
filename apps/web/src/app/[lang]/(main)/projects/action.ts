@@ -1,11 +1,21 @@
 "use server";
 import {
+  AbpForDeploy_ProjectService_ProjectSections_CreateUpdateProjectSectionDto,
   AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto,
   DeleteApiProjectServiceProjectsByIdData,
+  Volo_Abp_Application_Dtos_PagedResultDto_1,
   Volo_Abp_Application_Dtos_PagedResultDto_13,
 } from "@ayasofyazilim/saas/ProjectService";
 import { getProjectServiceClient } from "src/lib";
 
+export async function getProjectByIdServer(projectId: string) {
+  "use server";
+  return await getProjectServiceClient().project.getApiProjectServiceProjectsById(
+    {
+      id: projectId,
+    }
+  );
+}
 export async function getProjectsServer() {
   "use server";
   return (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
@@ -75,6 +85,28 @@ export async function deleteProjectServer(
       message: error?.body?.error?.details,
     };
   }
+}
+export async function getDefaultProjectSectionsServer() {
+  "use server";
+  try {
+    const client =
+      await getProjectServiceClient().projectSection.getApiProjectSectionServiceProjectSection();
+    return client;
+  } catch (error) {
+    return [] as Volo_Abp_Application_Dtos_PagedResultDto_1;
+  }
+}
+export async function getProjectSectionsServer(projectId: string) {
+  "use server";
+  try {
+    const client =
+      await getProjectServiceClient().projectSectionRelation.getApiProjectSectionRelationServiceProjectSectionRelation();
+
+    return client.items?.filter(
+      (i) => i.projectId === projectId
+    ) as Volo_Abp_Application_Dtos_PagedResultDto_1["items"];
+  } catch (error) {}
+  return [] as Array<AbpForDeploy_ProjectService_ProjectSections_CreateUpdateProjectSectionDto>;
 }
 export async function createProjectSectionRelationServer(
   projectId: string,
