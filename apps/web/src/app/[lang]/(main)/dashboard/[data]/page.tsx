@@ -130,7 +130,18 @@ const dataConfig: Record<string, tableData> = {
       ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: () => {
+            return fetch(getBaseLink("api/admin/edition")).then((data) => data.json()).then((data) => data.map((e: any) => e.id));
+          },
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
       dependencies: [
         {
@@ -146,7 +157,18 @@ const dataConfig: Record<string, tableData> = {
       schema: $Volo_Saas_Host_Dtos_SaasTenantDto,
       excludeList: ["id", "concurrencyStamp", "editionId"],
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: async () => {
+            return await fetch(getBaseLink("api/admin/edition")).then((data) => data.json()).then((data) => data.map((e: any) => e.id));
+          },
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
     },
     editFormSchema: {
@@ -176,23 +198,53 @@ const dataConfig: Record<string, tableData> = {
 
 function convertEnumField(
   value: string | number,
-  enumArray: string[]
+  enumArray: {
+    data: string[];
+    type: "enum";
+  }
 ): string | number {
+  const data = enumArray.data;
   if (typeof value === "number") {
-    return enumArray[value];
+    return data[value];
   } else {
-    return enumArray.indexOf(value);
+    return data.indexOf(value);
   }
 }
 
-export default function Page({
+async function convertAsyncField(value: object) {
+  if (typeof value.data === "function") {
+    console.log("function called");
+    const response = await value.data();
+    const data = await response.json();
+    value.data = data;
+  }
+  return [12,123,123]
+}
+
+export default   function Page({
   params,
 }: {
   params: { data: string };
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
+  const [serverData, setServerData] = useState<Record<string, any>>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
+  async function processConvertors(){
+    const dataConvertors = dataConfig[params.data].createFormSchema.convertors;
+    if(dataConvertors){
+      for (const [key, value] of Object.entries(dataConvertors)) {
+        if (value.type === "async") {
+          console.log("Async called page for of", key, value);
+          let tempValue = await value.data();
+          if (dataConfig[params.data].createFormSchema.convertors) {
+            dataConfig[params.data].createFormSchema.convertors[key] = tempValue
+          }
+
+        }
+      }
+    }
+  } 
 
   function getRoles() {
     function onData(data: any) {
@@ -209,7 +261,14 @@ export default function Page({
         transformedData = returnData.items.map((item: any) => {
           const returnObject = { ...item };
           Object.entries(dataConvertors).forEach(([key, value]) => {
-            returnObject[key] = convertEnumField(returnObject[key], value);
+            console.log("Value ", value, key);
+            if (value.type === "enum") {
+              console.log("Enum called", value, key, returnObject[key]);
+              returnObject[key] = convertEnumField(returnObject[key], value);
+            }
+            if (value.type === "async") {
+              returnObject[key] = convertAsyncField(value);
+            }
           });
           return returnObject;
         });
@@ -270,6 +329,7 @@ export default function Page({
   ];
 
   useEffect(() => {
+    processConvertors();
     setIsLoading(true);
     getRoles();
   }, []);
