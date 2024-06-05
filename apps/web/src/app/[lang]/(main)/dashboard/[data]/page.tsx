@@ -211,19 +211,19 @@ function convertEnumField(
   }
 }
 
-async function convertAsyncField(value: object, formData: any) {
+function convertAsyncField(value: any, ConvertorValue: object, formData: any) {
   if (typeof value.data === "function") {
-    console.log("function called");
-    const response = await value.data();
-    const data = await response.json();
-    value.data = data;
+    return;
   }
-  console.log("convertAsyncField ", value);
-  console.log("convertAsyncField called page ", formData)
-  return 123124;
+  const returnValue = ConvertorValue.data.find((item: any) => {
+    if (item[ConvertorValue.get] === value) {
+      return item[ConvertorValue.post];
+    }
+  });
+  return returnValue[ConvertorValue.post];
 }
 
-export default   function Page({
+export default function Page({
   params,
 }: {
   params: { data: string };
@@ -232,28 +232,22 @@ export default   function Page({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
   const [formData, setFormData] = useState<tableData>(dataConfig[params.data]);
-  async function processConvertors(){
+  async function processConvertors() {
     let tempData = formData;
     const dataConvertors = tempData.createFormSchema.convertors;
-    if(dataConvertors){
+    if (dataConvertors) {
       for (const [key, value] of Object.entries(dataConvertors)) {
         if (value.type === "async") {
-          console.log("Async called page for of", key, value);
           let tempValue = await value.data();
-          console.log("Temp Value before value.get", tempValue, key, value.get)
-          tempValue = await tempValue.map((item: any) => item[value.get]);
-          console.log("Temp Value after", tempValue, key, value)
           if (tempData.createFormSchema.convertors) {
             tempData.createFormSchema.convertors[key].data = tempValue
             tempData.createFormSchema.convertors[key].type = "async"
           }
-
         }
       }
-      console.log("Temp Data", tempData)
       setFormData(tempData);
     }
-  } 
+  }
 
   function getRoles() {
     function onData(data: any) {
@@ -270,9 +264,7 @@ export default   function Page({
         transformedData = returnData.items.map((item: any) => {
           const returnObject = { ...item };
           Object.entries(dataConvertors).forEach(([key, value]) => {
-            console.log("Value ", value, key);
             if (value.type === "enum") {
-              console.log("Enum called", value, key, returnObject[key]);
               returnObject[key] = convertEnumField(returnObject[key], value);
             }
           });
@@ -305,7 +297,6 @@ export default   function Page({
       dependencies: createFormSchema.dependencies,
     },
     callback: async (e) => {
-      console.log("pre-transformed data", e);
       const transformedData = parseFormValues(createFormSchema, e);
       await controlledFetch(
         fetchLink,
@@ -352,14 +343,12 @@ export default   function Page({
       const returnObject = { ...val };
       if (!schema.convertors) return returnObject;
       Object.entries(schema.convertors).forEach(([key, value]) => {
-        console.log("Value ", value, key, returnObject[key])
         if (value.type === "enum") {
           returnObject[key] = convertEnumField(returnObject[key], value);
         } else if (value.type === "async") {
-          returnObject[key] = convertAsyncField(value, formData);
+          returnObject[key] = convertAsyncField(returnObject[key], value, formData);
         }
       });
-
       return returnObject;
     });
     const parsed = transformedSchema.parse(data);
@@ -368,7 +357,6 @@ export default   function Page({
 
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    console.log(parsedData);
     controlledFetch(
       fetchLink,
       {

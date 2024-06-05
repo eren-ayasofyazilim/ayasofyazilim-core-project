@@ -88,11 +88,6 @@ export function createZodObject(
 ): ZodType {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
-    async function trial(convertors: Record<string, any>, element: string) {
-      const response = await convertors[element].data();
-      const data = await response.json();
-      console.log("Data server convertor ", data);
-    }
     const props = schema.properties[element];
     const isRequired = schema.required.includes(element);
     if (isSchemaType(props)) {
@@ -106,12 +101,14 @@ export function createZodObject(
       let zodType;
       if (convertors && Object.keys(convertors).includes(element)) {
         const newProps = props;
-        newProps.type = "select";
         newProps.enum = convertors[element].data;
-        console.log("New Props: ", newProps, " element", element);
-        if (typeof newProps.enum === "function") {
-          console.log("Function");
+        if (convertors[element].type === "enum") {
+          newProps.enum = convertors[element].data;
         }
+        if (convertors[element].type === "async" && typeof convertors[element].data !== "function") {
+          newProps.type = "select";
+          newProps.enum = convertors[element].data.map((e: any) => e[convertors[element].get]);
+        };
         zodType = createZodType(newProps, isRequired);
       } else {
         zodType = createZodType(props, isRequired);
@@ -152,7 +149,6 @@ function createZodType(
       if (schema.format === "date-time") zodType = z.coerce.date();
       break;
     case "select":
-      console.log("Select enum", schema.enum, schema)
       zodType = z.enum(schema.enum);
       if (schema.default) zodType = zodType.default(schema.default);
       break;
