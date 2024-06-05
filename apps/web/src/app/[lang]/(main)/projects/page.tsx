@@ -78,7 +78,9 @@ export default async function Page({ params }: { params: { lang: string } }) {
     <div className="relative w-full container mt-8">
       <Card className="p-6 w-full">
         <div className=" flex flex-row flex-wrap justify-between gap-5 mb-8">
-          <div />
+          <div>
+            <h1>Projects</h1>
+          </div>
           <div>
             <Link href={getBaseLink("projects/new", true)}>
               <CustomButton variant="destructive">New Project</CustomButton>
