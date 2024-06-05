@@ -1,5 +1,6 @@
 "use server";
 
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,7 +13,6 @@ import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import Link from "next/link";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { getProjectsServer } from "./action";
-import { Card } from "@/components/ui/card";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();
