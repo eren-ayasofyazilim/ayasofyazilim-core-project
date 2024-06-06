@@ -52,8 +52,8 @@ export default function ProjectForm({
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const projectResource = resources["ProjectService"]?.texts;
-  const uiResource = resources["AbpUi"]?.texts;
+  const projectResource = resources?.["ProjectService"]?.texts;
+  const uiResource = resources?.["AbpUi"]?.texts;
   if (!projectResource || !uiResource) return;
 
   const languageData = {
