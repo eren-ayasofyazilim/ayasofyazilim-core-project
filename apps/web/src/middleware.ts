@@ -105,6 +105,9 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     if (isPathHasLocale(request.nextUrl.pathname)) {
       return allowURL(locale, request);
     }
+    console.log(
+      "(No locale provided) Wrong redirection to pathName:" + pathName
+    );
     return NextResponse.redirect(
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
     );
@@ -116,6 +119,9 @@ export const middleware = auth(async (request: NextAuthRequest) => {
       return allowURL(locale, request);
     }
 
+    console.log(
+      "(No locale provided) Wrong redirection to pathName:" + pathName
+    );
     return NextResponse.redirect(
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
     );
