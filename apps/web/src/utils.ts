@@ -10,16 +10,26 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-export async function getLocalizationResources(languageCode: string) {
+export async function getLocalizationResources(languageCode: string): Promise<{
+  [key: string]: {
+    texts?:
+      | {
+          [key: string]: string;
+        }
+      | null
+      | undefined;
+    baseResources?: string[] | null | undefined;
+  };
+}> {
   try {
     const response = await fetch(
       `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
     );
-    return ((await response.json()) as LocalizationDto).resources;
+    return ((await response.json()) as LocalizationDto).resources || {};
   } catch (error) {
     console.error("Offline Data");
 
-    return defaultResources;
+    return defaultResources || {};
   }
 }
 
