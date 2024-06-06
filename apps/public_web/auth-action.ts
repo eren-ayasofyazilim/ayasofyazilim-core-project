@@ -2,6 +2,7 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { signIn, signOut } from "auth";
 import { redirect } from "next/navigation";
+import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
 
@@ -13,15 +14,80 @@ export async function signOutServer() {
   }
   redirect(getBaseLink("login", true));
 }
-export async function signInServer(username: string, password: string) {
+export async function signInServer({
+  userIdentifier,
+  password,
+}: {
+  userIdentifier: string;
+  password: string;
+}) {
   try {
     await signIn("credentials", {
-      username,
+      username: userIdentifier,
       password,
       redirect: false,
     });
-  } catch (error) {
-    return { error: "Invalid username or password" };
+    return {
+      status: 200,
+    };
+  } catch (error: any) {
+    console.log(error);
+    return {
+      status: error.status,
+      message: error?.body?.error?.message,
+    };
+  }
+}
+export async function signUpServer({
+  userName,
+  email,
+  password,
+}: {
+  userName: string;
+  email: string;
+  password: string;
+}) {
+  try {
+    const client = await getAccountServiceClient();
+    await client.account.postApiAccountRegister({
+      requestBody: {
+        userName: userName,
+        emailAddress: email,
+        password: password,
+        appName: process.env.APP_NAME || "",
+      },
+    });
+    return {
+      status: 200,
+    };
+  } catch (error: any) {
+    return {
+      status: error.status,
+      message: error?.body?.error?.message,
+    };
+  }
+}
+export async function sendPasswordResetCodeServer({
+  email,
+}: {
+  email: string;
+}) {
+  try {
+    const client = await getAccountServiceClient();
+    await client.account.postApiAccountSendPasswordResetCode({
+      requestBody: {
+        email: email,
+        appName: process.env.APP_NAME || "",
+      },
+    });
+    return {
+      status: 200,
+    };
+  } catch (error: any) {
+    return {
+      status: error.status,
+      message: error?.body?.error?.message,
+    };
   }
 }
 export async function getMyProfile(token: any) {
