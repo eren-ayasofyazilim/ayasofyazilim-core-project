@@ -13,7 +13,7 @@ import ProjectForm from "./form";
 export default async function Page({ params }: any) {
   const { projectId } = params;
   const resources = await getLocalizationResources(params.lang);
-  if (!resources?.["ProjectService"].texts) return null;
+  if (!resources?.["ProjectService"]?.texts) return null;
 
   const projectData = await getProjectByIdServer(projectId);
   const usedSectionsInProject =
