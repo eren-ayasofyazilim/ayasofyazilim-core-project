@@ -17,6 +17,7 @@ export async function getProjectByIdServer(projectId: string) {
       }
     );
   } catch (error) {
+    console.error("Offline Data");
     return {
       projectName: "Deneme bir proje",
       projectDefinition: "Projenin kısa açıklaması",
@@ -63,6 +64,7 @@ export async function getProjectsServer() {
   try {
     return (await getProjectServiceClient().project.getApiProjectServiceProjects()) as Volo_Abp_Application_Dtos_PagedResultDto_13;
   } catch (error) {
+    console.error("Offline Data");
     return {
       totalCount: 1,
       items: [
@@ -167,6 +169,7 @@ export async function getDefaultProjectSectionsServer() {
       await getProjectServiceClient().projectSection.getApiProjectSectionServiceProjectSection();
     return client;
   } catch (error) {
+    console.error("Offline Data");
     return {
       totalCount: 2,
       items: [
