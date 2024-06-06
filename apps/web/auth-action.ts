@@ -31,7 +31,6 @@ export async function signInServer({
       status: 200,
     };
   } catch (error: any) {
-    console.log(error);
     return {
       status: error.status,
       message: error?.body?.error?.message,
