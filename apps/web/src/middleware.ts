@@ -106,7 +106,7 @@ export const middleware = auth(async (request: NextAuthRequest) => {
       return allowURL(locale, request);
     }
     console.log(
-      "(No locale provided) Wrong redirection to pathName:" + pathName
+      "(No locale provided type 1) Wrong redirection to pathName:" + pathName
     );
     return NextResponse.redirect(
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
@@ -120,7 +120,7 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     }
 
     console.log(
-      "(No locale provided) Wrong redirection to pathName:" + pathName
+      "(No locale provided type 2) Wrong redirection to pathName:" + pathName
     );
     return NextResponse.redirect(
       new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
