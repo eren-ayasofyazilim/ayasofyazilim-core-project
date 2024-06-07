@@ -49,7 +49,7 @@ export function MainLayout({
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <div
-        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 max-w-72"} transition-all`}
+        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 fixed z-[99] w-full max-w-[unset] sm:max-w-72 sm:relative"} transition-all`}
       >
         <div className="min-h-16 max-h-16 bg-white px-4 flex items-center border-b">
           <Logo
@@ -92,7 +92,7 @@ export function MainLayout({
         >
           {topBarComponent}
         </div>
-        <div className="grow bg-slate-50 p-0 overflow-y-auto">{children}</div>
+        <div className="grow bg-slate-50 p-0 overflow-hidden">{children}</div>
       </div>
     </div>
   );
