@@ -5,6 +5,7 @@ import { auth } from "auth";
 import { NextRequest } from "next/server";
 import { getToken } from "@auth/core/jwt";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
+import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 
 export async function getIdentityServiceClient(
   request: NextRequest
@@ -72,5 +73,11 @@ export async function getSaasServiceClient(
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
     },
+  });
+}
+
+export function getSettingServiceClient(): SettingServiceClient {
+  return new SettingServiceClient({
+    BASE: process.env.BASE_URL,
   });
 }
