@@ -13,7 +13,7 @@ const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
 const title = appName.charAt(0).toUpperCase() + appName.slice(1).toLowerCase();
 
 export const metadata: Metadata = {
-  title: title,
+  title: title + "asd",
   description: "Unirefund is a web app for managing your refund process.",
 };
 export default async function RootLayout({

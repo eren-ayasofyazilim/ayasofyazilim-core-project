@@ -8,8 +8,11 @@ interface IRootLayoutProps {
   params: { lang: string };
   children: JSX.Element;
 }
+const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
+const title = appName.charAt(0).toUpperCase() + appName.slice(1).toLowerCase();
+
 export const metadata: Metadata = {
-  title: "Unirefund",
+  title: title,
   description: "Unirefund is a web app for managing your refund process.",
 };
 export default async function RootLayout({
