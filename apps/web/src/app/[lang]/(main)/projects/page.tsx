@@ -103,7 +103,11 @@ export default async function Page({ params }: { params: { lang: string } }) {
                     {project.projectName}
                   </Link>
                 </TableCell>
-                <TableCell>{project.projectDefinition}</TableCell>
+                <TableCell>
+                  <Link href={getBaseLink("projects/" + project.id, true)}>
+                    {project.projectDefinition}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-right">
                   {project.fundCollectionType === "SHRE"
                     ? languageData["FundCollectionTypeSHRE"]

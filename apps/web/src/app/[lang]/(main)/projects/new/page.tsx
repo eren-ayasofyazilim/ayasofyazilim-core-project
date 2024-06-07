@@ -5,7 +5,6 @@ import NewProjectForm from "./form";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const resources = await getLocalizationResources(params.lang);
-  if (!resources?.["ProjectService"]?.texts) return null;
 
   return (
     <div className="w-full mx-auto max-w-3xl">
