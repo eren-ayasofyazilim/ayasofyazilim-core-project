@@ -86,6 +86,7 @@ export default function Page(): JSX.Element {
     };
   } else if (authTypeParam === "register") {
     props = {
+      router: router,
       allowTenantChange: true,
       formSchema: registerFormSchema,
       registerFunction: signUpServer,
