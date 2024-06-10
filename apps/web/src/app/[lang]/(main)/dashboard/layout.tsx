@@ -33,6 +33,11 @@ const navbarItems = [
     name: "Applications",
     id: "applications",
   },
+
+  {
+    name: "Scopes",
+    id: "scopes",
+  },
 ];
 function isPathValid(path: string) {
   const validPaths = navbarItems.map((item) => item.id);
