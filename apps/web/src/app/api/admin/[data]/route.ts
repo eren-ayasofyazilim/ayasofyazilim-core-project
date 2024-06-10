@@ -72,7 +72,6 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-
   claimType: async (req: NextRequest) => {
     const client = await getIdentityServiceClient(req);
     const claimType = client.claimType;
@@ -84,6 +83,32 @@ const clients: Clients = {
         claimType.putApiIdentityClaimTypesById({ id, requestBody }),
       delete: async (id: string) =>
         claimType.deleteApiIdentityClaimTypesById({ id }),
+    };
+  },
+
+  applications: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const applications = client.applications;
+    return {
+      get: async () => applications.getApiOpeniddictApplications(),
+      post: async (requestBody: any) =>
+        applications.postApiOpeniddictApplications({ requestBody }),
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        applications.putApiOpeniddictApplicationsById({ id, requestBody }),
+      delete: async (id: string) =>
+        applications.deleteApiOpeniddictApplications({ id }),
+    };
+  },
+  scopes: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const scopes = client.scopes;
+    return {
+      get: async () => scopes.getApiOpeniddictScopes(),
+      post: async (requestBody: any) =>
+        scopes.postApiOpeniddictScopes({ requestBody }),
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        scopes.putApiOpeniddictScopesById({ id, requestBody }),
+      delete: async (id: string) => scopes.deleteApiOpeniddictScopes({ id }),
     };
   },
 };

@@ -8,6 +8,13 @@ import {
   $Volo_Abp_Identity_CreateClaimTypeDto,
   $Volo_Abp_Identity_ClaimTypeDto,
   $Volo_Abp_Identity_UpdateClaimTypeDto,
+  $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
+  $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
+  $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationTokenLifetimeDto,
+  $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -39,6 +46,7 @@ async function controlledFetch(
   showToast: boolean = true
 ) {
   try {
+    debugger;
     const getData = await fetch(url, options);
     if (!getData.ok) {
       const body = await getData.json();
@@ -268,6 +276,107 @@ const dataConfig: Record<string, tableData> = {
         },
       },
     },
+  },
+  applications: {
+    filterBy: "displayName",
+    createFormSchema: {
+      formPositions: [
+        "applicationType",
+        "clientId",
+        "displayName",
+        "clientUri",
+        "logoUri",
+        "clientType",
+        "allowAuthorizationCodeFlow",
+        "allowImplicitFlow",
+        "allowHybridFlow",
+        "allowPasswordFlow",
+        "allowClientCredentialsFlow",
+        "allowRefreshTokenFlow",
+        "allowDeviceEndpoint",
+        "extensionGrantTypes",
+        "scopes",
+      ],
+      schema: $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
+      convertors: {
+        clientType: {
+          data: ["Public client", "Confidential client"],
+          type: "enum",
+        },
+      },
+    },
+    tableSchema: {
+      excludeList: [
+        "id",
+        "concurrencyStamp",
+        "regexDescription",
+        "extraProperties",
+        "valueTypeAsString",
+        "clientUri",
+        "logoUri",
+        "allowAuthorizationCodeFlow",
+        "allowImplicitFlow",
+        "allowHybridFlow",
+        "allowPasswordFlow",
+        "allowClientCredentialsFlow",
+        "allowRefreshTokenFlow",
+        "allowDeviceEndpoint",
+        "extensionGrantTypes",
+        "allowLogoutEndpoint",
+        "scopes",
+        "clientSecret",
+        "consentType",
+      ],
+      schema: $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
+      convertors: {
+        clientType: {
+          data: ["Public client", "Confidential client"],
+          type: "enum",
+        },
+      },
+    },
+    editFormSchema: {
+      formPositions: [
+        "applicationType",
+        "clientId",
+        "displayName",
+        "clientUri",
+        "logoUri",
+        "clientType",
+        "clientSecret",
+        "allowAuthorizationCodeFlow",
+        "allowImplicitFlow",
+        "allowHybridFlow",
+        "allowPasswordFlow",
+        "allowClientCredentialsFlow",
+        "allowRefreshTokenFlow",
+        "allowDeviceEndpoint",
+        "extensionGrantTypes",
+        "scopes",
+      ],
+      schema: $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
+      convertors: {
+        valueType: {
+          data: ["Public client", "Confidential client"],
+          type: "enum",
+        },
+      },
+    },
+  },
+  scopes: {
+    createFormSchema: {
+      formPositions: ["name", "displayName", "description" /*"resources"*/],
+      schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
+    },
+    tableSchema: {
+      excludeList: ["id", "buildIn"],
+      schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+    },
+    editFormSchema: {
+      formPositions: ["name", "displayName", "description" /*"resources"*/],
+      schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+    },
+    filterBy: "name",
   },
 };
 
