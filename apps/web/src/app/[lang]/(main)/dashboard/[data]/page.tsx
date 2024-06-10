@@ -241,7 +241,6 @@ interface ConvertorValue {
 function convertAsyncField(
   value: any,
   ConvertorValue: ConvertorValue,
-  formData: any
 ) {
   if (typeof ConvertorValue.data === "function") {
     return;
@@ -394,7 +393,6 @@ export default function Page({
           returnObject[key] = convertAsyncField(
             returnObject[key],
             value,
-            formData
           );
         }
       });

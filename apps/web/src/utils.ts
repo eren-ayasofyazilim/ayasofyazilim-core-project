@@ -158,7 +158,6 @@ function createZodType(
       break;
     case "integer":
       if (schema.enum) {
-        console.log("Enum: ", schema.enum, schema);
         let stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
