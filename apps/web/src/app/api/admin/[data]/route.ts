@@ -72,6 +72,20 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
+
+  claimType: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const claimType = client.claimType;
+    return {
+      get: async () => claimType.getApiIdentityClaimTypes(),
+      post: async (requestBody: any) =>
+        claimType.postApiIdentityClaimTypes({ requestBody }),
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        claimType.putApiIdentityClaimTypesById({ id, requestBody }),
+      delete: async (id: string) =>
+        claimType.deleteApiIdentityClaimTypesById({ id }),
+    };
+  },
 };
 
 export async function GET(

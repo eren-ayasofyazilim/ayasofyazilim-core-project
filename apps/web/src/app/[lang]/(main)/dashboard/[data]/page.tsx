@@ -5,6 +5,9 @@ import {
   $Volo_Abp_Identity_IdentityRoleCreateDto,
   $Volo_Abp_Identity_IdentityRoleUpdateDto,
   $Volo_Abp_Identity_IdentityUserUpdateDto,
+  $Volo_Abp_Identity_CreateClaimTypeDto,
+  $Volo_Abp_Identity_ClaimTypeDto,
+  $Volo_Abp_Identity_UpdateClaimTypeDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -130,7 +133,20 @@ const dataConfig: Record<string, tableData> = {
       ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: () => {
+            return fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
+          },
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
       dependencies: [
         {
@@ -146,7 +162,21 @@ const dataConfig: Record<string, tableData> = {
       schema: $Volo_Saas_Host_Dtos_SaasTenantDto,
       excludeList: ["id", "concurrencyStamp", "editionId"],
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: async () => {
+            return await fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
+          },
+          covertTo: "editionName",
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
     },
     editFormSchema: {
@@ -158,7 +188,21 @@ const dataConfig: Record<string, tableData> = {
       ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: async () => {
+            return await fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
+          },
+          covertTo: "editionName",
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
 
       dependencies: [
@@ -172,16 +216,94 @@ const dataConfig: Record<string, tableData> = {
       ],
     },
   },
+  claimType: {
+    filterBy: "displayName",
+    createFormSchema: {
+      formPositions: [
+        "name",
+        "required",
+        "regex",
+        "regexDescription",
+        "description",
+        "valueType",
+      ],
+      schema: $Volo_Abp_Identity_CreateClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+    tableSchema: {
+      excludeList: [
+        "id",
+        "concurrencyStamp",
+        "regexDescription",
+        "extraProperties",
+        "valueTypeAsString",
+      ],
+      schema: $Volo_Abp_Identity_ClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+    editFormSchema: {
+      formPositions: [
+        "name",
+        "required",
+        "regex",
+        "regexDescription",
+        "description",
+        "valueType",
+      ],
+      schema: $Volo_Abp_Identity_UpdateClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+  },
 };
 
 function convertEnumField(
   value: string | number,
-  enumArray: string[]
+  enumArray: {
+    data: string[];
+    type: "enum";
+  }
 ): string | number {
+  const data = enumArray.data;
   if (typeof value === "number") {
-    return enumArray[value];
+    return data[value];
   } else {
-    return enumArray.indexOf(value);
+    return data.indexOf(value);
+  }
+}
+
+interface ConvertorValue {
+  covertTo?: string;
+  data: any;
+  get: string;
+  post: string;
+  type: "enum" | "async";
+}
+
+function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
+  if (typeof ConvertorValue.data === "function") {
+    return;
+  }
+  const returnValue = ConvertorValue.data.find((item: any) => {
+    return item[ConvertorValue.get] === value;
+  });
+
+  if (returnValue) {
+    return returnValue[ConvertorValue.post];
   }
 }
 
@@ -193,6 +315,32 @@ export default function Page({
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
+  const [formData, setFormData] = useState<tableData>(dataConfig[params.data]);
+
+  async function processConvertors() {
+    let tempData = { ...formData };
+    const schemas = ["createFormSchema", "editFormSchema"] as const;
+
+    for (const schema of schemas) {
+      const dataConvertors = tempData[schema].convertors;
+      if (dataConvertors) {
+        for (const [key, value] of Object.entries(dataConvertors)) {
+          if (value.type === "async" && typeof value.data === "function") {
+            try {
+              let tempValue = await value.data();
+              if (tempData[schema].convertors) {
+                tempData[schema].convertors[key].data = tempValue;
+                tempData[schema].convertors[key].type = "async";
+              }
+            } catch (error) {
+              console.error(`Error fetching data for ${key}:`, error);
+            }
+          }
+        }
+      }
+    }
+    setFormData(tempData);
+  }
 
   function getRoles() {
     function onData(data: any) {
@@ -203,13 +351,18 @@ export default function Page({
           items: data,
         };
       }
-      const dataConvertors = dataConfig[params.data].tableSchema.convertors;
+      const dataConvertors = formData.tableSchema.convertors;
       let transformedData = returnData.items;
       if (dataConvertors) {
         transformedData = returnData.items.map((item: any) => {
           const returnObject = { ...item };
           Object.entries(dataConvertors).forEach(([key, value]) => {
-            returnObject[key] = convertEnumField(returnObject[key], value);
+            if (value.type === "enum") {
+              returnObject[key] = convertEnumField(returnObject[key], value);
+            }
+            if (value.type === "async") {
+              returnObject[key] = returnObject[value.covertTo];
+            }
           });
           return returnObject;
         });
@@ -227,7 +380,8 @@ export default function Page({
       false
     );
   }
-  const createFormSchema = dataConfig[params.data].createFormSchema;
+
+  const createFormSchema = formData.createFormSchema;
   const action: tableAction = {
     cta: "New " + params.data,
     description: "Create a new " + params.data,
@@ -270,6 +424,7 @@ export default function Page({
   ];
 
   useEffect(() => {
+    processConvertors();
     setIsLoading(true);
     getRoles();
   }, []);
@@ -285,9 +440,12 @@ export default function Page({
       const returnObject = { ...val };
       if (!schema.convertors) return returnObject;
       Object.entries(schema.convertors).forEach(([key, value]) => {
-        returnObject[key] = convertEnumField(returnObject[key], value);
+        if (value.type === "enum") {
+          returnObject[key] = convertEnumField(returnObject[key], value);
+        } else if (value.type === "async") {
+          returnObject[key] = convertAsyncField(returnObject[key], value);
+        }
       });
-
       return returnObject;
     });
     const parsed = transformedSchema.parse(data);
@@ -296,7 +454,6 @@ export default function Page({
 
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    console.log(parsedData);
     controlledFetch(
       fetchLink,
       {
@@ -331,7 +488,7 @@ export default function Page({
     );
     return newSchema;
   }
-  const editFormSchema = dataConfig[params.data].editFormSchema;
+  const editFormSchema = formData.editFormSchema;
   const editFormSchemaZod = convertZod(editFormSchema);
 
   const columnsData: columnsType = {
@@ -340,10 +497,11 @@ export default function Page({
       callback: getRoles,
       autoFormArgs: {
         formSchema: editFormSchemaZod,
-        dependencies: dataConfig[params.data].editFormSchema.dependencies,
+        dependencies: formData.editFormSchema.dependencies,
+        convertor: formData.tableSchema.convertors,
       },
-      tableType: dataConfig[params.data].tableSchema.schema,
-      excludeList: dataConfig[params.data].tableSchema.excludeList || [],
+      tableType: formData.tableSchema.schema,
+      excludeList: formData.tableSchema.excludeList || [],
       onEdit: (data, row) => onEdit(data, row, editFormSchema),
       onDelete,
     },
@@ -354,7 +512,7 @@ export default function Page({
       withCards={false}
       withTable={true}
       isLoading={isLoading}
-      filterBy={dataConfig[params.data].filterBy}
+      filterBy={formData.filterBy}
       cards={[]}
       data={roles?.items}
       columnsData={columnsData}
