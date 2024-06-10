@@ -165,7 +165,7 @@ function createZodType(
     case "string":
       zodType = z.string({ description: schema.displayName });
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
-      // if (schema.pattern) zodType = zodType.regex(schema.pattern);
+      if (schema.pattern) zodType = zodType.regex(RegExp(schema.pattern));
       if (schema.format === "email") zodType = zodType.email();
       if (schema.default) zodType = zodType.default(schema.default);
       if (schema.format === "date-time") zodType = z.coerce.date();
