@@ -5,6 +5,9 @@ import {
   $Volo_Abp_Identity_IdentityRoleCreateDto,
   $Volo_Abp_Identity_IdentityRoleUpdateDto,
   $Volo_Abp_Identity_IdentityUserUpdateDto,
+  $Volo_Abp_Identity_CreateClaimTypeDto,
+  $Volo_Abp_Identity_ClaimTypeDto,
+  $Volo_Abp_Identity_UpdateClaimTypeDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -213,6 +216,59 @@ const dataConfig: Record<string, tableData> = {
       ],
     },
   },
+  claimType: {
+    filterBy: "displayName",
+    createFormSchema: {
+      formPositions: [
+        "name",
+        "required",
+        "regex",
+        "regexDescription",
+        "description",
+        "valueType",
+      ],
+      schema: $Volo_Abp_Identity_CreateClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+    tableSchema: {
+      excludeList: [
+        "id",
+        "concurrencyStamp",
+        "regexDescription",
+        "extraProperties",
+        "valueTypeAsString",
+      ],
+      schema: $Volo_Abp_Identity_ClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+    editFormSchema: {
+      formPositions: [
+        "name",
+        "required",
+        "regex",
+        "regexDescription",
+        "description",
+        "valueType",
+      ],
+      schema: $Volo_Abp_Identity_UpdateClaimTypeDto,
+      convertors: {
+        valueType: {
+          data: ["String", "Int", "Boolean", "DateTime"],
+          type: "enum",
+        },
+      },
+    },
+  },
 };
 
 function convertEnumField(
@@ -238,10 +294,7 @@ interface ConvertorValue {
   type: "enum" | "async";
 }
 
-function convertAsyncField(
-  value: any,
-  ConvertorValue: ConvertorValue,
-) {
+function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
   if (typeof ConvertorValue.data === "function") {
     return;
   }
@@ -390,10 +443,7 @@ export default function Page({
         if (value.type === "enum") {
           returnObject[key] = convertEnumField(returnObject[key], value);
         } else if (value.type === "async") {
-          returnObject[key] = convertAsyncField(
-            returnObject[key],
-            value,
-          );
+          returnObject[key] = convertAsyncField(returnObject[key], value);
         }
       });
       return returnObject;
