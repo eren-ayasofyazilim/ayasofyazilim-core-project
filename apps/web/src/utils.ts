@@ -118,7 +118,14 @@ export function createZodObject(
       let zodType;
       if (convertors && Object.keys(convertors).includes(element)) {
         const newProps = props;
-        newProps.enum = convertors[element];
+        newProps.enum = convertors[element].data;
+        if (convertors[element].type === "enum") {
+          newProps.enum = convertors[element].data;
+        }
+        if (convertors[element].type === "async" && typeof convertors[element].data !== "function") {
+          newProps.type = "select";
+          newProps.enum = convertors[element].data.map((e: any) => e[convertors[element].get]);
+        };
         zodType = createZodType(newProps, isRequired);
       } else {
         zodType = createZodType(props, isRequired);
