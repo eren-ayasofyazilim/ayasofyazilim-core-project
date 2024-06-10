@@ -28,6 +28,11 @@ const navbarItems = [
     name: "Claim Type",
     id: "claimType",
   },
+
+  {
+    name: "Applications",
+    id: "applications",
+  },
 ];
 function isPathValid(path: string) {
   const validPaths = navbarItems.map((item) => item.id);
