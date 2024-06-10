@@ -18,6 +18,12 @@ import {
   SchemaType,
   createZodObject,
 } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@repo/ayasofyazilim-ui/atoms/tooltip";
+import { CircleHelp } from "lucide-react";
 
 export type AllowedValueTypeModelNameStringEnum =
   | "ToggleStringValueType"
@@ -34,13 +40,18 @@ export function isGroupDto(
   return "isEnabled" in object;
 }
 
-function createConfig(item: UniRefund_SettingService_Items_GroupItemDto) {
+function createConfig(
+  item: UniRefund_SettingService_Items_GroupItemDto,
+  resources: any
+) {
   let config = {
     [item.key]: {
-      description: (
-        <span className="text-muted-foreground">{item.description}</span>
+      description: description(
+        resources?.SettingService?.texts?.[item.description] ?? item.description
       ),
-      displayName: item.displayName,
+      displayName:
+        resources?.SettingService?.texts?.[item.displayName] ??
+        item.displayName,
     },
   };
 
@@ -55,47 +66,61 @@ function createConfig(item: UniRefund_SettingService_Items_GroupItemDto) {
         fieldType: convertValueTypeNameToFieldType(
           item.valueType.name as AllowedValueTypeModelNameStringEnum
         ),
-        displayName: item.displayName,
+        displayName:
+          resources?.SettingService?.texts?.[item.displayName] ??
+          item.displayName,
       },
     });
   }
   return config;
 }
-function subField(item: UniRefund_SettingService_Items_GroupItemDto) {
+function subField(
+  item: UniRefund_SettingService_Items_GroupItemDto,
+  resources: any
+) {
   if (item.subItems && item.subItems.length > 0) {
     let subitemconfigs = item.subItems.map((subitem) => {
       if (subitem.subItems && subitem.subItems.length > 0) {
         let subsubitemconfigs = subitem.subItems.map((subsubitem) => {
-          return createConfig(subsubitem);
+          return createConfig(subsubitem, resources);
         });
         return {
           [subitem.key]: {
             ...Object.assign({}, ...Object.values(subsubitemconfigs)),
-            displayName: subitem.displayName,
-            description: subitem.description,
+            displayName:
+              resources?.SettingService?.texts?.[subitem.displayName] ??
+              subitem.displayName,
+            description: description(
+              resources?.SettingService?.texts?.[subitem.description] ??
+                subitem.description
+            ),
           },
         };
       }
-      return createConfig(subitem);
+      return createConfig(subitem, resources);
     });
     let subs = {
       [item.key]: {
         ...Object.assign({}, ...Object.values(subitemconfigs)),
         displayName: item.displayName,
-        description: item.description,
+        description: description(
+          resources?.SettingService?.texts?.[item.description] ??
+            item.description
+        ),
       },
     };
     return subs;
   }
 }
 function createFieldConfig(
-  object: UniRefund_SettingService_Groups_GroupDto
+  object: UniRefund_SettingService_Groups_GroupDto,
+  resources: any
 ): AutoFormTypes.FieldConfig<{ [x: string]: any }> {
   let configs = object.items.map((item) => {
     if (item.subItems && item.subItems.length > 0) {
-      return subField(item);
+      return subField(item, resources);
     } else {
-      return createConfig(item);
+      return createConfig(item, resources);
     }
   });
   let config = Object.assign({}, ...Object.values(configs));
@@ -235,8 +260,7 @@ function createSchema(
       );
   }
   return {
-    displayName:
-      (group ? group.displayName : item ? item.displayName : "") ?? "",
+    displayName: "asd",
     required: [group ? group.key : item ? item.key : ""],
     type: "object",
     properties: properties,
@@ -267,88 +291,6 @@ function createJsonSchema(
   return schema;
 }
 
-export function SettingsView({
-  list,
-  resources,
-  path,
-}: {
-  path: string;
-  list: UniRefund_SettingService_CountrySettings_CountrySettingDto;
-  resources?: any;
-}) {
-  const [activeGroup, setActiveGroup] =
-    useState<UniRefund_SettingService_Groups_GroupDto>(() => {
-      const test = list.groups.find((x) => x.key === path);
-      if (test) return test;
-      return list.groups[0];
-    });
-
-  const [content, setContent] = useState<React.ReactElement>(() => {
-    const group = activeGroup || list.groups[0];
-
-    let schema = createSchema(group);
-    const formSchema = createZodObject(
-      schema,
-      group.items.map((x) => x.key)
-    ) as AutoFormUtils.ZodObjectOrWrapped;
-    const fieldConfig = createFieldConfig(group);
-    const dependencies = createDependencies(group);
-    return Content(fieldConfig, formSchema, dependencies);
-  });
-  useEffect(() => {
-    window.history.pushState(
-      null,
-      "",
-      window.location.href.replace("home", list.groups[0].key)
-    );
-  }, []);
-
-  function onSectionChange(sectionId: string) {
-    console.log(sectionId); //sholdnt be called twice
-    if (sectionId === activeGroup.key) return;
-    const group =
-      list.groups.find((s) => s.key === sectionId) || list.groups[0];
-    let schema = createSchema(group);
-    const formSchema = createZodObject(
-      schema,
-      group.items.map((x) => x.key)
-    ) as AutoFormUtils.ZodObjectOrWrapped;
-    const fieldConfig = createFieldConfig(group);
-    const dependencies = createDependencies(group);
-
-    setContent(Content(fieldConfig, formSchema, dependencies));
-
-    window.history.pushState(
-      null,
-      "",
-      window.location.href.replace(activeGroup.key, sectionId)
-    );
-    setActiveGroup(group);
-  }
-  console.log(resources);
-  return (
-    <SectionLayout
-      sections={list.groups.map((group: any, index: any) => {
-        return {
-          id: group.key,
-          name:
-            resources?.SettingService?.texts[group.displayName] ??
-            group.displayName,
-        };
-      })}
-      defaultActiveSectionId={activeGroup?.key || list.groups[0].key}
-      openOnNewPage={false}
-      showContentInSamePage={true}
-      onSectionChange={onSectionChange}
-      vertical={true}
-      className=""
-      content={content}
-      contentClassName="flex flex-col"
-      // contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center h-full"
-    />
-  );
-}
-
 function Content(
   fieldConfig: AutoFormTypes.FieldConfig<{ [x: string]: any }>,
   formSchema: any,
@@ -367,5 +309,98 @@ function Content(
         <AutoFormSubmit className="float-right" />
       </AutoForm>
     </div>
+  );
+}
+
+function description(text: string) {
+  if (!text) return text;
+  if (text.length < 100)
+    return <div className="text-sm text-muted-foreground">{text}</div>;
+  return (
+    <Tooltip>
+      <TooltipTrigger className="text-muted-foreground">
+        {text.substring(0, 100) + "..."}
+      </TooltipTrigger>
+      <TooltipContent>{text}</TooltipContent>
+    </Tooltip>
+  );
+}
+
+export function SettingsView({
+  list,
+  resources,
+  path,
+}: {
+  path: string;
+  list: UniRefund_SettingService_CountrySettings_CountrySettingDto;
+  resources?: any;
+}) {
+  const [activeGroup, setActiveGroup] =
+    useState<UniRefund_SettingService_Groups_GroupDto>(() => {
+      const test = list.groups.find((x) => x.key === path);
+      if (test) return test;
+      return list.groups[0];
+    });
+
+  const [content, setContent] = useState<React.ReactElement>(() => {
+    const group = activeGroup || list.groups[0];
+    let schema = createSchema(group);
+    const formSchema = createZodObject(
+      schema,
+      group.items.map((x) => x.key)
+    ) as AutoFormUtils.ZodObjectOrWrapped;
+    const fieldConfig = createFieldConfig(group, resources);
+    const dependencies = createDependencies(group);
+    return Content(fieldConfig, formSchema, dependencies);
+  });
+  useEffect(() => {
+    window.history.pushState(
+      null,
+      "",
+      window.location.href.replace("home", list.groups[0].key)
+    );
+  }, []);
+
+  function onSectionChange(sectionId: string) {
+    // console.log(sectionId); //sholdnt be called twice
+    if (sectionId === activeGroup.key) return;
+    const group =
+      list.groups.find((s) => s.key === sectionId) || list.groups[0];
+    let schema = createSchema(group);
+    const formSchema = createZodObject(
+      schema,
+      group.items.map((x) => x.key)
+    ) as AutoFormUtils.ZodObjectOrWrapped;
+    const fieldConfig = createFieldConfig(group, resources);
+    const dependencies = createDependencies(group);
+
+    setContent(Content(fieldConfig, formSchema, dependencies));
+
+    window.history.pushState(
+      null,
+      "",
+      window.location.href.replace(activeGroup.key, sectionId)
+    );
+    setActiveGroup(group);
+  }
+  return (
+    <SectionLayout
+      sections={list.groups.map((group: any, index: any) => {
+        return {
+          id: group.key,
+          name:
+            resources?.SettingService?.texts[group.displayName] ??
+            group.displayName,
+        };
+      })}
+      defaultActiveSectionId={activeGroup?.key || list.groups[0].key}
+      openOnNewPage={false}
+      showContentInSamePage={true}
+      onSectionChange={onSectionChange}
+      vertical={true}
+      className=""
+      content={content}
+      contentClassName="flex flex-col"
+    />
   );
 }

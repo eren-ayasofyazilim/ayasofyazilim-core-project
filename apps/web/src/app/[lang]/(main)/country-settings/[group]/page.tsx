@@ -23,7 +23,7 @@ export default async function Page({
       mockSettingsResponse as UniRefund_SettingService_CountrySettings_CountrySettingDto;
   }
   const resources = await getLocalizationResources(lang);
-
+  if (!resources) return <></>;
   return (
     <SettingsView list={countrySettings} resources={resources} path={group} />
   );
