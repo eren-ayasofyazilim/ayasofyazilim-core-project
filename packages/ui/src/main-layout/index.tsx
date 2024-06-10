@@ -22,6 +22,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 export type MainLayoutProps = {
+  appName: string;
   children: JSX.Element;
   navigationItems: NavigationItem[];
   userNavigation: ProfileMenuProps;
@@ -40,6 +41,7 @@ export type NavigationItem = {
 };
 
 export function MainLayout({
+  appName,
   children,
   navigationItems,
   userNavigation,
@@ -49,24 +51,28 @@ export function MainLayout({
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <div
-        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 max-w-72"} transition-all`}
+        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 fixed z-[99] w-full max-w-[unset] sm:max-w-72 sm:relative"} transition-all`}
       >
         <div className="min-h-16 max-h-16 bg-white px-4 flex items-center border-b">
-          <Logo
-            variant={minNavbar ? "icon" : "text"}
-            iconProps={{
-              className: "w-10 h-10",
-              taxFree: false,
-              fill: "#DB0000",
-            }}
-            textProps={{
-              className: "h-4",
-              primaryColor: "#DB0000",
-            }}
-            appIconProps={{
-              className: "w-10 h-10",
-            }}
-          />
+          {appName === "UPWITHCROWD" ? (
+            <div className="font-bold text-xl text-[#f15656]">UPWITHCROWD</div>
+          ) : (
+            <Logo
+              variant={minNavbar ? "icon" : "text"}
+              iconProps={{
+                className: "w-10 h-10",
+                taxFree: false,
+                fill: "#DB0000",
+              }}
+              textProps={{
+                className: "h-4",
+                primaryColor: "#DB0000",
+              }}
+              appIconProps={{
+                className: "w-10 h-10",
+              }}
+            />
+          )}
           <Button
             className={`ml-auto p-0 w-6 h-6 ${minNavbar ? "fixed left-20 border bg-white" : ""}`}
             variant="link"
@@ -92,7 +98,7 @@ export function MainLayout({
         >
           {topBarComponent}
         </div>
-        <div className="grow bg-slate-50 p-0 overflow-y-auto">{children}</div>
+        <div className="grow bg-slate-50 p-0 overflow-hidden">{children}</div>
       </div>
     </div>
   );

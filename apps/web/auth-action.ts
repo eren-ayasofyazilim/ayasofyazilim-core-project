@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
+const AUTH_URL = process.env.BASE_URL + "/api/account/login";
 
 export async function signOutServer() {
   try {
@@ -22,6 +23,15 @@ export async function signInServer({
   password: string;
 }) {
   try {
+    const result = await canItBeAuthorized({
+      username: userIdentifier,
+      password,
+    });
+
+    if (result?.description !== "Success") {
+      return result;
+    }
+
     await signIn("credentials", {
       username: userIdentifier,
       password,
@@ -33,8 +43,8 @@ export async function signInServer({
   } catch (error: any) {
     console.log(error);
     return {
-      status: error.status,
-      message: error?.body?.error?.message,
+      status: 400,
+      description: "UnknownError",
     };
   }
 }
@@ -63,7 +73,7 @@ export async function signUpServer({
   } catch (error: any) {
     return {
       status: error.status,
-      message: error?.body?.error?.message,
+      description: error?.body?.error?.code,
     };
   }
 }
@@ -101,6 +111,25 @@ export async function getMyProfile(token: any) {
     },
   });
   return await client.profile.getApiAccountMyProfile();
+}
+export async function canItBeAuthorized(credentials: any) {
+  "use server";
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("X-Requested-With", "XMLHttpRequest");
+
+  const body = {
+    userNameOrEmailAddress: credentials.username as string,
+    password: credentials.password as string,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(AUTH_URL, requestOptions);
+  return await response.json();
 }
 export async function signInWithCredentials(credentials: any) {
   "use server";

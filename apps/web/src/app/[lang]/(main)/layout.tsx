@@ -19,6 +19,7 @@ type LayoutProps = {
   params: { lang: string };
   children: JSX.Element;
 };
+const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
 
 export default async function Layout({ children, params }: LayoutProps) {
   const permission = await getPermission();
@@ -189,6 +190,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   return (
     <MainLayout
+      appName={appName}
       navigationItems={navigationItems}
       userNavigation={userNavigation}
       topBarComponent={

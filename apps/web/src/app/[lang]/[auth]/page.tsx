@@ -13,11 +13,13 @@ import { useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { z } from "zod";
 import "./../../globals.css";
+import { useApplication } from "src/providers/application";
 
 export default function Page(): JSX.Element {
   const { cultureName, resources, changeLocale } = useLocale();
   const router = useRouter();
   const params = useParams();
+  const { appName } = useApplication();
   const searchParams = useSearchParams();
   let authTypeParam = params.auth as authTypes;
   const [errorMessage, setErrorMessage] = useState<string | null | undefined>(
@@ -86,6 +88,7 @@ export default function Page(): JSX.Element {
     };
   } else if (authTypeParam === "register") {
     props = {
+      router: router,
       allowTenantChange: true,
       formSchema: registerFormSchema,
       registerFunction: signUpServer,
@@ -154,7 +157,11 @@ export default function Page(): JSX.Element {
       onLangChange={changeLocale}
     >
       <div className="bg-slate-100 flex flex-auto justify-center items-center">
-        <Logo variant="text" textProps={{ className: "h-16" }} />
+        {appName === "UPWITHCROWD" ? (
+          <div className="font-bold text-5xl text-[#f15656]">UPWITHCROWD</div>
+        ) : (
+          <Logo variant="text" textProps={{ className: "h-16" }} />
+        )}
       </div>
     </Auth>
   );

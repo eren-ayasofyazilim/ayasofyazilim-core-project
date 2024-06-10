@@ -1,89 +1,126 @@
 "use client";
 import {
-  UniRefund_SettingService_Groups_GroupDto,
-  UniRefund_SettingService_Items_GroupItemDto,
   UniRefund_SettingService_Bonds_BondDto,
   UniRefund_SettingService_CountrySettings_CountrySettingDto,
+  UniRefund_SettingService_Groups_GroupDto,
+  UniRefund_SettingService_Items_GroupItemDto,
 } from "@ayasofyazilim/saas/SettingService";
+
 import AutoForm, {
   AutoFormSubmit,
+  AutoFormTypes,
+  AutoFormUtils,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
-import {
-  Dependency,
-  DependencyType,
-  FieldConfig,
-} from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
-import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
-import { JsonSchema, SchemaType, createZodObject } from "src/utils";
-import {
-  AllowedValueTypeModelNameStringEnum,
-  BondDto,
-  CountrySettingDto,
-} from "./types";
 import { useEffect, useState } from "react";
+import {
+  JsonSchema,
+  SchemaType,
+  createZodObject,
+} from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@repo/ayasofyazilim-ui/atoms/tooltip";
+import { CircleHelp } from "lucide-react";
 
-function isGroupDto(
+export type AllowedValueTypeModelNameStringEnum =
+  | "ToggleStringValueType"
+  | "FreeTextStringValueType"
+  | "SelectionStringValueType"
+  | "BooleanValueType"
+  | "NumericValueType"
+  | ""
+  | null;
+
+export function isGroupDto(
   object: any
 ): object is UniRefund_SettingService_Groups_GroupDto {
   return "isEnabled" in object;
 }
 
-function createConfig(item: UniRefund_SettingService_Items_GroupItemDto) {
+function createConfig(
+  item: UniRefund_SettingService_Items_GroupItemDto,
+  resources: any
+) {
   let config = {
     [item.key]: {
-      description: (
-        <span className="text-muted-foreground">{item.description}</span>
+      description: description(
+        resources?.SettingService?.texts?.[item.description] ?? item.description
       ),
-      displayName: item.displayName,
+      displayName:
+        resources?.SettingService?.texts?.[item.displayName] ??
+        item.displayName,
     },
   };
 
-  if (convertValueTypeNameToFieldType(item.valueType.name)) {
+  if (
+    item?.valueType?.name &&
+    convertValueTypeNameToFieldType(
+      item.valueType.name as AllowedValueTypeModelNameStringEnum
+    )
+  ) {
     Object.assign(config, {
       [item.key]: {
-        fieldType: convertValueTypeNameToFieldType(item.valueType.name),
-        displayName: item.displayName,
+        fieldType: convertValueTypeNameToFieldType(
+          item.valueType.name as AllowedValueTypeModelNameStringEnum
+        ),
+        displayName:
+          resources?.SettingService?.texts?.[item.displayName] ??
+          item.displayName,
       },
     });
   }
   return config;
 }
-function subField(item: UniRefund_SettingService_Items_GroupItemDto) {
+function subField(
+  item: UniRefund_SettingService_Items_GroupItemDto,
+  resources: any
+) {
   if (item.subItems && item.subItems.length > 0) {
     let subitemconfigs = item.subItems.map((subitem) => {
       if (subitem.subItems && subitem.subItems.length > 0) {
         let subsubitemconfigs = subitem.subItems.map((subsubitem) => {
-          return createConfig(subsubitem);
+          return createConfig(subsubitem, resources);
         });
         return {
           [subitem.key]: {
             ...Object.assign({}, ...Object.values(subsubitemconfigs)),
-            displayName: subitem.displayName,
-            description: subitem.description,
+            displayName:
+              resources?.SettingService?.texts?.[subitem.displayName] ??
+              subitem.displayName,
+            description: description(
+              resources?.SettingService?.texts?.[subitem.description] ??
+                subitem.description
+            ),
           },
         };
       }
-      return createConfig(subitem);
+      return createConfig(subitem, resources);
     });
     let subs = {
       [item.key]: {
         ...Object.assign({}, ...Object.values(subitemconfigs)),
         displayName: item.displayName,
-        description: item.description,
+        description: description(
+          resources?.SettingService?.texts?.[item.description] ??
+            item.description
+        ),
       },
     };
     return subs;
   }
 }
 function createFieldConfig(
-  object: UniRefund_SettingService_Groups_GroupDto
-): FieldConfig<{ [x: string]: any }> {
+  object: UniRefund_SettingService_Groups_GroupDto,
+  resources: any
+): AutoFormTypes.FieldConfig<{ [x: string]: any }> {
   let configs = object.items.map((item) => {
     if (item.subItems && item.subItems.length > 0) {
-      return subField(item);
+      return subField(item, resources);
     } else {
-      return createConfig(item);
+      return createConfig(item, resources);
     }
   });
   let config = Object.assign({}, ...Object.values(configs));
@@ -95,10 +132,10 @@ type createBondType = {
   targetField: string;
   parentField?: string;
 };
-type rtType = {
+type bondType = {
   sourceField: string;
   targetField: string;
-  type: DependencyType;
+  type: AutoFormTypes.DependencyType;
   hasParentField: boolean;
   when: (val: any) => boolean;
 };
@@ -113,17 +150,16 @@ function createSafeRegexp(val: any, pattern: string | undefined | null) {
     return x;
   }
 }
-
-function createBonds(sett: createBondType): rtType[] {
+function createBonds(sett: createBondType): bondType[] {
   return sett.bonds.map((bond) => {
     let sourceField = sett.parentField
       ? `${sett.parentField}.${bond.key}`
       : bond.key;
 
-    let createdBond: rtType = {
-      sourceField: sourceField,
+    let createdBond: bondType = {
+      sourceField: sourceField ?? "", //bond.key is not nullable fix it
       targetField: sett.targetField,
-      type: DependencyType[bond.type],
+      type: bond.type,
       hasParentField: sett.parentField ? true : false,
       when: (val: any) => createSafeRegexp(val, bond.pattern),
     };
@@ -132,7 +168,7 @@ function createBonds(sett: createBondType): rtType[] {
 }
 function createDependencies(
   group: UniRefund_SettingService_Groups_GroupDto
-): Dependency<{ [x: string]: any }>[] {
+): AutoFormTypes.Dependency<{ [x: string]: any }>[] {
   let bonds = group.items.map((item) => {
     if (item.subItems && item.subItems.length > 0) {
       let subitembonds = item.subItems.map((subitem) => {
@@ -160,7 +196,6 @@ function createDependencies(
   // @ts-ignore
   return bonds.filter((x) => x).flat();
 }
-
 function convertValueTypeNameToFieldType(
   type: AllowedValueTypeModelNameStringEnum
 ) {
@@ -189,19 +224,18 @@ function convertValueTypeNameToSchemaType(
       return "string";
   }
 }
-
-function CreateProperties(
+function createProperties(
   item: UniRefund_SettingService_Items_GroupItemDto
 ): any {
   if (!item.valueType) return;
-  if (item.valueType.name == null)
-    return { [item.key]: CreateSchema(undefined, item) };
+  if (item.subItems && item.subItems.length > 0)
+    return { [item.key]: createSchema(undefined, item) };
   return {
-    [item.key]: CreateJsonSchema(item),
+    [item.key]: createJsonSchema(item),
   };
 }
 //Creates item & parent schema
-function CreateSchema(
+function createSchema(
   group?: UniRefund_SettingService_Groups_GroupDto,
   item?: UniRefund_SettingService_Items_GroupItemDto
 ): SchemaType {
@@ -210,7 +244,7 @@ function CreateSchema(
     properties = Object.assign(
       {},
       ...group.items.map((item) => {
-        return CreateProperties(item);
+        return createProperties(item);
       })
     );
   } else if (item) {
@@ -221,13 +255,12 @@ function CreateSchema(
       properties = Object.assign(
         {},
         ...item.subItems.map((subitem) => {
-          return CreateProperties(subitem);
+          return createProperties(subitem);
         })
       );
   }
   return {
-    displayName:
-      (group ? group.displayName : item ? item.displayName : "") ?? "",
+    displayName: "asd",
     required: [group ? group.key : item ? item.key : ""],
     type: "object",
     properties: properties,
@@ -235,17 +268,19 @@ function CreateSchema(
   };
 }
 //Creates item schema
-function CreateJsonSchema(
+function createJsonSchema(
   item: UniRefund_SettingService_Items_GroupItemDto
 ): JsonSchema {
   let schema: JsonSchema = {
-    type: convertValueTypeNameToSchemaType(item.valueType?.name),
+    type: convertValueTypeNameToSchemaType(
+      item.valueType?.name as AllowedValueTypeModelNameStringEnum
+    ),
     isRequired: item.isRequired ?? false,
     isReadOnly: item.isActive ?? false,
     maxLength: item.valueType?.validator?.properties?.maxValue,
-    default: item.defaultValue,
-    description: item.description ?? "asdasdasdasd",
-    displayName: item.displayName ?? "test",
+    // default: item.defaultValue,
+    // description: item.description ?? "asdasdasdasd",
+    displayName: item.displayName ?? item.key,
   };
   if (item.valueType && item.valueType.name === "SelectionStringValueType") {
     schema = {
@@ -256,7 +291,42 @@ function CreateJsonSchema(
   return schema;
 }
 
-export default function Form({
+function Content(
+  fieldConfig: AutoFormTypes.FieldConfig<{ [x: string]: any }>,
+  formSchema: any,
+  dependencies: AutoFormTypes.Dependency<{ [x: string]: any }>[]
+) {
+  return (
+    <div className="flex flex-col gap-4 min-w-3xl mx-auto max-w-3xl w-full px-4 py-8">
+      <AutoForm
+        className="w-full"
+        formSchema={formSchema}
+        onParsedValuesChange={(e) => {}}
+        onSubmit={(e) => {}}
+        fieldConfig={fieldConfig}
+        dependencies={dependencies}
+      >
+        <AutoFormSubmit className="float-right" />
+      </AutoForm>
+    </div>
+  );
+}
+
+function description(text: string) {
+  if (!text) return text;
+  if (text.length < 100)
+    return <div className="text-sm text-muted-foreground">{text}</div>;
+  return (
+    <Tooltip>
+      <TooltipTrigger className="text-muted-foreground">
+        {text.substring(0, 100) + "..."}
+      </TooltipTrigger>
+      <TooltipContent>{text}</TooltipContent>
+    </Tooltip>
+  );
+}
+
+export function SettingsView({
   list,
   resources,
   path,
@@ -274,28 +344,14 @@ export default function Form({
 
   const [content, setContent] = useState<React.ReactElement>(() => {
     const group = activeGroup || list.groups[0];
-
-    let schema = CreateSchema(group);
+    let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
       group.items.map((x) => x.key)
-    ) as ZodObjectOrWrapped;
-    const fieldConfig = createFieldConfig(group);
+    ) as AutoFormUtils.ZodObjectOrWrapped;
+    const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
-    return (
-      <div className="flex flex-col gap-4 min-w-3xl max-w-3xl h-screen w-full mt-8">
-        <AutoForm
-          className="w-full h-screen"
-          formSchema={formSchema}
-          onParsedValuesChange={(e) => {}}
-          onSubmit={(e) => {}}
-          fieldConfig={fieldConfig}
-          dependencies={dependencies}
-        >
-          <AutoFormSubmit className="float-right" />
-        </AutoForm>
-      </div>
-    );
+    return Content(fieldConfig, formSchema, dependencies);
   });
   useEffect(() => {
     window.history.pushState(
@@ -306,30 +362,19 @@ export default function Form({
   }, []);
 
   function onSectionChange(sectionId: string) {
+    // console.log(sectionId); //sholdnt be called twice
     if (sectionId === activeGroup.key) return;
     const group =
       list.groups.find((s) => s.key === sectionId) || list.groups[0];
-    let schema = CreateSchema(group);
+    let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
       group.items.map((x) => x.key)
-    ) as ZodObjectOrWrapped;
-    const fieldConfig = createFieldConfig(group);
+    ) as AutoFormUtils.ZodObjectOrWrapped;
+    const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
-    setContent(
-      <div className="flex flex-col gap-4 min-w-3xl max-w-3xl w-full mt-8">
-        <AutoForm
-          className="w-full"
-          formSchema={formSchema}
-          onParsedValuesChange={(e) => {}}
-          onSubmit={(e) => {}}
-          fieldConfig={fieldConfig}
-          dependencies={dependencies}
-        >
-          <AutoFormSubmit className="float-right" />
-        </AutoForm>
-      </div>
-    );
+
+    setContent(Content(fieldConfig, formSchema, dependencies));
 
     window.history.pushState(
       null,
@@ -339,39 +384,23 @@ export default function Form({
     setActiveGroup(group);
   }
   return (
-    <div className="p-8">
-      <SectionLayout
-        sections={list.groups.map((group: any, index: any) => {
-          return {
-            id: group.key,
-            name:
-              resources?.SettingService.texts[group.displayName] ??
-              group.displayName,
-          };
-        })}
-        defaultActiveSectionId={activeGroup?.key || list.groups[0].key}
-        openOnNewPage={false}
-        showActiveSection={true}
-        onSectionChange={onSectionChange}
-        vertical={true}
-        className="items-start p-0 "
-        content={content}
-        // content={
-        //   <div className="flex flex-col gap-4 min-w-3xl max-w-3xl h-screen w-full mt-8">
-        //     <AutoForm
-        //       className="w-full h-screen"
-        //       formSchema={formSchema}
-        //       onParsedValuesChange={(e) => {}}
-        //       onSubmit={(e) => {}}
-        //       fieldConfig={fieldConfig}
-        //       dependencies={dependencies}
-        //     >
-        //       <AutoFormSubmit className="float-right" />
-        //     </AutoForm>
-        //   </div>
-        // }
-        contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center"
-      />
-    </div>
+    <SectionLayout
+      sections={list.groups.map((group: any, index: any) => {
+        return {
+          id: group.key,
+          name:
+            resources?.SettingService?.texts[group.displayName] ??
+            group.displayName,
+        };
+      })}
+      defaultActiveSectionId={activeGroup?.key || list.groups[0].key}
+      openOnNewPage={false}
+      showContentInSamePage={true}
+      onSectionChange={onSectionChange}
+      vertical={true}
+      className=""
+      content={content}
+      contentClassName="flex flex-col"
+    />
   );
 }

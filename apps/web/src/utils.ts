@@ -1,5 +1,6 @@
 import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
 import { ZodSchema, ZodType, z } from "zod";
+import { defaultResources } from "./resources";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
@@ -9,11 +10,27 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-export async function getLocalizationResources(languageCode: string) {
-  const response = await fetch(
-    `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
-  );
-  return ((await response.json()) as LocalizationDto).resources;
+export async function getLocalizationResources(languageCode: string): Promise<{
+  [key: string]: {
+    texts?:
+      | {
+          [key: string]: string;
+        }
+      | null
+      | undefined;
+    baseResources?: string[] | null | undefined;
+  };
+}> {
+  try {
+    const response = await fetch(
+      `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
+    );
+    return ((await response.json()) as LocalizationDto).resources || {};
+  } catch (error) {
+    console.error("Offline Data");
+
+    return defaultResources || {};
+  }
 }
 
 function getLocale(locale?: string) {

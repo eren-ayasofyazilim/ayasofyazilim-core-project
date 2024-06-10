@@ -9,16 +9,11 @@ import ProjectForm from "./form";
 export default async function Page({ params }: any) {
   const { projectId } = params;
   const resources = await getLocalizationResources(params.lang);
-  if (!resources?.["ProjectService"].texts) return null;
-
   const projectData = await getProjectByIdServer(projectId);
 
   if (!projectData) {
     redirect("/projects");
   }
-  const projectResource = resources["ProjectService"]?.texts;
-  const uiResource = resources["AbpUi"]?.texts;
-  if (!projectResource || !uiResource) return;
 
   return (
     <div className="relative w-full container mt-8">
