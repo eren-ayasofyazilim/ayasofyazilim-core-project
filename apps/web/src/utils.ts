@@ -122,10 +122,15 @@ export function createZodObject(
         if (convertors[element].type === "enum") {
           newProps.enum = convertors[element].data;
         }
-        if (convertors[element].type === "async" && typeof convertors[element].data !== "function") {
+        if (
+          convertors[element].type === "async" &&
+          typeof convertors[element].data !== "function"
+        ) {
           newProps.type = "select";
-          newProps.enum = convertors[element].data.map((e: any) => e[convertors[element].get]);
-        };
+          newProps.enum = convertors[element].data.map(
+            (e: any) => e[convertors[element].get]
+          );
+        }
         zodType = createZodType(newProps, isRequired);
       } else {
         zodType = createZodType(props, isRequired);
@@ -160,7 +165,7 @@ function createZodType(
     case "string":
       zodType = z.string({ description: schema.displayName });
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
-      if (schema.pattern) zodType = zodType.regex(schema.pattern);
+      // if (schema.pattern) zodType = zodType.regex(schema.pattern);
       if (schema.format === "email") zodType = zodType.email();
       if (schema.default) zodType = zodType.default(schema.default);
       if (schema.format === "date-time") zodType = z.coerce.date();
