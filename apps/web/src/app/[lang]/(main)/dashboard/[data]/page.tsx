@@ -136,7 +136,9 @@ const dataConfig: Record<string, tableData> = {
         },
         editionId: {
           data: () => {
-            return fetch(getBaseLink("api/admin/edition")).then((data) => data.json());
+            return fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
           },
           get: "displayName",
           post: "id",
@@ -163,8 +165,11 @@ const dataConfig: Record<string, tableData> = {
         },
         editionId: {
           data: async () => {
-            return await fetch(getBaseLink("api/admin/edition")).then((data) => data.json());
+            return await fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
           },
+          covertTo: "editionName",
           get: "displayName",
           post: "id",
           type: "async",
@@ -180,7 +185,21 @@ const dataConfig: Record<string, tableData> = {
       ],
       schema: $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
       convertors: {
-        activationState: ["Active", "Active with limited time", "Passive"],
+        activationState: {
+          data: ["Active", "Active with limited time", "Passive"],
+          type: "enum",
+        },
+        editionId: {
+          data: async () => {
+            return await fetch(getBaseLink("api/admin/edition")).then((data) =>
+              data.json()
+            );
+          },
+          covertTo: "editionName",
+          get: "displayName",
+          post: "id",
+          type: "async",
+        },
       },
 
       dependencies: [
@@ -211,16 +230,29 @@ function convertEnumField(
   }
 }
 
-function convertAsyncField(value: any, ConvertorValue: object, formData: any) {
-  if (typeof value.data === "function") {
+interface ConvertorValue {
+  covertTo?: string;
+  data: any;
+  get: string;
+  post: string;
+  type: "enum" | "async";
+}
+
+function convertAsyncField(
+  value: any,
+  ConvertorValue: ConvertorValue,
+  formData: any
+) {
+  if (typeof ConvertorValue.data === "function") {
     return;
   }
   const returnValue = ConvertorValue.data.find((item: any) => {
-    if (item[ConvertorValue.get] === value) {
-      return item[ConvertorValue.post];
-    }
+    return item[ConvertorValue.get] === value;
   });
-  return returnValue[ConvertorValue.post];
+
+  if (returnValue) {
+    return returnValue[ConvertorValue.post];
+  }
 }
 
 export default function Page({
@@ -232,21 +264,30 @@ export default function Page({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
   const [formData, setFormData] = useState<tableData>(dataConfig[params.data]);
+
   async function processConvertors() {
-    let tempData = formData;
-    const dataConvertors = tempData.createFormSchema.convertors;
-    if (dataConvertors) {
-      for (const [key, value] of Object.entries(dataConvertors)) {
-        if (value.type === "async") {
-          let tempValue = await value.data();
-          if (tempData.createFormSchema.convertors) {
-            tempData.createFormSchema.convertors[key].data = tempValue
-            tempData.createFormSchema.convertors[key].type = "async"
+    let tempData = { ...formData };
+    const schemas = ["createFormSchema", "editFormSchema"] as const;
+
+    for (const schema of schemas) {
+      const dataConvertors = tempData[schema].convertors;
+      if (dataConvertors) {
+        for (const [key, value] of Object.entries(dataConvertors)) {
+          if (value.type === "async" && typeof value.data === "function") {
+            try {
+              let tempValue = await value.data();
+              if (tempData[schema].convertors) {
+                tempData[schema].convertors[key].data = tempValue;
+                tempData[schema].convertors[key].type = "async";
+              }
+            } catch (error) {
+              console.error(`Error fetching data for ${key}:`, error);
+            }
           }
         }
       }
-      setFormData(tempData);
     }
+    setFormData(tempData);
   }
 
   function getRoles() {
@@ -267,6 +308,9 @@ export default function Page({
             if (value.type === "enum") {
               returnObject[key] = convertEnumField(returnObject[key], value);
             }
+            if (value.type === "async") {
+              returnObject[key] = returnObject[value.covertTo];
+            }
           });
           return returnObject;
         });
@@ -284,6 +328,7 @@ export default function Page({
       false
     );
   }
+
   const createFormSchema = formData.createFormSchema;
   const action: tableAction = {
     cta: "New " + params.data,
@@ -346,7 +391,11 @@ export default function Page({
         if (value.type === "enum") {
           returnObject[key] = convertEnumField(returnObject[key], value);
         } else if (value.type === "async") {
-          returnObject[key] = convertAsyncField(returnObject[key], value, formData);
+          returnObject[key] = convertAsyncField(
+            returnObject[key],
+            value,
+            formData
+          );
         }
       });
       return returnObject;
@@ -401,6 +450,7 @@ export default function Page({
       autoFormArgs: {
         formSchema: editFormSchemaZod,
         dependencies: formData.editFormSchema.dependencies,
+        convertor: formData.tableSchema.convertors,
       },
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],

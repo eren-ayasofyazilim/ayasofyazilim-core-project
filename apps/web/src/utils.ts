@@ -45,14 +45,14 @@ export function getBaseLink(
 //item & sub item
 export type JsonSchema = {
   type:
-  | "string"
-  | "boolean"
-  | "object"
-  | "integer"
-  | "number"
-  | "array"
-  | "toggle"
-  | "select";
+    | "string"
+    | "boolean"
+    | "object"
+    | "integer"
+    | "number"
+    | "array"
+    | "toggle"
+    | "select";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
