@@ -172,19 +172,55 @@ export const dataConfig: Record<string, any> = {
     displayName: "Admin Management",
     default: "languages",
     languages: {
-      filterBy: "displayName",
       createFormSchema: {
-        formPositions: ["displayName", "flagIcon", "cultureName"],
+        formPositions: [
+          "cultureName",
+          "uiCultureName",
+          "displayName",
+          "isEnabled",
+        ],
         schema: $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
+        convertors: {
+          cultureName: {
+            data: async () => {
+              return await fetch(getBaseLink("api/admin/culture")).then(
+                (data) => data.json()
+              );
+            },
+            covertTo: "displayName",
+            get: "displayName",
+            post: "name",
+            type: "async",
+          },
+          uiCultureName: {
+            data: async () => {
+              return await fetch(getBaseLink("api/admin/culture")).then(
+                (data) => data.json()
+              );
+            },
+            covertTo: "displayName",
+            get: "displayName",
+            post: "name",
+            type: "async",
+          },
+        },
       },
       tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "creationTime",
+          "creatorId",
+          "flagIcon",
+          "isDefaultLanguage",
+        ],
         schema: $Volo_Abp_LanguageManagement_Dto_LanguageDto,
-        excludeList: ["id", "concurrencyStamp"],
       },
       editFormSchema: {
-        formPositions: ["displayName", "flagIcon", "cultureName"],
+        formPositions: ["displayName", "isEnabled"],
         schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
       },
+      filterBy: "displayName",
     },
   },
   saas: {
