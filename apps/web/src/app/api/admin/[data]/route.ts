@@ -5,7 +5,11 @@ import {
   Volo_Abp_Identity_IdentityRoleUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { NextRequest } from "next/server";
-import { getIdentityServiceClient, getSaasServiceClient } from "src/lib";
+import {
+  getAdministrationServiceClient,
+  getIdentityServiceClient,
+  getSaasServiceClient,
+} from "src/lib";
 
 type Clients = {
   [key: string]: any;
@@ -85,7 +89,6 @@ const clients: Clients = {
         claimType.deleteApiIdentityClaimTypesById({ id }),
     };
   },
-
   applications: async (req: NextRequest) => {
     const client = await getIdentityServiceClient(req);
     const applications = client.applications;
@@ -109,6 +112,19 @@ const clients: Clients = {
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
         scopes.putApiOpeniddictScopesById({ id, requestBody }),
       delete: async (id: string) => scopes.deleteApiOpeniddictScopes({ id }),
+    };
+  },
+  languages: async (req: NextRequest) => {
+    const client = await getAdministrationServiceClient(req);
+    const languages = client.languages;
+    return {
+      get: async () => languages.getApiLanguageManagementLanguages(),
+      post: async (requestBody: any) =>
+        languages.postApiLanguageManagementLanguages({ requestBody }),
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        languages.putApiLanguageManagementLanguagesById({ id, requestBody }),
+      delete: async (id: string) =>
+        languages.deleteApiLanguageManagementLanguagesById({ id }),
     };
   },
 };
