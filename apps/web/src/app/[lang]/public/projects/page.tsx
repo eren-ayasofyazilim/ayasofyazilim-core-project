@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import { LayoutIcon, ViewHorizontalIcon } from "@radix-ui/react-icons";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
@@ -9,7 +9,6 @@ import {
   TabsTrigger,
 } from "@repo/ayasofyazilim-ui/molecules/tabs";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import {
@@ -23,27 +22,19 @@ import {
 } from "@repo/ayasofyazilim-ui/molecules/pagination";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
-import { Filter } from "@repo/ui/filter";
 import { Link } from "next-view-transitions";
-import { useEffect, useState } from "react";
 import { useLocale } from "src/providers/locale";
 import { cardProps, images, tableProps, tableProps2Col } from "./demo-data";
+import { useEffect, useState } from "react";
+import { getBaseLink, getLocalizationResources } from "src/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getProjectsServer } from "../../(main)/projects/action";
+import { Filter } from "@repo/ui/filter";
 
-export default function Page() {
-  const { resources } = useLocale();
-  const [data, setData] = useState<Volo_Abp_Application_Dtos_PagedResultDto_13>(
-    {}
-  );
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
+export default async function Page({ params }: { params: { lang: string } }) {
+  const projectData = await getProjectsServer();
 
+  const resources = await getLocalizationResources(params.lang);
   const statusOptions = [
     {
       label: resources?.ProjectService?.texts?.inFunding ?? "",
@@ -94,9 +85,10 @@ export default function Page() {
       value: 2,
     },
   ];
+  if (!resources) return;
   return (
     <div className="container h-full">
-      {data && !isLoading && (
+      {projectData && (
         <Tabs
           defaultValue="2"
           className="w-full flex grow flex-col overflow-hidden h-full"
@@ -128,7 +120,7 @@ export default function Page() {
           <ScrollArea className="p-2 pt-0 h-full grow">
             <TabsContent value="1">
               <div className="w-full flex flex-wrap gap-5 overflow-auto h-full">
-                {data.items?.map((project) => (
+                {projectData.items?.map((project) => (
                   <DetailsCard
                     key={project.id}
                     cardProps={{
@@ -168,7 +160,7 @@ export default function Page() {
             </TabsContent>
             <TabsContent value="2">
               <div className="flex flex-row w-full flex-wrap justify-center gap-5 col-span-10 overflow-auto h-full">
-                {data.items?.map((project) => (
+                {projectData.items?.map((project) => (
                   <DetailsCard
                     key={project.id}
                     cardProps={{
@@ -234,22 +226,6 @@ export default function Page() {
             </Pagination>
           </div>
         </Tabs>
-      )}
-      {isLoading && (
-        <Skeleton className="bg-gray-500/10 w-full flex grow flex-col overflow-hidden h-full">
-          <Skeleton className="bg-gray-500/10 flex items-center justify-between bg-white py-2 gap-2">
-            <Skeleton className="bg-gray-500/10 flex items-center justify-center gap-2">
-              <Skeleton className="bg-gray-500/10 w-[100px] h-[40px]" />
-              <Skeleton className="bg-gray-500/10 w-[100px] h-[40px]" />
-              <Skeleton className="bg-gray-500/10 w-[100px] h-[40px]" />
-            </Skeleton>
-            <Skeleton className="bg-gray-500/10 grid grid-cols-2 bg-gray-50 px-2">
-              <Skeleton className="bg-gray-500/10 h-full w-full" />
-              <Skeleton className="bg-gray-500/10 h-full w-full" />
-            </Skeleton>
-          </Skeleton>
-          <Skeleton className="bg-gray-500/10 p-2 pt-0 h-full grow"></Skeleton>
-        </Skeleton>
       )}
     </div>
   );

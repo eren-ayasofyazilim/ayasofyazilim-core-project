@@ -5,18 +5,19 @@ import {
   TooltipTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/tooltip";
 import { CountrySelector } from "@repo/ayasofyazilim-ui/organisms/country-selector";
-import { getBaseLink } from "src/utils";
 import countries from "./data";
-import { LocaleContext } from "src/providers/locale";
-import { useContext } from "react";
 
 export default function LanguageSelector({
   menuAlign,
+  resources,
+  cultureName,
+  baseLink,
 }: {
   menuAlign?: "start" | "center" | "end";
+  resources: any;
+  cultureName: string;
+  baseLink: any;
 }) {
-  const { resources, cultureName } = useContext(LocaleContext);
-
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -32,7 +33,7 @@ export default function LanguageSelector({
             onValueChange={(value: string) => {
               const newUrl =
                 value + "/" + location.pathname.split("/").slice(2).join("/");
-              location.href = getBaseLink(newUrl, false);
+              location.href = `${baseLink}${newUrl}`;
             }}
           />
         </div>

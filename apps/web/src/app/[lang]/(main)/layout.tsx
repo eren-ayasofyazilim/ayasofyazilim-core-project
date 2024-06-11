@@ -4,7 +4,7 @@ import { MainLayout, NavigationItem } from "@repo/ui/main-layout";
 import { getPermission } from "action";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
-import LanguageSelector from "components/language-selector";
+import LanguageSelector from "@repo/ui/language-selector";
 import {
   FileBadge,
   Presentation,
@@ -207,7 +207,12 @@ export default async function Layout({ children, params }: LayoutProps) {
             className="w-90"
             placeholder={`${resources?.AbpUi?.texts?.Search}...`}
           />
-          <LanguageSelector menuAlign="end" />
+          <LanguageSelector
+            menuAlign="end"
+            cultureName={params.lang}
+            resources={resources}
+            baseLink={getBaseLink("", false)}
+          />
         </div>
       }
     >

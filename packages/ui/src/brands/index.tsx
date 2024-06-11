@@ -1,19 +1,18 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
+} from "@repo/ayasofyazilim-ui/atoms/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
-import Autoplay from "embla-carousel-autoplay";
 
 export function Brands() {
   return (
     <div className="w-full flex justify-center bg-white">
       <Carousel
         className="w-full"
-        plugins={[AutoScroll()]}
+        plugins={[AutoScroll({ speed: 1 })]}
         opts={{
           align: "start",
           loop: true,

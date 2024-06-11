@@ -1,13 +1,5 @@
 "use client";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import {
   Avatar,
   AvatarFallback,
@@ -15,11 +7,18 @@ import {
 } from "@repo/ayasofyazilim-ui/atoms/avatar";
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import CardTable from "@repo/ayasofyazilim-ui/molecules/card-table";
-import { InvestInput } from "components/invest-input";
 import Link from "next/link";
 import { replacePlaceholders } from "@repo/ayasofyazilim-ui/lib/replace-placeholders";
-import { useLocale } from "src/providers/locale";
-import { useUser } from "src/providers/user";
+import { InvestInput } from "../invest-input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@repo/ayasofyazilim-ui/atoms/select";
+import { Checkbox } from "@repo/ayasofyazilim-ui/atoms/checkbox";
 
 export type InvestProps = {
   name: string;
@@ -30,6 +29,8 @@ export type InvestProps = {
   }>;
   images: Array<string>;
   onInvest?: () => void;
+  user: any;
+  resources: any;
 };
 export type ProfileProps = Array<{
   name: string;
@@ -41,11 +42,10 @@ export default function Invest({
   description,
   investmentDetails,
   images,
+  user,
+  resources,
   onInvest,
 }: InvestProps): JSX.Element {
-  const { resources } = useLocale();
-  console.log(resources);
-  const { user, getUser } = useUser();
   return (
     <div className="bg-gray-200 w-full h-screen flex items-center" id="invest">
       <div className="grid grid-cols-3 justify-center gap-4 p-4 container">
