@@ -35,7 +35,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type Language = {
   key: string;
@@ -176,23 +183,20 @@ export function DataTableDemo({
     };
   };
 }) {
-  const [activeResource, setActiveResource] =
-    React.useState<string>("AbpLocalization");
-  const [data, setData] = React.useState<
+  const [data, setData] = useState<
     {
       key: string;
       value: string | undefined;
+      baseValue: string | undefined;
       lang: string;
       resources: string;
     }[]
   >([]);
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [activeResource, setActiveResource] = useState("AbpLocalization");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -214,21 +218,42 @@ export function DataTableDemo({
   });
 
   useEffect(() => {
-    const data =
-      Object.keys(resources.AbpLocalization.texts || {}).map((i) => {
-        return {
-          key: i,
-          value: resources?.AbpLocalization?.texts?.[i],
-          baseValue: defaultResources?.AbpLocalization?.texts?.[i],
-          lang: lang,
-          resources: activeResource,
-        };
-      }) || [];
-    setData(data);
+    const _data: {
+      key: string;
+      value: string | undefined;
+      baseValue: string | undefined;
+      lang: string;
+      resources: string;
+    }[] = [];
+
+    Object.keys(resources[activeResource].texts || {}).map((i) => {
+      const _temp = {
+        key: i,
+        value: resources?.[activeResource]?.texts?.[i],
+        baseValue: defaultResources?.[activeResource]?.texts?.[i],
+        lang: lang,
+        resources: activeResource,
+      };
+      _data.push(_temp);
+    });
+    setData(() => _data);
   }, [activeResource]);
+
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 gap-2">
+        <Select value={activeResource} onValueChange={setActiveResource}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.keys(resources).map((i) => (
+              <SelectItem key={i} value={i}>
+                {i}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Input
           placeholder="Filter key..."
           value={(table.getColumn("key")?.getFilterValue() as string) ?? ""}
@@ -237,6 +262,8 @@ export function DataTableDemo({
           }
           className="max-w-sm"
         />
+        <div></div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
