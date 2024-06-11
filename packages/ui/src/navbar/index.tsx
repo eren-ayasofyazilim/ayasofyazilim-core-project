@@ -9,10 +9,9 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@repo/ayasofyazilim-ui/atoms/menubar";
 import Link from "next/link";
-import { useConfig } from "src/providers/configuration";
-import { useUser } from "src/providers/user";
+import { Logo } from "../logo";
 
 export type link = {
   text: string;
@@ -27,14 +26,36 @@ export const defaultLinks = [
   },
 ];
 export default function Navbar({
+  appName,
   links = defaultLinks,
 }: {
+  appName: string;
   links?: linksProp;
 }): JSX.Element {
   return (
     <div className="bg-white p-4">
       <div className="container flex gap-4 justify-between flex-wrap">
-        <span className="tracking-widest text-2xl font-bold">UPWITHCROWD</span>
+        {appName != "UNIREFUND" ? (
+          <span className="tracking-widest text-2xl font-bold">
+            {appName.toLocaleUpperCase()}
+          </span>
+        ) : (
+          <Logo
+            variant="text"
+            iconProps={{
+              className: "w-10 h-10",
+              taxFree: false,
+              fill: "#DB0000",
+            }}
+            textProps={{
+              className: "h-4",
+              primaryColor: "#DB0000",
+            }}
+            appIconProps={{
+              className: "w-10 h-10",
+            }}
+          />
+        )}
         <Menubar className="border-0 h-full shadow-none p-none">
           {links.map((link) => MenuCreator(link))}
         </Menubar>
@@ -72,21 +93,19 @@ function MenuCreator(link: link): JSX.Element {
         </MenubarContent>
       </MenubarMenu>
     );
-  } else {
-    return (
-      <MenubarMenu>
-        <MenubarTrigger
-          className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
-          asChild
-        >
-          <Link href={link.href || ""} className="cursor-pointer">
-            {link.text}
-          </Link>
-        </MenubarTrigger>
-      </MenubarMenu>
-    );
   }
-  return <></>;
+  return (
+    <MenubarMenu key={link.text}>
+      <MenubarTrigger
+        className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
+        asChild
+      >
+        <Link href={link.href || ""} className="cursor-pointer">
+          {link.text}
+        </Link>
+      </MenubarTrigger>
+    </MenubarMenu>
+  );
 }
 function SubMenuCreator(link: link): JSX.Element {
   if (link.submenu) {
@@ -106,18 +125,17 @@ function SubMenuCreator(link: link): JSX.Element {
         </MenubarSubContent>
       </MenubarSub>
     );
-  } else {
-    return (
-      <MenubarSub>
-        <MenubarSubTrigger
-          className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
-          asChild
-        >
-          <Link href={link.href || ""} className="cursor-pointer">
-            {link.text}
-          </Link>
-        </MenubarSubTrigger>
-      </MenubarSub>
-    );
   }
+  return (
+    <MenubarSub>
+      <MenubarSubTrigger
+        className="hover:text-primary focus:text-primary data-[state=open]:text-primary"
+        asChild
+      >
+        <Link href={link.href || ""} className="cursor-pointer">
+          {link.text}
+        </Link>
+      </MenubarSubTrigger>
+    </MenubarSub>
+  );
 }
