@@ -132,7 +132,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
           <div className="flex flex-col gap-2">
             <div className=" flex flex-row flex-wrap justify-end items-center">
               <Link href={getBaseLink("projects/new", true)}>
-                <CustomButton variant="destructive">New Project</CustomButton>
+                <CustomButton variant="outline">New Project</CustomButton>
               </Link>
             </div>
             {projectData?.items?.map((project) => (
