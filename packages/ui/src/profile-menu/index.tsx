@@ -121,7 +121,7 @@ function ProfileMenuLinks({
   return (
     <DropdownMenu>
       {ProfileMenuTrigger(minNavbar, imageURL, username)}
-      <DropdownMenuContent>
+      <DropdownMenuContent className="z-[99]">
         {menuLinks.map((item: MenuLinkItem) => (
           <DropdownMenuItem
             key={item.key ? item.key : item.title}

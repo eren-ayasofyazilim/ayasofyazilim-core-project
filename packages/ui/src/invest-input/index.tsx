@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
+import { Input } from "@repo/ayasofyazilim-ui/atoms/input";
+import { Label } from "@repo/ayasofyazilim-ui/atoms/label";
+import { Slider } from "@repo/ayasofyazilim-ui/atoms/slider";
+import { numberFormatter } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import { numberFormatter } from "src/app/[lang]/(main)/projects/demo-data";
 
 type InvestInputProps = {
   min: number;

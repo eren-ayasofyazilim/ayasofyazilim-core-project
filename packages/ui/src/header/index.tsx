@@ -1,18 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService";
-import { signOutServer } from "auth-action";
-import LanguageSelector from "components/language-selector";
+import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import Link from "next/link";
-import { ResourcesDto } from "src/utils";
+import LanguageSelector from "../language-selector";
 
 export default function Header({
-  menuAlign,
   user,
   resources,
+  signOutServer,
+  languageSelector,
 }: {
-  menuAlign?: "start" | "center" | "end";
-  user: Volo_Abp_Account_ProfileDto | undefined;
-  resources: ResourcesDto;
+  languageSelector: JSX.Element;
+  user: any | undefined;
+  resources: any;
+  signOutServer: any;
 }): JSX.Element {
   const resourcesMap = {
     home: resources?.AbpForDeploy?.texts?.["Menu:Home"] || "Home",
@@ -44,7 +43,7 @@ export default function Header({
             </Button>
           </>
         )}
-        <LanguageSelector menuAlign={menuAlign} />
+        {languageSelector}
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ export function MainLayout({
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <div
-        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 fixed z-[99] w-full max-w-[unset] sm:max-w-72 sm:relative"} transition-all`}
+        className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 fixed z-[99] w-full max-w-[unset] sm:z-0 sm:max-w-72 sm:relative"} transition-all`}
       >
         <div className="min-h-16 max-h-16 bg-white px-4 flex items-center border-b">
           {appName === "UPWITHCROWD" ? (
@@ -86,7 +86,7 @@ export function MainLayout({
         <div className="grow bg-white pt-4 overflow-y-auto flex flex-col">
           {Menu({ minNavbar, navigationItems })}
           <ProfileMenu
-            className="mt-auto bg-white px-4 h-16 border-t"
+            className="mt-auto bg-white px-4 h-16 border-t z-[100]"
             minNavbar={minNavbar}
             {...userNavigation}
           />
