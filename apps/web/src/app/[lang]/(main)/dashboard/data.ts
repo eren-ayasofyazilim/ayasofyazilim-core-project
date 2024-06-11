@@ -12,6 +12,7 @@ import {
   $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
   $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
   $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+  $Volo_Abp_Identity_IdentitySecurityLogDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -146,7 +147,7 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
           applicationType: {
-            data: ["Web", "Native"],
+            data: ["web", "native"],
             type: "static",
           },
         },
@@ -425,5 +426,19 @@ export const dataConfig: Record<string, any> = {
         },
       },
     },
+    securityLogs:{
+      filterBy: "applicationName", 
+      tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "regexDescription",
+          "extraProperties",
+          "valueTypeAsString",
+        ],
+        schema: $Volo_Abp_Identity_IdentitySecurityLogDto,
+      },
+      
+    }
   },
 };

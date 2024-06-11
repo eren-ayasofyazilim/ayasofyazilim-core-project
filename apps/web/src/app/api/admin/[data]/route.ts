@@ -134,6 +134,13 @@ const clients: Clients = {
       get: async () => languages.getApiLanguageManagementLanguagesCultureList(),
     };
   },
+  securityLogs : async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const securityLogs = client.securityLog;
+    return {
+      get: async () => securityLogs.getApiIdentitySecurityLogs(),
+    };
+  },
 };
 
 export async function GET(

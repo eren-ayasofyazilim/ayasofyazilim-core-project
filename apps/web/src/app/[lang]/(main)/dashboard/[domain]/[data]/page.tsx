@@ -73,7 +73,6 @@ export default function Page({
 }: {
   params: { data: string; domain: string };
 }): JSX.Element {
-  console.log("dashboard/[domain]/[data] params", params);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink("/api/admin/" + params.data);
@@ -86,7 +85,7 @@ export default function Page({
     const schemas = ["createFormSchema", "editFormSchema"] as const;
 
     for (const schema of schemas) {
-      const dataConvertors = tempData[schema].convertors;
+      const dataConvertors = tempData[schema]?.convertors;
       if (dataConvertors) {
         for (const [key, value] of Object.entries(dataConvertors)) {
           if (value.type === "async" && typeof value.data === "function") {
@@ -145,31 +144,35 @@ export default function Page({
     );
   }
 
-  const createFormSchema = formData.createFormSchema;
-  const action: tableAction = {
-    cta: "New " + params.data,
-    description: "Create a new " + params.data,
-    autoFormArgs: {
-      formSchema: createZodObject(
-        createFormSchema.schema,
-        createFormSchema.formPositions || [],
-        createFormSchema.convertors || {}
-      ),
-      dependencies: createFormSchema.dependencies,
-    },
-    callback: async (e) => {
-      const transformedData = parseFormValues(createFormSchema, e);
-      await controlledFetch(
-        fetchLink,
-        {
-          method: "POST",
-          body: JSON.stringify(transformedData),
-        },
-        getRoles,
-        "Added Successfully"
-      );
-    },
-  };
+
+  const createFormSchema = formData?.createFormSchema;
+  let action: tableAction | undefined = undefined;
+  if (createFormSchema) {
+    action = {
+      cta: "New " + params.data,
+      description: "Create a new " + params.data,
+      autoFormArgs: {
+        formSchema: createZodObject(
+          createFormSchema.schema,
+          createFormSchema.formPositions || [],
+          createFormSchema.convertors || {}
+        ),
+        dependencies: createFormSchema.dependencies,
+      },
+      callback: async (e) => {
+        const transformedData = parseFormValues(createFormSchema, e);
+        await controlledFetch(
+          fetchLink,
+          {
+            method: "POST",
+            body: JSON.stringify(transformedData),
+          },
+          getRoles,
+          "Added Successfully"
+        );
+      },
+    };
+  }
 
   const tableHeaders = [
     {
@@ -253,17 +256,21 @@ export default function Page({
     return newSchema;
   }
   const editFormSchema = formData.editFormSchema;
-  const editFormSchemaZod = convertZod(editFormSchema);
+  let editFormSchemaZod, autoformEditArgs;
+  if (editFormSchema) {
+    editFormSchemaZod = convertZod(editFormSchema);
+    autoformEditArgs = {
+      formSchema: editFormSchemaZod,
+      dependencies: formData.editFormSchema.dependencies,
+      convertor: formData.tableSchema.convertors,
+    };
+  }
 
   const columnsData: columnsType = {
     type: "Auto",
     data: {
       callback: getRoles,
-      autoFormArgs: {
-        formSchema: editFormSchemaZod,
-        dependencies: formData.editFormSchema.dependencies,
-        convertor: formData.tableSchema.convertors,
-      },
+      autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
       onEdit: (data, row) => onEdit(data, row, editFormSchema),
