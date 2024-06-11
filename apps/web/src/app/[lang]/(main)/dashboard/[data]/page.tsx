@@ -10,7 +10,6 @@ import {
   $Volo_Abp_Identity_UpdateClaimTypeDto,
   $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
   $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
-  $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationTokenLifetimeDto,
   $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
   $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
   $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
@@ -37,6 +36,11 @@ import {
 import { z } from "zod";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import {
+  $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
+  $Volo_Abp_LanguageManagement_Dto_LanguageDto,
+  $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
+} from "@ayasofyazilim/saas/AdministrationService";
 
 async function controlledFetch(
   url: string,
@@ -46,7 +50,6 @@ async function controlledFetch(
   showToast: boolean = true
 ) {
   try {
-    debugger;
     const getData = await fetch(url, options);
     if (!getData.ok) {
       const body = await getData.json();
@@ -375,6 +378,34 @@ const dataConfig: Record<string, tableData> = {
     editFormSchema: {
       formPositions: ["name", "displayName", "description" /*"resources"*/],
       schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+    },
+    filterBy: "name",
+  },
+
+  languages: {
+    createFormSchema: {
+      formPositions: [
+        "cultureName",
+        "uiCultureName",
+        "displayName",
+        "isEnabled",
+      ],
+      schema: $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
+    },
+    tableSchema: {
+      excludeList: [
+        "id",
+        "concurrencyStamp",
+        "creationTime",
+        "creatorId",
+        "flagIcon",
+        "isDefaultLanguage",
+      ],
+      schema: $Volo_Abp_LanguageManagement_Dto_LanguageDto,
+    },
+    editFormSchema: {
+      formPositions: ["displayName", "isEnabled"],
+      schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
     },
     filterBy: "name",
   },

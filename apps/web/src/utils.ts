@@ -95,7 +95,7 @@ function isJsonSchema(object: any): object is JsonSchema {
   return "type" in object;
 }
 function isSchemaType(object: any): object is SchemaType {
-  return "required" in object;
+  return object && "required" in object;
 }
 
 export function createZodObject(
@@ -106,15 +106,15 @@ export function createZodObject(
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
     const props = schema.properties[element];
-    const isRequired = schema.required.includes(element);
-    if (isSchemaType(props)) {
+    const isRequired = schema.required?.includes(element);
+    if (props && isSchemaType(props)) {
       Object.keys(props.properties).map((key) => {
         zodSchema[element] = createZodObject(
           props,
           Object.keys(props.properties)
         );
       });
-    } else if (isJsonSchema(props)) {
+    } else if (props && isJsonSchema(props)) {
       let zodType;
       if (convertors && Object.keys(convertors).includes(element)) {
         const newProps = props;
