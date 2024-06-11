@@ -61,6 +61,113 @@ export type tableData = {
 };
 
 export const dataConfig: Record<string, any> = {
+  openiddict: {
+    displayName: "open id",
+    default: "applications",
+    applications: {
+      filterBy: "displayName",
+      createFormSchema: {
+        formPositions: [
+          "applicationType",
+          "clientId",
+          "displayName",
+          "clientUri",
+          "logoUri",
+          "clientType",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "scopes",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
+        convertors: {
+          clientType: {
+            data: ["public", "confidential"],
+            type: "static",
+          },
+          applicationType: {
+            data: ["Web", "Native"],
+            type: "static",
+          },
+        },
+      },
+      tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "regexDescription",
+          "extraProperties",
+          "valueTypeAsString",
+          "clientUri",
+          "logoUri",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "allowLogoutEndpoint",
+          "scopes",
+          "clientSecret",
+          "consentType",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
+      },
+      editFormSchema: {
+        formPositions: [
+          "applicationType",
+          "clientId",
+          "displayName",
+          "clientUri",
+          "logoUri",
+          "clientType",
+          "clientSecret",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "scopes",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
+        convertors: {
+          clientType: {
+            data: ["public", "confidential"],
+            type: "static",
+          },
+          applicationType: {
+            data: ["Web", "Native"],
+            type: "static",
+          },
+        },
+      },
+    },
+    scopes: {
+      createFormSchema: {
+        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
+      },
+      tableSchema: {
+        excludeList: ["id", "buildIn"],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+      },
+      editFormSchema: {
+        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+      },
+      filterBy: "name",
+    },
+  },
   admin: {
     displayName: "Admin Management",
     default: "languages",

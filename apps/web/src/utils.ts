@@ -122,6 +122,10 @@ export function createZodObject(
         if (convertors[element].type === "enum") {
           newProps.enum = convertors[element].data;
         }
+        if (convertors[element].type === "static") {
+          newProps.type = "select";
+          newProps.enum = convertors[element].data;
+        }
         if (
           convertors[element].type === "async" &&
           typeof convertors[element].data !== "function"
