@@ -61,23 +61,166 @@ export type tableData = {
 };
 
 export const dataConfig: Record<string, any> = {
+  openiddict: {
+    displayName: "open id",
+    default: "applications",
+    applications: {
+      filterBy: "displayName",
+      createFormSchema: {
+        formPositions: [
+          "applicationType",
+          "clientId",
+          "displayName",
+          "clientUri",
+          "logoUri",
+          "clientType",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "scopes",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
+        convertors: {
+          clientType: {
+            data: ["public", "confidential"],
+            type: "static",
+          },
+          applicationType: {
+            data: ["Web", "Native"],
+            type: "static",
+          },
+        },
+      },
+      tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "regexDescription",
+          "extraProperties",
+          "valueTypeAsString",
+          "clientUri",
+          "logoUri",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "allowLogoutEndpoint",
+          "scopes",
+          "clientSecret",
+          "consentType",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
+      },
+      editFormSchema: {
+        formPositions: [
+          "applicationType",
+          "clientId",
+          "displayName",
+          "clientUri",
+          "logoUri",
+          "clientType",
+          "clientSecret",
+          "allowAuthorizationCodeFlow",
+          "allowImplicitFlow",
+          "allowHybridFlow",
+          "allowPasswordFlow",
+          "allowClientCredentialsFlow",
+          "allowRefreshTokenFlow",
+          "allowDeviceEndpoint",
+          "extensionGrantTypes",
+          "scopes",
+        ],
+        schema: $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
+        convertors: {
+          clientType: {
+            data: ["public", "confidential"],
+            type: "static",
+          },
+          applicationType: {
+            data: ["Web", "Native"],
+            type: "static",
+          },
+        },
+      },
+    },
+    scopes: {
+      createFormSchema: {
+        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
+      },
+      tableSchema: {
+        excludeList: ["id", "buildIn"],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+      },
+      editFormSchema: {
+        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+      },
+      filterBy: "name",
+    },
+  },
   admin: {
     displayName: "Admin Management",
     default: "languages",
     languages: {
-      filterBy: "displayName",
       createFormSchema: {
-        formPositions: ["displayName", "flagIcon", "cultureName"],
+        formPositions: [
+          "cultureName",
+          "uiCultureName",
+          "displayName",
+          "isEnabled",
+        ],
         schema: $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
+        convertors: {
+          cultureName: {
+            data: async () => {
+              return await fetch(getBaseLink("api/admin/culture")).then(
+                (data) => data.json()
+              );
+            },
+            covertTo: "displayName",
+            get: "displayName",
+            post: "name",
+            type: "async",
+          },
+          uiCultureName: {
+            data: async () => {
+              return await fetch(getBaseLink("api/admin/culture")).then(
+                (data) => data.json()
+              );
+            },
+            covertTo: "displayName",
+            get: "displayName",
+            post: "name",
+            type: "async",
+          },
+        },
       },
       tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "creationTime",
+          "creatorId",
+          "flagIcon",
+          "isDefaultLanguage",
+        ],
         schema: $Volo_Abp_LanguageManagement_Dto_LanguageDto,
-        excludeList: ["id", "concurrencyStamp"],
       },
       editFormSchema: {
-        formPositions: ["displayName", "flagIcon", "cultureName"],
+        formPositions: ["displayName", "isEnabled"],
         schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
       },
+      filterBy: "displayName",
     },
   },
   saas: {
