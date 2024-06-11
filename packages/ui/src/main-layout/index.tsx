@@ -54,8 +54,10 @@ export function MainLayout({
         className={`h-full flex flex-col border-r ${minNavbar ? "min-w-16 max-w-16" : "min-w-72 fixed z-[99] w-full max-w-[unset] sm:z-0 sm:max-w-72 sm:relative"} transition-all`}
       >
         <div className="min-h-16 max-h-16 bg-white px-4 flex items-center border-b">
-          {appName === "UPWITHCROWD" ? (
-            <div className="font-bold text-xl text-[#f15656]">UPWITHCROWD</div>
+          {appName !== "UNIREFUND" ? (
+            <div className="font-bold text-xl text-primary">
+              {appName.toLocaleUpperCase()}
+            </div>
           ) : (
             <Logo
               variant={minNavbar ? "icon" : "text"}
