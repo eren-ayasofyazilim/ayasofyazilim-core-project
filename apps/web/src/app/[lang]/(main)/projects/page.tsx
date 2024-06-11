@@ -1,19 +1,58 @@
 "use server";
 
-import { Card } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
+import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
+import DetailsCard, {
+  IDetailsCardProps,
+} from "@repo/ayasofyazilim-ui/organisms/details-card";
+import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import Link from "next/link";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { getProjectsServer } from "./action";
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+
+function tableProps(data: any) {
+  return [
+    {
+      title: "Proje Tipi",
+      value:
+        data.fundCollectionType === "SHRE" ? "Paya Dayalı" : "Borca Dayalı",
+    },
+    { title: "Ek Fonlama", value: data.additionalFundRate + "%" },
+    {
+      title: "Başlangıç Tarihi",
+      value: new Date("06.15.2024").toLocaleDateString("tr"),
+    },
+    {
+      title: "Bitiş Tarihi",
+      value: new Date("09.15.2024").toLocaleDateString("tr"),
+    },
+  ];
+}
+function tableProps2Col(data: any) {
+  return [
+    [
+      {
+        title: currencyFormatter
+          .format(data.fundNominalAmount)
+          .replace(/\s/g, " "),
+        value: "Gerçekleşen Yatırım",
+      },
+      {
+        title: currencyFormatter
+          .format(data.fundableAmount)
+          .replace(/\s/g, " "),
+        value: "Hedeflenen Yatırım",
+      },
+    ],
+  ] as [ICardTableProps, ICardTableProps][];
+}
+
+const currencyFormatter = new Intl.NumberFormat("tr", {
+  style: "currency",
+  currency: "TRY",
+  maximumFractionDigits: 0,
+});
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();
@@ -82,55 +121,39 @@ export default async function Page({ params }: { params: { lang: string } }) {
       name: languageData["Tab:Projects"],
     },
   ];
+
   return (
     <SectionLayout
       sections={navbarItems}
       defaultActiveSectionId={"general"}
       openOnNewPage={true}
       content={
-        <div className="relative w-full container mt-8">
-          <Card className="p-6 w-full">
-            <div className=" flex flex-row flex-wrap justify-between gap-5 mb-8 items-center">
-              <div>
-                <h1>Projects</h1>
-              </div>
-              <div>
-                <Link href={getBaseLink("projects/new", true)}>
-                  <CustomButton variant="destructive">New Project</CustomButton>
-                </Link>
-              </div>
+        <div className="relative w-full container mt-4">
+          <div className="flex flex-col gap-2">
+            <div className=" flex flex-row flex-wrap justify-end items-center">
+              <Link href={getBaseLink("projects/new", true)}>
+                <CustomButton variant="destructive">New Project</CustomButton>
+              </Link>
             </div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[200px]">Name</TableHead>
-                  <TableHead>Definition</TableHead>
-                  <TableHead className="text-right">Fund Type</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {projectData?.items?.map((project) => (
-                  <TableRow key={project.id}>
-                    <TableCell className="font-medium">
-                      <Link href={getBaseLink("projects/" + project.id, true)}>
-                        {project.projectName}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <Link href={getBaseLink("projects/" + project.id, true)}>
-                        {project.projectDefinition}
-                      </Link>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {project.fundCollectionType === "SHRE"
-                        ? languageData["FundCollectionTypeSHRE"]
-                        : languageData["FundCollectionTypeDBIT"]}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+            {projectData?.items?.map((project) => (
+              <DetailsCard
+                key={project.id}
+                cardProps={{
+                  image:
+                    "https://kapilendo-public.imgix.net/files/projects/bamboologic/8e0aa153-e311-47f9-9563-1aa44c05a3fe_01_Project-Header-1920x1080px.png?auto=compress&auto=format&maxdpr=3&w=750&fit=crop&dpr=1.5",
+                  tags: [],
+                  link: "projects/" + (project.id ?? ""),
+                  title: project.projectName ?? "",
+                  description: project.projectDefinition ?? "",
+                  tableProps: tableProps(project),
+                  tableProps2Col: tableProps2Col(project),
+                  cardTagTitle: "Taslak",
+                  cardTagVariant: "secondary",
+                }}
+                variant="compact-vertical"
+              />
+            ))}
+          </div>
         </div>
       }
     />

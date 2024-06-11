@@ -6,6 +6,7 @@ import {
   Volo_Abp_Application_Dtos_PagedResultDto_1,
   Volo_Abp_Application_Dtos_PagedResultDto_13,
 } from "@ayasofyazilim/saas/ProjectService";
+import { revalidatePath } from "next/cache";
 import { getProjectServiceClient } from "src/lib";
 
 export async function getProjectByIdServer(projectId: string) {
@@ -105,7 +106,7 @@ export async function createNewProjectServer(
     const response = await client.project.postApiProjectServiceProjects({
       requestBody: body,
     });
-
+    revalidatePath("/[lang]/(main)/projects", "page");
     return {
       status: 200,
       projectData: response,
@@ -128,7 +129,7 @@ export async function updateProjectServer(
       id: id,
       requestBody: body,
     });
-
+    revalidatePath("/[lang]/(main)/projects", "page");
     return {
       status: 200,
       projectData: response,
@@ -149,7 +150,7 @@ export async function deleteProjectServer(
     const response = await client.project.deleteApiProjectServiceProjectsById({
       id: body.id,
     });
-
+    revalidatePath("/[lang]/(main)/projects", "page");
     return {
       status: 200,
       projectData: response,
