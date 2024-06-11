@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
+import { dataConfig } from "./dashboard/data";
 
 type LayoutProps = {
   params: { lang: string };
@@ -142,6 +143,12 @@ export default async function Layout({ children, params }: LayoutProps) {
     signOutFunction: signOutServer,
     resources: resources,
   };
+  const dashboards = Object.entries(dataConfig).map(([key, value]) => ({
+    key,
+    title: value.displayName,
+    href: getBaseLink(`dashboard/${key}/${value.default}`, true, params.lang),
+    icon: <Presentation className="text-slate-500 w-4" />,
+  }));
 
   const navigationItems: NavigationItem[] = [
     {
@@ -149,6 +156,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: "Dashboard",
       href: "/dashboard",
       icon: <Presentation className="text-slate-500 w-4" />,
+      submenu: dashboards,
     },
     {
       key: "profile",
