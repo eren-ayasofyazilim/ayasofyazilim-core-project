@@ -6,6 +6,16 @@ import {
   UniRefund_SettingService_Items_GroupItemDto,
 } from "@ayasofyazilim/saas/SettingService";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@repo/ayasofyazilim-ui/atoms/tooltip";
+import {
+  JsonSchema,
+  SchemaType,
+  createZodObject,
+} from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
   AutoFormSubmit,
   AutoFormTypes,
@@ -13,17 +23,6 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { useEffect, useState } from "react";
-import {
-  JsonSchema,
-  SchemaType,
-  createZodObject,
-} from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@repo/ayasofyazilim-ui/atoms/tooltip";
-import { CircleHelp } from "lucide-react";
 
 export type AllowedValueTypeModelNameStringEnum =
   | "ToggleStringValueType"
@@ -79,30 +78,36 @@ function subField(
   resources: any
 ) {
   if (item.subItems && item.subItems.length > 0) {
-    let subitemconfigs = item.subItems.map((subitem) => {
-      if (subitem.subItems && subitem.subItems.length > 0) {
-        let subsubitemconfigs = subitem.subItems.map((subsubitem) => {
-          return createConfig(subsubitem, resources);
-        });
-        return {
-          [subitem.key]: {
-            ...Object.assign({}, ...Object.values(subsubitemconfigs)),
-            displayName:
-              resources?.SettingService?.texts?.[subitem.displayName] ??
-              subitem.displayName,
-            description: description(
-              resources?.SettingService?.texts?.[subitem.description] ??
-                subitem.description
-            ),
-          },
-        };
+    let subitemconfigs = item.subItems.map(
+      (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
+        if (subitem.subItems && subitem.subItems.length > 0) {
+          let subsubitemconfigs = subitem.subItems.map(
+            (subsubitem: UniRefund_SettingService_Items_GroupItemDto) => {
+              return createConfig(subsubitem, resources);
+            }
+          );
+          return {
+            [subitem.key]: {
+              ...Object.assign({}, ...Object.values(subsubitemconfigs)),
+              displayName:
+                resources?.SettingService?.texts?.[subitem.displayName] ??
+                subitem.displayName,
+              description: description(
+                resources?.SettingService?.texts?.[subitem.description] ??
+                  subitem.description
+              ),
+            },
+          };
+        }
+        return createConfig(subitem, resources);
       }
-      return createConfig(subitem, resources);
-    });
+    );
     let subs = {
       [item.key]: {
         ...Object.assign({}, ...Object.values(subitemconfigs)),
-        displayName: item.displayName,
+        displayName:
+          resources?.SettingService?.texts?.[item.displayName] ??
+          item.displayName,
         description: description(
           resources?.SettingService?.texts?.[item.description] ??
             item.description
@@ -110,19 +115,23 @@ function subField(
       },
     };
     return subs;
+  } else {
+    return createConfig(item, resources);
   }
 }
 function createFieldConfig(
   object: UniRefund_SettingService_Groups_GroupDto,
   resources: any
 ): AutoFormTypes.FieldConfig<{ [x: string]: any }> {
-  let configs = object.items.map((item) => {
-    if (item.subItems && item.subItems.length > 0) {
-      return subField(item, resources);
-    } else {
-      return createConfig(item, resources);
+  let configs = object.items.map(
+    (item: UniRefund_SettingService_Items_GroupItemDto) => {
+      if (item.subItems && item.subItems.length > 0) {
+        return subField(item, resources);
+      } else {
+        return createConfig(item, resources);
+      }
     }
-  });
+  );
   let config = Object.assign({}, ...Object.values(configs));
   return config;
 }
@@ -169,30 +178,34 @@ function createBonds(sett: createBondType): bondType[] {
 function createDependencies(
   group: UniRefund_SettingService_Groups_GroupDto
 ): AutoFormTypes.Dependency<{ [x: string]: any }>[] {
-  let bonds = group.items.map((item) => {
-    if (item.subItems && item.subItems.length > 0) {
-      let subitembonds = item.subItems.map((subitem) => {
-        return createBonds({
-          bonds: subitem.bonds,
-          targetField: subitem.key,
-          parentField: item.key,
-        });
-      });
-      let x = createBonds({
-        bonds: item.bonds,
-        targetField: item.key,
-      });
-      subitembonds.push(x);
-      return subitembonds.filter((bond) => bond).flat();
-    } else {
-      if (item.bonds && item.bonds.length > 0) {
-        return createBonds({
+  let bonds = group.items.map(
+    (item: UniRefund_SettingService_Items_GroupItemDto) => {
+      if (item.subItems && item.subItems.length > 0) {
+        let subitembonds = item.subItems.map(
+          (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
+            return createBonds({
+              bonds: subitem.bonds,
+              targetField: subitem.key,
+              parentField: item.key,
+            });
+          }
+        );
+        let x = createBonds({
           bonds: item.bonds,
           targetField: item.key,
         });
+        subitembonds.push(x);
+        return subitembonds.filter((bond: bondType) => bond).flat();
+      } else {
+        if (item.bonds && item.bonds.length > 0) {
+          return createBonds({
+            bonds: item.bonds,
+            targetField: item.key,
+          });
+        }
       }
     }
-  });
+  );
   // @ts-ignore
   return bonds.filter((x) => x).flat();
 }
@@ -243,9 +256,11 @@ function createSchema(
   if (group) {
     properties = Object.assign(
       {},
-      ...group.items.map((item) => {
-        return createProperties(item);
-      })
+      ...group.items.map(
+        (item: UniRefund_SettingService_Items_GroupItemDto) => {
+          return createProperties(item);
+        }
+      )
     );
   } else if (item) {
     if (item.isApplicable && item.subItems && item.subItems.length > 0) {
@@ -254,9 +269,11 @@ function createSchema(
     if (item.subItems && item.subItems.length > 0)
       properties = Object.assign(
         {},
-        ...item.subItems.map((subitem) => {
-          return createProperties(subitem);
-        })
+        ...item.subItems.map(
+          (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
+            return createProperties(subitem);
+          }
+        )
       );
   }
   return {
@@ -285,7 +302,7 @@ function createJsonSchema(
   if (item.valueType && item.valueType.name === "SelectionStringValueType") {
     schema = {
       ...schema,
-      enum: item.valueType?.itemSource?.items?.map((x) => x.value),
+      enum: item.valueType?.itemSource?.items?.map((x: any) => x.value),
     };
   }
   return schema;
@@ -337,7 +354,9 @@ export function SettingsView({
 }) {
   const [activeGroup, setActiveGroup] =
     useState<UniRefund_SettingService_Groups_GroupDto>(() => {
-      const test = list.groups.find((x) => x.key === path);
+      const test = list.groups.find(
+        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key === path
+      );
       if (test) return test;
       return list.groups[0];
     });
@@ -347,7 +366,9 @@ export function SettingsView({
     let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
-      group.items.map((x) => x.key)
+      group.items.map(
+        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key
+      )
     ) as AutoFormUtils.ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
@@ -365,11 +386,15 @@ export function SettingsView({
     // console.log(sectionId); //sholdnt be called twice
     if (sectionId === activeGroup.key) return;
     const group =
-      list.groups.find((s) => s.key === sectionId) || list.groups[0];
+      list.groups.find(
+        (s: UniRefund_SettingService_Groups_GroupDto) => s.key === sectionId
+      ) || list.groups[0];
     let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
-      group.items.map((x) => x.key)
+      group.items.map(
+        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key
+      )
     ) as AutoFormUtils.ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
