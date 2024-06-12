@@ -151,7 +151,9 @@ export function DataTableDemo({
   defaultResources,
 }: IDataTableDemo) {
   const router = useRouter();
-  const [activeResource, setActiveResource] = useState("Default");
+  const [activeResource, setActiveResource] = useState(
+    Object.keys(resources)[0]
+  );
   const data = useMemo<Language[]>(() => {
     const _data: Language[] = [];
     Object.keys(resources[activeResource].texts || {}).map((i) => {
@@ -227,11 +229,13 @@ export function DataTableDemo({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {Object.keys(resources).map((i) => (
-              <SelectItem key={i} value={i}>
-                {i}
-              </SelectItem>
-            ))}
+            {Object.keys(resources)
+              .sort((a, b) => a.localeCompare(b))
+              .map((i) => (
+                <SelectItem key={i} value={i}>
+                  {i}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
         <Input
