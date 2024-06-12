@@ -7,6 +7,7 @@ import { signOutServer } from "auth-action";
 import LanguageSelector from "@repo/ui/language-selector";
 import {
   FileBadge,
+  LanguagesIcon,
   Presentation,
   SlidersHorizontal,
   SquareStack,
@@ -193,6 +194,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: "Projects",
       icon: <Presentation className="text-slate-500 w-4" />,
       href: getBaseLink("projects", true, params.lang),
+    },
+    {
+      key: "languageManagement",
+      title: "Language Management",
+      icon: <LanguagesIcon className="text-slate-500 w-4" />,
+      href: getBaseLink("language-management", true, params.lang),
     },
   ];
 
