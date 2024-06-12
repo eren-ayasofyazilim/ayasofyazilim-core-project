@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/accordion";
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
+import { ScrollArea } from "@repo/ayasofyazilim-ui/atoms/scroll-area";
 import {
   Tooltip,
   TooltipContent,
@@ -85,14 +86,14 @@ export function MainLayout({
             />
           </Button>
         </div>
-        <div className="grow bg-white pt-4 overflow-y-auto flex flex-col">
+        <ScrollArea className="grow bg-white pt-4 overflow-auto flex flex-col h-full [&>div>div]:h-full [&>div>div]:flex">
           {Menu({ minNavbar, navigationItems })}
           <ProfileMenu
-            className="mt-auto bg-white px-4 h-16 border-t z-[100]"
+            className="mt-auto bg-white px-4 h-16 min-h-16 border-t bottom-0 sticky"
             minNavbar={minNavbar}
             {...userNavigation}
           />
-        </div>
+        </ScrollArea>
       </div>
       <div className="grow overflow-hidden flex flex-col">
         <div
@@ -114,7 +115,12 @@ export function Menu({
   navigationItems: NavigationItem[];
 }) {
   return (
-    <Accordion defaultValue="profile" type="single" collapsible>
+    <Accordion
+      defaultValue="profile"
+      type="single"
+      collapsible
+      className={`${minNavbar ? "w-16" : ""} h-[calc(100%-4rem)] flex flex-col`}
+    >
       {navigationItems.map((item: NavigationItem) => {
         return MenuItem(item, false, minNavbar);
       })}
