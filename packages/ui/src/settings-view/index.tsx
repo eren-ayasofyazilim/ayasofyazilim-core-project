@@ -277,7 +277,7 @@ function createSchema(
       );
   }
   return {
-    displayName: "asd",
+    displayName: group ? group.key : item ? item.key : "",
     required: [group ? group.key : item ? item.key : ""],
     type: "object",
     properties: properties,
@@ -295,8 +295,7 @@ function createJsonSchema(
     isRequired: item.isRequired ?? false,
     isReadOnly: item.isActive ?? false,
     maxLength: item.valueType?.validator?.properties?.maxValue,
-    // default: item.defaultValue,
-    // description: item.description ?? "asdasdasdasd",
+    default: item.defaultValue,
     displayName: item.displayName ?? item.key,
   };
   if (item.valueType && item.valueType.name === "SelectionStringValueType") {
