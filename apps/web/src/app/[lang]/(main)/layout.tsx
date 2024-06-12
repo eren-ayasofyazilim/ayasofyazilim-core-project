@@ -34,6 +34,8 @@ export default async function Layout({ children, params }: LayoutProps) {
       resources?.AbpForDeploy?.texts?.["Menu:Dashboard"] || "Dashboard",
     settings: resources?.AbpSettingManagement?.texts?.Settings || "Settings",
     Companies: resources?.AbpSettingManagement?.texts?.Settings || "Companies",
+    countrySettings:
+      resources?.SettingService?.texts?.CountrySettings || "Country Settings",
   };
 
   // const navigationLinks = [
@@ -179,7 +181,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
     {
       key: "countrySettings",
-      title: "Country Settings",
+      title: resourcesMap.countrySettings,
       href: "/country-settings",
       icon: <SlidersHorizontal className="text-slate-500 w-4" />,
     },
