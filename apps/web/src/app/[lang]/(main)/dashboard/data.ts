@@ -12,6 +12,7 @@ import {
   $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
   $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
   $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+  $Volo_Abp_Identity_IdentitySecurityLogDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
 import { useEffect, useState } from "react";
@@ -74,6 +75,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
+          "consentType",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -95,6 +97,28 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
         },
+
+        dependencies: [
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "consentType",
+            when: (activationState: string) =>
+              activationState !== "confidential",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowClientCredentialsFlow",
+            when: (activationState: string) => activationState == "public",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowDeviceEndpoint",
+            when: (activationState: string) => activationState == "public",
+          },
+        ],
       },
       tableSchema: {
         excludeList: [
@@ -128,7 +152,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
-          "clientSecret",
+          "consentType",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -146,10 +170,31 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
           applicationType: {
-            data: ["Web", "Native"],
+            data: ["web", "native"],
             type: "static",
           },
         },
+        dependencies: [
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "consentType",
+            when: (activationState: string) =>
+              activationState !== "confidential",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowClientCredentialsFlow",
+            when: (activationState: string) => activationState == "public",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowDeviceEndpoint",
+            when: (activationState: string) => activationState == "public",
+          },
+        ],
       },
     },
     scopes: {
@@ -425,5 +470,19 @@ export const dataConfig: Record<string, any> = {
         },
       },
     },
+    securityLogs:{
+      filterBy: "applicationName", 
+      tableSchema: {
+        excludeList: [
+          "id",
+          "concurrencyStamp",
+          "regexDescription",
+          "extraProperties",
+          "valueTypeAsString",
+        ],
+        schema: $Volo_Abp_Identity_IdentitySecurityLogDto,
+      },
+      
+    }
   },
 };
