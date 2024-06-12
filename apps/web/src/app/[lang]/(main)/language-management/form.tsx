@@ -219,6 +219,14 @@ export function DataTableDemo({
         "upwithcrowd"
       );
       router.refresh();
+      setNewTranslation({
+        key: "",
+        value: "",
+        baseValue: "",
+        upwithcrowd: false,
+        unirefund: false,
+      });
+      setIsLoading(false);
     }
   }
   return (
