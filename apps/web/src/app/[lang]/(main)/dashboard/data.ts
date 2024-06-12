@@ -74,6 +74,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
+          "consentType",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -95,6 +96,28 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
         },
+
+        dependencies: [
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "consentType",
+            when: (activationState: string) =>
+              activationState !== "confidential",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowClientCredentialsFlow",
+            when: (activationState: string) => activationState == "public",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowDeviceEndpoint",
+            when: (activationState: string) => activationState == "public",
+          },
+        ],
       },
       tableSchema: {
         excludeList: [
@@ -128,7 +151,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
-          "clientSecret",
+          "consentType",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -150,6 +173,27 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
         },
+        dependencies: [
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "consentType",
+            when: (activationState: string) =>
+              activationState !== "confidential",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowClientCredentialsFlow",
+            when: (activationState: string) => activationState == "public",
+          },
+          {
+            sourceField: "clientType",
+            type: DependencyType.HIDES,
+            targetField: "allowDeviceEndpoint",
+            when: (activationState: string) => activationState == "public",
+          },
+        ],
       },
     },
     scopes: {
