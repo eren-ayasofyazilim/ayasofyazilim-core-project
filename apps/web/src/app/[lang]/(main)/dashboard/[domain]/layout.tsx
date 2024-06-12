@@ -47,7 +47,7 @@ export default function Layout({ children, params }: LayoutProps) {
           content={children}
           contentClassName=""
           className="w-full"
-          isScrollArea={false}
+          isScrollArea={true}
         />
       )}
     </>

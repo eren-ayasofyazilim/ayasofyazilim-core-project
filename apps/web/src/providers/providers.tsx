@@ -19,7 +19,7 @@ export default async function Providers({ children, lang }: IProviders) {
 
   const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
   return (
-    <div>
+    <>
       <Toaster richColors />
       <ApplicationProvider appName={appName}>
         <AuthSession>
@@ -34,6 +34,6 @@ export default async function Providers({ children, lang }: IProviders) {
           </PermissionProvider>
         </AuthSession>
       </ApplicationProvider>
-    </div>
+    </>
   );
 }
