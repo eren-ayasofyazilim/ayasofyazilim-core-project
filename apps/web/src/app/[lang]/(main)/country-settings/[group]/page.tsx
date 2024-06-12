@@ -4,7 +4,7 @@ import { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@aya
 import { SettingsView } from "@repo/ui/settings-view";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
-import { mockSettingsResponse } from "./mockSettingsResponse";
+import { mockSettingsResponse, test4 } from "./mockSettingsResponse";
 
 export default async function Page({
   params,
