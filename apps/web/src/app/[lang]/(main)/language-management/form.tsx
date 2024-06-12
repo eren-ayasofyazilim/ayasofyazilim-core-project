@@ -58,54 +58,7 @@ import { useMemo, useState } from "react";
 import { addNewTranslationServer } from "./action";
 import { useRouter } from "next/navigation";
 
-export type Language = {
-  key: string;
-  baseValue: string;
-  value: string;
-  lang: string;
-  resources: string;
-};
-
-export const columns: ColumnDef<Language>[] = [
-  {
-    accessorKey: "resources",
-    header: "Resources",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("resources")}</div>
-    ),
-  },
-  {
-    accessorKey: "key",
-    header: ({ column }) => {
-      return <div className="capitalize">Key</div>;
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("key")}</div>,
-  },
-  {
-    accessorKey: "baseValue",
-    header: ({ column }) => {
-      return <div className="capitalize">Base Value</div>;
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("baseValue")}</div>
-    ),
-  },
-  {
-    accessorKey: "value",
-    header: () => <div className="text-right">Value</div>,
-    cell: ({ row }) => {
-      return (
-        <div className="text-right font-medium">{row.getValue("value")}</div>
-      );
-    },
-  },
-];
-
-export function DataTableDemo({
-  lang,
-  resources,
-  defaultResources,
-}: {
+interface IDataTableDemo {
   lang: string;
   resources: {
     [key: string]: {
@@ -129,9 +82,76 @@ export function DataTableDemo({
       baseResources?: string[] | null | undefined;
     };
   };
-}) {
+}
+
+export type Language = {
+  key: string;
+  baseValue: string;
+  value: string;
+  lang: string;
+  resources: string;
+};
+
+export const columns: ColumnDef<Language>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "resources",
+    header: "Resources",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("resources")}</div>
+    ),
+  },
+  {
+    accessorKey: "key",
+    header: ({ column }) => {
+      return <div className="capitalize">Key</div>;
+    },
+    cell: ({ row }) => <div>{row.getValue("key")}</div>,
+  },
+  {
+    accessorKey: "baseValue",
+    header: ({ column }) => {
+      return <div className="capitalize">Base Value</div>;
+    },
+    cell: ({ row }) => <div>{row.getValue("baseValue")}</div>,
+  },
+  {
+    accessorKey: "value",
+    header: () => <div className="capitalize">Value</div>,
+    cell: ({ row }) => {
+      return <div className=" font-medium">{row.getValue("value")}</div>;
+    },
+  },
+];
+
+export function DataTableDemo({
+  lang,
+  resources,
+  defaultResources,
+}: IDataTableDemo) {
   const router = useRouter();
-  const [activeResource, setActiveResource] = useState("AbpLocalization");
+  const [activeResource, setActiveResource] = useState("Default");
   const data = useMemo<Language[]>(() => {
     const _data: Language[] = [];
     Object.keys(resources[activeResource].texts || {}).map((i) => {
@@ -155,29 +175,11 @@ export function DataTableDemo({
     unirefund: false,
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
 
   async function addNewTranslation() {
