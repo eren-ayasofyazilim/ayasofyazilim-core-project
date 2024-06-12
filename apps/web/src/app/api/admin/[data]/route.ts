@@ -134,6 +134,7 @@ const clients: Clients = {
       get: async () => languages.getApiLanguageManagementLanguagesCultureList(),
     };
   },
+
   securityLogs : async (req: NextRequest) => {
     const client = await getIdentityServiceClient(req);
     const securityLogs = client.securityLog;
@@ -141,6 +142,15 @@ const clients: Clients = {
       get: async () => securityLogs.getApiIdentitySecurityLogs(),
     };
   },
+
+
+auditLogs : async (req: NextRequest) => {
+  const client = await getAdministrationServiceClient(req);
+  const auditLogs = client.auditLogs;
+  return {
+    get: async () => auditLogs.getApiAuditLoggingAuditLogs(),
+  };
+},
 };
 
 export async function GET(
