@@ -93,7 +93,7 @@ export const dataConfig: Record<string, any> = {
             type: "static",
           },
           applicationType: {
-            data: ["Web", "Native"],
+            data: ["web", "native"],
             type: "static",
           },
         },
