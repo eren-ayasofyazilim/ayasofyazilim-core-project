@@ -35,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -43,6 +43,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Dialog from "@repo/ayasofyazilim-ui/molecules/dialog";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export type Language = {
   key: string;
@@ -183,16 +191,22 @@ export function DataTableDemo({
     };
   };
 }) {
-  const [data, setData] = useState<
-    {
-      key: string;
-      value: string | undefined;
-      baseValue: string | undefined;
-      lang: string;
-      resources: string;
-    }[]
-  >([]);
   const [activeResource, setActiveResource] = useState("AbpLocalization");
+  const data = useMemo<Language[]>(() => {
+    const _data: Language[] = [];
+    Object.keys(resources[activeResource].texts || {}).map((i) => {
+      const _temp = {
+        key: i,
+        value: resources?.[activeResource]?.texts?.[i] || "",
+        baseValue: defaultResources?.[activeResource]?.texts?.[i] || "",
+        lang: lang,
+        resources: activeResource,
+      };
+      _data.push(_temp);
+    });
+    return _data;
+  }, [activeResource, resources, defaultResources, lang]);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -216,28 +230,6 @@ export function DataTableDemo({
       rowSelection,
     },
   });
-
-  useEffect(() => {
-    const _data: {
-      key: string;
-      value: string | undefined;
-      baseValue: string | undefined;
-      lang: string;
-      resources: string;
-    }[] = [];
-
-    Object.keys(resources[activeResource].texts || {}).map((i) => {
-      const _temp = {
-        key: i,
-        value: resources?.[activeResource]?.texts?.[i],
-        baseValue: defaultResources?.[activeResource]?.texts?.[i],
-        lang: lang,
-        resources: activeResource,
-      };
-      _data.push(_temp);
-    });
-    setData(() => _data);
-  }, [activeResource]);
 
   return (
     <div className="w-full">
@@ -299,12 +291,14 @@ export function DataTableDemo({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </>
                     </TableHead>
                   );
                 })}
@@ -320,10 +314,12 @@ export function DataTableDemo({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      <>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -365,6 +361,18 @@ export function DataTableDemo({
           </Button>
         </div>
       </div>
+      {/* <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog> */}
     </div>
   );
 }
