@@ -58,6 +58,32 @@ import { useMemo, useState } from "react";
 import { addNewTranslationServer } from "./action";
 import { useRouter } from "next/navigation";
 
+interface IDataTableDemo {
+  lang: string;
+  resources: {
+    [key: string]: {
+      texts?:
+        | {
+            [key: string]: string;
+          }
+        | null
+        | undefined;
+      baseResources?: string[] | null | undefined;
+    };
+  };
+  defaultResources: {
+    [key: string]: {
+      texts?:
+        | {
+            [key: string]: string;
+          }
+        | null
+        | undefined;
+      baseResources?: string[] | null | undefined;
+    };
+  };
+}
+
 export type Language = {
   key: string;
   baseValue: string;
@@ -99,42 +125,22 @@ export const columns: ColumnDef<Language>[] = [
   {
     accessorKey: "key",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Key
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <div className="capitalize">Key</div>;
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("key")}</div>,
+    cell: ({ row }) => <div>{row.getValue("key")}</div>,
   },
   {
     accessorKey: "baseValue",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Base Value
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <div className="capitalize">Base Value</div>;
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("baseValue")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("baseValue")}</div>,
   },
   {
     accessorKey: "value",
-    header: () => <div className="text-right">Value</div>,
+    header: () => <div className="capitalize">Value</div>,
     cell: ({ row }) => {
-      return (
-        <div className="text-right font-medium">{row.getValue("value")}</div>
-      );
+      return <div className=" font-medium">{row.getValue("value")}</div>;
     },
   },
 ];
@@ -143,33 +149,11 @@ export function DataTableDemo({
   lang,
   resources,
   defaultResources,
-}: {
-  lang: string;
-  resources: {
-    [key: string]: {
-      texts?:
-        | {
-            [key: string]: string;
-          }
-        | null
-        | undefined;
-      baseResources?: string[] | null | undefined;
-    };
-  };
-  defaultResources: {
-    [key: string]: {
-      texts?:
-        | {
-            [key: string]: string;
-          }
-        | null
-        | undefined;
-      baseResources?: string[] | null | undefined;
-    };
-  };
-}) {
+}: IDataTableDemo) {
   const router = useRouter();
-  const [activeResource, setActiveResource] = useState("AbpLocalization");
+  const [activeResource, setActiveResource] = useState(
+    Object.keys(resources)[0]
+  );
   const data = useMemo<Language[]>(() => {
     const _data: Language[] = [];
     Object.keys(resources[activeResource].texts || {}).map((i) => {
@@ -193,29 +177,11 @@ export function DataTableDemo({
     unirefund: false,
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
 
   async function addNewTranslation() {
@@ -253,6 +219,14 @@ export function DataTableDemo({
         "upwithcrowd"
       );
       router.refresh();
+      setNewTranslation({
+        key: "",
+        value: "",
+        baseValue: "",
+        upwithcrowd: false,
+        unirefund: false,
+      });
+      setIsLoading(false);
     }
   }
   return (
@@ -263,11 +237,13 @@ export function DataTableDemo({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {Object.keys(resources).map((i) => (
-              <SelectItem key={i} value={i}>
-                {i}
-              </SelectItem>
-            ))}
+            {Object.keys(resources)
+              .sort((a, b) => a.localeCompare(b))
+              .map((i) => (
+                <SelectItem key={i} value={i}>
+                  {i}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
         <Input
