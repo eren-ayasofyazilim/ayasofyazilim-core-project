@@ -75,7 +75,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
-          "consentType",
+          "clientSecret",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -102,7 +102,7 @@ export const dataConfig: Record<string, any> = {
           {
             sourceField: "clientType",
             type: DependencyType.HIDES,
-            targetField: "consentType",
+            targetField: "clientSecret",
             when: (activationState: string) =>
               activationState !== "confidential",
           },
@@ -152,7 +152,7 @@ export const dataConfig: Record<string, any> = {
           "clientUri",
           "logoUri",
           "clientType",
-          "consentType",
+          "clientSecret",
           "allowAuthorizationCodeFlow",
           "allowImplicitFlow",
           "allowHybridFlow",
@@ -178,7 +178,7 @@ export const dataConfig: Record<string, any> = {
           {
             sourceField: "clientType",
             type: DependencyType.HIDES,
-            targetField: "consentType",
+            targetField: "clientSecret",
             when: (activationState: string) =>
               activationState !== "confidential",
           },
