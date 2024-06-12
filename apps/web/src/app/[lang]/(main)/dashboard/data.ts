@@ -36,6 +36,7 @@ import { z } from "zod";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import {
+  $Volo_Abp_AuditLogging_AuditLogDto,
   $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
   $Volo_Abp_LanguageManagement_Dto_LanguageDto,
   $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
@@ -484,5 +485,32 @@ export const dataConfig: Record<string, any> = {
       },
       
     }
+  },
+
+  auditLogs: {
+    displayName: "Audit Logs",
+    default: "auditLogs",
+    auditLogs: {
+      tableSchema: {
+        excludeList: [
+          "id",
+          "userId",
+          "tenantId",
+          "tenantName",
+          "impersonatorUserId",
+          "impersonatorUserName",
+          "impersonatorTenantId",
+          "impersonatorTenantName",
+          "clientName",
+          "browserInfo",
+          "exceptions",
+          "comments",
+          "correlationId",
+        ],
+        schema: $Volo_Abp_AuditLogging_AuditLogDto,
+      },
+      filterBy: "userName",
+    },
+
   },
 };
