@@ -164,7 +164,7 @@ const clients: Clients = {
     const client = await getAdministrationServiceClient(req);
     const languageTexts = client.languageTexts;
     return {
-      get: async (baseCultureName = "ar", targetCultureName = "en") =>
+      get: async (baseCultureName = "en", targetCultureName = "tr") =>
         languageTexts.getApiLanguageManagementLanguageTexts({
           baseCultureName,
           targetCultureName,
