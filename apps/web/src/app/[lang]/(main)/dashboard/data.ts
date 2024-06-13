@@ -40,6 +40,7 @@ import {
   $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
   $Volo_Abp_LanguageManagement_Dto_LanguageDto,
   $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
+  $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
 } from "@ayasofyazilim/saas/AdministrationService";
 
 export type formModifier = {
@@ -471,8 +472,8 @@ export const dataConfig: Record<string, any> = {
         },
       },
     },
-    securityLogs:{
-      filterBy: "applicationName", 
+    securityLogs: {
+      filterBy: "applicationName",
       tableSchema: {
         excludeList: [
           "id",
@@ -483,8 +484,7 @@ export const dataConfig: Record<string, any> = {
         ],
         schema: $Volo_Abp_Identity_IdentitySecurityLogDto,
       },
-      
-    }
+    },
   },
 
   auditLogs: {
@@ -511,6 +511,18 @@ export const dataConfig: Record<string, any> = {
       },
       filterBy: "userName",
     },
+  },
 
+  textTemplates: {
+    displayName: "TextTemplates",
+    default: "textTemplates",
+    textTemplates: {
+      tableSchema: {
+        excludeList: ["name", "additionalProperties"],
+        schema:
+          $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
+      },
+      filterBy: "displayName",
+    },
   },
 };
