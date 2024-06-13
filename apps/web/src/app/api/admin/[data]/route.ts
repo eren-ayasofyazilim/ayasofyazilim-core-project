@@ -159,6 +159,18 @@ const clients: Clients = {
         textTemplates.getApiTextTemplateManagementTemplateDefinitions(),
     };
   },
+
+  languageTexts: async (req: NextRequest) => {
+    const client = await getAdministrationServiceClient(req);
+    const languageTexts = client.languageTexts;
+    return {
+      get: async (baseCultureName = "ar", targetCultureName = "en") =>
+        languageTexts.getApiLanguageManagementLanguageTexts({
+          baseCultureName,
+          targetCultureName,
+        }),
+    };
+  },
 };
 
 export async function GET(
