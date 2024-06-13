@@ -135,7 +135,7 @@ const clients: Clients = {
     };
   },
 
-  securityLogs : async (req: NextRequest) => {
+  securityLogs: async (req: NextRequest) => {
     const client = await getIdentityServiceClient(req);
     const securityLogs = client.securityLog;
     return {
@@ -143,14 +143,34 @@ const clients: Clients = {
     };
   },
 
+  auditLogs: async (req: NextRequest) => {
+    const client = await getAdministrationServiceClient(req);
+    const auditLogs = client.auditLogs;
+    return {
+      get: async () => auditLogs.getApiAuditLoggingAuditLogs(),
+    };
+  },
 
-auditLogs : async (req: NextRequest) => {
-  const client = await getAdministrationServiceClient(req);
-  const auditLogs = client.auditLogs;
-  return {
-    get: async () => auditLogs.getApiAuditLoggingAuditLogs(),
-  };
-},
+  textTemplates: async (req: NextRequest) => {
+    const client = await getAdministrationServiceClient(req);
+    const textTemplates = client.textTemplateDefinitions;
+    return {
+      get: async () =>
+        textTemplates.getApiTextTemplateManagementTemplateDefinitions(),
+    };
+  },
+
+  languageTexts: async (req: NextRequest) => {
+    const client = await getAdministrationServiceClient(req);
+    const languageTexts = client.languageTexts;
+    return {
+      get: async (baseCultureName = "en", targetCultureName = "tr") =>
+        languageTexts.getApiLanguageManagementLanguageTexts({
+          baseCultureName,
+          targetCultureName,
+        }),
+    };
+  },
 };
 
 export async function GET(
