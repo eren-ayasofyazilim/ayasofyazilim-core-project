@@ -69,7 +69,7 @@ export default function ProjectForm({
       type="single"
       collapsible
       className="w-full"
-      defaultValue={sectionData[0].id || "item"}
+      defaultValue={sectionData?.[0]?.id || "item"}
     >
       {sectionData?.map((section, index) => (
         <AccordionItem
