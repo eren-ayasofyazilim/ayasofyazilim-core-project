@@ -39,8 +39,8 @@ import {
   $Volo_Abp_AuditLogging_AuditLogDto,
   $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
   $Volo_Abp_LanguageManagement_Dto_LanguageDto,
+  $Volo_Abp_LanguageManagement_Dto_LanguageTextDto,
   $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
-  $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
 } from "@ayasofyazilim/saas/AdministrationService";
 
 export type formModifier = {
@@ -268,6 +268,13 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
       },
       filterBy: "displayName",
+    },
+    languageTexts: {
+      tableSchema: {
+        excludeList: ["cultureName", "baseCultureName"],
+        schema: $Volo_Abp_LanguageManagement_Dto_LanguageTextDto,
+      },
+      filterBy: "userName",
     },
   },
   saas: {
@@ -510,19 +517,6 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_AuditLogging_AuditLogDto,
       },
       filterBy: "userName",
-    },
-  },
-
-  textTemplates: {
-    displayName: "TextTemplates",
-    default: "textTemplates",
-    textTemplates: {
-      tableSchema: {
-        excludeList: ["name", "additionalProperties"],
-        schema:
-          $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
-      },
-      filterBy: "displayName",
     },
   },
 };
