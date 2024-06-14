@@ -1,6 +1,10 @@
 import { test as setup, expect } from '@playwright/test';
 
-const authFile = 'playwright/.auth/user.json';
+let directory = __dirname;
+if (!directory.endsWith('apps/web')) {
+  directory = directory + '/apps/web/';
+}
+const authFile = directory + '/playwright/.auth/user.json';
 
 setup('Authenticate/Login', async ({ page }) => {
     await page.goto("/");

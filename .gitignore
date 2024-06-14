@@ -128,3 +128,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 .turbo
+apps/web/tests/apps/web/playwright/.auth/user.json

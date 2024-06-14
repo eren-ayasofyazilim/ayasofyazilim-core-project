@@ -1,10 +1,21 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
+let directory = __dirname;
+if (!directory.endsWith(`apps\\web`)) {
+  directory = directory + '\\apps\\web\\';
+}
+const authFile = directory + '\\playwright\\.auth\\user.json';
+
 require('dotenv').config();
+dotenv.config({
+  path: directory + '\\.env',
+});
+
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -37,7 +48,7 @@ export default defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json',
+        storageState: authFile,
        },
       dependencies: ['setup'],
     },
@@ -46,7 +57,7 @@ export default defineConfig({
       name: 'firefox',
       use: { 
         ...devices['Desktop Firefox'],
-        storageState: 'playwright/.auth/user.json',
+        storageState: authFile,
        },
       dependencies: ['setup'],
     },
@@ -55,7 +66,7 @@ export default defineConfig({
       name: 'webkit',
       use: { 
         ...devices['Desktop Safari'], 
-        storageState: 'playwright/.auth/user.json',
+        storageState: authFile,
        },
       dependencies: ['setup'],
     },
