@@ -171,8 +171,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   let configSelected = await getConfig(process.env.APPLICATION_NAME);
   return (
     <MainLayout
-      wrapperClassName="h-full"
-      mainClassName="p-0 md:p-0 overflow-hidden"
+      mainClassName="p-0 md:p-0 w-full"
       childScrollArea={false}
       HeaderComponent={
         <Navbar
