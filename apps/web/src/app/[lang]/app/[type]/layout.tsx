@@ -13,6 +13,8 @@ import {
   SlidersHorizontal,
   UserCircle,
   WrenchIcon,
+  DollarSign,
+  Projector,
 } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { dataConfig } from "./dashboard/data";
@@ -148,6 +150,22 @@ export default async function Layout({ children, params }: LayoutProps) {
         params.lang
       ),
       type: "admin",
+      appType: "admin",
+    },
+    {
+      key: "investmensts",
+      title: "Investmensts",
+      icon: <DollarSign className="text-slate-500 w-4" />,
+      href: getBaseLink("app/" + type + "/investmensts", true, params.lang),
+      type: "investor",
+      appType: "admin",
+    },
+    {
+      key: "projects1",
+      title: "projects 1",
+      icon: <Projector className="text-slate-500 w-4" />,
+      href: getBaseLink("app/" + type + "/projects1", true, params.lang),
+      type: "entreperneur",
       appType: "admin",
     },
   ];
