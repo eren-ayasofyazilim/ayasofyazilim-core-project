@@ -45,10 +45,18 @@ export default async function Layout({ children, params }: LayoutProps) {
     email: user?.email ?? undefined,
     imageURL: "https://github.com/shadcn.png",
     menuLinks: [
-      // {
-      //   href: "settings/test",
-      //   title: resourcesMap.settings,
-      // },
+      {
+        href: getBaseLink(`app/admin`, true, params.lang),
+        title: "Admin",
+      },
+      {
+        href: getBaseLink(`app/entreperneur`, true, params.lang),
+        title: "entreperneur",
+      },
+      {
+        href: getBaseLink(`app/investor`, true, params.lang),
+        title: "investor",
+      },
     ],
     isLoggedIn: !!user,
     signOutFunction: signOutServer,
@@ -146,7 +154,8 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   const filteredNavigationItems = navigationItems.filter(
     (item) =>
-      (item?.type === type && item?.type?.includes(type)) ||
+      item?.type === type ||
+      item?.type?.includes(type) ||
       (item.appType === "admin" && item?.appType === appName)
   );
 
