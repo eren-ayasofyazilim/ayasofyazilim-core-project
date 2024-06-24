@@ -11,19 +11,12 @@ test.describe("Login page main functionalities", () => {
     await expect(page).toHaveTitle(/Unirefund/);
   });
 
-  test("get started link", async ({ page }) => {
+  test("Visbiility of profile and langauge buttons", async ({ page }) => {
     await page.goto("/");
     await page.url();
-    await page.getByPlaceholder("name@example.com").click();
-    await page
-      .getByPlaceholder("name@example.com")
-      .fill(process.env.TEST_USERNAME as string);
-    await page.getByPlaceholder("name@example.com").press("Tab");
-    await page
-      .getByPlaceholder("Password")
-      .fill(process.env.TEST_PASSWORD as string);
-    await page.getByRole("button", { name: "Login" }).click();
-    await page.url();
     await page.getByRole("heading", { name: "admin", exact: true }).click();
+    await expect(page.locator('body')).toContainText('admin');await expect(page.getByRole('button', { name: 'English' })).toBeVisible();
+    await expect(page.locator('h6')).toContainText('admin@abp.io');
+    await expect(page.getByRole('button', { name: 'English' })).toBeVisible();
   });
 });
