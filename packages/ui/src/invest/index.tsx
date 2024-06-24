@@ -47,7 +47,7 @@ export default function Invest({
   onInvest,
 }: InvestProps): JSX.Element {
   return (
-    <div className="bg-gray-200 w-full h-screen flex items-center" id="invest">
+    <div className="bg-gray-100 w-full h-screen flex items-center" id="invest">
       <div className="grid grid-cols-3 justify-center gap-4 p-4 container">
         <div className="flex flex-col gap-4 h-full">
           <div className="bg-white">
@@ -64,7 +64,8 @@ export default function Invest({
             </Avatar>
             <div className="p-4">
               <p className="text-left text-muted-foreground">
-                {resources?.ProjectService?.texts?.["youAreInvestingIn"]}
+                {resources?.ProjectService?.texts?.["youAreInvestingIn"] ||
+                  "Şu anda yatırım yaptığınız proje:"}
               </p>
               <div className="flex flex-col gap-2">
                 <h3 className="text-black text-xl font-bold">{name}</h3>
@@ -74,7 +75,8 @@ export default function Invest({
           </div>
           <div className="bg-white">
             <h3 className="px-4 bg-slate-700 text-white h-12 flex items-center bg-primary">
-              {resources?.ProjectService?.texts?.["investingProfile"]}
+              {resources?.ProjectService?.texts?.["investingProfile"] ||
+                "Yatırımcı Profili"}
             </h3>
             <div className="px-4">
               {!user ? (
@@ -108,7 +110,7 @@ export default function Invest({
                           "DisplayName:" +
                             key.charAt(0).toUpperCase() +
                             key.substring(1)
-                        ] ?? ""
+                        ] ?? "Görüntüleme Adı:"
                       }
                       value={(user as any)[key]}
                       titleClassName="text-sm font-medium text-left"
@@ -125,7 +127,7 @@ export default function Invest({
               {investmentDetails.map(({ name, value }) => (
                 <div className="flex items-end justify-between gap-4 w-full items-center">
                   <h3 className="text-sm font-semibold text-muted-foreground">
-                    {resources?.ProjectService?.texts?.[name]}
+                    {resources?.ProjectService?.texts?.[name] || name}
                   </h3>
                   <span className="text-md font-semibold">{value}</span>
                 </div>
@@ -139,7 +141,8 @@ export default function Invest({
               value={0}
               step={1}
               label={
-                resources?.ProjectService?.texts?.["investmentAmount"] ?? ""
+                resources?.ProjectService?.texts?.["investmentAmount"] ??
+                "Yatırım Tutarı"
               }
               subLabel="1₺ = 1 Pay"
               inputLabel="₺"
@@ -150,14 +153,14 @@ export default function Invest({
             <div className="flex gap-4 justify-between w-full items-center">
               <div className="flex flex-col gap-1 w-full flex-grow">
                 <h3 className="text-sm font-semibold">
-                  {resources?.ProjectService?.texts?.["investmentMethod"]}
+                  {resources?.ProjectService?.texts?.["investmentMethod"] ||
+                    "Yatırım Metodu"}
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  {
-                    resources?.ProjectService?.texts?.[
-                      "youCanInvestWithCreditCardOrEft/MoneyTransferOptions"
-                    ]
-                  }
+                  {resources?.ProjectService?.texts?.[
+                    "youCanInvestWithCreditCardOrEft/MoneyTransferOptions"
+                  ] ||
+                    "Kredi Kartı ile veya EFT/Money Transfer ile yatırım yapabilirsiniz."}
                 </p>
               </div>
               <div className="flex flex-col gap-2">
@@ -169,15 +172,14 @@ export default function Invest({
                     <SelectGroup>
                       <SelectItem value="credit-card">
                         {" "}
-                        {resources?.ProjectService?.texts?.["creditCard"]}
+                        {resources?.ProjectService?.texts?.["creditCard"] ||
+                          "Kredi Kartı"}
                       </SelectItem>
                       <SelectItem value="eft">
                         {" "}
-                        {
-                          resources?.ProjectService?.texts?.[
-                            "eft/MoneyTransfer"
-                          ]
-                        }
+                        {resources?.ProjectService?.texts?.[
+                          "eft/MoneyTransfer"
+                        ] || "EFT"}
                       </SelectItem>
                     </SelectGroup>
                   </SelectContent>
@@ -195,7 +197,7 @@ export default function Invest({
                     {replacePlaceholders(
                       resources?.ProjectService?.texts?.[
                         "iHaveReadAndAccept {0}"
-                      ] ?? "",
+                      ] ?? "Okudum ve onayladım",
                       [
                         {
                           holder: "{0}",
@@ -204,11 +206,9 @@ export default function Invest({
                               variant={"link"}
                               className="text-xs p-0 h-0"
                             >
-                              {
-                                resources?.ProjectService?.texts?.[
-                                  "riskDeclarationForm"
-                                ]
-                              }
+                              {resources?.ProjectService?.texts?.[
+                                "riskDeclarationForm"
+                              ] || "Risk Kabul Formu'nu okudum ve onaylıyorum."}
                             </Button>
                           ),
                         },
@@ -225,7 +225,7 @@ export default function Invest({
                     {replacePlaceholders(
                       resources?.ProjectService?.texts?.[
                         "iHaveReadAndAccept {0}"
-                      ] ?? "",
+                      ] ?? "Okudum ve onayladım",
                       [
                         {
                           holder: "{0}",
@@ -234,11 +234,10 @@ export default function Invest({
                               variant={"link"}
                               className="text-xs p-0 h-0"
                             >
-                              {
-                                resources?.ProjectService?.texts?.[
-                                  "projectInformationForm"
-                                ]
-                              }
+                              {resources?.ProjectService?.texts?.[
+                                "projectInformationForm"
+                              ] ||
+                                "Proje bilgi formu'nu okudum ve onaylıyorum."}
                             </Button>
                           ),
                         },
@@ -252,11 +251,10 @@ export default function Invest({
                     htmlFor="terms-3"
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {
-                      resources?.ProjectService?.texts?.[
-                        "iAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
-                      ]
-                    }
+                    {resources?.ProjectService?.texts?.[
+                      "iAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
+                    ] ||
+                      "Yatırım platformu ile yatırım hakkında tavsiye edilmediğini kabul ediyorum."}
                   </label>
                 </div>
               </div>
