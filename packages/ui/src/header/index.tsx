@@ -20,15 +20,15 @@ export default function Header({
     register: resources?.AbpForDeploy?.texts?.["Menu:Register"] || "Register",
   };
   return (
-    <div className="bg-gray-100 p-1 w-full">
+    <div className="p-1 w-full">
       <div className="container flex justify-end gap-4">
         {user ? (
           <>
-            <Button variant={"link"} className="p-0" asChild>
+            <Button variant={"link"} className="p-0 text-black" asChild>
               <Link href="/">{resourcesMap.home}</Link>
             </Button>
             <form action={signOutServer}>
-              <Button variant={"link"} className="p-0">
+              <Button variant={"link"} className="p-0 text-black">
                 {resourcesMap.logout}
               </Button>
             </form>
