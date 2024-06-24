@@ -34,13 +34,13 @@ export default async function Layout({ children, params }: LayoutProps) {
             resources={resources}
             signOutServer={signOutServer}
           />
-          <Navbar
+          {/* <Navbar
             appName={
               process.env.APPLICATION_NAME
                 ? process.env.APPLICATION_NAME
                 : "UNIREFUND"
             }
-          />
+          /> */}
         </>
       }
     >
