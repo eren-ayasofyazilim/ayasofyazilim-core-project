@@ -90,7 +90,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: navbarResources?.["Menu:Profile"] || "Profile",
       href: getBaseLink("app/" + type + "/profile", true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
-      type: "admin",
+      type: ["admin", "user", "entreperneur", "investor"],
       appType: "all",
     },
     {
@@ -152,12 +152,13 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
   ];
 
-  const filteredNavigationItems = navigationItems.filter(
-    (item) =>
+  const filteredNavigationItems = navigationItems.filter((item) => {
+    return (
       item?.type === type ||
       item?.type?.includes(type) ||
       (item.appType === "admin" && item?.appType === appName)
-  );
+    );
+  });
 
   return (
     <MainLayout
