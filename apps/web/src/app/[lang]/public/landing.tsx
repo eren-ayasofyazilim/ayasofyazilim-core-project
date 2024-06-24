@@ -303,7 +303,7 @@ const items = [
 export default function Page({ config }: { config: any }): JSX.Element {
   return (
     <div className="w-full bg-white p-0 ">
-      <Hero variant="hirevision" config={config} />
+      <Hero variant="stripe" config={config} />
       <Brands brands={BrandList} />
       <div
         className={`w-full h-[200px]`}

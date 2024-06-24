@@ -1,14 +1,14 @@
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import { Mouse } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../utils";
 import { createNoise3D } from "simplex-noise";
 import { AnimatePresence, motion } from "framer-motion";
 import AppLogo from "../app-logo";
 
 type HeroProps = {
-  variant: "invesdor" | "hirevision";
+  variant: "invesdor" | "hirevision" | "stripe";
   config: any;
 };
 export function Hero({ variant = "invesdor", config }: HeroProps) {
@@ -66,6 +66,39 @@ export function Hero({ variant = "invesdor", config }: HeroProps) {
         </div>
       </div>
     );
+  if (variant == "stripe") {
+    return (
+      <AuroraBackground className="h-[70vh]">
+        <motion.div
+          initial={{ opacity: 0.0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="relative flex flex-col gap-4 items-center justify-center px-4"
+        >
+          <div className="flex flex-col gap-16 items-center justify-center">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              {/* <div className={"tracking-widest text-8xl font-bold text-black"}>
+                UPWITH
+                <span className="text-primary">{config?.logo || "KONYA"}</span>
+              </div> */}
+              <img src={config.logo} />
+              <span className="text-xl text-slate-700">
+                SPK Lisanslı kitle fonlama platformu.
+              </span>
+            </div>
+            <h3 className="text-black font-bold text-3xl md:text-4xl lg:text-7xl text-center">
+              {/* <span> {config?.its || "Konya'nın"}</span> geleceğine ortak olun. */}
+              {config.texts.hero}
+            </h3>
+          </div>
+        </motion.div>
+      </AuroraBackground>
+    );
+  }
 }
 
 export function GradientBackground({
@@ -450,5 +483,53 @@ export const FlipWords = ({
         ))}
       </motion.div>
     </AnimatePresence>
+  );
+};
+
+interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
+  children: ReactNode;
+  showRadialGradient?: boolean;
+}
+
+export const AuroraBackground = ({
+  className,
+  children,
+  showRadialGradient = true,
+  ...props
+}: AuroraBackgroundProps) => {
+  return (
+    <main>
+      <div
+        className={cn(
+          "relative flex flex-col  h-[100vh] items-center justify-center bg-zinc-50   text-slate-950 transition-bg",
+          className
+        )}
+        {...props}
+      >
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            //   I'm sorry but this is what peak developer performance looks like // trigger warning
+            className={cn(
+              `
+            [--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]
+            [--aurora:repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)]
+            [background-image:var(--white-gradient),var(--aurora)]
+            [background-size:300%,_200%]
+            [background-position:50%_50%,50%_50%]
+            filter blur-[10px] invert
+            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
+            after:[background-size:200%,_100%] 
+            after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
+            pointer-events-none
+            absolute -inset-[10px] opacity-50 will-change-transform`,
+
+              showRadialGradient &&
+                `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
+            )}
+          ></div>
+        </div>
+        {children}
+      </div>
+    </main>
   );
 };
