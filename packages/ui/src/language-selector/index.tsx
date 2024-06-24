@@ -23,7 +23,7 @@ export default function LanguageSelector({
       <TooltipTrigger asChild>
         <div className="flex">
           <CountrySelector
-            searchText={resources?.AbpUi.texts?.Search}
+            searchText={resources?.AbpUi?.texts?.Search || "Search"}
             searchEmptyValue={
               resources?.AbpExceptionHandling?.texts?.DefaultErrorMessage404
             }
