@@ -16,14 +16,23 @@ import {
 } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { dataConfig } from "./dashboard/data";
-
+import { redirect } from "next/navigation";
+type navigationItmes = NavigationItem & {
+  type: string | string[];
+  appType?: string;
+};
 type LayoutProps = {
-  params: { lang: string };
+  params: { lang: string; type: string };
   children: JSX.Element;
 };
 const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
 
 export default async function Layout({ children, params }: LayoutProps) {
+  const types = ["admin", "user", "entreperneur", "investor"];
+  const { type } = params;
+  if (!types.includes(type)) {
+    redirect("/404");
+  }
   const resources = await getLocalizationResources(params.lang);
   const navbarResources = resources?.AbpUiNavigation?.texts || {};
   const permission = await getPermission();
@@ -50,66 +59,101 @@ export default async function Layout({ children, params }: LayoutProps) {
     title:
       navbarResources?.["Menu:" + value.displayName.replaceAll(" ", "")] ||
       value.displayName,
-    href: getBaseLink(`dashboard/${key}/${value.default}`, true, params.lang),
+    href: getBaseLink(
+      `app/${type}/dashboard/${key}/${value.default}`,
+      true,
+      params.lang
+    ),
     icon: <Presentation className="text-slate-500 w-4" />,
   }));
 
-  const navigationItems: NavigationItem[] = [
+  const navigationItems: navigationItmes[] = [
     {
       key: "dashboard",
       title: navbarResources?.["Menu:Dashboard"] || "Dashboard",
-      href: "/dashboard",
+      href: getBaseLink("app/" + type + "/dashboard", true, params.lang),
       icon: <Presentation className="text-slate-500 w-4" />,
       submenu: dashboards,
+      type: "admin",
+      appType: "admin",
     },
     {
       key: "profile",
       title: navbarResources?.["Menu:Profile"] || "Profile",
-      href: "/profile",
+      href: getBaseLink("app/" + type + "/profile", true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "all",
     },
     {
       key: "Details",
       title: "Details",
-      href: "/details",
+      href: getBaseLink("app/" + type + "/details", true, params.lang),
       icon: <FileBadge className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "unirefund",
     },
     {
       key: "company",
       title: navbarResources?.["Menu:Companies"] || "Companies",
-      href: "/company",
+      href: getBaseLink("app/" + type + "/company", true, params.lang),
       icon: <Building2 className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "unirefund",
     },
     {
       key: "countrySettings",
       title: navbarResources?.["Menu:CountrySettings"] || "Country Settings",
-      href: "/country-settings",
+      href: getBaseLink(
+        "app/" + type + "/country-settings/home",
+        true,
+        params.lang
+      ),
       icon: <WrenchIcon className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "unirefund",
     },
     {
       key: "settings",
       title: navbarResources?.["Menu:Settings"] || "Settings",
-      href: "/settings",
+      href: getBaseLink("app/" + type + "/settings/profile", true, params.lang),
       icon: <SlidersHorizontal className="text-slate-500 w-4" />,
+      type: ["admin", "user", "entreperneur", "investor"],
+      appType: "all",
     },
     {
       key: "projects",
       title: navbarResources?.["Menu:Projects"] || "Projects",
       icon: <Presentation className="text-slate-500 w-4" />,
-      href: getBaseLink("projects", true, params.lang),
+      href: getBaseLink("app/" + type + "/projects", true, params.lang),
+      type: ["admin", "entreperneur", "investor"],
+      appType: "upwithcrowd",
     },
     {
       key: "languageManagement",
       title:
         navbarResources?.["Menu:LanguageManagement"] || "Language Management",
       icon: <LanguagesIcon className="text-slate-500 w-4" />,
-      href: getBaseLink("language-management", true, params.lang),
+      href: getBaseLink(
+        "app/" + type + "/language-management",
+        true,
+        params.lang
+      ),
+      type: "admin",
+      appType: "admin",
     },
   ];
+
+  const filteredNavigationItems = navigationItems.filter(
+    (item) =>
+      (item?.type === type && item?.type?.includes(type)) ||
+      (item.appType === "admin" && item?.appType === appName)
+  );
+
   return (
     <MainLayout
       appName={appName}
-      navigationItems={navigationItems}
+      navigationItems={filteredNavigationItems}
       userNavigation={userNavigation}
       topBarComponent={
         <div className="w-min flex gap-4">
