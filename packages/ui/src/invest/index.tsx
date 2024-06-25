@@ -144,7 +144,7 @@ export default function Invest({
               subLabel="1₺ = 1 Pay"
               inputLabel="₺"
               onValueChange={(value: number) => {
-                // console.log(value);
+                console.log(value);
               }}
             />
             <div className="flex gap-4 justify-between w-full items-center">
