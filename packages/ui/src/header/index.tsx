@@ -1,5 +1,6 @@
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import Link from "next/link";
+import LanguageSelector from "../language-selector";
 
 export default function Header({
   user,
