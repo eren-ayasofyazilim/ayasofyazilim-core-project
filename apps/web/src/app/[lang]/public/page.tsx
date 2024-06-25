@@ -1,11 +1,11 @@
-import { Brands } from "@repo/ui/brands";
-import { Hero } from "@repo/ui/hero";
+"use server";
 
-export default function Page(): JSX.Element {
-  return (
-    <div className="w-full bg-red-200 p-0 h-[200vh]">
-      <Hero />
-      <Brands />
-    </div>
-  );
+import { isCustomNodeSelected } from "@tiptap-location/lib/utils";
+import Landing from "./landing";
+import { getConfig } from "./layout";
+
+export default async function Page() {
+  let appName = process.env?.APPLICATION_NAME || "konya";
+  let config = await getConfig(appName);
+  return <Landing config={config} />;
 }

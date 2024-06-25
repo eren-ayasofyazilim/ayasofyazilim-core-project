@@ -23,7 +23,7 @@ export default async function RootLayout({
   if (!resources) return <></>;
   return (
     <html>
-      <body className={`${GeistSans.className} overflow-hidden`}>
+      <body className={`${GeistSans.className}`} data-app-name={appName}>
         <Providers lang={params.lang}>{children}</Providers>
       </body>
     </html>
