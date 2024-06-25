@@ -24,7 +24,7 @@ export const i18n = {
     "zh-hant",
   ],
 };
-const publicURLs = ["404", "500", "api", "public"];
+const publicURLs = ["404", "500", "api"];
 const authPages = ["login", "register", "forgot-password", "reset-password"];
 function getLocaleFromBrowser(request: NextRequest) {
   const negotiatorHeaders: { [key: string]: string } = {};
