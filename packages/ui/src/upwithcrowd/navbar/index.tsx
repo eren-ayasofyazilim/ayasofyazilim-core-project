@@ -163,7 +163,7 @@ function HirevisionNavbar({
   config?: any;
 }): JSX.Element {
   const [isFixed, setIsFixed] = useState(false);
-  const scrollThreshold = 10;
+  const scrollThreshold = 200;
 
   useEffect(() => {
     let el = document.querySelector("#scroll-area > div");
@@ -180,7 +180,7 @@ function HirevisionNavbar({
   }, []);
   return (
     <nav
-      className={`w-full flex justify-between items-center gap-4 px-12 h-20 top-0 left-0 z-50 ${isFixed ? "fixed bg-white/60 hover:bg-white/80 backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
+      className={`w-full flex justify-between items-center gap-4 px-12 h-20 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
     >
       {/* <div className={"tracking-widest text-2xl font-bold"}>
         UPWITH
