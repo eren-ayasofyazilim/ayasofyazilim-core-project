@@ -9,90 +9,25 @@ import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import Invest from "@repo/ui/invest";
 import { auth } from "auth";
-import { getLocalizationResources } from "src/utils";
 import { currencyFormatter, numberFormatter } from "../demo-data";
+import { getResourceData } from "./language";
 export default async function Page({
   params,
 }: {
   params: { projectId: string; lang: string };
 }) {
   const { projectId, lang } = params;
+  const { languageData, resources } = await getResourceData(lang);
+
   const projectData =
     await getProjectServiceClient().project.getApiProjectServiceProjectsById({
       id: projectId,
     });
-  const resources = await getLocalizationResources(lang);
+  if (!projectData) return null;
 
   const session = await auth();
   const user = session?.user;
-  if (!projectData) return null;
 
-  const uiResource = resources?.["AbpUi"]?.texts;
-  const projectResource = resources?.["ProjectService"]?.texts;
-  const languageData = {
-    Next: uiResource?.["PagerNext"] || "Next",
-    Previous: uiResource?.["PagerPrevious"] || "Previous",
-    DaysLeft: uiResource?.["DaysLeft"] || "Days left",
-    CampaignStartDate:
-      projectResource?.["CampaignStartDate"] || "Campaign start date",
-    CampaignEndDate:
-      projectResource?.["CampaignEndDate"] || "Campaign end date",
-    CollectedAmount: projectResource?.["CollectedAmount"] || "Collected amount",
-    Investor: projectResource?.["Investor"] || "Investor",
-    QualifiedInvestor:
-      projectResource?.["QualifiedInvestor"] || "Qualified Investor",
-    Invest: projectResource?.["Invest"] || "Invest",
-    TargetReached:
-      projectResource?.["TargetReached"] || "{target}% of target reached",
-    "Tab:CreateProject":
-      projectResource?.["Tab:CreateProject"] || "Create Project",
-    "Tab:ProjectDetails":
-      projectResource?.["Tab:ProjectDetails"] || "Project Details",
-    "Tab:AdditionalFunding":
-      projectResource?.["Tab:AdditionalFunding"] || "Additional Funding",
-    "Tab:Summary": uiResource?.["Summary"] || "Summary",
-    "Tab:ViewProject": projectResource?.["Tab:ViewProject"] || "View Project",
-    "Messages:ProjectCreated":
-      projectResource?.["Messages:ProjectCreated"] ||
-      "The project has been created successfully.",
-    "Messages:ProjectCreationError":
-      projectResource?.["Messages:ProjectCreationError"] ||
-      "An error occurred while creating the project.",
-    ProjectName: projectResource?.["ProjectName"] || "Project name",
-    ProjectNameInfo:
-      projectResource?.["ProjectNameInfo"] ||
-      "A headline that describes your project in a way that attracts investors' attention.",
-    ProjectDescription:
-      projectResource?.["ProjectDescription"] || "Project description",
-    ProjectDescriptionInfo:
-      projectResource?.["ProjectDescriptionInfo"] ||
-      "Briefly describe your project in a way that attracts investors' attention.",
-    FundCollectionType:
-      projectResource?.["FundCollectionType"] || "Project type",
-    FundCollectionTypeInfo:
-      projectResource?.["FundCollectionTypeInfo"] || "Type of your project.",
-    FundCollectionTypeSHRE:
-      projectResource?.["FundCollectionTypeSHRE"] || "Share based",
-    FundCollectionTypeDBIT:
-      projectResource?.["FundCollectionTypeDBIT"] || "Dept based",
-    FundableAmount: projectResource?.["FundableAmount"] || "Fundable amount",
-    FundableAmountInfo:
-      projectResource?.["FundableAmountInfo"] ||
-      "The amount of investment you want to make in your project.",
-    AdditionalFunding:
-      projectResource?.["AdditionalFunding"] || "Additional funding",
-    AdditionalFundingInfo:
-      projectResource?.["AdditionalFundingInfo"] ||
-      "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
-    AdditionalFundingYes: projectResource?.["AdditionalFundingYes"] || "Yes",
-    AdditionalFundingNo: projectResource?.["AdditionalFundingNo"] || "No",
-    AdditionalFundingRate:
-      projectResource?.["AdditionalFundingRate"] ||
-      "Rate of additional funding",
-    AdditionalFundingRateInfo:
-      projectResource?.["AdditionalFundingRateInfo"] ||
-      "The rate of additional funding that will be collected in case your project is overfunded.",
-  };
   const usedSectionsInProject = [
     {
       projectId: "4674b59b-e2ea-fb15-7d64-3a13227b96c1",
@@ -233,15 +168,15 @@ export default async function Page({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b>
-                    {
-                      new Date(projectData.projectStartDate ?? 0)
-                        .toLocaleString("tr", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                        })
-                        .split(" ,")[0]
-                    }
+                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
+                      ? new Date(projectData.projectStartDate ?? 0)
+                          .toLocaleString("tr", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                          .split(" ,")[0]
+                      : languageData.StartingSoon}
                   </b>
                 </div>
                 <div className="text-muted-foreground text-xs">
@@ -252,7 +187,9 @@ export default async function Page({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b className="text-[#08985a]">
-                    {getDateDifferanceInDays() + " gün kaldı"}{" "}
+                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
+                      ? getDateDifferanceInDays() + " gün kaldı"
+                      : languageData.StartingSoon}
                   </b>
                 </div>
                 <div className="text-muted-foreground text-xs">
@@ -263,15 +200,15 @@ export default async function Page({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b>
-                    {
-                      new Date(projectData.projectEndDate ?? 0)
-                        .toLocaleString("tr", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                        })
-                        .split(" ,")[0]
-                    }
+                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
+                      ? new Date(projectData.projectEndDate ?? 0)
+                          .toLocaleString("tr", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                          .split(" ,")[0]
+                      : languageData.StartingSoon}
                   </b>
                 </div>
                 <div className="text-muted-foreground text-xs">
