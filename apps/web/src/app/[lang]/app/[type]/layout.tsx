@@ -15,6 +15,7 @@ import {
   WrenchIcon,
   DollarSign,
   Projector,
+  LayoutDashboard,
 } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { dataConfig } from "./dashboard/data";
@@ -78,6 +79,14 @@ export default async function Layout({ children, params }: LayoutProps) {
   }));
 
   const navigationItems: navigationItmes[] = [
+    {
+      key: "reports",
+      title: navbarResources?.["Menu:Reports"] || "Reports",
+      href: getBaseLink("app/" + type + "/", true, params.lang),
+      icon: <LayoutDashboard className="text-slate-500 w-4" />,
+      type: ["admin", "user", "entreperneur", "investor"],
+      appType: "all",
+    },
     {
       key: "dashboard",
       title: navbarResources?.["Menu:Dashboard"] || "Dashboard",
