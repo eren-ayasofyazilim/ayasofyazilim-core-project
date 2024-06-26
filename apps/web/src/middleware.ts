@@ -78,10 +78,10 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     return NextResponse.redirect(new URL(`/${locale}/login`, hostURL));
   }
   function redirectToProfile(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/profile`, hostURL));
+    return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   }
   function redirectToRoot(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/`, hostURL));
+    return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   }
   function allowURL(locale: string, request: NextRequest) {
     const response = NextResponse.next();
