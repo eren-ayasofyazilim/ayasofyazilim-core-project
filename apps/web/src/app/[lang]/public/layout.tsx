@@ -2,16 +2,17 @@
 
 import MainLayout from "@repo/ayasofyazilim-ui/templates/main-layout";
 
-import Header from "@repo/ui/upwithcrowd/header";
 import LanguageSelector from "@repo/ui/language-selector";
+import Header from "@repo/ui/upwithcrowd/header";
 import Navbar, { linksProp } from "@repo/ui/upwithcrowd/navbar";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
-import { getBaseLink, getLocalizationResources } from "src/utils";
-import konya from "/public/konya.svg";
+import { Projector, ShieldAlert, Worm } from "lucide-react";
+import { getBaseLink } from "src/utils";
 import bursa from "/public/bursa.svg";
-import sakarya from "/public/sakarya.svg";
 import istanbul from "/public/istanbul.svg";
+import konya from "/public/konya.svg";
+import sakarya from "/public/sakarya.svg";
 
 export async function getConfig(appName: string = "konya") {
   let configs = {
@@ -113,7 +114,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       submenu: [
         {
           text: "Yatırım yap",
-          href: "#",
+          href: getBaseLink("public/projects", true),
         },
         {
           text: "Destek merkezi",
@@ -169,6 +170,34 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
   ];
   let configSelected = await getConfig(process.env.APPLICATION_NAME);
+
+  const userNavigation = {
+    username: user?.userName ?? undefined,
+    initials: user?.name?.substring(0, 2).toUpperCase(),
+    email: user?.email ?? undefined,
+    user: user,
+    imageURL: "https://github.com/shadcn.png",
+    menuLinks: [
+      {
+        href: getBaseLink(`app/admin`, true, params.lang),
+        title: "Admin Merkezi",
+        icon: <ShieldAlert className="mr-2 h-4 w-4" />,
+      },
+      {
+        href: getBaseLink(`app/entreperneur`, true, params.lang),
+        title: "Girişimci Merkezi",
+        icon: <Projector className="mr-2 h-4 w-4" />,
+      },
+      {
+        href: getBaseLink(`app/investor`, true, params.lang),
+        title: "Yatırımcı Merkezi",
+        icon: <Worm className="mr-2 h-4 w-4" />,
+      },
+    ],
+    isLoggedIn: !!user,
+    signOutFunction: signOutServer,
+    resources: resources,
+  };
   return (
     <MainLayout
       mainClassName="p-0 md:p-0 w-full"
@@ -191,6 +220,8 @@ export default async function Layout({ children, params }: LayoutProps) {
           }
           variant="hirevision"
           links={links}
+          user={user}
+          userNavigation={userNavigation}
           config={configSelected}
           appName={process.env.APPLICATION_NAME || "konya"}
           languageSelector={
