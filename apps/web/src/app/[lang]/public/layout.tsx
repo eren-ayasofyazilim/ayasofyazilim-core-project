@@ -18,6 +18,7 @@ export async function getConfig(appName: string = "konya") {
   let configs = {
     bursa: {
       key: "bursa",
+      link: getBaseLink("/", true),
       with: "Bursa ile",
       its: "Bursa'nın",
       full: "Bursa Sanayi Odası",
@@ -37,6 +38,7 @@ export async function getConfig(appName: string = "konya") {
     },
     konya: {
       key: "konya",
+      link: getBaseLink("/", true),
       with: "Konya ile",
       its: "Konya'nın",
       full: "Konya Sanayi Odası",
@@ -56,6 +58,7 @@ export async function getConfig(appName: string = "konya") {
     },
     istanbul: {
       key: "istanbul",
+      link: getBaseLink("/", true),
       with: "İstanbul ile",
       its: "İstanbul'un",
       full: "İstanbul Sanayi Odası",
@@ -75,6 +78,7 @@ export async function getConfig(appName: string = "konya") {
     },
     sakarya: {
       key: "sakarya",
+      link: getBaseLink("/", true),
       with: "Sakarya ile",
       its: "Sakarya'nın",
       full: "Sakarya Sanayi Odası",

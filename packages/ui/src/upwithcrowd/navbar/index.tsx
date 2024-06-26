@@ -200,7 +200,9 @@ function HirevisionNavbar({
         UPWITH
         <span className="text-primary">{appName.toLocaleUpperCase()}</span>
       </div> */}
-      <img src={config.logo} className="h-14" />
+      <Link href={config.link}>
+        <img src={config.logo} className="h-14" />
+      </Link>
       <Menubar className="border-0 bg-transparent shadow-none p-none">
         {links.map((link) => MenuCreator(link))}
       </Menubar>
