@@ -51,7 +51,6 @@ export function ProfileMenu({
     MyAccount: resources?.AbpUiNavigation?.texts?.["MyAccount"] || "My Account",
     Add: resources?.AbpUiNavigation?.texts?.["Add"] || "Add",
   };
-  console.log(resources);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
