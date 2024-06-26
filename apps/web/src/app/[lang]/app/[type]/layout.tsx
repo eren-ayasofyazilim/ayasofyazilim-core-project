@@ -92,7 +92,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: navbarResources?.["Menu:Profile"] || "Profile",
       href: getBaseLink("app/" + type + "/profile", true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
-      type: ["admin", "user", "entreperneur", "investor"],
+      type: ["investor"],
       appType: "all",
     },
     {
@@ -153,10 +153,10 @@ export default async function Layout({ children, params }: LayoutProps) {
       appType: "admin",
     },
     {
-      key: "investmensts",
-      title: "Investmensts",
+      key: "investments",
+      title: "investments",
       icon: <DollarSign className="text-slate-500 w-4" />,
-      href: getBaseLink("app/" + type + "/investmensts", true, params.lang),
+      href: getBaseLink("app/" + type + "/investments", true, params.lang),
       type: "investor",
       appType: "admin",
     },
