@@ -9,12 +9,17 @@ export async function getResourceData(lang: string) {
     Next: uiResource?.["PagerNext"] || "Next",
     Previous: uiResource?.["PagerPrevious"] || "Previous",
     DaysLeft: uiResource?.["DaysLeft"] || "Days left",
+    InvestNow: projectResource?.["InvestNow"] || "Invest Now",
+    InvestmentOpportunities:
+      projectResource?.["InvestmentOpportunities"] ||
+      "Investment Opportunitiesies",
     StartingSoon: uiResource?.["StartingSoon"] || "Starting Soon",
     CampaignStartDate:
       projectResource?.["CampaignStartDate"] || "Campaign start date",
     CampaignEndDate:
       projectResource?.["CampaignEndDate"] || "Campaign end date",
     CollectedAmount: projectResource?.["CollectedAmount"] || "Collected amount",
+    TargetAmount: projectResource?.["TargetAmount"] || "Target amount",
     Investor: projectResource?.["Investor"] || "Investor",
     QualifiedInvestor:
       projectResource?.["QualifiedInvestor"] || "Qualified Investor",

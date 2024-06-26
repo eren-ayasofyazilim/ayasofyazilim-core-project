@@ -1,40 +1,18 @@
 "use server";
 
-import { LayoutIcon, ViewHorizontalIcon } from "@radix-ui/react-icons";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@repo/ayasofyazilim-ui/molecules/tabs";
 
-import { Volo_Abp_Application_Dtos_PagedResultDto_13 } from "@ayasofyazilim/saas/ProjectService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@repo/ayasofyazilim-ui/molecules/pagination";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
-import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
 import { Link } from "next-view-transitions";
-import { useLocale } from "src/providers/locale";
-import { cardProps, images, tableProps, tableProps2Col } from "./demo-data";
-import { useEffect, useState } from "react";
-import { getBaseLink, getLocalizationResources } from "src/utils";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getProjectsServer } from "../../(main)/projects/action";
-import { Filter } from "@repo/ui/filter";
+
+import { getProjectsServer } from "../../app/[type]/projects/action";
+import { getResourceData } from "./[projectId]/language";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();
 
-  const resources = await getLocalizationResources(params.lang);
+  const { languageData, resources } = await getResourceData(params.lang);
   const statusOptions = [
     {
       label: resources?.ProjectService?.texts?.inFunding ?? "",
@@ -86,146 +64,112 @@ export default async function Page({ params }: { params: { lang: string } }) {
     },
   ];
   if (!resources) return;
+
   return (
-    <div className="container h-full">
+    <div className="container h-full mt-20">
       {projectData && (
-        <Tabs
-          defaultValue="2"
-          className="w-full flex grow flex-col overflow-hidden h-full"
-        >
-          <div className="flex items-center justify-between bg-white py-2 gap-2">
-            <div className="flex items-center justify-center gap-2">
-              <Filter
-                title={resources?.ProjectService?.texts?.status ?? ""}
-                options={statusOptions}
-              />
-              <Filter
-                title={resources?.ProjectService?.texts?.sector ?? ""}
-                options={sectorOptions}
-              />
-              <Filter
-                title={resources?.ProjectService?.texts?.category ?? ""}
-                options={categoryOptions}
-              />
-            </div>
-            <TabsList className="grid grid-cols-2 bg-gray-50 px-2">
-              <TabsTrigger value="1">
-                <ViewHorizontalIcon />
-              </TabsTrigger>
-              <TabsTrigger value="2">
-                <LayoutIcon />
-              </TabsTrigger>
-            </TabsList>
-          </div>
-          <ScrollArea className="p-2 pt-0 h-full grow">
-            <TabsContent value="1">
-              <div className="w-full flex flex-wrap gap-5 overflow-auto h-full">
-                {projectData.items?.map((project) => (
-                  <DetailsCard
-                    key={project.id}
-                    cardProps={{
-                      IAboutCardProps: cardProps.IAboutCardProps,
-                      image:
-                        images?.[
-                          (project.id ?? "default") as keyof typeof images
-                        ],
-                      tags: cardProps.tags,
-                      link: "projects/" + (project.id ?? ""),
-                      title: project.projectName ?? "",
-                      description: project.projectDefinition ?? "",
-                      tableProps: tableProps(project),
-                      tableProps2Col: tableProps2Col(project),
-                      cardTagTitle: "Devam Ediyor",
-                      cardTagVariant: "primary",
-                      BeforeCardContentComponent: (
-                        <Progress
-                          value={20}
-                          containerClassName="h-3"
-                          variant="primary"
-                        />
-                      ),
-                      ActionComponent: (
-                        <Button customVariant="primary">
-                          <Link href={"projects/" + (project.id ?? "")}>
-                            {resources?.ProjectService?.texts?.projectDetail ??
-                              ""}
-                          </Link>
-                        </Button>
-                      ),
-                    }}
-                    variant="compact-vertical"
+        <ScrollArea className="p-2 pt-0 h-full grow">
+          <h2 className="text-3xl font-bold my-5">
+            {languageData.InvestmentOpportunities}
+          </h2>
+          <div className="flex flex-row flex-wrap gap-3">
+            {projectData.items?.map((project) => (
+              <div key={project.id} className="bg-white border rounded-md">
+                <div>
+                  <img
+                    src="https://placehold.co/1920x600"
+                    className="h-[200px] object-cover rounded-t-md"
                   />
-                ))}
+                </div>
+                <div className="py-4 px-6 flex flex-col gap-2 border-b">
+                  <h3 className="font-semibold leading-none tracking-tight hover:underline">
+                    <a href={`projects/${project.id}`}>{project.projectName}</a>
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {project.projectDefinition}
+                  </p>
+                </div>
+                <Progress
+                  value={Math.max(
+                    5,
+                    ((project.fundNominalAmount || 0) /
+                      (project.fundableAmount || 1)) *
+                      100
+                  )}
+                  containerClassName="h-4 overflow-hidden m-0"
+                  className={`bg-[#05ce78] rounded-r-full flex items-center`}
+                >
+                  <div className="ml-auto w-3 h-3 rounded-full bg-[#08995a] text-[#08995a] mr-1 flex items-center justify-center"></div>
+                </Progress>
+                <div className="py-4 px-6 flex flex-col gap-2">
+                  <div className="items-center py-1 flex justify-between  text-center flex-row">
+                    <div className="text-xs flex gap-0 font-semibold">
+                      {languageData.FundCollectionType}
+                    </div>
+                    <div className="text-xs flex gap-0">
+                      {project.fundCollectionType === "SHRE"
+                        ? languageData["FundCollectionTypeSHRE"]
+                        : languageData["FundCollectionTypeDBIT"]}
+                    </div>
+                  </div>
+                  <div className="items-center py-1 flex justify-between  text-center flex-row">
+                    <div className="text-xs flex gap-0 font-semibold">
+                      {languageData.AdditionalFunding}
+                    </div>
+                    <div className="text-xs flex gap-0">
+                      %{project.additionalFundRate || 0}
+                    </div>
+                  </div>
+                  <div className="items-center py-1 flex justify-between  text-center flex-row">
+                    <div className="text-xs flex gap-0 font-semibold">
+                      {languageData.CampaignEndDate}
+                    </div>
+                    <div className="text-xs flex gap-0">
+                      {project.projectStartDate !== "0001-01-01T00:00:00"
+                        ? new Date(project.projectEndDate ?? 0)
+                            .toLocaleString("tr", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            })
+                            .split(" ,")[0]
+                        : languageData.StartingSoon}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex flex-row justify-between items-center bg-gray-100">
+                    <div className="p-6 flex justify-between py-2 text-center flex-col items-start">
+                      <div className="flex gap-0 font-semibold text-md m-auto">
+                        ₺{project.fundNominalAmount || 0}
+                      </div>
+                      <div className="text-xs flex gap-0">
+                        {languageData.CollectedAmount}
+                      </div>
+                    </div>
+                    <div className="p-6 flex justify-between py-2 text-center flex-col items-end">
+                      <div className="flex gap-0 font-semibold text-md m-auto">
+                        ₺{project.fundableAmount || 0}
+                      </div>
+                      <div className="text-xs flex gap-0">
+                        {languageData.TargetAmount}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-4 py-3">
+                  <Button
+                    customVariant="primary"
+                    asChild
+                    className="rounded-full w-full"
+                  >
+                    <Link href={"projects/"}>{languageData.InvestNow}</Link>
+                  </Button>
+                </div>
               </div>
-            </TabsContent>
-            <TabsContent value="2">
-              <div className="flex flex-row w-full flex-wrap justify-center gap-5 col-span-10 overflow-auto h-full">
-                {projectData.items?.map((project) => (
-                  <DetailsCard
-                    key={project.id}
-                    cardProps={{
-                      IAboutCardProps: cardProps.IAboutCardProps,
-                      image:
-                        images?.[
-                          (project.id ?? "default") as keyof typeof images
-                        ],
-                      tags: cardProps.tags,
-                      link: "projects/" + (project.id ?? ""),
-                      title: project.projectName ?? "",
-                      description: project.projectDefinition ?? "",
-                      tableProps: tableProps(project),
-                      tableProps2Col: tableProps2Col(project),
-                      cardTagTitle: "Devam Ediyor",
-                      cardTagVariant: "primary",
-                      BeforeCardContentComponent: (
-                        <Progress
-                          value={20}
-                          containerClassName="h-3"
-                          variant="primary"
-                        />
-                      ),
-                      ActionComponent: (
-                        <Button customVariant="primary" asChild>
-                          <Link href={"projects/" + (project.id ?? "")}>
-                            {resources?.ProjectService?.texts?.projectDetail ??
-                              ""}
-                          </Link>
-                        </Button>
-                      ),
-                    }}
-                    variant="compact"
-                  />
-                ))}
-              </div>
-            </TabsContent>
-          </ScrollArea>
-          <div className="flex items-center justify-center bg-white py-2 gap-2 hidden">
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#" isActive>
-                    1
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">2</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext href="#" />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+            ))}
           </div>
-        </Tabs>
+        </ScrollArea>
       )}
     </div>
   );

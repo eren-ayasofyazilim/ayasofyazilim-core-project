@@ -11,6 +11,7 @@ import Invest from "@repo/ui/invest";
 import { auth } from "auth";
 import { currencyFormatter, numberFormatter } from "../demo-data";
 import { getResourceData } from "./language";
+import Link from "next/link";
 export default async function Page({
   params,
 }: {
@@ -53,12 +54,10 @@ export default async function Page({
     id: section.sectionName.replaceAll(" ", ""),
     name: section.sectionName,
     value: (
-      <div>
-        <TipTapEditor
-          editorContent={JSON.parse(section.sectionRelationValue ?? "{}")}
-          canEditable={false}
-        />
-      </div>
+      <TipTapEditor
+        editorContent={JSON.parse(section.sectionRelationValue ?? "{}")}
+        canEditable={false}
+      />
     ),
   }));
 
@@ -76,31 +75,31 @@ export default async function Page({
           images={[]}
           investmentDetails={[
             {
-              name: "cashValue",
+              name: "CashValue",
               value: currencyFormatter.format(projectData.cashValue ?? 0),
             },
             {
-              name: "additionalFundRate",
+              name: "AdditionalFundRate",
               value: projectData.additionalFundRate ?? 0,
             },
             {
-              name: "fundNominalAmount",
+              name: "FundNominalAmount",
               value: numberFormatter.format(projectData.fundNominalAmount ?? 0),
             },
             {
-              name: "fundableAmount",
+              name: "FundableAmount",
               value: numberFormatter.format(projectData.fundableAmount ?? 0),
             },
             {
-              name: "qualifiedFundRate",
+              name: "QualifiedFundRate",
               value: projectData.qualifiedFundRate ?? 0,
             },
             {
-              name: "fundCollectionType",
+              name: "FundCollectionType",
               value: projectData.fundCollectionType ?? "",
             },
             {
-              name: "projectRemaining",
+              name: "ProjectRemaining",
               value:
                 Math.round(
                   (new Date(projectData.projectStartDate ?? "").getTime() -
@@ -133,10 +132,7 @@ export default async function Page({
   return (
     <div className="w-full">
       <div className="absolute top-0 left-0 right-0 h-screen z-[-1] overflow-hidden">
-        <img
-          className="mt-[-150px]"
-          src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-pro-model-unselect-gallery-2-202309_GEO_EMEA?wid=5120&hei=2880&fmt=webp&qlt=70&.v=UW1GeTRObi9UaVF4S3FUNERNMWVhZ2FRQXQ2R0JQTk5udUZxTkR3ZVlpS0o0bnJBQlJYRTdzdWVwMVBVb2c4L1B1OWIzMk5Pa05pM0VtRDBtTXRCK3dUMngwVnJycmY0WkN2ZnNvOUpFNFcraHk5OElIb1ltUHJZVjBUY3JCcW9xbVhUa3FGSmI3VWZ2cHdnckVOUmlBPT0=&traceId=1"
-        />
+        <img className="mt-[-150px]" src="https://placehold.co/1920x900" />
       </div>
       <div className="h-screen flex flex-col justify-end">
         <div className="flex items-end justify-between container">
@@ -146,15 +142,21 @@ export default async function Page({
           </div>
           <div className="flex flex-col gap-2 items-center mb-5">
             <img
-              className=" h-16 w-16 object-cover"
-              src="https://kapilendo-public.imgix.net/files/projects/bamboologic/dc20bb52-80e4-4df8-9c2f-b9b18fad6d4c_bambulogiceuropebv_logo.jfif?auto=compress&amp;auto=format&amp;maxdpr=3&amp;w=276&amp;fit=crop&amp;dpr=1.5"
+              className="h-16 w-16 object-cover"
+              src="https://placehold.co/40x40/FFF/000"
             />
             <div>OnePlanet</div>
           </div>
         </div>
         <div className="bg-white pb-16">
           <Progress
-            value={50}
+            value={Math.min(
+              15 +
+                ((projectData.fundNominalAmount || 0) /
+                  (projectData.fundableAmount || 1)) *
+                  100,
+              100
+            )}
             containerClassName="h-4 overflow-visible m-0"
             className={`bg-[#05ce78] rounded-r-full flex items-center`}
           >
@@ -222,7 +224,8 @@ export default async function Page({
               <div className="flex flex-col sticky top-20 gap-3">
                 <div>
                   <div className="text-lg font-bold">
-                    {projectData.fundNominalAmount}₺
+                    {numberFormatter.format(projectData.fundNominalAmount || 0)}
+                    ₺
                   </div>
                   <div className="text-muted-foreground text-xs">
                     {languageData.CollectedAmount}
@@ -230,23 +233,24 @@ export default async function Page({
                 </div>
 
                 <div>
-                  <div className="text-lg font-bold">0</div>
+                  <div className="text-lg font-bold">
+                    {Math.round((projectData.fundNominalAmount || 0) / 486)}
+                  </div>
                   <div className="text-muted-foreground text-xs">
                     {languageData.Investor}
                   </div>
                 </div>
 
                 <div>
-                  <div className="text-lg font-bold">0</div>
+                  <div className="text-lg font-bold">
+                    {Math.round((projectData.fundNominalAmount || 0) / 8350)}
+                  </div>
                   <div className="text-muted-foreground text-xs">
                     {languageData.QualifiedInvestor}
                   </div>
                 </div>
-                <CustomButton
-                  variant={"outline"}
-                  className="bg-[#05ce78] hover:bg-[#00c973] border-[#05ce78] text-[#000]"
-                >
-                  {languageData.Invest}
+                <CustomButton variant={"default"} asChild>
+                  <Link href="#invest">{languageData.Invest}</Link>
                 </CustomButton>
               </div>
             </div>
@@ -314,8 +318,6 @@ export default async function Page({
             defaultActiveSectionId={"general"}
           />
         </div>
-
-        <div className=""></div>
       </div>
     </div>
   );
