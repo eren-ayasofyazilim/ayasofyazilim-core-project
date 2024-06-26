@@ -5,9 +5,9 @@ import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import { Link } from "next-view-transitions";
-
 import { getProjectsServer } from "../../app/[type]/projects/action";
 import { getResourceData } from "./[projectId]/language";
+import { numberFormatter } from "./demo-data";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();
@@ -72,9 +72,12 @@ export default async function Page({ params }: { params: { lang: string } }) {
           <h2 className="text-3xl font-bold my-5">
             {languageData.InvestmentOpportunities}
           </h2>
-          <div className="flex flex-row flex-wrap gap-3">
+          <div className="flex flex-row gap-3">
             {projectData.items?.map((project) => (
-              <div key={project.id} className="bg-white border rounded-md">
+              <div
+                key={project.id}
+                className="bg-white border rounded-md basis-1/3"
+              >
                 <div>
                   <img
                     src="https://placehold.co/1920x600"
@@ -141,7 +144,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
                   <div className="flex flex-row justify-between items-center bg-gray-100">
                     <div className="p-6 flex justify-between py-2 text-center flex-col items-start">
                       <div className="flex gap-0 font-semibold text-md m-auto">
-                        ₺{project.fundNominalAmount || 0}
+                        ₺
+                        {numberFormatter.format(project.fundNominalAmount ?? 0)}
                       </div>
                       <div className="text-xs flex gap-0">
                         {languageData.CollectedAmount}
@@ -149,7 +153,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
                     </div>
                     <div className="p-6 flex justify-between py-2 text-center flex-col items-end">
                       <div className="flex gap-0 font-semibold text-md m-auto">
-                        ₺{project.fundableAmount || 0}
+                        ₺{numberFormatter.format(project.fundableAmount ?? 0)}
                       </div>
                       <div className="text-xs flex gap-0">
                         {languageData.TargetAmount}

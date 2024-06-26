@@ -2,10 +2,7 @@
 
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
-import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
-import DetailsCard, {
-  IDetailsCardProps,
-} from "@repo/ayasofyazilim-ui/organisms/details-card";
+import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import Link from "next/link";
 import { getBaseLink, getLocalizationResources } from "src/utils";
@@ -135,6 +132,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
                 <CustomButton variant="outline">New Project</CustomButton>
               </Link>
             </div>
+
             {projectData?.items?.map((project) => (
               <DetailsCard
                 key={project.id}

@@ -106,7 +106,8 @@ export async function createNewProjectServer(
     const response = await client.project.postApiProjectServiceProjects({
       requestBody: body,
     });
-    revalidatePath("/[lang]/(main)/projects", "page");
+    revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/public/projects", "page");
     return {
       status: 200,
       projectData: response,
@@ -129,7 +130,8 @@ export async function updateProjectServer(
       id: id,
       requestBody: body,
     });
-    revalidatePath("/[lang]/(main)/projects", "page");
+    revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/public/projects", "page");
     return {
       status: 200,
       projectData: response,
@@ -150,7 +152,8 @@ export async function deleteProjectServer(
     const response = await client.project.deleteApiProjectServiceProjectsById({
       id: body.id,
     });
-    revalidatePath("/[lang]/(main)/projects", "page");
+    revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/public/projects", "page");
     return {
       status: 200,
       projectData: response,
