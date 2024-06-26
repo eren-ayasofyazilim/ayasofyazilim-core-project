@@ -6,10 +6,7 @@ import {
   AvatarImage,
 } from "@repo/ayasofyazilim-ui/atoms/avatar";
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
-import CardTable from "@repo/ayasofyazilim-ui/molecules/card-table";
-import Link from "next/link";
-import { replacePlaceholders } from "@repo/ayasofyazilim-ui/lib/replace-placeholders";
-import { InvestInput } from "../invest-input";
+import { Checkbox } from "@repo/ayasofyazilim-ui/atoms/checkbox";
 import {
   Select,
   SelectContent,
@@ -18,7 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@repo/ayasofyazilim-ui/atoms/select";
-import { Checkbox } from "@repo/ayasofyazilim-ui/atoms/checkbox";
+import { replacePlaceholders } from "@repo/ayasofyazilim-ui/lib/replace-placeholders";
+import CardTable from "@repo/ayasofyazilim-ui/molecules/card-table";
+import Link from "next/link";
+import { InvestInput } from "../invest-input";
 
 export type InvestProps = {
   name: string;
@@ -46,6 +46,51 @@ export default function Invest({
   resources,
   onInvest,
 }: InvestProps): JSX.Element {
+  const languageData = {
+    Login: resources?.AbpForDeploy?.texts?.["Login"] || "Login",
+    Invest: resources?.AbpForDeploy?.texts?.["Invest"] || "Invest",
+    YouAreInvestingIn:
+      resources?.AbpForDeploy?.texts?.["YouAreInvestingIn"] ||
+      "You are investing in",
+    InvestingProfile:
+      resources?.AbpForDeploy?.texts?.["InvestingProfile"] ||
+      "Investing Profile",
+    CashValue: resources?.AbpForDeploy?.texts?.["CashValue"] || "Cash Value",
+    AdditionalFundRate:
+      resources?.AbpForDeploy?.texts?.["AdditionalFundRate"] ||
+      "Additional Fund Rate",
+    FundNominalAmount:
+      resources?.AbpForDeploy?.texts?.["FundNominalAmount"] ||
+      "Fund Nominal Amount",
+    FundableAmount:
+      resources?.AbpForDeploy?.texts?.["FundableAmount"] || "Fundable Amount",
+    QualifiedFundRate:
+      resources?.AbpForDeploy?.texts?.["QualifiedFundRate"] ||
+      "Qualified Fund Rate",
+    FundCollectionType:
+      resources?.AbpForDeploy?.texts?.["FundCollectionType"] ||
+      "Fund Collection Type",
+    ProjectRemaining:
+      resources?.AbpForDeploy?.texts?.["ProjectRemaining"] ||
+      "Project Remaining",
+    InvestmentAmount:
+      resources?.AbpForDeploy?.texts?.["InvestmentAmount"] ||
+      "Investment Amount",
+    InvestmentMethod:
+      resources?.AbpForDeploy?.texts?.["InvestmentMethod"] ||
+      "Investment Method",
+    YouCanInvestWithCreditCardOrEft:
+      resources?.AbpForDeploy?.texts?.["YouCanInvestWithCreditCardOrEft"] ||
+      "You can invest with credit card or EFT",
+    CreditCard: resources?.AbpForDeploy?.texts?.["CreditCard"] || "Credit Card",
+    Eft: resources?.AbpForDeploy?.texts?.["Eft"] || "EFT",
+    "IHaveReadAndAccept {0}":
+      resources?.AbpForDeploy?.texts?.["IHaveReadAndAccept {0}"] ||
+      "I have read and accept {0}",
+    RiskDeclarationForm:
+      resources?.AbpForDeploy?.texts?.["RiskDeclarationForm"] ||
+      "Risk Declaration Form",
+  };
   return (
     <div className="bg-gray-200 w-full h-screen flex items-center" id="invest">
       <div className="grid grid-cols-3 justify-center gap-4 p-4 container">
@@ -64,7 +109,7 @@ export default function Invest({
             </Avatar>
             <div className="p-4">
               <p className="text-left text-muted-foreground">
-                {resources?.ProjectService?.texts?.["youAreInvestingIn"]}
+                {languageData["YouAreInvestingIn"]}
               </p>
               <div className="flex flex-col gap-2">
                 <h3 className="text-black text-xl font-bold">{name}</h3>
@@ -74,7 +119,7 @@ export default function Invest({
           </div>
           <div className="bg-white">
             <h3 className="px-4 bg-slate-700 text-white h-12 flex items-center bg-primary">
-              {resources?.ProjectService?.texts?.["investingProfile"]}
+              {languageData.InvestingProfile}
             </h3>
             <div className="px-4">
               {!user ? (
@@ -84,7 +129,7 @@ export default function Invest({
                   title={""}
                   value={
                     <Button asChild variant="link">
-                      <Link href="/login">Login</Link>
+                      <Link href="/login">{languageData.Login}</Link>
                     </Button>
                   }
                   titleClassName="text-md text-left"
@@ -123,9 +168,12 @@ export default function Invest({
           {investmentDetails && investmentDetails.length > 0 && (
             <div className="flex flex-col gap-4 bg-white p-4">
               {investmentDetails.map(({ name, value }) => (
-                <div className="flex items-end justify-between gap-4 w-full items-center">
+                <div
+                  key={name}
+                  className="flex justify-between gap-4 w-full items-center"
+                >
                   <h3 className="text-sm font-semibold text-muted-foreground">
-                    {resources?.ProjectService?.texts?.[name]}
+                    {languageData?.[name as keyof typeof languageData]}
                   </h3>
                   <span className="text-md font-semibold">{value}</span>
                 </div>
@@ -138,26 +186,17 @@ export default function Invest({
               max={10000000}
               value={0}
               step={1}
-              label={
-                resources?.ProjectService?.texts?.["investmentAmount"] ?? ""
-              }
+              label={languageData.InvestmentAmount}
               subLabel="1₺ = 1 Pay"
               inputLabel="₺"
-              onValueChange={(value: number) => {
-                // console.log(value);
-              }}
             />
             <div className="flex gap-4 justify-between w-full items-center">
               <div className="flex flex-col gap-1 w-full flex-grow">
                 <h3 className="text-sm font-semibold">
-                  {resources?.ProjectService?.texts?.["investmentMethod"]}
+                  {languageData.InvestmentMethod}
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  {
-                    resources?.ProjectService?.texts?.[
-                      "youCanInvestWithCreditCardOrEft/MoneyTransferOptions"
-                    ]
-                  }
+                  {languageData.YouCanInvestWithCreditCardOrEft}
                 </p>
               </div>
               <div className="flex flex-col gap-2">
@@ -168,17 +207,9 @@ export default function Invest({
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="credit-card">
-                        {" "}
-                        {resources?.ProjectService?.texts?.["creditCard"]}
+                        {languageData.CreditCard}
                       </SelectItem>
-                      <SelectItem value="eft">
-                        {" "}
-                        {
-                          resources?.ProjectService?.texts?.[
-                            "eft/MoneyTransfer"
-                          ]
-                        }
-                      </SelectItem>
+                      <SelectItem value="eft">{languageData.Eft}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -193,9 +224,7 @@ export default function Invest({
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {replacePlaceholders(
-                      resources?.ProjectService?.texts?.[
-                        "iHaveReadAndAccept {0}"
-                      ] ?? "",
+                      languageData["IHaveReadAndAccept {0}"] ?? "",
                       [
                         {
                           holder: "{0}",
@@ -204,11 +233,7 @@ export default function Invest({
                               variant={"link"}
                               className="text-xs p-0 h-0"
                             >
-                              {
-                                resources?.ProjectService?.texts?.[
-                                  "riskDeclarationForm"
-                                ]
-                              }
+                              {languageData.RiskDeclarationForm}
                             </Button>
                           ),
                         },
@@ -216,7 +241,7 @@ export default function Invest({
                     )}
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <Checkbox id="terms-2" />
                   <label
                     htmlFor="terms-2"
@@ -258,7 +283,7 @@ export default function Invest({
                       ]
                     }
                   </label>
-                </div>
+                </div> */}
               </div>
               <Button
                 className=""
@@ -267,7 +292,7 @@ export default function Invest({
                 }}
               >
                 <Link className="sticky top-0" href="#invest">
-                  Yatırım yap
+                  {languageData.Invest}
                 </Link>
               </Button>
             </div>
