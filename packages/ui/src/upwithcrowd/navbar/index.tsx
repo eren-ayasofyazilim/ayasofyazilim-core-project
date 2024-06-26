@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import {
   Menubar,
   MenubarContent,
@@ -12,9 +13,8 @@ import {
 } from "@repo/ayasofyazilim-ui/atoms/menubar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import AppLogo from "../app-logo";
-import { Badge } from "@repo/ayasofyazilim-ui/atoms/badge";
+import { ProfileMenu } from "../profile-menu";
 
 export type link = {
   text: string;
@@ -36,6 +36,8 @@ export default function Navbar({
   languageSelector,
   topBar,
   config,
+  userNavigation,
+  resources,
 }: {
   appName: string;
   links?: linksProp;
@@ -44,6 +46,8 @@ export default function Navbar({
   languageSelector?: JSX.Element;
   topBar?: JSX.Element;
   config?: any;
+  userNavigation?: any;
+  resources: any;
 }): JSX.Element {
   if (variant == "invesdor")
     return (
@@ -66,7 +70,9 @@ export default function Navbar({
         appName={appName}
         links={links}
         user={user}
+        userNavigation={userNavigation}
         languageSelector={languageSelector}
+        resources={resources}
       />
     );
   }
@@ -155,12 +161,16 @@ function HirevisionNavbar({
   user,
   config,
   languageSelector,
+  userNavigation,
+  resources,
 }: {
   appName: string;
   links?: linksProp;
   user?: any;
   languageSelector?: JSX.Element;
   config?: any;
+  userNavigation?: any;
+  resources: any;
 }): JSX.Element {
   const [isFixed, setIsFixed] = useState(false);
   const scrollThreshold = 200;
@@ -178,6 +188,10 @@ function HirevisionNavbar({
       el.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const languageData = {
+    Login: resources?.AbpForDeploy?.texts?.["Login"] || "Login",
+    Register: resources?.AbpForDeploy?.texts?.["Register"] || "Register",
+  };
   return (
     <nav
       className={`w-full flex justify-between items-center gap-4 px-12 h-20 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
@@ -192,21 +206,25 @@ function HirevisionNavbar({
       </Menubar>
       <div className="flex gap-4 items-center ">
         {user ? (
-          <Button>Profilim</Button>
+          <ProfileMenu className="" minNavbar={false} {...userNavigation} />
         ) : (
           <div className="grid grid-cols-2 items-center relative justify-center">
-            <Button
-              variant={"outline"}
-              className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all border-r-0 rounded-r-none"
-            >
-              Giriş yap
-            </Button>
-            <Button
-              variant={"outline"}
-              className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all rounded-l-none"
-            >
-              Üye ol
-            </Button>
+            <Link href={userNavigation.loginURL}>
+              <Button
+                variant={"outline"}
+                className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all border-r-0 rounded-r-none"
+              >
+                {languageData.Login}
+              </Button>
+            </Link>
+            <Link href={userNavigation.registerURL}>
+              <Button
+                variant={"outline"}
+                className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all rounded-l-none"
+              >
+                {languageData.Register}
+              </Button>
+            </Link>
             {/* <Badge className="absolute bg-black left-2/4 translate-x-[-50%] pointer-events-none">
               or
             </Badge> */}

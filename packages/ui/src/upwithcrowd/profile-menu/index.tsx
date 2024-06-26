@@ -42,7 +42,16 @@ export function ProfileMenu({
   signOutFunction,
   className,
   imageURL,
+  resources,
 }: ProfileMenuProps) {
+  const languageData = {
+    ChangeProfile:
+      resources?.AbpUiNavigation?.texts?.["ChangeProfile"] || "Change Profile",
+    LogOut: resources?.AbpUiNavigation?.texts?.["LogOut"] || "Log Out",
+    MyAccount: resources?.AbpUiNavigation?.texts?.["MyAccount"] || "My Account",
+    Add: resources?.AbpUiNavigation?.texts?.["Add"] || "Add",
+  };
+  console.log(resources);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -69,12 +78,12 @@ export function ProfileMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
+        <DropdownMenuLabel>{languageData.MyAccount}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <UserPlus className="mr-2 h-4 w-4" />
-            <span>Profili değiştir</span>
+            <span>{languageData.ChangeProfile}</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -89,7 +98,7 @@ export function ProfileMenu({
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <PlusCircle className="mr-2 h-4 w-4" />
-                <span>Ekle...</span>
+                <span>{languageData.Add}...</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
@@ -116,7 +125,7 @@ export function ProfileMenu({
             }}
           >
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Çıkış Yap</span>
+            <span>{languageData.LogOut}</span>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

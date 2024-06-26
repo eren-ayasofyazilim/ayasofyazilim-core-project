@@ -8,7 +8,7 @@ import Navbar, { linksProp } from "@repo/ui/upwithcrowd/navbar";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { Projector, ShieldAlert, Worm } from "lucide-react";
-import { getBaseLink } from "src/utils";
+import { getBaseLink, getLocalizationResources } from "src/utils";
 import bursa from "/public/bursa.svg";
 import istanbul from "/public/istanbul.svg";
 import konya from "/public/konya.svg";
@@ -103,94 +103,154 @@ type LayoutProps = {
 };
 
 export default async function Layout({ children, params }: LayoutProps) {
-  // const resources = await getLocalizationResources(params.lang);
-  const resources = {};
+  const resources = await getLocalizationResources(params.lang);
+  const languageData = {
+    Investor:
+      resources?.AbpUiNavigation?.texts?.Investor || "Investor" || "Yatırımcı",
+    Invest:
+      resources?.AbpUiNavigation?.texts?.Invest || "Invest" || "Yatırım Yap",
+    SupportCenter:
+      resources?.AbpUiNavigation?.texts?.SupportCenter ||
+      "Support Center" ||
+      "Destek Merkezi",
+    Entrepreneur:
+      resources?.AbpUiNavigation?.texts?.Entrepreneur ||
+      "Entrepreneur" ||
+      "Girişimci",
+    SubmitYourProject:
+      resources?.AbpUiNavigation?.texts?.SubmitYourProject ||
+      "Submit Your Project" ||
+      "Projeni gönder",
+    HowDoIFindTheNecessaryFunds:
+      resources?.AbpUiNavigation?.texts?.HowDoIFindTheNecessaryFunds ||
+      "How do I find the necessary funds?" ||
+      "Gerekli fonu nasıl bulurum?",
+    Institutional:
+      resources?.AbpUiNavigation?.texts?.Institutional ||
+      "Institutional" ||
+      "Kurumsal",
+    AboutUs:
+      resources?.AbpUiNavigation?.texts?.AboutUs || "About Us" || "Hakkımızda",
+    Contact:
+      resources?.AbpUiNavigation?.texts?.Contact || "Contact" || "İletişim",
+    OurTeam:
+      resources?.AbpUiNavigation?.texts?.OurTeam || "Our Team" || "Takımımız",
+    BoardOfDirectors:
+      resources?.AbpUiNavigation?.texts?.BoardOfDirectors ||
+      "Board of Directors" ||
+      "Yönetim kurulumuz",
+    InvestingCommittee:
+      resources?.AbpUiNavigation?.texts?.InvestingCommittee ||
+      "Investing committee" ||
+      "Yatırım komitesi",
+    Campaigns:
+      resources?.AbpUiNavigation?.texts?.Campaigns ||
+      "Campaigns" ||
+      "Kampanyalar",
+    AdminCenter:
+      resources?.AbpUiNavigation?.texts?.AdminCenter ||
+      "Admin Center" ||
+      "Yönetim Merkezi",
+    EntrepreneurCenter:
+      resources?.AbpUiNavigation?.texts?.EntrepreneurCenter ||
+      "Entrepreneur Center" ||
+      "Girişimci Merkezi",
+    InvestorCenter:
+      resources?.AbpUiNavigation?.texts?.InvestorCenter ||
+      "Investor Center" ||
+      "Yatırımcı Merkezi",
+    ChangeProfile:
+      resources?.AbpUiNavigation?.texts?.ChangeProfile ||
+      "Change Profile" ||
+      "Profili Değiştir",
+    LogOut:
+      resources?.AbpUiNavigation?.texts?.LogOut || "Log Out" || "Çıkış Yap",
+  };
 
   const session = await auth();
   const user = session?.user;
   const links: linksProp = [
     {
-      text: "Yatırımcı",
+      text: languageData.Investor,
       submenu: [
         {
-          text: "Yatırım yap",
+          text: languageData.Invest,
           href: getBaseLink("public/projects", true),
         },
         {
-          text: "Destek merkezi",
+          text: languageData.SupportCenter,
           href: "#",
         },
       ],
     },
     {
-      text: "Girişimci",
+      text: languageData.Entrepreneur,
       submenu: [
         {
-          text: "Projeni Gönder",
+          text: languageData.SubmitYourProject,
           href: "#",
         },
         {
-          text: "Destek merkezi",
+          text: languageData.SupportCenter,
           href: "#",
         },
         {
-          text: "Gerekli Fona Nasıl Ulaşırım",
+          text: languageData.HowDoIFindTheNecessaryFunds,
           href: "#",
         },
       ],
     },
     {
-      text: "Kurumsal",
+      text: languageData.Institutional,
       submenu: [
         {
-          text: "Hakkımızda",
+          text: languageData.AboutUs,
           href: "#",
         },
         {
-          text: "Takımımız",
+          text: languageData.OurTeam,
           href: "#",
         },
         {
-          text: "Iletisim",
+          text: languageData.Contact,
           href: "#",
         },
         {
-          text: "Yönetim Kurulumuz",
+          text: languageData.BoardOfDirectors,
           href: "#",
         },
         {
-          text: "Yatırım Komitesi",
+          text: languageData.InvestingCommittee,
           href: "#",
         },
       ],
     },
     {
-      text: "Kampanyalar",
-      href: "#",
+      text: languageData.Campaigns,
+      href: getBaseLink("public/projects", true),
     },
   ];
   let configSelected = await getConfig(process.env.APPLICATION_NAME);
 
   const userNavigation = {
-    username: user?.userName ?? undefined,
-    initials: user?.name?.substring(0, 2).toUpperCase(),
-    email: user?.email ?? undefined,
+    loginURL: getBaseLink(`login`, true, params.lang),
+    registerURL: getBaseLink(`register`, true, params.lang),
     user: user,
     imageURL: "https://github.com/shadcn.png",
     menuLinks: [
       {
         href: getBaseLink(`app/admin`, true, params.lang),
-        title: "Admin Merkezi",
+        title: languageData.AdminCenter,
         icon: <ShieldAlert className="mr-2 h-4 w-4" />,
       },
       {
         href: getBaseLink(`app/entreperneur`, true, params.lang),
-        title: "Girişimci Merkezi",
+        title: languageData.EntrepreneurCenter,
         icon: <Projector className="mr-2 h-4 w-4" />,
       },
       {
         href: getBaseLink(`app/investor`, true, params.lang),
-        title: "Yatırımcı Merkezi",
+        title: languageData.InvestorCenter,
         icon: <Worm className="mr-2 h-4 w-4" />,
       },
     ],
@@ -218,6 +278,7 @@ export default async function Layout({ children, params }: LayoutProps) {
               signOutServer={signOutServer}
             />
           }
+          resources={resources}
           variant="hirevision"
           links={links}
           user={user}
