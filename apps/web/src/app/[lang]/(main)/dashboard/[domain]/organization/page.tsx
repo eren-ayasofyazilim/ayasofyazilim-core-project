@@ -730,13 +730,13 @@ const App: React.FC = () => {
         isOpen={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
         onSave={handleAddUsers}
-        addedUsers={unitUsers}
+        addedItems={unitUsers}
       />
       <RoleModal
         isOpen={isRoleModalOpen}
         onClose={() => setIsRoleModalOpen(false)}
         onSave={handleAddRoles}
-        addedRoles={unitRoles}
+        addedItems={unitRoles}
       />
       <ConfirmDialog
         isOpen={isConfirmDialogOpen}
