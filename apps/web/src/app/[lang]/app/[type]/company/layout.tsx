@@ -55,7 +55,8 @@ export default function Layout({ children }: LayoutProps) {
         defaultActiveSectionId={path}
         openOnNewPage={true}
         content={children}
-        contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center"
+        contentClassName="block"
+        vertical={false}
       />
     </div>
   );
