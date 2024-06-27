@@ -48,6 +48,40 @@ const clients: Clients = {
         }),
     };
   },
+
+  organizationRole: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const organization = client.organizationUnit;
+    return {
+      get: async ({
+        id,
+        maxResultCount = 1000,
+      }: {
+        id: string;
+        maxResultCount: number;
+      }) =>
+        organization.getApiIdentityOrganizationUnitsByIdRoles({
+          id,
+          maxResultCount,
+        }),
+      put: async ({
+        id,
+        requestBody,
+      }: {
+        id: string;
+        requestBody: { roleIds: string[] };
+      }) =>
+        organization.putApiIdentityOrganizationUnitsByIdRoles({
+          id,
+          requestBody,
+        }),
+      delete: async ({ id, roleId }: { id: string; roleId: string }) =>
+        organization.deleteApiIdentityOrganizationUnitsByIdRolesByRoleId({
+          id,
+          roleId,
+        }),
+    };
+  },
 };
 
 export async function GET(
