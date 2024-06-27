@@ -82,6 +82,24 @@ const clients: Clients = {
         }),
     };
   },
+
+  MoveAllUsers: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const organization = client.organizationUnit;
+    return {
+      put: async ({
+        id,
+        organizationId,
+      }: {
+        id: string;
+        organizationId: string;
+      }) =>
+        organization.putApiIdentityOrganizationUnitsByIdMoveAllUsers({
+          id,
+          organizationId,
+        }),
+    };
+  },
 };
 
 export async function GET(
