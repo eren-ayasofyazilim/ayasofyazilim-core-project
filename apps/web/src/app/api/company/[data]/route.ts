@@ -1,9 +1,5 @@
 import { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
-import {
-  ApiError,
-  Volo_Abp_Identity_IdentityRoleCreateDto,
-  Volo_Abp_Identity_IdentityRoleUpdateDto,
-} from "@ayasofyazilim/saas/IdentityService";
+import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import { NextRequest } from "next/server";
 import {
   getIdentityServiceClient,
@@ -33,23 +29,79 @@ const clients: Clients = {
 
     return {
       get: async () => {
-        const getdetails: GetApiMerchantServiceMerchantsDetailResponse =
-          await merchant.getApiMerchantServiceMerchantsDetail();
+        const getDetails: GetApiMerchantServiceMerchantsDetailResponse =
+          await merchant.getApiMerchantServiceMerchantsDetail({
+            maxResultCount: 1000,
+          });
         return (
-          getdetails.items?.map((item) => ({
-            Company:
-              item.entityInformations?.[0]?.organizations?.[0]?.name || "",
-            CustomerNumber:
-              item.entityInformations?.[0]?.organizations?.[0]
-                ?.customerNumber || "",
-            ProductGroups:
-              item.entityInformations?.[0]?.organizations?.[0]?.productGroups?.map(
-                (pg) => pg.name
-              ) || [],
-            Address:
-              item.entityInformations?.[0]?.organizations?.[0]
-                ?.contactInformation?.address?.[0]?.fullAddress || "",
-          })) || []
+          getDetails.items?.map((item) => {
+            const organization =
+              item.entityInformations?.[0]?.organizations?.[0];
+            return {
+              Company: organization?.name || "",
+              CustomerNumber: organization?.customerNumber || "",
+              ProductGroups:
+                organization?.productGroups?.map((pg) => pg.name) || [],
+              Address:
+                organization?.contactInformation?.address?.[0]?.fullAddress ||
+                "",
+            };
+          }) || []
+        );
+      },
+      post: async (formdata: any) => {
+        return await merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
+          {
+            requestBody: {
+              entityInformationTypes: [
+                {
+                  organizations: [
+                    {
+                      name: formdata.Company,
+                      taxpayerId: "string",
+                      legalStatusCode: "string",
+                      customerNumber: formdata.CustomerNumber,
+                      contactInformation: {
+                        startDate: "2024-06-27T10:53:06.853Z",
+                        endDate: "2024-06-27T10:53:06.853Z",
+                        telephone: [
+                          {
+                            areaCode: "string",
+                            localNumber: "string",
+                            ituCountryCode: "string",
+                          },
+                        ],
+                        address: [
+                          {
+                            typeCode: 0,
+                            addressLine: "string",
+                            city: "string",
+                            terriority: "string",
+                            postalCode: "string",
+                            country: "string",
+                            fullAddress: formdata.Address,
+                          },
+                        ],
+                        email: [
+                          {
+                            emailAddress: "string",
+                          },
+                        ],
+                      },
+                      productGroups: [
+                        {
+                          name: formdata.ProductGroups,
+                          vatRate: 0,
+                          productCode: "string",
+                          isActive: true,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          }
         );
       },
     };
