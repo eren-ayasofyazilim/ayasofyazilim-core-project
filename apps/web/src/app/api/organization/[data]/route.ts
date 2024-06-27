@@ -14,7 +14,41 @@ function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
 }
 
-const clients: Clients = {};
+const clients: Clients = {
+  organizationUser: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const organization = client.organizationUnit;
+    return {
+      get: async ({
+        id,
+        maxResultCount = 1000,
+      }: {
+        id: string;
+        maxResultCount: number;
+      }) =>
+        organization.getApiIdentityOrganizationUnitsByIdMembers({
+          id,
+          maxResultCount,
+        }),
+      put: async ({
+        id,
+        requestBody,
+      }: {
+        id: string;
+        requestBody: { userIds: string[] };
+      }) =>
+        organization.putApiIdentityOrganizationUnitsByIdMembers({
+          id,
+          requestBody,
+        }),
+      delete: async ({ id, memberId }: { id: string; memberId: string }) =>
+        organization.deleteApiIdentityOrganizationUnitsByIdMembersByMemberId({
+          id,
+          memberId,
+        }),
+    };
+  },
+};
 
 export async function GET(
   request: NextRequest,
