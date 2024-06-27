@@ -100,6 +100,15 @@ const clients: Clients = {
         }),
     };
   },
+
+  organizationEdit: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const organization = client.organizationUnit;
+    return {
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        organization.putApiIdentityOrganizationUnitsById({ id, requestBody }),
+    };
+  },
 };
 
 export async function GET(
