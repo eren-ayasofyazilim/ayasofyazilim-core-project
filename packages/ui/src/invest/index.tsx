@@ -30,7 +30,7 @@ export type InvestProps = {
   images: Array<string>;
   onInvest?: () => void;
   user: any;
-  resources: any;
+  languageData: any;
 };
 export type ProfileProps = Array<{
   name: string;
@@ -43,54 +43,9 @@ export default function Invest({
   investmentDetails,
   images,
   user,
-  resources,
+  languageData,
   onInvest,
 }: InvestProps): JSX.Element {
-  const languageData = {
-    Login: resources?.AbpForDeploy?.texts?.["Login"] || "Login",
-    Invest: resources?.AbpForDeploy?.texts?.["Invest"] || "Invest",
-    YouAreInvestingIn:
-      resources?.AbpForDeploy?.texts?.["YouAreInvestingIn"] ||
-      "You are investing in",
-    InvestingProfile:
-      resources?.AbpForDeploy?.texts?.["InvestingProfile"] ||
-      "Investing Profile",
-    CashValue: resources?.AbpForDeploy?.texts?.["CashValue"] || "Cash Value",
-    AdditionalFundRate:
-      resources?.AbpForDeploy?.texts?.["AdditionalFundRate"] ||
-      "Additional Fund Rate",
-    FundNominalAmount:
-      resources?.AbpForDeploy?.texts?.["FundNominalAmount"] ||
-      "Fund Nominal Amount",
-    FundableAmount:
-      resources?.AbpForDeploy?.texts?.["FundableAmount"] || "Fundable Amount",
-    QualifiedFundRate:
-      resources?.AbpForDeploy?.texts?.["QualifiedFundRate"] ||
-      "Qualified Fund Rate",
-    FundCollectionType:
-      resources?.AbpForDeploy?.texts?.["FundCollectionType"] ||
-      "Fund Collection Type",
-    ProjectRemaining:
-      resources?.AbpForDeploy?.texts?.["ProjectRemaining"] ||
-      "Project Remaining",
-    InvestmentAmount:
-      resources?.AbpForDeploy?.texts?.["InvestmentAmount"] ||
-      "Investment Amount",
-    InvestmentMethod:
-      resources?.AbpForDeploy?.texts?.["InvestmentMethod"] ||
-      "Investment Method",
-    YouCanInvestWithCreditCardOrEft:
-      resources?.AbpForDeploy?.texts?.["YouCanInvestWithCreditCardOrEft"] ||
-      "You can invest with credit card or EFT",
-    CreditCard: resources?.AbpForDeploy?.texts?.["CreditCard"] || "Credit Card",
-    Eft: resources?.AbpForDeploy?.texts?.["Eft"] || "EFT",
-    "IHaveReadAndAccept {0}":
-      resources?.AbpForDeploy?.texts?.["IHaveReadAndAccept {0}"] ||
-      "I have read and accept {0}",
-    RiskDeclarationForm:
-      resources?.AbpForDeploy?.texts?.["RiskDeclarationForm"] ||
-      "Risk Declaration Form",
-  };
   return (
     <div className="bg-gray-200 w-full h-screen flex items-center" id="invest">
       <div className="grid grid-cols-3 justify-center gap-4 p-4 container">
@@ -129,37 +84,33 @@ export default function Invest({
                   title={""}
                   value={
                     <Button asChild variant="link">
-                      <Link href="/login">{languageData.Login}</Link>
+                      <Link href="/login">{languageData.LogIn}</Link>
                     </Button>
                   }
                   titleClassName="text-md text-left"
                 />
               ) : (
-                Object.keys(user).map((key: string) => {
-                  if (
-                    key !== "userName" &&
-                    key !== "email" &&
-                    key !== "name" &&
-                    key !== "surname" &&
-                    key !== "phoneNumber"
+                Object.keys(user)
+                  .filter((i) =>
+                    ["email", "name", "surname", "phoneNumber"].includes(i)
                   )
-                    return;
-                  return (
-                    <CardTable
-                      containerClassName="border-b dashed border-gray-50 px-0"
-                      key={key}
-                      title={
-                        resources?.AbpAccount?.texts?.[
-                          "DisplayName:" +
-                            key.charAt(0).toUpperCase() +
-                            key.substring(1)
-                        ] ?? ""
-                      }
-                      value={(user as any)[key]}
-                      titleClassName="text-sm font-medium text-left"
-                    />
-                  );
-                })
+                  .map((key: string) => {
+                    return (
+                      <CardTable
+                        containerClassName="border-b dashed border-gray-50 px-0"
+                        key={key}
+                        title={
+                          languageData[
+                            "DisplayName:" +
+                              key.charAt(0).toUpperCase() +
+                              key.substring(1)
+                          ] ?? ""
+                        }
+                        value={(user as any)[key]}
+                        titleClassName="text-sm font-medium text-left"
+                      />
+                    );
+                  })
               )}
             </div>
           </div>
@@ -187,7 +138,7 @@ export default function Invest({
               value={0}
               step={1}
               label={languageData.InvestmentAmount}
-              subLabel="1₺ = 1 Pay"
+              subLabel={`1₺ = 1 ${languageData.Share}`}
               inputLabel="₺"
             />
             <div className="flex gap-4 justify-between w-full items-center">
@@ -202,14 +153,16 @@ export default function Invest({
               <div className="flex flex-col gap-2">
                 <Select defaultValue="credit-card">
                   <SelectTrigger className="w-[220px]">
-                    <SelectValue placeholder="Ödeme yöntemi" />
+                    <SelectValue placeholder={languageData.InvestmentMethod} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="credit-card">
                         {languageData.CreditCard}
                       </SelectItem>
-                      <SelectItem value="eft">{languageData.Eft}</SelectItem>
+                      <SelectItem value="eft">
+                        {languageData["EFTOrMoneyTransfer"]}
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -241,16 +194,14 @@ export default function Invest({
                     )}
                   </label>
                 </div>
-                {/* <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                   <Checkbox id="terms-2" />
                   <label
                     htmlFor="terms-2"
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {replacePlaceholders(
-                      resources?.ProjectService?.texts?.[
-                        "iHaveReadAndAccept {0}"
-                      ] ?? "",
+                      languageData["IHaveReadAndAccept {0}"] ?? "",
                       [
                         {
                           holder: "{0}",
@@ -259,11 +210,7 @@ export default function Invest({
                               variant={"link"}
                               className="text-xs p-0 h-0"
                             >
-                              {
-                                resources?.ProjectService?.texts?.[
-                                  "projectInformationForm"
-                                ]
-                              }
+                              {languageData["ProjectInformationForm"]}
                             </Button>
                           ),
                         },
@@ -278,12 +225,12 @@ export default function Invest({
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {
-                      resources?.ProjectService?.texts?.[
-                        "iAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
+                      languageData[
+                        "IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
                       ]
                     }
                   </label>
-                </div> */}
+                </div>
               </div>
               <Button
                 className=""
