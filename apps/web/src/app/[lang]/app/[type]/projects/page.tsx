@@ -2,10 +2,7 @@
 
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { ICardTableProps } from "@repo/ayasofyazilim-ui/molecules/card-table";
-import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
-import DetailsCard, {
-  IDetailsCardProps,
-} from "@repo/ayasofyazilim-ui/organisms/details-card";
+import DetailsCard from "@repo/ayasofyazilim-ui/organisms/details-card";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import Link from "next/link";
 import { getBaseLink, getLocalizationResources } from "src/utils";
@@ -54,9 +51,12 @@ const currencyFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
 
-export default async function Page({ params }: { params: { lang: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { lang: string; type: string };
+}) {
   const projectData = await getProjectsServer();
-
   const resources = await getLocalizationResources(params.lang);
   const projectResource = resources?.["ProjectService"]?.texts;
   const uiResource = resources?.["AbpUi"]?.texts;
@@ -64,15 +64,13 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const languageData = {
     Next: uiResource?.["PagerNext"] || "Next",
     Previous: uiResource?.["PagerPrevious"] || "Previous",
-    "Tab:Projects": projectResource?.["Tab:Projects"] || "Projects",
-    "Tab:CreateProject":
-      projectResource?.["Tab:CreateProject"] || "Create Project",
-    "Tab:ProjectDetails":
-      projectResource?.["Tab:ProjectDetails"] || "Project Details",
-    "Tab:AdditionalFunding":
-      projectResource?.["Tab:AdditionalFunding"] || "Additional Funding",
-    "Tab:Summary": uiResource?.["Summary"] || "Summary",
-    "Tab:ViewProject": projectResource?.["Tab:ViewProject"] || "View Project",
+    Projects: projectResource?.["Projects"] || "Projects",
+    CreateProject: projectResource?.["CreateProject"] || "Create Project",
+    ProjectDetails: projectResource?.["ProjectDetails"] || "Project Details",
+    AdditionalFunding:
+      projectResource?.["AdditionalFunding"] || "Additional Funding",
+    Summary: uiResource?.["Summary"] || "Summary",
+    ViewProject: projectResource?.["ViewProject"] || "View Project",
     "Messages:ProjectCreated":
       projectResource?.["Messages:ProjectCreated"] ||
       "The project has been created successfully.",
@@ -100,8 +98,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
     FundableAmountInfo:
       projectResource?.["FundableAmountInfo"] ||
       "The amount of investment you want to make in your project.",
-    AdditionalFunding:
-      projectResource?.["AdditionalFunding"] || "Additional funding",
+
     AdditionalFundingInfo:
       projectResource?.["AdditionalFundingInfo"] ||
       "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
@@ -118,7 +115,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
     {
       id: "general",
       link: getBaseLink(`projects`, true),
-      name: languageData["Tab:Projects"],
+      name: languageData["Projects"],
     },
   ];
 
@@ -130,11 +127,14 @@ export default async function Page({ params }: { params: { lang: string } }) {
       content={
         <div className="relative w-full container mt-4">
           <div className="flex flex-col gap-2">
-            <div className=" flex flex-row flex-wrap justify-end items-center">
-              <Link href={getBaseLink("projects/new", true)}>
-                <CustomButton variant="outline">New Project</CustomButton>
-              </Link>
-            </div>
+            {params.type === "investor" && (
+              <div className=" flex flex-row flex-wrap justify-end items-center">
+                <Link href={getBaseLink("investor/projects/new", true)}>
+                  <CustomButton variant="outline">New Project</CustomButton>
+                </Link>
+              </div>
+            )}
+
             {projectData?.items?.map((project) => (
               <DetailsCard
                 key={project.id}
@@ -142,7 +142,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
                   image:
                     "https://kapilendo-public.imgix.net/files/projects/bamboologic/8e0aa153-e311-47f9-9563-1aa44c05a3fe_01_Project-Header-1920x1080px.png?auto=compress&auto=format&maxdpr=3&w=750&fit=crop&dpr=1.5",
                   tags: [],
-                  link: "projects/" + (project.id ?? ""),
+                  link:
+                    "/app/" + params.type + "/projects/" + (project.id ?? ""),
                   title: project.projectName ?? "",
                   description: project.projectDefinition ?? "",
                   tableProps: tableProps(project),

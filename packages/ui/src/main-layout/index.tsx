@@ -101,7 +101,7 @@ export function MainLayout({
         >
           {topBarComponent}
         </div>
-        <div className="grow bg-slate-50 p-0">{children}</div>
+        <div className="grow bg-slate-50 p-0 overflow-hidden">{children}</div>
       </div>
     </div>
   );

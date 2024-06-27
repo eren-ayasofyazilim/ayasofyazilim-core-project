@@ -9,10 +9,10 @@ import ProjectForm from "./form";
 export default async function Page({ params }: any) {
   const { projectId } = params;
   const resources = await getLocalizationResources(params.lang);
-  const projectData = await getProjectByIdServer(projectId);
+  const projectData = (await getProjectByIdServer(projectId)).project;
 
   if (!projectData) {
-    redirect("/projects");
+    redirect("/app/" + params.type + "/projects");
   }
 
   return (
