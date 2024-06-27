@@ -27,7 +27,6 @@ export type InvestProps = {
     name: string;
     value: string | number | null | undefined;
   }>;
-  images: Array<string>;
   onInvest?: () => void;
   user: any;
   languageData: any;
@@ -41,7 +40,6 @@ export default function Invest({
   name,
   description,
   investmentDetails,
-  images,
   user,
   languageData,
   onInvest,
@@ -176,22 +174,24 @@ export default function Invest({
                     htmlFor="terms"
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {replacePlaceholders(
-                      languageData["IHaveReadAndAccept {0}"] ?? "",
-                      [
-                        {
-                          holder: "{0}",
-                          replacement: (
-                            <Button
-                              variant={"link"}
-                              className="text-xs p-0 h-0"
-                            >
-                              {languageData.RiskDeclarationForm}
-                            </Button>
-                          ),
-                        },
-                      ]
-                    )}
+                    {
+                      replacePlaceholders(
+                        languageData["IHaveReadAndAccept {0}"] ?? "",
+                        [
+                          {
+                            holder: "{0}",
+                            replacement: (
+                              <Button
+                                variant={"link"}
+                                className="text-xs p-0 h-0"
+                              >
+                                {languageData.RiskDeclarationForm}
+                              </Button>
+                            ),
+                          },
+                        ]
+                      )[0]
+                    }
                   </label>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -200,22 +200,17 @@ export default function Invest({
                     htmlFor="terms-2"
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {replacePlaceholders(
-                      languageData["IHaveReadAndAccept {0}"] ?? "",
-                      [
-                        {
-                          holder: "{0}",
-                          replacement: (
-                            <Button
-                              variant={"link"}
-                              className="text-xs p-0 h-0"
-                            >
-                              {languageData["ProjectInformationForm"]}
-                            </Button>
-                          ),
-                        },
-                      ]
-                    )}
+                    {
+                      replacePlaceholders(
+                        languageData["IHaveReadAndAccept {0}"] ?? "",
+                        [
+                          {
+                            holder: "{0}",
+                            replacement: <></>,
+                          },
+                        ]
+                      )[0]
+                    }
                   </label>
                 </div>
                 <div className="flex items-center space-x-2">

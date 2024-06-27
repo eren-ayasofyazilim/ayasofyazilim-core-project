@@ -58,14 +58,12 @@ export default function ProjectForm({
   const languageData = {
     Next: uiResource?.["PagerNext"] || "Next",
     Previous: uiResource?.["PagerPrevious"] || "Previous",
-    "Tab:CreateProject":
-      projectResource?.["Tab:CreateProject"] || "Create Project",
-    "Tab:ProjectDetails":
-      projectResource?.["Tab:ProjectDetails"] || "Project Details",
-    "Tab:AdditionalFunding":
-      projectResource?.["Tab:AdditionalFunding"] || "Additional Funding",
-    "Tab:Summary": uiResource?.["Summary"] || "Summary",
-    "Tab:ViewProject": projectResource?.["Tab:ViewProject"] || "View Project",
+    CreateProject: projectResource?.["CreateProject"] || "Create Project",
+    ProjectDetails: projectResource?.["ProjectDetails"] || "Project Details",
+    AdditionalFunding:
+      projectResource?.["AdditionalFunding"] || "Additional Funding",
+    Summary: uiResource?.["Summary"] || "Summary",
+    ViewProject: projectResource?.["ViewProject"] || "View Project",
     "Messages:ProjectCreated":
       projectResource?.["Messages:ProjectCreated"] ||
       "The project has been created successfully.",
@@ -93,8 +91,6 @@ export default function ProjectForm({
     FundableAmountInfo:
       projectResource?.["FundableAmountInfo"] ||
       "The amount of investment you want to make in your project.",
-    AdditionalFunding:
-      projectResource?.["AdditionalFunding"] || "Additional funding",
     AdditionalFundingInfo:
       projectResource?.["AdditionalFundingInfo"] ||
       "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",

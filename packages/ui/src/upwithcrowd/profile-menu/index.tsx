@@ -105,7 +105,7 @@ export function ProfileMenu({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {menuLinks?.map((link) => (
-            <Link key={link.key} href={link.href}>
+            <Link key={link.title} href={link.href}>
               <DropdownMenuItem className="cursor-pointer">
                 {link.icon}
                 <span>{link.title}</span>
