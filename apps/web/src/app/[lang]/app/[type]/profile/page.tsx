@@ -8,7 +8,8 @@ import { z } from "zod";
 import { $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/BackerService";
 import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { Button } from "@/components/ui/button";
-import { postBacker} from "./actions";
+import { postBacker, getBackers } from "./actions";
+import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 
 export default function Page({
   params,
@@ -16,10 +17,11 @@ export default function Page({
   params: { lang: string; type: string };
 }) {
   const [open, setOpen] = useState(false);
+  const [backers, setBackers] = useState<any[]>([]);
   const type = params.type;
   const session = useSession();
   const createBacker = $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto;
-  const backerZod = createZodObject(createBacker, ["name", "taxpayerId", "legalStatusCode" ]);
+  const backerZod = createZodObject(createBacker, ["name", "taxpayerId", "legalStatusCode"]);
   const formSchema = {
     admin: backerZod,
     user: z.object({
@@ -38,6 +40,13 @@ export default function Page({
     }),
     investor: backerZod,
   };
+  async function updataBackers() {
+    const backers = await getBackers();
+    setBackers(backers)
+  }
+  useEffect(() => {
+    updataBackers()
+  }, []);
 
   useEffect(() => {
     async function getSession() {
@@ -60,46 +69,26 @@ export default function Page({
           cta: 'New ' + type,
           description: 'Add New ' + type,
           callback: (e) => {
-            console.log('callback', e);
-            postBacker(e)
+            postBacker(e);
+            updataBackers();
           },
           autoFormArgs: {
             formSchema: formSchema[type],
           },
         }}
       />
-      <CardList
-        cards={[
-          {
-            title: 'Profile',
-            content: 'Ahmet Kaya',
-            description: 'Comapny Name',
-            footer: 'Your target is 100%',
-          },
-          {
-            title: 'Profile',
-            content: 'Ahmet Kaya',
-            description: 'Comapny Name',
-            footer: 'Your target is 100%',
-          }, {
-            title: 'Profile',
-            content: 'Ahmet Kaya',
-            description: 'Comapny Name',
-            footer: 'Your target is 100%',
-          }, {
-            title: 'Profile',
-            content: 'Ahmet Kaya',
-            description: 'Comapny Name',
-            footer: 'Your target is 100%',
-          },
-          {
-            title: 'Profile',
-            content: 'Ahmet Kaya',
-            description: 'Comapny Name',
-            footer: 'Your target is 100%',
-          },
-        ]}
-      ></CardList>
+      {backers.length > 0 ? <ScrollArea>
+        <CardList 
+          cards={backers?.map((backer) => {
+            return {
+              title: backer.name || "",
+              description: backer.taxpayerId || "",
+              content: backer.legalStatusCode || "",
+              footer: backer.customerNumber || "",
+            };
+          }) || []}
+        ></CardList>
+      </ScrollArea> : <></>}
     </div>
   );
 }
