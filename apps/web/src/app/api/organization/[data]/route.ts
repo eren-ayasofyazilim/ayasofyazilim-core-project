@@ -1,0 +1,88 @@
+import { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
+import { ApiError } from "@ayasofyazilim/saas/IdentityService";
+import { NextRequest } from "next/server";
+import { getIdentityServiceClient } from "src/lib";
+
+type Clients = {
+  [key: string]: any;
+};
+
+const errorResponse = (message: string, status: number = 400) =>
+  new Response(JSON.stringify({ message }), { status: status });
+
+function isApiError(error: unknown): error is ApiError {
+  return error instanceof ApiError;
+}
+
+const clients: Clients = {};
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { data: string } }
+) {
+  if (!clients[params.data]) {
+    // return status 404
+    return errorResponse("Invalid data type");
+  }
+  const client = await clients[params.data](request);
+  const url = new URL(request.url);
+  const id = url.searchParams.get("id");
+
+  try {
+    const data = await client.get({ id });
+    return new Response(JSON.stringify(data));
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      // console.log(error);
+      const body = error?.body as Volo_Abp_Http_RemoteServiceErrorResponse;
+      const message = body?.error?.message || error.statusText;
+      return errorResponse(message, error.status);
+    }
+    let errorText = (error as any)?.statusText + " " + (error as any)?.status;
+    return errorResponse(errorText, (error as any)?.status);
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { data: string } }
+) {
+  if (!clients[params.data]) {
+    return errorResponse("Invalid data type");
+  }
+  let retVal = "something went wrong";
+  const client = await clients[params.data](request);
+  const id = await request.json();
+  const deleteById = await client.delete(id);
+  if (deleteById === undefined) retVal = "successfull";
+  return new Response(JSON.stringify(retVal));
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { data: string } }
+) {
+  if (!clients[params.data]) {
+    return errorResponse("Invalid data type", 404);
+  }
+  const client = await clients[params.data](request);
+  const requestBody = await request.json();
+  try {
+    const result = await client.put({
+      id: requestBody.id,
+      requestBody: requestBody.requestBody,
+      organizationId: requestBody.organizationId,
+    });
+    return new Response(JSON.stringify(result), { status: 200 });
+  } catch (error: unknown) {
+    console.error("Error in PUT request:", error);
+    if (isApiError(error)) {
+      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
+      return errorResponse(
+        body.error?.message || "Something went wrong",
+        error.status
+      );
+    }
+    return errorResponse("Something went wrong", 500);
+  }
+}
