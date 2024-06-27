@@ -25,6 +25,13 @@ interface UserModalProps {
   onSave: (selectedUsers: User[]) => void;
   addedUsers: User[];
 }
+
+interface RoleModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (selectedRoles: Role[]) => void;
+  addedRoles: Role[];
+}
 const SkeletonCell = () => <Skeleton className="w-20 h-3" />;
 
 export const UserModal: React.FC<UserModalProps> = ({
@@ -135,6 +142,116 @@ export const UserModal: React.FC<UserModalProps> = ({
           </Table>
         </div>
         <p className="text-sm mt-2">{filteredUsers.length} total</p>
+        <DialogFooter>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const RoleModal: React.FC<RoleModalProps> = ({
+  isOpen,
+  onClose,
+  onSave,
+  addedRoles,
+}) => {
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState<Set<string>>(new Set());
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+      const loadRoles = async () => {
+        const roles = await fetchRoles();
+        setRoles(roles);
+        setSelectedRoles(new Set(addedRoles.map((role) => role.id)));
+        setLoading(false);
+      };
+      loadRoles();
+    } else {
+      setSelectedRoles(new Set());
+    }
+  }, [isOpen, addedRoles]);
+
+  const handleToggleRole = (roleId: string) => {
+    setSelectedRoles((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(roleId)) {
+        newSelected.delete(roleId);
+      } else {
+        newSelected.add(roleId);
+      }
+      return newSelected;
+    });
+  };
+
+  const handleSave = () => {
+    const selectedRoleList = roles.filter((role) => selectedRoles.has(role.id));
+    onSave(selectedRoleList);
+  };
+
+  const filteredRoles = roles.filter((role) =>
+    role.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Select roles</DialogTitle>
+        </DialogHeader>
+        <Input
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div className="overflow-auto max-h-80">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Role Name</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {!loading &&
+                filteredRoles.map((role) => (
+                  <TableRow key={role.id}>
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={
+                          addedRoles.some((r) => r.id === role.id) ||
+                          selectedRoles.has(role.id)
+                        }
+                        onChange={() => handleToggleRole(role.id)}
+                        disabled={addedRoles.some((r) => r.id === role.id)}
+                        className="mr-6"
+                      />
+                      {addedRoles.some((r) => r.id === role.id) && (
+                        <span className="text-green-700 mr-2">✔</span>
+                      )}
+                      {role.name}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              {loading &&
+                Array(4)
+                  .fill({})
+                  .map((_, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <SkeletonCell />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </div>
+        <p className="text-sm mt-2">{filteredRoles.length} total</p>
         <DialogFooter>
           <Button onClick={onClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
