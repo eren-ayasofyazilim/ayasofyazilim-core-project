@@ -64,3 +64,39 @@ export const fetchRoles = async (): Promise<Role[]> => {
     return [];
   }
 };
+
+export const fetchUsersForUnit = async (unitId: string): Promise<User[]> => {
+  try {
+    const response = await fetch(
+      getBaseLink(`api/organization/organizationUser?id=${unitId}`)
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return data.items;
+    } else {
+      console.error("Failed to fetch users for unit", response.statusText);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching users for unit:", error);
+    return [];
+  }
+};
+
+export const fetchRolesForUnit = async (unitId: string): Promise<Role[]> => {
+  try {
+    const response = await fetch(
+      getBaseLink(`api/organization/organizationRole?id=${unitId}`)
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return data.items;
+    } else {
+      console.error("Failed to fetch roles for unit", response.statusText);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching roles for unit:", error);
+    return [];
+  }
+};
