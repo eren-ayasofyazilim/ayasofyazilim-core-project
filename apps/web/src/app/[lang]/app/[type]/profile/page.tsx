@@ -8,6 +8,7 @@ import { z } from "zod";
 import { $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/BackerService";
 import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { Button } from "@/components/ui/button";
+import { postBacker} from "./actions";
 
 export default function Page({
   params,
@@ -58,8 +59,9 @@ export default function Page({
         action={{
           cta: 'New ' + type,
           description: 'Add New ' + type,
-          callback: () => {
-            console.log('callback');
+          callback: (e) => {
+            console.log('callback', e);
+            postBacker(e)
           },
           autoFormArgs: {
             formSchema: formSchema[type],
