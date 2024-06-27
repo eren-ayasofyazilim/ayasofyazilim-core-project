@@ -2,17 +2,11 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,14 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -54,9 +40,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { addNewTranslationServer } from "./action";
-import { useRouter } from "next/navigation";
 
 interface IDataTableDemo {
   lang: string;
@@ -184,6 +170,49 @@ export function DataTableDemo({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  async function addNewTranslationJSON() {
+    setIsLoading(true);
+    const data = JSON.parse(newTranslation.value);
+    const baseData = JSON.parse(newTranslation.baseValue);
+    const keys = Object.keys(data);
+    for (let i = 0; i < keys.length; i++) {
+      console.log(keys[i]);
+      if (newTranslation.unirefund) {
+        await addNewTranslationServer(
+          activeResource,
+          "en",
+          keys[i],
+          baseData[keys[i]],
+          "unirefund"
+        );
+        await addNewTranslationServer(
+          activeResource,
+          lang,
+          keys[i],
+          data[keys[i]],
+          "unirefund"
+        );
+      }
+      if (newTranslation.upwithcrowd) {
+        await addNewTranslationServer(
+          activeResource,
+          "en",
+          keys[i],
+          baseData[keys[i]],
+          "upwithcrowd"
+        );
+        await addNewTranslationServer(
+          activeResource,
+          lang,
+          keys[i],
+          data[keys[i]],
+          "upwithcrowd"
+        );
+      }
+    }
+    setIsLoading(false);
+    router.refresh();
+  }
   async function addNewTranslation() {
     setIsLoading(true);
 
@@ -371,6 +400,135 @@ export function DataTableDemo({
                   <CustomButton
                     type="submit"
                     onClick={addNewTranslation}
+                    disabled={
+                      !newTranslation.key ||
+                      !newTranslation.baseValue ||
+                      !newTranslation.value
+                    }
+                    isLoading={isLoading}
+                  >
+                    Save changes
+                  </CustomButton>
+                </DialogClose>
+              </form>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog>
+          <DialogTrigger asChild>
+            <CustomButton variant="outline">
+              New Translation From JSON
+            </CustomButton>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>New Translation</DialogTitle>
+              <DialogDescription>
+                Enter the translation you want to add.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div>
+                <Label htmlFor="translation-key" className="text-right">
+                  Resource
+                </Label>
+                <Input
+                  id="translation-key"
+                  className="col-span-3"
+                  value={activeResource}
+                  readOnly
+                  disabled
+                />
+              </div>
+              <div>
+                <Label htmlFor="translation-key" className="text-right">
+                  Key
+                </Label>
+                <Input
+                  id="translation-key"
+                  className="col-span-3"
+                  onChange={(e) =>
+                    setNewTranslation({
+                      ...newTranslation,
+                      key: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div>
+                <Label htmlFor="translation-en" className="text-right">
+                  English Translation
+                </Label>
+                <Input
+                  id="translation-en"
+                  className="col-span-3"
+                  onChange={(e) =>
+                    setNewTranslation({
+                      ...newTranslation,
+                      baseValue: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div>
+                <Label htmlFor="translation-target" className="text-right">
+                  Target Translation
+                </Label>
+                <Input
+                  id="translation-target"
+                  className="col-span-3"
+                  onChange={(e) =>
+                    setNewTranslation({
+                      ...newTranslation,
+                      value: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <Separator className="my-1" />
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="unirefund"
+                  checked={newTranslation.unirefund}
+                  onCheckedChange={(e) =>
+                    setNewTranslation({
+                      ...newTranslation,
+                      unirefund: e,
+                    })
+                  }
+                />
+                <label
+                  htmlFor="unirefund"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Add to Unirefund
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="upwithcrowd"
+                  checked={newTranslation.upwithcrowd}
+                  onCheckedChange={(e) =>
+                    setNewTranslation({
+                      ...newTranslation,
+                      upwithcrowd: e,
+                    })
+                  }
+                />
+                <label
+                  htmlFor="upwithcrowd"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Add to Upwithcrowd
+                </label>
+              </div>
+            </div>
+            <DialogFooter>
+              <form action={async () => {}}>
+                <DialogClose asChild>
+                  <CustomButton
+                    type="submit"
+                    onClick={addNewTranslationJSON}
                     disabled={
                       !newTranslation.key ||
                       !newTranslation.baseValue ||

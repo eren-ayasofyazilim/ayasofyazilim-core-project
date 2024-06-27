@@ -69,8 +69,7 @@ export async function addNewTranslationServer(
           value,
         }
       );
-    console.log(response);
-    revalidatePath("/[lang]/(main)/language-management", "page");
+    revalidatePath("/[lang]/app/[type]/language-management", "page");
     return {
       status: 200,
       projectData: response,
