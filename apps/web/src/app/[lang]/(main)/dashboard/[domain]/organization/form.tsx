@@ -32,6 +32,15 @@ interface RoleModalProps {
   onSave: (selectedRoles: Role[]) => void;
   addedRoles: Role[];
 }
+
+interface ConfirmDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  description: string;
+}
+
 const SkeletonCell = () => <Skeleton className="w-20 h-3" />;
 
 export const UserModal: React.FC<UserModalProps> = ({
@@ -255,6 +264,31 @@ export const RoleModal: React.FC<RoleModalProps> = ({
         <DialogFooter>
           <Button onClick={onClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  description,
+}) => {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        <p>{description}</p>
+        <DialogFooter>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onConfirm} className="bg-primary text-white">
+            Yes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
