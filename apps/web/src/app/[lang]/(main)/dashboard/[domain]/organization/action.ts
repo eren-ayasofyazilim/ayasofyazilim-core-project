@@ -17,86 +17,38 @@ export interface Role {
   id: string;
 }
 
-export const fetchOrganizationUnits = async (): Promise<OrganizationUnit[]> => {
+const fetchData = async <T>(url: string): Promise<T[]> => {
   try {
-    const response = await fetch(getBaseLink("api/admin/organization"));
+    const response = await fetch(getBaseLink(url));
     if (response.ok) {
       const data = await response.json();
       return data.items;
     } else {
-      console.error("Failed to fetch organization units", response.statusText);
+      console.error(`Failed to fetch data from ${url}`, response.statusText);
       return [];
     }
   } catch (error) {
-    console.error("Error fetching organization units:", error);
+    console.error(`Error fetching data from ${url}:`, error);
     return [];
   }
+};
+
+export const fetchOrganizationUnits = async (): Promise<OrganizationUnit[]> => {
+  return fetchData<OrganizationUnit>("api/admin/organization");
 };
 
 export const fetchUsers = async (): Promise<User[]> => {
-  try {
-    const response = await fetch(getBaseLink("api/admin/user"));
-    if (response.ok) {
-      const data = await response.json();
-      return data.items;
-    } else {
-      console.error("Failed to fetch users", response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    return [];
-  }
+  return fetchData<User>("api/admin/user");
 };
 
 export const fetchRoles = async (): Promise<Role[]> => {
-  try {
-    const response = await fetch(getBaseLink("api/admin/role"));
-    if (response.ok) {
-      const data = await response.json();
-      return data.items;
-    } else {
-      console.error("Failed to fetch roles", response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching roles:", error);
-    return [];
-  }
+  return fetchData<Role>("api/admin/role");
 };
 
 export const fetchUsersForUnit = async (unitId: string): Promise<User[]> => {
-  try {
-    const response = await fetch(
-      getBaseLink(`api/organization/organizationUser?id=${unitId}`)
-    );
-    if (response.ok) {
-      const data = await response.json();
-      return data.items;
-    } else {
-      console.error("Failed to fetch users for unit", response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching users for unit:", error);
-    return [];
-  }
+  return fetchData<User>(`api/organization/organizationUser?id=${unitId}`);
 };
 
 export const fetchRolesForUnit = async (unitId: string): Promise<Role[]> => {
-  try {
-    const response = await fetch(
-      getBaseLink(`api/organization/organizationRole?id=${unitId}`)
-    );
-    if (response.ok) {
-      const data = await response.json();
-      return data.items;
-    } else {
-      console.error("Failed to fetch roles for unit", response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching roles for unit:", error);
-    return [];
-  }
+  return fetchData<Role>(`api/organization/organizationRole?id=${unitId}`);
 };
