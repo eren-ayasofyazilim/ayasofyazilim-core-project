@@ -13,11 +13,11 @@ export function isServerSide() {
 export async function getLocalizationResources(languageCode: string): Promise<{
   [key: string]: {
     texts?:
-      | {
-          [key: string]: string;
-        }
-      | null
-      | undefined;
+    | {
+      [key: string]: string;
+    }
+    | null
+    | undefined;
     baseResources?: string[] | null | undefined;
   };
 }> {
@@ -62,14 +62,14 @@ export function getBaseLink(
 //item & sub item
 export type JsonSchema = {
   type:
-    | "string"
-    | "boolean"
-    | "object"
-    | "integer"
-    | "number"
-    | "array"
-    | "toggle"
-    | "select";
+  | "string"
+  | "boolean"
+  | "object"
+  | "integer"
+  | "number"
+  | "array"
+  | "toggle"
+  | "select";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
@@ -105,6 +105,7 @@ export function createZodObject(
 ): ZodType {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
+    if (element === "extraProperties") return;
     const props = schema.properties[element];
     const isRequired = schema.required?.includes(element);
     if (props && isSchemaType(props)) {
@@ -197,6 +198,20 @@ function createZodType(
         break;
       }
       zodType = z.number().int();
+      break;
+    case "object":
+      zodType = z.object({});
+      if (schema.properties) {
+        zodType = createZodObject(schema, Object.keys(schema?.properties));
+      }
+      break;
+    case "array":
+      console.log("Array  ",  schema);
+      if (schema.items && schema?.items.properties) {
+        zodType = z.array(createZodObject(schema.items, Object.keys(schema?.items.properties)));
+      } else {
+        zodType = z.array(z.unknown());
+      }
       break;
     default:
       zodType = z.unknown({ description: schema.displayName });

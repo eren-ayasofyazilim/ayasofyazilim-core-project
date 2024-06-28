@@ -16,12 +16,13 @@ export default function Page({
 }: {
   params: { lang: string; type: string };
 }) {
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [backers, setBackers] = useState<any[]>([]);
   const type = params.type;
   const session = useSession();
   const createBacker = $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto;
-  const backerZod = createZodObject(createBacker, ["name", "taxpayerId", "legalStatusCode"]);
+  const backerZod = createZodObject(createBacker, Object.keys(createBacker.properties));
   const formSchema = {
     admin: backerZod,
     user: z.object({
@@ -42,7 +43,8 @@ export default function Page({
   };
   async function updataBackers() {
     const backers = await getBackers();
-    setBackers(backers)
+    setBackers(backers);
+    setLoading(false);
   }
   useEffect(() => {
     updataBackers()
@@ -58,7 +60,7 @@ export default function Page({
   }, [session.data]);
 
   return (
-    <div className="container flex flex-col m-4">
+    <div className="container flex flex-col m-4 max-h-full">
       <div className="flex-row mb-2">
         <Button onClick={() => setOpen(true)} className="float-right">New {type}</Button>
       </div>
@@ -79,6 +81,7 @@ export default function Page({
       />
       {backers.length > 0 ? <ScrollArea>
         <CardList 
+          isLoading={loading}
           cards={backers?.map((backer) => {
             return {
               title: backer.name || "",
