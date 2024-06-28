@@ -39,7 +39,8 @@ export async function getBackers() {
         returnArray.push({
             name: organization?.name,
             legalStatusCode: organization?.legalStatusCode,
-            taxpayerId: organization?.taxpayerId
+            taxpayerId: organization?.taxpayerId,
+            backerId: id
         })
     }
     return returnArray;

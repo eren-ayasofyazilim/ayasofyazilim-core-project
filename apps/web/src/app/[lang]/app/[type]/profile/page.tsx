@@ -10,6 +10,7 @@ import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { Button } from "@/components/ui/button";
 import { postBacker, getBackers } from "./actions";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
+import Link from "next/link";
 
 export default function Page({
   params,
@@ -62,7 +63,9 @@ export default function Page({
   return (
     <div className="container flex flex-col m-4 max-h-full">
       <div className="flex-row mb-2">
-        <Button onClick={() => setOpen(true)} className="float-right">New {type}</Button>
+        <Button asChild>
+          <Link href={"profile/new"} className="float-right">New {type}</Link>
+        </Button>
       </div>
       <AutoformDialog
         open={open}
@@ -80,7 +83,7 @@ export default function Page({
         }}
       />
       {backers.length > 0 ? <ScrollArea>
-        <CardList 
+        <CardList
           isLoading={loading}
           cards={backers?.map((backer) => {
             return {
