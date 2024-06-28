@@ -2,7 +2,7 @@
 
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
-import ProjectCard from "@repo/ui/upwithcrowd/project-card";
+import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import Link from "next/link";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";

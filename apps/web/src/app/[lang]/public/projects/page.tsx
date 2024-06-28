@@ -2,7 +2,7 @@
 
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 
-import ProjectCard from "@repo/ui/upwithcrowd/project-card";
+import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
