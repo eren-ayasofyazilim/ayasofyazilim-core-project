@@ -1,16 +1,14 @@
 "use client";
-import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import CardList from "@repo/ayasofyazilim-ui/organisms/card-list";
 import { useSession } from "next-auth/react";
-import { use, useEffect, useState } from "react";
-import { createZodObject, getBaseLink } from "src/utils";
-import { z } from "zod";
-import { $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/BackerService";
+import { useEffect, useState } from "react";
+import { getBaseLink } from "src/utils";
 import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { Button } from "@/components/ui/button";
 import { postBacker, getBackers } from "./actions";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import Link from "next/link";
+import { formSchema } from "./data";
 
 export default function Page({
   params,
@@ -22,26 +20,7 @@ export default function Page({
   const [backers, setBackers] = useState<any[]>([]);
   const type = params.type;
   const session = useSession();
-  const createBacker = $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto;
-  const backerZod = createZodObject(createBacker, Object.keys(createBacker.properties));
-  const formSchema = {
-    admin: backerZod,
-    user: z.object({
-      name: z.string(),
-      surname: z.string(),
-      phoneNumber: z.string(),
-      address: z.string(),
-      email: z.string().email(),
-    }),
-    entreperneur: z.object({
-      name: z.string(),
-      surname: z.string(),
-      companyName: z.string(),
-      phoneNumber: z.string(),
-      email: z.string().email(),
-    }),
-    investor: backerZod,
-  };
+
   async function updataBackers() {
     const backers = await getBackers();
     setBackers(backers);
