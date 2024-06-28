@@ -45,3 +45,30 @@ export async function getBackers() {
     }
     return returnArray;
 }
+
+export async function deleteBacker(backerId: string) {
+    const client = await getBackerServiceClient();
+    const result = await client.backer.deleteApiBackerServiceBackers({
+        id: backerId
+    });
+    return result;
+}
+
+export async function putBacker(backerId: string, formdata: any) {
+    const client = await getBackerServiceClient();
+    const result = await client.backer.putApiBackerServiceBackers({
+        id: backerId,
+        requestBody: {
+            "entityInformationTypes": [
+                {
+                    "organizations": [
+                        {
+                            ...formdata
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return result;
+}

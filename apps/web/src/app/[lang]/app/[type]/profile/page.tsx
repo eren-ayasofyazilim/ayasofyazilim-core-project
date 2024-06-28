@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
 import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { Button } from "@/components/ui/button";
-import { postBacker, getBackers } from "./actions";
+import { postBacker, getBackers, deleteBacker, putBacker } from "./actions";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import Link from "next/link";
 import { formSchema } from "./data";
@@ -70,6 +70,14 @@ export default function Page({
               description: backer.taxpayerId || "",
               content: backer.legalStatusCode || "",
               footer: backer.customerNumber || "",
+              onEdit: () => {
+                console.log("edit", backer.backerId);
+              },
+              onDelete: async () => {
+                console.log("delete", backer.backerId);
+                await deleteBacker(backer.backerId);
+                await updataBackers();
+              },
             };
           }) || []}
         ></CardList>
