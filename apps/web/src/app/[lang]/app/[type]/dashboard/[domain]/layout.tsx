@@ -31,7 +31,7 @@ export default function Layout({ children, params }: LayoutProps) {
       .map(([key, value]: [any, any]) => ({
         id: `${params.domain}/${key}`,
         name: key,
-        link: getBaseLink(`dashboard/${params.domain}/${key}`, true),
+        link: getBaseLink(`app/admin/dashboard/${params.domain}/${key}`, true),
       }));
     setnavbarItems(tempNavbarItems);
   }, []);
