@@ -1,6 +1,7 @@
 import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
 import { ZodSchema, ZodType, z } from "zod";
 import { defaultResources } from "./resources";
+import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
@@ -102,7 +103,7 @@ export function createZodObject(
   schema: SchemaType,
   positions: Array<any>,
   convertors?: Record<string, any>
-): ZodType {
+): ZodObjectOrWrapped {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
     if (element === "extraProperties") return;
