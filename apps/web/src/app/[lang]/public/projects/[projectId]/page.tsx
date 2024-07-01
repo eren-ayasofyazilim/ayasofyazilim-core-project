@@ -38,27 +38,13 @@ export default async function Page({
       ),
     })) || [];
 
-  // sectionsData.push({
-  //   key: "invest",
-  //   id: "invest",
-  //   name: languageData.Invest,
-  //   value: (
-  //     <Invest
-  //       user={user}
-  //       languageData={languageData}
-  //       name={projectData.projectName || ""}
-  //       description={projectData.projectDefinition || ""}
-  //       investmentDetails={investmentDetails}
-  //     />
-  //   ),
-  // });
-
   return (
     <ProjectPage
       projectData={projectData}
       sectionsData={sectionsData}
       languageData={languageData}
       ProjectStatusEnums={ProjectStatusEnums}
+      user={user}
     />
   );
 }
