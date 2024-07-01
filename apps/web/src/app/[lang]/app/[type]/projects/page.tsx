@@ -42,7 +42,7 @@ export default async function Page({
           <div className="flex flex-col gap-2">
             {params.type === "entreperneur" && (
               <div className=" flex flex-row flex-wrap justify-end items-center">
-                <Link href={getBaseLink("entreperneur/projects/new", true)}>
+                <Link href={getBaseLink("app/entreperneur/projects/new", true)}>
                   <CustomButton variant="outline">New Project</CustomButton>
                 </Link>
               </div>
