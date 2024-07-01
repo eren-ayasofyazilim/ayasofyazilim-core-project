@@ -5,13 +5,15 @@ import { currencyFormatter, getFundCollectionType } from "../project-card";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { CardContent } from "@repo/ayasofyazilim-ui/atoms/card";
 import { TiptapLayout } from "@repo/ayasofyazilim-ui/templates/tiptap-layout";
+import Invest from "../../../invest";
 
 interface IProjectCardProps {
   languageData: any;
   projectData: any;
-
   ProjectStatusEnums: any;
   sectionsData: any;
+  user?: any;
+  isPreview?: boolean;
 }
 
 export default function ProjectPage({
@@ -19,6 +21,8 @@ export default function ProjectPage({
   projectData,
   ProjectStatusEnums,
   sectionsData,
+  user,
+  isPreview,
 }: IProjectCardProps): JSX.Element {
   function getDateDifferanceInDays() {
     const date1Obj = new Date();
@@ -73,6 +77,24 @@ export default function ProjectPage({
     projectData?.fundCollectionType || ""
   );
   const investmentDetails = getInvestmentDetails();
+
+  if (user && !isPreview) {
+    sectionsData.push({
+      key: "invest",
+      id: "invest",
+      name: languageData.Invest,
+      value: (
+        <Invest
+          user={user}
+          languageData={languageData}
+          name={projectData.projectName || ""}
+          description={projectData.projectDefinition || ""}
+          investmentDetails={investmentDetails}
+        />
+      ),
+    });
+  }
+
   return (
     <div className="w-full">
       <div className="absolute top-0 left-0 right-0 h-screen z-[-1] overflow-hidden">
