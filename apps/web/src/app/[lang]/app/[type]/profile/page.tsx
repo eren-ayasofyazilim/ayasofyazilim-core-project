@@ -27,7 +27,7 @@ export default function Page({
     setLoading(false);
   }
   useEffect(() => {
-    updataBackers()
+    updataBackers();
   }, []);
 
   useEffect(() => {
@@ -43,15 +43,17 @@ export default function Page({
     <div className="container flex flex-col m-4 max-h-full">
       <div className="flex-row mb-2">
         <Button asChild>
-          <Link href={"profile/new"} className="float-right">New {type}</Link>
+          <Link href={"profile/new"} className="float-right">
+            New {type}
+          </Link>
         </Button>
       </div>
       <AutoformDialog
         open={open}
         onOpenChange={setOpen}
         action={{
-          cta: 'New ' + type,
-          description: 'Add New ' + type,
+          cta: "New " + type,
+          description: "Add New " + type,
           callback: (e) => {
             postBacker(e);
             updataBackers();
@@ -61,27 +63,31 @@ export default function Page({
           },
         }}
       />
-      {backers.length > 0 ? <ScrollArea>
-        <CardList
-          isLoading={loading}
-          cards={backers?.map((backer) => {
-            return {
-              title: backer.name || "",
-              description: backer.taxpayerId || "",
-              content: backer.legalStatusCode || "",
-              footer: backer.customerNumber || "",
-              onEdit: () => {
-                console.log("edit", backer.backerId);
-              },
-              onDelete: async () => {
-                console.log("delete", backer.backerId);
-                await deleteBacker(backer.backerId);
-                await updataBackers();
-              },
-            };
-          }) || []}
-        ></CardList>
-      </ScrollArea> : <></>}
+      {backers.length > 0 ? (
+        <ScrollArea>
+          <CardList
+            isLoading={loading}
+            cards={
+              backers?.map((backer) => {
+                return {
+                  title: backer.name || "",
+                  description: backer.taxpayerId || "",
+                  content: backer.legalStatusCode || "",
+                  footer: backer.customerNumber || "",
+                  onEdit: "profile/" + backer.backerId,
+                  onDelete: async () => {
+                    console.log("delete", backer.backerId);
+                    await deleteBacker(backer.backerId);
+                    await updataBackers();
+                  },
+                };
+              }) || []
+            }
+          ></CardList>
+        </ScrollArea>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

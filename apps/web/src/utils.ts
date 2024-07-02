@@ -14,11 +14,11 @@ export function isServerSide() {
 export async function getLocalizationResources(languageCode: string): Promise<{
   [key: string]: {
     texts?:
-    | {
-      [key: string]: string;
-    }
-    | null
-    | undefined;
+      | {
+          [key: string]: string;
+        }
+      | null
+      | undefined;
     baseResources?: string[] | null | undefined;
   };
 }> {
@@ -63,14 +63,14 @@ export function getBaseLink(
 //item & sub item
 export type JsonSchema = {
   type:
-  | "string"
-  | "boolean"
-  | "object"
-  | "integer"
-  | "number"
-  | "array"
-  | "toggle"
-  | "select";
+    | "string"
+    | "boolean"
+    | "object"
+    | "integer"
+    | "number"
+    | "array"
+    | "toggle"
+    | "select";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
@@ -207,9 +207,10 @@ function createZodType(
       }
       break;
     case "array":
-      console.log("Array  ",  schema);
       if (schema.items && schema?.items.properties) {
-        zodType = z.array(createZodObject(schema.items, Object.keys(schema?.items.properties)));
+        zodType = z.array(
+          createZodObject(schema.items, Object.keys(schema?.items.properties))
+        );
       } else {
         zodType = z.array(z.unknown());
       }
