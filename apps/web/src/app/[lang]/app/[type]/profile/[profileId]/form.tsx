@@ -1,14 +1,12 @@
 "use client";
 
+import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { formSchema } from "../data";
-import { postBacker, putBacker } from "../actions";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
-import { revalidatePath } from "next/cache";
+import { postBacker, putBacker } from "../actions";
+import { formSchema } from "../data";
 
 export function BackerForm({
   type,
@@ -21,14 +19,11 @@ export function BackerForm({
 }) {
   const [data, setData] = useState<any>();
   function submitFormData(formData) {
-    console.log("submitting", formData);
     if (profileId === "new") {
-      console.log("new")
       postBacker(formData);
     } else {
       putBacker(profileId, formData);
     }
-    // revalidatePath("/[lang]/app/[type]/profile", "page");
   }
   return (
     <>
@@ -43,18 +38,19 @@ export function BackerForm({
             }}
             onSubmit={(formData) => submitFormData(formData)}
           >
-          </AutoForm>
-          <AutoFormSubmit >
+            <AutoFormSubmit >
             <>
             Save Form
             </>
           </AutoFormSubmit>
+          </AutoForm>
+          
         </ScrollArea>
       </div>
       <div className="flex-row mb-2">
-        <Button className="max-w-20 float-right" onClick={() => submitFormData(data)}>
+        {/* <Button className="max-w-20 float-right" onClick={() => submitFormData(data)}>
           Save Form
-        </Button>
+        </Button> */}
       </div>
     </>
   );
