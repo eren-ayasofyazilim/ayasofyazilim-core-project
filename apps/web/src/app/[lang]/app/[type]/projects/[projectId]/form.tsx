@@ -17,8 +17,9 @@ import {
 import { toast } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto,
-  AbpForDeploy_ProjectService_Projects_ProjectDto,
+  PutApiProjectServiceProjectsByIdData,
+  UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto,
+  UpwithCrowd_ProjectService_Projects_ProjectDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "@ayasofyazilim/saas/ProjectService";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
@@ -26,31 +27,72 @@ import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import { deleteProjectServer, updateProjectServer } from "../action";
+import {
+  deleteProjectServer,
+  updateProjectServer,
+  updateProjectStatusServer,
+} from "../action";
+import { CircleX } from "lucide-react";
+import { ProjectStatusEnums } from "src/enums/project";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
+
+const defaultFormValuesValidation = {
+  projectName: undefined,
+  projectDefinition: undefined,
+  additionalFundRate: undefined,
+  fundableAmount: undefined,
+  overFunding: undefined,
+  fundCollectionType: undefined,
+};
 export interface INewProjectFormProps {
   resources: {
     [
       key: string
     ]: Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
   };
-  projectData: AbpForDeploy_ProjectService_Projects_ProjectDto;
+  projectData: UpwithCrowd_ProjectService_Projects_ProjectDto;
   projectId: string;
+  profileType: string;
 }
 export default function ProjectForm({
   projectId,
   resources,
   projectData,
+  profileType,
 }: INewProjectFormProps) {
   const [formValues, setFormValues] =
-    useState<AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto>(
+    useState<UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto>(
       projectData
     );
+  const [formValuesValidation, setFormValuesValidation] = useState<{
+    [key: string]: boolean | undefined;
+  }>(defaultFormValuesValidation);
+  const [formValuesValidationChanged, setFormValuesValidationChanged] =
+    useState(false);
+
+  const isAdmin = profileType === "admin";
+  const [accordionTab, setAccordionTab] = useState("item-1");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  const isInputEditDisabled =
+    isAdmin ||
+    isLoading ||
+    (projectData.status !== ProjectStatusEnums.IN_DRAFT_STAGE &&
+      projectData.status !== ProjectStatusEnums.NOT_APPROVED);
 
   const projectResource = resources?.["ProjectService"]?.texts;
   const uiResource = resources?.["AbpUi"]?.texts;
@@ -116,10 +158,59 @@ export default function ProjectForm({
     return () => clearTimeout(timeout);
   }, [formValues]);
 
+  async function onEvaluateClick() {
+    setIsLoading(true);
+    try {
+      const isApproved =
+        Object.values(formValuesValidation)?.filter((i) => i === false)
+          .length === 0;
+      const result = await updateProjectStatusServer(
+        projectId,
+        isApproved
+          ? ProjectStatusEnums.APPROVED
+          : ProjectStatusEnums.NOT_APPROVED
+      );
+      setFormValuesValidationChanged(false);
+      if (result.status === 200) {
+        setIsSubmitDisabled(true);
+        toast.success("Başarılı.");
+      } else {
+        toast.error(result?.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  async function onSendToApprovalClick() {
+    setIsLoading(true);
+    try {
+      const result = await updateProjectStatusServer(
+        projectId,
+        ProjectStatusEnums.SENT_FOR_APPROVAL
+      );
+
+      if (result.status === 200) {
+        setIsSubmitDisabled(true);
+        toast.success("Başarılı.");
+      } else {
+        toast.error(result?.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
   async function onSaveClick() {
     setIsLoading(true);
     try {
-      const result = await updateProjectServer(projectId, formValues);
+      formValues.status = ProjectStatusEnums.IN_DRAFT_STAGE;
+      const result = await updateProjectServer(
+        projectId,
+        formValues as PutApiProjectServiceProjectsByIdData
+      );
       if (result.status === 200) {
         setIsSubmitDisabled(true);
         toast.success("Başarılı.");
@@ -146,11 +237,43 @@ export default function ProjectForm({
 
   return (
     <>
+      {profileType === "entreperneur" && (
+        <div className="flex justify-end mb-3">
+          <form action={onSendToApprovalClick}>
+            <CustomButton
+              variant="default"
+              className="w-[220px] bg-transparent text-primary border-primary border hover:bg-primary hover:text-white"
+              disabled={
+                projectData.status !== ProjectStatusEnums.IN_DRAFT_STAGE
+              }
+            >
+              <>
+                {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL
+                  ? "Onay Bekliyor"
+                  : ""}
+                {projectData.status === ProjectStatusEnums.NOT_APPROVED
+                  ? "Değerlendirmeyi Geçemedi"
+                  : ""}
+                {projectData.status === ProjectStatusEnums.APPROVED
+                  ? "Onaylandı"
+                  : ""}
+                {projectData.status === ProjectStatusEnums.FUNDABLE
+                  ? "Yayında"
+                  : ""}
+                {projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE
+                  ? "Onaya Gönder"
+                  : ""}
+              </>
+            </CustomButton>
+          </form>
+        </div>
+      )}
       <Accordion
         type="single"
         collapsible
         className="w-full"
-        defaultValue="item-1"
+        value={accordionTab}
+        onValueChange={setAccordionTab}
       >
         <AccordionItem value="item-1" className="my-2 border">
           <AccordionStepperHeader
@@ -160,9 +283,29 @@ export default function ProjectForm({
                 formValues?.projectName?.length < 4 ||
                 !formValues?.projectDefinition ||
                 formValues?.projectDefinition?.length < 4
-              )
+              ) &&
+              formValuesValidation?.projectName !== false &&
+              formValuesValidation?.projectDefinition !== false
             }
             children="Temel Bilgiler"
+            customUncheckedIcon={
+              formValuesValidation?.projectName === false &&
+              formValuesValidation?.projectDefinition === false
+                ? CircleX
+                : undefined
+            }
+            customCheckedIconColor={
+              formValuesValidation?.projectName &&
+              formValuesValidation?.projectDefinition
+                ? "text-emerald-600"
+                : "text-muted-foreground"
+            }
+            customUncheckedIconColor={
+              formValuesValidation?.projectName === false &&
+              formValuesValidation?.projectDefinition === false
+                ? "text-red-500"
+                : "text-muted-foreground"
+            }
           />
 
           <AccordionContent className="px-6">
@@ -172,6 +315,7 @@ export default function ProjectForm({
                   {languageData["ProjectName"]}
                 </Label>
                 <Input
+                  disabled={isInputEditDisabled}
                   id="projectName"
                   value={formValues?.projectName || ""}
                   onChange={(e) =>
@@ -190,6 +334,7 @@ export default function ProjectForm({
                   {languageData["ProjectDescription"]}
                 </Label>
                 <Textarea
+                  disabled={isInputEditDisabled}
                   value={formValues?.projectDefinition || ""}
                   onChange={(e) =>
                     setFormValues({
@@ -203,6 +348,54 @@ export default function ProjectForm({
                 </p>
               </div>
             </div>
+            <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
+              {profileType === "admin" && (
+                <>
+                  <CustomButton
+                    variant="destructive"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        projectName: false,
+                        projectDefinition: false,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("item-2");
+                    }}
+                  >
+                    Reddet
+                  </CustomButton>
+
+                  <CustomButton
+                    customVariant="success"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        projectName: true,
+                        projectDefinition: true,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("item-2");
+                    }}
+                  >
+                    Onayla
+                  </CustomButton>
+                </>
+              )}
+              {profileType === "entreperneur" && (
+                <CustomButton
+                  variant="secondary"
+                  className="w-[120px]"
+                  onClick={() => {
+                    setAccordionTab("item-2");
+                  }}
+                >
+                  İlerle
+                </CustomButton>
+              )}
+            </div>
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2" className="my-2 border">
@@ -212,9 +405,29 @@ export default function ProjectForm({
                 !formValues?.fundableAmount ||
                 formValues?.fundableAmount === 0 ||
                 !formValues?.fundCollectionType
-              )
+              ) &&
+              formValuesValidation?.fundableAmount !== false &&
+              formValuesValidation?.fundCollectionType !== false
             }
             children="Bütçe"
+            customUncheckedIcon={
+              formValuesValidation?.fundCollectionType === false &&
+              formValuesValidation?.fundableAmount === false
+                ? CircleX
+                : undefined
+            }
+            customCheckedIconColor={
+              formValuesValidation?.fundCollectionType &&
+              formValuesValidation?.fundableAmount
+                ? "text-emerald-600"
+                : "text-muted-foreground"
+            }
+            customUncheckedIconColor={
+              formValuesValidation?.fundCollectionType === false &&
+              formValuesValidation?.fundableAmount === false
+                ? "text-red-500"
+                : "text-muted-foreground"
+            }
           />
           <AccordionContent className="px-6">
             <div className="w-full">
@@ -224,6 +437,7 @@ export default function ProjectForm({
                 </Label>
                 <div className="relative">
                   <Select
+                    disabled={isInputEditDisabled}
                     value={formValues?.fundCollectionType || ""}
                     onValueChange={(value) =>
                       setFormValues({
@@ -260,9 +474,10 @@ export default function ProjectForm({
                     min={0}
                     subLabel={""}
                     inputLabel="₺"
-                    slider
+                    slider={!isInputEditDisabled}
                     direction="column"
                     value={formValues?.fundableAmount || 0}
+                    disabled={isInputEditDisabled}
                     onValueChange={(value) => {
                       setFormValues({ ...formValues, fundableAmount: value });
                     }}
@@ -273,6 +488,54 @@ export default function ProjectForm({
                 </div>
               </div>
             </div>
+            <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
+              {profileType === "admin" && (
+                <>
+                  <CustomButton
+                    variant="destructive"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        fundCollectionType: false,
+                        fundableAmount: false,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("item-3");
+                    }}
+                  >
+                    Reddet
+                  </CustomButton>
+
+                  <CustomButton
+                    customVariant="success"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        fundCollectionType: true,
+                        fundableAmount: true,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("item-3");
+                    }}
+                  >
+                    Onayla
+                  </CustomButton>
+                </>
+              )}
+              {profileType === "entreperneur" && (
+                <CustomButton
+                  variant="secondary"
+                  className="w-[120px]"
+                  onClick={() => {
+                    setAccordionTab("item-3");
+                  }}
+                >
+                  İlerle
+                </CustomButton>
+              )}
+            </div>
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3" className="my-2 border">
@@ -282,9 +545,29 @@ export default function ProjectForm({
                 !formValues?.overFunding ||
                 (formValues?.overFunding === "Y" &&
                   !formValues?.additionalFundRate)
-              )
+              ) &&
+              formValuesValidation?.overFunding !== false &&
+              formValuesValidation?.additionalFundRate !== false
             }
             children="Ek Fonlama"
+            customUncheckedIcon={
+              formValuesValidation?.overFunding === false &&
+              formValuesValidation?.additionalFundRate === false
+                ? CircleX
+                : undefined
+            }
+            customCheckedIconColor={
+              formValuesValidation?.overFunding &&
+              formValuesValidation?.additionalFundRate
+                ? "text-emerald-600"
+                : "text-muted-foreground"
+            }
+            customUncheckedIconColor={
+              formValuesValidation?.overFunding === false &&
+              formValuesValidation?.additionalFundRate === false
+                ? "text-red-500"
+                : "text-muted-foreground"
+            }
           />
           <AccordionContent className="px-6">
             <div className="w-full">
@@ -294,6 +577,7 @@ export default function ProjectForm({
                 </Label>
                 <div className="relative">
                   <Select
+                    disabled={isInputEditDisabled}
                     value={formValues?.overFunding || ""}
                     onValueChange={(value) =>
                       setFormValues({ ...formValues, overFunding: value })
@@ -336,7 +620,8 @@ export default function ProjectForm({
                             min={0}
                             subLabel={""}
                             inputLabel="%"
-                            slider
+                            slider={!isInputEditDisabled}
+                            disabled={isInputEditDisabled}
                             direction="column"
                             value={parseInt(
                               formValues?.additionalFundRate || "0"
@@ -358,29 +643,118 @@ export default function ProjectForm({
                 </Accordion>
               )}
             </div>
+
+            <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
+              {profileType === "admin" && (
+                <>
+                  <CustomButton
+                    variant="destructive"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        overFunding: false,
+                        additionalFundRate: false,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("");
+                    }}
+                  >
+                    Reddet
+                  </CustomButton>
+                  <CustomButton
+                    customVariant="success"
+                    className="w-[120px]"
+                    onClick={() => {
+                      setFormValuesValidation({
+                        ...formValuesValidation,
+                        overFunding: true,
+                        additionalFundRate: true,
+                      });
+                      setFormValuesValidationChanged(true);
+                      setAccordionTab("");
+                    }}
+                  >
+                    Onayla
+                  </CustomButton>
+                </>
+              )}
+              {profileType === "entreperneur" && (
+                <CustomButton
+                  variant="secondary"
+                  className="w-[120px]"
+                  onClick={() => {
+                    setAccordionTab("");
+                  }}
+                >
+                  İlerle
+                </CustomButton>
+              )}
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      <div className="mt-8 flex flex-row flex-wrap justify-between">
-        <form action={onDeleteClick}>
-          <CustomButton
-            variant="secondary"
-            isLoading={isLoading}
-            className="w-[120px]"
-          >
-            Delete Project
-          </CustomButton>
-        </form>
-        <form action={onSaveClick}>
-          <CustomButton
-            variant="default"
-            isLoading={isLoading}
-            disabled={isSubmitDisabled}
-            className="w-[120px]"
-          >
-            Save Project
-          </CustomButton>
-        </form>
+      <div className="mt-8 flex flex-row flex-wrap justify-end gap-5">
+        {profileType === "admin" && (
+          <form action={onEvaluateClick}>
+            <CustomButton
+              variant="secondary"
+              isLoading={isLoading}
+              disabled={
+                isLoading ||
+                !formValuesValidationChanged ||
+                Object.values(formValuesValidation)?.filter(
+                  (i) => i === undefined
+                ).length !== 0
+              }
+              className="w-[200px]"
+            >
+              Değerlendirmeyi Tamamla
+            </CustomButton>
+          </form>
+        )}
+        {profileType === "entreperneur" && (
+          <>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="secondary" className="w-[120px]">
+                  Projeyi Sil
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Projeyi Sil</DialogTitle>
+                  <DialogDescription>
+                    Projeyi silmek istediğinize emin misiniz? Bu işlem geri
+                    alınamaz.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                  <form action={onDeleteClick}>
+                    <CustomButton
+                      type="submit"
+                      isLoading={isLoading}
+                      disabled={isLoading}
+                    >
+                      Projeyi Sil
+                    </CustomButton>
+                  </form>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            <form action={onSaveClick}>
+              <CustomButton
+                variant="default"
+                isLoading={isLoading}
+                disabled={isSubmitDisabled}
+                className="w-[120px]"
+              >
+                Save Project
+              </CustomButton>
+            </form>
+          </>
+        )}
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import { getProjectByIdServer } from "../action";
 import ProjectForm from "./form";
 
 export default async function Page({ params }: any) {
-  const { projectId } = params;
+  const { projectId, type } = params;
   const resources = await getLocalizationResources(params.lang);
   const projectData = (await getProjectByIdServer(projectId)).project;
 
@@ -22,6 +22,7 @@ export default async function Page({ params }: any) {
           resources={resources}
           projectData={projectData}
           projectId={projectId}
+          profileType={type}
         />
       </Card>
     </div>

@@ -13,26 +13,24 @@ export default async function Page({ params }: any) {
   const { projectId, type } = params;
   const resources = await getLocalizationResources(params.lang);
 
-  const {
-    project: projectData,
-    projectSectionRelations: usedSectionsInProject,
-  } = await getProjectByIdServer(projectId);
+  const { project: projectData, projectSectionRelations: usedSections } =
+    await getProjectByIdServer(projectId);
 
-  // console.log(usedSectionsInProject);
   const mandatorySections = (await getDefaultProjectSectionsServer()) || [];
-  // console.log(mandatorySections);
-  // mandatorySections?.items?.toReversed()?.forEach((section: any) => {
-  //   const index = usedSectionsInProject?.findIndex(
-  //     /* @ts-ignore */
-  //     (s) => s.projectSectionId === section.id
-  //   ) ||-1;
-  //   if (index > -1 && usedSectionsInProject?.[index]) {
-  //     /* @ts-ignore */
-  //     usedSectionsInProject[index].name = section.name;
-  //   } else {
-  //     usedSectionsInProject.push(section);
-  //   }
-  // });
+
+  mandatorySections?.items?.forEach((section: any) => {
+    const index = usedSections?.findIndex((s) => s.sectionId == section.id);
+
+    if (index === -1) {
+      usedSections?.push({
+        projectId: projectData?.id,
+        sectionId: section.id,
+        sectionName: section.name,
+        sectionRelationValue: JSON.stringify({}),
+      });
+    }
+  });
+
   if (!projectData) {
     redirect("/app/" + type + "/projects");
   }
@@ -41,7 +39,7 @@ export default async function Page({ params }: any) {
       <Card className="p-6 w-full">
         <ProjectForm
           resources={resources}
-          sectionData={usedSectionsInProject || []}
+          sectionData={usedSections || []}
           projectId={projectId}
         />
       </Card>

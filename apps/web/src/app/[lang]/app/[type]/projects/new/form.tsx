@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto,
+  UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto,
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "@ayasofyazilim/saas/ProjectService";
 import { default as CustomButton } from "@repo/ayasofyazilim-ui/molecules/button";
@@ -98,7 +98,7 @@ export default function NewProjectForm({ resources }: INewProjectFormProps) {
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
-    useState<AbpForDeploy_ProjectService_ProjectsDto_CreateUpdateProjectDto>({
+    useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({
       additionalFundRate: "0",
       fundableAmount: 0,
     });
@@ -338,7 +338,12 @@ export default function NewProjectForm({ resources }: INewProjectFormProps) {
                 {languageData["Messages:ProjectCreated"]}
               </h3>
               <CustomButton className="mt-4">
-                <Link href={getBaseLink("projects/" + projectId, true)}>
+                <Link
+                  href={getBaseLink(
+                    `app/entreperneur/projects/${projectId}`,
+                    true
+                  )}
+                >
                   {languageData["ViewProject"]}
                 </Link>
               </CustomButton>
