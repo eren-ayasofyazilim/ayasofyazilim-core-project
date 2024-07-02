@@ -5,20 +5,27 @@ import { revalidatePath } from "next/cache";
 import { getBackerServiceClient } from "src/lib";
 
 export async function postBacker(formdata: any) {
+  console.log("postBacker", formdata.telephones);
   const client = await getBackerServiceClient();
-  const result = await client.backer.postApiBackerServiceBackersWithComponents({
-    requestBody: {
-      entityInformationTypes: [
-        {
-          organizations: [
-            {
-              ...formdata,
-            },
-          ],
-        },
-      ],
-    },
-  });
+  let result;
+  try {
+    result = await client.backer.postApiBackerServiceBackersWithComponents({
+      requestBody: {
+        entityInformationTypes: [
+          {
+            organizations: [
+              {
+                ...formdata,
+              },
+            ],
+          },
+        ],
+      },
+    });
+  } catch (e){
+    console.error(e);
+  }
+  console.log("postBacker API Result, ", result);
   return result;
 }
 
@@ -53,6 +60,7 @@ export async function deleteBacker(backerId: string) {
 }
 
 export async function putBacker(backerId: string, formdata: any) {
+  console.log("putBacker", backerId, formdata);
   const client: BackerServiceClient = await getBackerServiceClient();
   const result = await client.backer.putApiBackerServiceBackers({
     id: backerId,

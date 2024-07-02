@@ -15,12 +15,8 @@ export default async function Page({
     backer = await getBacker(profileId);
   }
   return (
-    <ScrollArea>
       <div className="container flex flex-col m-4 max-h-[600px]">
-        <div className="grid gap-4 py-4">
           <BackerForm type={type} backer={backer} profileId={profileId} />
-        </div>
       </div>
-    </ScrollArea>
   );
 }
