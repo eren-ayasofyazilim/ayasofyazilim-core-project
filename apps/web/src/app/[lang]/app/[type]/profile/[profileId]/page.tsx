@@ -14,7 +14,6 @@ export default async function Page({
   if (profileId !== "new") {
     backer = await getBacker(profileId);
   }
-  console.log("backer", backer);
   return (
     <ScrollArea>
       <div className="container flex flex-col m-4 max-h-[600px]">

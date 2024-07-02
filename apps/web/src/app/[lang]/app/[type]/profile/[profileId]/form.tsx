@@ -20,7 +20,6 @@ export function BackerForm({
       formSchema={formSchema[type]}
       values={backer}
       onSubmit={(formData) => {
-        console.log("Submıtted", formData);
         if (profileId === "new") {
           postBacker(formData);
         } else {
@@ -29,7 +28,7 @@ export function BackerForm({
       }}
     >
       <AutoFormSubmit className="float-right">
-        <button>Save Changes</button>
+        <>Save Changes</>
       </AutoFormSubmit>
     </AutoForm>
   );
