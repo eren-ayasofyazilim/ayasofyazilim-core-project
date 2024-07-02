@@ -67,7 +67,35 @@ export async function updateProjectServer(
       requestBody: body,
     });
     revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/app/[type]/projects/[projectId]", "page");
     revalidatePath("/[lang]/public/projects", "page");
+    revalidatePath("/[lang]/public/projects/[projectId]", "page");
+    return {
+      status: 200,
+      projectData: response,
+    };
+  } catch (error: any) {
+    return {
+      status: error.status,
+      message: error?.body?.error?.details,
+    };
+  }
+}
+export async function updateProjectStatusServer(
+  id: string,
+  body: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined
+) {
+  "use server";
+  try {
+    const client = await getProjectServiceClient();
+    const response = await client.project.putApiProjectServiceProjectsStatus({
+      projectId: id,
+      status: body,
+    });
+    revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/app/[type]/projects/[projectId]", "page");
+    revalidatePath("/[lang]/public/projects", "page");
+    revalidatePath("/[lang]/public/projects/[projectId]", "page");
     return {
       status: 200,
       projectData: response,

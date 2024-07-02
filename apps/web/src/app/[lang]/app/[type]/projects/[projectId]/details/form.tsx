@@ -48,9 +48,14 @@ export default function ProjectForm({
 
   async function onSaveClick(editorId: string, editorContent: string) {
     const section = sectionData?.find((i) => i.sectionId === editorId);
-    if (section?.sectionRelationValue && section.sectionId) {
+    if (
+      section?.sectionRelationValue &&
+      section.sectionRelationId &&
+      section.sectionId
+    ) {
+      console.log(section);
       return await updateProjectSectionRelationServer(
-        section.sectionId,
+        section.sectionRelationId,
         editorContent
       );
     }
