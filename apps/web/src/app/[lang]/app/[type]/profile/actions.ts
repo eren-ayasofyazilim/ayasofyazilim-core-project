@@ -1,76 +1,88 @@
-'use server'
+"use server";
 
+import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { revalidatePath } from "next/cache";
 import { getBackerServiceClient } from "src/lib";
 
-
 export async function postBacker(formdata: any) {
-    const client = await getBackerServiceClient();
-    const result = await client.backer.postApiBackerServiceBackersWithComponents(
-        {
-            requestBody: {
-                "entityInformationTypes": [
-                    {
-                        "organizations": [
-                            {
-                                "name": formdata.name,
-                                "taxpayerId": formdata.taxpayerId,
-                                "legalStatusCode": formdata.legalStatusCode,
-                                "customerNumber": "123123",
-                                "contactInformation": {
-                                    "startDate": "2024-06-26T10:13:07.146Z",
-                                    "endDate": "2024-06-26T10:13:07.147Z",
-                                    "telephones": [
-                                        {
-                                            "areaCode": "1231",
-                                            "localNumber": "123",
-                                            "ituCountryCode": "123123"
-                                        }
-                                    ],
-                                    "addresses": [
-                                        {
-                                            "typeCode": 0,
-                                            "addressLine": "string",
-                                            "city": "string",
-                                            "terriority": "string",
-                                            "postalCode": "string",
-                                            "country": "string",
-                                            "fullAddress": "string"
-                                        }
-                                    ],
-                                    "emails": [
-                                        {
-                                            "emailAddress": "string"
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    );
-    return result;
+  console.log("postBacker", formdata.telephones);
+  const client = await getBackerServiceClient();
+  let result;
+  try {
+    result = await client.backer.postApiBackerServiceBackersWithComponents({
+      requestBody: {
+        entityInformationTypes: [
+          {
+            organizations: [
+              {
+                ...formdata,
+              },
+            ],
+          },
+        ],
+      },
+    });
+  } catch (e){
+    console.error(e);
+  }
+  console.log("postBacker API Result, ", result);
+  return result;
 }
 
 export async function getBackers() {
-    const client = await getBackerServiceClient();
-    const result = await client.backer.getApiBackerServiceBackers({
-        maxResultCount: 1000
+  const client = await getBackerServiceClient();
+  const result = await client.backer.getApiBackerServiceBackers({
+    maxResultCount: 1000,
+  });
+  const itemsIds = result.items?.map((item) => item.id) || [];
+  const returnArray = [];
+  for (const id of itemsIds) {
+    const item = await client.backer.getApiBackerServiceBackersDetailById({
+      id: id || "",
     });
-    const itemsIds = result.items?.map((item) => item.id) || [];
-    const returnArray = [];
-    for (const id of itemsIds) {
-        const item = await client.backer.getApiBackerServiceBackersDetailById({
-            id: id || ""
-        });
-        const organization = item.entityInformations?.[0]?.organizations?.[0]
-        returnArray.push({
-            name: organization?.name,
-            legalStatusCode: organization?.legalStatusCode,
-            taxpayerId: organization?.taxpayerId
-        })
-    }
-    return returnArray;
+    const organization = item.entityInformations?.[0]?.organizations?.[0];
+    returnArray.push({
+      name: organization?.name,
+      legalStatusCode: organization?.legalStatusCode,
+      taxpayerId: organization?.taxpayerId,
+      backerId: id,
+    });
+  }
+  return returnArray;
+}
+
+export async function deleteBacker(backerId: string) {
+  const client = await getBackerServiceClient();
+  const result = await client.backer.deleteApiBackerServiceBackers({
+    id: backerId,
+  });
+  return result;
+}
+
+export async function putBacker(backerId: string, formdata: any) {
+  console.log("putBacker", backerId, formdata);
+  const client: BackerServiceClient = await getBackerServiceClient();
+  const result = await client.backer.putApiBackerServiceBackers({
+    id: backerId,
+    requestBody: {
+      entityInformationTypes: [
+        {
+          organizations: [
+            {
+              ...formdata,
+            },
+          ],
+        },
+      ],
+    },
+  });
+  return result;
+}
+
+export async function getBacker(profileId: string) {
+  const client = await getBackerServiceClient();
+  const result = await client.backer.getApiBackerServiceBackersDetailById({
+    id: profileId,
+  });
+  return result.entityInformations?.[0]?.organizations?.[0] || {};
 }
