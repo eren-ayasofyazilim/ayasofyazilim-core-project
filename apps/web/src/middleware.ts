@@ -24,7 +24,7 @@ export const i18n = {
     "zh-hant",
   ],
 };
-const publicURLs = ["404", "500", "api"];
+const publicURLs = ["404", "500", "api", "public"];
 const authPages = ["login", "register", "forgot-password", "reset-password"];
 function getLocaleFromBrowser(request: NextRequest) {
   const negotiatorHeaders: { [key: string]: string } = {};
@@ -78,10 +78,10 @@ export const middleware = auth(async (request: NextAuthRequest) => {
     return NextResponse.redirect(new URL(`/${locale}/login`, hostURL));
   }
   function redirectToProfile(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/profile`, hostURL));
+    return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   }
   function redirectToRoot(locale: string) {
-    return NextResponse.redirect(new URL(`/${locale}/`, hostURL));
+    return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   }
   function allowURL(locale: string, request: NextRequest) {
     const response = NextResponse.next();
@@ -93,7 +93,11 @@ export const middleware = auth(async (request: NextAuthRequest) => {
 
   const isAuthorized = isUserAuthorized(request);
   const locale = getLocale(request);
-  const pathName = request.nextUrl.pathname.split("/")[2] || "/";
+  const pathName = request.nextUrl.pathname.split("/")[2];
+
+  if (!pathName) {
+    return redirectToRoot(locale);
+  }
 
   // If the user is authorized
   if (isAuthorized) {
