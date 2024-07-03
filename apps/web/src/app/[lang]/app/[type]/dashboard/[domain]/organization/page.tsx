@@ -81,23 +81,13 @@ const App: React.FC = () => {
     onConfirm: () => {},
   });
   const [DisplayNameEnum, setDisplayNameEnum] = useState<any>();
-  const [currentUnitName, setCurrentUnitName] = useState<string>("");
   const [action, setAction] = useState<tableAction | undefined>(undefined);
-  const [triggerData, setTriggerData] = useState<Record<string, any> | undefined>(undefined);
+  const [triggerData, setTriggerData] = useState<
+    Record<string, any> | undefined
+  >(undefined);
 
   useEffect(() => {
-    const loadData = async () => {
-      const units = await fetchOrganizationUnits();
-      setOrganizationUnits(units);
-
-      const unitNames = units.map((unit) => unit.displayName);
-      if (unitNames.length > 0) {
-        const DynamicEnum = z.enum([unitNames[0], ...unitNames.slice(1)]);
-        setDisplayNameEnum(DynamicEnum);
-      }
-    };
-
-    loadData();
+    fetchAndUpdateUnits();
   }, []);
 
   const updateEnums = (units: OrganizationUnit[]) => {
@@ -106,6 +96,12 @@ const App: React.FC = () => {
       const DynamicEnum = z.enum([unitNames[0], ...unitNames.slice(1)]);
       setDisplayNameEnum(DynamicEnum);
     }
+  };
+
+  const fetchAndUpdateUnits = async () => {
+    const units = await fetchOrganizationUnits();
+    setOrganizationUnits(units);
+    updateEnums(units);
   };
 
   const handleAddUsers = async (selectedUsers: User[]) => {
@@ -248,21 +244,33 @@ const App: React.FC = () => {
     }
   };
 
-  const handleSave = async (formData: { displayName: string }) => {
+  const handleSave = async (
+    formData: { displayName: string },
+    triggerData?: { id: string }
+  ) => {
     try {
       const response = await fetch(getBaseLink("api/admin/organization"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          displayName: formData.displayName,
+          parentId: triggerData?.id,
+        }),
       });
 
       if (response.ok) {
         toast.success("Organization unit added successfully");
         const units = await fetchOrganizationUnits();
+        console.log(
+          units.map((unit) => {
+            return { displayName: unit.displayName, id: unit.id };
+          })
+        );
         setOrganizationUnits(units);
-        updateEnums(units);
+        await fetchAndUpdateUnits();
+        setTriggerData({});
         setOpen(false);
       } else {
         const errorData = await response.json();
@@ -288,7 +296,7 @@ const App: React.FC = () => {
             toast.success("Organization unit deleted successfully");
             const units = await fetchOrganizationUnits();
             setOrganizationUnits(units);
-            updateEnums(units);
+            await fetchAndUpdateUnits();
             if (selectedUnit && selectedUnit.id === unitId) {
               setSelectedUnit(null);
               setUnitUsers([]);
@@ -310,7 +318,10 @@ const App: React.FC = () => {
     setIsConfirmDialogOpen(true);
   };
 
-  const handleUpdateUnit = async (formData: { displayName: string }) => {
+  const handleUpdateUnit = async (
+    formData: { displayName: string },
+    triggerData: { id: string }
+  ) => {
     try {
       const response = await fetch(
         getBaseLink(`api/organization/organizationEdit`),
@@ -320,7 +331,7 @@ const App: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: selectedUnit?.id,
+            id: triggerData.id,
             requestBody: { displayName: formData.displayName },
           }),
         }
@@ -329,12 +340,11 @@ const App: React.FC = () => {
         toast.success("Organization unit updated successfully");
         const units = await fetchOrganizationUnits();
         setOrganizationUnits(units);
+        const updatedUnit =
+          units.find((unit) => unit.id === triggerData.id) || null;
+        setSelectedUnit(updatedUnit);
         updateEnums(units);
-        if (selectedUnit && selectedUnit.id === selectedUnit.id) {
-          setSelectedUnit((prevUnit) =>
-            prevUnit ? { ...prevUnit, displayName: formData.displayName } : null
-          );
-        }
+        setTriggerData({});
         setOpen(false);
       } else {
         const errorData = await response.json();
@@ -346,7 +356,10 @@ const App: React.FC = () => {
     }
   };
 
-  const handleMoveUsers = async (formData: { displayName: string }) => {
+  const handleMoveUsers = async (
+    formData: { displayName: string },
+    triggerData: { id: string }
+  ) => {
     if (selectedUnit) {
       try {
         const targetUnit = organizationUnits.find(
@@ -364,14 +377,15 @@ const App: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id: selectedUnit.id,
+              id: triggerData.id,
               organizationId: targetUnit.id,
             }),
           }
         );
         if (response.ok) {
           toast.success("Users moved successfully");
-          const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
+          setTriggerData({});
+          const updatedUsers = await fetchUsersForUnit(triggerData.id);
           setUnitUsers(updatedUsers);
         } else {
           const errorData = await response.json();
@@ -385,12 +399,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleToggleForm = () => {
-    setSelectedUnit(null);
-    setAction(createAction);
-    setOpen(true);
-  };
-
   const handleUnitClick = async (unit: OrganizationUnit) => {
     setSelectedUnit(unit);
     setActiveTab("Users");
@@ -402,16 +410,62 @@ const App: React.FC = () => {
     setUnitRoles(roles);
   };
 
+  const handleToggleForm = () => {
+    setSelectedUnit(null);
+    setAction({
+      autoFormArgs: {
+        formSchema: createZodObject(
+          createFormSchema.schema,
+          createFormSchema.formPositions || []
+        ),
+      },
+      callback: (e, triggerData) => {
+        const formData = { ...e, ParentId: selectedUnit?.id };
+        handleSave(formData, triggerData);
+        return true;
+      },
+      cta: "New organization unit",
+      description: "Create a new organization unit",
+    });
+    setOpen(true);
+  };
+
   const handleSubUnit = async (unit: OrganizationUnit) => {
     await handleUnitClick(unit);
-    setAction(addSubUnitAction);
+    setSelectedUnit(unit);
+    setAction({
+      autoFormArgs: {
+        formSchema: createZodObject(
+          createFormSchema.schema,
+          createFormSchema.formPositions || []
+        ),
+      },
+      callback: (e, triggerData) => {
+        const formData = { ...e, ParentId: unit?.id };
+        handleSave(formData, triggerData);
+        return true;
+      },
+      cta: "New organization unit",
+      description: `Parent: ${unit.displayName}`,
+    });
+    setTriggerData({ id: unit?.id });
     setOpen(true);
   };
 
   const handleEditUnit = async (unit: OrganizationUnit) => {
     await handleUnitClick(unit);
-    setAction(editAction);
-    setTriggerData({ displayName: "ttt" });
+    setAction({
+      autoFormArgs: {
+        formSchema: createZodObject(
+          editFormSchema.schema,
+          editFormSchema.formPositions || []
+        ),
+      },
+      callback: handleUpdateUnit,
+      cta: "Edit Unit",
+      description: "Edit the name of the organization unit",
+    });
+    setTriggerData({ displayName: unit?.displayName, id: unit?.id });
     setOpen(true);
   };
 
@@ -428,73 +482,30 @@ const App: React.FC = () => {
       toast.warning("There are no users currently in this unit.");
       return;
     }
-    const filteredUnits = organizationUnits.filter((u) => u.id !== unit.id);
-    const unitNames = filteredUnits.map((u) => u.displayName);
-    if (unitNames.length > 0) {
-      const DynamicEnum = z.enum([unitNames[0], ...unitNames.slice(1)]);
-      setDisplayNameEnum(DynamicEnum);
-    }
-    setAction(moveAllUserAction);
+    const availableUnits = organizationUnits.filter((u) => u.id !== unit.id);
+    const unitNames = availableUnits.map((unit) => unit.displayName);
+    const DynamicEnum = z.enum([unitNames[0], ...unitNames.slice(1)]);
+    setDisplayNameEnum(DynamicEnum);
+    setTriggerData({ displayName: unit.displayName, id: unit.id });
+    setAction({
+      autoFormArgs: {
+        formSchema: z.object({
+          displayName: DynamicEnum,
+        }),
+      },
+      callback: (e, triggerData) => {
+        const formData = { ...e, organizationId: unit.id };
+        handleMoveUsers(formData, triggerData);
+        return true;
+      },
+      cta: "Move all Users",
+      description: `Move all users from ${unit.displayName} to:`,
+    });
     setOpen(true);
   };
 
   const createFormSchema = dataConfig.organization.createFormSchema;
   const editFormSchema = dataConfig.organization.editFormSchema;
-
-  const createAction: tableAction = {
-    autoFormArgs: {
-      formSchema: createZodObject(
-        createFormSchema.schema,
-        createFormSchema.formPositions || []
-      ),
-    },
-    callback: (e) => {
-      const formData = { ...e };
-      handleSave(formData);
-      return true;
-    },
-    cta: "New organization unit",
-    description: "Create a new organization unit",
-  };
-
-  const editAction: tableAction = {
-    autoFormArgs: {
-      formSchema: createZodObject(
-        editFormSchema.schema,
-        editFormSchema.formPositions || []
-      ),
-    },
-    callback: handleUpdateUnit,
-    cta: "Edit Unit",
-    description: "Edit the name of the organization unit",
-  };
-
-  const moveAllUserAction: tableAction = {
-    autoFormArgs: {
-      formSchema: z.object({
-        displayName: DisplayNameEnum,
-      }),
-    },
-    callback: handleMoveUsers,
-    cta: "Move all Users",
-    description: `Move all users with ${currentUnitName} organization unit to:`,
-  };
-
-  const addSubUnitAction: tableAction = {
-    autoFormArgs: {
-      formSchema: createZodObject(
-        createFormSchema.schema,
-        createFormSchema.formPositions || []
-      ),
-    },
-    callback: (e) => {
-      const formData = { ...e, ParentId: selectedUnit?.id };
-      handleSave(formData);
-      return true;
-    },
-    cta: "New organization unit",
-    description: `Parent: ${selectedUnit?.displayName}`,
-  };
 
   return (
     <div className="flex flex-col h-screen p-4 bg-gray-50 items-center overflow-auto">
@@ -696,12 +707,14 @@ const App: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-      <AutoformDialog
-        open={open}
-        onOpenChange={setOpen}
-        action={action}
-        triggerData={triggerData}
-      />
+      {open && (
+        <AutoformDialog
+          open={open}
+          onOpenChange={setOpen}
+          action={action}
+          triggerData={triggerData}
+        />
+      )}
       <UserModal
         isOpen={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
