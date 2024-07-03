@@ -30,5 +30,11 @@
   "Settings": "Settings",
   "Projects": "Projects",
   "LanguageManagement": "Language Management",
+  "IdentityManagement": "Identity Management",
+  "Identity:role": "Roles",
+  "Identity:user": "Users",
+  "Identity:claimType": "Claim Types",
+  "Identity:securityLogs": "Security Logs",
+  "SaasManagement": "SaaS Management",
   "Investmensts": "Investmensts"
 }
