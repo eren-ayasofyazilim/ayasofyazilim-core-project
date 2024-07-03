@@ -4,6 +4,21 @@ export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const navigationResource = resources?.["AbpUiNavigation"]?.texts;
   const languageData = {
+    HomePage: navigationResource?.HomePage || "Home Page" || "Ana Sayfa",
+    Dashboard: navigationResource?.Dashboard || "Dashboard" || "Kontrol Paneli",
+    Profile: navigationResource?.Profile || "Profile" || "Profil",
+    Details: navigationResource?.Details || "Details" || "Detaylar",
+    Companies: navigationResource?.Companies || "Companies" || "Sirketler",
+    CountrySettings:
+      navigationResource?.CountrySettings ||
+      "Country Settings" ||
+      "Ülke Ayarları",
+    Settings: navigationResource?.Settings || "Settings" || "Ayarlar",
+    LanguageManagement:
+      navigationResource?.LanguageManagement ||
+      "Language Management" ||
+      "Dil Yönetimi",
+
     Investor: navigationResource?.Investor || "Investor" || "Yatırımcı",
     Invest: navigationResource?.Invest || "Invest" || "Yatırım Yap",
     SupportCenter:
