@@ -7,13 +7,11 @@ import { useState } from "react";
 
 export function BackerList({backers}) {
     console.log(backers);
-    const [loading, setLoading] = useState(true);
     const [backersState, setBackers] = useState(backers);
 
     async function updataBackers() {
         const backers = await getBackers();
         setBackers(backers);
-        setLoading(false);
     }
     return (<CardList
         cards={

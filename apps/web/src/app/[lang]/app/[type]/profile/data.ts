@@ -106,7 +106,7 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
 const createBacker = $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto;
 const createIndividual = $UpwithCrowd_BackerService_Individuals_CreateIndividualDto;
 const backerZod = createZodObject(createBacker, Object.keys(createBacker.properties));
-const IndividualZod = createZodObject(createIndividual, Object.keys(createBacker.properties));
+const IndividualZod = createZodObject(createIndividual, Object.keys(createIndividual.properties));
 export const formSchema: Record<string, ZodObjectOrWrapped> = {
     admin: backerZod,
     user: z.object({

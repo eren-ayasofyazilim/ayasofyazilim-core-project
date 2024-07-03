@@ -92,7 +92,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: navbarResources?.["Menu:Profile"] || "Profile",
       href: getBaseLink("app/" + type + "/profile", true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
-      type: ["investor"],
+      type: "all",
       appType: "all",
     },
     {
@@ -172,6 +172,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   const filteredNavigationItems = navigationItems.filter((item) => {
     return (
+      item?.type === "all" ||
       item?.type === type ||
       item?.type?.includes(type) ||
       (item.appType === "admin" && item?.appType === appName)
