@@ -5,6 +5,7 @@ import { ZodAny, ZodAnyDef, ZodObject, z } from "zod";
 
 const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
     type: 'object',
+    required: ['name', 'taxpayerId', 'legalStatusCode', 'customerNumber', 'emailAddress'],
     properties: {
         extraProperties: {
             type: 'object',
@@ -28,7 +29,12 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
             type: 'string',
             nullable: true
         },
-        contactInformation: {
+        emailAddress: {
+            type: 'string',
+            nullable: true,
+            format: "email"
+        },
+        telephone: {
             type: 'object',
             properties: {
                 extraProperties: {
@@ -37,97 +43,57 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
                     nullable: true,
                     readOnly: true
                 },
-                telephones: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            extraProperties: {
-                                type: 'object',
-                                additionalProperties: {},
-                                nullable: true,
-                                readOnly: true
-                            },
-                            areaCode: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            localNumber: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            ituCountryCode: {
-                                type: 'string',
-                                nullable: true
-                            }
-                        },
-                        additionalProperties: false
-                    },
+                areaCode: {
+                    type: 'string',
                     nullable: true
                 },
-                addresses: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            extraProperties: {
-                                type: 'object',
-                                additionalProperties: {},
-                                nullable: true,
-                                readOnly: true
-                            },
-                            typeCode: {
-                                enum: [0, 1],
-                                type: 'integer',
-                                format: 'int32'
-                            },
-                            addressLine: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            city: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            terriority: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            postalCode: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            country: {
-                                type: 'string',
-                                nullable: true
-                            },
-                            fullAddress: {
-                                type: 'string',
-                                nullable: true
-                            }
-                        },
-                        additionalProperties: false
-                    },
+                localNumber: {
+                    type: 'string',
                     nullable: true
                 },
-                emails: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            extraProperties: {
-                                type: 'object',
-                                additionalProperties: {},
-                                nullable: true,
-                                readOnly: true
-                            },
-                            emailAddress: {
-                                type: 'string',
-                                nullable: true
-                            }
-                        },
-                        additionalProperties: false
-                    },
+                ituCountryCode: {
+                    type: 'string',
+                    nullable: true
+                }
+            },
+            additionalProperties: false
+        },
+        address: {
+            type: 'object',
+            properties: {
+                extraProperties: {
+                    type: 'object',
+                    additionalProperties: {},
+                    nullable: true,
+                    readOnly: true
+                },
+                typeCode: {
+                    enum: [0, 1],
+                    type: 'integer',
+                    format: 'int32'
+                },
+                addressLine: {
+                    type: 'string',
+                    nullable: true
+                },
+                city: {
+                    type: 'string',
+                    nullable: true
+                },
+                terriority: {
+                    type: 'string',
+                    nullable: true
+                },
+                postalCode: {
+                    type: 'string',
+                    nullable: true
+                },
+                country: {
+                    type: 'string',
+                    nullable: true
+                },
+                fullAddress: {
+                    type: 'string',
                     nullable: true
                 }
             },
