@@ -7,6 +7,7 @@ import { getToken } from "@auth/core/jwt";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
+import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 
 export async function getIdentityServiceClient(
@@ -95,6 +96,19 @@ export async function getAdministrationServiceClient(
   return new AdministrationServiceClient({
     TOKEN: token as string,
     BASE: process.env.BASE_URL,
+    HEADERS: {
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export async function getBackerServiceClient(): Promise<BackerServiceClient> {
+  const session = await auth();
+  const token = session?.access_token;
+  return new BackerServiceClient({
+    TOKEN: token as string,
+    BASE: "http://192.168.1.105:44326",
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
