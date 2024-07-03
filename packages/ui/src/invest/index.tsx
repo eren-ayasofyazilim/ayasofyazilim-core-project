@@ -19,6 +19,7 @@ import { replacePlaceholders } from "@repo/ayasofyazilim-ui/lib/replace-placehol
 import CardTable from "@repo/ayasofyazilim-ui/molecules/card-table";
 import Link from "next/link";
 import { InvestInput } from "../invest-input";
+import React from "react";
 
 export type InvestProps = {
   name: string;
@@ -174,70 +175,51 @@ export default function Invest({
                     htmlFor="terms"
                     className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {
-                      replacePlaceholders(
-                        languageData["IHaveReadAndAccept {0}"] ?? "",
-                        [
-                          {
-                            holder: "{0}",
-                            replacement: (
-                              <Button
-                                variant={"link"}
-                                className="text-xs p-0 h-0"
-                              >
-                                {languageData.RiskDeclarationForm}
-                              </Button>
-                            ),
-                          },
-                        ]
-                      )[0]
-                    }
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="terms-2" />
-                  <label
-                    htmlFor="terms-2"
-                    className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {
-                      replacePlaceholders(
-                        languageData["IHaveReadAndAccept {0}"] ?? "",
-                        [
-                          {
-                            holder: "{0}",
-                            replacement: <></>,
-                          },
-                        ]
-                      )[0]
-                    }
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="terms-3" />
-                  <label
-                    htmlFor="terms-3"
-                    className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {
-                      languageData[
-                        "IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
+                    {replacePlaceholders(
+                      languageData["IHaveReadAndAccept {0}"] ?? "",
+                      [
+                        {
+                          holder: "{0}",
+                          replacement: (
+                            <Button
+                              variant={"link"}
+                              className="text-xs p-0 h-0"
+                            >
+                              {languageData.RiskDeclarationForm}
+                            </Button>
+                          ),
+                        },
                       ]
-                    }
+                    ).map((i, index) => (
+                      <React.Fragment key={index}>{i}</React.Fragment>
+                    ))}
                   </label>
                 </div>
               </div>
-              <Button
-                className=""
-                onClick={() => {
-                  onInvest && onInvest();
-                }}
-              >
-                <Link className="sticky top-0" href="#invest">
-                  {languageData.Invest}
-                </Link>
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="terms-3" />
+                <label
+                  htmlFor="terms-3"
+                  className="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {
+                    languageData[
+                      "IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice"
+                    ]
+                  }
+                </label>
+              </div>
             </div>
+            <Button
+              className=""
+              onClick={() => {
+                onInvest && onInvest();
+              }}
+            >
+              <Link className="sticky top-0" href="#invest">
+                {languageData.Invest}
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
