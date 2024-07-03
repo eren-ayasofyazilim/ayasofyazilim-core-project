@@ -1,9 +1,94 @@
-import { $UpwithCrowd_BackerService_Individuals_CreateIndividualDto } from "@ayasofyazilim/saas/BackerService";
 import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { createZodObject } from "src/utils";
 import { ZodAny, ZodAnyDef, ZodObject, z } from "zod";
 
 const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
+    type: 'object',
+    required: ['companyName', 'taxpayerId', 'legalStatusCode', 'customerNumber', 'emailAddress', 'telephone'],
+    properties: {
+        extraProperties: {
+            type: 'object',
+            additionalProperties: {},
+            nullable: true,
+            readOnly: true
+        },
+        companyName: {
+            type: 'string',
+        },
+        taxpayerId: {
+            type: 'string',
+        },
+        legalStatusCode: {
+            type: 'string',
+        },
+        customerNumber: {
+            type: 'string',
+        },
+        emailAddress: {
+            type: 'string',
+            format: "email"
+        },
+        telephone: {
+            type: 'object',
+            properties: {
+                extraProperties: {
+                    type: 'object',
+                    additionalProperties: {},
+                    nullable: true,
+                    readOnly: true
+                },
+                areaCode: {
+                    type: 'string',
+                },
+                localNumber: {
+                    type: 'string',
+                },
+                ituCountryCode: {
+                    type: 'string',
+                }
+            },
+            additionalProperties: false
+        },
+        address: {
+            type: 'object',
+            properties: {
+                extraProperties: {
+                    type: 'object',
+                    additionalProperties: {},
+                    nullable: true,
+                    readOnly: true
+                },
+                typeCode: {
+                    enum: [0, 1],
+                    type: 'integer',
+                    format: 'int32'
+                },
+                addressLine: {
+                    type: 'string',
+                },
+                city: {
+                    type: 'string',
+                },
+                terriority: {
+                    type: 'string',
+                },
+                postalCode: {
+                    type: 'string',
+                },
+                country: {
+                    type: 'string',
+                },
+                fullAddress: {
+                    type: 'string',
+                }
+            },
+            additionalProperties: false
+        }
+    },
+    additionalProperties: false
+} as const;
+
+const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
     type: 'object',
     properties: {
         extraProperties: {
@@ -13,20 +98,30 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
             readOnly: true
         },
         name: {
-            type: 'string',
-            nullable: true
-        },
-        taxpayerId: {
-            type: 'string',
-            nullable: true
-        },
-        legalStatusCode: {
-            type: 'string',
-            nullable: true
-        },
-        customerNumber: {
-            type: 'string',
-            nullable: true
+            type: 'object',
+            properties: {
+                salutation: {
+                    type: 'string',
+                    nullable: true
+                },
+                name: {
+                    type: 'string',
+                    nullable: true
+                },
+                suffix: {
+                    type: 'string',
+                    nullable: true
+                },
+                mailingName: {
+                    type: 'string',
+                    nullable: true
+                },
+                officialName: {
+                    type: 'string',
+                    nullable: true
+                }
+            },
+            additionalProperties: false
         },
         contactInformation: {
             type: 'object',
@@ -36,6 +131,14 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
                     additionalProperties: {},
                     nullable: true,
                     readOnly: true
+                },
+                startDate: {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                endDate: {
+                    type: 'string',
+                    format: 'date-time'
                 },
                 telephones: {
                     type: 'array',
@@ -132,6 +235,36 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
                 }
             },
             additionalProperties: false
+        },
+        personalSummaries: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    date: {
+                        type: 'string',
+                        format: 'date-time'
+                    },
+                    birthDate: {
+                        type: 'string',
+                        format: 'date-time'
+                    },
+                    ethnicity: {
+                        type: 'string',
+                        nullable: true
+                    },
+                    maritalStatusCode: {
+                        type: 'string',
+                        nullable: true
+                    },
+                    religiousAffiliationName: {
+                        type: 'string',
+                        nullable: true
+                    }
+                },
+                additionalProperties: false
+            },
+            nullable: true
         }
     },
     additionalProperties: false
@@ -140,7 +273,7 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
 const createBacker = $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto;
 const createIndividual = $UpwithCrowd_BackerService_Individuals_CreateIndividualDto;
 const backerZod = createZodObject(createBacker, Object.keys(createBacker.properties));
-const IndividualZod = createZodObject(createIndividual, Object.keys(createBacker.properties));
+const IndividualZod = createZodObject(createIndividual, Object.keys(createIndividual.properties));
 export const formSchema: Record<string, ZodObjectOrWrapped> = {
     admin: backerZod,
     user: z.object({
@@ -152,4 +285,5 @@ export const formSchema: Record<string, ZodObjectOrWrapped> = {
     }),
     entreperneur: IndividualZod,
     investor: backerZod,
+    individual: IndividualZod,
 };
