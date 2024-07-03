@@ -1,8 +1,7 @@
 import { GeistSans } from "geist/font/sans";
+import { Metadata } from "next";
 import Providers from "../../providers/providers";
 import "./../globals.css";
-import { Metadata } from "next";
-import { getLocalizationResources } from "src/utils";
 
 interface IRootLayoutProps {
   params: { lang: string };
@@ -15,12 +14,7 @@ export const metadata: Metadata = {
   title: title,
   description: "Unirefund is a web app for managing your refund process.",
 };
-export default async function RootLayout({
-  children,
-  params,
-}: IRootLayoutProps) {
-  const resources = await getLocalizationResources(params.lang);
-  if (!resources) return <></>;
+export default function RootLayout({ children, params }: IRootLayoutProps) {
   return (
     <html>
       <body className={`${GeistSans.className}`} data-app-name={appName}>

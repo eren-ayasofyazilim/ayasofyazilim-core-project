@@ -1,4 +1,5 @@
 {
+  "HomePage": "Ana Sayfa",
   "Investor": "Yatırımcı",
   "Invest": "Yatırım Yap",
   "SupportCenter": "Destek Merkezi",
@@ -29,5 +30,11 @@
   "Settings": "Ayarlar",
   "Projects": "Projeler",
   "LanguageManagement": "Dil Yönetimi",
+  "IdentityManagement": "Kimlik Yönetimi",
+  "Identity:role": "Roller",
+  "Identity:user": "Kullanıcılar",
+  "Identity:claimType": "Talep Türleri",
+  "Identity:securityLogs": "Güvenlik Kayıtları",
+  "SaasManagement": "SaaS Yönetimi",
   "Investmensts": "Yatırımlar"
 }

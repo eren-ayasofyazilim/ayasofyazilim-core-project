@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   AvatarFallback,
@@ -35,6 +36,7 @@ export type ProfileMenuProps = {
   menuLinks?: MenuLinkItem[];
   signOutFunction?: any;
   resources?: { [key: string]: any } | null;
+  minNavbar?: boolean;
 };
 export function ProfileMenu({
   menuLinks,

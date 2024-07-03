@@ -97,21 +97,27 @@ export default function ProjectPage({
 
   return (
     <div className="w-full">
-      <div className="absolute top-0 left-0 right-0 h-screen z-[-1] overflow-hidden">
-        <img className="mt-[-150px]" src="https://placehold.co/1920x900" />
-      </div>
-      <div className="h-screen flex flex-col justify-end">
-        <div className="flex items-end justify-between container">
-          <div className="flex flex-col gap-2 mb-5">
-            <div className="text-4xl font-bold">{projectData.projectName}</div>
-            <div className="text-2xl ">{projectData.projectDefinition}</div>
-          </div>
-          <div className="flex flex-col gap-2 items-center mb-5">
-            <img
-              className="h-16 w-16 object-cover"
-              src="https://placehold.co/40x40/FFF/000"
-            />
-            <div>OnePlanet</div>
+      <div className="flex flex-col">
+        <div className="md:h-[600px] md:bg-[url('https://placehold.co/1920x600')] bg-cover bg-no-repeat bg-center ">
+          <img
+            src="https://placehold.co/1920x600"
+            alt="image"
+            className="w-full mt-20 mb-10 md:hidden"
+          />
+          <div className="container flex items-end justify-between h-full">
+            <div className="flex flex-col gap-2 mb-5">
+              <div className="text-4xl font-bold">
+                {projectData.projectName}
+              </div>
+              <div className="text-2xl ">{projectData.projectDefinition}</div>
+            </div>
+            <div className="flex flex-col gap-2 items-center mb-5">
+              <img
+                className="h-16 w-16 object-cover"
+                src="https://placehold.co/40x40/FFF/000"
+              />
+              <div>OnePlanet</div>
+            </div>
           </div>
         </div>
         <div className="bg-white pb-16">
