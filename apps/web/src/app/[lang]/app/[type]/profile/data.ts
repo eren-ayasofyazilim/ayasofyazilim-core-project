@@ -1,11 +1,10 @@
-import { $UpwithCrowd_BackerService_Individuals_CreateIndividualDto } from "@ayasofyazilim/saas/BackerService";
 import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { createZodObject } from "src/utils";
 import { ZodAny, ZodAnyDef, ZodObject, z } from "zod";
 
 const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
     type: 'object',
-    required: ['name', 'taxpayerId', 'legalStatusCode', 'customerNumber', 'emailAddress'],
+    required: ['companyName', 'taxpayerId', 'legalStatusCode', 'customerNumber', 'emailAddress', 'telephone'],
     properties: {
         extraProperties: {
             type: 'object',
@@ -15,23 +14,18 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
         },
         companyName: {
             type: 'string',
-            nullable: true
         },
         taxpayerId: {
             type: 'string',
-            nullable: true
         },
         legalStatusCode: {
             type: 'string',
-            nullable: true
         },
         customerNumber: {
             type: 'string',
-            nullable: true
         },
         emailAddress: {
             type: 'string',
-            nullable: true,
             format: "email"
         },
         telephone: {
@@ -45,15 +39,12 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
                 },
                 areaCode: {
                     type: 'string',
-                    nullable: true
                 },
                 localNumber: {
                     type: 'string',
-                    nullable: true
                 },
                 ituCountryCode: {
                     type: 'string',
-                    nullable: true
                 }
             },
             additionalProperties: false
@@ -74,30 +65,206 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
                 },
                 addressLine: {
                     type: 'string',
-                    nullable: true
                 },
                 city: {
                     type: 'string',
-                    nullable: true
                 },
                 terriority: {
                     type: 'string',
-                    nullable: true
                 },
                 postalCode: {
                     type: 'string',
-                    nullable: true
                 },
                 country: {
                     type: 'string',
-                    nullable: true
                 },
                 fullAddress: {
+                    type: 'string',
+                }
+            },
+            additionalProperties: false
+        }
+    },
+    additionalProperties: false
+} as const;
+
+const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
+    type: 'object',
+    properties: {
+        extraProperties: {
+            type: 'object',
+            additionalProperties: {},
+            nullable: true,
+            readOnly: true
+        },
+        name: {
+            type: 'object',
+            properties: {
+                salutation: {
+                    type: 'string',
+                    nullable: true
+                },
+                name: {
+                    type: 'string',
+                    nullable: true
+                },
+                suffix: {
+                    type: 'string',
+                    nullable: true
+                },
+                mailingName: {
+                    type: 'string',
+                    nullable: true
+                },
+                officialName: {
                     type: 'string',
                     nullable: true
                 }
             },
             additionalProperties: false
+        },
+        contactInformation: {
+            type: 'object',
+            properties: {
+                extraProperties: {
+                    type: 'object',
+                    additionalProperties: {},
+                    nullable: true,
+                    readOnly: true
+                },
+                startDate: {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                endDate: {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                telephones: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            extraProperties: {
+                                type: 'object',
+                                additionalProperties: {},
+                                nullable: true,
+                                readOnly: true
+                            },
+                            areaCode: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            localNumber: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            ituCountryCode: {
+                                type: 'string',
+                                nullable: true
+                            }
+                        },
+                        additionalProperties: false
+                    },
+                    nullable: true
+                },
+                addresses: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            extraProperties: {
+                                type: 'object',
+                                additionalProperties: {},
+                                nullable: true,
+                                readOnly: true
+                            },
+                            typeCode: {
+                                enum: [0, 1],
+                                type: 'integer',
+                                format: 'int32'
+                            },
+                            addressLine: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            city: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            terriority: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            postalCode: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            country: {
+                                type: 'string',
+                                nullable: true
+                            },
+                            fullAddress: {
+                                type: 'string',
+                                nullable: true
+                            }
+                        },
+                        additionalProperties: false
+                    },
+                    nullable: true
+                },
+                emails: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            extraProperties: {
+                                type: 'object',
+                                additionalProperties: {},
+                                nullable: true,
+                                readOnly: true
+                            },
+                            emailAddress: {
+                                type: 'string',
+                                nullable: true
+                            }
+                        },
+                        additionalProperties: false
+                    },
+                    nullable: true
+                }
+            },
+            additionalProperties: false
+        },
+        personalSummaries: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    date: {
+                        type: 'string',
+                        format: 'date-time'
+                    },
+                    birthDate: {
+                        type: 'string',
+                        format: 'date-time'
+                    },
+                    ethnicity: {
+                        type: 'string',
+                        nullable: true
+                    },
+                    maritalStatusCode: {
+                        type: 'string',
+                        nullable: true
+                    },
+                    religiousAffiliationName: {
+                        type: 'string',
+                        nullable: true
+                    }
+                },
+                additionalProperties: false
+            },
+            nullable: true
         }
     },
     additionalProperties: false
@@ -118,4 +285,5 @@ export const formSchema: Record<string, ZodObjectOrWrapped> = {
     }),
     entreperneur: IndividualZod,
     investor: backerZod,
+    individual: IndividualZod,
 };

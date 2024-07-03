@@ -20,23 +20,33 @@ export function BackerForm({
 }) {
   const [formType, setFormType] = useState<string>(type);
   const [data, setData] = useState<any>();
+  const functionTypes: Record<string, any> = {
+    individual: {
+      post: postBacker,
+      put: putBacker,
+    },
+    organization: {
+      post: postBacker,
+      put: putBacker,
+    },
+  }
   function submitFormData(formData) {
     if (profileId === "new") {
-      postBacker(formData);
+      functionTypes[formType].post(formData);
     } else {
-      putBacker(profileId, formData);
+      functionTypes[formType].put(profileId, formData);
     }
   }
   return (
     <>
       <div className="flex flex-row justify-end">
         <Button className="w-48 flex float-right" onClick={() => {
-          if (formType === "user") {
+          if (formType === "individual") {
             setFormType("investor");
           } else {
-            setFormType("user");
+            setFormType("individual");
           }
-        }}> Change to {formType === "user" ? "investor" : "user"} profile</Button>
+        }}> Change to {formType === "individual" ? "investor" : "individual"} profile</Button>
       </div>
       <div className="grid gap-4 py-4">
         <ScrollArea className="max-h-[600px]">
