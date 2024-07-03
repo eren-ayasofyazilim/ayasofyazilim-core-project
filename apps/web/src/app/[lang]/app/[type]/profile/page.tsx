@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import CardList from "@repo/ayasofyazilim-ui/organisms/card-list";
 import Link from "next/link";
-import { deleteBacker, getBackers } from "./actions";
+import { deleteBacker, getBackers, getBackersIndividuals } from "./actions";
 import { BackerList } from "./backerlist";
+import { ScrollBar } from "@/components/ui/scroll-area";
 
 export default async function Page({
   params,
@@ -12,7 +13,8 @@ export default async function Page({
   params: { lang: string; type: string };
 }) {
   const type = params.type;
-  const backers = await getBackers();
+  const backersComapnies = await getBackers();
+  const backersIndividuals = await getBackersIndividuals();
 
   return (
     <>
@@ -23,8 +25,15 @@ export default async function Page({
           </Link>
         </Button>
       </div>
+      <>Companies</>
       <ScrollArea>
-        <BackerList backers={backers} />
+        {/* <ScrollBar orientation="horizontal" /> */}
+        <BackerList backers={backersComapnies} />
+      </ScrollArea>
+      <>Individuals</>
+      <ScrollArea>
+        {/* <ScrollBar orientation="horizontal" /> */}
+        <BackerList backers={backersIndividuals} />
       </ScrollArea>
     </>
   );

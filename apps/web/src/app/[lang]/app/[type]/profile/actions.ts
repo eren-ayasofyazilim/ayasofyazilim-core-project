@@ -9,7 +9,7 @@ function populateCustomFormData(formdata: any) {
         {
           organizations: [
             {
-              name: formdata.name,
+              name: formdata.companyName,
               taxpayerId: formdata.taxpayerId,
               legalStatusCode: formdata.legalStatusCode,
               customerNumber: formdata.customerNumber,
@@ -60,6 +60,7 @@ export async function getBackers() {
       id: id || "",
     });
     const organization = item.entityInformations?.[0]?.organizations?.[0];
+    if (!organization) continue;
     returnArray.push({
       name: organization?.name,
       legalStatusCode: organization?.legalStatusCode,
@@ -94,8 +95,8 @@ export async function getBacker(profileId: string) {
     id: profileId,
   });
   const organization = result.entityInformations?.[0]?.organizations?.[0];
-  return  {
-    name: organization?.name,
+    return  {
+    companyName: organization?.name,
     legalStatusCode: organization?.legalStatusCode,
     taxpayerId: organization?.taxpayerId,
     customerNumber: "not available by backend API",
@@ -103,4 +104,27 @@ export async function getBacker(profileId: string) {
     telephone: organization?.contactInformation?.telephones?.[0],
     address: organization?.contactInformation?.addresses?.[0],
   } || {};
+}
+
+export async function getBackersIndividuals() {
+  const client = await getBackerServiceClient();
+  const result = await client.backer.getApiBackerServiceBackers({
+    maxResultCount: 1000,
+  });
+  const itemsIds = result.items?.map((item) => item.id) || [];
+  const returnArray = [];
+  for (const id of itemsIds) {
+    const item = await client.backer.getApiBackerServiceBackersDetailById({
+      id: id || "",
+    });
+    const individual = item.entityInformations?.[0]?.individuals?.[0];
+    if (!individual) continue;
+    returnArray.push({
+      name: individual?.name?.name,
+      legalStatusCode: individual?.name?.salutation,
+      taxpayerId: individual?.name?.id,
+      backerId: id,
+    });
+  }
+  return returnArray;
 }

@@ -3,13 +3,14 @@ import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import { BackerForm } from "./form";
 import { getBacker } from "../actions";
 import { formSchema } from "../data";
+import { Button } from "@/components/ui/button";
 
 export default async function Page({
   params,
 }: {
   params: { lang: string; type: string; profileId: string };
 }) {
-  const { profileId, type } = params;
+  let { profileId, type } = params;
   let backer = {};
   if (profileId !== "new") {
     backer = await getBacker(profileId);

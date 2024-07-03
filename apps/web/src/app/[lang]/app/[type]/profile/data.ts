@@ -13,7 +13,7 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
             nullable: true,
             readOnly: true
         },
-        name: {
+        companyName: {
             type: 'string',
             nullable: true
         },
