@@ -46,8 +46,8 @@ export default function Invest({
   onInvest,
 }: InvestProps): JSX.Element {
   return (
-    <div className="bg-gray-200 w-full h-screen flex items-center" id="invest">
-      <div className="grid grid-cols-3 justify-center gap-4 p-4 container">
+    <div className="w-full h-screen flex items-center" id="invest">
+      <div className="border-4 grid grid-cols-3 justify-center gap-4 p-4 container">
         <div className="flex flex-col gap-4 h-full">
           <div className="bg-white">
             <Avatar className="rounded-none w-full h-auto">
