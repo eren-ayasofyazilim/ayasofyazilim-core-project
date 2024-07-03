@@ -288,14 +288,14 @@ export function DataTableDemo({
         <Dialog>
           <DialogTrigger asChild>
             <CustomButton variant="outline" className="ml-auto">
-              New Translation
+              Yeni Çeviri
             </CustomButton>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>New Translation</DialogTitle>
+              <DialogTitle>Yeni Çeviri</DialogTitle>
               <DialogDescription>
-                Enter the translation you want to add.
+                Çevirisini eklemek istediğiniz çeviriyi girin.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">
