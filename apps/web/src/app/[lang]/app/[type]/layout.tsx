@@ -19,6 +19,7 @@ import {
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { dataConfig } from "./dashboard/data";
 import { redirect } from "next/navigation";
+import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 type navigationItmes = NavigationItem & {
   type: string | string[];
   appType?: string;
@@ -44,6 +45,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   const userNavigation = {
     username: user?.userName ?? undefined,
     initials: user?.name?.substring(0, 2).toUpperCase(),
+    user: user,
     email: user?.email ?? undefined,
     imageURL: "https://github.com/shadcn.png",
     menuLinks: [
@@ -184,11 +186,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       navigationItems={filteredNavigationItems}
       userNavigation={userNavigation}
       topBarComponent={
-        <div className="w-min flex gap-4">
-          <Input
-            className="w-90"
+        <div className="w-min flex gap-4 mr-5">
+          {/* <Input
+            className="w-90 mr-auto"
             placeholder={`${resources?.AbpUi?.texts?.Search}...`}
-          />
+          /> */}
+          <ProfileMenu className="" {...userNavigation} />
           <LanguageSelector
             menuAlign="end"
             cultureName={params.lang}
