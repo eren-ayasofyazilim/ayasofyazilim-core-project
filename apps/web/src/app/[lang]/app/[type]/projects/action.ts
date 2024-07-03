@@ -117,7 +117,9 @@ export async function deleteProjectServer(
       id: body.id,
     });
     revalidatePath("/[lang]/app/[type]/projects", "page");
+    revalidatePath("/[lang]/app/[type]/[projectId]", "page");
     revalidatePath("/[lang]/public/projects", "page");
+    revalidatePath("/[lang]/public/projects/[projectId]", "page");
     return {
       status: 200,
       projectData: response,
