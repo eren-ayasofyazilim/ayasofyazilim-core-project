@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getProjectsServer } from "./action";
+import { ProjectStatusEnums } from "src/enums/project";
 
 export default async function Page({
   params,
@@ -57,6 +58,7 @@ export default async function Page({
                 languageData={languageData}
                 projectURL={`${projectURL}/${project.id}`}
                 actionText={languageData.ViewProject}
+                ProjectStatusEnums={ProjectStatusEnums}
               />
             ))}
           </div>

@@ -107,6 +107,17 @@ export async function getResourceData(lang: string) {
     "DisplayName:Name": accountResource?.["DisplayName:Name"] || "Name",
     "DisplayName:Surname":
       accountResource?.["DisplayName:Surname"] || "Surname",
+
+    IN_DRAFT_STAGE: projectResource?.["IN_DRAFT_STAGE"] || "Draft",
+    SENT_FOR_APPROVAL:
+      projectResource?.["SENT_FOR_APPROVAL"] || "Sent for Approval",
+    NOT_APPROVED: projectResource?.["NOT_APPROVED"] || "Rejected",
+    APPROVED: projectResource?.["APPROVED"] || "Approved",
+    FUNDABLE: projectResource?.["FUNDABLE"] || "Fundable",
+    FUNDING_SUCCESSFUL: projectResource?.["FUNDING_SUCCESSFUL"] || "Successful",
+    FUNDING_UNSUCCESSFUL:
+      projectResource?.["FUNDING_UNSUCCESSFUL"] || "Unsuccessful",
+    FUNDING_COMPLETED: projectResource?.["FUNDING_COMPLETED"] || "Completed",
   };
   return {
     languageData,

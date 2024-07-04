@@ -183,26 +183,7 @@ export default function ProjectForm({
       setIsLoading(false);
     }
   }
-  async function onSendToApprovalClick() {
-    setIsLoading(true);
-    try {
-      const result = await updateProjectStatusServer(
-        projectId,
-        ProjectStatusEnums.SENT_FOR_APPROVAL
-      );
 
-      if (result.status === 200) {
-        setIsSubmitDisabled(true);
-        toast.success("Başarılı.");
-      } else {
-        toast.error(result?.message);
-      }
-    } catch (error: any) {
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
   async function onSaveClick() {
     setIsLoading(true);
     try {
@@ -237,37 +218,6 @@ export default function ProjectForm({
 
   return (
     <>
-      {profileType === "entreperneur" && (
-        <div className="flex justify-end mb-3">
-          <form action={onSendToApprovalClick}>
-            <CustomButton
-              variant="default"
-              className="w-[220px] bg-transparent text-primary border-primary border hover:bg-primary hover:text-white"
-              disabled={
-                projectData.status !== ProjectStatusEnums.IN_DRAFT_STAGE
-              }
-            >
-              <>
-                {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL
-                  ? "Onay Bekliyor"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.NOT_APPROVED
-                  ? "Değerlendirmeyi Geçemedi"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.APPROVED
-                  ? "Onaylandı"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.FUNDABLE
-                  ? "Yayında"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE
-                  ? "Onaya Gönder"
-                  : ""}
-              </>
-            </CustomButton>
-          </form>
-        </div>
-      )}
       <Accordion
         type="single"
         collapsible
@@ -349,41 +299,42 @@ export default function ProjectForm({
               </div>
             </div>
             <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
-              {profileType === "admin" && (
-                <>
-                  <CustomButton
-                    variant="destructive"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        projectName: false,
-                        projectDefinition: false,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("item-2");
-                    }}
-                  >
-                    Reddet
-                  </CustomButton>
+              {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+                profileType === "admin" && (
+                  <>
+                    <CustomButton
+                      variant="destructive"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          projectName: false,
+                          projectDefinition: false,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("item-2");
+                      }}
+                    >
+                      Reddet
+                    </CustomButton>
 
-                  <CustomButton
-                    customVariant="success"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        projectName: true,
-                        projectDefinition: true,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("item-2");
-                    }}
-                  >
-                    Onayla
-                  </CustomButton>
-                </>
-              )}
+                    <CustomButton
+                      customVariant="success"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          projectName: true,
+                          projectDefinition: true,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("item-2");
+                      }}
+                    >
+                      Onayla
+                    </CustomButton>
+                  </>
+                )}
               {profileType === "entreperneur" && (
                 <CustomButton
                   variant="secondary"
@@ -645,40 +596,41 @@ export default function ProjectForm({
             </div>
 
             <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
-              {profileType === "admin" && (
-                <>
-                  <CustomButton
-                    variant="destructive"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        overFunding: false,
-                        additionalFundRate: false,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("");
-                    }}
-                  >
-                    Reddet
-                  </CustomButton>
-                  <CustomButton
-                    customVariant="success"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        overFunding: true,
-                        additionalFundRate: true,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("");
-                    }}
-                  >
-                    Onayla
-                  </CustomButton>
-                </>
-              )}
+              {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+                profileType === "admin" && (
+                  <>
+                    <CustomButton
+                      variant="destructive"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          overFunding: false,
+                          additionalFundRate: false,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("");
+                      }}
+                    >
+                      Reddet
+                    </CustomButton>
+                    <CustomButton
+                      customVariant="success"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          overFunding: true,
+                          additionalFundRate: true,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("");
+                      }}
+                    >
+                      Onayla
+                    </CustomButton>
+                  </>
+                )}
               {profileType === "entreperneur" && (
                 <CustomButton
                   variant="secondary"
@@ -695,24 +647,25 @@ export default function ProjectForm({
         </AccordionItem>
       </Accordion>
       <div className="mt-8 flex flex-row flex-wrap justify-end gap-5">
-        {profileType === "admin" && (
-          <form action={onEvaluateClick}>
-            <CustomButton
-              variant="secondary"
-              isLoading={isLoading}
-              disabled={
-                isLoading ||
-                !formValuesValidationChanged ||
-                Object.values(formValuesValidation)?.filter(
-                  (i) => i === undefined
-                ).length !== 0
-              }
-              className="w-[200px]"
-            >
-              Değerlendirmeyi Tamamla
-            </CustomButton>
-          </form>
-        )}
+        {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+          profileType === "admin" && (
+            <form action={onEvaluateClick}>
+              <CustomButton
+                variant="secondary"
+                isLoading={isLoading}
+                disabled={
+                  isLoading ||
+                  !formValuesValidationChanged ||
+                  Object.values(formValuesValidation)?.filter(
+                    (i) => i === undefined
+                  ).length !== 0
+                }
+                className="w-[200px]"
+              >
+                Değerlendirmeyi Tamamla
+              </CustomButton>
+            </form>
+          )}
         {profileType === "entreperneur" && (
           <>
             <Dialog>
