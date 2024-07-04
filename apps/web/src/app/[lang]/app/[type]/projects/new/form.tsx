@@ -284,7 +284,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
               <CustomButton className="mt-4">
                 <Link
                   href={getBaseLink(
-                    `app/entreperneur/projects/${projectId}`,
+                    `app/entrepreneur/projects/${projectId}`,
                     true
                   )}
                 >
