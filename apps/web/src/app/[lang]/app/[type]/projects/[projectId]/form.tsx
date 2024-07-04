@@ -58,18 +58,14 @@ const defaultFormValuesValidation = {
   fundCollectionType: undefined,
 };
 export interface INewProjectFormProps {
-  resources: {
-    [
-      key: string
-    ]: Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
-  };
+  languageData: any;
   projectData: UpwithCrowd_ProjectService_Projects_ProjectDto;
   projectId: string;
   profileType: string;
 }
 export default function ProjectForm({
   projectId,
-  resources,
+  languageData,
   projectData,
   profileType,
 }: INewProjectFormProps) {
@@ -93,58 +89,6 @@ export default function ProjectForm({
     isLoading ||
     (projectData.status !== ProjectStatusEnums.IN_DRAFT_STAGE &&
       projectData.status !== ProjectStatusEnums.NOT_APPROVED);
-
-  const projectResource = resources?.["ProjectService"]?.texts;
-  const uiResource = resources?.["AbpUi"]?.texts;
-
-  const languageData = {
-    Next: uiResource?.["PagerNext"] || "Next",
-    Previous: uiResource?.["PagerPrevious"] || "Previous",
-    CreateProject: projectResource?.["CreateProject"] || "Create Project",
-    ProjectDetails: projectResource?.["ProjectDetails"] || "Project Details",
-    AdditionalFunding:
-      projectResource?.["AdditionalFunding"] || "Additional Funding",
-    Summary: uiResource?.["Summary"] || "Summary",
-    ViewProject: projectResource?.["ViewProject"] || "View Project",
-    "Messages:ProjectCreated":
-      projectResource?.["Messages:ProjectCreated"] ||
-      "The project has been created successfully.",
-    "Messages:ProjectCreationError":
-      projectResource?.["Messages:ProjectCreationError"] ||
-      "An error occurred while creating the project.",
-    ProjectName: projectResource?.["ProjectName"] || "Project name",
-    ProjectNameInfo:
-      projectResource?.["ProjectNameInfo"] ||
-      "A headline that describes your project in a way that attracts investors' attention.",
-    ProjectDescription:
-      projectResource?.["ProjectDescription"] || "Project description",
-    ProjectDescriptionInfo:
-      projectResource?.["ProjectDescriptionInfo"] ||
-      "Briefly describe your project in a way that attracts investors' attention.",
-    FundCollectionType:
-      projectResource?.["FundCollectionType"] || "Project type",
-    FundCollectionTypeInfo:
-      projectResource?.["FundCollectionTypeInfo"] || "Type of your project.",
-    FundCollectionTypeSHRE:
-      projectResource?.["FundCollectionTypeSHRE"] || "Share based",
-    FundCollectionTypeDBIT:
-      projectResource?.["FundCollectionTypeDBIT"] || "Dept based",
-    FundableAmount: projectResource?.["FundableAmount"] || "Fundable amount",
-    FundableAmountInfo:
-      projectResource?.["FundableAmountInfo"] ||
-      "The amount of investment you want to make in your project.",
-    AdditionalFundingInfo:
-      projectResource?.["AdditionalFundingInfo"] ||
-      "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
-    AdditionalFundingYes: projectResource?.["AdditionalFundingYes"] || "Yes",
-    AdditionalFundingNo: projectResource?.["AdditionalFundingNo"] || "No",
-    AdditionalFundingRate:
-      projectResource?.["AdditionalFundingRate"] ||
-      "Rate of additional funding",
-    AdditionalFundingRateInfo:
-      projectResource?.["AdditionalFundingRateInfo"] ||
-      "The rate of additional funding that will be collected in case your project is overfunded.",
-  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -183,26 +127,7 @@ export default function ProjectForm({
       setIsLoading(false);
     }
   }
-  async function onSendToApprovalClick() {
-    setIsLoading(true);
-    try {
-      const result = await updateProjectStatusServer(
-        projectId,
-        ProjectStatusEnums.SENT_FOR_APPROVAL
-      );
 
-      if (result.status === 200) {
-        setIsSubmitDisabled(true);
-        toast.success("Başarılı.");
-      } else {
-        toast.error(result?.message);
-      }
-    } catch (error: any) {
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
   async function onSaveClick() {
     setIsLoading(true);
     try {
@@ -237,37 +162,6 @@ export default function ProjectForm({
 
   return (
     <>
-      {profileType === "entrepreneur" && (
-        <div className="flex justify-end mb-3">
-          <form action={onSendToApprovalClick}>
-            <CustomButton
-              variant="default"
-              className="w-[220px] bg-transparent text-primary border-primary border hover:bg-primary hover:text-white"
-              disabled={
-                projectData.status !== ProjectStatusEnums.IN_DRAFT_STAGE
-              }
-            >
-              <>
-                {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL
-                  ? "Onay Bekliyor"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.NOT_APPROVED
-                  ? "Değerlendirmeyi Geçemedi"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.APPROVED
-                  ? "Onaylandı"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.FUNDABLE
-                  ? "Yayında"
-                  : ""}
-                {projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE
-                  ? "Onaya Gönder"
-                  : ""}
-              </>
-            </CustomButton>
-          </form>
-        </div>
-      )}
       <Accordion
         type="single"
         collapsible
@@ -349,41 +243,42 @@ export default function ProjectForm({
               </div>
             </div>
             <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
-              {profileType === "admin" && (
-                <>
-                  <CustomButton
-                    variant="destructive"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        projectName: false,
-                        projectDefinition: false,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("item-2");
-                    }}
-                  >
-                    Reddet
-                  </CustomButton>
+              {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+                profileType === "admin" && (
+                  <>
+                    <CustomButton
+                      variant="destructive"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          projectName: false,
+                          projectDefinition: false,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("item-2");
+                      }}
+                    >
+                      Reddet
+                    </CustomButton>
 
-                  <CustomButton
-                    customVariant="success"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        projectName: true,
-                        projectDefinition: true,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("item-2");
-                    }}
-                  >
-                    Onayla
-                  </CustomButton>
-                </>
-              )}
+                    <CustomButton
+                      customVariant="success"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          projectName: true,
+                          projectDefinition: true,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("item-2");
+                      }}
+                    >
+                      Onayla
+                    </CustomButton>
+                  </>
+                )}
               {profileType === "entrepreneur" && (
                 <CustomButton
                   variant="secondary"
@@ -645,40 +540,41 @@ export default function ProjectForm({
             </div>
 
             <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
-              {profileType === "admin" && (
-                <>
-                  <CustomButton
-                    variant="destructive"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        overFunding: false,
-                        additionalFundRate: false,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("");
-                    }}
-                  >
-                    Reddet
-                  </CustomButton>
-                  <CustomButton
-                    customVariant="success"
-                    className="w-[120px]"
-                    onClick={() => {
-                      setFormValuesValidation({
-                        ...formValuesValidation,
-                        overFunding: true,
-                        additionalFundRate: true,
-                      });
-                      setFormValuesValidationChanged(true);
-                      setAccordionTab("");
-                    }}
-                  >
-                    Onayla
-                  </CustomButton>
-                </>
-              )}
+              {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+                profileType === "admin" && (
+                  <>
+                    <CustomButton
+                      variant="destructive"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          overFunding: false,
+                          additionalFundRate: false,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("");
+                      }}
+                    >
+                      Reddet
+                    </CustomButton>
+                    <CustomButton
+                      customVariant="success"
+                      className="w-[120px]"
+                      onClick={() => {
+                        setFormValuesValidation({
+                          ...formValuesValidation,
+                          overFunding: true,
+                          additionalFundRate: true,
+                        });
+                        setFormValuesValidationChanged(true);
+                        setAccordionTab("");
+                      }}
+                    >
+                      Onayla
+                    </CustomButton>
+                  </>
+                )}
               {profileType === "entrepreneur" && (
                 <CustomButton
                   variant="secondary"
@@ -695,24 +591,25 @@ export default function ProjectForm({
         </AccordionItem>
       </Accordion>
       <div className="mt-8 flex flex-row flex-wrap justify-end gap-5">
-        {profileType === "admin" && (
-          <form action={onEvaluateClick}>
-            <CustomButton
-              variant="secondary"
-              isLoading={isLoading}
-              disabled={
-                isLoading ||
-                !formValuesValidationChanged ||
-                Object.values(formValuesValidation)?.filter(
-                  (i) => i === undefined
-                ).length !== 0
-              }
-              className="w-[200px]"
-            >
-              Değerlendirmeyi Tamamla
-            </CustomButton>
-          </form>
-        )}
+        {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL &&
+          profileType === "admin" && (
+            <form action={onEvaluateClick}>
+              <CustomButton
+                variant="secondary"
+                isLoading={isLoading}
+                disabled={
+                  isLoading ||
+                  !formValuesValidationChanged ||
+                  Object.values(formValuesValidation)?.filter(
+                    (i) => i === undefined
+                  ).length !== 0
+                }
+                className="w-[200px]"
+              >
+                Değerlendirmeyi Tamamla
+              </CustomButton>
+            </form>
+          )}
         {profileType === "entrepreneur" && (
           <>
             <Dialog>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getProjectsServer } from "./action";
+import { ProjectStatusEnums } from "src/enums/project";
 
 export default async function Page({
   params,
@@ -43,7 +44,7 @@ export default async function Page({
             {params.type === "entrepreneur" && (
               <div className=" flex flex-row flex-wrap justify-end items-center">
                 <Link href={getBaseLink("app/entrepreneur/projects/new", true)}>
-                  <CustomButton variant="outline">New Project</CustomButton>
+                  <CustomButton variant="outline">{languageData.CreateProject}</CustomButton>
                 </Link>
               </div>
             )}
@@ -55,6 +56,7 @@ export default async function Page({
                 languageData={languageData}
                 projectURL={`${projectURL}/${project.id}`}
                 actionText={languageData.ViewProject}
+                ProjectStatusEnums={ProjectStatusEnums}
               />
             ))}
           </div>

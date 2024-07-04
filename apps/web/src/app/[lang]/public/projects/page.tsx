@@ -42,6 +42,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
                     languageData={languageData}
                     projectURL={`${projectURL}/${project.id}`}
                     actionText={languageData.InvestNow}
+                    showProgress={true}
+                    ProjectStatusEnums={ProjectStatusEnums}
                   />
                 ))}
               </div>
@@ -60,6 +62,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
                     languageData={languageData}
                     projectURL={`${projectURL}/${project.id}`}
                     actionText={languageData.InvestNow}
+                    showProgress={false}
+                    ProjectStatusEnums={ProjectStatusEnums}
                   />
                 ))}
               </div>
