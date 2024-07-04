@@ -168,6 +168,17 @@ export async function getBacker(profileId: string) {
       type: "organization",
     } || {};
   }
+  const individuals = result.entityInformations?.[0]?.individuals?.length
+  if (individuals && individuals > 0) {
+    const individual = result.entityInformations?.[0]?.individuals?.[0];
+    return {
+      name: individual?.name?.name,
+      emailAddress: individual?.contactInformation?.emails?.[0]?.emailAddress,
+      telephone: individual?.contactInformation?.telephones?.[0],
+      address: individual?.contactInformation?.addresses?.[0],
+      type: "individual",
+    } || {};
+  }
 
 }
 

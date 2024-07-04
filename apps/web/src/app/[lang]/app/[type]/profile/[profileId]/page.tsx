@@ -17,7 +17,7 @@ export default async function Page({
   }
   return (
       <div className="container flex flex-col m-4 max-h-[90vh]">
-          <BackerForm type={type} backer={backer} profileId={profileId} />
+          <BackerForm type={backer?.type || type} backer={backer} profileId={profileId} />
       </div>
   );
 }

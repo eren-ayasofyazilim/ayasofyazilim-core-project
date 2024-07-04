@@ -188,4 +188,5 @@ export const formSchema: Record<string, ZodObjectOrWrapped> = {
     entreperneur: IndividualZod,
     investor: backerZod,
     individual: IndividualZod,
+    organization: backerZod,
 };
