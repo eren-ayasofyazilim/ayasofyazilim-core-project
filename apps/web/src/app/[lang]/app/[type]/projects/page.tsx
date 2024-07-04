@@ -43,7 +43,9 @@ export default async function Page({
             {params.type === "entreperneur" && (
               <div className=" flex flex-row flex-wrap justify-end items-center">
                 <Link href={getBaseLink("app/entreperneur/projects/new", true)}>
-                  <CustomButton variant="outline">New Project</CustomButton>
+                  <CustomButton variant="outline">
+                    {languageData.CreateProject}
+                  </CustomButton>
                 </Link>
               </div>
             )}
