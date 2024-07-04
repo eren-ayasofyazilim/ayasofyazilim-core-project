@@ -24,12 +24,12 @@ export default async function Page({
         </Button>
       </div>
       <>Companies</>
-      <ScrollArea>
+      <ScrollArea className="p-2 border-2">
         {/* <ScrollBar orientation="horizontal" /> */}
         <BackerList backers={backersComapnies} type="companies" />
       </ScrollArea>
       <>Individuals</>
-      <ScrollArea>
+      <ScrollArea className="p-2 border-2">
         {/* <ScrollBar orientation="horizontal" /> */}
         <BackerList backers={backersIndividuals} type="individuals" />
       </ScrollArea>
