@@ -15,15 +15,66 @@ export function getFundCollectionType(languageData: any, fundType?: string) {
     ? languageData["FundCollectionTypeSHRE"]
     : languageData["FundCollectionTypeDBIT"];
 }
+export function getProjectStartDate(
+  languageData: any,
+  projectStartDate: string
+) {
+  return projectStartDate !== "0001-01-01T00:00:00"
+    ? new Date(projectStartDate ?? 0)
+        .toLocaleString("tr", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })
+        .split(" ,")[0]
+    : languageData.StartingSoon;
+}
 interface IProjectCardProps {
   languageData: any;
   project: any;
   projectURL: string;
   horizontal?: boolean;
-  actionText: string;
+  actionText?: string;
   showProgress?: boolean;
+  ProjectStatusEnums: any;
 }
+interface IInformationLineProps {
+  label: string;
+  value: string;
+}
+interface IStatusBadgeProps {
+  status: string;
+  title: string;
+}
+function StatusBadge({ status, title }: IStatusBadgeProps) {
+  const badgeColors = {
+    IN_DRAFT_STAGE: "bg-gray-300 border-gray-200",
+    SENT_FOR_APPROVAL: "bg-amber-400 text-white border-amber-300",
+    APPROVED: "bg-purple-500 text-white border-purple-400",
+    NOT_APPROVED: "bg-red-400 text-white border-red-300",
+    FUNDABLE: "bg-cyan-500 text-white border-cyan-400",
+    FUNDING_SUCCESSFUL: "bg-emerald-500 text-white border-emerald-400",
+    FUNDING_UNSUCCESSFUL: "bg-pink-950 text-white border-pink-800",
+    FUNDING_COMPLETED: "bg-gray-300 border-gray-200",
+  };
+  const className = badgeColors[status as keyof typeof badgeColors];
 
+  return (
+    <div
+      className={`px-2 py-1 rounded-md border-2 font-bold text-xs flex items-center justify-center ${className}`}
+    >
+      {title}
+    </div>
+  );
+}
+function InformationLine({ label, value }: IInformationLineProps) {
+  return (
+    <div className="items-center py-1 flex justify-between text-center flex-row">
+      <div className="text-xs flex gap-0 font-semibold">{label}</div>
+      <div className="text-xs flex gap-0">{value}</div>
+    </div>
+  );
+}
 export default function ProjectCard({
   languageData,
   project,
@@ -31,17 +82,33 @@ export default function ProjectCard({
   horizontal = false,
   actionText,
   showProgress,
+  ProjectStatusEnums,
 }: IProjectCardProps): JSX.Element {
+  const fundCollectionType = getFundCollectionType(
+    languageData,
+    project.fundCollectionType
+  );
+  const projectStartDate = getProjectStartDate(
+    languageData,
+    project.projectStartDate
+  );
+  const projectStatus = ProjectStatusEnums[project.status || 0];
   return (
     <div
       key={project.id}
       className={`bg-white border rounded-md flex ${horizontal ? "flex-row" : "flex-col basis-1/3"}`}
     >
-      <div className={horizontal ? "basis-2/4" : ""}>
+      <div className={horizontal ? "basis-2/4 relative" : "relative"}>
         <img
           src="https://placehold.co/1920x600"
           className={`h-full object-cover min-h-[200px] ${horizontal ? "" : "rounded-t-md"}`}
         />
+        <div className="absolute top-3 right-3">
+          <StatusBadge
+            title={languageData[projectStatus]}
+            status={projectStatus}
+          />
+        </div>
       </div>
       <div className={horizontal ? "basis-2/4" : ""}>
         {showProgress && (
@@ -68,40 +135,18 @@ export default function ProjectCard({
         </div>
 
         <div className="py-4 px-6 flex flex-col gap-2">
-          <div className="items-center py-1 flex justify-between  text-center flex-row">
-            <div className="text-xs flex gap-0 font-semibold">
-              {languageData.FundCollectionType}
-            </div>
-            <div className="text-xs flex gap-0">
-              {project.fundCollectionType === "SHRE"
-                ? languageData["FundCollectionTypeSHRE"]
-                : languageData["FundCollectionTypeDBIT"]}
-            </div>
-          </div>
-          <div className="items-center py-1 flex justify-between  text-center flex-row">
-            <div className="text-xs flex gap-0 font-semibold">
-              {languageData.AdditionalFunding}
-            </div>
-            <div className="text-xs flex gap-0">
-              %{project.additionalFundRate || 0}
-            </div>
-          </div>
-          <div className="items-center py-1 flex justify-between  text-center flex-row">
-            <div className="text-xs flex gap-0 font-semibold">
-              {languageData.CampaignStartDate}
-            </div>
-            <div className="text-xs flex gap-0">
-              {project.projectStartDate !== "0001-01-01T00:00:00"
-                ? new Date(project.projectStartDate ?? 0)
-                    .toLocaleString("tr", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })
-                    .split(" ,")[0]
-                : languageData.StartingSoon}
-            </div>
-          </div>
+          <InformationLine
+            label={languageData.FundCollectionType}
+            value={fundCollectionType}
+          />
+          <InformationLine
+            label={languageData.AdditionalFunding}
+            value={`%${project.additionalFundRate || 0}`}
+          />
+          <InformationLine
+            label={languageData.CampaignStartDate}
+            value={projectStartDate}
+          />
         </div>
         <div>
           <div className="flex flex-row justify-between items-center bg-gray-100">
@@ -123,15 +168,17 @@ export default function ProjectCard({
             </div>
           </div>
         </div>
-        <div className="px-4 py-3">
-          <Button
-            asChild
-            customVariant="primary"
-            className="rounded-full w-full"
-          >
-            <Link href={projectURL}>{actionText}</Link>
-          </Button>
-        </div>
+        {actionText && (
+          <div className="px-4 py-3">
+            <Button
+              asChild
+              customVariant="primary"
+              className="rounded-full w-full"
+            >
+              <Link href={projectURL}>{actionText}</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
