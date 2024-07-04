@@ -185,7 +185,7 @@ export const formSchema: Record<string, ZodObjectOrWrapped> = {
         address: z.string(),
         email: z.string().email(),
     }),
-    entreperneur: IndividualZod,
+    entrepreneur: IndividualZod,
     investor: backerZod,
     individual: IndividualZod,
     organization: backerZod,
