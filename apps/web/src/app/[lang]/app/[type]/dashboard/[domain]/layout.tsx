@@ -1,12 +1,12 @@
 "use client";
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { dataConfig } from "../data";
-import { getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/AbpUiNavigation/navbar";
+import { useLocale } from "src/providers/locale";
+import { getBaseLink } from "src/utils";
+import { dataConfig } from "../data";
 
 function isPathValid(path: string, navbarItems: any[]) {
   const validPaths = navbarItems.map((item) => item.id);
@@ -25,7 +25,7 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources);
   const pathname = usePathname();
   const path = pathname.split("dashboard/")?.[1];
-  console.log(languageData);
+
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
       .filter(([e, value]) => e !== "displayName" && e !== "default")

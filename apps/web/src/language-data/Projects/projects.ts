@@ -4,7 +4,11 @@ export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const projectResource = resources?.["ProjectService"]?.texts;
   const accountResource = resources?.AbpAccount?.texts;
+  const uiResource = resources?.["AbpUi"]?.texts;
   const languageData = {
+    Next: uiResource?.["PagerNext"] || "Next",
+    Previous: uiResource?.["PagerPrevious"] || "Previous",
+    Summary: uiResource?.["Summary"] || "Summary",
     Projects: projectResource?.Projects || "Projects",
     LogIn: resources?.AbpUiNavigation?.texts?.["LogIn"] || "Login",
     DaysLeft: projectResource?.["DaysLeft"] || "Days left",
@@ -33,7 +37,6 @@ export async function getResourceData(lang: string) {
     ProjectDetails: projectResource?.["ProjectDetails"] || "Project Details",
     AdditionalFunding:
       projectResource?.["AdditionalFunding"] || "Additional Funding",
-    Summary: projectResource?.["Summary"] || "Summary",
     ViewProject: projectResource?.["ViewProject"] || "View Project",
     "Messages:ProjectCreated":
       projectResource?.["Messages:ProjectCreated"] ||
@@ -108,6 +111,8 @@ export async function getResourceData(lang: string) {
     "DisplayName:Surname":
       accountResource?.["DisplayName:Surname"] || "Surname",
 
+    SEND_FOR_APPROVAL:
+      projectResource?.["SEND_FOR_APPROVAL"] || "Send for Approval",
     IN_DRAFT_STAGE: projectResource?.["IN_DRAFT_STAGE"] || "Draft",
     SENT_FOR_APPROVAL:
       projectResource?.["SENT_FOR_APPROVAL"] || "Sent for Approval",

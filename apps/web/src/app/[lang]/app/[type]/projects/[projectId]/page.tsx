@@ -3,13 +3,12 @@
 import { Card } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 
-import { getProjectByIdServer } from "../action";
-import ProjectForm from "./form";
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
+import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
-import { ProjectStatusEnums } from "src/enums/project";
-import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import { getProjectByIdServer } from "../action";
+import ProjectForm from "./form";
 import StatusForm from "./statusForm";
 
 export default async function Page({ params }: any) {
@@ -33,7 +32,7 @@ export default async function Page({ params }: any) {
     <div className="flex flex-row gap-3 relative w-full container mt-8">
       <Card className="p-6 basis-3/5">
         <ProjectForm
-          resources={resources}
+          languageData={languageData}
           projectData={projectData}
           projectId={projectId}
           profileType={type}
@@ -48,7 +47,10 @@ export default async function Page({ params }: any) {
         />
         {type === "entreperneur" &&
           projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE && (
-            <StatusForm projectId={projectId} />
+            <StatusForm
+              projectId={projectId}
+              actionText={languageData.SEND_FOR_APPROVAL}
+            />
           )}
       </div>
     </div>

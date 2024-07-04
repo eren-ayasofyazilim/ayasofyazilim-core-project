@@ -221,7 +221,7 @@ export default async function Layout({ children, params }: LayoutProps) {
               signOutServer={signOutServer}
             />
           }
-          resources={resources}
+          languageData={languageData}
           variant="hirevision"
           links={links}
           user={user}

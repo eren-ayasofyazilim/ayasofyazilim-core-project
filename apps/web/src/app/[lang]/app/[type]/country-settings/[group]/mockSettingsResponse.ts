@@ -69,7 +69,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                     bonds: [],
                     subItems: [],
                     valueType: {
-                      itemSource: null,
+                      itemSource: undefined,
                       name: "ToggleStringValueType",
                       properties: "{}",
                       validator: {
@@ -97,7 +97,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                     bonds: [],
                     subItems: [],
                     valueType: {
-                      itemSource: null,
+                      itemSource: undefined,
                       name: "ToggleStringValueType",
                       properties: "{}",
                       validator: {
@@ -111,7 +111,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                   },
                 ],
                 valueType: {
-                  itemSource: null,
+                  itemSource: undefined,
                   name: null,
                   properties: "{}",
                   validator: {
@@ -139,7 +139,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                 bonds: [],
                 subItems: [],
                 valueType: {
-                  itemSource: null,
+                  itemSource: undefined,
                   name: "FreeTextStringValueType",
                   properties: "{}",
                   validator: {
@@ -168,7 +168,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                 bonds: [],
                 subItems: [],
                 valueType: {
-                  itemSource: null,
+                  itemSource: undefined,
                   name: "ToggleStringValueType",
                   properties: "{}",
                   validator: {
@@ -182,7 +182,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
               },
             ],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: null,
               properties: "{}",
               validator: {
@@ -226,7 +226,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                 bonds: [],
                 subItems: [],
                 valueType: {
-                  itemSource: null,
+                  itemSource: undefined,
                   name: "ToggleStringValueType",
                   properties: "{}",
                   validator: {
@@ -261,7 +261,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
                 ],
                 subItems: [],
                 valueType: {
-                  itemSource: null,
+                  itemSource: undefined,
                   name: "FreeTextStringValueType",
                   properties: "{}",
                   validator: {
@@ -275,7 +275,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
               },
             ],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: null,
               properties: "{}",
               validator: {
@@ -303,7 +303,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "FreeTextStringValueType",
               properties: "{}",
               validator: {
@@ -337,7 +337,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             ],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "FreeTextStringValueType",
               properties: "{}",
               validator: {
@@ -374,7 +374,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -402,7 +402,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -430,7 +430,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -465,7 +465,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             ],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "FreeTextStringValueType",
               properties: "{}",
               validator: {
@@ -493,7 +493,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -574,7 +574,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -661,7 +661,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "FreeTextStringValueType",
               properties: "{}",
               validator: {
@@ -689,7 +689,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -717,7 +717,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {
@@ -745,7 +745,7 @@ export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_Coun
             bonds: [],
             subItems: [],
             valueType: {
-              itemSource: null,
+              itemSource: undefined,
               name: "BooleanValueType",
               properties: "{}",
               validator: {

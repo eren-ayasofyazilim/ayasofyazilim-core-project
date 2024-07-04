@@ -5,6 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -30,72 +31,15 @@ import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";
 import { createNewProjectServer } from "../action";
-import { Card } from "@/components/ui/card";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
 
 export interface INewProjectFormProps {
-  resources: {
-    [
-      key: string
-    ]: Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
-  };
+  languageData: any;
 }
-export default function NewProjectForm({ resources }: INewProjectFormProps) {
-  const projectResource = resources?.["ProjectService"]?.texts;
-  const uiResource = resources?.["AbpUi"]?.texts;
-
-  const languageData = {
-    Next: uiResource?.["PagerNext"] || "Next",
-    Previous: uiResource?.["PagerPrevious"] || "Previous",
-    CreateProject: projectResource?.["CreateProject"] || "Create Project",
-    ProjectDetails: projectResource?.["ProjectDetails"] || "Project Details",
-    AdditionalFunding:
-      projectResource?.["AdditionalFunding"] || "Additional Funding",
-    Summary: uiResource?.["Summary"] || "Summary",
-    ViewProject: projectResource?.["ViewProject"] || "View Project",
-    "Messages:ProjectCreated":
-      projectResource?.["Messages:ProjectCreated"] ||
-      "The project has been created successfully.",
-    "Messages:ProjectCreationError":
-      projectResource?.["Messages:ProjectCreationError"] ||
-      "An error occurred while creating the project.",
-    ProjectName: projectResource?.["ProjectName"] || "Project name",
-    ProjectNameInfo:
-      projectResource?.["ProjectNameInfo"] ||
-      "A headline that describes your project in a way that attracts investors' attention.",
-    ProjectDescription:
-      projectResource?.["ProjectDescription"] || "Project description",
-    ProjectDescriptionInfo:
-      projectResource?.["ProjectDescriptionInfo"] ||
-      "Briefly describe your project in a way that attracts investors' attention.",
-    FundCollectionType:
-      projectResource?.["FundCollectionType"] || "Project type",
-    FundCollectionTypeInfo:
-      projectResource?.["FundCollectionTypeInfo"] || "Type of your project.",
-    FundCollectionTypeSHRE:
-      projectResource?.["FundCollectionTypeSHRE"] || "Share based",
-    FundCollectionTypeDBIT:
-      projectResource?.["FundCollectionTypeDBIT"] || "Dept based",
-    FundableAmount: projectResource?.["FundableAmount"] || "Fundable amount",
-    FundableAmountInfo:
-      projectResource?.["FundableAmountInfo"] ||
-      "The amount of investment you want to make in your project.",
-    AdditionalFundingInfo:
-      projectResource?.["AdditionalFundingInfo"] ||
-      "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
-    AdditionalFundingYes: projectResource?.["AdditionalFundingYes"] || "Yes",
-    AdditionalFundingNo: projectResource?.["AdditionalFundingNo"] || "No",
-    AdditionalFundingRate:
-      projectResource?.["AdditionalFundingRate"] ||
-      "Rate of additional funding",
-    AdditionalFundingRateInfo:
-      projectResource?.["AdditionalFundingRateInfo"] ||
-      "The rate of additional funding that will be collected in case your project is overfunded.",
-  };
-
+export default function NewProjectForm({ languageData }: INewProjectFormProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({

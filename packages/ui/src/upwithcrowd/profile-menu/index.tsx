@@ -35,7 +35,7 @@ export type ProfileMenuProps = {
   imageURL?: string;
   menuLinks?: MenuLinkItem[];
   signOutFunction?: any;
-  resources?: { [key: string]: any } | null;
+  languageData?: any;
   minNavbar?: boolean;
 };
 export function ProfileMenu({
@@ -44,15 +44,8 @@ export function ProfileMenu({
   signOutFunction,
   className,
   imageURL,
-  resources,
+  languageData,
 }: ProfileMenuProps) {
-  const languageData = {
-    ChangeProfile:
-      resources?.AbpUiNavigation?.texts?.["ChangeProfile"] || "Change Profile",
-    LogOut: resources?.AbpUiNavigation?.texts?.["LogOut"] || "Log Out",
-    MyAccount: resources?.AbpUiNavigation?.texts?.["MyAccount"] || "My Account",
-    Add: resources?.AbpUiNavigation?.texts?.["Add"] || "Add",
-  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

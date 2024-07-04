@@ -7,8 +7,12 @@ import { updateProjectStatusServer } from "../action";
 
 export interface INewProjectFormProps {
   projectId: string;
+  actionText: string;
 }
-export default function StatusForm({ projectId }: INewProjectFormProps) {
+export default function StatusForm({
+  projectId,
+  actionText,
+}: INewProjectFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSendToApprovalClick() {
@@ -32,15 +36,13 @@ export default function StatusForm({ projectId }: INewProjectFormProps) {
   }
 
   return (
-    // <form action={onSendToApprovalClick}>
     <CustomButton
       variant="default"
       className="w-full bg-transparent text-primary mt-3 border-primary border hover:bg-primary hover:text-white"
       disabled={isLoading}
       onClick={onSendToApprovalClick}
     >
-      {"Onaya Gönder"}
+      {actionText}
     </CustomButton>
-    // </form>
   );
 }
