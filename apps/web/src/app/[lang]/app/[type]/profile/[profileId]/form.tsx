@@ -5,9 +5,10 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useState } from "react";
-import { postBacker, putBacker } from "../actions";
+import { postBacker, postIndividual, putBacker } from "../actions";
 import { formSchema } from "../data";
 import { Button } from "@/components/ui/button";
+import { ScrollBar } from "@/components/ui/scroll-area";
 
 export function BackerForm({
   type,
@@ -22,7 +23,7 @@ export function BackerForm({
   const [data, setData] = useState<any>();
   const functionTypes: Record<string, any> = {
     individual: {
-      post: postBacker,
+      post: postIndividual,
       put: putBacker,
     },
     organization: {
@@ -50,6 +51,7 @@ export function BackerForm({
       </div>
       <div className="grid gap-4 py-4">
         <ScrollArea className="max-h-[600px]">
+          <ScrollBar forceMount/>
           <AutoForm
             // id="backer-form-new"  
             formSchema={formSchema[formType]}
