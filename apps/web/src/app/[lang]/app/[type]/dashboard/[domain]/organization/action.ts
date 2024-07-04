@@ -1,6 +1,7 @@
 import { getBaseLink } from "src/utils";
 
 export interface OrganizationUnit {
+  parentId: string;
   code: string;
   displayName: string;
   id: string;
