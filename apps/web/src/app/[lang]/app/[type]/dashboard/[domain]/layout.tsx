@@ -1,12 +1,12 @@
 "use client";
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { dataConfig } from "../data";
-import { getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/AbpUiNavigation/navbar";
+import { useLocale } from "src/providers/locale";
+import { getBaseLink } from "src/utils";
+import { dataConfig } from "../data";
 
 function isPathValid(path: string, navbarItems: any[]) {
   const validPaths = navbarItems.map((item) => item.id);

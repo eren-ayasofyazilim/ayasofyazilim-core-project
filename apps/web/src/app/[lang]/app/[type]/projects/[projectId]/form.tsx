@@ -4,6 +4,16 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -20,30 +30,19 @@ import {
   PutApiProjectServiceProjectsByIdData,
   UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto,
   UpwithCrowd_ProjectService_Projects_ProjectDto,
-  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
 } from "@ayasofyazilim/saas/ProjectService";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
+import { CircleX } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ProjectStatusEnums } from "src/enums/project";
 import {
   deleteProjectServer,
   updateProjectServer,
   updateProjectStatusServer,
 } from "../action";
-import { CircleX } from "lucide-react";
-import { ProjectStatusEnums } from "src/enums/project";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,

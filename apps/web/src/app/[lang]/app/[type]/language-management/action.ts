@@ -1,6 +1,5 @@
 "use server";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
-import { auth } from "auth";
 import { revalidatePath } from "next/cache";
 
 async function dangerouslyGetToken(project: string) {
