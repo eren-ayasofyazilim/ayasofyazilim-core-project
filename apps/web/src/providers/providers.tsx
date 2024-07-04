@@ -6,8 +6,8 @@ import { ConfigProvider } from "./configuration";
 import { LocaleProvider } from "./locale";
 import { PermissionProvider } from "./permissions";
 import Toaster from "@repo/ayasofyazilim-ui/molecules/toaster";
-import { TooltipProvider } from "@repo/ayasofyazilim-ui/molecules/tooltip";
 import { ApplicationProvider } from "./application";
+import Tooltip from "./tooltip";
 
 interface IProviders {
   children: JSX.Element;
@@ -25,11 +25,11 @@ export default async function Providers({ children, lang }: IProviders) {
         <AuthSession>
           <PermissionProvider>
             <ConfigProvider>
-              <TooltipProvider>
+              <Tooltip>
                 <LocaleProvider resources={resources} lang={lang}>
                   {children}
                 </LocaleProvider>
-              </TooltipProvider>
+              </Tooltip>
             </ConfigProvider>
           </PermissionProvider>
         </AuthSession>
