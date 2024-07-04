@@ -41,12 +41,10 @@ export default async function Page({
       content={
         <div className="relative w-full container mt-4">
           <div className="flex flex-col gap-2">
-            {params.type === "entreperneur" && (
+            {params.type === "entrepreneur" && (
               <div className=" flex flex-row flex-wrap justify-end items-center">
-                <Link href={getBaseLink("app/entreperneur/projects/new", true)}>
-                  <CustomButton variant="outline">
-                    {languageData.CreateProject}
-                  </CustomButton>
+                <Link href={getBaseLink("app/entrepreneur/projects/new", true)}>
+                  <CustomButton variant="outline">{languageData.CreateProject}</CustomButton>
                 </Link>
               </div>
             )}

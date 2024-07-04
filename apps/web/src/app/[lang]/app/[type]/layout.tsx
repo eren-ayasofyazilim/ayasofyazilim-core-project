@@ -34,7 +34,7 @@ type LayoutProps = {
 const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
 
 export default async function Layout({ children, params }: LayoutProps) {
-  const types = ["admin", "user", "entreperneur", "investor"];
+  const types = ["admin", "user", "entrepreneur", "investor"];
   const { type } = params;
   if (!types.includes(type)) {
     redirect("/404");
@@ -64,7 +64,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         icon: <ShieldAlert className="mr-2 h-4 w-4" />,
       },
       {
-        href: getBaseLink(`app/entreperneur`, true, params.lang),
+        href: getBaseLink(`app/entrepreneur`, true, params.lang),
         title: languageData.EntrepreneurCenter,
         icon: <Projector className="mr-2 h-4 w-4" />,
       },
@@ -112,7 +112,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: languageData.Profile,
       href: getBaseLink("app/" + type + "/profile", true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
-      type: ["admin", "user", "entreperneur", "investor"],
+      type: ["admin", "user", "entrepreneur", "investor"],
       appType: "upwithcrowd",
     },
 
@@ -149,7 +149,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: languageData.Settings,
       href: getBaseLink("app/" + type + "/settings/profile", true, params.lang),
       icon: <SlidersHorizontal className="text-slate-500 w-4" />,
-      type: ["admin", "user", "entreperneur", "investor"],
+      type: ["admin", "user", "entrepreneur", "investor"],
       appType: "unirefund",
     },
     {
@@ -157,7 +157,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       title: languageData.Campaigns,
       icon: <Presentation className="text-slate-500 w-4" />,
       href: getBaseLink("app/" + type + "/projects", true, params.lang),
-      type: ["admin", "entreperneur", "investor"],
+      type: ["admin", "entrepreneur", "investor"],
       appType: "upwithcrowd",
     },
     {
