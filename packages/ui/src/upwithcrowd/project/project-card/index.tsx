@@ -21,6 +21,7 @@ interface IProjectCardProps {
   projectURL: string;
   horizontal?: boolean;
   actionText: string;
+  showProgress?: boolean;
 }
 
 export default function ProjectCard({
@@ -29,6 +30,7 @@ export default function ProjectCard({
   projectURL,
   horizontal = false,
   actionText,
+  showProgress,
 }: IProjectCardProps): JSX.Element {
   return (
     <div
@@ -42,17 +44,20 @@ export default function ProjectCard({
         />
       </div>
       <div className={horizontal ? "basis-2/4" : ""}>
-        <Progress
-          value={Math.max(
-            5,
-            ((project.fundNominalAmount || 0) / (project.fundableAmount || 1)) *
-              100
-          )}
-          containerClassName="h-4 overflow-hidden m-0"
-          className={`bg-[#05ce78] rounded-r-full flex items-center`}
-        >
-          <div className="ml-auto w-3 h-3 rounded-full bg-[#08995a] text-[#08995a] mr-1 flex items-center justify-center"></div>
-        </Progress>
+        {showProgress && (
+          <Progress
+            value={Math.max(
+              5,
+              ((project.fundNominalAmount || 0) /
+                (project.fundableAmount || 1)) *
+                100
+            )}
+            containerClassName="h-4 overflow-hidden m-0"
+            className={`bg-[#05ce78] rounded-r-full flex items-center`}
+          >
+            <div className="ml-auto w-3 h-3 rounded-full bg-[#08995a] text-[#08995a] mr-1 flex items-center justify-center"></div>
+          </Progress>
+        )}
         <div className="py-4 px-6 flex flex-col gap-2 border-b">
           <h3 className="font-semibold leading-none tracking-tight hover:underline">
             <Link href={projectURL}>{project.projectName}</Link>
