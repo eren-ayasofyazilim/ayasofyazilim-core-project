@@ -237,7 +237,7 @@ export default function ProjectForm({
 
   return (
     <>
-      {profileType === "entreperneur" && (
+      {profileType === "entrepreneur" && (
         <div className="flex justify-end mb-3">
           <form action={onSendToApprovalClick}>
             <CustomButton
@@ -384,7 +384,7 @@ export default function ProjectForm({
                   </CustomButton>
                 </>
               )}
-              {profileType === "entreperneur" && (
+              {profileType === "entrepreneur" && (
                 <CustomButton
                   variant="secondary"
                   className="w-[120px]"
@@ -524,7 +524,7 @@ export default function ProjectForm({
                   </CustomButton>
                 </>
               )}
-              {profileType === "entreperneur" && (
+              {profileType === "entrepreneur" && (
                 <CustomButton
                   variant="secondary"
                   className="w-[120px]"
@@ -679,7 +679,7 @@ export default function ProjectForm({
                   </CustomButton>
                 </>
               )}
-              {profileType === "entreperneur" && (
+              {profileType === "entrepreneur" && (
                 <CustomButton
                   variant="secondary"
                   className="w-[120px]"
@@ -713,7 +713,7 @@ export default function ProjectForm({
             </CustomButton>
           </form>
         )}
-        {profileType === "entreperneur" && (
+        {profileType === "entrepreneur" && (
           <>
             <Dialog>
               <DialogTrigger asChild>

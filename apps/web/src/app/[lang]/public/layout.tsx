@@ -187,7 +187,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         icon: <ShieldAlert className="mr-2 h-4 w-4" />,
       },
       {
-        href: getBaseLink(`app/entreperneur`, true, params.lang),
+        href: getBaseLink(`app/entrepreneur`, true, params.lang),
         title: languageData.EntrepreneurCenter,
         icon: <Projector className="mr-2 h-4 w-4" />,
       },
