@@ -407,7 +407,7 @@ export function DataTableDemo({
                     }
                     isLoading={isLoading}
                   >
-                    Save changes
+                    Kaydet
                   </CustomButton>
                 </DialogClose>
               </form>
@@ -416,9 +416,7 @@ export function DataTableDemo({
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
-            <CustomButton variant="outline">
-              New Translation From JSON
-            </CustomButton>
+            <CustomButton variant="outline">JSON'dan Çeviri Ekle</CustomButton>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -536,7 +534,7 @@ export function DataTableDemo({
                     }
                     isLoading={isLoading}
                   >
-                    Save changes
+                    Kaydet
                   </CustomButton>
                 </DialogClose>
               </form>
