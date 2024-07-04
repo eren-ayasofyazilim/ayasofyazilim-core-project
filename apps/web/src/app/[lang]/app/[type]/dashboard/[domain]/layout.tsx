@@ -25,7 +25,7 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources);
   const pathname = usePathname();
   const path = pathname.split("dashboard/")?.[1];
-  console.log(languageData);
+
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
       .filter(([e, value]) => e !== "displayName" && e !== "default")

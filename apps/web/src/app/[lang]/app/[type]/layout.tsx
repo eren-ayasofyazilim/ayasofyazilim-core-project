@@ -40,7 +40,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     redirect("/404");
   }
   const { languageData, resources } = await getResourceData(params.lang);
-  const navbarResources = resources?.AbpUiNavigation?.texts || {};
+
   const permission = await getPermission();
   const session = await auth();
   const user = session?.user;
@@ -76,7 +76,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     ],
     isLoggedIn: !!user,
     signOutFunction: signOutServer,
-    resources: resources,
+    languageData: languageData,
   };
   const dashboards = Object.entries(dataConfig)
     .filter((i) => arrayOf.includes(i[0]))
@@ -193,14 +193,9 @@ export default async function Layout({ children, params }: LayoutProps) {
     <MainLayout
       appName={appName}
       navigationItems={filteredNavigationItems}
-      //userNavigation={userNavigation}
       topBarComponent={
         <div className="w-min flex gap-4 mr-5">
-          {/* <Input
-            className="w-90 mr-auto"
-            placeholder={`${resources?.AbpUi?.texts?.Search}...`}
-          /> */}
-          <ProfileMenu className="" {...userNavigation} />
+          <ProfileMenu {...userNavigation} />
           <LanguageSelector
             menuAlign="end"
             cultureName={params.lang}

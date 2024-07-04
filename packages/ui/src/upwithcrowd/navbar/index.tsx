@@ -37,7 +37,7 @@ export default function Navbar({
   topBar,
   config,
   userNavigation,
-  resources,
+  languageData,
 }: {
   appName: string;
   links?: linksProp;
@@ -47,7 +47,7 @@ export default function Navbar({
   topBar?: JSX.Element;
   config?: any;
   userNavigation?: any;
-  resources: any;
+  languageData: any;
 }): JSX.Element {
   if (variant == "invesdor")
     return (
@@ -72,7 +72,7 @@ export default function Navbar({
         user={user}
         userNavigation={userNavigation}
         languageSelector={languageSelector}
-        resources={resources}
+        languageData={languageData}
       />
     );
   }
@@ -162,7 +162,7 @@ function HirevisionNavbar({
   config,
   languageSelector,
   userNavigation,
-  resources,
+  languageData,
 }: {
   appName: string;
   links?: linksProp;
@@ -170,7 +170,7 @@ function HirevisionNavbar({
   languageSelector?: JSX.Element;
   config?: any;
   userNavigation?: any;
-  resources: any;
+  languageData: any;
 }): JSX.Element {
   const [isFixed, setIsFixed] = useState(false);
   const scrollThreshold = 200;
@@ -188,10 +188,6 @@ function HirevisionNavbar({
       el.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const languageData = {
-    Login: resources?.AbpForDeploy?.texts?.["Login"] || "Login",
-    Register: resources?.AbpForDeploy?.texts?.["Register"] || "Register",
-  };
   return (
     <nav
       className={`w-full flex justify-between items-center gap-4 px-12 h-20 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
@@ -208,7 +204,11 @@ function HirevisionNavbar({
       </Menubar>
       <div className="flex gap-4 items-center ">
         {user ? (
-          <ProfileMenu className="" minNavbar={false} {...userNavigation} />
+          <ProfileMenu
+            minNavbar={false}
+            {...userNavigation}
+            languageData={languageData}
+          />
         ) : (
           <div className="grid grid-cols-2 items-center relative justify-center">
             <Link href={userNavigation.loginURL}>
@@ -216,7 +216,7 @@ function HirevisionNavbar({
                 variant={"outline"}
                 className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all border-r-0 rounded-r-none"
               >
-                {languageData.Login}
+                {languageData.LogIn}
               </Button>
             </Link>
             <Link href={userNavigation.registerURL}>
