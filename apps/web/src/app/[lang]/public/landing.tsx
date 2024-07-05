@@ -53,6 +53,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
               />
@@ -67,6 +68,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-inv-step-2.webp"
               />
@@ -81,6 +83,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
               />
@@ -107,6 +110,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
               />
@@ -121,6 +125,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-ent-step-2.webp"
               />
@@ -136,6 +141,7 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
+                alt=""
                 className="w-16 h-full mt-[-30px]"
                 src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
               />
@@ -166,6 +172,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/thumbcache/homepage_blog/uploads/blogs/blog-6662d10e87010.webp"
         />
@@ -189,6 +196,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6662cf2c5b936.webp"
         />
@@ -212,6 +220,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6662cbc4f1975.webp"
         />
@@ -236,6 +245,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-665d874515335.webp"
         />
@@ -260,6 +270,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6630fd88724bf.webp"
         />
@@ -286,6 +297,7 @@ const items = [
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
         <img
+          alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6630fd6b43c03.webp"
         />
@@ -310,7 +322,7 @@ export default function Page({ config }: { config: any }): JSX.Element {
         style={{
           backgroundImage: `url(${config.images.second})`,
         }}
-       />
+      />
       <div className="bg-slate-50 w-full overflow-hidden">
         <div className="container grid grid-cols-2 justify-center gap-6">
           <div className="flex flex-col gap-6 justify-center h-full">
@@ -318,7 +330,7 @@ export default function Page({ config }: { config: any }): JSX.Element {
               {/* <div className="text-black">
                 UPWITH<span className="text-primary">{config.logo}</span>
               </div>{" "} */}
-              <img src={config.logo} />
+              <img alt="" src={config.logo} />
               aracılığıyla girişim şirketlerinde hisse sahibi olabilirsiniz.
             </h1>
             <p className="text-l">
@@ -332,6 +344,7 @@ export default function Page({ config }: { config: any }): JSX.Element {
           </div>
           <div className="h-full">
             <img
+              alt=""
               className="max-h-[500px]"
               src="https://kapilendo-public.imgix.net/files/undefined/40740ec4-1931-44c8-8b9b-e7bcc383f732_funded_projects_invesdor_EN.png?w=1028&auto=format,compress&fit=crop&crop=right&min-h=580"
             />
@@ -340,7 +353,7 @@ export default function Page({ config }: { config: any }): JSX.Element {
       </div>
       <h3 className="text-5xl font-bold text-center w-full max-w-4xl mx-auto my-20 flex  items-center gap-0">
         {/* UPWITH{config.logo} ile */}
-        <img className="mr-4" src={config.logo} /> ile
+        <img alt="" className="mr-4" src={config.logo} /> ile
         <FlipWords
           className="text-black min-w-[230px]"
           words={["yatırımcı", "girişimci"]}
@@ -376,13 +389,14 @@ export default function Page({ config }: { config: any }): JSX.Element {
           ))}
         </BentoGrid>
         <div className="flex absolute top-60 z-0 w-full opacity-10 grayscale hidden">
-          <img className="w-full" src={config.images.footer} />
+          <img alt="" className="w-full" src={config.images.footer} />
         </div>
       </div>
 
       <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden">
         {/* <div className="absolute pointer-events-none inset-[-50%] flex items-center justify-center dark:bg-slate-900 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
         <img
+          alt=""
           className="w-full absolute pointer-events-none z-0 opacity-20"
           src={config.images.footer}
         />
@@ -391,14 +405,14 @@ export default function Page({ config }: { config: any }): JSX.Element {
           style={{
             backgroundImage: `url(${config.images.second})`,
           }}
-         />
+        />
         <div className="container flex flex-col h-full justify-center gap-20">
           <div className="mx-auto">
             {/* <div className={"tracking-widest text-2xl font-bold text-white"}>
               UPWITH
               <span className="text-primary">{config.logo}</span>
             </div> */}
-            <img className="mx-auto" src={config.logo} />
+            <img alt="" className="mx-auto" src={config.logo} />
           </div>
           <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-5 gap-6 col-span-2">
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
