@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children, params }: IRootLayoutProps) {
   return (
-    <html>
+    <html lang={params.lang}>
       <body className={GeistSans.className} data-app-name={appName}>
         <Providers lang={params.lang}>{children}</Providers>
       </body>
