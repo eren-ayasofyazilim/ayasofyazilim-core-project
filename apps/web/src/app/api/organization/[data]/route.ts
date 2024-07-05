@@ -3,10 +3,6 @@ import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import { NextRequest } from "next/server";
 import { getIdentityServiceClient } from "src/lib";
 
-type Clients = {
-  [key: string]: any;
-};
-
 const errorResponse = (message: string, status: number = 400) =>
   new Response(JSON.stringify({ message }), { status: status });
 
@@ -14,9 +10,9 @@ function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
 }
 
-const clients: Clients = {
-  organizationUser: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+const clients: Record<string, any> = {
+  organizationUser: async () => {
+    const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
       get: async ({
@@ -49,8 +45,8 @@ const clients: Clients = {
     };
   },
 
-  organizationRole: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  organizationRole: async () => {
+    const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
       get: async ({
@@ -83,8 +79,8 @@ const clients: Clients = {
     };
   },
 
-  MoveAllUsers: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  MoveAllUsers: async () => {
+    const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
       put: async ({
@@ -101,8 +97,8 @@ const clients: Clients = {
     };
   },
 
-  organizationEdit: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  organizationEdit: async () => {
+    const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -128,7 +124,6 @@ export async function GET(
     return new Response(JSON.stringify(data));
   } catch (error: unknown) {
     if (isApiError(error)) {
-      // console.log(error);
       const body = error?.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       const message = body?.error?.message || error.statusText;
       return errorResponse(message, error.status);
