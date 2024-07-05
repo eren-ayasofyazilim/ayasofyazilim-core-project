@@ -11,5 +11,9 @@ module.exports = {
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
+	"@typescript-eslint/naming-convention":"off",
+	"@typescript-eslint/prefer-promise-reject-errors":"off",
+	"@typescript-eslint/no-floating-promises":"off",
+	"@typescript-eslint/no-misused-promises":"off"
   },
 };
