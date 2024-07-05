@@ -165,7 +165,6 @@ export async function PUT(
     });
     return new Response(JSON.stringify(result), { status: 200 });
   } catch (error: unknown) {
-    console.error("Error in PUT request:", error);
     if (isApiError(error)) {
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(

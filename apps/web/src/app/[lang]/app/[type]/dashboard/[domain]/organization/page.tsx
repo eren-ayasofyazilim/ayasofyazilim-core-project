@@ -130,7 +130,6 @@ const App: React.FC = () => {
             toast.error(errorData.message || "Failed to add users");
           }
         } catch (error) {
-          console.error("Error adding users:", error);
           toast.error("An error occurred while adding the users");
         }
       } else if (selectedUsers.length === 0) {
@@ -167,7 +166,6 @@ const App: React.FC = () => {
             toast.error(errorData.message || "Failed to add roles");
           }
         } catch (error) {
-          console.error("Error adding roles:", error);
           toast.error("An error occurred while adding the roles");
         }
       } else if (selectedRoles.length === 0) {
@@ -208,7 +206,7 @@ const App: React.FC = () => {
                 toast.error(errorData.message || "Failed to delete user");
               }
             } catch (error) {
-              console.error("Error deleting user:", error);
+              or("Error deleting user:", error);
               toast.error("An error occurred while deleting the user");
             }
             setIsConfirmDialogOpen(false);
@@ -247,7 +245,6 @@ const App: React.FC = () => {
                 toast.error(errorData.message || "Failed to delete role");
               }
             } catch (error) {
-              console.error("Error deleting role:", error);
               toast.error("An error occurred while deleting the role");
             }
             setIsConfirmDialogOpen(false);
@@ -276,11 +273,7 @@ const App: React.FC = () => {
         if (response.ok) {
           toast.success("Organization unit added successfully");
           const units = await fetchOrganizationUnits();
-          console.log(
-            units.map((unit) => {
-              return { displayName: unit.displayName, id: unit.id };
-            })
-          );
+
           setOrganizationUnits(units);
           await fetchAndUpdateUnits();
           setTriggerData({});
@@ -290,7 +283,6 @@ const App: React.FC = () => {
           toast.error(errorData.message || "Failed to add organization unit");
         }
       } catch (error) {
-        console.error("Error saving organization unit:", error);
         toast.error("An error occurred while saving the organization unit");
       }
     },
@@ -328,7 +320,6 @@ const App: React.FC = () => {
               );
             }
           } catch (error) {
-            console.error("Error deleting organization unit:", error);
             toast.error(
               "An error occurred while deleting the organization unit"
             );
@@ -374,7 +365,6 @@ const App: React.FC = () => {
           );
         }
       } catch (error) {
-        console.error("Error updating organization unit:", error);
         toast.error("An error occurred while updating the organization unit");
       }
     },
@@ -415,7 +405,6 @@ const App: React.FC = () => {
             toast.error(errorData.message || "Failed to move users");
           }
         } catch (error) {
-          console.error("Error moving users:", error);
           toast.error("An error occurred while moving the users");
         }
         setOpen(false);

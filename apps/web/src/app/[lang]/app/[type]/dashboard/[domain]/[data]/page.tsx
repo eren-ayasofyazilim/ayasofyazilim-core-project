@@ -28,7 +28,6 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    console.error(error);
     toast.error("Something went wrong 3 ");
   }
 }
@@ -95,9 +94,7 @@ export default function Page({
                 tempData[schema].convertors[key].data = tempValue;
                 tempData[schema].convertors[key].type = "async";
               }
-            } catch (error) {
-              console.error(`Error fetching data for ${key}:`, error);
-            }
+            } catch (error) {}
           }
         }
       }

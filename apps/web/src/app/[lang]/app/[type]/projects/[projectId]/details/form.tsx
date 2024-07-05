@@ -53,7 +53,6 @@ export default function ProjectForm({
       section.sectionRelationId &&
       section.sectionId
     ) {
-      console.log(section);
       return await updateProjectSectionRelationServer(
         section.sectionRelationId,
         editorContent

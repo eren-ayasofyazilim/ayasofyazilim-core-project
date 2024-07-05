@@ -14,97 +14,81 @@ function populateCustomFormData(formdata: any) {
             legalStatusCode: formdata.legalStatusCode,
             customerNumber: formdata.customerNumber,
             contactInformation: {
-              telephones: [
-                { ...formdata.telephone }
-              ],
-              addresses: [
-                { ...formdata.address }
-              ],
-              emails: [
-                { emailAddress: formdata.emailAddress }
-              ],
+              telephones: [{ ...formdata.telephone }],
+              addresses: [{ ...formdata.address }],
+              emails: [{ emailAddress: formdata.emailAddress }],
             },
-
           },
         ],
       },
     ],
-  }
+  };
   return customFormData;
 }
 
 function populateIndividual(formdata: any) {
   const customFormData = {
-    "entityInformationTypes": [
+    entityInformationTypes: [
       {
-        "individuals": [
+        individuals: [
           {
-            "name": {
-              "salutation": formdata.name,
-              "name": formdata.name,
-              "suffix": formdata.name,
-              "mailingName": formdata.name,
-              "officialName": formdata.name
+            name: {
+              salutation: formdata.name,
+              name: formdata.name,
+              suffix: formdata.name,
+              mailingName: formdata.name,
+              officialName: formdata.name,
             },
-            "contactInformation": {
-              "telephones": [
-                {...formdata.telephone}
-              ],
-              "addresses": [
+            contactInformation: {
+              telephones: [{ ...formdata.telephone }],
+              addresses: [
                 {
-                  ...formdata.address
-                }
+                  ...formdata.address,
+                },
               ],
-              "emails": [
+              emails: [
                 {
-                  "emailAddress": formdata.emailAddress
-                }
-              ]
+                  emailAddress: formdata.emailAddress,
+                },
+              ],
             },
-            "personalSummaries": [
+            personalSummaries: [
               {
-                "date": "2024-07-04T08:12:58.923Z",
-                "birthDate": "2024-07-04T08:12:58.923Z",
-                "ethnicity": "string",
-                "maritalStatusCode": "string",
-                "religiousAffiliationName": "string"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                date: "2024-07-04T08:12:58.923Z",
+                birthDate: "2024-07-04T08:12:58.923Z",
+                ethnicity: "string",
+                maritalStatusCode: "string",
+                religiousAffiliationName: "string",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
   return customFormData;
 }
 
 export async function postBacker(formdata: any) {
-  console.log("postBacker", formdata);
   const client = await getBackerServiceClient();
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
       requestBody: populateCustomFormData(formdata),
     });
-  } catch (e) {
-    console.error(e);
-  }
-  console.log("postBacker API Result, ", result);
+  } catch (e) {}
+
   return result;
 }
 
 export async function postIndividual(formdata: any) {
-  console.log("postIndividual", formdata);
   const client = await getBackerServiceClient();
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
       requestBody: populateIndividual(formdata),
     });
-  } catch (e) {
-    console.error(e);
-  }
-  console.log("postBacker API Result, ", result);
+  } catch (e) {}
   return result;
 }
 
@@ -140,7 +124,6 @@ export async function deleteBacker(backerId: string) {
 }
 
 export async function putBacker(backerId: string, formdata: any) {
-  console.log("putBacker", backerId, formdata);
   const client: BackerServiceClient = await getBackerServiceClient();
   const result = await client.backer.putApiBackerServiceBackers({
     id: backerId,
@@ -154,32 +137,36 @@ export async function getBacker(profileId: string) {
   const result = await client.backer.getApiBackerServiceBackersDetailById({
     id: profileId,
   });
-  const organizations = result.entityInformations?.[0]?.organizations?.length
+  const organizations = result.entityInformations?.[0]?.organizations?.length;
   if (organizations && organizations > 0) {
     const organization = result.entityInformations?.[0]?.organizations?.[0];
-    return {
-      companyName: organization?.name,
-      legalStatusCode: organization?.legalStatusCode,
-      taxpayerId: organization?.taxpayerId,
-      customerNumber: "not available by backend API",
-      emailAddress: organization?.contactInformation?.emails?.[0]?.emailAddress,
-      telephone: organization?.contactInformation?.telephones?.[0],
-      address: organization?.contactInformation?.addresses?.[0],
-      type: "organization",
-    } || {};
+    return (
+      {
+        companyName: organization?.name,
+        legalStatusCode: organization?.legalStatusCode,
+        taxpayerId: organization?.taxpayerId,
+        customerNumber: "not available by backend API",
+        emailAddress:
+          organization?.contactInformation?.emails?.[0]?.emailAddress,
+        telephone: organization?.contactInformation?.telephones?.[0],
+        address: organization?.contactInformation?.addresses?.[0],
+        type: "organization",
+      } || {}
+    );
   }
-  const individuals = result.entityInformations?.[0]?.individuals?.length
+  const individuals = result.entityInformations?.[0]?.individuals?.length;
   if (individuals && individuals > 0) {
     const individual = result.entityInformations?.[0]?.individuals?.[0];
-    return {
-      name: individual?.name?.name,
-      emailAddress: individual?.contactInformation?.emails?.[0]?.emailAddress,
-      telephone: individual?.contactInformation?.telephones?.[0],
-      address: individual?.contactInformation?.addresses?.[0],
-      type: "individual",
-    } || {};
+    return (
+      {
+        name: individual?.name?.name,
+        emailAddress: individual?.contactInformation?.emails?.[0]?.emailAddress,
+        telephone: individual?.contactInformation?.telephones?.[0],
+        address: individual?.contactInformation?.addresses?.[0],
+        type: "individual",
+      } || {}
+    );
   }
-
 }
 
 export async function getBackersIndividuals() {

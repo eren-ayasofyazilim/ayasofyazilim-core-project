@@ -27,8 +27,6 @@ export async function getLocalizationResources(languageCode: string): Promise<
     );
     return ((await response.json()) as LocalizationDto).resources || {};
   } catch (error) {
-    console.error("Offline Data");
-
     return defaultResources || {};
   }
 }

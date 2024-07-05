@@ -25,11 +25,9 @@ const fetchData = async <T>(url: string): Promise<T[]> => {
       const data = await response.json();
       return data.items;
     } else {
-      console.error(`Failed to fetch data from ${url}`, response.statusText);
       return [];
     }
   } catch (error) {
-    console.error(`Error fetching data from ${url}:`, error);
     return [];
   }
 };
