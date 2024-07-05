@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { getAccountServiceClient } from "src/lib";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const client = await getAccountServiceClient();
   const result =
     await client.abpApplicationConfiguration.getApiAbpApplicationConfiguration({
