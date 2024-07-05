@@ -206,7 +206,6 @@ const App: React.FC = () => {
                 toast.error(errorData.message || "Failed to delete user");
               }
             } catch (error) {
-              or("Error deleting user:", error);
               toast.error("An error occurred while deleting the user");
             }
             setIsConfirmDialogOpen(false);
