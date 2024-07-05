@@ -8,7 +8,7 @@ async function dangerouslyGetToken(project: string) {
     project === "upwithcrowd"
       ? "http://192.168.1.105:44325"
       : "http://192.168.1.105:44335";
-  const TOKEN_URL = `${baseURL  }/connect/token`;
+  const TOKEN_URL = `${baseURL}/connect/token`;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -21,16 +21,16 @@ async function dangerouslyGetToken(project: string) {
     scope:
       "AccountService IdentityService SaasService AdministrationService phone roles profile address email offline_access",
   };
-  Object.keys(urlEncodedContent).forEach((key) =>
-    { urlencoded.append(key, urlEncodedContent[key]); }
-  );
+  Object.keys(urlEncodedContent).forEach((key) => {
+    urlencoded.append(key, urlEncodedContent[key]);
+  });
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  return await response.json();
+  return response.json();
 }
 
 async function getAdministrationServiceClient(project: string) {
@@ -74,7 +74,6 @@ export async function addNewTranslationServer(
       projectData: response,
     };
   } catch (error: any) {
-    console.log(error.statusText, "er");
     return {
       status: error.status,
       message: error?.statusText,

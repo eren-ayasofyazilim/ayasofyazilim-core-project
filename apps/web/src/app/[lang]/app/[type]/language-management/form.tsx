@@ -1,7 +1,6 @@
 "use client";
 
-import type {
-  ColumnDef} from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   flexRender,
   getCoreRowModel,
@@ -46,20 +45,20 @@ import { addNewTranslationServer } from "./action";
 
 interface IDataTableDemo {
   lang: string;
-  resources: Record<string, {
-      texts?:
-        | Record<string, string>
-        | null
-        | undefined;
+  resources: Record<
+    string,
+    {
+      texts?: Record<string, string> | null | undefined;
       baseResources?: string[] | null | undefined;
-    }>;
-  defaultResources: Record<string, {
-      texts?:
-        | Record<string, string>
-        | null
-        | undefined;
+    }
+  >;
+  defaultResources: Record<
+    string,
+    {
+      texts?: Record<string, string> | null | undefined;
       baseResources?: string[] | null | undefined;
-    }>;
+    }
+  >;
 }
 
 export interface Language {
@@ -80,14 +79,18 @@ export const columns: ColumnDef<Language>[] = [
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => { table.toggleAllPageRowsSelected(Boolean(value)); }}
+        onCheckedChange={(value) => {
+          table.toggleAllPageRowsSelected(Boolean(value));
+        }}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         aria-label="Select row"
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => { row.toggleSelected(Boolean(value)); }}
+        onCheckedChange={(value) => {
+          row.toggleSelected(Boolean(value));
+        }}
       />
     ),
     enableSorting: false,
@@ -102,14 +105,14 @@ export const columns: ColumnDef<Language>[] = [
   },
   {
     accessorKey: "key",
-    header: ({ column }) => {
+    header: ({}) => {
       return <div className="capitalize">Key</div>;
     },
     cell: ({ row }) => <div>{row.getValue("key")}</div>,
   },
   {
     accessorKey: "baseValue",
-    header: ({ column }) => {
+    header: ({}) => {
       return <div className="capitalize">Base Value</div>;
     },
     cell: ({ row }) => <div>{row.getValue("baseValue")}</div>,
@@ -164,11 +167,10 @@ export function DataTableDemo({
 
   async function addNewTranslationJSON() {
     setIsLoading(true);
-    const data = JSON.parse(newTranslation.value);
+    const _data = JSON.parse(newTranslation.value);
     const baseData = JSON.parse(newTranslation.baseValue);
-    const keys = Object.keys(data);
+    const keys = Object.keys(_data);
     for (let i = 0; i < keys.length; i++) {
-      console.log(keys[i]);
       if (newTranslation.unirefund) {
         await addNewTranslationServer(
           activeResource,
@@ -181,7 +183,7 @@ export function DataTableDemo({
           activeResource,
           lang,
           keys[i],
-          data[keys[i]],
+          _data[keys[i]],
           "unirefund"
         );
       }
@@ -197,7 +199,7 @@ export function DataTableDemo({
           activeResource,
           lang,
           keys[i],
-          data[keys[i]],
+          _data[keys[i]],
           "upwithcrowd"
         );
       }
@@ -273,7 +275,7 @@ export function DataTableDemo({
             table.getColumn("key")?.setFilterValue(event.target.value)
           }
           placeholder="Filter key..."
-          value={(table.getColumn("key")?.getFilterValue() as string) ?? ""}
+          value={table.getColumn("key")?.getFilterValue() as string}
         />
         <div />
 
@@ -310,12 +312,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-key"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       key: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <div>
@@ -325,12 +327,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-en"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       baseValue: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <div>
@@ -340,12 +342,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-target"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       value: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <Separator className="my-1" />
@@ -353,12 +355,12 @@ export function DataTableDemo({
                 <Switch
                   checked={newTranslation.unirefund}
                   id="unirefund"
-                  onCheckedChange={(e) =>
-                    { setNewTranslation({
+                  onCheckedChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       unirefund: e,
-                    }); }
-                  }
+                    });
+                  }}
                 />
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -371,12 +373,12 @@ export function DataTableDemo({
                 <Switch
                   checked={newTranslation.upwithcrowd}
                   id="upwithcrowd"
-                  onCheckedChange={(e) =>
-                    { setNewTranslation({
+                  onCheckedChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       upwithcrowd: e,
-                    }); }
-                  }
+                    });
+                  }}
                 />
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -437,12 +439,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-key"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       key: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <div>
@@ -452,12 +454,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-en"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       baseValue: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <div>
@@ -467,12 +469,12 @@ export function DataTableDemo({
                 <Input
                   className="col-span-3"
                   id="translation-target"
-                  onChange={(e) =>
-                    { setNewTranslation({
+                  onChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       value: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                 />
               </div>
               <Separator className="my-1" />
@@ -480,12 +482,12 @@ export function DataTableDemo({
                 <Switch
                   checked={newTranslation.unirefund}
                   id="unirefund"
-                  onCheckedChange={(e) =>
-                    { setNewTranslation({
+                  onCheckedChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       unirefund: e,
-                    }); }
-                  }
+                    });
+                  }}
                 />
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -498,12 +500,12 @@ export function DataTableDemo({
                 <Switch
                   checked={newTranslation.upwithcrowd}
                   id="upwithcrowd"
-                  onCheckedChange={(e) =>
-                    { setNewTranslation({
+                  onCheckedChange={(e) => {
+                    setNewTranslation({
                       ...newTranslation,
                       upwithcrowd: e,
-                    }); }
-                  }
+                    });
+                  }}
                 />
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -596,7 +598,9 @@ export function DataTableDemo({
         <div className="space-x-2">
           <Button
             disabled={!table.getCanPreviousPage()}
-            onClick={() => { table.previousPage(); }}
+            onClick={() => {
+              table.previousPage();
+            }}
             size="sm"
             variant="outline"
           >
@@ -604,7 +608,9 @@ export function DataTableDemo({
           </Button>
           <Button
             disabled={!table.getCanNextPage()}
-            onClick={() => { table.nextPage(); }}
+            onClick={() => {
+              table.nextPage();
+            }}
             size="sm"
             variant="outline"
           >
