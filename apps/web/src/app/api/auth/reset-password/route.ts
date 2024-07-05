@@ -1,5 +1,5 @@
 "use server";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function POST(reqest: NextRequest) {
   const { password, resetToken, userId } = (await reqest.json()) as {
@@ -12,9 +12,9 @@ export async function POST(reqest: NextRequest) {
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
   const raw = JSON.stringify({
-    userId: userId,
-    resetToken: resetToken,
-    password: password,
+    userId,
+    resetToken,
+    password,
   });
   const requestOptions = {
     method: "POST",

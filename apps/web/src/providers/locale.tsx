@@ -1,6 +1,6 @@
 "use client";
 
-import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/AccountService";
+import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/AccountService";
 import { createContext, useContext } from "react";
 import { getBaseLink } from "src/utils";
 
@@ -29,17 +29,17 @@ export const useLocale = () => {
   return useContext(LocaleContext);
 };
 
-export const LocaleProvider = ({
+export function LocaleProvider({
   children,
   lang,
   resources,
-}: ILocaleProvider) => {
-  const localeData = { resources: resources, cultureName: lang };
+}: ILocaleProvider) {
+  const localeData = { resources, cultureName: lang };
 
   async function changeLocale(cultureName: string) {
     if (!cultureName) return;
     const newUrl =
-      cultureName + "/" + location.pathname.split("/").slice(2).join("/");
+      `${cultureName  }/${  location.pathname.split("/").slice(2).join("/")}`;
     location.href = getBaseLink(newUrl, false);
   }
 
@@ -48,4 +48,4 @@ export const LocaleProvider = ({
       {children}
     </LocaleContext.Provider>
   );
-};
+}

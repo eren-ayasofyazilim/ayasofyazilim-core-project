@@ -17,7 +17,7 @@ import {
   NavigationBadge,
   NavigationBadgeProps,
 } from "@repo/ui/navigation-badge";
-import { ProfileMenu, ProfileMenuProps } from "@repo/ui/profile-menu";
+
 import { PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,7 +26,6 @@ export type MainLayoutProps = {
   appName: string;
   children: JSX.Element;
   navigationItems: NavigationItem[];
-  userNavigation: ProfileMenuProps;
   topBarComponent?: JSX.Element;
 };
 
@@ -45,7 +44,6 @@ export function MainLayout({
   appName,
   children,
   navigationItems,
-  userNavigation,
   topBarComponent,
 }: MainLayoutProps) {
   const [minNavbar, setMinNavbar] = React.useState(false);
@@ -86,13 +84,10 @@ export function MainLayout({
             />
           </Button>
         </div>
-        <ScrollArea className="grow bg-white overflow-auto flex flex-col h-full [&>div>div]:h-full [&>div>div]:flex">
-          {Menu({ minNavbar, navigationItems })}
-          <ProfileMenu
-            className="mt-auto bg-white px-4 h-16 min-h-16 border-t bottom-0 sticky"
-            minNavbar={minNavbar}
-            {...userNavigation}
-          />
+        <ScrollArea className="grow bg-white pt-4 overflow-auto flex flex-col h-full [&>div>div]:h-full [&>div>div]:flex">
+          <div className="flex flex-col space-between h-full">
+            {Menu({ minNavbar, navigationItems })}
+          </div>
         </ScrollArea>
       </div>
       <div className="grow overflow-hidden flex flex-col">

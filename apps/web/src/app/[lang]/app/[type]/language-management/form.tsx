@@ -1,19 +1,13 @@
 "use client";
 
+import type {
+  ColumnDef} from "@tanstack/react-table";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -26,14 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -54,62 +40,54 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { addNewTranslationServer } from "./action";
-import { useRouter } from "next/navigation";
 
 interface IDataTableDemo {
   lang: string;
-  resources: {
-    [key: string]: {
+  resources: Record<string, {
       texts?:
-        | {
-            [key: string]: string;
-          }
+        | Record<string, string>
         | null
         | undefined;
       baseResources?: string[] | null | undefined;
-    };
-  };
-  defaultResources: {
-    [key: string]: {
+    }>;
+  defaultResources: Record<string, {
       texts?:
-        | {
-            [key: string]: string;
-          }
+        | Record<string, string>
         | null
         | undefined;
       baseResources?: string[] | null | undefined;
-    };
-  };
+    }>;
 }
 
-export type Language = {
+export interface Language {
   key: string;
   baseValue: string;
   value: string;
   lang: string;
   resources: string;
-};
+}
 
 export const columns: ColumnDef<Language>[] = [
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
+        aria-label="Select all"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        onCheckedChange={(value) => { table.toggleAllPageRowsSelected(Boolean(value)); }}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => { row.toggleSelected(Boolean(value)); }}
       />
     ),
     enableSorting: false,
@@ -159,9 +137,9 @@ export function DataTableDemo({
     Object.keys(resources[activeResource].texts || {}).map((i) => {
       const _temp = {
         key: i,
-        value: resources?.[activeResource]?.texts?.[i] || "",
-        baseValue: defaultResources?.[activeResource]?.texts?.[i] || "",
-        lang: lang,
+        value: resources[activeResource].texts?.[i] || "",
+        baseValue: defaultResources[activeResource].texts?.[i] || "",
+        lang,
         resources: activeResource,
       };
       _data.push(_temp);
@@ -184,6 +162,49 @@ export function DataTableDemo({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  async function addNewTranslationJSON() {
+    setIsLoading(true);
+    const data = JSON.parse(newTranslation.value);
+    const baseData = JSON.parse(newTranslation.baseValue);
+    const keys = Object.keys(data);
+    for (let i = 0; i < keys.length; i++) {
+      console.log(keys[i]);
+      if (newTranslation.unirefund) {
+        await addNewTranslationServer(
+          activeResource,
+          "en",
+          keys[i],
+          baseData[keys[i]],
+          "unirefund"
+        );
+        await addNewTranslationServer(
+          activeResource,
+          lang,
+          keys[i],
+          data[keys[i]],
+          "unirefund"
+        );
+      }
+      if (newTranslation.upwithcrowd) {
+        await addNewTranslationServer(
+          activeResource,
+          "en",
+          keys[i],
+          baseData[keys[i]],
+          "upwithcrowd"
+        );
+        await addNewTranslationServer(
+          activeResource,
+          lang,
+          keys[i],
+          data[keys[i]],
+          "upwithcrowd"
+        );
+      }
+    }
+    setIsLoading(false);
+    router.refresh();
+  }
   async function addNewTranslation() {
     setIsLoading(true);
 
@@ -232,7 +253,7 @@ export function DataTableDemo({
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-2">
-        <Select value={activeResource} onValueChange={setActiveResource}>
+        <Select onValueChange={setActiveResource} value={activeResource}>
           <SelectTrigger className="w-[180px]">
             <SelectValue />
           </SelectTrigger>
@@ -247,20 +268,147 @@ export function DataTableDemo({
           </SelectContent>
         </Select>
         <Input
-          placeholder="Filter key..."
-          value={(table.getColumn("key")?.getFilterValue() as string) ?? ""}
+          className="max-w-sm"
           onChange={(event) =>
             table.getColumn("key")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          placeholder="Filter key..."
+          value={(table.getColumn("key")?.getFilterValue() as string) ?? ""}
         />
-        <div></div>
+        <div />
 
         <Dialog>
           <DialogTrigger asChild>
-            <CustomButton variant="outline" className="ml-auto">
-              New Translation
+            <CustomButton className="ml-auto" variant="outline">
+              Yeni Çeviri
             </CustomButton>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Yeni Çeviri</DialogTitle>
+              <DialogDescription>
+                Çevirisini eklemek istediğiniz çeviriyi girin.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div>
+                <Label className="text-right" htmlFor="translation-key">
+                  Resource
+                </Label>
+                <Input
+                  className="col-span-3"
+                  disabled
+                  id="translation-key"
+                  readOnly
+                  value={activeResource}
+                />
+              </div>
+              <div>
+                <Label className="text-right" htmlFor="translation-key">
+                  Key
+                </Label>
+                <Input
+                  className="col-span-3"
+                  id="translation-key"
+                  onChange={(e) =>
+                    { setNewTranslation({
+                      ...newTranslation,
+                      key: e.target.value,
+                    }); }
+                  }
+                />
+              </div>
+              <div>
+                <Label className="text-right" htmlFor="translation-en">
+                  English Translation
+                </Label>
+                <Input
+                  className="col-span-3"
+                  id="translation-en"
+                  onChange={(e) =>
+                    { setNewTranslation({
+                      ...newTranslation,
+                      baseValue: e.target.value,
+                    }); }
+                  }
+                />
+              </div>
+              <div>
+                <Label className="text-right" htmlFor="translation-target">
+                  Target Translation
+                </Label>
+                <Input
+                  className="col-span-3"
+                  id="translation-target"
+                  onChange={(e) =>
+                    { setNewTranslation({
+                      ...newTranslation,
+                      value: e.target.value,
+                    }); }
+                  }
+                />
+              </div>
+              <Separator className="my-1" />
+              <div className="flex items-center space-x-2">
+                <Switch
+                  checked={newTranslation.unirefund}
+                  id="unirefund"
+                  onCheckedChange={(e) =>
+                    { setNewTranslation({
+                      ...newTranslation,
+                      unirefund: e,
+                    }); }
+                  }
+                />
+                <label
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor="unirefund"
+                >
+                  Add to Unirefund
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  checked={newTranslation.upwithcrowd}
+                  id="upwithcrowd"
+                  onCheckedChange={(e) =>
+                    { setNewTranslation({
+                      ...newTranslation,
+                      upwithcrowd: e,
+                    }); }
+                  }
+                />
+                <label
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor="upwithcrowd"
+                >
+                  Add to Upwithcrowd
+                </label>
+              </div>
+            </div>
+            <DialogFooter>
+              <form action={async () => {}}>
+                <DialogClose asChild>
+                  <CustomButton
+                    disabled={
+                      !newTranslation.key ||
+                      !newTranslation.baseValue ||
+                      !newTranslation.value
+                    }
+                    isLoading={isLoading}
+                    onClick={addNewTranslation}
+                    type="submit"
+                  >
+                    Kaydet
+                  </CustomButton>
+                </DialogClose>
+              </form>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog>
+          <DialogTrigger asChild>
+            <CustomButton variant="outline">JSON'dan Çeviri Ekle</CustomButton>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -271,95 +419,95 @@ export function DataTableDemo({
             </DialogHeader>
             <div className="grid gap-4">
               <div>
-                <Label htmlFor="translation-key" className="text-right">
+                <Label className="text-right" htmlFor="translation-key">
                   Resource
                 </Label>
                 <Input
-                  id="translation-key"
                   className="col-span-3"
-                  value={activeResource}
-                  readOnly
                   disabled
+                  id="translation-key"
+                  readOnly
+                  value={activeResource}
                 />
               </div>
               <div>
-                <Label htmlFor="translation-key" className="text-right">
+                <Label className="text-right" htmlFor="translation-key">
                   Key
                 </Label>
                 <Input
-                  id="translation-key"
                   className="col-span-3"
+                  id="translation-key"
                   onChange={(e) =>
-                    setNewTranslation({
+                    { setNewTranslation({
                       ...newTranslation,
                       key: e.target.value,
-                    })
+                    }); }
                   }
                 />
               </div>
               <div>
-                <Label htmlFor="translation-en" className="text-right">
+                <Label className="text-right" htmlFor="translation-en">
                   English Translation
                 </Label>
                 <Input
-                  id="translation-en"
                   className="col-span-3"
+                  id="translation-en"
                   onChange={(e) =>
-                    setNewTranslation({
+                    { setNewTranslation({
                       ...newTranslation,
                       baseValue: e.target.value,
-                    })
+                    }); }
                   }
                 />
               </div>
               <div>
-                <Label htmlFor="translation-target" className="text-right">
+                <Label className="text-right" htmlFor="translation-target">
                   Target Translation
                 </Label>
                 <Input
-                  id="translation-target"
                   className="col-span-3"
+                  id="translation-target"
                   onChange={(e) =>
-                    setNewTranslation({
+                    { setNewTranslation({
                       ...newTranslation,
                       value: e.target.value,
-                    })
+                    }); }
                   }
                 />
               </div>
               <Separator className="my-1" />
               <div className="flex items-center space-x-2">
                 <Switch
-                  id="unirefund"
                   checked={newTranslation.unirefund}
+                  id="unirefund"
                   onCheckedChange={(e) =>
-                    setNewTranslation({
+                    { setNewTranslation({
                       ...newTranslation,
                       unirefund: e,
-                    })
+                    }); }
                   }
                 />
                 <label
-                  htmlFor="unirefund"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor="unirefund"
                 >
                   Add to Unirefund
                 </label>
               </div>
               <div className="flex items-center space-x-2">
                 <Switch
-                  id="upwithcrowd"
                   checked={newTranslation.upwithcrowd}
+                  id="upwithcrowd"
                   onCheckedChange={(e) =>
-                    setNewTranslation({
+                    { setNewTranslation({
                       ...newTranslation,
                       upwithcrowd: e,
-                    })
+                    }); }
                   }
                 />
                 <label
-                  htmlFor="upwithcrowd"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor="upwithcrowd"
                 >
                   Add to Upwithcrowd
                 </label>
@@ -369,16 +517,16 @@ export function DataTableDemo({
               <form action={async () => {}}>
                 <DialogClose asChild>
                   <CustomButton
-                    type="submit"
-                    onClick={addNewTranslation}
                     disabled={
                       !newTranslation.key ||
                       !newTranslation.baseValue ||
                       !newTranslation.value
                     }
                     isLoading={isLoading}
+                    onClick={addNewTranslationJSON}
+                    type="submit"
                   >
-                    Save changes
+                    Kaydet
                   </CustomButton>
                 </DialogClose>
               </form>
@@ -409,11 +557,11 @@ export function DataTableDemo({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -430,8 +578,8 @@ export function DataTableDemo({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
                   className="h-24 text-center"
+                  colSpan={columns.length}
                 >
                   No results.
                 </TableCell>
@@ -447,18 +595,18 @@ export function DataTableDemo({
         </div>
         <div className="space-x-2">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            onClick={() => { table.previousPage(); }}
+            size="sm"
+            variant="outline"
           >
             Previous
           </Button>
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            onClick={() => { table.nextPage(); }}
+            size="sm"
+            variant="outline"
           >
             Next
           </Button>

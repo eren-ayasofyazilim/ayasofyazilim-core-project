@@ -1,20 +1,21 @@
 "use client";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
-import { createZodObject, getBaseLink } from "src/utils";
-import {
+import type {
   tableAction,
   columnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-import { dataConfig, formModifier, tableData } from "../../data";
+import { createZodObject, getBaseLink } from "src/utils";
+import type { formModifier, tableData } from "../../data";
+import { dataConfig } from "../../data";
 
 async function controlledFetch(
   url: string,
   options: RequestInit,
   onSuccess: (data?: any) => void,
-  successMessage: string = "Successful",
-  showToast: boolean = true
+  successMessage = "Successful",
+  showToast = true
 ) {
   try {
     const getData = await fetch(url, options);
@@ -42,9 +43,9 @@ function convertEnumField(
   const data = enumArray.data;
   if (typeof value === "number") {
     return data[value];
-  } else {
+  } 
     return data.indexOf(value);
-  }
+  
 }
 
 interface ConvertorValue {
@@ -75,22 +76,22 @@ export default function Page({
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink("/api/admin/" + params.data);
+  const fetchLink = getBaseLink(`/api/admin/${  params.data}`);
   const [formData, setFormData] = useState<tableData>(
     dataConfig[params.domain][params.data]
   );
 
   async function processConvertors() {
-    let tempData = { ...formData };
+    const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
 
     for (const schema of schemas) {
-      const dataConvertors = tempData[schema]?.convertors;
+      const dataConvertors = tempData[schema].convertors;
       if (dataConvertors) {
         for (const [key, value] of Object.entries(dataConvertors)) {
           if (value.type === "async" && typeof value.data === "function") {
             try {
-              let tempValue = await value.data();
+              const tempValue = await value.data();
               if (tempData[schema].convertors) {
                 tempData[schema].convertors[key].data = tempValue;
                 tempData[schema].convertors[key].type = "async";
@@ -145,12 +146,12 @@ export default function Page({
   }
 
 
-  const createFormSchema = formData?.createFormSchema;
-  let action: tableAction | undefined = undefined;
+  const createFormSchema = formData.createFormSchema;
+  let action: tableAction | undefined;
   if (createFormSchema) {
     action = {
-      cta: "New " + params.data,
-      description: "Create a new " + params.data,
+      cta: `New ${  params.data}`,
+      description: `Create a new ${  params.data}`,
       autoFormArgs: {
         formSchema: createZodObject(
           createFormSchema.schema,
@@ -273,21 +274,21 @@ export default function Page({
       autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
-      onEdit: (data, row) => onEdit(data, row, editFormSchema),
+      onEdit: (data, row) => { onEdit(data, row, editFormSchema); },
       onDelete,
     },
   };
 
   return (
     <Dashboard
-      withCards={false}
-      withTable={true}
-      isLoading={isLoading}
-      filterBy={formData.filterBy}
-      cards={[]}
-      data={roles?.items}
-      columnsData={columnsData}
       action={action}
+      cards={[]}
+      columnsData={columnsData}
+      data={roles?.items}
+      filterBy={formData.filterBy}
+      isLoading={isLoading}
+      withCards={false}
+      withTable
     />
   );
 }

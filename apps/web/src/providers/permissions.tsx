@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import type { ReactNode} from "react";
+import { createContext, useContext, useState } from "react";
 
 const permissionContext = createContext<any>({});
 
@@ -8,7 +9,7 @@ export const usePermission = () => {
     return useContext(permissionContext);
 };
 
-export const PermissionProvider = ({ children }: { children: ReactNode }) => {
+export function PermissionProvider({ children }: { children: ReactNode }) {
     const [permission, setPermission] = useState<string | Object>();
 
     return (
@@ -16,4 +17,4 @@ export const PermissionProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </permissionContext.Provider>
     );
-};
+}

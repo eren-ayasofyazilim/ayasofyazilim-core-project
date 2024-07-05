@@ -1,11 +1,12 @@
-import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
+import CardList from "@repo/ayasofyazilim-ui/organisms/card-list";
 
-export default function Loading() {
-  return (
-    <Spinner
-      className="stroke-purple-900"
-      variant="transparent"
-      fullScreen={false}
-    />
-  );
+export default function page() {
+    return <CardList cards={
+        Array.from({ length: 4 }, (_, i) => ({
+            title: `Loading ${i}`,
+            description: `Loading ${i}`,
+            content: `Loading ${i}`,
+            footer: `Loading ${i}`,
+        }))
+    } isLoading />
 }

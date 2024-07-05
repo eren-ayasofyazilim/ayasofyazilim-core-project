@@ -1,53 +1,57 @@
 "use client";
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { dataConfig } from "../data";
+import { getResourceDataClient } from "src/language-data/AbpUiNavigation/navbar";
+import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
+import { dataConfig } from "../data";
 
-function isPathValid(path: string, navbarItems: any[]) {
-  const validPaths = navbarItems.map((item) => item.id);
-  return validPaths.includes(path) || path === undefined;
-}
-
-type LayoutProps = {
+interface LayoutProps {
   children: JSX.Element;
   params?: any;
-};
+}
 
 export default function Layout({ children, params }: LayoutProps) {
-  const [navbarItems, setnavbarItems] = useState<any>([]);
-  const router = useRouter();
+  const [navbarItems, setNavbarItems] = useState<any>([]);
+  const { resources } = useLocale();
+
+  const languageData = getResourceDataClient(resources);
   const pathname = usePathname();
-  const path = pathname.split("dashboard/")?.[1];
+  const path = pathname.split("dashboard/")[1];
 
   useEffect(() => {
-    if (!path || isPathValid(path, navbarItems) === false) {
-      //   router.push("dashboardfsdfasdf/role");
-    }
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
       .filter(([e, value]) => e !== "displayName" && e !== "default")
       .map(([key, value]: [any, any]) => ({
         id: `${params.domain}/${key}`,
-        name: key,
-        link: getBaseLink(`app/admin/dashboard/${params.domain}/${key}`, true),
+        name:
+          languageData[(`Identity:${  key}`) as keyof typeof languageData] ||
+          key,
+        link: getBaseLink(
+          `dashboard/${params.domain}/${key}`,
+          true,
+          params.lang,
+          true,
+          params.type
+        ),
       }));
-    setnavbarItems(tempNavbarItems);
+    setNavbarItems(tempNavbarItems);
   }, []);
-  console.log("path", path);
+
   return (
     <>
       {navbarItems.length > 0 && (
         <SectionLayout
-          vertical={false}
-          sections={navbarItems}
-          defaultActiveSectionId={path}
-          openOnNewPage={true}
+          className="w-full"
           content={children}
           contentClassName=""
-          className="w-full"
-          isScrollArea={true}
+          defaultActiveSectionId={path}
+          isScrollArea
+          openOnNewPage
+          sections={navbarItems}
+          vertical={false}
         />
       )}
     </>

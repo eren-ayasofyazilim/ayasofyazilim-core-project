@@ -1,11 +1,11 @@
 "use server";
 
+import Toaster from "@repo/ayasofyazilim-ui/molecules/toaster";
 import { getLocalizationResources } from "src/utils";
 import AuthSession from "./auth";
 import { ConfigProvider } from "./configuration";
 import { LocaleProvider } from "./locale";
 import { PermissionProvider } from "./permissions";
-import Toaster from "@repo/ayasofyazilim-ui/molecules/toaster";
 import { ApplicationProvider } from "./application";
 import Tooltip from "./tooltip";
 
@@ -17,7 +17,7 @@ export default async function Providers({ children, lang }: IProviders) {
   const resources = await getLocalizationResources(lang);
   if (!resources) return <></>;
 
-  const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
+  const appName = process.env.APPLICATION_NAME || "UNIREFUND";
   return (
     <>
       <Toaster richColors />
@@ -26,7 +26,7 @@ export default async function Providers({ children, lang }: IProviders) {
           <PermissionProvider>
             <ConfigProvider>
               <Tooltip>
-                <LocaleProvider resources={resources} lang={lang}>
+                <LocaleProvider lang={lang} resources={resources}>
                   {children}
                 </LocaleProvider>
               </Tooltip>

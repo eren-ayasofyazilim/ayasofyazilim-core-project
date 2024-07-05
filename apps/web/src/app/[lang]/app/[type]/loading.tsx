@@ -4,8 +4,8 @@ export default function Loading() {
   return (
     <Spinner
       className="stroke-purple-900"
-      variant="transparent"
       fullScreen={false}
+      variant="transparent"
     />
   );
 }

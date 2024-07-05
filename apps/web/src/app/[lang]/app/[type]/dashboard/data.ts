@@ -1,40 +1,4 @@
-import {
-  $Volo_Abp_Identity_IdentityRoleDto,
-  $Volo_Abp_Identity_IdentityRoleCreateDto,
-  $Volo_Abp_Identity_IdentityRoleUpdateDto,
-  $Volo_Abp_Identity_IdentityUserUpdateDto,
-  $Volo_Abp_Identity_CreateClaimTypeDto,
-  $Volo_Abp_Identity_ClaimTypeDto,
-  $Volo_Abp_Identity_UpdateClaimTypeDto,
-  $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
-  $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
-  $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
-  $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
-  $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
-  $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
-  $Volo_Abp_Identity_IdentitySecurityLogDto,
-} from "@ayasofyazilim/saas/IdentityService";
-import { $Volo_Abp_Identity_IdentityUserCreateDto } from "@ayasofyazilim/saas/IdentityService";
-import { useEffect, useState } from "react";
-import { createZodObject, getBaseLink } from "src/utils";
-import {
-  tableAction,
-  columnsType,
-} from "@repo/ayasofyazilim-ui/molecules/tables";
-import { toast } from "@/components/ui/sonner";
-import {
-  $Volo_Saas_Host_Dtos_EditionCreateDto,
-  $Volo_Saas_Host_Dtos_EditionDto,
-  $Volo_Saas_Host_Dtos_EditionUpdateDto,
-  $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
-} from "@ayasofyazilim/saas/SaasService";
-import {
-  $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
-  $Volo_Saas_Host_Dtos_SaasTenantDto,
-} from "@ayasofyazilim/saas/SaasService";
-import { z } from "zod";
 import { $Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
-import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import {
   $Volo_Abp_AuditLogging_AuditLogDto,
   $Volo_Abp_LanguageManagement_Dto_CreateLanguageDto,
@@ -43,26 +7,53 @@ import {
   $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
   $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
 } from "@ayasofyazilim/saas/AdministrationService";
+import {
+  $Volo_Abp_Identity_ClaimTypeDto,
+  $Volo_Abp_Identity_CreateClaimTypeDto,
+  $Volo_Abp_Identity_IdentityRoleCreateDto,
+  $Volo_Abp_Identity_IdentityRoleDto,
+  $Volo_Abp_Identity_IdentityRoleUpdateDto,
+  $Volo_Abp_Identity_IdentitySecurityLogDto,
+  $Volo_Abp_Identity_IdentityUserCreateDto,
+  $Volo_Abp_Identity_IdentityUserUpdateDto,
+  $Volo_Abp_Identity_UpdateClaimTypeDto,
+  $Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto,
+  $Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput,
+  $Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+  $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
+} from "@ayasofyazilim/saas/IdentityService";
+import {
+  $Volo_Saas_Host_Dtos_EditionCreateDto,
+  $Volo_Saas_Host_Dtos_EditionDto,
+  $Volo_Saas_Host_Dtos_EditionUpdateDto,
+  $Volo_Saas_Host_Dtos_SaasTenantCreateDto,
+  $Volo_Saas_Host_Dtos_SaasTenantDto,
+  $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
+} from "@ayasofyazilim/saas/SaasService";
+import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import { getBaseLink } from "src/utils";
 
-export type formModifier = {
+export interface formModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-  dependencies?: Array<{
+  dependencies?: {
     sourceField: string;
     type: DependencyType;
     targetField: string;
     when: (value: any) => boolean;
-  }>;
-};
+  }[];
+}
 
-export type tableData = {
+export interface tableData {
   createFormSchema: formModifier;
   editFormSchema: formModifier;
   tableSchema: formModifier;
   filterBy: string;
-};
+}
 
 export const dataConfig: Record<string, any> = {
   openiddict: {

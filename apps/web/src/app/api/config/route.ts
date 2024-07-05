@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { getAccountServiceClient } from "src/lib";
 
 export async function GET(request: NextRequest) {

@@ -1,11 +1,12 @@
 "use server";
 
-import { getBaseLink, getLocalizationResources } from "src/utils";
-import NewProjectForm from "./form";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import { getResourceData } from "src/language-data/Projects/projects";
+import { getBaseLink } from "src/utils";
+import NewProjectForm from "./form";
 
 export default async function Page({ params }: { params: { lang: string } }) {
-  const resources = await getLocalizationResources(params.lang);
+  const { languageData, resources } = await getResourceData(params.lang);
   const navbarItems = [
     {
       id: "general",
@@ -15,18 +16,18 @@ export default async function Page({ params }: { params: { lang: string } }) {
   ];
   return (
     <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={"general"}
-      openOnNewPage={true}
       content={
         <div className="w-full mx-auto max-w-3xl">
           <div className="flex flex-col items-center justify-start mb-8 w-full">
             <div className="flex-row p-4 w-10/12 ">
-              <NewProjectForm resources={resources} />
+              <NewProjectForm languageData={languageData} />
             </div>
           </div>
         </div>
       }
+      defaultActiveSectionId="general"
+      openOnNewPage
+      sections={navbarItems}
     />
   );
 }

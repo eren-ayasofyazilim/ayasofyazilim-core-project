@@ -6,42 +6,41 @@ import { getLocalizationResources } from "src/utils";
 import {
   getDefaultProjectSectionsServer,
   getProjectByIdServer,
-  getProjectSectionsServer,
 } from "../../action";
 import ProjectForm from "./form";
 
 export default async function Page({ params }: any) {
-  const { projectId } = params;
+  const { projectId, type } = params;
   const resources = await getLocalizationResources(params.lang);
 
-  const projectData = await getProjectByIdServer(projectId);
-  const usedSectionsInProject =
-    (await getProjectSectionsServer(projectId)) || [];
+  const { project: projectData, projectSectionRelations: usedSections } =
+    await getProjectByIdServer(projectId);
+
   const mandatorySections = (await getDefaultProjectSectionsServer()) || [];
 
-  mandatorySections?.items?.toReversed()?.forEach((section: any) => {
-    const index = usedSectionsInProject.findIndex(
-      /* @ts-ignore */
-      (s) => s.projectSectionId === section.id
-    );
-    if (index > -1 && usedSectionsInProject?.[index]) {
-      /* @ts-ignore */
-      usedSectionsInProject[index].name = section.name;
-    } else {
-      usedSectionsInProject.push(section);
+  mandatorySections.items?.forEach((section: any) => {
+    const index = usedSections?.findIndex((s) => s.sectionId == section.id);
+
+    if (index === -1) {
+      usedSections?.push({
+        projectId: projectData?.id,
+        sectionId: section.id,
+        sectionName: section.name,
+        sectionRelationValue: JSON.stringify({}),
+      });
     }
   });
-  if (!projectData) {
-    redirect("/projects");
-  }
 
+  if (!projectData) {
+    redirect(`/app/${  type  }/projects`);
+  }
   return (
     <div className="relative w-full container mt-8">
       <Card className="p-6 w-full">
         <ProjectForm
-          resources={resources}
-          sectionData={usedSectionsInProject}
           projectId={projectId}
+          resources={resources}
+          sectionData={usedSections || []}
         />
       </Card>
     </div>

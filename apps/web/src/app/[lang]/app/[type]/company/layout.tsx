@@ -30,20 +30,20 @@ const navbarItems = [
 ];
 function isPathValid(path: string) {
   const validPaths = navbarItems.map((item) => item.id);
-  return validPaths.includes(path) || path === undefined;
+  return validPaths.includes(path);
 }
 
-type LayoutProps = {
+interface LayoutProps {
   children: JSX.Element;
-};
+}
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const path = pathname.split("company/")?.[1];
+  const path = pathname.split("company/")[1];
 
   useEffect(() => {
-    if (!path || isPathValid(path) === false) {
+    if (!path || !isPathValid(path)) {
       router.push("company/merchants");
     }
   }, []);
@@ -51,10 +51,10 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <SectionLayout
-        sections={navbarItems}
-        defaultActiveSectionId={path}
-        openOnNewPage={true}
         content={children}
+        defaultActiveSectionId={path}
+        openOnNewPage
+        sections={navbarItems}
         contentClassName="block"
         vertical={false}
       />

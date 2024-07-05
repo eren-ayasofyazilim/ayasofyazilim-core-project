@@ -1,15 +1,13 @@
 "use client";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
-
 import { useEffect, useState } from "react";
-import { createZodObject, getBaseLink } from "src/utils";
-import {
+import type {
   tableAction,
   columnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-
-import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import { createZodObject, getBaseLink } from "src/utils";
 import {
   $createCustoms,
   $createMerchants,
@@ -29,8 +27,8 @@ async function controlledFetch(
   url: string,
   options: RequestInit,
   onSuccess: (data?: any) => void,
-  successMessage: string = "Successful",
-  showToast: boolean = true
+  successMessage = "Successful",
+  showToast = true
 ) {
   try {
     const getData = await fetch(url, options);
@@ -48,25 +46,25 @@ async function controlledFetch(
   }
 }
 
-type formModifier = {
+interface formModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-  dependencies?: Array<{
+  dependencies?: {
     sourceField: string;
     type: DependencyType;
     targetField: string;
     when: (value: any) => boolean;
-  }>;
-};
+  }[];
+}
 
-type tableData = {
+interface tableData {
   createFormSchema: formModifier;
   editFormSchema: formModifier;
   tableSchema: formModifier;
   filterBy: string;
-};
+}
 
 const dataConfig: Record<string, tableData> = {
   merchants: {
@@ -156,9 +154,9 @@ function convertEnumField(
 ): string | number {
   if (typeof value === "number") {
     return enumArray[value];
-  } else {
+  } 
     return enumArray.indexOf(value);
-  }
+  
 }
 
 export default function Page({
@@ -168,7 +166,7 @@ export default function Page({
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink("/api/company/" + params.data);
+  const fetchLink = getBaseLink(`/api/company/${  params.data}`);
 
   function getRoles() {
     function onData(data: any) {
@@ -205,8 +203,8 @@ export default function Page({
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
   const action: tableAction = {
-    cta: "New " + params.data,
-    description: "Create a new " + params.data,
+    cta: `New ${  params.data}`,
+    description: `Create a new ${  params.data}`,
     autoFormArgs: {
       formSchema: createZodObject(
         createFormSchema.schema,
@@ -272,7 +270,6 @@ export default function Page({
 
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    console.log(parsedData);
     controlledFetch(
       fetchLink,
       {
@@ -320,21 +317,21 @@ export default function Page({
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],
-      onEdit: (data, row) => onEdit(data, row, editFormSchema),
+      onEdit: (data, row) => { onEdit(data, row, editFormSchema); },
       onDelete,
     },
   };
 
   return (
     <Dashboard
-      withCards={false}
-      withTable={true}
-      isLoading={isLoading}
-      filterBy={dataConfig[params.data].filterBy}
-      cards={[]}
-      data={roles?.items}
-      columnsData={columnsData}
       action={action}
+      cards={[]}
+      columnsData={columnsData}
+      data={roles?.items}
+      filterBy={dataConfig[params.data].filterBy}
+      isLoading={isLoading}
+      withCards={false}
+      withTable
     />
   );
 }

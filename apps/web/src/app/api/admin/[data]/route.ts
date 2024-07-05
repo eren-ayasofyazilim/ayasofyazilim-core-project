@@ -1,22 +1,21 @@
-import { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
-import {
-  ApiError,
+import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
+import type {
   Volo_Abp_Identity_IdentityRoleCreateDto,
-  Volo_Abp_Identity_IdentityRoleUpdateDto,
+  Volo_Abp_Identity_IdentityRoleUpdateDto} from "@ayasofyazilim/saas/IdentityService";
+import {
+  ApiError
 } from "@ayasofyazilim/saas/IdentityService";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import {
   getAdministrationServiceClient,
   getIdentityServiceClient,
   getSaasServiceClient,
 } from "src/lib";
 
-type Clients = {
-  [key: string]: any;
-};
+type Clients = Record<string, any>;
 
-const errorResponse = (message: string, status: number = 400) =>
-  new Response(JSON.stringify({ message }), { status: status });
+const errorResponse = (message: string, status = 400) =>
+  new Response(JSON.stringify({ message }), { status });
 
 function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
@@ -202,11 +201,11 @@ export async function GET(
   } catch (error: unknown) {
     if (isApiError(error)) {
       // console.log(error);
-      const body = error?.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      const message = body?.error?.message || error.statusText;
+      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
+      const message = body.error?.message || error.statusText;
       return errorResponse(message, error.status);
     }
-    let errorText = (error as any)?.statusText + " " + (error as any)?.status;
+    const errorText = `${(error as any)?.statusText  } ${  (error as any)?.status}`;
     return errorResponse(errorText, (error as any)?.status);
   }
 }

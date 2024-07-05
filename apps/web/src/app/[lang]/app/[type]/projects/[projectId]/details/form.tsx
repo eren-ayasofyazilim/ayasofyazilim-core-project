@@ -4,13 +4,9 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
-import {
-  AbpForDeploy_ProjectService_ProjectSections_ProjectSectionRelationDetailDto,
-  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
-} from "@ayasofyazilim/saas/ProjectService";
+import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/ProjectService";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
-
 import { useState } from "react";
 import {
   createProjectSectionRelationServer,
@@ -18,36 +14,43 @@ import {
 } from "../../action";
 
 export interface INewProjectFormProps {
-  resources: {
-    [
-      key: string
-    ]: Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
-  };
+  resources: Record<string, Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto>;
   projectId: string;
-  sectionData: Array<AbpForDeploy_ProjectService_ProjectSections_ProjectSectionRelationDetailDto> | null;
+  sectionData: {
+    projectId?: string;
+    sectionId?: string;
+    sectionRelationId?: string;
+    sectionName?: string | null;
+    sectionRelationValue?: string | null;
+    order?: number;
+  }[] | null;
 }
 export default function ProjectForm({
   resources,
   projectId,
   sectionData,
 }: INewProjectFormProps) {
-  const [formValues, setFormValues] = useState<{ [id: string]: number }>(() => {
-    const data: { [id: string]: number } = {};
+  const [formValues, setFormValues] = useState<Record<string, number>>(() => {
+    const data: Record<string, number> = {};
     sectionData?.map((section) => {
-      if (section?.id) {
-        data[section.id] = section.value?.length || 0;
+      if (section.sectionId) {
+        data[section.sectionId] = section.sectionRelationValue?.length || 0;
       }
     });
     return data;
   });
-
   if (!sectionData) return <></>;
 
   async function onSaveClick(editorId: string, editorContent: string) {
-    const section = sectionData?.find((i) => i.id === editorId);
-    if (section?.value && section.id) {
+    const section = sectionData?.find((i) => i.sectionId === editorId);
+    if (
+      section?.sectionRelationValue &&
+      section.sectionRelationId &&
+      section.sectionId
+    ) {
+      console.log(section);
       return await updateProjectSectionRelationServer(
-        section.id,
+        section.sectionRelationId,
         editorContent
       );
     }
@@ -63,38 +66,41 @@ export default function ProjectForm({
 
     setFormValues({ ...formValues, [id]: count });
   }
-
   return (
     <Accordion
-      type="single"
-      collapsible
       className="w-full"
-      defaultValue={sectionData[0].id || "item"}
+      collapsible
+      defaultValue={sectionData[0]?.sectionId || "item"}
+      type="single"
     >
-      {sectionData?.map((section, index) => (
+      {sectionData.map((section, index) => (
         <AccordionItem
-          key={section.id}
-          value={section.id || "item"}
           className="my-2 border"
+          key={section.sectionId}
+          value={section.sectionId || "item"}
         >
           <AccordionStepperHeader
-            checked={formValues?.[section?.id || "item"] > 10}
-            children={section.name}
+            checked={formValues[section.sectionId || "item"] > 10}
+            children={section.sectionName}
           />
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4">
                 <TipTapEditor
-                  canEditable={true}
+                  canEditable
+                  editOnStart={
+                    !(section.sectionRelationValue || index !== 0)
+                  }
+                  editorContent={
+                    section.sectionRelationValue
+                      ? JSON.parse(section.sectionRelationValue)
+                      : undefined
+                  }
+                  editorId={section.sectionId}
                   onSaveFunction={onSaveClick}
                   onWordCountChanged={(v) => {
-                    onWordCountChanged(section.id || "", v);
+                    onWordCountChanged(section.sectionId || "", v);
                   }}
-                  editorId={section.id}
-                  editorContent={
-                    section.value ? JSON.parse(section.value) : undefined
-                  }
-                  editOnStart={section.value || index !== 0 ? false : true}
                 />
               </div>
             </div>

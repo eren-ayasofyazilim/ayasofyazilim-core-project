@@ -41,6 +41,17 @@
   "RiskDeclarationForm": "Risk Declaration Form",
   "ProjectInformationForm": "Project Information Form",
   "IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice": "I acknowledge that the investment platform does not give investment advice.",
+
+  "SEND_FOR_APPROVAL": "Send for Approval",
+  "IN_DRAFT_STAGE": "Draft",
+  "SENT_FOR_APPROVAL": "Sent for Approval",
+  "NOT_APPROVED": "Rejected",
+  "APPROVED": "Approved",
+  "FUNDABLE": "Fundable",
+  "FUNDING_SUCCESSFUL": "Successful",
+  "FUNDING_UNSUCCESSFUL": "Unsuccessful",
+  "FUNDING_COMPLETED": "Completed",
+
   "CreditCard": "Credit Card",
   "YouCanInvestWithCreditCardOrEft": "You can invest with Credit Card or EFT/Money Transfer options",
   "InvestmentAmount": "Investment Amount",

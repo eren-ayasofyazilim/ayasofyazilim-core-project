@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import type { ReactNode} from "react";
+import { createContext, useContext, useState } from "react";
 
 const configurationContext = createContext<any>({});
 
@@ -8,7 +9,7 @@ export const useConfig = () => {
     return useContext(configurationContext);
 };
 
-export const ConfigProvider = ({ children }: { children: ReactNode }) => {
+export function ConfigProvider({ children }: { children: ReactNode }) {
     const [config, setConfig] = useState<string | undefined>("test");
 
     return (
@@ -16,4 +17,4 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </configurationContext.Provider>
     );
-};
+}
