@@ -1,6 +1,6 @@
 "use client";
 import type { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
-import type { authTypes} from "@repo/ayasofyazilim-ui/pages/auth";
+import type { authTypes } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Auth, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Logo } from "@repo/ui/logo";
 import Error from "next/error";
@@ -49,9 +49,7 @@ export default function Page(): JSX.Element {
   //Login end
   //Register waiting for implementation
   //ResetPassword start
-  const onResetPasswordSubmit = (
-    values: ResetPasswordFormDataType
-  ): Promise<string> => {
+  const onResetPasswordSubmit = async (values: ResetPasswordFormDataType) => {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch("./api/auth/reset-password", {
@@ -64,13 +62,13 @@ export default function Page(): JSX.Element {
         });
         if (response.status > 199 && response.status < 300) {
           router.push("/login");
-          resolve(""); return;
-        } 
-          const result = await response.json();
-          reject(result.error.code); 
-        
+          resolve("");
+          return;
+        }
+        const result = await response.json();
+        reject(result.error.code);
       } catch (e) {
-        reject(e); 
+        reject(e);
       }
     });
   };
@@ -129,19 +127,17 @@ export default function Page(): JSX.Element {
             const res = await response.json();
             if (!res) {
               setErrorMessage(
-                resources.AbpIdentity.texts?.[
-                  "Volo.Abp.Identity:InvalidToken"
-                ]
+                resources.AbpIdentity.texts?.["Volo.Abp.Identity:InvalidToken"]
               );
             }
-            resolve(""); return;
-          } 
+            resolve("");
+          } else {
             const result = await response.json();
             setErrorMessage(result.error.code);
-            reject(result.error.code); 
-          
+            reject(result.error.code);
+          }
         } catch (e) {
-          reject(e); 
+          reject(e);
         }
       });
     };
@@ -152,7 +148,7 @@ export default function Page(): JSX.Element {
     <Auth
       cultureName={cultureName || "tr"}
       onLangChange={changeLocale}
-      resources={resources ? JSON.parse(JSON.stringify(resources)) : undefined}
+      resources={resources}
       authType={authTypeParam}
       // @ts-ignore
       authProps={props}
