@@ -484,6 +484,7 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_Identity_IdentitySecurityLogDto,
       },
     },
+    organization: {},
   },
 
   auditLogs: {

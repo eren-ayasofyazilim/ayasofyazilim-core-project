@@ -111,10 +111,9 @@ export function Menu({
 }) {
   return (
     <Accordion
-      defaultValue="profile"
       type="single"
       collapsible
-      className={`${minNavbar ? "w-16" : ""} h-[calc(100%-4rem)] flex flex-col`}
+      className={`${minNavbar ? "w-16" : "w-full"} h-full max-h-[calc(100%-4rem)] pt-4 inline-table`}
     >
       {navigationItems.map((item: NavigationItem) => {
         return MenuItem(item, false, minNavbar);
@@ -132,7 +131,7 @@ export function MenuItem(
     <AccordionItem
       value={item.key}
       key={item.key}
-      className="border-0 p-0"
+      className={`border-0 p-0 ${minNavbar ? "w-16" : "w-full"}`}
       data-has-child={item.submenu ? true : false}
     >
       {MenuItemTrigger(item, isFromSubMenu, minNavbar)}

@@ -100,6 +100,14 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   const navigationItems: navigationItmes[] = [
     {
+      key: "reports",
+      title: navbarResources?.["Menu:Reports"] || "Reports",
+      href: getBaseLink("app/" + type + "/", true, params.lang),
+      icon: <LayoutDashboard className="text-slate-500 w-4" />,
+      type: ["admin", "user", "entreperneur", "investor"],
+      appType: "all",
+    },
+    {
       key: "dashboard",
       title: languageData.Dashboard,
       href: getBaseLink(`app/${  type  }/dashboard`, true, params.lang),

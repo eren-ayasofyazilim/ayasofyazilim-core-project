@@ -170,6 +170,20 @@ const clients: Clients = {
         }),
     };
   },
+
+  organization: async (req: NextRequest) => {
+    const client = await getIdentityServiceClient(req);
+    const organization = client.organizationUnit;
+    return {
+      get: async () => organization.getApiIdentityOrganizationUnitsAll(),
+      post: async (requestBody: any) =>
+        organization.postApiIdentityOrganizationUnits({ requestBody }),
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
+        organization.putApiIdentityOrganizationUnitsById({ id, requestBody }),
+      delete: async (id: string) =>
+        organization.deleteApiIdentityOrganizationUnits({ id }),
+    };
+  },
 };
 
 export async function GET(

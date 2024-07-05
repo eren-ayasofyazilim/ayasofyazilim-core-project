@@ -8,6 +8,7 @@ import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationS
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { auth } from "auth";
+import { MerchantServiceClient } from "@ayasofyazilim/saas/MerchantService";
 
 export async function getIdentityServiceClient(
   request: NextRequest
@@ -108,6 +109,25 @@ export async function getBackerServiceClient(): Promise<BackerServiceClient> {
   return new BackerServiceClient({
     TOKEN: token as string,
     BASE: "http://192.168.1.105:44326",
+    HEADERS: {
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+
+export async function getMerchantServiceClient(
+  request: NextRequest
+): MerchantServiceClient {
+  const JWT_Token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET ?? "",
+  });
+  const token = JWT_Token?.access_token || "";
+  return new MerchantServiceClient({
+    TOKEN: token as string,
+    BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",

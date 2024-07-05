@@ -52,10 +52,11 @@ export default function Layout({ children }: LayoutProps) {
     <div>
       <SectionLayout
         content={children}
-        contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center"
         defaultActiveSectionId={path}
         openOnNewPage
         sections={navbarItems}
+        contentClassName="block"
+        vertical={false}
       />
     </div>
   );
