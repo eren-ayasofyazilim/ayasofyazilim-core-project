@@ -2,15 +2,15 @@
 
 import { createContext, useContext } from "react";
 
-interface IApplicationProvider {
+interface IApplicationProviderProps {
   appName: string;
   children: JSX.Element;
 }
-interface IApplicationContext {
+interface IApplicationContextProps {
   appName: string;
 }
 
-export const ApplicationContext = createContext<IApplicationContext>({
+export const ApplicationContext = createContext<IApplicationContextProps>({
   appName: "UNIREFUND",
 });
 
@@ -21,7 +21,7 @@ export const useApplication = () => {
 export function ApplicationProvider({
   children,
   appName,
-}: IApplicationProvider) {
+}: IApplicationProviderProps) {
   return (
     <ApplicationContext.Provider value={{ appName }}>
       {children}
