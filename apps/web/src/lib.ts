@@ -1,30 +1,24 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
-import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
-import type { NextRequest } from "next/server";
-import { getToken } from "@auth/core/jwt";
-import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
-import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
-import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
-import { auth } from "auth";
+import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
 import { MerchantServiceClient } from "@ayasofyazilim/saas/MerchantService";
+import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
+import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
+import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
+import { auth } from "auth";
 
-export async function getIdentityServiceClient(
-  request: NextRequest
-): IdentityServiceClient {
-  const JWT_Token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET ?? "",
-  });
-  const token = JWT_Token?.access_token || "";
+const HEADERS = {
+  "X-Requested-With": "XMLHttpRequest",
+  "Content-Type": "application/json",
+};
+export async function getIdentityServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
   return new IdentityServiceClient({
-    TOKEN: token as string,
+    TOKEN: token,
     BASE: process.env.BASE_URL,
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
@@ -34,48 +28,31 @@ export async function getAccountServiceClient() {
   return new AccountServiceClient({
     TOKEN: token,
     BASE: process.env.AUTH_URL,
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
 export function getProjectServiceClient(): ProjectServiceClient {
   return new ProjectServiceClient({
     BASE: process.env.PROJECT_SERVICE_URL ?? "",
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
 export function getProjectServiceDetailClient(): ProjectServiceClient {
   return new ProjectServiceClient({
     BASE: process.env.PROJECT_SERVICE_URL ?? "",
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
-export async function getSaasServiceClient(
-  request: NextRequest
-): SaasServiceClient {
-  const JWT_Token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET ?? "",
-  });
-  const token = JWT_Token?.access_token || "";
+export async function getSaasServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
   return new SaasServiceClient({
-    TOKEN: token as string,
+    TOKEN: token,
     BASE: process.env.BASE_URL,
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
@@ -85,21 +62,13 @@ export function getSettingServiceClient(): SettingServiceClient {
   });
 }
 
-export async function getAdministrationServiceClient(
-  request: NextRequest
-): AdministrationServiceClient {
-  const JWT_Token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET ?? "",
-  });
-  const token = JWT_Token?.access_token || "";
+export async function getAdministrationServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
   return new AdministrationServiceClient({
-    TOKEN: token as string,
+    TOKEN: token,
     BASE: process.env.BASE_URL,
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
@@ -107,30 +76,18 @@ export async function getBackerServiceClient(): Promise<BackerServiceClient> {
   const session = await auth();
   const token = session?.access_token;
   return new BackerServiceClient({
-    TOKEN: token as string,
+    TOKEN: token,
     BASE: "http://192.168.1.105:44326",
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
 
-
-export async function getMerchantServiceClient(
-  request: NextRequest
-): MerchantServiceClient {
-  const JWT_Token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET ?? "",
-  });
-  const token = JWT_Token?.access_token || "";
+export async function getMerchantServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
   return new MerchantServiceClient({
-    TOKEN: token as string,
+    TOKEN: token,
     BASE: process.env.BASE_URL,
-    HEADERS: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "application/json",
-    },
+    HEADERS: HEADERS,
   });
 }
