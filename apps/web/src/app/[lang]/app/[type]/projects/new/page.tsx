@@ -6,7 +6,7 @@ import { getBaseLink } from "src/utils";
 import NewProjectForm from "./form";
 
 export default async function Page({ params }: { params: { lang: string } }) {
-  const { languageData, resources } = await getResourceData(params.lang);
+  const { languageData } = await getResourceData(params.lang);
   const navbarItems = [
     {
       id: "general",

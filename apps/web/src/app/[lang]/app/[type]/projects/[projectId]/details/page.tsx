@@ -19,7 +19,7 @@ export default async function Page({ params }: any) {
   const mandatorySections = (await getDefaultProjectSectionsServer()) || [];
 
   mandatorySections.items?.forEach((section: any) => {
-    const index = usedSections?.findIndex((s) => s.sectionId == section.id);
+    const index = usedSections?.findIndex((s) => s.sectionId === section.id);
 
     if (index === -1) {
       usedSections?.push({
@@ -32,7 +32,7 @@ export default async function Page({ params }: any) {
   });
 
   if (!projectData) {
-    redirect(`/app/${  type  }/projects`);
+    redirect(`/app/${type}/projects`);
   }
   return (
     <div className="relative w-full container mt-8">

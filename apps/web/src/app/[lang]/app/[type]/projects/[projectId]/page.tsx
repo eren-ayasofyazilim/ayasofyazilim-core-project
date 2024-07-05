@@ -8,15 +8,15 @@ import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getProjectByIdServer } from "../action";
 import ProjectForm from "./form";
-import StatusForm from "./statusForm";
+import StatusForm from "./status-form";
 
 export default async function Page({ params }: any) {
   const { projectId, type } = params;
-  const { languageData, resources } = await getResourceData(params.lang);
+  const { languageData } = await getResourceData(params.lang);
   const projectData = (await getProjectByIdServer(projectId)).project;
 
   if (!projectData) {
-    redirect(`/app/${  params.type  }/projects`);
+    redirect(`/app/${params.type}/projects`);
   }
 
   const projectURL = getBaseLink(

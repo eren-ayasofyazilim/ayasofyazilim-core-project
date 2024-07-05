@@ -56,7 +56,7 @@ const defaultFormValuesValidation = {
   overFunding: undefined,
   fundCollectionType: undefined,
 };
-export interface INewProjectFormProps {
+export interface IProjectFormProps {
   languageData: any;
   projectData: UpwithCrowd_ProjectService_Projects_ProjectDto;
   projectId: string;
@@ -67,12 +67,14 @@ export default function ProjectForm({
   languageData,
   projectData,
   profileType,
-}: INewProjectFormProps) {
+}: IProjectFormProps) {
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto>(
       projectData
     );
-  const [formValuesValidation, setFormValuesValidation] = useState<Record<string, boolean | undefined>>(defaultFormValuesValidation);
+  const [formValuesValidation, setFormValuesValidation] = useState<
+    Record<string, boolean | undefined>
+  >(defaultFormValuesValidation);
   const [formValuesValidationChanged, setFormValuesValidationChanged] =
     useState(false);
 
@@ -96,7 +98,9 @@ export default function ProjectForm({
       setIsSubmitDisabled(false);
     }, 500);
 
-    return () => { clearTimeout(timeout); };
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [formValues]);
 
   async function onEvaluateClick() {
@@ -202,18 +206,16 @@ export default function ProjectForm({
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4">
-                <Label htmlFor="projectName">
-                  {languageData.ProjectName}
-                </Label>
+                <Label htmlFor="projectName">{languageData.ProjectName}</Label>
                 <Input
                   disabled={isInputEditDisabled}
                   id="projectName"
-                  onChange={(e) =>
-                    { setFormValues({
+                  onChange={(e) => {
+                    setFormValues({
                       ...formValues,
                       projectName: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                   value={formValues.projectName || ""}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
@@ -226,12 +228,12 @@ export default function ProjectForm({
                 </Label>
                 <Textarea
                   disabled={isInputEditDisabled}
-                  onChange={(e) =>
-                    { setFormValues({
+                  onChange={(e) => {
+                    setFormValues({
                       ...formValues,
                       projectDefinition: e.target.value,
-                    }); }
-                  }
+                    });
+                  }}
                   value={formValues.projectDefinition || ""}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
@@ -330,12 +332,12 @@ export default function ProjectForm({
                 <div className="relative">
                   <Select
                     disabled={isInputEditDisabled}
-                    onValueChange={(value) =>
-                      { setFormValues({
+                    onValueChange={(value) => {
+                      setFormValues({
                         ...formValues,
                         fundCollectionType: value,
-                      }); }
-                    }
+                      });
+                    }}
                     value={formValues.fundCollectionType || ""}
                   >
                     <SelectTrigger>
@@ -470,9 +472,9 @@ export default function ProjectForm({
                 <div className="relative">
                   <Select
                     disabled={isInputEditDisabled}
-                    onValueChange={(value) =>
-                      { setFormValues({ ...formValues, overFunding: value }); }
-                    }
+                    onValueChange={(value) => {
+                      setFormValues({ ...formValues, overFunding: value });
+                    }}
                     value={formValues.overFunding || ""}
                   >
                     <SelectTrigger>

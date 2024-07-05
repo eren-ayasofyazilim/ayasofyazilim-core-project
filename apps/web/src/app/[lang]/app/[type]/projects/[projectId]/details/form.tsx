@@ -13,23 +13,28 @@ import {
   updateProjectSectionRelationServer,
 } from "../../action";
 
-export interface INewProjectFormProps {
-  resources: Record<string, Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto>;
+export interface IStatusFormProps {
+  resources: Record<
+    string,
+    Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto
+  >;
   projectId: string;
-  sectionData: {
-    projectId?: string;
-    sectionId?: string;
-    sectionRelationId?: string;
-    sectionName?: string | null;
-    sectionRelationValue?: string | null;
-    order?: number;
-  }[] | null;
+  sectionData:
+    | {
+        projectId?: string;
+        sectionId?: string;
+        sectionRelationId?: string;
+        sectionName?: string | null;
+        sectionRelationValue?: string | null;
+        order?: number;
+      }[]
+    | null;
 }
 export default function ProjectForm({
   resources,
   projectId,
   sectionData,
-}: INewProjectFormProps) {
+}: IStatusFormProps) {
   const [formValues, setFormValues] = useState<Record<string, number>>(() => {
     const data: Record<string, number> = {};
     sectionData?.map((section) => {
@@ -88,9 +93,7 @@ export default function ProjectForm({
               <div className="grid w-full items-center gap-3 mt-4">
                 <TipTapEditor
                   canEditable
-                  editOnStart={
-                    !(section.sectionRelationValue || index !== 0)
-                  }
+                  editOnStart={!(section.sectionRelationValue || index !== 0)}
                   editorContent={
                     section.sectionRelationValue
                       ? JSON.parse(section.sectionRelationValue)

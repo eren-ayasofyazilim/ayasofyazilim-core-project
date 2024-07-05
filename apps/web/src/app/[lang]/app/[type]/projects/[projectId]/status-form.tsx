@@ -5,14 +5,14 @@ import { useState } from "react";
 import { ProjectStatusEnums } from "src/enums/project";
 import { updateProjectStatusServer } from "../action";
 
-export interface INewProjectFormProps {
+export interface IStatusFormProps {
   projectId: string;
   actionText: string;
 }
 export default function StatusForm({
   projectId,
   actionText,
-}: INewProjectFormProps) {
+}: IStatusFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSendToApprovalClick() {
