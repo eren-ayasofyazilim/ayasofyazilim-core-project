@@ -23,12 +23,11 @@ export default function Layout({ children, params }: LayoutProps) {
 
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
-      .filter(([e, value]) => e !== "displayName" && e !== "default")
-      .map(([key, value]: [any, any]) => ({
+      .filter(([e]) => e !== "displayName" && e !== "default")
+      .map(([key]: [any, any]) => ({
         id: `${params.domain}/${key}`,
         name:
-          languageData[(`Identity:${  key}`) as keyof typeof languageData] ||
-          key,
+          languageData[`Identity:${key}` as keyof typeof languageData] || key,
         link: getBaseLink(
           `dashboard/${params.domain}/${key}`,
           true,

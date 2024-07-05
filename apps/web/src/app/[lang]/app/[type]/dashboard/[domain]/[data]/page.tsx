@@ -43,9 +43,8 @@ function convertEnumField(
   const data = enumArray.data;
   if (typeof value === "number") {
     return data[value];
-  } 
-    return data.indexOf(value);
-  
+  }
+  return data.indexOf(value);
 }
 
 interface ConvertorValue {
@@ -76,7 +75,7 @@ export default function Page({
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink(`/api/admin/${  params.data}`);
+  const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [formData, setFormData] = useState<tableData>(
     dataConfig[params.domain][params.data]
   );
@@ -145,13 +144,12 @@ export default function Page({
     );
   }
 
-
   const createFormSchema = formData.createFormSchema;
   let action: tableAction | undefined;
   if (createFormSchema) {
     action = {
-      cta: `New ${  params.data}`,
-      description: `Create a new ${  params.data}`,
+      cta: `New ${params.data}`,
+      description: `Create a new ${params.data}`,
       autoFormArgs: {
         formSchema: createZodObject(
           createFormSchema.schema,
@@ -174,22 +172,6 @@ export default function Page({
       },
     };
   }
-
-  const tableHeaders = [
-    {
-      name: "name",
-      isSortable: true,
-    },
-    {
-      name: "isDefault",
-    },
-    {
-      name: "isPublic",
-    },
-    {
-      name: "userCount",
-    },
-  ];
 
   useEffect(() => {
     processConvertors();
@@ -274,7 +256,9 @@ export default function Page({
       autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
-      onEdit: (data, row) => { onEdit(data, row, editFormSchema); },
+      onEdit: (data, row) => {
+        onEdit(data, row, editFormSchema);
+      },
       onDelete,
     },
   };

@@ -104,13 +104,13 @@ export const dataConfig: Record<string, any> = {
             sourceField: "clientType",
             type: DependencyType.HIDES,
             targetField: "allowClientCredentialsFlow",
-            when: (activationState: string) => activationState == "public",
+            when: (activationState: string) => activationState === "public",
           },
           {
             sourceField: "clientType",
             type: DependencyType.HIDES,
             targetField: "allowDeviceEndpoint",
-            when: (activationState: string) => activationState == "public",
+            when: (activationState: string) => activationState === "public",
           },
         ],
       },
@@ -180,13 +180,13 @@ export const dataConfig: Record<string, any> = {
             sourceField: "clientType",
             type: DependencyType.HIDES,
             targetField: "allowClientCredentialsFlow",
-            when: (activationState: string) => activationState == "public",
+            when: (activationState: string) => activationState === "public",
           },
           {
             sourceField: "clientType",
             type: DependencyType.HIDES,
             targetField: "allowDeviceEndpoint",
-            when: (activationState: string) => activationState == "public",
+            when: (activationState: string) => activationState === "public",
           },
         ],
       },
@@ -222,8 +222,8 @@ export const dataConfig: Record<string, any> = {
         convertors: {
           cultureName: {
             data: async () => {
-              return await fetch(getBaseLink("api/admin/culture")).then(
-                (data) => data.json()
+              return fetch(getBaseLink("api/admin/culture")).then((data) =>
+                data.json()
               );
             },
             covertTo: "displayName",
@@ -233,8 +233,8 @@ export const dataConfig: Record<string, any> = {
           },
           uiCultureName: {
             data: async () => {
-              return await fetch(getBaseLink("api/admin/culture")).then(
-                (data) => data.json()
+              return fetch(getBaseLink("api/admin/culture")).then((data) =>
+                data.json()
               );
             },
             covertTo: "displayName",
@@ -335,8 +335,8 @@ export const dataConfig: Record<string, any> = {
           },
           editionId: {
             data: async () => {
-              return await fetch(getBaseLink("api/admin/edition")).then(
-                (data) => data.json()
+              return fetch(getBaseLink("api/admin/edition")).then((data) =>
+                data.json()
               );
             },
             covertTo: "editionName",
@@ -361,8 +361,8 @@ export const dataConfig: Record<string, any> = {
           },
           editionId: {
             data: async () => {
-              return await fetch(getBaseLink("api/admin/edition")).then(
-                (data) => data.json()
+              return fetch(getBaseLink("api/admin/edition")).then((data) =>
+                data.json()
               );
             },
             covertTo: "editionName",

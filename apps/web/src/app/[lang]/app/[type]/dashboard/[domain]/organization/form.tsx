@@ -19,11 +19,11 @@ interface GenericModalProps<T> {
   onSave: (selectedItems: T[]) => void;
   addedItems: T[];
   fetchItems: () => Promise<T[]>;
-  columns: Array<{
+  columns: {
     header: string;
     accessorKey: keyof T;
     cell?: (row: any) => JSX.Element;
-  }>;
+  }[];
   filterBy: string;
   title: string;
   checkboxColumnKey: keyof T;
@@ -47,8 +47,8 @@ export const GenericModal = <T extends { id: string }>({
   useEffect(() => {
     if (isOpen) {
       const loadItems = async () => {
-        const items = await fetchItems();
-        const filteredItems = items.filter(
+        const _items = await fetchItems();
+        const filteredItems = _items.filter(
           (item) => !addedItems.some((addedItem) => addedItem.id === item.id)
         );
         setItems(filteredItems);
