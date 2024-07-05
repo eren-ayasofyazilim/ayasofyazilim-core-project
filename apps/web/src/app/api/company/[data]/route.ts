@@ -1,21 +1,12 @@
 import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
-import type {
-  Volo_Abp_Identity_IdentityRoleCreateDto,
-  Volo_Abp_Identity_IdentityRoleUpdateDto} from "@ayasofyazilim/saas/IdentityService";
-import type { NextRequest } from "next/server";
-import { getIdentityServiceClient, getSaasServiceClient } from "src/lib";
-import { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
 import { ApiError } from "@ayasofyazilim/saas/IdentityService";
-import { NextRequest } from "next/server";
+import { GetApiMerchantServiceMerchantsDetailResponse } from "@ayasofyazilim/saas/MerchantService";
+import type { NextRequest } from "next/server";
 import {
   getIdentityServiceClient,
   getMerchantServiceClient,
   getSaasServiceClient,
 } from "src/lib";
-import {
-  GetApiMerchantServiceMerchantsDetailResponse,
-  PostApiMerchantServiceMerchantsCreateMerchantWithComponentsData,
-} from "@ayasofyazilim/saas/MerchantService";
 
 type Clients = Record<string, any>;
 
@@ -27,8 +18,8 @@ function isApiError(error: unknown): error is ApiError {
 }
 
 const clients: Clients = {
-  merchants: async (req: NextRequest) => {
-    const client = await getMerchantServiceClient(req);
+  merchants: async () => {
+    const client = await getMerchantServiceClient();
     const merchant = client.merchant;
 
     return {
@@ -54,7 +45,7 @@ const clients: Clients = {
         );
       },
       post: async (formdata: any) => {
-        return await merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
+        return merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
           {
             requestBody: {
               entityInformationTypes: [
@@ -111,11 +102,11 @@ const clients: Clients = {
     };
   },
 
-  refund_points: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  refund_points: async () => {
+    const client = await getIdentityServiceClient();
     const user = client.user;
     return {
-      get: async () => [
+      get: () => [
         {
           Company:
             "Travelex Döviz Ticaret Yetkili Müessese Anonim Şirketi (assigned to Mehmet Baykam)",
@@ -181,11 +172,11 @@ const clients: Clients = {
       delete: async (id: string) => user.deleteApiIdentityUsersById({ id }),
     };
   },
-  customs: async (req: NextRequest) => {
-    const client = await getSaasServiceClient(req);
+  customs: async () => {
+    const client = await getSaasServiceClient();
     const edition = client.edition;
     return {
-      get: async () => [
+      get: () => [
         {
           Company: "340900",
           CustomerNumber: "-",
@@ -254,11 +245,11 @@ const clients: Clients = {
       delete: async (id: string) => edition.deleteApiSaasEditionsById({ id }),
     };
   },
-  tax_free: async (req: NextRequest) => {
-    const client = await getSaasServiceClient(req);
+  tax_free: async () => {
+    const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {
-      get: async () => [],
+      get: () => [],
       post: async (requestBody: any) =>
         tenant.postApiSaasTenants({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -266,11 +257,11 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  tax_offices: async (req: NextRequest) => {
-    const client = await getSaasServiceClient(req);
+  tax_offices: async () => {
+    const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {
-      get: async () => [
+      get: () => [
         {
           Company: "Düzce Vergi Dairesi Müdürlüğü",
           CustomerNumber: "81260",
@@ -360,7 +351,7 @@ export async function GET(
       const message = body.error?.message || error.statusText;
       return errorResponse(message, error.status);
     }
-    const errorText = `${(error as any)?.statusText  } ${  (error as any)?.status}`;
+    const errorText = `${(error as any)?.statusText} ${(error as any)?.status}`;
     return errorResponse(errorText, (error as any)?.status);
   }
 }
