@@ -5,10 +5,6 @@ import type {
   GetApiProjectServiceProjectsResponse,
   PostApiProjectServiceProjectsData,
   PutApiProjectServiceProjectsByIdData} from "@ayasofyazilim/saas/ProjectService";
-import {
-  GetApiProjectServiceProjectsData,
-  Volo_Abp_Application_Dtos_PagedResultDto_13,
-} from "@ayasofyazilim/saas/ProjectService";
 import { revalidatePath } from "next/cache";
 import { getProjectServiceClient } from "src/lib";
 

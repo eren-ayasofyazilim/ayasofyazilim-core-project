@@ -7,7 +7,6 @@ import { Brands } from "@repo/ui/upwithcrowd/brands";
 import { FlipWords, Hero } from "@repo/ui/upwithcrowd/hero";
 import { Tabs } from "@repo/ui/upwithcrowd/tabs";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const BrandList = [
   {

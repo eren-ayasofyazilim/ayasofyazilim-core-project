@@ -19,9 +19,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import type {
   UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto} from "@ayasofyazilim/saas/ProjectService";
-import {
-  Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto,
-} from "@ayasofyazilim/saas/ProjectService";
 import { default as CustomButton } from "@repo/ayasofyazilim-ui/molecules/button";
 import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import Stepper, {

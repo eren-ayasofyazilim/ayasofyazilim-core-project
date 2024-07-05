@@ -8,7 +8,7 @@ import Navbar from "@repo/ui/upwithcrowd/navbar";
 import { Projector, ShieldAlert, Worm } from "lucide-react";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
-import { getBaseLink, getLocalizationResources } from "src/utils";
+import { getBaseLink } from "src/utils";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import bursa from "../../../../../../../../public/bursa.svg";
 import istanbul from "../../../../../../../../public/istanbul.svg";

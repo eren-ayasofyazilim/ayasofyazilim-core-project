@@ -1,8 +1,5 @@
 "use server";
-import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
-import { Button } from "@/components/ui/button";
 import { getBacker } from "../actions";
-import { formSchema } from "../data";
 import { BackerForm } from "./form";
 
 export default async function Page({

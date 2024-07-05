@@ -1,4 +1,3 @@
-import { DasboardLayout } from "@repo/ui/dashboard-layout";
 
 export default function Page() {
   return (

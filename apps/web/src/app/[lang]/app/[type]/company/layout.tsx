@@ -30,7 +30,7 @@ const navbarItems = [
 ];
 function isPathValid(path: string) {
   const validPaths = navbarItems.map((item) => item.id);
-  return validPaths.includes(path) || path === undefined;
+  return validPaths.includes(path);
 }
 
 interface LayoutProps {

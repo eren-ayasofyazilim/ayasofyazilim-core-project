@@ -1,6 +1,5 @@
 "use server";
 
-import { isCustomNodeSelected } from "@tiptap-location/lib/utils";
 import Landing from "./landing";
 import { getConfig } from "./layout";
 

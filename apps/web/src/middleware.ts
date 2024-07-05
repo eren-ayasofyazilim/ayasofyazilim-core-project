@@ -2,7 +2,6 @@ import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import type { NextRequest} from "next/server";
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import type { NextAuthRequest } from "node_modules/next-auth/lib";
 import { auth } from "auth";
 

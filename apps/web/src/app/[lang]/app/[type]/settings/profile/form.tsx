@@ -11,7 +11,6 @@ import {
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon } from "lucide-react";
-import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { useEffect, useState } from "react";
 import { updateUserProfileServer } from "action";
 import { createZodObject } from "src/utils";

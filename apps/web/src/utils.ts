@@ -1,6 +1,6 @@
 import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
 import type { ZodSchema} from "zod";
-import { ZodType, z } from "zod";
+import { z } from "zod";
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { defaultResources } from "./resources";
 

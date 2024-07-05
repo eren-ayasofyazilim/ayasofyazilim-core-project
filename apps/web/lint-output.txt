@@ -1,95 +1,34 @@
 
 ./src/app/api/admin/[data]/route.ts
-1:15  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
-3:3  Error: Identifier 'Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-4:3  Error: Identifier 'Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
-15:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 17:55  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 26:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-30:33  Error: Identifier 'Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-37:22  Error: Identifier 'Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
 43:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-47:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-48:37  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-49:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-50:44  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 55:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-59:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-60:39  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-61:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-62:46  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 67:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-71:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-72:37  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-73:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-74:44  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 79:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-83:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-84:47  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-85:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-86:54  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 92:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-96:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-97:54  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-98:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-99:61  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 105:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-109:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-110:42  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-111:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-112:49  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 117:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-121:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-122:56  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-123:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-124:63  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 130:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 138:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 146:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 154:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 163:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 175:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-183:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-183:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-185:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-185:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 185:31  Error: Unsafe member access .get on an `any` value.  @typescript-eslint/no-unsafe-member-access
-190:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
-194:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 194:42  Error: Unsafe member access .statusText on an `any` value.  @typescript-eslint/no-unsafe-member-access
-194:70  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 194:76  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
 195:37  Error: Unsafe argument of type `any` assigned to a parameter of type `number`.  @typescript-eslint/no-unsafe-argument
-195:47  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 195:53  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
 199:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-206:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-206:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-207:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-209:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-209:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 209:32  Error: Unsafe member access .post on an `any` value.  @typescript-eslint/no-unsafe-member-access
-213:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
 223:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-231:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-231:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-232:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-233:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-233:28  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 233:35  Error: Unsafe member access .delete on an `any` value.  @typescript-eslint/no-unsafe-member-access
 238:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-245:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-245:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-246:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-248:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-248:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 248:32  Error: Unsafe member access .put on an `any` value.  @typescript-eslint/no-unsafe-member-access
-249:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 249:23  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-250:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 250:31  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 250:43  Error: Unsafe member access .requestBody on an `any` value.  @typescript-eslint/no-unsafe-member-access
-255:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
 
 ./src/app/api/auth/reset-password/route.ts
 4:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
@@ -100,94 +39,40 @@
 15:14  Error: APP_NAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 25:8  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 
-./src/app/api/auth/[...nextauth]/route.ts
-3:14  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-
 ./src/app/api/company/[data]/route.ts
-1:15  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
-3:3  Error: Identifier 'Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-4:3  Error: Identifier 'Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
-11:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 13:55  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 22:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 25:21  Error: Async method 'get' has no 'await' expression.  @typescript-eslint/require-await
-80:33  Error: Identifier 'Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-87:22  Error: Identifier 'Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
 93:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 96:21  Error: Async method 'get' has no 'await' expression.  @typescript-eslint/require-await
-155:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-156:37  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-157:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-158:44  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 163:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 166:21  Error: Async method 'get' has no 'await' expression.  @typescript-eslint/require-await
-228:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-229:39  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-230:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-231:46  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 236:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 239:21  Error: Async method 'get' has no 'await' expression.  @typescript-eslint/require-await
-240:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-241:37  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-242:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-243:44  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 248:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
 251:21  Error: Async method 'get' has no 'await' expression.  @typescript-eslint/require-await
-313:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-314:37  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-315:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-316:44  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 322:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-330:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-330:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-332:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-332:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 332:31  Error: Unsafe member access .get on an `any` value.  @typescript-eslint/no-unsafe-member-access
 336:7  Error: Unexpected console statement.  no-console
-337:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
-341:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 341:42  Error: Unsafe member access .statusText on an `any` value.  @typescript-eslint/no-unsafe-member-access
-341:70  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 341:76  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
 342:37  Error: Unsafe argument of type `any` assigned to a parameter of type `number`.  @typescript-eslint/no-unsafe-argument
-342:47  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 342:53  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
 346:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-353:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-353:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-354:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-356:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-356:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 356:32  Error: Unsafe member access .post on an `any` value.  @typescript-eslint/no-unsafe-member-access
-360:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
 370:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-378:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-378:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-379:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-380:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-380:28  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 380:35  Error: Unsafe member access .delete on an `any` value.  @typescript-eslint/no-unsafe-member-access
 385:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-392:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-392:24  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-393:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-395:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-395:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 395:32  Error: Unsafe member access .put on an `any` value.  @typescript-eslint/no-unsafe-member-access
-396:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 396:23  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-397:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 397:31  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 397:43  Error: Unsafe member access .requestBody on an `any` value.  @typescript-eslint/no-unsafe-member-access
-402:34  Error: Identifier 'Volo_Abp_Http_RemoteServiceErrorResponse' is not in camel case.  camelcase
 
 ./src/app/api/config/route.ts
 4:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/app/api/post/route.ts
 4:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-5:11  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
-6:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 18:19  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 
 ./src/app/api/route.ts
@@ -196,7 +81,6 @@
 
 ./src/app/[lang]/app/[type]/company/layout.tsx
 31:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-33:39  Error: Unnecessary conditional, the types have no overlap.  @typescript-eslint/no-unnecessary-condition
 40:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 49:6  Warning: React Hook useEffect has missing dependencies: 'path' and 'router'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
 
@@ -204,56 +88,22 @@
 4:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/app/[lang]/app/[type]/company/[data]/page.tsx
-14:3  Error: Identifier '$createRefund_points' is not in camel case.  camelcase
-15:3  Error: Identifier '$createTax_free' is not in camel case.  camelcase
-18:3  Error: Identifier '$editRefund_points' is not in camel case.  camelcase
-19:3  Error: Identifier '$editTax_free' is not in camel case.  camelcase
-22:3  Error: Identifier '$showRefund_points' is not in camel case.  camelcase
-23:3  Error: Identifier '$showTax_free' is not in camel case.  camelcase
 26:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-29:22  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-36:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 37:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 37:24  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
-39:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 44:5  Error: Unexpected console statement.  no-console
 49:11  Error: Interface name `formModifier` must match one of the following formats: PascalCase  @typescript-eslint/naming-convention
-52:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-53:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-58:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 62:11  Error: Interface name `tableData` must match one of the following formats: PascalCase  @typescript-eslint/naming-convention
-89:15  Error: Identifier '$createRefund_points' is not in camel case.  camelcase
-93:15  Error: Identifier '$editRefund_points' is not in camel case.  camelcase
-97:15  Error: Identifier '$showRefund_points' is not in camel case.  camelcase
-122:15  Error: Identifier '$createTax_free' is not in camel case.  camelcase
-126:15  Error: Identifier '$editTax_free' is not in camel case.  camelcase
-129:15  Error: Identifier '$showTax_free' is not in camel case.  camelcase
-138:15  Error: Identifier '$createTax_free' is not in camel case.  camelcase
-142:15  Error: Identifier '$editTax_free' is not in camel case.  camelcase
-145:15  Error: Identifier '$showTax_free' is not in camel case.  camelcase
-167:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
-167:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 171:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 172:5  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-172:27  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-173:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 174:18  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-176:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 176:28  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
-177:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-181:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 181:40  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-183:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-183:27  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 183:38  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-183:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-184:17  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 186:26  Error: Unsafe member access [key] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 186:50  Error: Unsafe argument of type `any` assigned to a parameter of type `string | number`.  @typescript-eslint/no-unsafe-argument
 186:63  Error: Unsafe member access [key] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 186:69  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
-188:11  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-191:33  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 194:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
 210:9  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
 216:15  Error: Promise-returning function provided to property where a void return was expected.  @typescript-eslint/no-misused-promises
@@ -261,228 +111,97 @@
 230:9  Error: 'tableHeaders' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
 249:6  Warning: React Hook useEffect has a missing dependency: 'getRoles'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 251:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-251:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 253:7  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
 262:46  Error: Unsafe argument of type `any` assigned to a parameter of type `string | number`.  @typescript-eslint/no-unsafe-argument
 262:65  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
-271:25  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-271:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-271:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 271:61  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 272:40  Error: Unsafe argument of type `any` assigned to a parameter of type `formModifier`.  @typescript-eslint/no-unsafe-argument
 273:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
-278:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 278:19  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-287:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-287:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 287:39  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 288:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
 292:34  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
 299:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 301:7  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
-318:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-330:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 330:20  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
-./src/app/[lang]/app/[type]/company/[data]/schemas.gen.ts
-81:14  Error: Identifier '$createRefund_points' is not in camel case.  camelcase
-108:14  Error: Identifier '$editRefund_points' is not in camel case.  camelcase
-135:14  Error: Identifier '$showRefund_points' is not in camel case.  camelcase
-243:14  Error: Identifier '$createTax_free' is not in camel case.  camelcase
-270:14  Error: Identifier '$editTax_free' is not in camel case.  camelcase
-297:14  Error: Identifier '$showTax_free' is not in camel case.  camelcase
-
 ./src/app/[lang]/app/[type]/country-settings/page.tsx
-3:43  Error: 'redirect' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:43  Error: 'redirect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
 6:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 6:16  Error: Async function 'Page' has no 'await' expression.  @typescript-eslint/require-await
 
 ./src/app/[lang]/app/[type]/country-settings/[group]/mockSettingsResponse.ts
 1:1  Error: Filename is not in kebab case. Rename it to `mock-settings-response.ts`.  unicorn/filename-case
-1:15  Error: Identifier 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is not in camel case.  camelcase
-3:36  Error: Identifier 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is not in camel case.  camelcase
-765:21  Error: Identifier 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is not in camel case.  camelcase
 
 ./src/app/[lang]/app/[type]/country-settings/[group]/page.tsx
-3:15  Error: Identifier 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is not in camel case.  camelcase
-3:15  Error: 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:15  Error: 'UniRefund_SettingService_CountrySettings_CountrySettingDto' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-7:32  Error: 'test4' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-7:32  Error: 'test4' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-9:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-26:8  Error: Unnecessary conditional, value is always falsy.  @typescript-eslint/no-unnecessary-condition
-26:26  Warning: Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all.  react/jsx-no-useless-fragment
+8:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+25:8  Error: Unnecessary conditional, value is always falsy.  @typescript-eslint/no-unnecessary-condition
+25:26  Warning: Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all.  react/jsx-no-useless-fragment
 
 ./src/app/[lang]/app/[type]/dashboard/data.ts
-1:10  Error: Identifier '$Volo_Abp_Identity_IdentityUserDto' is not in camel case.  camelcase
-3:3  Error: Identifier '$Volo_Abp_AuditLogging_AuditLogDto' is not in camel case.  camelcase
-4:3  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_CreateLanguageDto' is not in camel case.  camelcase
-5:3  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_LanguageDto' is not in camel case.  camelcase
-6:3  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_LanguageTextDto' is not in camel case.  camelcase
-7:3  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto' is not in camel case.  camelcase
-8:3  Error: Identifier '$Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto' is not in camel case.  camelcase
-11:3  Error: Identifier '$Volo_Abp_Identity_ClaimTypeDto' is not in camel case.  camelcase
-12:3  Error: Identifier '$Volo_Abp_Identity_CreateClaimTypeDto' is not in camel case.  camelcase
-13:3  Error: Identifier '$Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-14:3  Error: Identifier '$Volo_Abp_Identity_IdentityRoleDto' is not in camel case.  camelcase
-15:3  Error: Identifier '$Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
-16:3  Error: Identifier '$Volo_Abp_Identity_IdentitySecurityLogDto' is not in camel case.  camelcase
-17:3  Error: Identifier '$Volo_Abp_Identity_IdentityUserCreateDto' is not in camel case.  camelcase
-18:3  Error: Identifier '$Volo_Abp_Identity_IdentityUserUpdateDto' is not in camel case.  camelcase
-19:3  Error: Identifier '$Volo_Abp_Identity_UpdateClaimTypeDto' is not in camel case.  camelcase
-20:3  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto' is not in camel case.  camelcase
-21:3  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput' is not in camel case.  camelcase
-22:3  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput' is not in camel case.  camelcase
-23:3  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput' is not in camel case.  camelcase
-24:3  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto' is not in camel case.  camelcase
-25:3  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput' is not in camel case.  camelcase
-28:3  Error: Identifier '$Volo_Saas_Host_Dtos_EditionCreateDto' is not in camel case.  camelcase
-29:3  Error: Identifier '$Volo_Saas_Host_Dtos_EditionDto' is not in camel case.  camelcase
-30:3  Error: Identifier '$Volo_Saas_Host_Dtos_EditionUpdateDto' is not in camel case.  camelcase
-31:3  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantCreateDto' is not in camel case.  camelcase
-32:3  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantDto' is not in camel case.  camelcase
-33:3  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantUpdateDto' is not in camel case.  camelcase
 38:18  Error: Interface name `formModifier` must match one of the following formats: PascalCase  @typescript-eslint/naming-convention
-41:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-42:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-47:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 51:18  Error: Interface name `tableData` must match one of the following formats: PascalCase  @typescript-eslint/naming-convention
-58:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-83:17  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_CreateApplicationInput' is not in camel case.  camelcase
 107:64  Error: Expected '===' and instead saw '=='.  eqeqeq
 113:64  Error: Expected '===' and instead saw '=='.  eqeqeq
-139:17  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_ApplicationDto' is not in camel case.  camelcase
-160:17  Error: Identifier '$Volo_Abp_OpenIddict_Applications_Dtos_UpdateApplicationInput' is not in camel case.  camelcase
 183:64  Error: Expected '===' and instead saw '=='.  eqeqeq
 189:64  Error: Expected '===' and instead saw '=='.  eqeqeq
-197:17  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput' is not in camel case.  camelcase
-201:17  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto' is not in camel case.  camelcase
-205:17  Error: Identifier '$Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput' is not in camel case.  camelcase
-221:17  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_CreateLanguageDto' is not in camel case.  camelcase
-225:15  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 225:22  Error: Redundant use of `await` on a return value.  no-return-await
-236:15  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 236:22  Error: Redundant use of `await` on a return value.  no-return-await
-256:17  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_LanguageDto' is not in camel case.  camelcase
-260:17  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto' is not in camel case.  camelcase
-267:17  Error: Identifier '$Volo_Abp_LanguageManagement_Dto_LanguageTextDto' is not in camel case.  camelcase
-279:17  Error: Identifier '$Volo_Saas_Host_Dtos_EditionCreateDto' is not in camel case.  camelcase
-283:17  Error: Identifier '$Volo_Saas_Host_Dtos_EditionUpdateDto' is not in camel case.  camelcase
-287:17  Error: Identifier '$Volo_Saas_Host_Dtos_EditionDto' is not in camel case.  camelcase
-301:17  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantCreateDto' is not in camel case.  camelcase
-329:17  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantDto' is not in camel case.  camelcase
-338:15  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 338:22  Error: Redundant use of `await` on a return value.  no-return-await
-356:17  Error: Identifier '$Volo_Saas_Host_Dtos_SaasTenantUpdateDto' is not in camel case.  camelcase
-364:15  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 364:22  Error: Redundant use of `await` on a return value.  no-return-await
-393:17  Error: Identifier '$Volo_Abp_Identity_IdentityRoleCreateDto' is not in camel case.  camelcase
-397:17  Error: Identifier '$Volo_Abp_Identity_IdentityRoleUpdateDto' is not in camel case.  camelcase
-401:17  Error: Identifier '$Volo_Abp_Identity_IdentityRoleDto' is not in camel case.  camelcase
-408:17  Error: Identifier '$Volo_Abp_Identity_IdentityUserCreateDto' is not in camel case.  camelcase
-412:17  Error: Identifier '$Volo_Abp_Identity_IdentityUserUpdateDto' is not in camel case.  camelcase
-416:17  Error: Identifier '$Volo_Abp_Identity_IdentityUserDto' is not in camel case.  camelcase
-432:17  Error: Identifier '$Volo_Abp_Identity_CreateClaimTypeDto' is not in camel case.  camelcase
-448:17  Error: Identifier '$Volo_Abp_Identity_ClaimTypeDto' is not in camel case.  camelcase
-465:17  Error: Identifier '$Volo_Abp_Identity_UpdateClaimTypeDto' is not in camel case.  camelcase
-484:17  Error: Identifier '$Volo_Abp_Identity_IdentitySecurityLogDto' is not in camel case.  camelcase
-509:17  Error: Identifier '$Volo_Abp_AuditLogging_AuditLogDto' is not in camel case.  camelcase
-522:11  Error: Identifier '$Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto' is not in camel case.  camelcase
 
 ./src/app/[lang]/app/[type]/dashboard/[domain]/layout.tsx
-11:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-11:10  Error: 'isPathValid' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-11:10  Error: 'isPathValid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-11:49  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-12:48  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-12:53  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-13:39  Error: Unnecessary conditional, the types have no overlap.  @typescript-eslint/no-unnecessary-condition
-18:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-21:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-22:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
-22:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-30:44  Error: Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: unknown; } | ArrayLike<unknown>`.  @typescript-eslint/no-unsafe-argument
-30:55  Error: Computed name [params.domain] resolves to an any value.  @typescript-eslint/no-unsafe-member-access
-30:62  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
-31:20  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
-31:20  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
-32:19  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
-32:19  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
-32:28  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-32:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-33:23  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
-34:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-38:31  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
-40:11  Error: Unsafe argument of type `any` assigned to a parameter of type `string | undefined`.  @typescript-eslint/no-unsafe-argument
-40:18  Error: Unsafe member access .lang on an `any` value.  @typescript-eslint/no-unsafe-member-access
-42:11  Error: Unsafe argument of type `any` assigned to a parameter of type `string | undefined`.  @typescript-eslint/no-unsafe-argument
-42:18  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-46:6  Warning: React Hook useEffect has missing dependencies: 'languageData', 'params.domain', 'params.lang', and 'params.type'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
-50:20  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
-58:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+16:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+25:44  Error: Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: unknown; } | ArrayLike<unknown>`.  @typescript-eslint/no-unsafe-argument
+25:55  Error: Computed name [params.domain] resolves to an any value.  @typescript-eslint/no-unsafe-member-access
+25:62  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
+26:20  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
+26:20  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+27:19  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
+27:19  Error: 'value' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+28:23  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
+33:31  Error: Unsafe member access .domain on an `any` value.  @typescript-eslint/no-unsafe-member-access
+35:11  Error: Unsafe argument of type `any` assigned to a parameter of type `string | undefined`.  @typescript-eslint/no-unsafe-argument
+35:18  Error: Unsafe member access .lang on an `any` value.  @typescript-eslint/no-unsafe-member-access
+37:11  Error: Unsafe argument of type `any` assigned to a parameter of type `string | undefined`.  @typescript-eslint/no-unsafe-argument
+37:18  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
+41:6  Warning: React Hook useEffect has missing dependencies: 'languageData', 'params.domain', 'params.lang', and 'params.type'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+45:20  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/app/[type]/dashboard/[domain]/[data]/page.tsx
 13:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-16:22  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-23:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 24:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 24:24  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
-26:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 31:5  Error: Unexpected console statement.  no-console
-53:9  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 59:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-59:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-63:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-63:23  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 63:43  Error: Unsafe member access .find on an `any` value.  @typescript-eslint/no-unsafe-member-access
-63:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 64:17  Error: Unsafe member access [ConvertorValue.get] on an `any` value.  @typescript-eslint/no-unsafe-member-access
-68:5  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 68:24  Error: Unsafe member access [ConvertorValue.post] on an `any` value.  @typescript-eslint/no-unsafe-member-access
-77:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
-77:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 81:5  Error: Unsafe argument of type `any` assigned to a parameter of type `tableData | (() => tableData)`.  @typescript-eslint/no-unsafe-argument
 81:31  Error: Unsafe member access [params.data] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 84:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 92:21  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
 92:54  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
-94:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 94:33  Error: Unexpected `await` inside a loop.  no-await-in-loop
-94:39  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 94:45  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
-96:17  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 96:50  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
 97:50  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
 100:15  Error: Unexpected console statement.  no-console
 109:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 110:5  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-110:27  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-111:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 112:18  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-114:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 114:28  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
-115:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-119:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 119:40  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-121:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-121:27  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 121:38  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
-121:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-122:17  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 124:23  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
 125:28  Error: Unsafe member access [key] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 125:52  Error: Unsafe argument of type `any` assigned to a parameter of type `string | number`.  @typescript-eslint/no-unsafe-argument
 125:65  Error: Unsafe member access [key] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 125:71  Error: Unsafe argument of type `any` assigned to a parameter of type `{ data: string[]; type: "enum"; }`.  @typescript-eslint/no-unsafe-argument
 127:23  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-128:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 128:28  Error: Unsafe member access [key] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 128:48  Error: Unsafe member access [value.covertTo] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 128:48  Error: Computed name [value.covertTo] resolves to an any value.  @typescript-eslint/no-unsafe-member-access
 128:54  Error: Unsafe member access .covertTo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-131:11  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-134:33  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 137:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
 151:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 157:11  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
@@ -492,32 +211,22 @@
 195:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
 198:6  Warning: React Hook useEffect has missing dependencies: 'getRoles' and 'processConvertors'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
 200:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-200:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 202:7  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
 211:19  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
 212:48  Error: Unsafe argument of type `any` assigned to a parameter of type `string | number`.  @typescript-eslint/no-unsafe-argument
 212:67  Error: Unsafe argument of type `any` assigned to a parameter of type `{ data: string[]; type: "enum"; }`.  @typescript-eslint/no-unsafe-argument
 213:26  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-214:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 214:68  Error: Unsafe argument of type `any` assigned to a parameter of type `ConvertorValue`.  @typescript-eslint/no-unsafe-argument
-223:25  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-223:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-223:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 223:61  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 224:40  Error: Unsafe argument of type `any` assigned to a parameter of type `formModifier`.  @typescript-eslint/no-unsafe-argument
 225:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
-230:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 230:19  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-239:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-239:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 239:39  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 240:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
 244:34  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
 251:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 253:7  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument
 261:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-275:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-287:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 287:20  Error: Unsafe member access .items on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/app/[type]/details/page.tsx
@@ -549,19 +258,13 @@
 
 ./src/app/[lang]/app/[type]/language-management/action.ts
 5:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-33:3  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 33:10  Error: Redundant use of `await` on a return value.  no-return-await
 36:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-41:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-45:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 45:22  Error: Unsafe member access .access_token on an `any` value.  @typescript-eslint/no-unsafe-member-access
 52:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-76:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 77:5  Error: Unexpected console statement.  no-console
 77:23  Error: Unsafe member access .statusText on an `any` value.  @typescript-eslint/no-unsafe-member-access
-79:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 79:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
-80:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 80:23  Error: Unsafe member access .statusText on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/app/[type]/language-management/form.tsx
@@ -573,9 +276,7 @@
 126:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 137:64  Error: Array.prototype.map() expects a return value from arrow function.  array-callback-return
 165:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-167:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 167:11  Error: 'data' is already declared in the upper scope on line 135 column 9.  @typescript-eslint/no-shadow
-168:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 169:30  Error: Unsafe argument of type `any` assigned to a parameter of type `{}`.  @typescript-eslint/no-unsafe-argument
 170:5  Error: Expected a `for-of` loop instead of a `for` loop with this simple iteration.  @typescript-eslint/prefer-for-of
 171:7  Error: Unexpected console statement.  no-console
@@ -610,84 +311,44 @@
 38:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 46:9  Error: 'permission' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
 46:9  Error: 'permission' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-47:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-47:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-48:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 48:25  Error: Unsafe member access .user on an `any` value.  @typescript-eslint/no-unsafe-member-access
-52:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 52:21  Error: Unsafe member access .userName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-53:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-53:15  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-53:15  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 53:21  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
 53:43  Error: Unsafe member access .toUpperCase on an `any` value.  @typescript-eslint/no-unsafe-member-access
-54:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-55:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 55:18  Error: Unsafe member access .email on an `any` value.  @typescript-eslint/no-unsafe-member-access
-60:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-65:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-70:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-75:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-87:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-89:11  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 89:17  Error: Unsafe member access .displayName on an `any` value.  @typescript-eslint/no-unsafe-member-access
 90:20  Error: Unsafe member access .displayName on an `any` value.  @typescript-eslint/no-unsafe-member-access
 92:47  Error: Unsafe member access .default on an `any` value.  @typescript-eslint/no-unsafe-member-access
-104:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-114:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-123:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-131:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-139:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-151:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-159:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-167:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/loading.tsx
 3:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/app/[lang]/app/[type]/page.tsx
-1:10  Error: 'DasboardLayout' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-1:10  Error: 'DasboardLayout' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-3:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+2:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/app/[lang]/app/[type]/profile/actions.ts
 6:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-6:43  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-12:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 12:28  Error: Unsafe member access .companyName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-13:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 13:34  Error: Unsafe member access .taxpayerId on an `any` value.  @typescript-eslint/no-unsafe-member-access
-14:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 14:39  Error: Unsafe member access .legalStatusCode on an `any` value.  @typescript-eslint/no-unsafe-member-access
-15:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 15:38  Error: Unsafe member access .customerNumber on an `any` value.  @typescript-eslint/no-unsafe-member-access
 18:31  Error: Unsafe member access .telephone on an `any` value.  @typescript-eslint/no-unsafe-member-access
 21:31  Error: Unsafe member access .address on an `any` value.  @typescript-eslint/no-unsafe-member-access
-24:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 24:42  Error: Unsafe member access .emailAddress on an `any` value.  @typescript-eslint/no-unsafe-member-access
 36:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-36:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-43:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 43:38  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-44:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 44:32  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-45:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 45:34  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-46:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 46:39  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-47:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 47:40  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
 51:30  Error: Unsafe member access .telephone on an `any` value.  @typescript-eslint/no-unsafe-member-access
 55:31  Error: Unsafe member access .address on an `any` value.  @typescript-eslint/no-unsafe-member-access
-60:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 60:44  Error: Unsafe member access .emailAddress on an `any` value.  @typescript-eslint/no-unsafe-member-access
 81:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-81:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 82:3  Error: Unexpected console statement.  no-console
 90:5  Error: Unexpected console statement.  no-console
 92:3  Error: Unexpected console statement.  no-console
 96:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-96:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 97:3  Error: Unexpected console statement.  no-console
 105:5  Error: Unexpected console statement.  no-console
 107:3  Error: Unexpected console statement.  no-console
@@ -695,7 +356,6 @@
 119:18  Error: Unexpected `await` inside a loop.  no-await-in-loop
 134:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 142:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-142:61  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 143:3  Error: Unexpected console statement.  no-console
 152:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 160:12  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
@@ -709,17 +369,10 @@
 8:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 9:5  Error: Unexpected console statement.  no-console
 10:11  Warning: useState call is not destructured into value + setter pair  react/hook-use-state
-10:12  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
-11:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-11:19  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 11:33  Error: Unsafe member access .map on an `any` value.  @typescript-eslint/no-unsafe-member-access
-13:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 13:27  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-14:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 14:33  Error: Unsafe member access .taxpayerId on an `any` value.  @typescript-eslint/no-unsafe-member-access
-15:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 15:29  Error: Unsafe member access .legalStatusCode on an `any` value.  @typescript-eslint/no-unsafe-member-access
-16:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 16:28  Error: Unsafe member access .customerNumber on an `any` value.  @typescript-eslint/no-unsafe-member-access
 17:41  Error: Unsafe member access .backerId on an `any` value.  @typescript-eslint/no-unsafe-member-access
 19:17  Error: Unexpected console statement.  no-console
@@ -728,31 +381,12 @@
 20:43  Error: Unsafe member access .backerId on an `any` value.  @typescript-eslint/no-unsafe-member-access
 25:5  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 26:13  Error: 'backers' is already declared in the upper scope on line 8 column 30.  @typescript-eslint/no-shadow
-37:24  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 37:30  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
-./src/app/[lang]/app/[type]/profile/data.ts
-2:10  Error: 'ZodAny' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-2:10  Error: 'ZodAny' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-2:18  Error: 'ZodAnyDef' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-2:18  Error: 'ZodAnyDef' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-2:29  Error: 'ZodObject' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-2:29  Error: 'ZodObject' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-5:7  Error: Identifier '$UpwithCrowd_BackerService_Organizations_CreateOrganizationDto' is not in camel case.  camelcase
-91:7  Error: Identifier '$UpwithCrowd_BackerService_Individuals_CreateIndividualDto' is not in camel case.  camelcase
-175:22  Error: Identifier '$UpwithCrowd_BackerService_Organizations_CreateOrganizationDto' is not in camel case.  camelcase
-176:26  Error: Identifier '$UpwithCrowd_BackerService_Individuals_CreateIndividualDto' is not in camel case.  camelcase
-
 ./src/app/[lang]/app/[type]/profile/layout.tsx
-1:10  Error: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-1:10  Error: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-2:8  Error: 'ScrollArea' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-2:8  Error: 'ScrollArea' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-3:8  Error: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:8  Error: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-5:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-5:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
-5:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+2:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+2:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
+2:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
 
 ./src/app/[lang]/app/[type]/profile/loading.tsx
 3:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
@@ -762,142 +396,95 @@
 
 ./src/app/[lang]/app/[type]/profile/[profileId]/form.tsx
 13:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-19:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-23:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
 23:10  Error: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
 23:10  Error: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-23:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-24:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 34:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-36:7  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 36:31  Error: Unsafe member access .post on an `any` value.  @typescript-eslint/no-unsafe-member-access
-38:7  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 38:31  Error: Unsafe member access .put on an `any` value.  @typescript-eslint/no-unsafe-member-access
-62:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/profile/[profileId]/page.tsx
-2:8  Error: 'ScrollArea' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-2:8  Error: 'ScrollArea' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-3:10  Error: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:10  Error: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-5:10  Error: 'formSchema' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-5:10  Error: 'formSchema' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-8:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-20:67  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+5:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/app/[lang]/app/[type]/projects/action.ts
-9:3  Error: 'GetApiProjectServiceProjectsData' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-9:3  Error: 'GetApiProjectServiceProjectsData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-10:3  Error: Identifier 'Volo_Abp_Application_Dtos_PagedResultDto_13' is not in camel case.  camelcase
-10:3  Error: 'Volo_Abp_Application_Dtos_PagedResultDto_13' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-10:3  Error: 'Volo_Abp_Application_Dtos_PagedResultDto_13' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-15:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-24:5  Error: Unexpected console statement.  no-console
-28:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-33:5  Error: Unexpected console statement.  no-console
-37:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-42:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-52:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-54:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-54:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
-55:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-55:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
-59:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-65:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-78:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-80:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-80:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
-81:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-81:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
-85:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-91:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-104:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-106:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-106:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
-107:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-107:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
-111:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-116:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-128:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-129:5  Error: Unexpected console statement.  no-console
-131:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-131:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
-132:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-132:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
-136:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-143:5  Error: Unexpected console statement.  no-console
-164:22  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
-164:22  Error: Promise executor functions should not be async.  no-async-promise-executor
-177:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-178:7  Error: Unexpected console statement.  no-console
-179:15  Error: Unsafe argument of type `any` assigned to a parameter of type `string | PromiseLike<string>`.  @typescript-eslint/no-unsafe-argument
-179:22  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
-187:22  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
-187:22  Error: Promise executor functions should not be async.  no-async-promise-executor
-205:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-206:15  Error: Unsafe argument of type `any` assigned to a parameter of type `string | PromiseLike<string>`.  @typescript-eslint/no-unsafe-argument
-206:22  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+11:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+20:5  Error: Unexpected console statement.  no-console
+24:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+29:5  Error: Unexpected console statement.  no-console
+33:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+38:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
+50:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+51:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+55:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+61:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
+76:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+77:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+81:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+87:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
+102:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+103:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+107:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+112:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
+125:5  Error: Unexpected console statement.  no-console
+127:21  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+128:23  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+132:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+139:5  Error: Unexpected console statement.  no-console
+160:22  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
+160:22  Error: Promise executor functions should not be async.  no-async-promise-executor
+174:7  Error: Unexpected console statement.  no-console
+175:15  Error: Unsafe argument of type `any` assigned to a parameter of type `string | PromiseLike<string>`.  @typescript-eslint/no-unsafe-argument
+175:22  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+183:22  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
+183:22  Error: Promise executor functions should not be async.  no-async-promise-executor
+202:15  Error: Unsafe argument of type `any` assigned to a parameter of type `string | PromiseLike<string>`.  @typescript-eslint/no-unsafe-argument
+202:22  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/app/[type]/projects/new/form.tsx
-21:3  Error: Identifier 'UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto' is not in camel case.  camelcase
-23:3  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is not in camel case.  camelcase
-23:3  Error: 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-23:3  Error: 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-40:18  Error: Interface name `INewProjectFormProps` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
-41:17  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-43:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-46:14  Error: Identifier 'UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto' is not in camel case.  camelcase
-55:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-58:9  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-61:16  Error: Unsafe argument of type `any` assigned to a parameter of type `SetStateAction<string | undefined>`.  @typescript-eslint/no-unsafe-argument
-69:25  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-69:38  Error: Unsafe member access .Next on an `any` value.  @typescript-eslint/no-unsafe-member-access
-71:29  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-71:42  Error: Unsafe member access .Previous on an `any` value.  @typescript-eslint/no-unsafe-member-access
-81:18  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-81:31  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
-85:29  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
-88:58  Error: Unsafe member access .ProjectName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-100:31  Error: Unsafe member access .ProjectNameInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-105:31  Error: Unsafe member access .ProjectDescription on an `any` value.  @typescript-eslint/no-unsafe-member-access
-117:31  Error: Unsafe member access .ProjectDescriptionInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-128:18  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-128:31  Error: Unsafe member access .ProjectDetails on an `any` value.  @typescript-eslint/no-unsafe-member-access
-133:29  Error: Unsafe member access .ProjectDetails on an `any` value.  @typescript-eslint/no-unsafe-member-access
-138:31  Error: Unsafe member access .FundCollectionType on an `any` value.  @typescript-eslint/no-unsafe-member-access
-156:39  Error: Unsafe member access .FundCollectionTypeSHRE on an `any` value.  @typescript-eslint/no-unsafe-member-access
-159:39  Error: Unsafe member access .FundCollectionTypeDBIT on an `any` value.  @typescript-eslint/no-unsafe-member-access
-166:31  Error: Unsafe member access .FundCollectionTypeInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-175:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-175:39  Error: Unsafe member access .FundableAmount on an `any` value.  @typescript-eslint/no-unsafe-member-access
-185:33  Error: Unsafe member access .FundableAmountInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-196:18  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-196:31  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
-201:29  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
-206:31  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
-221:39  Error: Unsafe member access .AdditionalFundingYes on an `any` value.  @typescript-eslint/no-unsafe-member-access
-224:39  Error: Unsafe member access .AdditionalFundingNo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-231:31  Error: Unsafe member access .AdditionalFundingInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-249:34  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-249:47  Error: Unsafe member access .AdditionalFundingRate on an `any` value.  @typescript-eslint/no-unsafe-member-access
-262:41  Error: Unsafe member access .AdditionalFundingRateInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-275:18  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-275:31  Error: Unsafe member access .Summary on an `any` value.  @typescript-eslint/no-unsafe-member-access
-282:31  Error: Unsafe member access ["Messages:ProjectCreated"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
-291:33  Error: Unsafe member access .ViewProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
-298:31  Error: Unsafe member access ["Messages:ProjectCreationError"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
-307:35  Error: Unsafe member access .ProjectName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-315:35  Error: Unsafe member access .ProjectDescription on an `any` value.  @typescript-eslint/no-unsafe-member-access
-323:35  Error: Unsafe member access .FundCollectionType on an `any` value.  @typescript-eslint/no-unsafe-member-access
-327:38  Error: Unsafe member access .FundCollectionTypeSHRE on an `any` value.  @typescript-eslint/no-unsafe-member-access
-328:38  Error: Unsafe member access .FundCollectionTypeDBIT on an `any` value.  @typescript-eslint/no-unsafe-member-access
-333:35  Error: Unsafe member access .FundableAmount on an `any` value.  @typescript-eslint/no-unsafe-member-access
-341:35  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
-345:38  Error: Unsafe member access .AdditionalFundingYes on an `any` value.  @typescript-eslint/no-unsafe-member-access
-346:38  Error: Unsafe member access .AdditionalFundingNo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-351:35  Error: Unsafe member access .AdditionalFundingRate on an `any` value.  @typescript-eslint/no-unsafe-member-access
-361:25  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
-363:31  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
+37:18  Error: Interface name `INewProjectFormProps` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
+40:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+52:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+55:9  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
+58:16  Error: Unsafe argument of type `any` assigned to a parameter of type `SetStateAction<string | undefined>`.  @typescript-eslint/no-unsafe-argument
+66:38  Error: Unsafe member access .Next on an `any` value.  @typescript-eslint/no-unsafe-member-access
+68:42  Error: Unsafe member access .Previous on an `any` value.  @typescript-eslint/no-unsafe-member-access
+78:31  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
+82:29  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
+85:58  Error: Unsafe member access .ProjectName on an `any` value.  @typescript-eslint/no-unsafe-member-access
+97:31  Error: Unsafe member access .ProjectNameInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+102:31  Error: Unsafe member access .ProjectDescription on an `any` value.  @typescript-eslint/no-unsafe-member-access
+114:31  Error: Unsafe member access .ProjectDescriptionInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+125:31  Error: Unsafe member access .ProjectDetails on an `any` value.  @typescript-eslint/no-unsafe-member-access
+130:29  Error: Unsafe member access .ProjectDetails on an `any` value.  @typescript-eslint/no-unsafe-member-access
+135:31  Error: Unsafe member access .FundCollectionType on an `any` value.  @typescript-eslint/no-unsafe-member-access
+153:39  Error: Unsafe member access .FundCollectionTypeSHRE on an `any` value.  @typescript-eslint/no-unsafe-member-access
+156:39  Error: Unsafe member access .FundCollectionTypeDBIT on an `any` value.  @typescript-eslint/no-unsafe-member-access
+163:31  Error: Unsafe member access .FundCollectionTypeInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+172:39  Error: Unsafe member access .FundableAmount on an `any` value.  @typescript-eslint/no-unsafe-member-access
+182:33  Error: Unsafe member access .FundableAmountInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+193:31  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
+198:29  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
+203:31  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
+218:39  Error: Unsafe member access .AdditionalFundingYes on an `any` value.  @typescript-eslint/no-unsafe-member-access
+221:39  Error: Unsafe member access .AdditionalFundingNo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+228:31  Error: Unsafe member access .AdditionalFundingInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+246:47  Error: Unsafe member access .AdditionalFundingRate on an `any` value.  @typescript-eslint/no-unsafe-member-access
+259:41  Error: Unsafe member access .AdditionalFundingRateInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+272:31  Error: Unsafe member access .Summary on an `any` value.  @typescript-eslint/no-unsafe-member-access
+279:31  Error: Unsafe member access ["Messages:ProjectCreated"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+288:33  Error: Unsafe member access .ViewProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
+295:31  Error: Unsafe member access ["Messages:ProjectCreationError"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+304:35  Error: Unsafe member access .ProjectName on an `any` value.  @typescript-eslint/no-unsafe-member-access
+312:35  Error: Unsafe member access .ProjectDescription on an `any` value.  @typescript-eslint/no-unsafe-member-access
+320:35  Error: Unsafe member access .FundCollectionType on an `any` value.  @typescript-eslint/no-unsafe-member-access
+324:38  Error: Unsafe member access .FundCollectionTypeSHRE on an `any` value.  @typescript-eslint/no-unsafe-member-access
+325:38  Error: Unsafe member access .FundCollectionTypeDBIT on an `any` value.  @typescript-eslint/no-unsafe-member-access
+330:35  Error: Unsafe member access .FundableAmount on an `any` value.  @typescript-eslint/no-unsafe-member-access
+338:35  Error: Unsafe member access .AdditionalFunding on an `any` value.  @typescript-eslint/no-unsafe-member-access
+342:38  Error: Unsafe member access .AdditionalFundingYes on an `any` value.  @typescript-eslint/no-unsafe-member-access
+343:38  Error: Unsafe member access .AdditionalFundingNo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+348:35  Error: Unsafe member access .AdditionalFundingRate on an `any` value.  @typescript-eslint/no-unsafe-member-access
+358:25  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
+360:31  Error: Unsafe member access .CreateProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/app/[type]/projects/new/page.tsx
 8:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
@@ -910,9 +497,7 @@
 19:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
 
 ./src/app/[lang]/app/[type]/projects/[projectId]/details/form.tsx
-7:15  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is not in camel case.  camelcase
 16:18  Error: Interface name `INewProjectFormProps` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
-17:29  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is not in camel case.  camelcase
 28:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 29:3  Error: 'resources' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
 29:3  Error: 'resources' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
@@ -924,46 +509,31 @@
 58:12  Error: Redundant use of `await` on a return value.  no-return-await
 64:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 84:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
-95:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/projects/[projectId]/details/page.tsx
 12:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-12:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-13:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 14:52  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 14:59  Error: Unsafe member access .lang on an `any` value.  @typescript-eslint/no-unsafe-member-access
 17:32  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 19:30  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-21:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 22:62  Error: Expected '===' and instead saw '=='.  eqeqeq
 22:73  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-27:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 27:28  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
-28:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 28:30  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
-41:22  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/projects/[projectId]/form.tsx
-31:3  Error: Identifier 'UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto' is not in camel case.  camelcase
-32:3  Error: Identifier 'UpwithCrowd_ProjectService_Projects_ProjectDto' is not in camel case.  camelcase
 59:18  Error: Interface name `INewProjectFormProps` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
-60:17  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-61:16  Error: Identifier 'UpwithCrowd_ProjectService_Projects_ProjectDto' is not in camel case.  camelcase
 65:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-72:14  Error: Identifier 'UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto' is not in camel case.  camelcase
 100:6  Warning: React Hook useEffect has a missing dependency: 'projectData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 102:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 119:21  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
-121:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 122:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 122:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
 128:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 140:21  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
-142:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 143:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 143:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
 148:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-152:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 153:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 153:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
 181:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
@@ -976,7 +546,6 @@
 347:41  Error: Unsafe member access .FundCollectionTypeSHRE on an `any` value.  @typescript-eslint/no-unsafe-member-access
 350:41  Error: Unsafe member access .FundCollectionTypeDBIT on an `any` value.  @typescript-eslint/no-unsafe-member-access
 357:33  Error: Unsafe member access .FundCollectionTypeInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-367:28  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 367:41  Error: Unsafe member access .FundableAmount on an `any` value.  @typescript-eslint/no-unsafe-member-access
 378:35  Error: Unsafe member access .FundableAmountInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
 444:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
@@ -984,7 +553,6 @@
 484:41  Error: Unsafe member access .AdditionalFundingYes on an `any` value.  @typescript-eslint/no-unsafe-member-access
 487:41  Error: Unsafe member access .AdditionalFundingNo on an `any` value.  @typescript-eslint/no-unsafe-member-access
 494:33  Error: Unsafe member access .AdditionalFundingInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-513:36  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 513:49  Error: Unsafe member access .AdditionalFundingRate on an `any` value.  @typescript-eslint/no-unsafe-member-access
 529:43  Error: Unsafe member access .AdditionalFundingRateInfo on an `any` value.  @typescript-eslint/no-unsafe-member-access
 593:26  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
@@ -996,8 +564,6 @@
 
 ./src/app/[lang]/app/[type]/projects/[projectId]/page.tsx
 13:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-13:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-14:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 15:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
 15:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
 15:61  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
@@ -1008,23 +574,14 @@
 25:12  Error: Unsafe member access .lang on an `any` value.  @typescript-eslint/no-unsafe-member-access
 27:5  Error: Unsafe argument of type `any` assigned to a parameter of type `string | undefined`.  @typescript-eslint/no-unsafe-argument
 27:12  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-35:24  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-37:22  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-51:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/projects/[projectId]/preview/page.tsx
 10:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 16:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
 16:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-26:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-27:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 27:20  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-28:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-28:11  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 28:19  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-29:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 29:21  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-33:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 33:37  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 33:45  Error: Unsafe member access .sectionRelationValue on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
@@ -1034,43 +591,28 @@
 12:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 18:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 29:21  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
-31:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 32:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
 32:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
 42:15  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
 
 ./src/app/[lang]/app/[type]/settings/profile/form.tsx
-7:3  Error: Identifier 'Volo_Abp_Account_ProfileDto' is not in camel case.  camelcase
-9:3  Error: Identifier '$Volo_Abp_Account_UpdateProfileDto' is not in camel case.  camelcase
-14:10  Error: 'ZodObjectOrWrapped' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-14:10  Error: 'ZodObjectOrWrapped' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-19:22  Error: Identifier 'Volo_Abp_Account_ProfileDto' is not in camel case.  camelcase
-27:14  Error: Identifier '$Volo_Abp_Account_UpdateProfileDto' is not in camel case.  camelcase
-30:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-33:9  Error: Identifier 'Volo_Abp_Account_ProfileDto' is not in camel case.  camelcase
-36:5  Error: Identifier 'Volo_Abp_Account_ProfileDto' is not in camel case.  camelcase
-47:6  Warning: React Hook useEffect has a missing dependency: 'user'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-49:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-61:15  Error: 'response' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-61:15  Error: 'response' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-68:9  Error: Unsafe argument of type `any` assigned to a parameter of type `Volo_Abp_Account_UpdateProfileDto`.  @typescript-eslint/no-unsafe-argument
-68:25  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-75:21  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
-77:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-78:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
-78:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
-84:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-102:20  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
-116:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-116:11  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+29:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+46:6  Warning: React Hook useEffect has a missing dependency: 'user'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+48:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+60:15  Error: 'response' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
+60:15  Error: 'response' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+67:9  Error: Unsafe argument of type `any` assigned to a parameter of type `Volo_Abp_Account_UpdateProfileDto`.  @typescript-eslint/no-unsafe-argument
+74:21  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
+77:19  Error: Unsafe argument of type `any` assigned to a parameter of type `ReactNode`.  @typescript-eslint/no-unsafe-argument
+77:25  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+83:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+101:20  Error: Promise-returning function provided to attribute where a void return was expected.  @typescript-eslint/no-misused-promises
+115:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+115:11  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
 
 ./src/app/[lang]/app/[type]/settings/profile/page.tsx
 9:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-18:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-18:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-19:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 19:25  Error: Unsafe member access .user on an `any` value.  @typescript-eslint/no-unsafe-member-access
-22:35  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/app/[type]/settings/sectionItems.tsx
 1:1  Error: Filename is not in kebab case. Rename it to `section-items.tsx`.  unicorn/filename-case
@@ -1093,116 +635,74 @@
 19:7  Warning: Missing an explicit type attribute for button  react/button-has-type
 
 ./src/app/[lang]/public/landing.tsx
-10:10  Error: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-10:10  Error: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-10:21  Error: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-10:21  Error: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-56:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-56:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-70:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-70:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-84:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-84:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-110:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-110:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-124:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-124:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-139:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-139:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-147:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
-169:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-169:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-192:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-192:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-215:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-215:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-239:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-239:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-263:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-263:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-289:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-289:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-304:52  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-307:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-312:42  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
-322:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-322:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-322:25  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-322:32  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-335:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-335:13  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-344:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-344:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-344:36  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-344:43  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-362:19  Error: Unsafe member access .full on an `any` value.  @typescript-eslint/no-unsafe-member-access
-374:20  Warning: Do not use Array index in keys  react/no-array-index-key
-380:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-380:11  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-380:40  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-380:47  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
-386:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-386:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-388:16  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-388:23  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
-393:44  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
-402:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-402:13  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-402:43  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-402:50  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
-501:25  Error: Unsafe member access .full on an `any` value.  @typescript-eslint/no-unsafe-member-access
+55:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+55:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+69:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+69:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+83:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+83:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+109:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+109:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+123:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+123:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+138:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+138:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+146:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+168:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+168:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+191:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+191:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+214:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+214:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+238:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+238:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+262:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+262:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+288:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+288:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+311:42  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
+321:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+321:15  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+321:32  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+334:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+334:13  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+343:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+343:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+343:43  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+361:19  Error: Unsafe member access .full on an `any` value.  @typescript-eslint/no-unsafe-member-access
+373:20  Warning: Do not use Array index in keys  react/no-array-index-key
+379:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+379:11  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+379:47  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
+385:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+385:9  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+387:23  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
+392:44  Error: Unsafe member access .images on an `any` value.  @typescript-eslint/no-unsafe-member-access
+401:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+401:13  Error: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+401:50  Error: Unsafe member access .logo on an `any` value.  @typescript-eslint/no-unsafe-member-access
+500:25  Error: Unsafe member access .full on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/app/[lang]/public/layout.tsx
-11:23  Error: 'getLocalizationResources' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-11:23  Error: 'getLocalizationResources' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
 13:19  Error: Unable to resolve path to module '../../../../../../../../public/bursa.svg'.  import/no-unresolved
 14:22  Error: Unable to resolve path to module '../../../../../../../../public/istanbul.svg'.  import/no-unresolved
 15:19  Error: Unable to resolve path to module '../../../../../../../../public/konya.svg'.  import/no-unresolved
 16:21  Error: Unable to resolve path to module '../../../../../../../../public/sakarya.svg'.  import/no-unresolved
 18:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 18:8  Error: Async function 'getConfig' has no 'await' expression.  @typescript-eslint/require-await
-36:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 36:23  Error: Unsafe member access .src on an `any` value.  @typescript-eslint/no-unsafe-member-access
-56:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 56:23  Error: Unsafe member access .src on an `any` value.  @typescript-eslint/no-unsafe-member-access
-76:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 76:26  Error: Unsafe member access .src on an `any` value.  @typescript-eslint/no-unsafe-member-access
-96:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 96:25  Error: Unsafe member access .src on an `any` value.  @typescript-eslint/no-unsafe-member-access
 102:10  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 110:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-113:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-113:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-114:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 114:25  Error: Unsafe member access .user on an `any` value.  @typescript-eslint/no-unsafe-member-access
-117:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-120:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-124:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-130:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-133:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-137:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-141:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-147:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-150:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-154:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-158:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-162:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-166:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-172:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 176:42  Error: APPLICATION_NAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-181:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-186:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-191:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-196:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 208:20  Error: APPLICATION_NAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-230:21  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-233:17  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/public/page.tsx
-3:10  Error: 'isCustomNodeSelected' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:10  Error: 'isCustomNodeSelected' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-7:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-8:19  Error: APPLICATION_NAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
+6:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+7:19  Error: APPLICATION_NAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 
 ./src/app/[lang]/public/projects/page.tsx
 10:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
@@ -1213,27 +713,16 @@
 10:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 16:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
 16:25  Error: 'resources' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-25:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-25:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-26:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 26:25  Error: Unsafe member access .user on an `any` value.  @typescript-eslint/no-unsafe-member-access
-28:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-29:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 29:20  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-30:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-30:11  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 30:19  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-31:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 31:21  Error: Unsafe member access .sectionName on an `any` value.  @typescript-eslint/no-unsafe-member-access
-35:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 35:37  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 35:45  Error: Unsafe member access .sectionRelationValue on an `any` value.  @typescript-eslint/no-unsafe-member-access
-46:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 
 ./src/app/[lang]/[auth]/page.tsx
 55:24  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
 55:24  Error: Promise executor functions should not be async.  no-async-promise-executor
-69:17  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 70:11  Error: Expected the Promise rejection reason to be an Error.  @typescript-eslint/prefer-promise-reject-errors
 70:25  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
 73:9  Error: Expected the Promise rejection reason to be an Error.  @typescript-eslint/prefer-promise-reject-errors
@@ -1241,15 +730,12 @@
 115:39  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 116:25  Error: Promise returned in function argument where a void return was expected.  @typescript-eslint/no-misused-promises
 116:25  Error: Promise executor functions should not be async.  no-async-promise-executor
-129:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-139:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 140:29  Error: Unsafe argument of type `any` assigned to a parameter of type `SetStateAction<string | null | undefined>`.  @typescript-eslint/no-unsafe-argument
 140:36  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
 141:13  Error: Expected the Promise rejection reason to be an Error.  @typescript-eslint/prefer-promise-reject-errors
 141:27  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
 144:11  Error: Expected the Promise rejection reason to be an Error.  @typescript-eslint/prefer-promise-reject-errors
 148:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
-155:18  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 155:18  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 156:7  Warning: Props should be sorted alphabetically  react/jsx-sort-props
 157:7  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
@@ -1266,221 +752,162 @@
 
 ./src/language-data/AbpUiNavigation/navbar.ts
 3:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-3:37  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-4:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 4:41  Error: Unsafe member access .AbpUiNavigation on an `any` value.  @typescript-eslint/no-unsafe-member-access
-6:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 6:15  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 6:35  Error: Unsafe member access .HomePage on an `any` value.  @typescript-eslint/no-unsafe-member-access
 6:47  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-7:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 7:16  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 7:36  Error: Unsafe member access .Dashboard on an `any` value.  @typescript-eslint/no-unsafe-member-access
 7:49  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-8:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 8:14  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 8:34  Error: Unsafe member access .Profile on an `any` value.  @typescript-eslint/no-unsafe-member-access
 8:45  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-9:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 9:14  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 9:34  Error: Unsafe member access .Details on an `any` value.  @typescript-eslint/no-unsafe-member-access
 9:45  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-10:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 10:16  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 10:36  Error: Unsafe member access .Companies on an `any` value.  @typescript-eslint/no-unsafe-member-access
 10:49  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-11:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 12:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 12:27  Error: Unsafe member access .CountrySettings on an `any` value.  @typescript-eslint/no-unsafe-member-access
 13:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-15:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 15:15  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 15:35  Error: Unsafe member access .Settings on an `any` value.  @typescript-eslint/no-unsafe-member-access
 15:47  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-16:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 17:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 17:27  Error: Unsafe member access .LanguageManagement on an `any` value.  @typescript-eslint/no-unsafe-member-access
 18:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-20:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 21:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 21:27  Error: Unsafe member access .IdentityManagement on an `any` value.  @typescript-eslint/no-unsafe-member-access
 22:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-24:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 25:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 25:27  Error: Unsafe member access .SaasManagement on an `any` value.  @typescript-eslint/no-unsafe-member-access
 26:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-28:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 29:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 29:28  Error: Unsafe member access ["Identity:role"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 29:48  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-30:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 31:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 31:28  Error: Unsafe member access ["Identity:user"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 31:48  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-32:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 33:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 33:28  Error: Unsafe member access ["Identity:claimType"] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 34:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-37:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 37:15  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 37:35  Error: Unsafe member access .Investor on an `any` value.  @typescript-eslint/no-unsafe-member-access
 37:47  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-38:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 38:13  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 38:33  Error: Unsafe member access .Invest on an `any` value.  @typescript-eslint/no-unsafe-member-access
 38:43  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-39:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 40:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 40:27  Error: Unsafe member access .SupportCenter on an `any` value.  @typescript-eslint/no-unsafe-member-access
 40:44  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-41:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 42:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 42:27  Error: Unsafe member access .Entrepreneur on an `any` value.  @typescript-eslint/no-unsafe-member-access
 42:43  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-43:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 44:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 44:27  Error: Unsafe member access .SubmitYourProject on an `any` value.  @typescript-eslint/no-unsafe-member-access
 45:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-47:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 48:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 48:27  Error: Unsafe member access .HowDoIFindTheNecessaryFunds on an `any` value.  @typescript-eslint/no-unsafe-member-access
 49:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-51:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 52:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 52:27  Error: Unsafe member access .Institutional on an `any` value.  @typescript-eslint/no-unsafe-member-access
 52:44  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-53:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 53:14  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 53:34  Error: Unsafe member access .AboutUs on an `any` value.  @typescript-eslint/no-unsafe-member-access
 53:45  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-54:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 54:14  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 54:34  Error: Unsafe member access .Contact on an `any` value.  @typescript-eslint/no-unsafe-member-access
 54:45  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-55:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 55:14  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 55:34  Error: Unsafe member access .OurTeam on an `any` value.  @typescript-eslint/no-unsafe-member-access
 55:45  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-56:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 57:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 57:27  Error: Unsafe member access .BoardOfDirectors on an `any` value.  @typescript-eslint/no-unsafe-member-access
 58:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-60:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 61:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 61:27  Error: Unsafe member access .InvestingCommittee on an `any` value.  @typescript-eslint/no-unsafe-member-access
 62:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-64:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 64:16  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 64:36  Error: Unsafe member access .Campaigns on an `any` value.  @typescript-eslint/no-unsafe-member-access
 64:49  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-65:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 66:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 66:27  Error: Unsafe member access .AdminCenter on an `any` value.  @typescript-eslint/no-unsafe-member-access
 66:42  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-67:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 68:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 68:27  Error: Unsafe member access .EntrepreneurCenter on an `any` value.  @typescript-eslint/no-unsafe-member-access
 69:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-71:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 72:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 72:27  Error: Unsafe member access .InvestorCenter on an `any` value.  @typescript-eslint/no-unsafe-member-access
 73:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-75:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 76:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 76:27  Error: Unsafe member access .ChangeProfile on an `any` value.  @typescript-eslint/no-unsafe-member-access
 77:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-79:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 79:32  Error: Unsafe member access .LogIn on an `any` value.  @typescript-eslint/no-unsafe-member-access
-80:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 80:35  Error: Unsafe member access .Register on an `any` value.  @typescript-eslint/no-unsafe-member-access
-81:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 81:13  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
 81:33  Error: Unsafe member access .LogOut on an `any` value.  @typescript-eslint/no-unsafe-member-access
 81:43  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-82:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 82:27  Error: Unsafe member access .AbpUiNavigation on an `any` value.  @typescript-eslint/no-unsafe-member-access
-83:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 83:21  Error: Unsafe member access .AbpUiNavigation on an `any` value.  @typescript-eslint/no-unsafe-member-access
 86:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 94:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-94:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 
 ./src/language-data/Projects/projects.ts
 3:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/lib.ts
 10:1  Error: Dependency cycle via auth-action:5  import/no-cycle
-15:9  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 17:13  Error: AUTH_SECRET is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-19:17  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 22:11  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 30:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-31:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-31:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-32:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 32:26  Error: Unsafe member access .access_token on an `any` value.  @typescript-eslint/no-unsafe-member-access
-34:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 35:11  Error: AUTH_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 45:11  Error: PROJECT_SERVICE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 55:11  Error: PROJECT_SERVICE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-66:9  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 68:13  Error: AUTH_SECRET is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-70:17  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 73:11  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 83:11  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-90:9  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 92:13  Error: AUTH_SECRET is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-94:17  Error: Identifier 'JWT_Token' is not in camel case.  camelcase
 97:11  Error: BASE_URL is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
-106:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-106:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-107:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 107:26  Error: Unsafe member access .access_token on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/middleware.ts
-5:10  Error: 'getToken' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-5:10  Error: 'getToken' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-5:26  Error: Unable to resolve path to module 'next-auth/jwt'.  import/no-unresolved
-30:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-39:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-46:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-49:55  Error: Array.prototype.find() expects a value to be returned at the end of arrow function.  array-callback-return
-61:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-69:14  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-69:27  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-69:65  Error: Async arrow function has no 'await' expression.  @typescript-eslint/require-await
-70:19  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
-70:31  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-70:39  Error: Unsafe member access .headers on an `any` value.  @typescript-eslint/no-unsafe-member-access
-72:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-72:29  Error: 'request' is already declared in the upper scope on line 69 column 39.  @typescript-eslint/no-shadow
-73:28  Error: Unsafe member access .auth on an `any` value.  @typescript-eslint/no-unsafe-member-access
-75:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-78:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-81:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-81:12  Error: 'redirectToProfile' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-81:12  Error: 'redirectToProfile' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-84:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-87:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-87:37  Error: 'request' is already declared in the upper scope on line 69 column 39.  @typescript-eslint/no-shadow
-96:28  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
-97:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-97:20  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
-97:28  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
-97:56  Error: Unsafe member access [2] on an `any` value.  @typescript-eslint/no-unsafe-member-access
-106:28  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
-110:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
-110:33  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
-111:31  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
-113:5  Error: Unexpected console statement.  no-console
-117:36  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
-122:27  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
-122:59  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
-123:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
-123:33  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
-124:31  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
-127:5  Error: Unexpected console statement.  no-console
-131:36  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
+29:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+38:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+45:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+48:55  Error: Array.prototype.find() expects a value to be returned at the end of arrow function.  array-callback-return
+60:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+68:65  Error: Async arrow function has no 'await' expression.  @typescript-eslint/require-await
+69:19  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
+69:39  Error: Unsafe member access .headers on an `any` value.  @typescript-eslint/no-unsafe-member-access
+71:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+71:29  Error: 'request' is already declared in the upper scope on line 68 column 39.  @typescript-eslint/no-shadow
+72:28  Error: Unsafe member access .auth on an `any` value.  @typescript-eslint/no-unsafe-member-access
+74:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+77:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+80:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+80:12  Error: 'redirectToProfile' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
+80:12  Error: 'redirectToProfile' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+83:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+86:3  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
+86:37  Error: 'request' is already declared in the upper scope on line 68 column 39.  @typescript-eslint/no-shadow
+95:28  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
+96:28  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
+96:56  Error: Unsafe member access [2] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+105:28  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+109:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+109:33  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
+110:31  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
+112:5  Error: Unexpected console statement.  no-console
+116:36  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
+121:27  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+121:59  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+122:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+122:33  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
+123:31  Error: Unsafe argument of type `NextAuthRequest` assigned to a parameter of type `NextRequest`.  @typescript-eslint/no-unsafe-argument
+126:5  Error: Unexpected console statement.  no-console
+130:36  Error: Unsafe member access .nextUrl on an `any` value.  @typescript-eslint/no-unsafe-member-access
 
 ./src/providers/application.tsx
 5:11  Error: Interface name `IApplicationProvider` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
@@ -1493,14 +920,10 @@
 5:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/providers/configuration.tsx
-6:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 8:29  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-9:5  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 12:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
 ./src/providers/locale.tsx
-3:15  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is not in camel case.  camelcase
-9:3  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto' is not in camel case.  camelcase
 11:11  Error: Interface name `ILocaleProvider` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
 16:11  Error: Interface name `ILocaleContext` must not match the RegExp: /^I[A-Z]|^(Interface|Props|State)$/u  @typescript-eslint/naming-convention
 24:23  Error: Unexpected empty method 'changeLocale'.  @typescript-eslint/no-empty-function
@@ -1511,9 +934,7 @@
 47:53  Error: Promise-returning function provided to property where a void return was expected.  @typescript-eslint/no-misused-promises
 
 ./src/providers/permissions.tsx
-6:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 8:33  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-9:5  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 12:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 13:59  Error: Don't use `Object` as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
 - If you want a type meaning "any object", you probably want `object` instead.
@@ -1530,27 +951,15 @@
 ./src/providers/tooltip.tsx
 5:16  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 
-./src/resources.ts
-1:15  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto' is not in camel case.  camelcase
-4:3  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto' is not in camel case.  camelcase
-
 ./src/utils.ts
-1:15  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto' is not in camel case.  camelcase
-3:10  Error: 'ZodType' is defined but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-3:10  Error: 'ZodType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-8:3  Error: Identifier 'Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto' is not in camel case.  camelcase
 11:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 24:17  Error: HOSTNAME is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 24:41  Error: PORT is not listed as a dependency in turbo.json  turbo/no-undeclared-env-vars
 28:5  Error: Unexpected console statement.  no-console
 34:1  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
-38:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-38:25  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 38:25  Error: Require statement not part of import statement.  @typescript-eslint/no-var-requires
 38:49  Error: Unsafe member access .cookies on an `any` value.  @typescript-eslint/no-unsafe-member-access
-39:5  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 39:5  Error: Assignment to function parameter 'locale'.  no-param-reassign
-39:14  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 39:26  Error: Unsafe member access .get on an `any` value.  @typescript-eslint/no-unsafe-member-access
 39:41  Error: Unsafe member access .value on an `any` value.  @typescript-eslint/no-unsafe-member-access
 43:5  Error: Assignment to function parameter 'locale'.  no-param-reassign
@@ -1560,52 +969,28 @@
 56:15  Error: Unnecessary conditional, expected left-hand side of `??` operator to be possibly null or undefined.  @typescript-eslint/no-unnecessary-condition
 60:8  Warning: Missing return type on function.  @typescript-eslint/explicit-function-return-type
 69:5  Error: Assignment to function parameter 'location'.  no-param-reassign
-96:10  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-97:13  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-110:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-113:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-114:3  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-119:14  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-120:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
 127:9  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 128:42  Error: 'key' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
 128:42  Error: 'key' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
 128:47  Error: Array.prototype.map() expects a return value from arrow function.  array-callback-return
 134:16  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-138:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 138:45  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
 139:33  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-140:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 140:47  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
 142:33  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
-144:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
 144:47  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
 147:31  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
 148:38  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
-151:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-151:27  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 151:47  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
-152:17  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-152:25  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
 152:27  Error: Unsafe member access [convertors[element].get] on an `any` value.  @typescript-eslint/no-unsafe-member-access
 152:27  Error: Computed name [convertors[element].get] resolves to an any value.  @typescript-eslint/no-unsafe-member-access
 152:47  Error: Unsafe member access .get on an `any` value.  @typescript-eslint/no-unsafe-member-access
 191:53  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
 200:68  Error: Expected '===' and instead saw '=='.  eqeqeq
-204:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-204:29  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 204:41  Error: Unsafe member access .map on an `any` value.  @typescript-eslint/no-unsafe-member-access
-204:49  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-204:57  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-204:57  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 204:59  Error: Unsafe member access .toString on an `any` value.  @typescript-eslint/no-unsafe-member-access
 210:5  Error: Duplicate case label.  no-duplicate-case
-212:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
-212:29  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 212:41  Error: Unsafe member access .map on an `any` value.  @typescript-eslint/no-unsafe-member-access
-212:49  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-212:57  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
-212:57  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
 212:59  Error: Unsafe member access .toString on an `any` value.  @typescript-eslint/no-unsafe-member-access
 225:25  Error: Unsafe member access .properties on an `any` value.  @typescript-eslint/no-unsafe-member-access
 227:27  Error: Unsafe argument of type `any` assigned to a parameter of type `SchemaType`.  @typescript-eslint/no-unsafe-argument

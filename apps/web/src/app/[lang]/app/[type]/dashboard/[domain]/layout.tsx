@@ -8,11 +8,6 @@ import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "../data";
 
-function isPathValid(path: string, navbarItems: any[]) {
-  const validPaths = navbarItems.map((item) => item.id);
-  return validPaths.includes(path) || path === undefined;
-}
-
 interface LayoutProps {
   children: JSX.Element;
   params?: any;

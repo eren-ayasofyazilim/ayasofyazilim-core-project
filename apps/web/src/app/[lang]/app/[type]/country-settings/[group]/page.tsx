@@ -1,10 +1,9 @@
 "use server";
 
-import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 import { SettingsView } from "@repo/ui/settings-view";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
-import { mockSettingsResponse, test4 } from "./mockSettingsResponse";
+import { mockSettingsResponse } from "./mockSettingsResponse";
 
 export default async function Page({
   params,
