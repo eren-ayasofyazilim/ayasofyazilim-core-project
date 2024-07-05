@@ -256,7 +256,10 @@ const App: React.FC = () => {
   );
 
   const handleSave = useCallback(
-    async (formData: { displayName: string }, triggerData?: { id: string }) => {
+    async (
+      formData: { displayName: string },
+      _triggerData?: { id: string }
+    ) => {
       try {
         const response = await fetch(getBaseLink("api/admin/organization"), {
           method: "POST",
@@ -265,7 +268,7 @@ const App: React.FC = () => {
           },
           body: JSON.stringify({
             displayName: formData.displayName,
-            parentId: triggerData?.id,
+            parentId: _triggerData?.id,
           }),
         });
 
@@ -332,7 +335,7 @@ const App: React.FC = () => {
   );
 
   const handleUpdateUnit = useCallback(
-    async (formData: { displayName: string }, triggerData: { id: string }) => {
+    async (formData: { displayName: string }, _triggerData: { id: string }) => {
       try {
         const response = await fetch(
           getBaseLink(`api/organization/organizationEdit`),
@@ -342,7 +345,7 @@ const App: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id: triggerData.id,
+              id: _triggerData.id,
               requestBody: { displayName: formData.displayName },
             }),
           }
@@ -352,7 +355,7 @@ const App: React.FC = () => {
           const units = await fetchOrganizationUnits();
           setOrganizationUnits(units);
           const updatedUnit =
-            units.find((unit) => unit.id === triggerData.id) || null;
+            units.find((unit) => unit.id === _triggerData.id) || null;
           setSelectedUnit(updatedUnit);
           updateEnums(units);
           setTriggerData({});
@@ -371,7 +374,10 @@ const App: React.FC = () => {
   );
 
   const handleMoveUsers = useCallback(
-    async (formData: { targetUnitId: string }, triggerData: { id: string }) => {
+    async (
+      formData: { targetUnitId: string },
+      _triggerData: { id: string }
+    ) => {
       if (selectedUnit) {
         try {
           const targetUnit = organizationUnits.find(
@@ -389,7 +395,7 @@ const App: React.FC = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                id: triggerData.id,
+                id: _triggerData.id,
                 organizationId: targetUnit.id,
               }),
             }
@@ -397,7 +403,7 @@ const App: React.FC = () => {
           if (response.ok) {
             toast.success("Users moved successfully");
             setTriggerData({});
-            const updatedUsers = await fetchUsersForUnit(triggerData.id);
+            const updatedUsers = await fetchUsersForUnit(_triggerData.id);
             setUnitUsers(updatedUsers);
           } else {
             const errorData = await response.json();
@@ -412,12 +418,12 @@ const App: React.FC = () => {
     [organizationUnits, selectedUnit]
   );
 
-  const handleUnitClick = useCallback(async (unit: OrganizationUnit) => {
-    setSelectedUnit(unit);
+  const handleUnitClick = useCallback(async (_unit: OrganizationUnit) => {
+    setSelectedUnit(_unit);
     setActiveTab("Users");
     const [users, roles] = await Promise.all([
-      fetchUsersForUnit(unit.id),
-      fetchRolesForUnit(unit.id),
+      fetchUsersForUnit(_unit.id),
+      fetchRolesForUnit(_unit.id),
     ]);
     setUnitUsers(users);
     setUnitRoles(roles);
@@ -444,9 +450,9 @@ const App: React.FC = () => {
   }, [handleSave, selectedUnit]);
 
   const handleSubUnit = useCallback(
-    async (unit: OrganizationUnit) => {
-      await handleUnitClick(unit);
-      setSelectedUnit(unit);
+    async (_unit: OrganizationUnit) => {
+      await handleUnitClick(_unit);
+      setSelectedUnit(_unit);
       setAction({
         autoFormArgs: {
           formSchema: createZodObject(
@@ -455,22 +461,22 @@ const App: React.FC = () => {
           ),
         },
         callback: (e, triggerData) => {
-          const formData = { ...e, ParentId: unit?.id };
+          const formData = { ...e, ParentId: _unit?.id };
           handleSave(formData, triggerData);
           return true;
         },
         cta: "New organization unit",
-        description: `Parent: ${unit.displayName}`,
+        description: `Parent: ${_unit.displayName}`,
       });
-      setTriggerData({ id: unit?.id });
+      setTriggerData({ id: _unit?.id });
       setOpen(true);
     },
     [handleSave, handleUnitClick]
   );
 
   const handleEditUnit = useCallback(
-    async (unit: OrganizationUnit) => {
-      await handleUnitClick(unit);
+    async (_unit: OrganizationUnit) => {
+      await handleUnitClick(_unit);
       setAction({
         autoFormArgs: {
           formSchema: createZodObject(
@@ -482,19 +488,19 @@ const App: React.FC = () => {
         cta: "Edit Unit",
         description: "Edit the name of the organization unit",
       });
-      setTriggerData({ displayName: unit?.displayName, id: unit?.id });
+      setTriggerData({ displayName: _unit?.displayName, id: _unit?.id });
       setOpen(true);
     },
     [handleUnitClick, handleUpdateUnit]
   );
 
   const handleListAllUnits = useCallback(
-    async (unit: OrganizationUnit) => {
-      setSelectedUnit(unit);
+    async (_unit: OrganizationUnit) => {
+      setSelectedUnit(_unit);
       setActiveTab("Users");
       const [users, roles] = await Promise.all([
-        fetchUsersForUnit(unit.id),
-        fetchRolesForUnit(unit.id),
+        fetchUsersForUnit(_unit.id),
+        fetchRolesForUnit(_unit.id),
       ]);
       setUnitUsers(users);
       setUnitRoles(roles);
@@ -502,7 +508,7 @@ const App: React.FC = () => {
         toast.warning("There are no users currently in this unit.");
         return;
       }
-      const availableUnits = organizationUnits.filter((u) => u.id !== unit.id);
+      const availableUnits = organizationUnits.filter((u) => u.id !== _unit.id);
       const unitOptions = availableUnits.map((unit) => {
         const parentUnit = organizationUnits.find(
           (u) => u.id === unit.parentId
@@ -525,7 +531,7 @@ const App: React.FC = () => {
           ),
         ]);
         setDisplayNameEnum(DynamicEnum);
-        setTriggerData({ displayName: unit.displayName, id: unit.id });
+        setTriggerData({ displayName: _unit.displayName, id: _unit.id });
         setAction({
           autoFormArgs: {
             formSchema: z.object({
@@ -548,7 +554,7 @@ const App: React.FC = () => {
             return true;
           },
           cta: "Move all Users",
-          description: `Move all users from ${unit.displayName} to:`,
+          description: `Move all users from ${_unit.displayName} to:`,
         });
         setOpen(true);
       } else {
