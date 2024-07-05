@@ -16,9 +16,6 @@ export default async function Page({ params }: { params: { lang: string } }) {
   ];
   return (
     <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={"general"}
-      openOnNewPage={true}
       content={
         <div className="w-full mx-auto max-w-3xl">
           <div className="flex flex-col items-center justify-start mb-8 w-full">
@@ -28,6 +25,9 @@ export default async function Page({ params }: { params: { lang: string } }) {
           </div>
         </div>
       }
+      defaultActiveSectionId="general"
+      openOnNewPage
+      sections={navbarItems}
     />
   );
 }

@@ -24,13 +24,13 @@ export default async function Page({
 
   const sectionsData =
     projectSectionData?.map((section: any, index) => ({
-      key: section.sectionName || "" + index,
+      key: section.sectionName || `${  index}`,
       id: section.sectionName.replaceAll(" ", ""),
       name: section.sectionName,
       value: (
         <TipTapEditor
-          editorContent={JSON.parse(section.sectionRelationValue || "{}")}
           canEditable={false}
+          editorContent={JSON.parse(section.sectionRelationValue || "{}")}
         />
       ),
     })) || [];
@@ -38,11 +38,11 @@ export default async function Page({
   return (
     <ScrollArea className="z-10">
       <ProjectPage
+        ProjectStatusEnums={ProjectStatusEnums}
+        isPreview
+        languageData={languageData}
         projectData={projectData}
         sectionsData={sectionsData}
-        languageData={languageData}
-        ProjectStatusEnums={ProjectStatusEnums}
-        isPreview={true}
       />
     </ScrollArea>
   );

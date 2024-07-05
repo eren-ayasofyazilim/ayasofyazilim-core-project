@@ -35,25 +35,25 @@ import {
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
 
-export type formModifier = {
+export interface formModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-  dependencies?: Array<{
+  dependencies?: {
     sourceField: string;
     type: DependencyType;
     targetField: string;
     when: (value: any) => boolean;
-  }>;
-};
+  }[];
+}
 
-export type tableData = {
+export interface tableData {
   createFormSchema: formModifier;
   editFormSchema: formModifier;
   tableSchema: formModifier;
   filterBy: string;
-};
+}
 
 export const dataConfig: Record<string, any> = {
   openiddict: {

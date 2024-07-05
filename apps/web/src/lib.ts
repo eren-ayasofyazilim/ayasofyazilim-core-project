@@ -1,14 +1,13 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
-
 import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
-import { auth } from "auth";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { getToken } from "@auth/core/jwt";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
+import { auth } from "auth";
 
 export async function getIdentityServiceClient(
   request: NextRequest

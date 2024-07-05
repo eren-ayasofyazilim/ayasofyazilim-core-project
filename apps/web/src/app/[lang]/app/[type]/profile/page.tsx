@@ -18,17 +18,17 @@ export default async function Page({
     <>
       <div className="flex-row mb-2">
         <Button asChild>
-          <Link href={"profile/new"} className="float-right">
+          <Link className="float-right" href="profile/new">
             New {type}
           </Link>
         </Button>
       </div>
-      <>Companies</>
+      Companies
       <ScrollArea className="p-2 border-2">
         {/* <ScrollBar orientation="horizontal" /> */}
         <BackerList backers={backersComapnies} type="companies" />
       </ScrollArea>
-      <>Individuals</>
+      Individuals
       <ScrollArea className="p-2 border-2">
         {/* <ScrollBar orientation="horizontal" /> */}
         <BackerList backers={backersIndividuals} type="individuals" />

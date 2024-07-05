@@ -1,11 +1,12 @@
 "use server";
 
-import {
+import type {
   DeleteApiProjectServiceProjectsByIdData,
-  GetApiProjectServiceProjectsData,
   GetApiProjectServiceProjectsResponse,
   PostApiProjectServiceProjectsData,
-  PutApiProjectServiceProjectsByIdData,
+  PutApiProjectServiceProjectsByIdData} from "@ayasofyazilim/saas/ProjectService";
+import {
+  GetApiProjectServiceProjectsData,
   Volo_Abp_Application_Dtos_PagedResultDto_13,
 } from "@ayasofyazilim/saas/ProjectService";
 import { revalidatePath } from "next/cache";
@@ -27,7 +28,7 @@ export async function getProjectByIdServer(projectId: string) {
 export async function getProjectsServer() {
   "use server";
   try {
-    return (await getProjectServiceClient().project.getApiProjectServiceProjects()) as GetApiProjectServiceProjectsResponse;
+    return (await getProjectServiceClient().project.getApiProjectServiceProjects());
   } catch (error) {
     console.error("Offline Data");
     return {} as GetApiProjectServiceProjectsResponse;
@@ -63,7 +64,7 @@ export async function updateProjectServer(
   try {
     const client = await getProjectServiceClient();
     const response = await client.project.putApiProjectServiceProjectsById({
-      id: id,
+      id,
       requestBody: body,
     });
     revalidatePath("/[lang]/app/[type]/projects", "page");
@@ -166,9 +167,9 @@ export async function createProjectSectionRelationServer(
       await client.projectSectionRelation.postApiProjectServiceProjectSectionRelation(
         {
           requestBody: {
-            projectId: projectId,
-            value: value,
-            projectSectionId: projectSectionId,
+            projectId,
+            value,
+            projectSectionId,
           },
         }
       );
@@ -189,14 +190,14 @@ export async function updateProjectSectionRelationServer(
       const data =
         await client.projectSectionRelation.getApiProjectServiceProjectSectionRelationById(
           {
-            id: id,
+            id,
           }
         );
       data.value = value;
 
       await client.projectSectionRelation.putApiProjectServiceProjectSectionRelationById(
         {
-          id: id,
+          id,
           requestBody: data,
         }
       );

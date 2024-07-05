@@ -5,10 +5,10 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useState } from "react";
-import { postBacker, postIndividual, putBacker } from "../actions";
-import { formSchema } from "../data";
 import { Button } from "@/components/ui/button";
 import { ScrollBar } from "@/components/ui/scroll-area";
+import { postBacker, postIndividual, putBacker } from "../actions";
+import { formSchema } from "../data";
 
 export function BackerForm({
   type,
@@ -55,11 +55,11 @@ export function BackerForm({
           <AutoForm
             // id="backer-form-new"  
             formSchema={formSchema[formType]}
-            values={backer}
             onParsedValuesChange={(values) => {
               setData(values);
             }}
-            onSubmit={(formData) => submitFormData(formData)}
+            onSubmit={(formData) => { submitFormData(formData); }}
+            values={backer}
           >
             <AutoFormSubmit >
               <>

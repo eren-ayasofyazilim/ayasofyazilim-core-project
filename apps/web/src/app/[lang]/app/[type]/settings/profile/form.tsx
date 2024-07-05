@@ -3,16 +3,17 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
+import type {
+  Volo_Abp_Account_ProfileDto} from "@ayasofyazilim/saas/AccountService";
 import {
-  $Volo_Abp_Account_UpdateProfileDto,
-  Volo_Abp_Account_ProfileDto,
+  $Volo_Abp_Account_UpdateProfileDto
 } from "@ayasofyazilim/saas/AccountService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { updateUserProfileServer } from "action";
 import { EditIcon } from "lucide-react";
 import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { useEffect, useState } from "react";
+import { updateUserProfileServer } from "action";
 import { createZodObject } from "src/utils";
 
 const inputs: (keyof Volo_Abp_Account_ProfileDto)[] = [
@@ -24,7 +25,7 @@ const inputs: (keyof Volo_Abp_Account_ProfileDto)[] = [
 ];
 
 const form = $Volo_Abp_Account_UpdateProfileDto;
-const formSchema = createZodObject(form, inputs) as ZodObjectOrWrapped;
+const formSchema = createZodObject(form, inputs);
 
 export default function ProfileForm({
   user,
@@ -71,7 +72,7 @@ export default function ProfileForm({
         setIsSubmitDisabled(true);
         setImageFile(null); // Reset the imageFile state
       } else {
-        toast.error(profileResponse?.message);
+        toast.error(profileResponse.message);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -97,14 +98,14 @@ export default function ProfileForm({
       <div className="basis-2/4 pt-4">
         <AutoForm
           formSchema={formSchema}
-          onParsedValuesChange={(i) => setUserDataForm(i)}
-          values={user}
+          onParsedValuesChange={(i) => { setUserDataForm(i); }}
           onSubmit={onSubmit}
+          values={user}
         >
           <Button
+            className=" w-[120px] text-white float-right"
             disabled={isSubmitDisabled}
             isLoading={isLoading}
-            className=" w-[120px] text-white float-right"
           >
             Güncelle
           </Button>
@@ -113,8 +114,8 @@ export default function ProfileForm({
       <div className="basis-1/4 min-w-[100px] pt-4">
         <div className="relative m-auto w-64 h-64">
           <img
-            src={selectedImage}
             className="rounded-full border-4 border-gray-200 w-full h-full object-cover"
+            src={selectedImage}
           />
           <div className="absolute top-0 right-0 p-1.5 w-8 h-8 bg-white rounded-full border border-gray-400">
             <Label htmlFor="picture">
@@ -123,10 +124,10 @@ export default function ProfileForm({
           </div>
         </div>
         <Input
-          id="picture"
-          type="file"
           className="hidden"
+          id="picture"
           onChange={handleImageChange}
+          type="file"
         />
       </div>
     </>

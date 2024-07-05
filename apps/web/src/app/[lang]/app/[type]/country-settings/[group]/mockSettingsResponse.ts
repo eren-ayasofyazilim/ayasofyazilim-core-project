@@ -1,4 +1,4 @@
-import { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
+import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 
 export const mockSettingsResponse: UniRefund_SettingService_CountrySettings_CountrySettingDto =
   {

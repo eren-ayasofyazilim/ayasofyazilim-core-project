@@ -1,22 +1,22 @@
 "use server";
 
 import MainLayout from "@repo/ayasofyazilim-ui/templates/main-layout";
-
 import LanguageSelector from "@repo/ui/language-selector";
 import Header from "@repo/ui/upwithcrowd/header";
-import Navbar, { linksProp } from "@repo/ui/upwithcrowd/navbar";
+import type { linksProp } from "@repo/ui/upwithcrowd/navbar";
+import Navbar from "@repo/ui/upwithcrowd/navbar";
+import { Projector, ShieldAlert, Worm } from "lucide-react";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
-import { Projector, ShieldAlert, Worm } from "lucide-react";
 import { getBaseLink, getLocalizationResources } from "src/utils";
-import bursa from "/public/bursa.svg";
-import istanbul from "/public/istanbul.svg";
-import konya from "/public/konya.svg";
-import sakarya from "/public/sakarya.svg";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
+import bursa from "../../../../../../../../public/bursa.svg";
+import istanbul from "../../../../../../../../public/istanbul.svg";
+import konya from "../../../../../../../../public/konya.svg";
+import sakarya from "../../../../../../../../public/sakarya.svg";
 
-export async function getConfig(appName: string = "konya") {
-  let configs = {
+export async function getConfig(appName = "konya") {
+  const configs = {
     bursa: {
       key: "bursa",
       link: getBaseLink("/", true),
@@ -102,10 +102,10 @@ export async function getConfig(appName: string = "konya") {
   return configs[appName as keyof typeof configs] || configs.konya;
 }
 
-type LayoutProps = {
+interface LayoutProps {
   params: { lang: string };
   children: JSX.Element;
-};
+}
 
 export default async function Layout({ children, params }: LayoutProps) {
   const { languageData, resources } = await getResourceData(params.lang);
@@ -173,12 +173,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink("public/projects", true),
     },
   ];
-  let configSelected = await getConfig(process.env.APPLICATION_NAME);
+  const configSelected = await getConfig(process.env.APPLICATION_NAME);
 
   const userNavigation = {
     loginURL: getBaseLink(`login`, true, params.lang),
     registerURL: getBaseLink(`register`, true, params.lang),
-    user: user,
+    user,
     imageURL: "https://github.com/shadcn.png",
     menuLinks: [
       {
@@ -197,46 +197,46 @@ export default async function Layout({ children, params }: LayoutProps) {
         icon: <Worm className="mr-2 h-4 w-4" />,
       },
     ],
-    isLoggedIn: !!user,
+    isLoggedIn: Boolean(user),
     signOutFunction: signOutServer,
-    resources: resources,
+    resources,
   };
   return (
     <MainLayout
-      mainClassName="p-0 md:p-0 w-full"
-      childScrollArea={false}
       HeaderComponent={
         <Navbar
+          appName={process.env.APPLICATION_NAME || "konya"}
+          config={configSelected}
+          languageData={languageData}
+          languageSelector={
+            <LanguageSelector
+              baseLink={getBaseLink("", false)}
+              cultureName={params.lang}
+              resources={resources}
+            />
+          }
+          links={links}
           topBar={
             <Header
               languageSelector={
                 <LanguageSelector
-                  resources={resources}
-                  cultureName={params.lang}
                   baseLink={getBaseLink("", false)}
+                  cultureName={params.lang}
+                  resources={resources}
                 />
               }
-              user={user}
               resources={resources}
               signOutServer={signOutServer}
+              user={user}
             />
           }
-          languageData={languageData}
-          variant="hirevision"
-          links={links}
           user={user}
           userNavigation={userNavigation}
-          config={configSelected}
-          appName={process.env.APPLICATION_NAME || "konya"}
-          languageSelector={
-            <LanguageSelector
-              resources={resources}
-              cultureName={params.lang}
-              baseLink={getBaseLink("", false)}
-            />
-          }
+          variant="hirevision"
         />
       }
+      childScrollArea={false}
+      mainClassName="p-0 md:p-0 w-full"
     >
       {children}
     </MainLayout>

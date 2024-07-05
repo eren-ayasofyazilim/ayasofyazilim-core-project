@@ -33,17 +33,17 @@ function isPathValid(path: string) {
   return validPaths.includes(path) || path === undefined;
 }
 
-type LayoutProps = {
+interface LayoutProps {
   children: JSX.Element;
-};
+}
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const path = pathname.split("company/")?.[1];
+  const path = pathname.split("company/")[1];
 
   useEffect(() => {
-    if (!path || isPathValid(path) === false) {
+    if (!path || !isPathValid(path)) {
       router.push("company/merchants");
     }
   }, []);
@@ -51,11 +51,11 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <SectionLayout
-        sections={navbarItems}
-        defaultActiveSectionId={path}
-        openOnNewPage={true}
         content={children}
         contentClassName="flex flex-col-reverse md:flex-row flex-wrap-reverse flex-1 lg:gap-16 md:gap-4 justify-center"
+        defaultActiveSectionId={path}
+        openOnNewPage
+        sections={navbarItems}
       />
     </div>
   );

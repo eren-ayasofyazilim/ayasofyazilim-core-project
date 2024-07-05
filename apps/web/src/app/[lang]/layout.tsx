@@ -1,23 +1,23 @@
 import { GeistSans } from "geist/font/sans";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Providers from "../../providers/providers";
-import "./../globals.css";
+import "../globals.css";
 
 interface IRootLayoutProps {
   params: { lang: string };
   children: JSX.Element;
 }
-const appName = process.env?.APPLICATION_NAME || "UNIREFUND";
+const appName = process.env.APPLICATION_NAME || "UNIREFUND";
 const title = appName.charAt(0).toUpperCase() + appName.slice(1).toLowerCase();
 
 export const metadata: Metadata = {
-  title: title,
+  title,
   description: "Unirefund is a web app for managing your refund process.",
 };
 export default function RootLayout({ children, params }: IRootLayoutProps) {
   return (
     <html>
-      <body className={`${GeistSans.className}`} data-app-name={appName}>
+      <body className={GeistSans.className} data-app-name={appName}>
         <Providers lang={params.lang}>{children}</Providers>
       </body>
     </html>

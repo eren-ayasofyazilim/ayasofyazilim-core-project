@@ -26,7 +26,7 @@ export default function StatusForm({
       if (result.status === 200) {
         toast.success("Başarılı.");
       } else {
-        toast.error(result?.message);
+        toast.error(result.message);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -37,10 +37,10 @@ export default function StatusForm({
 
   return (
     <CustomButton
-      variant="default"
       className="w-full bg-transparent text-primary mt-3 border-primary border hover:bg-primary hover:text-white"
       disabled={isLoading}
       onClick={onSendToApprovalClick}
+      variant="default"
     >
       {actionText}
     </CustomButton>

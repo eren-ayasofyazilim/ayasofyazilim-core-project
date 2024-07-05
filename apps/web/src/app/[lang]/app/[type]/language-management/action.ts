@@ -8,7 +8,7 @@ async function dangerouslyGetToken(project: string) {
     project === "upwithcrowd"
       ? "http://192.168.1.105:44325"
       : "http://192.168.1.105:44335";
-  const TOKEN_URL = baseURL + "/connect/token";
+  const TOKEN_URL = `${baseURL  }/connect/token`;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -22,7 +22,7 @@ async function dangerouslyGetToken(project: string) {
       "AccountService IdentityService SaasService AdministrationService phone roles profile address email offline_access",
   };
   Object.keys(urlEncodedContent).forEach((key) =>
-    urlencoded.append(key, urlEncodedContent[key])
+    { urlencoded.append(key, urlEncodedContent[key]); }
   );
   const requestOptions = {
     method: "POST",

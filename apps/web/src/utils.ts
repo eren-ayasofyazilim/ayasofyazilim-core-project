@@ -1,7 +1,8 @@
-import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
-import { ZodSchema, ZodType, z } from "zod";
+import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
+import type { ZodSchema} from "zod";
+import { ZodType, z } from "zod";
+import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { defaultResources } from "./resources";
-import { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
@@ -11,17 +12,13 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-export async function getLocalizationResources(languageCode: string): Promise<{
-  [key: string]: {
+export async function getLocalizationResources(languageCode: string): Promise<Record<string, {
     texts?:
-      | {
-          [key: string]: string;
-        }
+      | Record<string, string>
       | null
       | undefined;
     baseResources?: string[] | null | undefined;
-  };
-}> {
+  }>> {
   try {
     const response = await fetch(
       `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
@@ -43,20 +40,20 @@ function getLocale(locale?: string) {
   } else {
     const pathname = window.location.pathname;
     const pathnameParts = pathname.split("/");
-    locale = pathnameParts?.[1] ?? "en";
+    locale = pathnameParts[1] ?? "en";
   }
   return locale;
 }
 function getAppType(appType?: string) {
   if (appType) {
-    if (appType === "public") return appType + "/";
-    return "app/" + appType + "/";
+    if (appType === "public") return `${appType  }/`;
+    return `app/${  appType  }/`;
   }
 
   if (!isServerSide()) {
     const pathname = window.location.pathname;
     const pathnameParts = pathname.split("/");
-    appType = "app/" + pathnameParts?.[3] + "/" ?? "public/";
+    appType = `app/${  pathnameParts[3]  }/` ?? "public/";
   }
   return "public/";
 }
@@ -68,10 +65,10 @@ export function getBaseLink(
   appType?: string
 ) {
   // check if location first character is a slash
-  if (location.charAt(0) === "/") {
+  if (location.startsWith("/")) {
     location = location.slice(1);
   }
-  let localePath = withLocale ? getLocale(locale) + "/" : "";
+  let localePath = withLocale ? `${getLocale(locale)  }/` : "";
   if (withAppType) {
     localePath += getAppType(appType);
   }
@@ -79,7 +76,7 @@ export function getBaseLink(
   return `/${localePath}${location}`;
 }
 //item & sub item
-export type JsonSchema = {
+export interface JsonSchema {
   type:
     | "string"
     | "boolean"
@@ -100,15 +97,15 @@ export type JsonSchema = {
   default?: any;
   properties?: Record<string, JsonSchema>;
   displayName: string;
-};
+}
 //group
-export type SchemaType = {
-  required: ReadonlyArray<string>;
-  type: String;
+export interface SchemaType {
+  required: readonly string[];
+  type: string;
   displayName: string;
   properties: Record<string, JsonSchema | SchemaType>;
-  additionalProperties: Boolean;
-};
+  additionalProperties: boolean;
+}
 
 function isJsonSchema(object: any): object is JsonSchema {
   return "type" in object;
@@ -119,14 +116,14 @@ function isSchemaType(object: any): object is SchemaType {
 
 export function createZodObject(
   schema: SchemaType,
-  positions: Array<any>,
+  positions: any[],
   convertors?: Record<string, any>
 ): ZodObjectOrWrapped {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
     if (element === "extraProperties") return;
     const props = schema.properties[element];
-    const isRequired = schema.required?.includes(element);
+    const isRequired = schema.required.includes(element);
     if (props && isSchemaType(props)) {
       Object.keys(props.properties).map((key) => {
         zodSchema[element] = createZodObject(
@@ -183,9 +180,9 @@ export function createZodObject(
 function createZodType(
   schema: JsonSchema,
   isRequired: boolean
-): ZodSchema<any> {
+): ZodSchema {
   let zodType;
-  switch (schema?.type) {
+  switch (schema.type) {
     case "string":
       zodType = z.string({ description: schema.displayName });
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
@@ -204,7 +201,7 @@ function createZodType(
       break;
     case "integer":
       if (schema.enum) {
-        let stringEnums = schema.enum.map((e: any) => e.toString());
+        const stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
       }
@@ -212,7 +209,7 @@ function createZodType(
       break;
     case "integer":
       if (schema.enum) {
-        let stringEnums = schema.enum.map((e: any) => e.toString());
+        const stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
       }
@@ -221,13 +218,13 @@ function createZodType(
     case "object":
       zodType = z.object({});
       if (schema.properties) {
-        zodType = createZodObject(schema, Object.keys(schema?.properties));
+        zodType = createZodObject(schema, Object.keys(schema.properties));
       }
       break;
     case "array":
-      if (schema.items && schema?.items.properties) {
+      if (schema.items?.properties) {
         zodType = z.array(
-          createZodObject(schema.items, Object.keys(schema?.items.properties))
+          createZodObject(schema.items, Object.keys(schema.items.properties))
         );
       } else {
         zodType = z.array(z.unknown());

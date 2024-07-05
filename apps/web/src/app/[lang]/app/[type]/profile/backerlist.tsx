@@ -14,7 +14,7 @@ export function BackerList({ backers, type }: { type: string }) {
             description: backer.taxpayerId || "",
             content: backer.legalStatusCode || "",
             footer: backer.customerNumber || "",
-            onEdit: "profile/" + backer.backerId,
+            onEdit: `profile/${  backer.backerId}`,
             onDelete: async () => {
                 console.log("delete", backer.backerId);
                 await deleteBacker(backer.backerId);
@@ -42,7 +42,7 @@ export function BackerList({ backers, type }: { type: string }) {
                         footer: "",
                     }
                 ]}
-            ></CardList>
+             />
         </div>
     )
 }

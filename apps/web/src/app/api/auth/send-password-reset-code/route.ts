@@ -1,6 +1,6 @@
 "use server";
-import { ForgotPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/forgot-password-form";
-import { NextRequest } from "next/server";
+import type { ForgotPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/forgot-password-form";
+import type { NextRequest } from "next/server";
 
 export async function POST(reqest: NextRequest) {
   const { email } = (await reqest.json()) as ForgotPasswordFormDataType;
@@ -11,7 +11,7 @@ export async function POST(reqest: NextRequest) {
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
   const raw = JSON.stringify({
-    email: email,
+    email,
     appName: process.env.APP_NAME,
   });
 

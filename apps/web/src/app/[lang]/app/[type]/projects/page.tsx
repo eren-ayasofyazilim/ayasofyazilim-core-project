@@ -6,8 +6,8 @@ import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import Link from "next/link";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
-import { getProjectsServer } from "./action";
 import { ProjectStatusEnums } from "src/enums/project";
+import { getProjectsServer } from "./action";
 
 export default async function Page({
   params,
@@ -22,7 +22,7 @@ export default async function Page({
     {
       id: "general",
       link: getBaseLink(`projects`, true, params.lang, true, params.type),
-      name: languageData["Projects"],
+      name: languageData.Projects,
     },
   ];
 
@@ -35,9 +35,6 @@ export default async function Page({
   );
   return (
     <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={"general"}
-      openOnNewPage={true}
       content={
         <div className="relative w-full container mt-4">
           <div className="flex flex-col gap-2">
@@ -50,18 +47,21 @@ export default async function Page({
             )}
             {projectData.items?.map((project) => (
               <ProjectCard
-                key={project.id}
-                horizontal
-                project={project}
-                languageData={languageData}
-                projectURL={`${projectURL}/${project.id}`}
-                actionText={languageData.ViewProject}
                 ProjectStatusEnums={ProjectStatusEnums}
+                actionText={languageData.ViewProject}
+                horizontal
+                key={project.id}
+                languageData={languageData}
+                project={project}
+                projectURL={`${projectURL}/${project.id}`}
               />
             ))}
           </div>
         </div>
       }
+      defaultActiveSectionId="general"
+      openOnNewPage
+      sections={navbarItems}
     />
   );
 }

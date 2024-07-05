@@ -13,10 +13,10 @@ function isPathValid(path: string, navbarItems: any[]) {
   return validPaths.includes(path) || path === undefined;
 }
 
-type LayoutProps = {
+interface LayoutProps {
   children: JSX.Element;
   params?: any;
-};
+}
 
 export default function Layout({ children, params }: LayoutProps) {
   const [navbarItems, setNavbarItems] = useState<any>([]);
@@ -24,7 +24,7 @@ export default function Layout({ children, params }: LayoutProps) {
 
   const languageData = getResourceDataClient(resources);
   const pathname = usePathname();
-  const path = pathname.split("dashboard/")?.[1];
+  const path = pathname.split("dashboard/")[1];
 
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
@@ -32,7 +32,7 @@ export default function Layout({ children, params }: LayoutProps) {
       .map(([key, value]: [any, any]) => ({
         id: `${params.domain}/${key}`,
         name:
-          languageData?.[("Identity:" + key) as keyof typeof languageData] ||
+          languageData[(`Identity:${  key}`) as keyof typeof languageData] ||
           key,
         link: getBaseLink(
           `dashboard/${params.domain}/${key}`,
@@ -49,14 +49,14 @@ export default function Layout({ children, params }: LayoutProps) {
     <>
       {navbarItems.length > 0 && (
         <SectionLayout
-          vertical={false}
-          sections={navbarItems}
-          defaultActiveSectionId={path}
-          openOnNewPage={true}
+          className="w-full"
           content={children}
           contentClassName=""
-          className="w-full"
-          isScrollArea={true}
+          defaultActiveSectionId={path}
+          isScrollArea
+          openOnNewPage
+          sections={navbarItems}
+          vertical={false}
         />
       )}
     </>

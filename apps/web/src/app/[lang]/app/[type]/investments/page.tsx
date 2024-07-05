@@ -4,8 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@repo/ayasofyazilim-ui/molecules/dropdown-menu";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
-import { ColumnDef } from "@tanstack/react-table";
-import { Payment } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/data";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { Payment } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/data";
 
 export default async function Page() {
 
@@ -41,19 +41,19 @@ export default async function Page() {
             id: 'select',
             header: ({ table }) => (
                 <Checkbox
+                    aria-label="Select all"
                     checked={
                         table.getIsAllPageRowsSelected() ||
                         (table.getIsSomePageRowsSelected() && 'indeterminate')
                     }
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    aria-label="Select all"
+                    onCheckedChange={(value) => { table.toggleAllPageRowsSelected(Boolean(value)); }}
                 />
             ),
             cell: ({ row }) => (
                 <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
                     aria-label="Select row"
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => { row.toggleSelected(Boolean(value)); }}
                 />
             ),
             enableSorting: false,
@@ -70,8 +70,8 @@ export default async function Page() {
             accessorKey: 'email',
             header: ({ column }) => (
                 <Button
+                    onClick={() => { column.toggleSorting(column.getIsSorted() === 'asc'); }}
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                 >
                     Email
                     <CaretSortIcon className="ml-2 h-4 w-4" />
@@ -103,7 +103,7 @@ export default async function Page() {
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
+                            <Button className="h-8 w-8 p-0" variant="ghost">
                                 <span className="sr-only">Open menu</span>
                                 <DotsHorizontalIcon className="h-4 w-4" />
                             </Button>
@@ -161,18 +161,18 @@ export default async function Page() {
 
     return <div className="container">
         <Dashboard
-            withCards={true}
-            withTable={true}
-            // isLoading={isLoading}
-            filterBy={"test"}
             cards={cards}
-            data={data}
             columnsData={
                 {
                     type: 'Custom',
                     data: columns,
                 }
             }
+            data={data}
+            withCards={true}
+            withTable={true}
+            // isLoading={isLoading}
+            filterBy={"test"}
         />
     </div>
 }

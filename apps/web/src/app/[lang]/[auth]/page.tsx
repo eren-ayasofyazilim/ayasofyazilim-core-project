@@ -1,18 +1,19 @@
 "use client";
-import { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
-import { Auth, authTypes, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
+import type { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
+import type { authTypes} from "@repo/ayasofyazilim-ui/pages/auth";
+import { Auth, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Logo } from "@repo/ui/logo";
+import Error from "next/error";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { z } from "zod";
+import { useLocale } from "src/providers/locale";
 import {
   sendPasswordResetCodeServer,
   signInServer,
   signUpServer,
 } from "auth-action";
-import Error from "next/error";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { useLocale } from "src/providers/locale";
-import { z } from "zod";
-import "./../../globals.css";
+import "../../globals.css";
 import { useApplication } from "src/providers/application";
 
 export default function Page(): JSX.Element {
@@ -21,13 +22,13 @@ export default function Page(): JSX.Element {
   const params = useParams();
   const { appName } = useApplication();
   const searchParams = useSearchParams();
-  let authTypeParam = params.auth as authTypes;
+  const authTypeParam = params.auth as authTypes;
   const [errorMessage, setErrorMessage] = useState<string | null | undefined>(
     null
   );
   if (!isAuthType(authTypeParam)) {
     return (
-      <Error statusCode={404} title={resources?.AbpUi.texts?.PageNotFound} />
+      <Error statusCode={404} title={resources.AbpUi.texts?.PageNotFound} />
     );
   }
 
@@ -63,13 +64,13 @@ export default function Page(): JSX.Element {
         });
         if (response.status > 199 && response.status < 300) {
           router.push("/login");
-          return resolve("");
-        } else {
-          let result = await response.json();
-          return reject(result.error.code);
-        }
+          resolve(""); return;
+        } 
+          const result = await response.json();
+          reject(result.error.code); 
+        
       } catch (e) {
-        return reject(e);
+        reject(e); 
       }
     });
   };
@@ -78,7 +79,7 @@ export default function Page(): JSX.Element {
   let props = {};
   if (authTypeParam === "login") {
     props = {
-      router: router,
+      router,
       allowTenantChange: false,
       formSchema: loginFormSchema,
       onSubmitFunction: signInServer,
@@ -88,7 +89,7 @@ export default function Page(): JSX.Element {
     };
   } else if (authTypeParam === "register") {
     props = {
-      router: router,
+      router,
       allowTenantChange: true,
       formSchema: registerFormSchema,
       registerFunction: signUpServer,
@@ -96,7 +97,7 @@ export default function Page(): JSX.Element {
     };
   } else if (authTypeParam === "reset-password") {
     props = {
-      onResetPasswordSubmit: onResetPasswordSubmit,
+      onResetPasswordSubmit,
       onResetPasswordCancel: () => {
         router.push("/login");
       },
@@ -125,22 +126,22 @@ export default function Page(): JSX.Element {
             }),
           });
           if (response.status > 199 && response.status < 300) {
-            let res = await response.json();
+            const res = await response.json();
             if (!res) {
               setErrorMessage(
-                resources?.AbpIdentity?.texts?.[
+                resources.AbpIdentity.texts?.[
                   "Volo.Abp.Identity:InvalidToken"
                 ]
               );
             }
-            return resolve("");
-          } else {
-            let result = await response.json();
+            resolve(""); return;
+          } 
+            const result = await response.json();
             setErrorMessage(result.error.code);
-            return reject(result.error.code);
-          }
+            reject(result.error.code); 
+          
         } catch (e) {
-          return reject(e);
+          reject(e); 
         }
       });
     };
@@ -149,18 +150,18 @@ export default function Page(): JSX.Element {
 
   return (
     <Auth
+      cultureName={cultureName || "tr"}
+      onLangChange={changeLocale}
+      resources={resources ? JSON.parse(JSON.stringify(resources)) : undefined}
       authType={authTypeParam}
       // @ts-ignore
       authProps={props}
-      resources={resources ? JSON.parse(JSON.stringify(resources)) : undefined}
-      cultureName={cultureName || "tr"}
-      onLangChange={changeLocale}
     >
       <div className="bg-slate-100 flex flex-auto justify-center items-center">
         {appName === "UPWITHCROWD" ? (
           <div className="font-bold text-5xl text-[#f15656]">UPWITHCROWD</div>
         ) : (
-          <Logo variant="text" textProps={{ className: "h-16" }} />
+          <Logo textProps={{ className: "h-16" }} variant="text" />
         )}
       </div>
     </Auth>

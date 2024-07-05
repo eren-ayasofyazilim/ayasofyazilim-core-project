@@ -8,6 +8,7 @@ import { FlipWords, Hero } from "@repo/ui/upwithcrowd/hero";
 import { Tabs } from "@repo/ui/upwithcrowd/tabs";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 const BrandList = [
   {
     title: "beets&roots",
@@ -53,8 +54,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -67,8 +68,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-inv-step-2.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-inv-step-2.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -81,8 +82,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -107,8 +108,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-ent-step-1.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -121,8 +122,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-ent-step-2.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-ent-step-2.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -136,8 +137,8 @@ const tabs = [
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
-                src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
                 className="w-16 h-full mt-[-30px]"
+                src="https://valu.com.tr/assets/images/wm-ent-step-3.webp"
               />
             </div>
             <div className="grid gap-0 text-black">
@@ -174,7 +175,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -197,7 +198,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -220,7 +221,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -244,7 +245,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -268,7 +269,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -294,7 +295,7 @@ const items = [
     className: "md:col-span-1",
     icon: (
       <div className="flex gap-2">
-        <Badge variant={"secondary"}>Yatırım</Badge>
+        <Badge variant="secondary">Yatırım</Badge>
       </div>
     ),
   },
@@ -303,14 +304,14 @@ const items = [
 export default function Page({ config }: { config: any }): JSX.Element {
   return (
     <div className="w-full bg-white p-0 ">
-      <Hero variant="stripe" config={config} />
+      <Hero config={config} variant="stripe" />
       <Brands brands={BrandList} />
       <div
-        className={`w-full h-[200px]`}
+        className="w-full h-[200px]"
         style={{
           backgroundImage: `url(${config.images.second})`,
         }}
-      ></div>
+       />
       <div className="bg-slate-50 w-full overflow-hidden">
         <div className="container grid grid-cols-2 justify-center gap-6">
           <div className="flex flex-col gap-6 justify-center h-full">
@@ -326,7 +327,7 @@ export default function Page({ config }: { config: any }): JSX.Element {
               başlayın, şirketlere destek olun, etki yaratın.
             </p>
             <div className="flex gap-2">
-              <Button variant={"outline"}>Bilgi al</Button>
+              <Button variant="outline">Bilgi al</Button>
               <Button>Yatırım yap</Button>
             </div>
           </div>
@@ -340,20 +341,20 @@ export default function Page({ config }: { config: any }): JSX.Element {
       </div>
       <h3 className="text-5xl font-bold text-center w-full max-w-4xl mx-auto my-20 flex  items-center gap-0">
         {/* UPWITH{config.logo} ile */}
-        <img src={config.logo} className="mr-4" /> ile
+        <img className="mr-4" src={config.logo} /> ile
         <FlipWords
-          words={["yatırımcı", "girişimci"]}
           className="text-black min-w-[230px]"
+          words={["yatırımcı", "girişimci"]}
         />{" "}
         olabilirsiniz.
       </h3>
       <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-full  items-start justify-start col-span-2 container">
         <Tabs
-          contentClassName="mt-0"
-          containerClassName="mt-0 justify-center"
-          tabs={tabs}
-          tabClassName="bg-slate-50 text-black rounded-none"
           activeTabClassName="bg-primary [&~*]:text-white rounded-none"
+          containerClassName="mt-0 justify-center"
+          contentClassName="mt-0"
+          tabClassName="bg-slate-50 text-black rounded-none"
+          tabs={tabs}
         />
       </div>
       <div className="bg-slate-50 mt-20 grid justify-center relative pb-60">
@@ -366,57 +367,57 @@ export default function Page({ config }: { config: any }): JSX.Element {
         <BentoGrid className="container py-16 md:auto-rows-[20rem] px-0 z-10">
           {items.map((item, i) => (
             <BentoGridItem
-              key={i}
-              title={item.title}
+              className={cn("[&>p:text-lg]", item.className)}
               description={item.description}
               header={item.header}
-              className={cn("[&>p:text-lg]", item.className)}
               icon={item.icon}
+              key={i}
+              title={item.title}
             />
           ))}
         </BentoGrid>
         <div className="flex absolute top-60 z-0 w-full opacity-10 grayscale hidden">
-          <img src={config.images.footer} className="w-full" />
+          <img className="w-full" src={config.images.footer} />
         </div>
       </div>
 
       <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden">
         {/* <div className="absolute pointer-events-none inset-[-50%] flex items-center justify-center dark:bg-slate-900 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
         <img
-          src={config.images.footer}
           className="w-full absolute pointer-events-none z-0 opacity-20"
+          src={config.images.footer}
         />
         <div
-          className={`w-full hidden h-full absolute inset-0 pointer-events-none opacity-10`}
+          className="w-full hidden h-full absolute inset-0 pointer-events-none opacity-10"
           style={{
             backgroundImage: `url(${config.images.second})`,
           }}
-        ></div>
+         />
         <div className="container flex flex-col h-full justify-center gap-20">
           <div className="mx-auto">
             {/* <div className={"tracking-widest text-2xl font-bold text-white"}>
               UPWITH
               <span className="text-primary">{config.logo}</span>
             </div> */}
-            <img src={config.logo} className="mx-auto" />
+            <img className="mx-auto" src={config.logo} />
           </div>
           <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-5 gap-6 col-span-2">
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
               <h3 className="text-md font-bold">Kurumsal</h3>
               <div className="grid text-sm">
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Hakkımızda
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Platform Ortaklık Yapısı
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Blog
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   S.S.S
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   İletişim
                 </Link>
               </div>
@@ -424,16 +425,16 @@ export default function Page({ config }: { config: any }): JSX.Element {
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
               <h3 className="text-md font-bold">Paydaşlarımız</h3>
               <div className="grid text-sm">
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Merkezi Kayıt İstanbul
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Takas İstanbul
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   İstanbul Ticaret Odası
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   E-Devlet
                 </Link>
               </div>
@@ -441,16 +442,16 @@ export default function Page({ config }: { config: any }): JSX.Element {
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
               <h3 className="text-md font-bold">Yatırımcı</h3>
               <div className="grid text-sm">
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Nasıl Yatırım Yapılır?
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Aktif Projeler
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Tamamlanmış Projeler
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Gelecek Projeler
                 </Link>
               </div>
@@ -458,13 +459,13 @@ export default function Page({ config }: { config: any }): JSX.Element {
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
               <h3 className="text-md font-bold">Girişimci</h3>
               <div className="grid text-sm">
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Nasıl Proje Oluşturulur?
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Proje Oluştur
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Gerekli Belgeler
                 </Link>
               </div>
@@ -472,22 +473,22 @@ export default function Page({ config }: { config: any }): JSX.Element {
             <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
               <h3 className="text-md font-bold">Dokümantasyon</h3>
               <div className="grid text-sm">
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Değerlendirme Politikası
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Bilgi Güvenliği Politikası
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Çıkar Çatışması Politikası
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Kalite Politikası
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Rüşvet ve Yolsuzlukla Mücadele
                 </Link>
-                <Link href="#" className="text-slate-200 hover:text-white">
+                <Link className="text-slate-200 hover:text-white" href="#">
                   Kara Para ile Mücadele Politikası
                 </Link>
               </div>
@@ -499,19 +500,19 @@ export default function Page({ config }: { config: any }): JSX.Element {
             {/* <h1>UPWITH{config.logo} 2024 Tüm hakları saklıdır.</h1> */}
             <h1>{config.full} 2024 Tüm hakları saklıdır.</h1>
             <div className="flex items-center gap-4 flex-col md:flex-row">
-              <Link href="#" className="text-slate-200 hover:text-white">
+              <Link className="text-slate-200 hover:text-white" href="#">
                 Genel Risk Bildirimi
               </Link>
-              <Link href="#" className="text-slate-200 hover:text-white">
+              <Link className="text-slate-200 hover:text-white" href="#">
                 Üyelik Sözleşmesi
               </Link>
-              <Link href="#" className="text-slate-200 hover:text-white">
+              <Link className="text-slate-200 hover:text-white" href="#">
                 KVKK Bildirimi
               </Link>
-              <Link href="#" className="text-slate-200 hover:text-white">
+              <Link className="text-slate-200 hover:text-white" href="#">
                 Kampanya Sözleşmesi
               </Link>
-              <Link href="#" className="text-slate-200 hover:text-white">
+              <Link className="text-slate-200 hover:text-white" href="#">
                 Faaliyet Raporu ve Finansal Tablolar
               </Link>
             </div>

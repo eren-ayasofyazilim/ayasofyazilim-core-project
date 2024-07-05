@@ -1,7 +1,7 @@
 import { getLocalizationResources } from "src/utils";
 
 function getLanguageData(resources: any) {
-  const navigationResource = resources?.["AbpUiNavigation"]?.texts;
+  const navigationResource = resources?.AbpUiNavigation?.texts;
   return {
     HomePage: navigationResource?.HomePage || "Home Page" || "Ana Sayfa",
     Dashboard: navigationResource?.Dashboard || "Dashboard" || "Kontrol Paneli",
@@ -76,11 +76,11 @@ function getLanguageData(resources: any) {
       navigationResource?.ChangeProfile ||
       "Change Profile" ||
       "Profili Değiştir",
-    LogIn: navigationResource?.["LogIn"] || "Login",
-    Register: navigationResource?.["Register"] || "Register",
+    LogIn: navigationResource?.LogIn || "Login",
+    Register: navigationResource?.Register || "Register",
     LogOut: navigationResource?.LogOut || "Log Out" || "Çıkış Yap",
-    MyAccount: resources?.AbpUiNavigation?.texts?.["MyAccount"] || "My Account",
-    Add: resources?.AbpUiNavigation?.texts?.["Add"] || "Add",
+    MyAccount: resources?.AbpUiNavigation?.texts?.MyAccount || "My Account",
+    Add: resources?.AbpUiNavigation?.texts?.Add || "Add",
   };
 }
 export async function getResourceData(lang: string) {

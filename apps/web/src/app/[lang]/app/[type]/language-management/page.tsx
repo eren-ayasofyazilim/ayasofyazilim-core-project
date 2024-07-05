@@ -18,20 +18,20 @@ export default async function Page({ params }: { params: { lang: string } }) {
 
   return (
     <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={"general"}
-      openOnNewPage={true}
       content={
         <div className="relative w-full container mt-4">
           <div className="flex flex-col gap-2">
             <DataTableDemo
+              defaultResources={defaultResources}
               lang={params.lang}
               resources={resources}
-              defaultResources={defaultResources}
             />
           </div>
         </div>
       }
+      defaultActiveSectionId="general"
+      openOnNewPage
+      sections={navbarItems}
     />
   );
 }

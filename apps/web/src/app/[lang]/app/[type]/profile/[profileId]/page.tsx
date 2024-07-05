@@ -1,23 +1,23 @@
 "use server";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
-import { BackerForm } from "./form";
+import { Button } from "@/components/ui/button";
 import { getBacker } from "../actions";
 import { formSchema } from "../data";
-import { Button } from "@/components/ui/button";
+import { BackerForm } from "./form";
 
 export default async function Page({
   params,
 }: {
   params: { lang: string; type: string; profileId: string };
 }) {
-  let { profileId, type } = params;
+  const { profileId, type } = params;
   let backer = {};
   if (profileId !== "new") {
     backer = await getBacker(profileId);
   }
   return (
       <div className="container flex flex-col m-4 max-h-[90vh]">
-          <BackerForm type={backer?.type || type} backer={backer} profileId={profileId} />
+          <BackerForm backer={backer} profileId={profileId} type={backer.type || type} />
       </div>
   );
 }

@@ -5,11 +5,11 @@ import { getBaseLink } from "src/utils";
 
 export default function Layout({ children }: { children: JSX.Element }) {
   const type = usePathname().split("/")[3];
-  const pathname = usePathname().split("projects/")?.[1];
-  const projectId = pathname?.split("/")?.[0];
-  const activeSection = pathname?.split("/")?.[1] || "general";
+  const pathname = usePathname().split("projects/")[1];
+  const projectId = pathname.split("/")[0];
+  const activeSection = pathname.split("/")[1] || "general";
   if (!projectId) {
-    redirect("/app/" + type + "/projects");
+    redirect(`/app/${  type  }/projects`);
   }
   const navbarItems = [
     {
@@ -30,10 +30,10 @@ export default function Layout({ children }: { children: JSX.Element }) {
   ];
   return (
     <SectionLayout
-      sections={navbarItems}
-      defaultActiveSectionId={activeSection}
-      openOnNewPage={true}
       content={children}
+      defaultActiveSectionId={activeSection}
+      openOnNewPage
+      sections={navbarItems}
     />
   );
 }

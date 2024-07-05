@@ -1,6 +1,6 @@
 "use server";
 
-import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
+import type { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { getBackerServiceClient } from "src/lib";
 
 function populateCustomFormData(formdata: any) {
@@ -122,9 +122,9 @@ export async function getBackers() {
     const organization = item.entityInformations?.[0]?.organizations?.[0];
     if (!organization) continue;
     returnArray.push({
-      name: organization?.name,
-      legalStatusCode: organization?.legalStatusCode,
-      taxpayerId: organization?.taxpayerId,
+      name: organization.name,
+      legalStatusCode: organization.legalStatusCode,
+      taxpayerId: organization.taxpayerId,
       backerId: id,
     });
   }
@@ -196,9 +196,9 @@ export async function getBackersIndividuals() {
     const individual = item.entityInformations?.[0]?.individuals?.[0];
     if (!individual) continue;
     returnArray.push({
-      name: individual?.name?.name,
-      legalStatusCode: individual?.name?.salutation,
-      taxpayerId: individual?.name?.id,
+      name: individual.name?.name,
+      legalStatusCode: individual.name?.salutation,
+      taxpayerId: individual.name?.id,
       backerId: id,
     });
   }

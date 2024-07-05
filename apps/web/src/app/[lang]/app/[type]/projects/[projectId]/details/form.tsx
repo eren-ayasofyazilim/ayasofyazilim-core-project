@@ -4,10 +4,9 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
-import { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/ProjectService";
+import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/ProjectService";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
-
 import { useState } from "react";
 import {
   createProjectSectionRelationServer,
@@ -15,30 +14,26 @@ import {
 } from "../../action";
 
 export interface INewProjectFormProps {
-  resources: {
-    [
-      key: string
-    ]: Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto;
-  };
+  resources: Record<string, Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto>;
   projectId: string;
-  sectionData: Array<{
+  sectionData: {
     projectId?: string;
     sectionId?: string;
     sectionRelationId?: string;
     sectionName?: string | null;
     sectionRelationValue?: string | null;
     order?: number;
-  }> | null;
+  }[] | null;
 }
 export default function ProjectForm({
   resources,
   projectId,
   sectionData,
 }: INewProjectFormProps) {
-  const [formValues, setFormValues] = useState<{ [id: string]: number }>(() => {
-    const data: { [id: string]: number } = {};
+  const [formValues, setFormValues] = useState<Record<string, number>>(() => {
+    const data: Record<string, number> = {};
     sectionData?.map((section) => {
-      if (section?.sectionId) {
+      if (section.sectionId) {
         data[section.sectionId] = section.sectionRelationValue?.length || 0;
       }
     });
@@ -73,39 +68,39 @@ export default function ProjectForm({
   }
   return (
     <Accordion
-      type="single"
-      collapsible
       className="w-full"
-      defaultValue={sectionData?.[0]?.sectionId || "item"}
+      collapsible
+      defaultValue={sectionData[0]?.sectionId || "item"}
+      type="single"
     >
-      {sectionData?.map((section, index) => (
+      {sectionData.map((section, index) => (
         <AccordionItem
-          key={section?.sectionId}
-          value={section?.sectionId || "item"}
           className="my-2 border"
+          key={section.sectionId}
+          value={section.sectionId || "item"}
         >
           <AccordionStepperHeader
-            checked={formValues?.[section?.sectionId || "item"] > 10}
+            checked={formValues[section.sectionId || "item"] > 10}
             children={section.sectionName}
           />
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4">
                 <TipTapEditor
-                  canEditable={true}
-                  onSaveFunction={onSaveClick}
-                  onWordCountChanged={(v) => {
-                    onWordCountChanged(section?.sectionId || "", v);
-                  }}
-                  editorId={section?.sectionId}
+                  canEditable
+                  editOnStart={
+                    !(section.sectionRelationValue || index !== 0)
+                  }
                   editorContent={
-                    section?.sectionRelationValue
+                    section.sectionRelationValue
                       ? JSON.parse(section.sectionRelationValue)
                       : undefined
                   }
-                  editOnStart={
-                    section.sectionRelationValue || index !== 0 ? false : true
-                  }
+                  editorId={section.sectionId}
+                  onSaveFunction={onSaveClick}
+                  onWordCountChanged={(v) => {
+                    onWordCountChanged(section.sectionId || "", v);
+                  }}
                 />
               </div>
             </div>

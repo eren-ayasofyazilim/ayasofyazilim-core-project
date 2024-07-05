@@ -1,7 +1,6 @@
 "use server";
 
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
-
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
@@ -17,60 +16,58 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const projectURL = getBaseLink("projects", true, params.lang, true);
 
   const fundableProjects =
-    projectData?.items?.filter(
+    projectData.items?.filter(
       (i) => ProjectStatusEnums[i.status || 0] === "FUNDABLE"
     ) || [];
   const approvedProjects =
-    projectData?.items?.filter(
+    projectData.items?.filter(
       (i) => ProjectStatusEnums[i.status || 0] === "APPROVED"
     ) || [];
 
   return (
     <div className="container h-full mt-20">
-      {projectData && (
-        <ScrollArea className="p-2 pt-0 h-full grow">
-          {fundableProjects?.length > 0 && (
+      {projectData ? <ScrollArea className="p-2 pt-0 h-full grow">
+          {fundableProjects.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold mb-8 mt-10 text-center">
                 {languageData.InvestmentOpportunities}
               </h2>
               <div className="flex flex-row gap-3 justify-center">
-                {fundableProjects?.map((project) => (
+                {fundableProjects.map((project) => (
                   <ProjectCard
-                    key={project.id}
-                    project={project}
-                    languageData={languageData}
-                    projectURL={`${projectURL}/${project.id}`}
-                    actionText={languageData.InvestNow}
-                    showProgress={true}
                     ProjectStatusEnums={ProjectStatusEnums}
+                    actionText={languageData.InvestNow}
+                    key={project.id}
+                    languageData={languageData}
+                    project={project}
+                    projectURL={`${projectURL}/${project.id}`}
+                    showProgress
                   />
                 ))}
               </div>
             </div>
           )}
-          {approvedProjects?.length > 0 && (
+          {approvedProjects.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold mb-8 mt-10 text-center">
                 {languageData.ProjectsToOpenForInvestmentSoon}
               </h2>
               <div className="flex flex-row gap-3 justify-center">
-                {approvedProjects?.map((project) => (
+                {approvedProjects.map((project) => (
                   <ProjectCard
-                    key={project.id}
-                    project={project}
-                    languageData={languageData}
-                    projectURL={`${projectURL}/${project.id}`}
-                    actionText={languageData.InvestNow}
-                    showProgress={false}
                     ProjectStatusEnums={ProjectStatusEnums}
+                    actionText={languageData.InvestNow}
+                    key={project.id}
+                    languageData={languageData}
+                    project={project}
+                    projectURL={`${projectURL}/${project.id}`}
+                    showProgress={false}
                   />
                 ))}
               </div>
             </div>
           )}
-        </ScrollArea>
-      )}
+        </ScrollArea> : null}
     </div>
   );
 }

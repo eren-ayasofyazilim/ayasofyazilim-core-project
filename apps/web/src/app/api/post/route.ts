@@ -1,5 +1,5 @@
 "use server";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function POST(reqest: NextRequest) {
   const { body, url } = (await reqest.json()) as {
@@ -12,7 +12,7 @@ export async function POST(reqest: NextRequest) {
 
   const requestOptions = {
     method: "POST",
-    headers: headers,
+    headers,
     body: JSON.stringify(body),
   };
   return fetch(`${process.env.BASE_URL}/api/${url}`, requestOptions);

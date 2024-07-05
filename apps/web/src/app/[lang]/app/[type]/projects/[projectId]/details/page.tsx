@@ -18,7 +18,7 @@ export default async function Page({ params }: any) {
 
   const mandatorySections = (await getDefaultProjectSectionsServer()) || [];
 
-  mandatorySections?.items?.forEach((section: any) => {
+  mandatorySections.items?.forEach((section: any) => {
     const index = usedSections?.findIndex((s) => s.sectionId == section.id);
 
     if (index === -1) {
@@ -32,15 +32,15 @@ export default async function Page({ params }: any) {
   });
 
   if (!projectData) {
-    redirect("/app/" + type + "/projects");
+    redirect(`/app/${  type  }/projects`);
   }
   return (
     <div className="relative w-full container mt-8">
       <Card className="p-6 w-full">
         <ProjectForm
+          projectId={projectId}
           resources={resources}
           sectionData={usedSections || []}
-          projectId={projectId}
         />
       </Card>
     </div>

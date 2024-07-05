@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
-import {
+import type {
   PutApiProjectServiceProjectsByIdData,
   UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto,
   UpwithCrowd_ProjectService_Projects_ProjectDto,
@@ -72,9 +72,7 @@ export default function ProjectForm({
     useState<UpwithCrowd_ProjectService_ProjectsDto_UpdateProjectDto>(
       projectData
     );
-  const [formValuesValidation, setFormValuesValidation] = useState<{
-    [key: string]: boolean | undefined;
-  }>(defaultFormValuesValidation);
+  const [formValuesValidation, setFormValuesValidation] = useState<Record<string, boolean | undefined>>(defaultFormValuesValidation);
   const [formValuesValidationChanged, setFormValuesValidationChanged] =
     useState(false);
 
@@ -98,14 +96,14 @@ export default function ProjectForm({
       setIsSubmitDisabled(false);
     }, 500);
 
-    return () => clearTimeout(timeout);
+    return () => { clearTimeout(timeout); };
   }, [formValues]);
 
   async function onEvaluateClick() {
     setIsLoading(true);
     try {
       const isApproved =
-        Object.values(formValuesValidation)?.filter((i) => i === false)
+        Object.values(formValuesValidation).filter((i) => i === false)
           .length === 0;
       const result = await updateProjectStatusServer(
         projectId,
@@ -118,7 +116,7 @@ export default function ProjectForm({
         setIsSubmitDisabled(true);
         toast.success("Başarılı.");
       } else {
-        toast.error(result?.message);
+        toast.error(result.message);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -139,7 +137,7 @@ export default function ProjectForm({
         setIsSubmitDisabled(true);
         toast.success("Başarılı.");
       } else {
-        toast.error(result?.message);
+        toast.error(result.message);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -162,40 +160,40 @@ export default function ProjectForm({
   return (
     <>
       <Accordion
-        type="single"
-        collapsible
         className="w-full"
-        value={accordionTab}
+        collapsible
         onValueChange={setAccordionTab}
+        type="single"
+        value={accordionTab}
       >
-        <AccordionItem value="item-1" className="my-2 border">
+        <AccordionItem className="my-2 border" value="item-1">
           <AccordionStepperHeader
             checked={
               !(
-                !formValues?.projectName ||
-                formValues?.projectName?.length < 4 ||
-                !formValues?.projectDefinition ||
-                formValues?.projectDefinition?.length < 4
+                !formValues.projectName ||
+                formValues.projectName.length < 4 ||
+                !formValues.projectDefinition ||
+                formValues.projectDefinition.length < 4
               ) &&
-              formValuesValidation?.projectName !== false &&
-              formValuesValidation?.projectDefinition !== false
+              formValuesValidation.projectName !== false &&
+              formValuesValidation.projectDefinition !== false
             }
             children="Temel Bilgiler"
-            customUncheckedIcon={
-              formValuesValidation?.projectName === false &&
-              formValuesValidation?.projectDefinition === false
-                ? CircleX
-                : undefined
-            }
             customCheckedIconColor={
-              formValuesValidation?.projectName &&
-              formValuesValidation?.projectDefinition
+              formValuesValidation.projectName &&
+              formValuesValidation.projectDefinition
                 ? "text-emerald-600"
                 : "text-muted-foreground"
             }
+            customUncheckedIcon={
+              formValuesValidation.projectName === false &&
+              formValuesValidation.projectDefinition === false
+                ? CircleX
+                : undefined
+            }
             customUncheckedIconColor={
-              formValuesValidation?.projectName === false &&
-              formValuesValidation?.projectDefinition === false
+              formValuesValidation.projectName === false &&
+              formValuesValidation.projectDefinition === false
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
@@ -205,39 +203,39 @@ export default function ProjectForm({
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4">
                 <Label htmlFor="projectName">
-                  {languageData["ProjectName"]}
+                  {languageData.ProjectName}
                 </Label>
                 <Input
                   disabled={isInputEditDisabled}
                   id="projectName"
-                  value={formValues?.projectName || ""}
                   onChange={(e) =>
-                    setFormValues({
+                    { setFormValues({
                       ...formValues,
                       projectName: e.target.value,
-                    })
+                    }); }
                   }
+                  value={formValues.projectName || ""}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
-                  {languageData["ProjectNameInfo"]}
+                  {languageData.ProjectNameInfo}
                 </p>
               </div>
               <div className="grid w-full items-center gap-3 mt-4">
                 <Label htmlFor="projectDefinition">
-                  {languageData["ProjectDescription"]}
+                  {languageData.ProjectDescription}
                 </Label>
                 <Textarea
                   disabled={isInputEditDisabled}
-                  value={formValues?.projectDefinition || ""}
                   onChange={(e) =>
-                    setFormValues({
+                    { setFormValues({
                       ...formValues,
                       projectDefinition: e.target.value,
-                    })
+                    }); }
                   }
+                  value={formValues.projectDefinition || ""}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
-                  {languageData["ProjectDescriptionInfo"]}
+                  {languageData.ProjectDescriptionInfo}
                 </p>
               </div>
             </div>
@@ -246,7 +244,6 @@ export default function ProjectForm({
                 profileType === "admin" && (
                   <>
                     <CustomButton
-                      variant="destructive"
                       className="w-[120px]"
                       onClick={() => {
                         setFormValuesValidation({
@@ -257,13 +254,14 @@ export default function ProjectForm({
                         setFormValuesValidationChanged(true);
                         setAccordionTab("item-2");
                       }}
+                      variant="destructive"
                     >
                       Reddet
                     </CustomButton>
 
                     <CustomButton
-                      customVariant="success"
                       className="w-[120px]"
+                      customVariant="success"
                       onClick={() => {
                         setFormValuesValidation({
                           ...formValuesValidation,
@@ -280,11 +278,11 @@ export default function ProjectForm({
                 )}
               {profileType === "entrepreneur" && (
                 <CustomButton
-                  variant="secondary"
                   className="w-[120px]"
                   onClick={() => {
                     setAccordionTab("item-2");
                   }}
+                  variant="secondary"
                 >
                   İlerle
                 </CustomButton>
@@ -292,33 +290,33 @@ export default function ProjectForm({
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-2" className="my-2 border">
+        <AccordionItem className="my-2 border" value="item-2">
           <AccordionStepperHeader
             checked={
               !(
-                !formValues?.fundableAmount ||
-                formValues?.fundableAmount === 0 ||
-                !formValues?.fundCollectionType
+                !formValues.fundableAmount ||
+                formValues.fundableAmount === 0 ||
+                !formValues.fundCollectionType
               ) &&
-              formValuesValidation?.fundableAmount !== false &&
-              formValuesValidation?.fundCollectionType !== false
+              formValuesValidation.fundableAmount !== false &&
+              formValuesValidation.fundCollectionType !== false
             }
             children="Bütçe"
-            customUncheckedIcon={
-              formValuesValidation?.fundCollectionType === false &&
-              formValuesValidation?.fundableAmount === false
-                ? CircleX
-                : undefined
-            }
             customCheckedIconColor={
-              formValuesValidation?.fundCollectionType &&
-              formValuesValidation?.fundableAmount
+              formValuesValidation.fundCollectionType &&
+              formValuesValidation.fundableAmount
                 ? "text-emerald-600"
                 : "text-muted-foreground"
             }
+            customUncheckedIcon={
+              formValuesValidation.fundCollectionType === false &&
+              formValuesValidation.fundableAmount === false
+                ? CircleX
+                : undefined
+            }
             customUncheckedIconColor={
-              formValuesValidation?.fundCollectionType === false &&
-              formValuesValidation?.fundableAmount === false
+              formValuesValidation.fundCollectionType === false &&
+              formValuesValidation.fundableAmount === false
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
@@ -327,18 +325,18 @@ export default function ProjectForm({
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4 ">
                 <Label htmlFor="fundCollectionType">
-                  {languageData["FundCollectionType"]}
+                  {languageData.FundCollectionType}
                 </Label>
                 <div className="relative">
                   <Select
                     disabled={isInputEditDisabled}
-                    value={formValues?.fundCollectionType || ""}
                     onValueChange={(value) =>
-                      setFormValues({
+                      { setFormValues({
                         ...formValues,
                         fundCollectionType: value,
-                      })
+                      }); }
                     }
+                    value={formValues.fundCollectionType || ""}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="" />
@@ -346,38 +344,38 @@ export default function ProjectForm({
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem value="SHRE">
-                          {languageData["FundCollectionTypeSHRE"]}
+                          {languageData.FundCollectionTypeSHRE}
                         </SelectItem>
                         <SelectItem value="DBIT">
-                          {languageData["FundCollectionTypeDBIT"]}
+                          {languageData.FundCollectionTypeDBIT}
                         </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
                 <p className="text-[0.8rem] text-muted-foreground">
-                  {languageData["FundCollectionTypeInfo"]}
+                  {languageData.FundCollectionTypeInfo}
                 </p>
               </div>
               <div className="grid w-full items-center gap-3 mt-4 ">
                 <div className="relative">
                   <NumericInput
+                    direction="column"
+                    disabled={isInputEditDisabled}
                     id="fundableAmount"
-                    label={languageData["FundableAmount"]}
+                    inputLabel="₺"
+                    label={languageData.FundableAmount}
                     max={1000000}
                     min={0}
-                    subLabel={""}
-                    inputLabel="₺"
-                    slider={!isInputEditDisabled}
-                    direction="column"
-                    value={formValues?.fundableAmount || 0}
-                    disabled={isInputEditDisabled}
                     onValueChange={(value) => {
                       setFormValues({ ...formValues, fundableAmount: value });
                     }}
+                    slider={!isInputEditDisabled}
+                    subLabel=""
+                    value={formValues.fundableAmount || 0}
                   />
                   <p className="text-[0.8rem] text-muted-foreground mt-2">
-                    {languageData["FundableAmountInfo"]}
+                    {languageData.FundableAmountInfo}
                   </p>
                 </div>
               </div>
@@ -386,7 +384,6 @@ export default function ProjectForm({
               {profileType === "admin" && (
                 <>
                   <CustomButton
-                    variant="destructive"
                     className="w-[120px]"
                     onClick={() => {
                       setFormValuesValidation({
@@ -397,13 +394,14 @@ export default function ProjectForm({
                       setFormValuesValidationChanged(true);
                       setAccordionTab("item-3");
                     }}
+                    variant="destructive"
                   >
                     Reddet
                   </CustomButton>
 
                   <CustomButton
-                    customVariant="success"
                     className="w-[120px]"
+                    customVariant="success"
                     onClick={() => {
                       setFormValuesValidation({
                         ...formValuesValidation,
@@ -420,11 +418,11 @@ export default function ProjectForm({
               )}
               {profileType === "entrepreneur" && (
                 <CustomButton
-                  variant="secondary"
                   className="w-[120px]"
                   onClick={() => {
                     setAccordionTab("item-3");
                   }}
+                  variant="secondary"
                 >
                   İlerle
                 </CustomButton>
@@ -432,33 +430,33 @@ export default function ProjectForm({
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-3" className="my-2 border">
+        <AccordionItem className="my-2 border" value="item-3">
           <AccordionStepperHeader
             checked={
               !(
-                !formValues?.overFunding ||
-                (formValues?.overFunding === "Y" &&
-                  !formValues?.additionalFundRate)
+                !formValues.overFunding ||
+                (formValues.overFunding === "Y" &&
+                  !formValues.additionalFundRate)
               ) &&
-              formValuesValidation?.overFunding !== false &&
-              formValuesValidation?.additionalFundRate !== false
+              formValuesValidation.overFunding !== false &&
+              formValuesValidation.additionalFundRate !== false
             }
             children="Ek Fonlama"
-            customUncheckedIcon={
-              formValuesValidation?.overFunding === false &&
-              formValuesValidation?.additionalFundRate === false
-                ? CircleX
-                : undefined
-            }
             customCheckedIconColor={
-              formValuesValidation?.overFunding &&
-              formValuesValidation?.additionalFundRate
+              formValuesValidation.overFunding &&
+              formValuesValidation.additionalFundRate
                 ? "text-emerald-600"
                 : "text-muted-foreground"
             }
+            customUncheckedIcon={
+              formValuesValidation.overFunding === false &&
+              formValuesValidation.additionalFundRate === false
+                ? CircleX
+                : undefined
+            }
             customUncheckedIconColor={
-              formValuesValidation?.overFunding === false &&
-              formValuesValidation?.additionalFundRate === false
+              formValuesValidation.overFunding === false &&
+              formValuesValidation.additionalFundRate === false
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
@@ -467,15 +465,15 @@ export default function ProjectForm({
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4 ">
                 <Label htmlFor="overFunding">
-                  {languageData["AdditionalFunding"]}
+                  {languageData.AdditionalFunding}
                 </Label>
                 <div className="relative">
                   <Select
                     disabled={isInputEditDisabled}
-                    value={formValues?.overFunding || ""}
                     onValueChange={(value) =>
-                      setFormValues({ ...formValues, overFunding: value })
+                      { setFormValues({ ...formValues, overFunding: value }); }
                     }
+                    value={formValues.overFunding || ""}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="" />
@@ -483,52 +481,52 @@ export default function ProjectForm({
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem value="Y">
-                          {languageData["AdditionalFundingYes"]}
+                          {languageData.AdditionalFundingYes}
                         </SelectItem>
                         <SelectItem value="N">
-                          {languageData["AdditionalFundingNo"]}
+                          {languageData.AdditionalFundingNo}
                         </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
                 <p className="text-[0.8rem] text-muted-foreground">
-                  {languageData["AdditionalFundingInfo"]}
+                  {languageData.AdditionalFundingInfo}
                 </p>
               </div>
-              {formValues?.overFunding === "Y" && (
+              {formValues.overFunding === "Y" && (
                 <Accordion
-                  type="single"
-                  defaultValue="item-1"
-                  collapsible
                   className="w-full"
+                  collapsible
+                  defaultValue="item-1"
+                  type="single"
                 >
                   <AccordionItem value="item-1">
                     <AccordionContent>
                       <div className="grid w-full items-center gap-3 mt-4 ">
                         <div className="relative">
                           <NumericInput
+                            direction="column"
+                            disabled={isInputEditDisabled}
                             id="additionalFundRate"
-                            label={languageData["AdditionalFundingRate"]}
+                            inputLabel="%"
+                            label={languageData.AdditionalFundingRate}
                             max={20}
                             min={0}
-                            subLabel={""}
-                            inputLabel="%"
-                            slider={!isInputEditDisabled}
-                            disabled={isInputEditDisabled}
-                            direction="column"
-                            value={parseInt(
-                              formValues?.additionalFundRate || "0"
-                            )}
                             onValueChange={(value) => {
                               setFormValues({
                                 ...formValues,
                                 additionalFundRate: value.toString(),
                               });
                             }}
+                            slider={!isInputEditDisabled}
+                            subLabel=""
+                            value={parseInt(
+                              formValues.additionalFundRate || "0"
+                            )}
                           />
                           <p className="text-[0.8rem] text-muted-foreground mt-2">
-                            {languageData["AdditionalFundingRateInfo"]}
+                            {languageData.AdditionalFundingRateInfo}
                           </p>
                         </div>
                       </div>
@@ -543,7 +541,6 @@ export default function ProjectForm({
                 profileType === "admin" && (
                   <>
                     <CustomButton
-                      variant="destructive"
                       className="w-[120px]"
                       onClick={() => {
                         setFormValuesValidation({
@@ -554,12 +551,13 @@ export default function ProjectForm({
                         setFormValuesValidationChanged(true);
                         setAccordionTab("");
                       }}
+                      variant="destructive"
                     >
                       Reddet
                     </CustomButton>
                     <CustomButton
-                      customVariant="success"
                       className="w-[120px]"
+                      customVariant="success"
                       onClick={() => {
                         setFormValuesValidation({
                           ...formValuesValidation,
@@ -576,11 +574,11 @@ export default function ProjectForm({
                 )}
               {profileType === "entrepreneur" && (
                 <CustomButton
-                  variant="secondary"
                   className="w-[120px]"
                   onClick={() => {
                     setAccordionTab("");
                   }}
+                  variant="secondary"
                 >
                   İlerle
                 </CustomButton>
@@ -594,16 +592,16 @@ export default function ProjectForm({
           profileType === "admin" && (
             <form action={onEvaluateClick}>
               <CustomButton
-                variant="secondary"
-                isLoading={isLoading}
+                className="w-[200px]"
                 disabled={
                   isLoading ||
                   !formValuesValidationChanged ||
-                  Object.values(formValuesValidation)?.filter(
+                  Object.values(formValuesValidation).filter(
                     (i) => i === undefined
                   ).length !== 0
                 }
-                className="w-[200px]"
+                isLoading={isLoading}
+                variant="secondary"
               >
                 Değerlendirmeyi Tamamla
               </CustomButton>
@@ -613,7 +611,7 @@ export default function ProjectForm({
           <>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="secondary" className="w-[120px]">
+                <Button className="w-[120px]" variant="secondary">
                   Projeyi Sil
                 </Button>
               </DialogTrigger>
@@ -629,9 +627,9 @@ export default function ProjectForm({
                 <DialogFooter>
                   <form action={onDeleteClick}>
                     <CustomButton
-                      type="submit"
-                      isLoading={isLoading}
                       disabled={isLoading}
+                      isLoading={isLoading}
+                      type="submit"
                     >
                       Projeyi Sil
                     </CustomButton>
@@ -641,10 +639,10 @@ export default function ProjectForm({
             </Dialog>
             <form action={onSaveClick}>
               <CustomButton
-                variant="default"
-                isLoading={isLoading}
-                disabled={isSubmitDisabled}
                 className="w-[120px]"
+                disabled={isSubmitDisabled}
+                isLoading={isLoading}
+                variant="default"
               >
                 Save Project
               </CustomButton>

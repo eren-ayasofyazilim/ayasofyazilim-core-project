@@ -18,13 +18,13 @@ export const useApplication = () => {
   return useContext(ApplicationContext);
 };
 
-export const ApplicationProvider = ({
+export function ApplicationProvider({
   children,
   appName,
-}: IApplicationProvider) => {
+}: IApplicationProvider) {
   return (
     <ApplicationContext.Provider value={{ appName }}>
       {children}
     </ApplicationContext.Provider>
   );
-};
+}
