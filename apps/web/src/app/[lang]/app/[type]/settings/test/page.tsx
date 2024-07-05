@@ -2,7 +2,7 @@
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { getLocalizationResources } from "src/utils";
-import { sectionItems } from "../sectionItems";
+import { sectionItems } from "../section-items";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const resources = await getLocalizationResources(params.lang);
