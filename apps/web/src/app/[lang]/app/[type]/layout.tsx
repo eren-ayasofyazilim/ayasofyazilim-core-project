@@ -9,6 +9,7 @@ import {
   FileBadge,
   Home,
   LanguagesIcon,
+  LayoutDashboard,
   Presentation,
   Projector,
   ShieldAlert,
@@ -41,9 +42,9 @@ export default async function Layout({ children, params }: LayoutProps) {
   if (!types.includes(type)) {
     redirect("/404");
   }
+  const navbarResources = { "Menu:Reports": "Reports" };
   const { languageData, resources } = await getResourceData(params.lang);
 
-  const permission = await getPermission();
   const session = await auth();
   const user = session?.user;
 
@@ -101,7 +102,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   const navigationItems: navigationItmes[] = [
     {
       key: "reports",
-      title: navbarResources?.["Menu:Reports"] || "Reports",
+      title: navbarResources?.["Menu:Reports"],
       href: getBaseLink("app/" + type + "/", true, params.lang),
       icon: <LayoutDashboard className="text-slate-500 w-4" />,
       type: ["admin", "user", "entreperneur", "investor"],
@@ -110,7 +111,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "dashboard",
       title: languageData.Dashboard,
-      href: getBaseLink(`app/${  type  }/dashboard`, true, params.lang),
+      href: getBaseLink(`app/${type}/dashboard`, true, params.lang),
       icon: <Presentation className="text-slate-500 w-4" />,
       submenu: dashboards,
       type: "admin",
@@ -120,7 +121,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "profile",
       title: languageData.Profile,
-      href: getBaseLink(`app/${  type  }/profile`, true, params.lang),
+      href: getBaseLink(`app/${type}/profile`, true, params.lang),
       icon: <UserCircle className="text-slate-500 w-4" />,
       type: ["admin", "user", "entrepreneur", "investor"],
       appType: "upwithcrowd",
@@ -129,7 +130,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "Details",
       title: languageData.Details,
-      href: getBaseLink(`app/${  type  }/details`, true, params.lang),
+      href: getBaseLink(`app/${type}/details`, true, params.lang),
       icon: <FileBadge className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
@@ -137,7 +138,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "company",
       title: languageData.Companies,
-      href: getBaseLink(`app/${  type  }/company`, true, params.lang),
+      href: getBaseLink(`app/${type}/company`, true, params.lang),
       icon: <Building2 className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
@@ -145,11 +146,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "countrySettings",
       title: languageData.CountrySettings,
-      href: getBaseLink(
-        `app/${  type  }/country-settings/home`,
-        true,
-        params.lang
-      ),
+      href: getBaseLink(`app/${type}/country-settings/home`, true, params.lang),
       icon: <WrenchIcon className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
@@ -157,7 +154,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "settings",
       title: languageData.Settings,
-      href: getBaseLink(`app/${  type  }/settings/profile`, true, params.lang),
+      href: getBaseLink(`app/${type}/settings/profile`, true, params.lang),
       icon: <SlidersHorizontal className="text-slate-500 w-4" />,
       type: ["admin", "user", "entrepreneur", "investor"],
       appType: "unirefund",
@@ -166,7 +163,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       key: "projects",
       title: languageData.Campaigns,
       icon: <Presentation className="text-slate-500 w-4" />,
-      href: getBaseLink(`app/${  type  }/projects`, true, params.lang),
+      href: getBaseLink(`app/${type}/projects`, true, params.lang),
       type: ["admin", "entrepreneur", "investor"],
       appType: "upwithcrowd",
     },
@@ -174,11 +171,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       key: "languageManagement",
       title: languageData.LanguageManagement || "Language Management",
       icon: <LanguagesIcon className="text-slate-500 w-4" />,
-      href: getBaseLink(
-        `app/${  type  }/language-management`,
-        true,
-        params.lang
-      ),
+      href: getBaseLink(`app/${type}/language-management`, true, params.lang),
       type: "admin",
       appType: "upwithcrowd",
     },
@@ -186,7 +179,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       key: "investments",
       title: "investments",
       icon: <DollarSign className="text-slate-500 w-4" />,
-      href: getBaseLink(`app/${  type  }/investments`, true, params.lang),
+      href: getBaseLink(`app/${type}/investments`, true, params.lang),
       type: "investor",
       appType: "admin",
     },
