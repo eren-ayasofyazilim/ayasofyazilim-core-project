@@ -3,7 +3,7 @@ import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import { NextRequest } from "next/server";
 import { getIdentityServiceClient } from "src/lib";
 
-const errorResponse = (message: string, status: number = 400) =>
+const errorResponse = (message: string, status = 400) =>
   new Response(JSON.stringify({ message }), { status: status });
 
 function isApiError(error: unknown): error is ApiError {
@@ -124,8 +124,8 @@ export async function GET(
     return new Response(JSON.stringify(data));
   } catch (error: unknown) {
     if (isApiError(error)) {
-      const body = error?.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      const message = body?.error?.message || error.statusText;
+      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
+      const message = body.error?.message || error.statusText;
       return errorResponse(message, error.status);
     }
     let errorText = (error as any)?.statusText + " " + (error as any)?.status;
