@@ -182,7 +182,6 @@ export default function ProjectForm({
               formValuesValidation.projectName !== false &&
               formValuesValidation.projectDefinition !== false
             }
-            children="Temel Bilgiler"
             customCheckedIconColor={
               formValuesValidation.projectName &&
               formValuesValidation.projectDefinition
@@ -201,7 +200,9 @@ export default function ProjectForm({
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
-          />
+          >
+            Temel Bilgiler
+          </AccordionStepperHeader>
 
           <AccordionContent className="px-6">
             <div className="w-full">
@@ -303,7 +304,6 @@ export default function ProjectForm({
               formValuesValidation.fundableAmount !== false &&
               formValuesValidation.fundCollectionType !== false
             }
-            children="Bütçe"
             customCheckedIconColor={
               formValuesValidation.fundCollectionType &&
               formValuesValidation.fundableAmount
@@ -322,7 +322,9 @@ export default function ProjectForm({
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
-          />
+          >
+            Bütçe
+          </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4 ">
@@ -443,7 +445,6 @@ export default function ProjectForm({
               formValuesValidation.overFunding !== false &&
               formValuesValidation.additionalFundRate !== false
             }
-            children="Ek Fonlama"
             customCheckedIconColor={
               formValuesValidation.overFunding &&
               formValuesValidation.additionalFundRate
@@ -462,7 +463,9 @@ export default function ProjectForm({
                 ? "text-red-500"
                 : "text-muted-foreground"
             }
-          />
+          >
+            Ek Fonlama
+          </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4 ">

@@ -1,64 +1,13 @@
 
 ./src/app/[lang]/app/[type]/dashboard/[domain]/[data]/page.tsx
+87:46  Error: Unnecessary optional chain on a non-nullish value.  @typescript-eslint/no-unnecessary-condition
+93:35  Error: Unnecessary optional chain on a non-nullish value.  @typescript-eslint/no-unnecessary-condition
 148:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 242:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-
-./src/app/[lang]/app/[type]/profile/actions.ts
-79:15  Error: Empty block statement.  no-empty
-Error: Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary.  eslint-comments/require-description
-147:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
-147:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-164:7  Error: Unexpected constant truthiness on the left-hand side of a `||` expression.  no-constant-binary-expression
-164:7  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-
-./src/app/[lang]/app/[type]/profile/backerlist.tsx
-23:9  Error: 'backers' is already declared in the upper scope on line 7 column 30.  @typescript-eslint/no-shadow
-
-./src/app/[lang]/app/[type]/profile/layout.tsx
-2:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
-2:51  Error: 'type' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
-
-./src/app/[lang]/app/[type]/profile/[profileId]/form.tsx
-23:10  Error: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  no-unused-vars
-23:10  Error: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
-
-./src/app/[lang]/app/[type]/projects/action.ts
-37:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-60:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-86:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-111:20  Error: Unexpected `await` of a non-Promise (non-"Thenable") value.  @typescript-eslint/await-thenable
-136:19  Error: Empty block statement.  no-empty
-156:22  Error: Promise executor functions should not be async.  no-async-promise-executor
-178:22  Error: Promise executor functions should not be async.  no-async-promise-executor
-
-./src/app/[lang]/app/[type]/projects/new/form.tsx
-55:9  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-
-./src/app/[lang]/app/[type]/projects/[projectId]/details/form.tsx
-34:3  Error: 'resources' is defined but never used. Allowed unused args must match /^_/u.  no-unused-vars
-34:3  Error: 'resources' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
-40:32  Error: Array.prototype.map() expects a return value from arrow function.  array-callback-return
-56:14  Error: Redundant use of `await` on a return value.  no-return-await
-62:12  Error: Redundant use of `await` on a return value.  no-return-await
-88:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
-
-./src/app/[lang]/app/[type]/projects/[projectId]/details/page.tsx
-19:30  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-
-./src/app/[lang]/app/[type]/projects/[projectId]/form.tsx
-185:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
-306:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
-446:13  Error: Do not pass children as props. Instead, nest children between the opening and closing tags.  react/no-children-prop
-
-./src/app/[lang]/public/landing.tsx
-152:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+246:44  Error: Unnecessary optional chain on a non-nullish value.  @typescript-eslint/no-unnecessary-condition
 
 ./src/app/[lang]/public/layout.tsx
 18:8  Error: Async function 'getConfig' has no 'await' expression.  @typescript-eslint/require-await
-102:10  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
-
-./src/app/[lang]/public/projects/page.tsx
-28:8  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 
 ./src/app/[lang]/[auth]/page.tsx
 53:24  Error: Promise executor functions should not be async.  no-async-promise-executor
@@ -66,6 +15,9 @@ Error: Unexpected undescribed directive comment. Include descriptions to explain
 114:25  Error: Promise executor functions should not be async.  no-async-promise-executor
 153:7  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
 153:7  Error: Use "@ts-expect-error" to ensure an error is actually being suppressed.  @typescript-eslint/prefer-ts-expect-error
+
+./src/language-data/Projects/projects.ts
+5:51  Error: Unnecessary optional chain on a non-nullish value.  @typescript-eslint/no-unnecessary-condition
 
 ./src/lib.ts
 9:1  Error: Dependency cycle via auth-action:5  import/no-cycle
@@ -75,6 +27,7 @@ Error: Unexpected undescribed directive comment. Include descriptions to explain
 54:5  Error: Assignment to function parameter 'appType'.  no-param-reassign
 54:15  Error: Unexpected constant nullishness on the left-hand side of a `??` expression.  no-constant-binary-expression
 54:15  Error: Unnecessary conditional, expected left-hand side of `??` operator to be possibly null or undefined.  @typescript-eslint/no-unnecessary-condition
+125:39  Error: Unnecessary optional chain on a non-nullish value.  @typescript-eslint/no-unnecessary-condition
 126:9  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition
 127:44  Error: Array.prototype.map() expects a return value from arrow function.  array-callback-return
 133:16  Error: Unnecessary conditional, value is always truthy.  @typescript-eslint/no-unnecessary-condition

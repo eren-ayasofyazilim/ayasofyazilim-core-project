@@ -12,10 +12,10 @@ import { getProjectServiceClient } from "src/lib";
 export async function getProjectByIdServer(projectId: string) {
   "use server";
   try {
-    return await getProjectServiceClient().project.getApiProjectServiceProjectsDetailById(
+    return getProjectServiceClient().project.getApiProjectServiceProjectsDetailById(
       {
         id: projectId,
-      },
+      }
     );
   } catch (error) {
     return {};
@@ -30,11 +30,11 @@ export async function getProjectsServer() {
   }
 }
 export async function createNewProjectServer(
-  body: PostApiProjectServiceProjectsData["requestBody"],
+  body: PostApiProjectServiceProjectsData["requestBody"]
 ) {
   "use server";
   try {
-    const client = await getProjectServiceClient();
+    const client = getProjectServiceClient();
     const response = await client.project.postApiProjectServiceProjects({
       requestBody: body,
     });
@@ -53,11 +53,11 @@ export async function createNewProjectServer(
 }
 export async function updateProjectServer(
   id: string,
-  body: PutApiProjectServiceProjectsByIdData,
+  body: PutApiProjectServiceProjectsByIdData
 ) {
   "use server";
   try {
-    const client = await getProjectServiceClient();
+    const client = getProjectServiceClient();
     const response = await client.project.putApiProjectServiceProjectsById({
       id,
       requestBody: body,
@@ -79,11 +79,11 @@ export async function updateProjectServer(
 }
 export async function updateProjectStatusServer(
   id: string,
-  body: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined,
+  body: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined
 ) {
   "use server";
   try {
-    const client = await getProjectServiceClient();
+    const client = getProjectServiceClient();
     const response = await client.project.putApiProjectServiceProjectsStatus({
       projectId: id,
       status: body,
@@ -104,11 +104,11 @@ export async function updateProjectStatusServer(
   }
 }
 export async function deleteProjectServer(
-  body: DeleteApiProjectServiceProjectsByIdData,
+  body: DeleteApiProjectServiceProjectsByIdData
 ) {
   "use server";
   try {
-    const client = await getProjectServiceClient();
+    const client = getProjectServiceClient();
     const response = await client.project.deleteApiProjectServiceProjectsById({
       id: body.id,
     });
@@ -133,8 +133,12 @@ export async function getDefaultProjectSectionsServer() {
     const client =
       await getProjectServiceClient().projectSection.getApiProjectServiceProjectSection();
     return client;
-  } catch (error) {}
-  return {};
+  } catch (error) {
+    return {
+      items: [],
+      error,
+    };
+  }
 }
 // export async function getProjectSectionsServer(projectId: string) {
 //   "use server";
@@ -151,50 +155,54 @@ export async function getDefaultProjectSectionsServer() {
 export async function createProjectSectionRelationServer(
   projectId: string,
   projectSectionId: string,
-  value: string,
+  value: string
 ): Promise<string> {
-  return new Promise(async (resolve) => {
-    try {
-      const client = getProjectServiceClient();
-      await client.projectSectionRelation.postApiProjectServiceProjectSectionRelation(
-        {
-          requestBody: {
-            projectId,
-            value,
-            projectSectionId,
-          },
-        },
-      );
-      resolve("OK");
-    } catch (error: any) {
-      resolve(error?.body?.error?.message);
-    }
+  return new Promise((resolve) => {
+    (async () => {
+      try {
+        const client = getProjectServiceClient();
+        await client.projectSectionRelation.postApiProjectServiceProjectSectionRelation(
+          {
+            requestBody: {
+              projectId,
+              value,
+              projectSectionId,
+            },
+          }
+        );
+        resolve("OK");
+      } catch (error: any) {
+        resolve(error?.body?.error?.message);
+      }
+    })();
   });
 }
 export async function updateProjectSectionRelationServer(
   id: string,
-  value: string,
+  value: string
 ): Promise<string> {
-  return new Promise(async (resolve) => {
-    try {
-      const client = getProjectServiceClient();
-      const data =
-        await client.projectSectionRelation.getApiProjectServiceProjectSectionRelationById(
+  return new Promise((resolve) => {
+    (async () => {
+      try {
+        const client = getProjectServiceClient();
+        const data =
+          await client.projectSectionRelation.getApiProjectServiceProjectSectionRelationById(
+            {
+              id,
+            }
+          );
+        data.value = value;
+
+        await client.projectSectionRelation.putApiProjectServiceProjectSectionRelationById(
           {
             id,
-          },
+            requestBody: data,
+          }
         );
-      data.value = value;
-
-      await client.projectSectionRelation.putApiProjectServiceProjectSectionRelationById(
-        {
-          id,
-          requestBody: data,
-        },
-      );
-      resolve("OK");
-    } catch (error: any) {
-      resolve(error?.body?.error?.message);
-    }
+        resolve("OK");
+      } catch (error: any) {
+        resolve(error?.body?.error?.message);
+      }
+    })();
   });
 }

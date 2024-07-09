@@ -20,24 +20,23 @@ export interface IStatusFormProps {
   >;
   projectId: string;
   sectionData:
-    | {
-        projectId?: string;
-        sectionId?: string;
-        sectionRelationId?: string;
-        sectionName?: string | null;
-        sectionRelationValue?: string | null;
-        order?: number;
-      }[]
-    | null;
+  | {
+    projectId?: string;
+    sectionId?: string;
+    sectionRelationId?: string;
+    sectionName?: string | null;
+    sectionRelationValue?: string | null;
+    order?: number;
+  }[]
+  | null;
 }
 export default function ProjectForm({
-  resources,
   projectId,
   sectionData,
 }: IStatusFormProps) {
   const [formValues, setFormValues] = useState<Record<string, number>>(() => {
     const data: Record<string, number> = {};
-    sectionData?.map((section) => {
+    sectionData?.forEach((section) => {
       if (section.sectionId) {
         data[section.sectionId] = section.sectionRelationValue?.length || 0;
       }
@@ -53,17 +52,19 @@ export default function ProjectForm({
       section.sectionRelationId &&
       section.sectionId
     ) {
-      return await updateProjectSectionRelationServer(
+      const updatedProjectInformation = await updateProjectSectionRelationServer(
         section.sectionRelationId,
         editorContent,
       );
+      return updatedProjectInformation;
     }
 
-    return await createProjectSectionRelationServer(
+    const createdProjectInformation = await createProjectSectionRelationServer(
       projectId,
       editorId,
       editorContent,
     );
+    return createdProjectInformation;
   }
   function onWordCountChanged(id: string, count: number) {
     if (formValues[id] === count) return;
@@ -84,9 +85,9 @@ export default function ProjectForm({
           value={section.sectionId || "item"}
         >
           <AccordionStepperHeader
-            checked={formValues[section.sectionId || "item"] > 10}
-            children={section.sectionName}
-          />
+            checked={formValues[section.sectionId || "item"] > 10}>
+            {section.sectionName}
+          </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
               <div className="grid w-full items-center gap-3 mt-4">
