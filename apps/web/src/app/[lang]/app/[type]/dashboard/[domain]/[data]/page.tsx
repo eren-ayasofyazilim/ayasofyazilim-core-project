@@ -94,7 +94,9 @@ export default function Page({
                 tempData[schema].convertors[key].data = tempValue;
                 tempData[schema].convertors[key].type = "async";
               }
-            } catch (error) {}
+            } catch (error) {
+              toast.error("Something went wrong 4");
+            }
           }
         }
       }
