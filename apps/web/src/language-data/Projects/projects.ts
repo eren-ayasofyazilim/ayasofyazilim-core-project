@@ -2,7 +2,7 @@ import { getLocalizationResources } from "src/utils";
 
 export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
-  const projectResource = resources.ProjectService?.texts;
+  const projectResource = resources.ProjectService.texts;
   const accountResource = resources.AbpAccount.texts;
   const uiResource = resources.AbpUi.texts;
   const languageData = {

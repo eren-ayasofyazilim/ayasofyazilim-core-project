@@ -20,15 +20,15 @@ export interface IStatusFormProps {
   >;
   projectId: string;
   sectionData:
-  | {
-    projectId?: string;
-    sectionId?: string;
-    sectionRelationId?: string;
-    sectionName?: string | null;
-    sectionRelationValue?: string | null;
-    order?: number;
-  }[]
-  | null;
+    | {
+        projectId?: string;
+        sectionId?: string;
+        sectionRelationId?: string;
+        sectionName?: string | null;
+        sectionRelationValue?: string | null;
+        order?: number;
+      }[]
+    | null;
 }
 export default function ProjectForm({
   projectId,
@@ -52,10 +52,11 @@ export default function ProjectForm({
       section.sectionRelationId &&
       section.sectionId
     ) {
-      const updatedProjectInformation = await updateProjectSectionRelationServer(
-        section.sectionRelationId,
-        editorContent,
-      );
+      const updatedProjectInformation =
+        await updateProjectSectionRelationServer(
+          section.sectionRelationId,
+          editorContent,
+        );
       return updatedProjectInformation;
     }
 
@@ -85,7 +86,8 @@ export default function ProjectForm({
           value={section.sectionId || "item"}
         >
           <AccordionStepperHeader
-            checked={formValues[section.sectionId || "item"] > 10}>
+            checked={formValues[section.sectionId || "item"] > 10}
+          >
             {section.sectionName}
           </AccordionStepperHeader>
           <AccordionContent className="px-6">

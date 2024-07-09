@@ -17,9 +17,9 @@ export default async function Page({ params }: any) {
   const { project: projectData, projectSectionRelations: usedSections } =
     await getProjectByIdServer(projectId);
 
-  const mandatorySections: GetApiProjectServiceProjectSectionResponse = await getDefaultProjectSectionsServer()
-  
-  
+  const mandatorySections: GetApiProjectServiceProjectSectionResponse =
+    await getDefaultProjectSectionsServer();
+
   mandatorySections.items?.forEach((section: any) => {
     const index = usedSections?.findIndex((s) => s.sectionId === section.id);
 
