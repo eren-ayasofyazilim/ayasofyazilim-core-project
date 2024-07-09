@@ -21,8 +21,6 @@ import {
   WrenchIcon,
 } from "lucide-react";
 import { redirect } from "next/navigation";
-import { auth } from "auth";
-import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
