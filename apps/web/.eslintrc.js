@@ -21,5 +21,6 @@ module.exports = {
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "no-await-in-loop": "off",
+    "import/no-cycle": "off",
   },
 };
