@@ -21,6 +21,8 @@ import {
   WrenchIcon,
 } from "lucide-react";
 import { redirect } from "next/navigation";
+import { auth } from "auth";
+import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
@@ -91,7 +93,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang
+        params.lang,
       ),
       type: "admin",
       appType: "upwithcrowd",

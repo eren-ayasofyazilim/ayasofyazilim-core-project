@@ -76,7 +76,9 @@ export async function postBacker(formdata: any) {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
       requestBody: populateCustomFormData(formdata),
     });
-  } catch (e) {}
+  } catch (e) {
+    result = { error: e };
+  }
 
   return result;
 }
@@ -84,10 +86,13 @@ export async function postBacker(formdata: any) {
 export async function postIndividual(formdata: any) {
   const client = await getBackerServiceClient();
   let result;
-  result = await client.backer.postApiBackerServiceBackersWithComponents({
-    requestBody: populateIndividual(formdata),
-  });
-
+  try {
+    result = await client.backer.postApiBackerServiceBackersWithComponents({
+      requestBody: populateIndividual(formdata),
+    });
+  } catch (e) {
+    result = { error: e };
+  }
   return result;
 }
 
