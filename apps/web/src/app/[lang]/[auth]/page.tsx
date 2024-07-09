@@ -50,26 +50,28 @@ export default function Page(): JSX.Element {
   //Register waiting for implementation
   //ResetPassword start
   const onResetPasswordSubmit = async (values: ResetPasswordFormDataType) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch("./api/auth/reset-password", {
-          method: "POST",
-          body: JSON.stringify({
-            password: values.password,
-            resetToken: searchParams.get("resetToken"),
-            userId: searchParams.get("userId"),
-          }),
-        });
-        if (response.status > 199 && response.status < 300) {
-          router.push("/login");
-          resolve("");
-          return;
+    return new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          const response = await fetch("./api/auth/reset-password", {
+            method: "POST",
+            body: JSON.stringify({
+              password: values.password,
+              resetToken: searchParams.get("resetToken"),
+              userId: searchParams.get("userId"),
+            }),
+          });
+          if (response.status > 199 && response.status < 300) {
+            router.push("/login");
+            resolve("");
+            return;
+          }
+          const result = await response.json();
+          reject(result.error.code);
+        } catch (e) {
+          reject(e);
         }
-        const result = await response.json();
-        reject(result.error.code);
-      } catch (e) {
-        reject(e);
-      }
+      })();
     });
   };
 
@@ -114,50 +116,52 @@ export default function Page(): JSX.Element {
         error: errorMessage,
       };
       const verifyResetToken = async () => {
-        await new Promise(async (resolve, reject) => {
-          try {
-            const response = await fetch("./api/post", {
-              method: "POST",
-              body: JSON.stringify({
-                body: {
-                  resetToken: searchParams.get("resetToken"),
-                  userId: searchParams.get("userId"),
-                },
-                url: "account/verify-password-reset-token",
-              }),
-            });
-            if (response.status > 199 && response.status < 300) {
-              const res = await response.json();
-              if (!res) {
-                setErrorMessage(
-                  resources.AbpIdentity.texts?.["Volo.Abp.Identity:InvalidToken"],
-                );
+        await new Promise((resolve, reject) => {
+          (async () => {
+            try {
+              const response = await fetch("./api/post", {
+                method: "POST",
+                body: JSON.stringify({
+                  body: {
+                    resetToken: searchParams.get("resetToken"),
+                    userId: searchParams.get("userId"),
+                  },
+                  url: "account/verify-password-reset-token",
+                }),
+              });
+              if (response.status > 199 && response.status < 300) {
+                const res = await response.json();
+                if (!res) {
+                  setErrorMessage(
+                    resources.AbpIdentity.texts?.[
+                      "Volo.Abp.Identity:InvalidToken"
+                    ],
+                  );
+                }
+                resolve("");
+              } else {
+                const result = await response.json();
+                setErrorMessage(result.error.code);
+                reject(result.error.code);
               }
-              resolve("");
-            } else {
-              const result = await response.json();
-              setErrorMessage(result.error.code);
-              reject(result.error.code);
+            } catch (e) {
+              reject(e);
             }
-          } catch (e) {
-            reject(e);
-          }
+          })();
         });
       };
       verifyResetToken();
       break;
     }
-
   }
-
 
   return (
     <Auth
+      authProps={props}
+      authType={authTypeParam}
       cultureName={cultureName || "tr"}
       onLangChange={changeLocale}
       resources={resources}
-      authType={authTypeParam}
-      authProps={props}
     >
       <div className="bg-slate-100 flex flex-auto justify-center items-center">
         {appName === "UPWITHCROWD" ? (
