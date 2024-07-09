@@ -15,10 +15,11 @@ export function isServerSide() {
 export async function getLocalizationResources(languageCode: string): Promise<
   Record<
     string,
-    {
-      texts?: Record<string, string> | null | undefined;
-      baseResources?: string[] | null | undefined;
-    }
+    | {
+        texts?: Record<string, string> | null | undefined;
+        baseResources?: string[] | null | undefined;
+      }
+    | undefined
   >
 > {
   try {
@@ -43,15 +44,16 @@ function getLocale(locale?: string) {
   return pathnameParts[1] ?? "en";
 }
 function getAppType(appType?: string) {
+  if (appType === "public") return `${appType}/`;
+
   if (appType) {
-    if (appType === "public") return `${appType}/`;
     return `app/${appType}/`;
   }
 
   if (!isServerSide()) {
     const pathname = window.location.pathname;
     const pathnameParts = pathname.split("/");
-    appType = `app/${pathnameParts[3]}/` ?? "public/";
+    return `app/${pathnameParts[3]}/` ?? "public/";
   }
   return "public/";
 }

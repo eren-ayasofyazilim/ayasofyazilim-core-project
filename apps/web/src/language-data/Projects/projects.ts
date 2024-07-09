@@ -3,14 +3,14 @@ import { getLocalizationResources } from "src/utils";
 export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const projectResource = resources.ProjectService?.texts;
-  const accountResource = resources.AbpAccount.texts;
-  const uiResource = resources.AbpUi.texts;
+  const accountResource = resources.AbpAccount?.texts;
+  const uiResource = resources.AbpUi?.texts;
   const languageData = {
     Next: uiResource?.PagerNext || "Next",
     Previous: uiResource?.PagerPrevious || "Previous",
     Summary: uiResource?.Summary || "Summary",
     Projects: projectResource?.Projects || "Projects",
-    LogIn: resources.AbpUiNavigation.texts?.LogIn || "Login",
+    LogIn: resources.AbpUiNavigation?.texts?.LogIn || "Login",
     DaysLeft: projectResource?.DaysLeft || "Days left",
     InvestNow: projectResource?.InvestNow || "Invest Now",
     InvestmentOpportunities:
