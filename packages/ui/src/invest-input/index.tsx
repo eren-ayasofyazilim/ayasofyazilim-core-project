@@ -80,10 +80,10 @@ export function InvestInput({
               onChange={(e) => onValueChanged(e.target.value)}
               placeholder={label}
               onKeyDown={(e) => {
-                if (e.key == "ArrowUp") {
+                if (e.key === "ArrowUp") {
                   onValueChanged(quantity + step);
                 }
-                if (e.key == "ArrowDown") {
+                if (e.key === "ArrowDown") {
                   onValueChanged(quantity - step);
                 }
               }}

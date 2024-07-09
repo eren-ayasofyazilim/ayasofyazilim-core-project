@@ -10,8 +10,7 @@ import { getProjectsServer } from "../../app/[type]/projects/action";
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();
 
-  const { languageData, resources } = await getResourceData(params.lang);
-  if (!resources) return;
+  const { languageData } = await getResourceData(params.lang);
 
   const projectURL = getBaseLink("projects", true, params.lang, true);
 
@@ -26,7 +25,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
 
   return (
     <div className="container h-full mt-20">
-      {projectData ? <ScrollArea className="p-2 pt-0 h-full grow">
+      {projectData ? (
+        <ScrollArea className="p-2 pt-0 h-full grow">
           {fundableProjects.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold mb-8 mt-10 text-center">
@@ -67,7 +67,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
               </div>
             </div>
           )}
-        </ScrollArea> : null}
+        </ScrollArea>
+      ) : null}
     </div>
   );
 }

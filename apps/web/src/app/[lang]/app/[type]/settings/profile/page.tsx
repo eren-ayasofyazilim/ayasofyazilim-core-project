@@ -3,7 +3,7 @@
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { auth } from "auth";
 import { getLocalizationResources } from "src/utils";
-import { sectionItems } from "../sectionItems";
+import { sectionItems } from "../section-items";
 import ProfileForm from "./form";
 
 export default async function Page({ params }: { params: { lang: string } }) {

@@ -24,9 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (response?.access_token) {
             return { ...response };
           }
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
         return null;
       },
     }),

@@ -41,7 +41,6 @@ export async function signInServer({
       status: 200,
     };
   } catch (error: any) {
-    console.log(error);
     return {
       status: 400,
       description: "UnknownError",

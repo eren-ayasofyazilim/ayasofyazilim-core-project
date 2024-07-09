@@ -1,10 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/sonner";
-import AutoformDialog, { tableAction } from "@repo/ayasofyazilim-ui/molecules/dialog";
 import {
   Table,
   TableBody,
@@ -13,7 +17,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  $Volo_Abp_Identity_OrganizationUnitCreateDto,
+  $Volo_Abp_Identity_OrganizationUnitUpdateDto,
+} from "@ayasofyazilim/saas/IdentityService";
+import AutoformDialog, {
+  tableAction,
+} from "@repo/ayasofyazilim-ui/molecules/dialog";
+import { useCallback, useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
+import { z } from "zod";
 import {
   fetchOrganizationUnits,
   fetchRolesForUnit,
@@ -23,28 +36,17 @@ import {
   User,
 } from "./action";
 import { ConfirmDialog, RoleModal, UserModal } from "./form";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { z } from "zod";
-import {
-  $Volo_Abp_Identity_OrganizationUnitCreateDto,
-  $Volo_Abp_Identity_OrganizationUnitUpdateDto,
-} from "@ayasofyazilim/saas/IdentityService";
 
-export type formModifier = {
+export interface formModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
-};
+}
 
-export type tableData = {
+export interface tableData {
   createFormSchema: formModifier;
   editFormSchema: formModifier;
-};
+}
 
 const dataConfig: Record<string, tableData> = {
   organization: {
@@ -60,8 +62,12 @@ const dataConfig: Record<string, tableData> = {
 };
 
 const App: React.FC = () => {
-  const [organizationUnits, setOrganizationUnits] = useState<OrganizationUnit[]>([]);
-  const [selectedUnit, setSelectedUnit] = useState<OrganizationUnit | null>(null);
+  const [organizationUnits, setOrganizationUnits] = useState<
+    OrganizationUnit[]
+  >([]);
+  const [selectedUnit, setSelectedUnit] = useState<OrganizationUnit | null>(
+    null
+  );
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Users" | "Roles">("Users");
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -76,7 +82,9 @@ const App: React.FC = () => {
   });
   const [DisplayNameEnum, setDisplayNameEnum] = useState<any>();
   const [action, setAction] = useState<tableAction | undefined>(undefined);
-  const [triggerData, setTriggerData] = useState<Record<string, any> | undefined>(undefined);
+  const [triggerData, setTriggerData] = useState<
+    Record<string, any> | undefined
+  >(undefined);
 
   useEffect(() => {
     fetchAndUpdateUnits();
@@ -96,306 +104,326 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleAddUsers = useCallback(async (selectedUsers: User[]) => {
-    if (selectedUnit && selectedUsers.length > 0) {
-      try {
-        const response = await fetch(
-          getBaseLink(`api/organization/organizationUser`),
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: selectedUnit.id,
-              requestBody: { userIds: selectedUsers.map((user) => user.id) },
-            }),
-          }
-        );
-        if (response.ok) {
-          toast.success("Users added successfully");
-          const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
-          setUnitUsers(updatedUsers);
-        } else {
-          const errorData = await response.json();
-          toast.error(errorData.message || "Failed to add users");
-        }
-      } catch (error) {
-        console.error("Error adding users:", error);
-        toast.error("An error occurred while adding the users");
-      }
-    } else if (selectedUsers.length === 0) {
-      toast.error("No users selected");
-    }
-    setIsUserModalOpen(false);
-  }, [selectedUnit]);
-
-  const handleAddRoles = useCallback(async (selectedRoles: Role[]) => {
-    if (selectedUnit && selectedRoles.length > 0) {
-      try {
-        const response = await fetch(
-          getBaseLink(`api/organization/organizationRole`),
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: selectedUnit.id,
-              requestBody: { roleIds: selectedRoles.map((role) => role.id) },
-            }),
-          }
-        );
-        if (response.ok) {
-          toast.success("Roles added successfully");
-          const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
-          setUnitRoles(updatedRoles);
-        } else {
-          const errorData = await response.json();
-          toast.error(errorData.message || "Failed to add roles");
-        }
-      } catch (error) {
-        console.error("Error adding roles:", error);
-        toast.error("An error occurred while adding the roles");
-      }
-    } else if (selectedRoles.length === 0) {
-      toast.error("No roles selected");
-    }
-    setIsRoleModalOpen(false);
-  }, [selectedUnit]);
-
-  const handleDeleteUser = useCallback((userId: string, userName: string) => {
-    if (selectedUnit) {
-      setConfirmDialogContent({
-        title: "Are You Sure",
-        description: `Are you sure you want to remove the user "${userName}" from organization unit "${selectedUnit.displayName}" ?`,
-        onConfirm: async () => {
-          try {
-            const response = await fetch(
-              getBaseLink(`api/organization/organizationUser`),
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id: selectedUnit.id, memberId: userId }),
-              }
-            );
-            if (response.ok) {
-              toast.success("User deleted successfully");
-              const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
-              setUnitUsers(updatedUsers);
-            } else {
-              const errorData = await response.json();
-              toast.error(errorData.message || "Failed to delete user");
-            }
-          } catch (error) {
-            console.error("Error deleting user:", error);
-            toast.error("An error occurred while deleting the user");
-          }
-          setIsConfirmDialogOpen(false);
-        },
-      });
-      setIsConfirmDialogOpen(true);
-    }
-  }, [selectedUnit]);
-
-  const handleDeleteRole = useCallback((roleId: string, roleName: string) => {
-    if (selectedUnit) {
-      setConfirmDialogContent({
-        title: "Are You Sure",
-        description: `Are you sure you want to remove the role "${roleName}" from organization unit "${selectedUnit.displayName}" ?`,
-        onConfirm: async () => {
-          try {
-            const response = await fetch(
-              getBaseLink(`api/organization/organizationRole`),
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id: selectedUnit.id, roleId: roleId }),
-              }
-            );
-            if (response.ok) {
-              toast.success("Role deleted successfully");
-              const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
-              setUnitRoles(updatedRoles);
-            } else {
-              const errorData = await response.json();
-              toast.error(errorData.message || "Failed to delete role");
-            }
-          } catch (error) {
-            console.error("Error deleting role:", error);
-            toast.error("An error occurred while deleting the role");
-          }
-          setIsConfirmDialogOpen(false);
-        },
-      });
-      setIsConfirmDialogOpen(true);
-    }
-  }, [selectedUnit]);
-
-  const handleSave = useCallback(async (
-    formData: { displayName: string },
-    triggerData?: { id: string }
-  ) => {
-    try {
-      const response = await fetch(getBaseLink("api/admin/organization"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          displayName: formData.displayName,
-          parentId: triggerData?.id,
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Organization unit added successfully");
-        const units = await fetchOrganizationUnits();
-        console.log(
-          units.map((unit) => {
-            return { displayName: unit.displayName, id: unit.id };
-          })
-        );
-        setOrganizationUnits(units);
-        await fetchAndUpdateUnits();
-        setTriggerData({});
-        setOpen(false);
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to add organization unit");
-      }
-    } catch (error) {
-      console.error("Error saving organization unit:", error);
-      toast.error("An error occurred while saving the organization unit");
-    }
-  }, [fetchAndUpdateUnits]);
-
-  const handleDeleteUnit = useCallback(async (unitId: string, unitName: string) => {
-    setConfirmDialogContent({
-      title: "Are You Sure",
-      description: `Are you sure you want to delete the organization unit "${unitName}" ?`,
-      onConfirm: async () => {
+  const handleAddUsers = useCallback(
+    async (selectedUsers: User[]) => {
+      if (selectedUnit && selectedUsers.length > 0) {
         try {
-          const response = await fetch(getBaseLink(`api/admin/organization`), {
-            method: "DELETE",
-            body: JSON.stringify(unitId),
-          });
-          if (response.ok) {
-            toast.success("Organization unit deleted successfully");
-            const units = await fetchOrganizationUnits();
-            setOrganizationUnits(units);
-            await fetchAndUpdateUnits();
-            if (selectedUnit && selectedUnit.id === unitId) {
-              setSelectedUnit(null);
-              setUnitUsers([]);
-              setUnitRoles([]);
+          const response = await fetch(
+            getBaseLink(`api/organization/organizationUser`),
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: selectedUnit.id,
+                requestBody: { userIds: selectedUsers.map((user) => user.id) },
+              }),
             }
+          );
+          if (response.ok) {
+            toast.success("Users added successfully");
+            const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
+            setUnitUsers(updatedUsers);
           } else {
             const errorData = await response.json();
-            toast.error(
-              errorData.message || "Failed to delete organization unit"
-            );
+            toast.error(errorData.message || "Failed to add users");
           }
         } catch (error) {
-          console.error("Error deleting organization unit:", error);
-          toast.error("An error occurred while deleting the organization unit");
+          toast.error("An error occurred while adding the users");
         }
-        setIsConfirmDialogOpen(false);
-      },
-    });
-    setIsConfirmDialogOpen(true);
-  }, [fetchAndUpdateUnits, selectedUnit]);
+      } else if (selectedUsers.length === 0) {
+        toast.error("No users selected");
+      }
+      setIsUserModalOpen(false);
+    },
+    [selectedUnit]
+  );
 
-  const handleUpdateUnit = useCallback(async (
-    formData: { displayName: string },
-    triggerData: { id: string }
-  ) => {
-    try {
-      const response = await fetch(
-        getBaseLink(`api/organization/organizationEdit`),
-        {
-          method: "PUT",
+  const handleAddRoles = useCallback(
+    async (selectedRoles: Role[]) => {
+      if (selectedUnit && selectedRoles.length > 0) {
+        try {
+          const response = await fetch(
+            getBaseLink(`api/organization/organizationRole`),
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: selectedUnit.id,
+                requestBody: { roleIds: selectedRoles.map((role) => role.id) },
+              }),
+            }
+          );
+          if (response.ok) {
+            toast.success("Roles added successfully");
+            const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
+            setUnitRoles(updatedRoles);
+          } else {
+            const errorData = await response.json();
+            toast.error(errorData.message || "Failed to add roles");
+          }
+        } catch (error) {
+          toast.error("An error occurred while adding the roles");
+        }
+      } else if (selectedRoles.length === 0) {
+        toast.error("No roles selected");
+      }
+      setIsRoleModalOpen(false);
+    },
+    [selectedUnit]
+  );
+
+  const handleDeleteUser = useCallback(
+    (userId: string, userName: string) => {
+      if (selectedUnit) {
+        setConfirmDialogContent({
+          title: "Are You Sure",
+          description: `Are you sure you want to remove the user "${userName}" from organization unit "${selectedUnit.displayName}" ?`,
+          onConfirm: async () => {
+            try {
+              const response = await fetch(
+                getBaseLink(`api/organization/organizationUser`),
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    id: selectedUnit.id,
+                    memberId: userId,
+                  }),
+                }
+              );
+              if (response.ok) {
+                toast.success("User deleted successfully");
+                const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
+                setUnitUsers(updatedUsers);
+              } else {
+                const errorData = await response.json();
+                toast.error(errorData.message || "Failed to delete user");
+              }
+            } catch (error) {
+              toast.error("An error occurred while deleting the user");
+            }
+            setIsConfirmDialogOpen(false);
+          },
+        });
+        setIsConfirmDialogOpen(true);
+      }
+    },
+    [selectedUnit]
+  );
+
+  const handleDeleteRole = useCallback(
+    (roleId: string, roleName: string) => {
+      if (selectedUnit) {
+        setConfirmDialogContent({
+          title: "Are You Sure",
+          description: `Are you sure you want to remove the role "${roleName}" from organization unit "${selectedUnit.displayName}" ?`,
+          onConfirm: async () => {
+            try {
+              const response = await fetch(
+                getBaseLink(`api/organization/organizationRole`),
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ id: selectedUnit.id, roleId: roleId }),
+                }
+              );
+              if (response.ok) {
+                toast.success("Role deleted successfully");
+                const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
+                setUnitRoles(updatedRoles);
+              } else {
+                const errorData = await response.json();
+                toast.error(errorData.message || "Failed to delete role");
+              }
+            } catch (error) {
+              toast.error("An error occurred while deleting the role");
+            }
+            setIsConfirmDialogOpen(false);
+          },
+        });
+        setIsConfirmDialogOpen(true);
+      }
+    },
+    [selectedUnit]
+  );
+
+  const handleSave = useCallback(
+    async (
+      formData: { displayName: string },
+      _triggerData?: { id: string }
+    ) => {
+      try {
+        const response = await fetch(getBaseLink("api/admin/organization"), {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: triggerData.id,
-            requestBody: { displayName: formData.displayName },
+            displayName: formData.displayName,
+            parentId: _triggerData?.id,
           }),
-        }
-      );
-      if (response.ok) {
-        toast.success("Organization unit updated successfully");
-        const units = await fetchOrganizationUnits();
-        setOrganizationUnits(units);
-        const updatedUnit = units.find((unit) => unit.id === triggerData.id) || null;
-        setSelectedUnit(updatedUnit);
-        updateEnums(units);
-        setTriggerData({});
-        setOpen(false);
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to update organization unit");
-      }
-    } catch (error) {
-      console.error("Error updating organization unit:", error);
-      toast.error("An error occurred while updating the organization unit");
-    }
-  }, [fetchAndUpdateUnits, updateEnums]);
+        });
 
-  const handleMoveUsers = useCallback(async (
-    formData: { targetUnitId: string },
-    triggerData: { id: string }
-  ) => {
-    if (selectedUnit) {
-      try {
-        const targetUnit = organizationUnits.find(
-          (unit) => unit.id === formData.targetUnitId
-        );
-        if (!targetUnit) {
-          toast.error("Target unit not found");
-          return;
+        if (response.ok) {
+          toast.success("Organization unit added successfully");
+          const units = await fetchOrganizationUnits();
+
+          setOrganizationUnits(units);
+          await fetchAndUpdateUnits();
+          setTriggerData({});
+          setOpen(false);
+        } else {
+          const errorData = await response.json();
+          toast.error(errorData.message || "Failed to add organization unit");
         }
+      } catch (error) {
+        toast.error("An error occurred while saving the organization unit");
+      }
+    },
+    [fetchAndUpdateUnits]
+  );
+
+  const handleDeleteUnit = useCallback(
+    async (unitId: string, unitName: string) => {
+      setConfirmDialogContent({
+        title: "Are You Sure",
+        description: `Are you sure you want to delete the organization unit "${unitName}" ?`,
+        onConfirm: async () => {
+          try {
+            const response = await fetch(
+              getBaseLink(`api/admin/organization`),
+              {
+                method: "DELETE",
+                body: JSON.stringify(unitId),
+              }
+            );
+            if (response.ok) {
+              toast.success("Organization unit deleted successfully");
+              const units = await fetchOrganizationUnits();
+              setOrganizationUnits(units);
+              await fetchAndUpdateUnits();
+              if (selectedUnit && selectedUnit.id === unitId) {
+                setSelectedUnit(null);
+                setUnitUsers([]);
+                setUnitRoles([]);
+              }
+            } else {
+              const errorData = await response.json();
+              toast.error(
+                errorData.message || "Failed to delete organization unit"
+              );
+            }
+          } catch (error) {
+            toast.error(
+              "An error occurred while deleting the organization unit"
+            );
+          }
+          setIsConfirmDialogOpen(false);
+        },
+      });
+      setIsConfirmDialogOpen(true);
+    },
+    [fetchAndUpdateUnits, selectedUnit]
+  );
+
+  const handleUpdateUnit = useCallback(
+    async (formData: { displayName: string }, _triggerData: { id: string }) => {
+      try {
         const response = await fetch(
-          getBaseLink(`api/organization/MoveAllUsers`),
+          getBaseLink(`api/organization/organizationEdit`),
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id: triggerData.id,
-              organizationId: targetUnit.id,
+              id: _triggerData.id,
+              requestBody: { displayName: formData.displayName },
             }),
           }
         );
         if (response.ok) {
-          toast.success("Users moved successfully");
+          toast.success("Organization unit updated successfully");
+          const units = await fetchOrganizationUnits();
+          setOrganizationUnits(units);
+          const updatedUnit =
+            units.find((unit) => unit.id === _triggerData.id) || null;
+          setSelectedUnit(updatedUnit);
+          updateEnums(units);
           setTriggerData({});
-          const updatedUsers = await fetchUsersForUnit(triggerData.id);
-          setUnitUsers(updatedUsers);
+          setOpen(false);
         } else {
           const errorData = await response.json();
-          toast.error(errorData.message || "Failed to move users");
+          toast.error(
+            errorData.message || "Failed to update organization unit"
+          );
         }
       } catch (error) {
-        console.error("Error moving users:", error);
-        toast.error("An error occurred while moving the users");
+        toast.error("An error occurred while updating the organization unit");
       }
-      setOpen(false);
-    }
-  }, [organizationUnits, selectedUnit]);
+    },
+    [fetchAndUpdateUnits, updateEnums]
+  );
 
-  const handleUnitClick = useCallback(async (unit: OrganizationUnit) => {
-    setSelectedUnit(unit);
+  const handleMoveUsers = useCallback(
+    async (
+      formData: { targetUnitId: string },
+      _triggerData: { id: string }
+    ) => {
+      if (selectedUnit) {
+        try {
+          const targetUnit = organizationUnits.find(
+            (unit) => unit.id === formData.targetUnitId
+          );
+          if (!targetUnit) {
+            toast.error("Target unit not found");
+            return;
+          }
+          const response = await fetch(
+            getBaseLink(`api/organization/MoveAllUsers`),
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: _triggerData.id,
+                organizationId: targetUnit.id,
+              }),
+            }
+          );
+          if (response.ok) {
+            toast.success("Users moved successfully");
+            setTriggerData({});
+            const updatedUsers = await fetchUsersForUnit(_triggerData.id);
+            setUnitUsers(updatedUsers);
+          } else {
+            const errorData = await response.json();
+            toast.error(errorData.message || "Failed to move users");
+          }
+        } catch (error) {
+          toast.error("An error occurred while moving the users");
+        }
+        setOpen(false);
+      }
+    },
+    [organizationUnits, selectedUnit]
+  );
+
+  const handleUnitClick = useCallback(async (_unit: OrganizationUnit) => {
+    setSelectedUnit(_unit);
     setActiveTab("Users");
     const [users, roles] = await Promise.all([
-      fetchUsersForUnit(unit.id),
-      fetchRolesForUnit(unit.id),
+      fetchUsersForUnit(_unit.id),
+      fetchRolesForUnit(_unit.id),
     ]);
     setUnitUsers(users);
     setUnitRoles(roles);
@@ -421,97 +449,120 @@ const App: React.FC = () => {
     setOpen(true);
   }, [handleSave, selectedUnit]);
 
-  const handleSubUnit = useCallback(async (unit: OrganizationUnit) => {
-    await handleUnitClick(unit);
-    setSelectedUnit(unit);
-    setAction({
-      autoFormArgs: {
-        formSchema: createZodObject(
-          createFormSchema.schema,
-          createFormSchema.formPositions || []
-        ),
-      },
-      callback: (e, triggerData) => {
-        const formData = { ...e, ParentId: unit?.id };
-        handleSave(formData, triggerData);
-        return true;
-      },
-      cta: "New organization unit",
-      description: `Parent: ${unit.displayName}`,
-    });
-    setTriggerData({ id: unit?.id });
-    setOpen(true);
-  }, [ handleSave, handleUnitClick]);
-
-  const handleEditUnit = useCallback(async (unit: OrganizationUnit) => {
-    await handleUnitClick(unit);
-    setAction({
-      autoFormArgs: {
-        formSchema: createZodObject(
-          editFormSchema.schema,
-          editFormSchema.formPositions || []
-        ),
-      },
-      callback: handleUpdateUnit,
-      cta: "Edit Unit",
-      description: "Edit the name of the organization unit",
-    });
-    setTriggerData({ displayName: unit?.displayName, id: unit?.id });
-    setOpen(true);
-  }, [handleUnitClick, handleUpdateUnit]);
-
-  const handleListAllUnits = useCallback(async (unit: OrganizationUnit) => {
-    setSelectedUnit(unit);
-    setActiveTab("Users");
-    const [users, roles] = await Promise.all([
-      fetchUsersForUnit(unit.id),
-      fetchRolesForUnit(unit.id),
-    ]);
-    setUnitUsers(users);
-    setUnitRoles(roles);
-    if (users.length === 0) {
-      toast.warning("There are no users currently in this unit.");
-      return;
-    }
-    const availableUnits = organizationUnits.filter((u) => u.id !== unit.id);
-    const unitOptions = availableUnits.map((unit) => {
-      const parentUnit = organizationUnits.find(u => u.id === unit.parentId);
-      return {
-        id: unit.id,
-        displayName: unit.displayName,
-        parentName: parentUnit ? parentUnit.displayName : '',
-      };
-    });
-
-    if (unitOptions.length > 0) {
-      const placeholder = "Select a unit";
-      const DynamicEnum = z.enum([placeholder, ...unitOptions.map(u => u.parentName ? `${u.displayName} ( Parent: ${u.parentName} )` : `${u.displayName}`)]);
-      setDisplayNameEnum(DynamicEnum);
-      setTriggerData({ displayName: unit.displayName, id: unit.id });
+  const handleSubUnit = useCallback(
+    async (_unit: OrganizationUnit) => {
+      await handleUnitClick(_unit);
+      setSelectedUnit(_unit);
       setAction({
         autoFormArgs: {
-          formSchema: z.object({
-            targetUnit: DynamicEnum.default(placeholder),
-          }),
+          formSchema: createZodObject(
+            createFormSchema.schema,
+            createFormSchema.formPositions || []
+          ),
         },
         callback: (e, triggerData) => {
-          const selectedUnit = unitOptions.find(u => u.parentName ? `${u.displayName} ( Parent: ${u.parentName} )` === e.targetUnit : `${u.displayName}` === e.targetUnit);
-          if (!selectedUnit) {
-            toast.error("Selected unit not found");
-            return false;
-          }
-          const formData = { targetUnitId: selectedUnit.id };
-          handleMoveUsers(formData, triggerData);
+          const formData = { ...e, ParentId: _unit?.id };
+          handleSave(formData, triggerData);
           return true;
         },
-        cta: "Move all Users",
-        description: `Move all users from ${unit.displayName} to:`,
+        cta: "New organization unit",
+        description: `Parent: ${_unit.displayName}`,
       });
+      setTriggerData({ id: _unit?.id });
       setOpen(true);
-    } else {
-      toast.error("No other units available to move users.");
-    }
-  }, [fetchRolesForUnit, fetchUsersForUnit, handleMoveUsers, organizationUnits]);
+    },
+    [handleSave, handleUnitClick]
+  );
+
+  const handleEditUnit = useCallback(
+    async (_unit: OrganizationUnit) => {
+      await handleUnitClick(_unit);
+      setAction({
+        autoFormArgs: {
+          formSchema: createZodObject(
+            editFormSchema.schema,
+            editFormSchema.formPositions || []
+          ),
+        },
+        callback: handleUpdateUnit,
+        cta: "Edit Unit",
+        description: "Edit the name of the organization unit",
+      });
+      setTriggerData({ displayName: _unit?.displayName, id: _unit?.id });
+      setOpen(true);
+    },
+    [handleUnitClick, handleUpdateUnit]
+  );
+
+  const handleListAllUnits = useCallback(
+    async (_unit: OrganizationUnit) => {
+      setSelectedUnit(_unit);
+      setActiveTab("Users");
+      const [users, roles] = await Promise.all([
+        fetchUsersForUnit(_unit.id),
+        fetchRolesForUnit(_unit.id),
+      ]);
+      setUnitUsers(users);
+      setUnitRoles(roles);
+      if (users.length === 0) {
+        toast.warning("There are no users currently in this unit.");
+        return;
+      }
+      const availableUnits = organizationUnits.filter((u) => u.id !== _unit.id);
+      const unitOptions = availableUnits.map((unit) => {
+        const parentUnit = organizationUnits.find(
+          (u) => u.id === unit.parentId
+        );
+        return {
+          id: unit.id,
+          displayName: unit.displayName,
+          parentName: parentUnit ? parentUnit.displayName : "",
+        };
+      });
+
+      if (unitOptions.length > 0) {
+        const placeholder = "Select a unit";
+        const DynamicEnum = z.enum([
+          placeholder,
+          ...unitOptions.map((u) =>
+            u.parentName
+              ? `${u.displayName} ( Parent: ${u.parentName} )`
+              : `${u.displayName}`
+          ),
+        ]);
+        setDisplayNameEnum(DynamicEnum);
+        setTriggerData({ displayName: _unit.displayName, id: _unit.id });
+        setAction({
+          autoFormArgs: {
+            formSchema: z.object({
+              targetUnit: DynamicEnum.default(placeholder),
+            }),
+          },
+          callback: (e, triggerData) => {
+            const selectedUnit = unitOptions.find((u) =>
+              u.parentName
+                ? `${u.displayName} ( Parent: ${u.parentName} )` ===
+                  e.targetUnit
+                : `${u.displayName}` === e.targetUnit
+            );
+            if (!selectedUnit) {
+              toast.error("Selected unit not found");
+              return false;
+            }
+            const formData = { targetUnitId: selectedUnit.id };
+            handleMoveUsers(formData, triggerData);
+            return true;
+          },
+          cta: "Move all Users",
+          description: `Move all users from ${_unit.displayName} to:`,
+        });
+        setOpen(true);
+      } else {
+        toast.error("No other units available to move users.");
+      }
+    },
+    [fetchRolesForUnit, fetchUsersForUnit, handleMoveUsers, organizationUnits]
+  );
 
   const createFormSchema = dataConfig.organization.createFormSchema;
   const editFormSchema = dataConfig.organization.editFormSchema;
@@ -547,7 +598,9 @@ const App: React.FC = () => {
                             }`}
                             onClick={() => handleUnitClick(unit)}
                           >
-                            <h6 className="text-center w-full">{unit.displayName}</h6>
+                            <h6 className="text-center w-full">
+                              {unit.displayName}
+                            </h6>
                           </Button>
                         </TableCell>
                         <TableCell className="border-b px-4 py-2 text-right">
@@ -564,17 +617,25 @@ const App: React.FC = () => {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="left-0">
-                              <DropdownMenuItem onClick={() => handleEditUnit(unit)}>
+                              <DropdownMenuItem
+                                onClick={() => handleEditUnit(unit)}
+                              >
                                 Edit
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleSubUnit(unit)}>
+                              <DropdownMenuItem
+                                onClick={() => handleSubUnit(unit)}
+                              >
                                 Add Sub-unit
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleListAllUnits(unit)}>
+                              <DropdownMenuItem
+                                onClick={() => handleListAllUnits(unit)}
+                              >
                                 Move all Users
                               </DropdownMenuItem>
                               <DropdownMenuItem
-                                onClick={() => handleDeleteUnit(unit.id, unit.displayName)}
+                                onClick={() =>
+                                  handleDeleteUnit(unit.id, unit.displayName)
+                                }
                               >
                                 Delete
                               </DropdownMenuItem>
@@ -598,7 +659,9 @@ const App: React.FC = () => {
               <div className="flex items-center space-x-4">
                 <Button
                   className={`text-sm bg-transparent ${
-                    activeTab === "Users" ? "text-white bg-primary" : "text-gray-700"
+                    activeTab === "Users"
+                      ? "text-white bg-primary"
+                      : "text-gray-700"
                   }`}
                   onClick={() => setActiveTab("Users")}
                 >
@@ -606,7 +669,9 @@ const App: React.FC = () => {
                 </Button>
                 <Button
                   className={`text-sm bg-transparent ${
-                    activeTab === "Roles" ? "text-white bg-primary" : "text-gray-700"
+                    activeTab === "Roles"
+                      ? "text-white bg-primary"
+                      : "text-gray-700"
                   }`}
                   onClick={() => setActiveTab("Roles")}
                 >
@@ -653,7 +718,9 @@ const App: React.FC = () => {
                               <TableCell>
                                 <Button
                                   className="bg-primary text-white"
-                                  onClick={() => handleDeleteUser(user.id, user.userName)}
+                                  onClick={() =>
+                                    handleDeleteUser(user.id, user.userName)
+                                  }
                                 >
                                   Delete
                                 </Button>
@@ -688,7 +755,9 @@ const App: React.FC = () => {
                                 <TableCell>
                                   <Button
                                     className="bg-primary text-white"
-                                    onClick={() => handleDeleteRole(role.id, role.name)}
+                                    onClick={() =>
+                                      handleDeleteRole(role.id, role.name)
+                                    }
                                   >
                                     Delete
                                   </Button>

@@ -1,8 +1,6 @@
-"use server";
-
 import { RedirectType, permanentRedirect } from "next/navigation";
 import { getBaseLink } from "src/utils";
 
-export default async function Page() {
+export default function Page() {
   permanentRedirect(getBaseLink("country-settings/home"), RedirectType.push);
 }

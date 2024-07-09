@@ -41,7 +41,6 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    console.error(error);
     toast.error("Something went wrong 3 ");
   }
 }
@@ -154,9 +153,8 @@ function convertEnumField(
 ): string | number {
   if (typeof value === "number") {
     return enumArray[value];
-  } 
-    return enumArray.indexOf(value);
-  
+  }
+  return enumArray.indexOf(value);
 }
 
 export default function Page({
@@ -166,7 +164,7 @@ export default function Page({
 }): JSX.Element {
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink(`/api/company/${  params.data}`);
+  const fetchLink = getBaseLink(`/api/company/${params.data}`);
 
   function getRoles() {
     function onData(data: any) {
@@ -199,12 +197,12 @@ export default function Page({
       onData,
       "",
       false
-    );
+    ).catch();
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
   const action: tableAction = {
-    cta: `New ${  params.data}`,
-    description: `Create a new ${  params.data}`,
+    cta: `New ${params.data}`,
+    description: `Create a new ${params.data}`,
     autoFormArgs: {
       formSchema: createZodObject(
         createFormSchema.schema,
@@ -224,24 +222,9 @@ export default function Page({
         getRoles,
         "Added Successfully"
       );
+      return;
     },
   };
-
-  const tableHeaders = [
-    {
-      name: "name",
-      isSortable: true,
-    },
-    {
-      name: "isDefault",
-    },
-    {
-      name: "isPublic",
-    },
-    {
-      name: "userCount",
-    },
-  ];
 
   useEffect(() => {
     setIsLoading(true);
@@ -317,7 +300,9 @@ export default function Page({
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],
-      onEdit: (data, row) => { onEdit(data, row, editFormSchema); },
+      onEdit: (data, row) => {
+        onEdit(data, row, editFormSchema);
+      },
       onDelete,
     },
   };

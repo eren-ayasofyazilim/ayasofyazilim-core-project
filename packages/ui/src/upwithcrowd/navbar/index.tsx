@@ -49,7 +49,7 @@ export default function Navbar({
   userNavigation?: any;
   languageData: any;
 }): JSX.Element {
-  if (variant == "invesdor")
+  if (variant === "invesdor")
     return (
       <div>
         {topBar}
@@ -63,7 +63,7 @@ export default function Navbar({
         </div>
       </div>
     );
-  if (variant == "hirevision") {
+  if (variant === "hirevision") {
     return (
       <HirevisionNavbar
         config={config}
@@ -178,7 +178,7 @@ function HirevisionNavbar({
   useEffect(() => {
     let el = document.querySelector("#scroll-area > div");
     // let el = document.body;
-    if (el == null) return;
+    if (el === null) return;
     const handleScroll = () => {
       setIsFixed(el.scrollTop >= scrollThreshold);
     };

@@ -16,7 +16,7 @@ export default async function Page({
 }) {
   const projectData = await getProjectsServer();
 
-  const { languageData, resources } = await getResourceData(params.lang);
+  const { languageData } = await getResourceData(params.lang);
 
   const navbarItems = [
     {
@@ -41,7 +41,9 @@ export default async function Page({
             {params.type === "entrepreneur" && (
               <div className=" flex flex-row flex-wrap justify-end items-center">
                 <Link href={getBaseLink("app/entrepreneur/projects/new", true)}>
-                  <CustomButton variant="outline">{languageData.CreateProject}</CustomButton>
+                  <CustomButton variant="outline">
+                    {languageData.CreateProject}
+                  </CustomButton>
                 </Link>
               </div>
             )}

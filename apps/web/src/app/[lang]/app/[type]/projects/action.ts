@@ -4,7 +4,8 @@ import type {
   DeleteApiProjectServiceProjectsByIdData,
   GetApiProjectServiceProjectsResponse,
   PostApiProjectServiceProjectsData,
-  PutApiProjectServiceProjectsByIdData} from "@ayasofyazilim/saas/ProjectService";
+  PutApiProjectServiceProjectsByIdData,
+} from "@ayasofyazilim/saas/ProjectService";
 import { revalidatePath } from "next/cache";
 import { getProjectServiceClient } from "src/lib";
 
@@ -17,16 +18,14 @@ export async function getProjectByIdServer(projectId: string) {
       }
     );
   } catch (error) {
-    console.error("Offline Data");
     return {};
   }
 }
 export async function getProjectsServer() {
   "use server";
   try {
-    return (await getProjectServiceClient().project.getApiProjectServiceProjects());
+    return await getProjectServiceClient().project.getApiProjectServiceProjects();
   } catch (error) {
-    console.error("Offline Data");
     return {} as GetApiProjectServiceProjectsResponse;
   }
 }
@@ -122,7 +121,6 @@ export async function deleteProjectServer(
       projectData: response,
     };
   } catch (error: any) {
-    console.log(error);
     return {
       status: error.status,
       message: error?.body?.error?.details,
@@ -135,9 +133,7 @@ export async function getDefaultProjectSectionsServer() {
     const client =
       await getProjectServiceClient().projectSection.getApiProjectServiceProjectSection();
     return client;
-  } catch (error) {
-    console.error("Offline Data");
-  }
+  } catch (error) {}
   return {};
 }
 // export async function getProjectSectionsServer(projectId: string) {
@@ -171,7 +167,6 @@ export async function createProjectSectionRelationServer(
       );
       resolve("OK");
     } catch (error: any) {
-      console.log(error);
       resolve(error?.body?.error?.message);
     }
   });

@@ -24,9 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return { ...response };
           }
           throw new Error("Unknown auth error");
-        } catch (error: any) {
-          console.error(error);
-        }
+        } catch (error: any) {}
         return null;
       },
     }),

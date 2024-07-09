@@ -3,11 +3,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
-import type {
-  Volo_Abp_Account_ProfileDto} from "@ayasofyazilim/saas/AccountService";
-import {
-  $Volo_Abp_Account_UpdateProfileDto
-} from "@ayasofyazilim/saas/AccountService";
+import type { Volo_Abp_Account_ProfileDto } from "@ayasofyazilim/saas/AccountService";
+import { $Volo_Abp_Account_UpdateProfileDto } from "@ayasofyazilim/saas/AccountService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon } from "lucide-react";
@@ -57,7 +54,7 @@ export default function ProfileForm({
         formData.append("ImageContent", imageFile);
         formData.append("type", "2");
 
-        const response = await fetch("/api/profile/myprofile", {
+        await fetch("/api/profile/myprofile", {
           method: "POST",
           body: formData,
         });
@@ -97,7 +94,9 @@ export default function ProfileForm({
       <div className="basis-2/4 pt-4">
         <AutoForm
           formSchema={formSchema}
-          onParsedValuesChange={(i) => { setUserDataForm(i); }}
+          onParsedValuesChange={(i) => {
+            setUserDataForm(i);
+          }}
           onSubmit={onSubmit}
           values={user}
         >
@@ -113,6 +112,7 @@ export default function ProfileForm({
       <div className="basis-1/4 min-w-[100px] pt-4">
         <div className="relative m-auto w-64 h-64">
           <img
+            alt=""
             className="rounded-full border-4 border-gray-200 w-full h-full object-cover"
             src={selectedImage}
           />

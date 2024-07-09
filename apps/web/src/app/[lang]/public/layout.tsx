@@ -10,10 +10,10 @@ import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
-import bursa from "../../../../../../../../public/bursa.svg";
-import istanbul from "../../../../../../../../public/istanbul.svg";
-import konya from "../../../../../../../../public/konya.svg";
-import sakarya from "../../../../../../../../public/sakarya.svg";
+import bursa from "public/bursa.svg";
+import istanbul from "public/istanbul.svg";
+import konya from "public/konya.svg";
+import sakarya from "public/sakarya.svg";
 
 export async function getConfig(appName = "konya") {
   const configs = {

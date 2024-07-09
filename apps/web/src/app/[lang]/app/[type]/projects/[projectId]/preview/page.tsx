@@ -13,7 +13,7 @@ export default async function Page({
   params: { projectId: string; lang: string };
 }) {
   const { projectId, lang } = params;
-  const { languageData, resources } = await getResourceData(lang);
+  const { languageData } = await getResourceData(lang);
 
   const { project: projectData, projectSectionRelations: projectSectionData } =
     await getProjectServiceClient().project.getApiProjectServiceProjectsDetailById(
@@ -24,7 +24,7 @@ export default async function Page({
 
   const sectionsData =
     projectSectionData?.map((section: any, index) => ({
-      key: section.sectionName || `${  index}`,
+      key: section.sectionName || `${index}`,
       id: section.sectionName.replaceAll(" ", ""),
       name: section.sectionName,
       value: (

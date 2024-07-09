@@ -12,7 +12,7 @@ type HeroProps = {
   config: any;
 };
 export function Hero({ variant = "invesdor", config }: HeroProps) {
-  if (variant == "hirevision") {
+  if (variant === "hirevision") {
     return (
       <GradientBackground
         fifthColor="125, 69%, 83%"
@@ -40,7 +40,7 @@ export function Hero({ variant = "invesdor", config }: HeroProps) {
       </GradientBackground>
     );
   }
-  if (variant == "invesdor")
+  if (variant === "invesdor")
     return (
       <div className="h-screen min-h-96 bg-green-200 relative bg-[url('https://kapilendo-public.imgix.net/files/content/header/406d031c-f316-4132-83ba-dc3d5553c5cb_hero-dna-fullscreen-2.jpg')] bg-cover bg-center relative">
         <div className="container h-full flex items-center justify-center bg-gradient-to-r from-transparent via-white to-transparent">
@@ -66,7 +66,7 @@ export function Hero({ variant = "invesdor", config }: HeroProps) {
         </div>
       </div>
     );
-  if (variant == "stripe") {
+  if (variant === "stripe") {
     return (
       <AuroraBackground className="h-[70vh]">
         <motion.div

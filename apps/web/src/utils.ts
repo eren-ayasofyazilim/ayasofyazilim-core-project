@@ -1,5 +1,5 @@
 import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
-import type { ZodSchema} from "zod";
+import type { ZodSchema } from "zod";
 import { z } from "zod";
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { defaultResources } from "./resources";
@@ -12,21 +12,21 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-export async function getLocalizationResources(languageCode: string): Promise<Record<string, {
-    texts?:
-      | Record<string, string>
-      | null
-      | undefined;
-    baseResources?: string[] | null | undefined;
-  }>> {
+export async function getLocalizationResources(languageCode: string): Promise<
+  Record<
+    string,
+    {
+      texts?: Record<string, string> | null | undefined;
+      baseResources?: string[] | null | undefined;
+    }
+  >
+> {
   try {
     const response = await fetch(
       `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
     );
     return ((await response.json()) as LocalizationDto).resources || {};
   } catch (error) {
-    console.error("Offline Data");
-
     return defaultResources || {};
   }
 }
@@ -36,24 +36,22 @@ function getLocale(locale?: string) {
 
   if (isServerSide()) {
     const cookieStore = require("next/headers").cookies();
-    locale = cookieStore.get("locale")?.value ?? "en";
-  } else {
-    const pathname = window.location.pathname;
-    const pathnameParts = pathname.split("/");
-    locale = pathnameParts[1] ?? "en";
+    return cookieStore.get("locale")?.value ?? "en";
   }
-  return locale;
+  const pathname = window.location.pathname;
+  const pathnameParts = pathname.split("/");
+  return pathnameParts[1] ?? "en";
 }
 function getAppType(appType?: string) {
   if (appType) {
-    if (appType === "public") return `${appType  }/`;
-    return `app/${  appType  }/`;
+    if (appType === "public") return `${appType}/`;
+    return `app/${appType}/`;
   }
 
   if (!isServerSide()) {
     const pathname = window.location.pathname;
     const pathnameParts = pathname.split("/");
-    appType = `app/${  pathnameParts[3]  }/` ?? "public/";
+    appType = `app/${pathnameParts[3]}/` ?? "public/";
   }
   return "public/";
 }
@@ -65,15 +63,16 @@ export function getBaseLink(
   appType?: string
 ) {
   // check if location first character is a slash
+  let newLocation = "";
   if (location.startsWith("/")) {
-    location = location.slice(1);
+    newLocation = location.slice(1);
   }
-  let localePath = withLocale ? `${getLocale(locale)  }/` : "";
+  let localePath = withLocale ? `${getLocale(locale)}/` : "";
   if (withAppType) {
     localePath += getAppType(appType);
   }
 
-  return `/${localePath}${location}`;
+  return `/${localePath}${newLocation}`;
 }
 //item & sub item
 export interface JsonSchema {
@@ -125,7 +124,7 @@ export function createZodObject(
     const props = schema.properties[element];
     const isRequired = schema.required.includes(element);
     if (props && isSchemaType(props)) {
-      Object.keys(props.properties).map((key) => {
+      Object.keys(props.properties).map(() => {
         zodSchema[element] = createZodObject(
           props,
           Object.keys(props.properties)
@@ -177,10 +176,7 @@ export function createZodObject(
 //         readOnly: z.boolean().optional()
 //     }).optional().nullable()
 // })
-function createZodType(
-  schema: JsonSchema,
-  isRequired: boolean
-): ZodSchema {
+function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
   let zodType;
   switch (schema.type) {
     case "string":
@@ -197,7 +193,7 @@ function createZodType(
       break;
     case "boolean":
       zodType = z.boolean();
-      if (schema.default) zodType = zodType.default(schema.default == "true");
+      if (schema.default) zodType = zodType.default(schema.default === "true");
       break;
     case "integer":
       if (schema.enum) {

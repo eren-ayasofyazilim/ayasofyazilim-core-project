@@ -3,7 +3,7 @@
 import { SettingsView } from "@repo/ui/settings-view";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
-import { mockSettingsResponse } from "./mockSettingsResponse";
+import { mockSettingsResponse } from "./mock-settings-response";
 
 export default async function Page({
   params,
@@ -18,11 +18,9 @@ export default async function Page({
     countrySettings =
       await getSettingServiceClient().countrySetting.getApiSettingServiceCountrySettings();
   } catch (e) {
-    countrySettings =
-      mockSettingsResponse;
+    countrySettings = mockSettingsResponse;
   }
   const resources = await getLocalizationResources(lang);
-  if (!resources) return <></>;
   return (
     <SettingsView list={countrySettings} path={group} resources={resources} />
   );

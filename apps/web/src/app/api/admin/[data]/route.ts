@@ -1,10 +1,9 @@
 import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
 import type {
   Volo_Abp_Identity_IdentityRoleCreateDto,
-  Volo_Abp_Identity_IdentityRoleUpdateDto} from "@ayasofyazilim/saas/IdentityService";
-import {
-  ApiError
+  Volo_Abp_Identity_IdentityRoleUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
+import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import type { NextRequest } from "next/server";
 import {
   getAdministrationServiceClient,
@@ -22,8 +21,8 @@ function isApiError(error: unknown): error is ApiError {
 }
 
 const clients: Clients = {
-  role: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  role: async () => {
+    const client = await getIdentityServiceClient();
     const role = client.role;
     return {
       get: async () => role.getApiIdentityRolesAll(),
@@ -39,8 +38,8 @@ const clients: Clients = {
       delete: async (id: string) => role.deleteApiIdentityRolesById({ id }),
     };
   },
-  user: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  user: async () => {
+    const client = await getIdentityServiceClient();
     const user = client.user;
     return {
       get: async () => user.getApiIdentityUsers(),
@@ -51,8 +50,8 @@ const clients: Clients = {
       delete: async (id: string) => user.deleteApiIdentityUsersById({ id }),
     };
   },
-  edition: async (req: NextRequest) => {
-    const client = await getSaasServiceClient(req);
+  edition: async () => {
+    const client = await getSaasServiceClient();
     const edition = client.edition;
     return {
       get: async () => edition.getApiSaasEditionsAll(),
@@ -63,8 +62,8 @@ const clients: Clients = {
       delete: async (id: string) => edition.deleteApiSaasEditionsById({ id }),
     };
   },
-  tenant: async (req: NextRequest) => {
-    const client = await getSaasServiceClient(req);
+  tenant: async () => {
+    const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {
       get: async () => tenant.getApiSaasTenants(),
@@ -75,8 +74,8 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  claimType: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  claimType: async () => {
+    const client = await getIdentityServiceClient();
     const claimType = client.claimType;
     return {
       get: async () => claimType.getApiIdentityClaimTypes(),
@@ -88,8 +87,8 @@ const clients: Clients = {
         claimType.deleteApiIdentityClaimTypesById({ id }),
     };
   },
-  applications: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  applications: async () => {
+    const client = await getIdentityServiceClient();
     const applications = client.applications;
     return {
       get: async () => applications.getApiOpeniddictApplications(),
@@ -101,8 +100,8 @@ const clients: Clients = {
         applications.deleteApiOpeniddictApplications({ id }),
     };
   },
-  scopes: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  scopes: async () => {
+    const client = await getIdentityServiceClient();
     const scopes = client.scopes;
     return {
       get: async () => scopes.getApiOpeniddictScopes(),
@@ -113,8 +112,8 @@ const clients: Clients = {
       delete: async (id: string) => scopes.deleteApiOpeniddictScopes({ id }),
     };
   },
-  languages: async (req: NextRequest) => {
-    const client = await getAdministrationServiceClient(req);
+  languages: async () => {
+    const client = await getAdministrationServiceClient();
     const languages = client.languages;
     return {
       get: async () => languages.getApiLanguageManagementLanguages(),
@@ -126,32 +125,32 @@ const clients: Clients = {
         languages.deleteApiLanguageManagementLanguagesById({ id }),
     };
   },
-  culture: async (req: NextRequest) => {
-    const client = await getAdministrationServiceClient(req);
+  culture: async () => {
+    const client = await getAdministrationServiceClient();
     const languages = client.languages;
     return {
       get: async () => languages.getApiLanguageManagementLanguagesCultureList(),
     };
   },
 
-  securityLogs: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  securityLogs: async () => {
+    const client = await getIdentityServiceClient();
     const securityLogs = client.securityLog;
     return {
       get: async () => securityLogs.getApiIdentitySecurityLogs(),
     };
   },
 
-  auditLogs: async (req: NextRequest) => {
-    const client = await getAdministrationServiceClient(req);
+  auditLogs: async () => {
+    const client = await getAdministrationServiceClient();
     const auditLogs = client.auditLogs;
     return {
       get: async () => auditLogs.getApiAuditLoggingAuditLogs(),
     };
   },
 
-  textTemplates: async (req: NextRequest) => {
-    const client = await getAdministrationServiceClient(req);
+  textTemplates: async () => {
+    const client = await getAdministrationServiceClient();
     const textTemplates = client.textTemplateDefinitions;
     return {
       get: async () =>
@@ -159,8 +158,8 @@ const clients: Clients = {
     };
   },
 
-  languageTexts: async (req: NextRequest) => {
-    const client = await getAdministrationServiceClient(req);
+  languageTexts: async () => {
+    const client = await getAdministrationServiceClient();
     const languageTexts = client.languageTexts;
     return {
       get: async (baseCultureName = "en", targetCultureName = "tr") =>
@@ -171,8 +170,8 @@ const clients: Clients = {
     };
   },
 
-  organization: async (req: NextRequest) => {
-    const client = await getIdentityServiceClient(req);
+  organization: async () => {
+    const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
       get: async () => organization.getApiIdentityOrganizationUnitsAll(),
@@ -205,7 +204,7 @@ export async function GET(
       const message = body.error?.message || error.statusText;
       return errorResponse(message, error.status);
     }
-    const errorText = `${(error as any)?.statusText  } ${  (error as any)?.status}`;
+    const errorText = `${(error as any)?.statusText} ${(error as any)?.status}`;
     return errorResponse(errorText, (error as any)?.status);
   }
 }

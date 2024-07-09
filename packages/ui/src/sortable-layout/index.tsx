@@ -95,9 +95,9 @@ export function Sortable({
     if (active.id !== over.id) {
       setItems((items: any) => {
         const oldIndex = items.findIndex(
-          (item: any) => item.order == active.id
+          (item: any) => item.order === active.id
         );
-        const newIndex = items.findIndex((item: any) => item.order == over.id);
+        const newIndex = items.findIndex((item: any) => item.order === over.id);
         let newArray = arraySwap(items, oldIndex, newIndex);
         if (getLatestList) getLatestList(newArray);
         return newArray;

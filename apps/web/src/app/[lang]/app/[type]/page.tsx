@@ -405,7 +405,6 @@ export default function Page() {
     setSortableEditMode(!sortableEditMode);
     if (sortableEditMode) {
       setListOrder(listOrder);
-      console.log(listOrder);
     }
   }
 
@@ -463,7 +462,6 @@ export function AreaChartHero({ item }: any) {
       valueFormatter={(number: number) =>
         `$${Intl.NumberFormat("us").format(number).toString()}`
       }
-      onValueChange={(v) => console.log(v)}
     />
   );
 }
@@ -478,17 +476,11 @@ export function BarChartHero({ item }: any) {
       valueFormatter={(number: number) =>
         `${Intl.NumberFormat("us").format(number).toString()}`
       }
-      onValueChange={(v) => console.log(v)}
     />
   );
 }
 export function BarListHero({ item }: any) {
-  return (
-    <BarList
-      data={item.data}
-      onValueChange={(item: any) => console.log(item)}
-    />
-  );
+  return <BarList data={item.data} />;
 }
 export function CategoryBarHero({ item }: any) {
   return (
@@ -510,7 +502,6 @@ export function LineChartHero({ item }: any) {
       valueFormatter={(number: number) =>
         `$${Intl.NumberFormat("us").format(number).toString()}`
       }
-      onValueChange={(v) => console.log(v)}
       xAxisLabel="Month"
       yAxisLabel="Spend Category"
     />
