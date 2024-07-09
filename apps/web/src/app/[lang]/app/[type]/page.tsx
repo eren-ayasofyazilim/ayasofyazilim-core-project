@@ -474,7 +474,7 @@ export function BarChartHero({ item }: any) {
       colors={["emerald"]}
       categories={item.categories}
       valueFormatter={(number: number) =>
-        `${Intl.NumberFormat("us").format(number).toString()}`
+        Intl.NumberFormat("us").format(number).toString()
       }
     />
   );
