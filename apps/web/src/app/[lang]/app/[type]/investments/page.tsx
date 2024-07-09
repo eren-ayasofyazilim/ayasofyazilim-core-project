@@ -185,9 +185,9 @@ export default function Page() {
           data: columns,
         }}
         data={data}
-        withCards={true}
-        withTable={true}
-        filterBy={"test"}
+        filterBy="test"
+        withCards
+        withTable
       />
     </div>
   );
