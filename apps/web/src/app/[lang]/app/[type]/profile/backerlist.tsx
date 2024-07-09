@@ -2,12 +2,8 @@
 
 import CardList from "@repo/ayasofyazilim-ui/organisms/card-list";
 import { useState } from "react";
-import {
-  deleteBacker,
-  getBackers,
-  getBackersIndividuals,
-  IBackersProps,
-} from "./actions";
+import type { IBackersProps } from "./actions";
+import { deleteBacker, getBackers, getBackersIndividuals } from "./actions";
 
 export function BackerList({
   backers,
@@ -17,7 +13,7 @@ export function BackerList({
   backers: IBackersProps[];
 }) {
   const [backersState, setBackers] = useState<IBackersProps[]>(backers);
-  const cards = backersState?.map((backer) => {
+  const cards = backersState.map((backer) => {
     return {
       title: backer.name || "",
       description: backer.taxpayerId || "",

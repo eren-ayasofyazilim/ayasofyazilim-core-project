@@ -16,7 +16,7 @@ import konya from "public/konya.svg";
 import sakarya from "public/sakarya.svg";
 
 export async function getConfig(appName = "konya") {
-  const configs = {
+  const configs: Record<string, any> = {
     bursa: {
       key: "bursa",
       link: getBaseLink("/", true),
@@ -99,7 +99,7 @@ export async function getConfig(appName = "konya") {
     },
   };
 
-  return configs[appName as keyof typeof configs] || configs.konya;
+  return configs[appName] || configs.konya;
 }
 
 interface LayoutProps {

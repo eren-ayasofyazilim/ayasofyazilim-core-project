@@ -149,7 +149,7 @@ const tabs = [
             <div className="grid gap-0 text-black">
               <h1 className="text-2xl font-bold">Yatırım turu</h1>
               <p className="text-sm font-normal">
-                Onaylama sürecinden sonra projeniz UPWITHBURSA'da listelenir.
+                {`Onaylama sürecinden sonra projeniz UPWITHBURSA'da listelenir.`}
               </p>
             </div>
           </div>

@@ -20,7 +20,6 @@ export function BackerForm({
   profileId: string;
 }) {
   const [formType, setFormType] = useState<string>(type);
-  const [data, setData] = useState<any>();
   const functionTypes: Record<string, any> = {
     individual: {
       post: postIndividual,
@@ -62,9 +61,6 @@ export function BackerForm({
           <AutoForm
             // id="backer-form-new"
             formSchema={formSchema[formType]}
-            onParsedValuesChange={(values) => {
-              setData(values);
-            }}
             onSubmit={(formData) => {
               submitFormData(formData);
             }}
