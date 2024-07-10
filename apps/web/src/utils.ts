@@ -15,10 +15,11 @@ export function isServerSide() {
 export async function getLocalizationResources(languageCode: string): Promise<
   Record<
     string,
-    {
-      texts?: Record<string, string> | null | undefined;
-      baseResources?: string[] | null | undefined;
-    }
+    | {
+        texts?: Record<string, string> | null | undefined;
+        baseResources?: string[] | null | undefined;
+      }
+    | undefined
   >
 > {
   try {
@@ -31,27 +32,34 @@ export async function getLocalizationResources(languageCode: string): Promise<
   }
 }
 
-function getLocale(locale?: string) {
-  if (locale) return locale;
+// async function localeServerSide() {
+//   const { cookies } = await import("next/headers");
+//   const cookieStore = cookies();
+//   return cookieStore.get("locale")?.value ?? "en";
+// }
 
+function getLocale(locale?: string): string {
+  if (locale) return locale;
+  // FIXME: This is a temporary solution for eslint
   if (isServerSide()) {
-    const cookieStore = require("next/headers").cookies();
-    return cookieStore.get("locale")?.value ?? "en";
+    //   return localeServerSide();
+    return "en";
   }
   const pathname = window.location.pathname;
   const pathnameParts = pathname.split("/");
   return pathnameParts[1] ?? "en";
 }
 function getAppType(appType?: string) {
+  if (appType === "public") return `${appType}/`;
+
   if (appType) {
-    if (appType === "public") return `${appType}/`;
     return `app/${appType}/`;
   }
 
   if (!isServerSide()) {
     const pathname = window.location.pathname;
     const pathnameParts = pathname.split("/");
-    appType = `app/${pathnameParts[3]}/` ?? "public/";
+    return `app/${pathnameParts[3]}/`;
   }
   return "public/";
 }
@@ -123,14 +131,14 @@ export function createZodObject(
     if (element === "extraProperties") return;
     const props = schema.properties[element];
     const isRequired = schema.required.includes(element);
-    if (props && isSchemaType(props)) {
-      Object.keys(props.properties).map(() => {
+    if (isSchemaType(props)) {
+      Object.keys(props.properties).forEach(() => {
         zodSchema[element] = createZodObject(
           props,
           Object.keys(props.properties),
         );
       });
-    } else if (props && isJsonSchema(props)) {
+    } else if (isJsonSchema(props)) {
       let zodType;
       if (convertors && Object.keys(convertors).includes(element)) {
         const newProps = props;
@@ -194,14 +202,6 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
     case "boolean":
       zodType = z.boolean();
       if (schema.default) zodType = zodType.default(schema.default === "true");
-      break;
-    case "integer":
-      if (schema.enum) {
-        const stringEnums = schema.enum.map((e: any) => e.toString());
-        zodType = z.enum(stringEnums as [string, ...string[]]);
-        break;
-      }
-      zodType = z.number().int();
       break;
     case "integer":
       if (schema.enum) {

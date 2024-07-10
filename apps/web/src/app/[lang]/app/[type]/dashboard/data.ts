@@ -49,8 +49,8 @@ export interface formModifier {
 }
 
 export interface tableData {
-  createFormSchema: formModifier;
-  editFormSchema: formModifier;
+  createFormSchema?: formModifier;
+  editFormSchema?: formModifier;
   tableSchema: formModifier;
   filterBy: string;
 }

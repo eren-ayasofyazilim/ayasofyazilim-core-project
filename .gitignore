@@ -129,3 +129,4 @@ dist
 .pnp.*
 .turbo
 apps/web/tests/apps/web/playwright/.auth/user.json
+apps/web/lint-output.txt

@@ -51,7 +51,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
   async function createNewProject() {
     setLoading(true);
     const response = await createNewProjectServer(formValues);
-    if (response && response.status === 200 && response.projectData) {
+    if (response.status === 200 && response.projectData) {
       setProjectId(response.projectData.id);
     } else {
       setError(response.message);

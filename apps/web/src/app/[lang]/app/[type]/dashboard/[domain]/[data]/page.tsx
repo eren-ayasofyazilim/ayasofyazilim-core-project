@@ -84,13 +84,13 @@ export default function Page({
     const schemas = ["createFormSchema", "editFormSchema"] as const;
 
     for (const schema of schemas) {
-      const dataConvertors = tempData[schema].convertors;
+      const dataConvertors = tempData[schema]?.convertors;
       if (dataConvertors) {
         for (const [key, value] of Object.entries(dataConvertors)) {
           if (value.type === "async" && typeof value.data === "function") {
             try {
               const tempValue = await value.data();
-              if (tempData[schema].convertors) {
+              if (tempData[schema]?.convertors) {
                 tempData[schema].convertors[key].data = tempValue;
                 tempData[schema].convertors[key].type = "async";
               }
@@ -243,7 +243,7 @@ export default function Page({
     editFormSchemaZod = convertZod(editFormSchema);
     autoformEditArgs = {
       formSchema: editFormSchemaZod,
-      dependencies: formData.editFormSchema.dependencies,
+      dependencies: formData.editFormSchema?.dependencies,
       convertor: formData.tableSchema.convertors,
     };
   }

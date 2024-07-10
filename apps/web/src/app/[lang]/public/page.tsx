@@ -1,10 +1,8 @@
-"use server";
-
 import Landing from "./landing";
-import { getConfig } from "./layout";
+import { getConfig } from "./config";
 
-export default async function Page() {
+export default function Page() {
   const appName = process.env.APPLICATION_NAME || "konya";
-  const config = await getConfig(appName);
+  const config = getConfig(appName);
   return <Landing config={config} />;
 }

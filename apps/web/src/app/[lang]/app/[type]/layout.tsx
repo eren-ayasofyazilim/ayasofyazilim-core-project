@@ -3,8 +3,6 @@ import LanguageSelector from "@repo/ui/language-selector";
 import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
-import { auth } from "auth";
-import { signOutServer } from "auth-action";
 import {
   Building2,
   DollarSign,
@@ -21,6 +19,8 @@ import {
   WrenchIcon,
 } from "lucide-react";
 import { redirect } from "next/navigation";
+import { auth } from "auth";
+import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
@@ -102,7 +102,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "reports",
       title: navbarResources["Menu:Reports"],
-      href: getBaseLink("app/" + type + "/", true, params.lang),
+      href: getBaseLink(`app/${type}/`, true, params.lang),
       icon: <LayoutDashboard className="text-slate-500 w-4" />,
       type: ["admin", "user", "entreperneur", "investor"],
       appType: "all",
