@@ -1,11 +1,12 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
-const BASE_URL = process.env.AUTH_URL;
+const BASE_URL = process.env.BASE_URL;
 const TOKEN_URL = BASE_URL + "/connect/token";
+const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
 
 export async function getMyProfile(token: any) {
   const client = new AccountServiceClient({
     TOKEN: token,
-    BASE: process.env.AUTH_URL,
+    BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
@@ -16,6 +17,13 @@ export async function getMyProfile(token: any) {
 }
 export async function signInWithCredentials(credentials: any) {
   "use server";
+  const scopes = await fetch(OPENID_URL)
+    .then((response) => response.json())
+    .then((json) =>
+      json?.scopes_supported
+        .filter((i: string) => i !== "FundraiserService")
+        ?.join(" ")
+    );
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -25,8 +33,7 @@ export async function signInWithCredentials(credentials: any) {
     client_id: "Angular",
     username: credentials.username as string,
     password: credentials.password as string,
-    scope:
-      "AccountService IdentityService phone roles profile address email offline_access",
+    scope: scopes,
   };
   Object.keys(urlEncodedContent).forEach((key) =>
     urlencoded.append(key, urlEncodedContent[key])

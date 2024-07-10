@@ -27,21 +27,21 @@ export async function getAccountServiceClient() {
   const token = session?.access_token;
   return new AccountServiceClient({
     TOKEN: token,
-    BASE: process.env.AUTH_URL,
+    BASE: process.env.BASE_URL,
     HEADERS,
   });
 }
 
 export function getProjectServiceClient(): ProjectServiceClient {
   return new ProjectServiceClient({
-    BASE: process.env.PROJECT_SERVICE_URL ?? "",
+    BASE: process.env.BASE_URL ?? "",
     HEADERS,
   });
 }
 
 export function getProjectServiceDetailClient(): ProjectServiceClient {
   return new ProjectServiceClient({
-    BASE: process.env.PROJECT_SERVICE_URL ?? "",
+    BASE: process.env.BASE_URL ?? "",
     HEADERS,
   });
 }

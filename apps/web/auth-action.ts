@@ -6,6 +6,7 @@ import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
 const AUTH_URL = process.env.BASE_URL + "/api/account/login";
+const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
 
 export async function signOutServer() {
   try {
@@ -27,7 +28,6 @@ export async function signInServer({
       username: userIdentifier,
       password,
     });
-
     if (result?.description !== "Success") {
       return result;
     }
@@ -102,7 +102,7 @@ export async function sendPasswordResetCodeServer({
 export async function getMyProfile(token: any) {
   const client = new AccountServiceClient({
     TOKEN: token,
-    BASE: process.env.AUTH_URL,
+    BASE: process.env.BASE_URL,
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
@@ -132,6 +132,14 @@ export async function canItBeAuthorized(credentials: any) {
 }
 export async function signInWithCredentials(credentials: any) {
   "use server";
+  const scopes = await fetch(OPENID_URL)
+    .then((response) => response.json())
+    .then((json) =>
+      json?.scopes_supported
+        .filter((i: string) => i !== "FundraiserService")
+        ?.join(" ")
+    );
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -141,11 +149,10 @@ export async function signInWithCredentials(credentials: any) {
     client_id: "Angular",
     username: credentials.username as string,
     password: credentials.password as string,
-    scope:
-      "AccountService IdentityService SaasService MerchantService AdministrationService phone roles profile address email offline_access",
+    scope: scopes,
   };
   Object.keys(urlEncodedContent).forEach((key) =>
-    urlencoded.append(key, urlEncodedContent[key]),
+    urlencoded.append(key, urlEncodedContent[key])
   );
   const requestOptions = {
     method: "POST",
@@ -167,7 +174,7 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     refresh_token: refreshToken,
   };
   Object.keys(urlEncodedContent).forEach((key) =>
-    urlencoded.append(key, urlEncodedContent[key]),
+    urlencoded.append(key, urlEncodedContent[key])
   );
   const requestOptions = {
     method: "POST",
