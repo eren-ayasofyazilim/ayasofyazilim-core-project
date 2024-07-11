@@ -134,11 +134,7 @@ export async function signInWithCredentials(credentials: any) {
   "use server";
   const scopes = await fetch(OPENID_URL)
     .then((response) => response.json())
-    .then((json) =>
-      json?.scopes_supported
-        .filter((i: string) => i !== "FundraiserService")
-        ?.join(" ")
-    );
+    .then((json) => json?.scopes_supported?.join(" "));
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
