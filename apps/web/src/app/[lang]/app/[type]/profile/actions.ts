@@ -148,7 +148,7 @@ export async function getBacker(profileId: string) {
   const result = await client.backer.getApiBackerServiceBackersDetailById({
     id: profileId,
   });
-  const organizations = result.entityInformations?.[0]?.organizations?.length;
+  const organizations = result?.entityInformations?.[0]?.organizations?.length;
   if (organizations && organizations > 0) {
     const organization = result.entityInformations?.[0]?.organizations?.[0];
     return {
