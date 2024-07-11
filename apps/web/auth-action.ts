@@ -43,7 +43,7 @@ export async function signInServer({
   } catch (error: any) {
     return {
       status: 400,
-      description: "UnknownError",
+      description: error.message,
     };
   }
 }
