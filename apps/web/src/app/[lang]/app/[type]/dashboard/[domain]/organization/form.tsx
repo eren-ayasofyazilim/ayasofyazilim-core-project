@@ -10,9 +10,108 @@ import { Button } from "@/components/ui/button";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Table, Row } from "@tanstack/react-table";
-import type { Volo_Abp_Identity_IdentityUserDto } from "@ayasofyazilim/saas/AccountService";
 import { fetchRoles, fetchUsers } from "./action";
 import type { Role, User } from "./action";
+
+interface SelectAllCheckboxProps<T> {
+  table: Table<T>;
+  selectedItems: Set<string>;
+  handleToggleAll: (value: boolean, rows: Row<T>[]) => void;
+}
+
+function SelectAllCheckbox<T>({
+  table,
+  selectedItems,
+  handleToggleAll,
+}: SelectAllCheckboxProps<T>) {
+  const rows = table.getRowModel().rows;
+  const isAllSelected = rows.every((row: Row<T>) =>
+    selectedItems.has((row.original as User | Role).id),
+  );
+
+  return (
+    <Checkbox
+      aria-label="Select all"
+      checked={isAllSelected}
+      onCheckedChange={(value) => {
+        table.toggleAllPageRowsSelected(Boolean(value));
+        handleToggleAll(Boolean(value), rows);
+      }}
+    />
+  );
+}
+
+interface RowCheckboxProps<T> {
+  row: Row<T>;
+  selectedItems: Set<string>;
+  handleToggleItem: (id: string) => void;
+}
+
+function RowCheckbox<T>({
+  row,
+  selectedItems,
+  handleToggleItem,
+}: RowCheckboxProps<T>) {
+  const id = (row.original as User | Role).id;
+
+  return (
+    <Checkbox
+      aria-label="Select row"
+      checked={row.getIsSelected() || selectedItems.has(id)}
+      className="mr-6"
+      onCheckedChange={(value) => {
+        row.toggleSelected(Boolean(value));
+        handleToggleItem(id);
+      }}
+    />
+  );
+}
+
+const enhancedColumns = <T,>({
+  columns,
+  checkboxColumnKey,
+  selectedItems,
+  handleToggleAll,
+  handleToggleItem,
+}: {
+  columns: {
+    header: string;
+    accessorKey: keyof T;
+    cell?: (row: any) => JSX.Element;
+  }[];
+  checkboxColumnKey: keyof T;
+  selectedItems: Set<string>;
+  handleToggleAll: (value: boolean, rows: Row<T>[]) => void;
+  handleToggleItem: (id: string) => void;
+}) => [
+  {
+    id: "select",
+    header: ({ table }: { table: Table<any> }) => (
+      <SelectAllCheckbox<T>
+        handleToggleAll={handleToggleAll}
+        selectedItems={selectedItems}
+        table={table}
+      />
+    ),
+    cell: ({ row }: { row: Row<T> }) => (
+      <RowCheckbox<T>
+        handleToggleItem={handleToggleItem}
+        row={row}
+        selectedItems={selectedItems}
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  ...columns.map((column) => {
+    if (column.accessorKey === checkboxColumnKey) {
+      return {
+        ...column,
+      };
+    }
+    return column;
+  }),
+];
 
 interface GenericModalProps<T> {
   isOpen: boolean;
@@ -93,48 +192,13 @@ export function GenericModal<T extends { id: string }>({
     });
   };
 
-  const enhancedColumns = [
-    {
-      id: "select",
-      header: ({ table }: { table: Table<any> }) => {
-        const rows = table.getRowModel().rows;
-        const isAllSelected = rows.every((row: Row<T>) =>
-          selectedItems.has(row.original.id),
-        );
-        return (
-          <Checkbox
-            aria-label="Select all"
-            checked={isAllSelected}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(Boolean(value));
-              handleToggleAll(Boolean(value), rows);
-            }}
-          />
-        );
-      },
-      cell: ({ row }: { row: Row<Volo_Abp_Identity_IdentityUserDto> }) => (
-        <Checkbox
-          aria-label="Select row"
-          checked={row.getIsSelected() || selectedItems.has(row.original.id!)}
-          className="mr-6"
-          onCheckedChange={(value) => {
-            row.toggleSelected(Boolean(value));
-            handleToggleItem(row.original.id!);
-          }}
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    ...columns.map((column) => {
-      if (column.accessorKey === checkboxColumnKey) {
-        return {
-          ...column,
-        };
-      }
-      return column;
-    }),
-  ];
+  const columnsData = enhancedColumns<T>({
+    columns,
+    checkboxColumnKey,
+    selectedItems,
+    handleToggleAll,
+    handleToggleItem,
+  });
 
   return (
     <Dialog onOpenChange={onClose} open={isOpen}>
@@ -143,7 +207,7 @@ export function GenericModal<T extends { id: string }>({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DataTable
-          columnsData={{ type: "Custom", data: enhancedColumns }}
+          columnsData={{ type: "Custom", data: columnsData }}
           data={items}
           filterBy={filterBy}
           isLoading={loading}
