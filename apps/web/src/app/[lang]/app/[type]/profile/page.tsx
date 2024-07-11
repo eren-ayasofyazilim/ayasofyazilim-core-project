@@ -1,9 +1,27 @@
 "use server";
 import { Button } from "@/components/ui/button";
-import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
+import { Building2Icon, User } from "lucide-react";
 import Link from "next/link";
-import { getBackers, getBackersIndividuals } from "./actions";
-import { BackerList } from "./backerlist";
+import { deleteBacker, getBackers, getBackersIndividuals } from "./actions";
+import Form from "./form";
+
+async function getBackerProfiles() {
+  const _backerProfiles = [];
+  const backersCompanies = await getBackers();
+  const backersIndividual = (await getBackersIndividuals())?.[0];
+
+  _backerProfiles.push({
+    ...backersIndividual,
+    icon: <User className="w-5 h-5" />,
+  });
+  backersCompanies.forEach((backer) => {
+    _backerProfiles.push({
+      ...backer,
+      icon: <Building2Icon className="w-5 h-5" />,
+    });
+  });
+  return _backerProfiles;
+}
 
 export default async function Page({
   params,
@@ -11,28 +29,21 @@ export default async function Page({
   params: { lang: string; type: string };
 }) {
   const type = params.type;
-  const backersComapnies = await getBackers();
-  const backersIndividuals = await getBackersIndividuals();
+  const backerProfiles = await getBackerProfiles();
 
+  async function onDeleteClick(backerId: string) {
+    "use server";
+    await deleteBacker(backerId || "");
+    return await getBackerProfiles();
+  }
   return (
     <>
-      <div className="flex-row mb-2">
+      <div className="flex justify-end flex-row mb-2">
         <Button asChild>
-          <Link className="float-right" href="profile/new">
-            New {type}
-          </Link>
+          <Link href="profile/new">New {type}</Link>
         </Button>
       </div>
-      Companies
-      <ScrollArea className="p-2 border-2">
-        {/* <ScrollBar orientation="horizontal" /> */}
-        <BackerList backers={backersComapnies} type="companies" />
-      </ScrollArea>
-      Individuals
-      <ScrollArea className="p-2 border-2">
-        {/* <ScrollBar orientation="horizontal" /> */}
-        <BackerList backers={backersIndividuals} type="individuals" />
-      </ScrollArea>
+      <Form initialData={backerProfiles} onDeleteClick={onDeleteClick} />
     </>
   );
 }
