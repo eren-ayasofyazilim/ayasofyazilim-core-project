@@ -16,25 +16,24 @@ import {
   $Volo_Abp_Identity_OrganizationUnitUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
-import AutoformDialog, {
-  tableAction,
-} from "@repo/ayasofyazilim-ui/molecules/dialog";
+import type { tableAction } from "@repo/ayasofyazilim-ui/molecules/dialog";
+import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { TreeView } from "@repo/ayasofyazilim-ui/molecules/tree-view";
 import { SectionNavbarBase } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { Trash2 } from "lucide-react";
-import { TreeViewElement } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tree-view/tree-view-api";
+import type { TreeViewElement } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tree-view/tree-view-api";
 import { useCallback, useEffect, useState } from "react";
-import { createZodObject, getBaseLink } from "src/utils";
 import { z } from "zod";
+import { createZodObject, getBaseLink } from "src/utils";
+import type { OrganizationUnit, Role, User } from "./action";
 import {
   fetchOrganizationUnits,
   fetchRolesForUnit,
   fetchUsersForUnit,
-  OrganizationUnit,
-  Role,
-  User,
 } from "./action";
 import { ConfirmDialog, RoleModal, UserModal } from "./form";
+import { noop } from "@tanstack/react-table";
+
 function getChildrens(parentId: string, data: OrganizationUnit[]) {
   const childrens: TreeViewElement[] = [];
   data
@@ -100,9 +99,7 @@ const App: React.FC = () => {
   const [confirmDialogContent, setConfirmDialogContent] = useState({
     title: "",
     description: "",
-    onConfirm: function () {
-      //do nothing
-    },
+    onConfirm: noop,
   });
   const [activeTab, setActiveTab] = useState("Users");
 
@@ -177,6 +174,7 @@ const App: React.FC = () => {
     },
     []
   );
+
   const handleEditUnitClick = useCallback(() => {
     setAction({
       autoFormArgs: {
@@ -229,6 +227,7 @@ const App: React.FC = () => {
     },
     []
   );
+
   const handleAddUnitClick = useCallback(
     (_selectedUnitId: any) => {
       const selectedUnit = _selectedUnitId
@@ -299,8 +298,9 @@ const App: React.FC = () => {
       callback: (e, _triggerData) => {
         const _selectedUnit = unitOptions.find(
           (u) =>
-            `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""}` ===
-            e.targetUnit
+            `${u.displayName} ${
+              u.parentName ? `Parent: ${u.parentName}` : ""
+            }` === e.targetUnit
         );
         if (!_selectedUnit) {
           toast.error("Selected unit not found");
@@ -346,6 +346,7 @@ const App: React.FC = () => {
     });
     setIsConfirmDialogOpen(true);
   }, []);
+
   const handleMoveUsers = useCallback(
     async (
       formData: { targetUnitId: string },
@@ -391,6 +392,7 @@ const App: React.FC = () => {
     },
     [selectedUnitId, unitUsers]
   );
+
   const optionsDropdownContent = useCallback(
     () => (
       <>
@@ -592,12 +594,12 @@ const App: React.FC = () => {
             <div className="flex justify-between items-center">
               <h2 className="text-xl">Organization Tree</h2>
               <Button
+                className="bg-primary text-white py-2 px-4 rounded"
                 onClick={() => {
                   setSelectedUnitId(undefined);
                   setTriggerData({});
                   handleAddUnitClick(null);
                 }}
-                className="bg-primary text-white py-2 px-4 rounded"
               >
                 + Add root unit
               </Button>
@@ -607,9 +609,9 @@ const App: React.FC = () => {
             {organizationUnits.length > 0 ? (
               <TreeView
                 elements={organizationTreeElements}
-                setSelectedId={setSelectedUnitId}
-                selectedId={selectedUnitId}
                 optionsDropdownContent={optionsDropdownContent()}
+                selectedId={selectedUnitId}
+                setSelectedId={setSelectedUnitId}
               />
             ) : (
               <p>No organization units available</p>
@@ -619,17 +621,17 @@ const App: React.FC = () => {
         <Card className="m-2 shadow-lg pb-4 w-1/2">
           <CardContent>
             <SectionNavbarBase
+              activeSectionId={activeTab}
+              navClassName="p-0"
+              navContainerClassName="shadow-none"
+              onSectionChange={(newActiveSection) => {
+                setActiveTab(newActiveSection);
+              }}
               sections={[
                 { id: "Users", name: "Users" },
                 { id: "Roles", name: "Roles" },
               ]}
-              activeSectionId={activeTab}
               showContentInSamePage
-              navContainerClassName="shadow-none"
-              navClassName="p-0"
-              onSectionChange={(newActiveSection) => {
-                setActiveTab(newActiveSection);
-              }}
             />
             {selectedUnitId ? (
               <div>
@@ -678,10 +680,10 @@ const App: React.FC = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell className="text-right">
                               <Button
-                                variant={"link"}
                                 onClick={() => {
                                   handleDeleteUser(user.id, user.userName);
                                 }}
+                                variant="link"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
@@ -699,10 +701,10 @@ const App: React.FC = () => {
                             <TableCell>{role.name}</TableCell>
                             <TableCell className="text-right">
                               <Button
-                                variant={"link"}
                                 onClick={() => {
                                   handleDeleteRole(role.id, role.name);
                                 }}
+                                variant="link"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
@@ -727,22 +729,22 @@ const App: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-      {open && (
+      {open ? (
         <AutoformDialog
-          open={open}
-          onOpenChange={setOpen}
           action={action}
+          onOpenChange={setOpen}
+          open={open}
           triggerData={triggerData}
         />
-      )}
+      ) : null}
       <ConfirmDialog
+        description={confirmDialogContent.description}
         isOpen={isConfirmDialogOpen}
         onClose={() => {
           setIsConfirmDialogOpen(false);
         }}
         onConfirm={confirmDialogContent.onConfirm}
         title={confirmDialogContent.title}
-        description={confirmDialogContent.description}
       />
       <UserModal
         addedItems={unitUsers}
