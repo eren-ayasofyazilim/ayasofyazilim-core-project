@@ -2,11 +2,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: ["unused-imports"],
   extends: ["@repo/eslint-config/next.js", "eslint:recommended"],
-  ignorePatterns: [
-    "**/organization/*.tsx",
-    "**/language-management/form.tsx",
-    "**/vendor/*.js",
-  ],
+  ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
     "unused-imports/no-unused-imports-ts": 2,
     "@typescript-eslint/no-explicit-any": "off",
