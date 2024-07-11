@@ -138,6 +138,7 @@ const tabs = [
               </p>
             </div>
           </div>
+
           <div className="flex gap-6 items-center">
             <div className="w-20 h-16 rounded-md overflow-visible relative bg-white flex items-center justify-center">
               <img
