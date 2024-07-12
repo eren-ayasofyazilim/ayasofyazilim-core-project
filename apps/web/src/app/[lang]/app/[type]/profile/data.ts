@@ -1,6 +1,6 @@
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
-import { z } from "zod";
 import { createZodObject } from "src/utils";
+import { z } from "zod";
 
 const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
   type: "object",
@@ -19,21 +19,32 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
       nullable: true,
       readOnly: true,
     },
-    companyName: {
-      type: "string",
-    },
-    taxpayerId: {
-      type: "string",
-    },
-    legalStatusCode: {
-      type: "string",
-    },
-    customerNumber: {
-      type: "string",
-    },
-    emailAddress: {
-      type: "string",
-      format: "email",
+    generalInformation: {
+      type: "object",
+      properties: {
+        extraProperties: {
+          type: "object",
+          additionalProperties: {},
+          nullable: true,
+          readOnly: true,
+        },
+        companyName: {
+          type: "string",
+        },
+        taxpayerId: {
+          type: "string",
+        },
+        legalStatusCode: {
+          type: "string",
+        },
+        customerNumber: {
+          type: "string",
+        },
+        emailAddress: {
+          type: "string",
+          format: "email",
+        },
+      },
     },
     telephone: {
       type: "object",
@@ -104,13 +115,24 @@ const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
       nullable: true,
       readOnly: true,
     },
-    name: {
-      type: "string",
-      additionalProperties: false,
-    },
-    emailAddress: {
-      type: "string",
-      format: "email",
+    generalInformation: {
+      type: "object",
+      properties: {
+        extraProperties: {
+          type: "object",
+          additionalProperties: {},
+          nullable: true,
+          readOnly: true,
+        },
+        name: {
+          type: "string",
+          additionalProperties: false,
+        },
+        emailAddress: {
+          type: "string",
+          format: "email",
+        },
+      },
     },
     telephone: {
       type: "object",
@@ -185,11 +207,11 @@ const createIndividual =
   $UpwithCrowd_BackerService_Individuals_CreateIndividualDto;
 const backerZod = createZodObject(
   createBacker,
-  Object.keys(createBacker.properties),
+  Object.keys(createBacker.properties)
 );
 const IndividualZod = createZodObject(
   createIndividual,
-  Object.keys(createIndividual.properties),
+  Object.keys(createIndividual.properties)
 );
 export const formSchema: Record<string, ZodObjectOrWrapped> = {
   admin: backerZod,
