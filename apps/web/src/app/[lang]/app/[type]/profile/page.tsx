@@ -1,5 +1,6 @@
 "use server";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { Building2Icon, User } from "lucide-react";
 import Link from "next/link";
 import { deleteBacker, getBackers, getBackersIndividuals } from "./actions";
@@ -22,7 +23,12 @@ async function getBackerProfiles() {
   });
   return _backerProfiles;
 }
-
+export async function onDeleteClick(backerId: string) {
+  "use server";
+  await deleteBacker(backerId || "");
+  const backerProfilesPostDelete = await getBackerProfiles();
+  return backerProfilesPostDelete;
+}
 export default async function Page({
   params,
 }: {
@@ -31,20 +37,19 @@ export default async function Page({
   const type = params.type;
   const backerProfiles = await getBackerProfiles();
 
-  async function onDeleteClick(backerId: string) {
-    "use server";
-    await deleteBacker(backerId || "");
-    const backerProfilesPostDelete = await getBackerProfiles();
-    return backerProfilesPostDelete;
-  }
   return (
     <>
+      <PageHeader
+        description="Yatırımcı profillerinizi buradan oluşturabilir veya görüntüleyebilirsiniz."
+        title="Yatırımcı Profillerim"
+      />
+
       <div className="flex justify-end flex-row mb-2">
-        <Button asChild>
+        <Button asChild variant="outline">
           <Link href="profile/new">New {type}</Link>
         </Button>
       </div>
-      <Form initialData={backerProfiles} onDeleteClick={onDeleteClick} />
+      <Form backerProfiles={backerProfiles} />
     </>
   );
 }

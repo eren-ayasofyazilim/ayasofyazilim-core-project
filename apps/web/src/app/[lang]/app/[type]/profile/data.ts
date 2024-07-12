@@ -19,21 +19,32 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
       nullable: true,
       readOnly: true,
     },
-    companyName: {
-      type: "string",
-    },
-    taxpayerId: {
-      type: "string",
-    },
-    legalStatusCode: {
-      type: "string",
-    },
-    customerNumber: {
-      type: "string",
-    },
-    emailAddress: {
-      type: "string",
-      format: "email",
+    generalInformation: {
+      type: "object",
+      properties: {
+        extraProperties: {
+          type: "object",
+          additionalProperties: {},
+          nullable: true,
+          readOnly: true,
+        },
+        companyName: {
+          type: "string",
+        },
+        taxpayerId: {
+          type: "string",
+        },
+        legalStatusCode: {
+          type: "string",
+        },
+        customerNumber: {
+          type: "string",
+        },
+        emailAddress: {
+          type: "string",
+          format: "email",
+        },
+      },
     },
     telephone: {
       type: "object",
@@ -104,13 +115,24 @@ const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
       nullable: true,
       readOnly: true,
     },
-    name: {
-      type: "string",
-      additionalProperties: false,
-    },
-    emailAddress: {
-      type: "string",
-      format: "email",
+    generalInformation: {
+      type: "object",
+      properties: {
+        extraProperties: {
+          type: "object",
+          additionalProperties: {},
+          nullable: true,
+          readOnly: true,
+        },
+        name: {
+          type: "string",
+          additionalProperties: false,
+        },
+        emailAddress: {
+          type: "string",
+          format: "email",
+        },
+      },
     },
     telephone: {
       type: "object",
