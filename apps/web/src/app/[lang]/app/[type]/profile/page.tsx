@@ -40,12 +40,12 @@ export default async function Page({
   return (
     <>
       <PageHeader
-        title="Yatırımcı Profillerim"
         description="Yatırımcı profillerinizi buradan oluşturabilir veya görüntüleyebilirsiniz."
+        title="Yatırımcı Profillerim"
       />
 
       <div className="flex justify-end flex-row mb-2">
-        <Button asChild variant={"outline"}>
+        <Button asChild variant="outline">
           <Link href="profile/new">New {type}</Link>
         </Button>
       </div>

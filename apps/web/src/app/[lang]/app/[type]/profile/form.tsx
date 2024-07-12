@@ -13,7 +13,7 @@ export default function Form({ backerProfiles }: any) {
   return (
     <Card className="m-auto">
       <SectionNavbarBase
-        activeSectionId={"default"}
+        activeSectionId="default"
         navContainerClassName="shadow-none border"
         sections={[{ id: "default", name: "Yatırımcı Profillerim" }]}
         showContentInSamePage
