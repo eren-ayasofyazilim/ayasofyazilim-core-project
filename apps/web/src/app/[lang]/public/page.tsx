@@ -11,7 +11,7 @@ export default function Page() {
       footer: "",
       cta: {
         text: "Go to city page",
-        href: getBaseLink(`public/${  city}`, true),
+        href: getBaseLink(`public/${city}`, true),
       },
     };
   });
