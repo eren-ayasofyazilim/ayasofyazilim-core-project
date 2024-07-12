@@ -1,6 +1,6 @@
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
-import { createZodObject } from "src/utils";
 import { z } from "zod";
+import { createZodObject } from "src/utils";
 
 const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
   type: "object",
@@ -207,11 +207,11 @@ const createIndividual =
   $UpwithCrowd_BackerService_Individuals_CreateIndividualDto;
 const backerZod = createZodObject(
   createBacker,
-  Object.keys(createBacker.properties)
+  Object.keys(createBacker.properties),
 );
 const IndividualZod = createZodObject(
   createIndividual,
-  Object.keys(createIndividual.properties)
+  Object.keys(createIndividual.properties),
 );
 export const formSchema: Record<string, ZodObjectOrWrapped> = {
   admin: backerZod,
