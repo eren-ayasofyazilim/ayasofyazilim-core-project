@@ -10,15 +10,16 @@ import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
-import { getConfig } from "./config";
+import { getConfig } from "../config";
 
 interface LayoutProps {
-  params: { lang: string };
+  params: { lang: string; city: string };
   children: JSX.Element;
 }
 
 export default async function Layout({ children, params }: LayoutProps) {
   const { languageData, resources } = await getResourceData(params.lang);
+  const appName = params.city;
 
   const session = await auth();
   const user = session?.user;
@@ -28,7 +29,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       submenu: [
         {
           text: languageData.Invest,
-          href: getBaseLink("public/projects", true),
+          href: getBaseLink(`public/${appName}/projects`, true),
         },
         {
           text: languageData.SupportCenter,
@@ -80,10 +81,10 @@ export default async function Layout({ children, params }: LayoutProps) {
     },
     {
       text: languageData.Campaigns,
-      href: getBaseLink("public/projects", true),
+      href: getBaseLink(`public/${appName}/projects`, true),
     },
   ];
-  const configSelected = getConfig(process.env.APPLICATION_NAME);
+  const configSelected = getConfig(appName);
 
   const userNavigation = {
     loginURL: getBaseLink(`login`, true, params.lang),
@@ -115,7 +116,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     <MainLayout
       HeaderComponent={
         <Navbar
-          appName={process.env.APPLICATION_NAME || "konya"}
+          appName={appName}
           config={configSelected}
           languageData={languageData}
           languageSelector={

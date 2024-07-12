@@ -17,7 +17,11 @@ export default function Form({ initialData, onDeleteClick }: any) {
     title: string;
     description: string;
     onConfirm: () => void;
-  }>({ title: "", description: "", onConfirm: () => {} });
+  }>({
+    title: "",
+    description: "",
+    onConfirm: () => undefined,
+  });
 
   function handleDeleteBacker(backer: any) {
     setConfirmDialogContent({
@@ -39,28 +43,30 @@ export default function Form({ initialData, onDeleteClick }: any) {
     <Card className="m-auto">
       <SectionNavbarBase
         activeSectionId={activeTab}
-        showScrollArea={false}
         navContainerClassName="shadow-none border"
-        onSectionChange={(e) => setActiveTab(e)}
-        showContentInSamePage
+        onSectionChange={(e) => {
+          setActiveTab(e);
+        }}
         sections={[
           { id: "companies", name: "Companies" },
           { id: "individuals", name: "Individuals" },
         ]}
+        showContentInSamePage
+        showScrollArea={false}
       />
       <div className="flex flex-col bg-white">
         {isLoading ? (
           <Spinner
-            fullScreen={false}
             className="stroke-purple-900"
             containerClassName="border h-20"
+            fullScreen={false}
             variant="transparent"
           />
         ) : (
           backerProfiles?.map((i: any) => (
             <div
-              key={i.backerId}
               className="border flex flex-row px-5 py-3 items-center"
+              key={i.backerId}
             >
               <div className="bg-gray-100 rounded-md border p-2">{i.icon}</div>
               <div className="ml-4">
@@ -70,11 +76,21 @@ export default function Form({ initialData, onDeleteClick }: any) {
                 </div>
               </div>
               <div className="ml-auto">
-                <Button variant={"link"} onClick={() => handleDeleteBacker(i)}>
+                <Button
+                  onClick={() => {
+                    handleDeleteBacker(i);
+                  }}
+                  variant="link"
+                >
                   <Trash2 className="w-5 h-5 text-muted-foreground" />
                 </Button>
                 <Link href={`profile/${i.backerId}`}>
-                  <Button variant={"link"} onClick={() => setIsLoading(true)}>
+                  <Button
+                    onClick={() => {
+                      setIsLoading(true);
+                    }}
+                    variant="link"
+                  >
                     <Edit className="w-5 h-5 text-muted-foreground" />
                   </Button>
                 </Link>
@@ -89,7 +105,7 @@ export default function Form({ initialData, onDeleteClick }: any) {
         onClose={() => {
           setIsConfirmDialogOpen(false);
         }}
-        onConfirm={confirmDialogContent?.onConfirm}
+        onConfirm={confirmDialogContent.onConfirm}
         title={confirmDialogContent.title}
       />
     </Card>

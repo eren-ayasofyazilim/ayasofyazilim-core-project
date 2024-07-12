@@ -5,7 +5,7 @@ import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
-import { getProjectsServer } from "../../app/[type]/projects/action";
+import { getProjectsServer } from "../../../app/[type]/projects/action";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const projectData = await getProjectsServer();

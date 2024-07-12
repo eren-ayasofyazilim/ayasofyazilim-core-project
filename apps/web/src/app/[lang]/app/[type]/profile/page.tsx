@@ -8,7 +8,7 @@ import Form from "./form";
 async function getBackerProfiles() {
   const _backerProfiles = [];
   const backersCompanies = await getBackers();
-  const backersIndividual = (await getBackersIndividuals())?.[0];
+  const backersIndividual = (await getBackersIndividuals())[0];
 
   _backerProfiles.push({
     ...backersIndividual,
@@ -34,7 +34,8 @@ export default async function Page({
   async function onDeleteClick(backerId: string) {
     "use server";
     await deleteBacker(backerId || "");
-    return await getBackerProfiles();
+    const backerProfilesPostDelete = await getBackerProfiles();
+    return backerProfilesPostDelete;
   }
   return (
     <>
