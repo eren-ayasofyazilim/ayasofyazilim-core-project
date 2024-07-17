@@ -128,7 +128,6 @@ export function BackerForm({
         <div className="max-h-[500px]">
           <AutoForm
             className="pb-10"
-            showInRow
             fieldConfig={{
               generalInformation: {
                 phoneNumber: {
@@ -143,6 +142,7 @@ export function BackerForm({
             onSubmit={(formData) => {
               submitFormData(formData);
             }}
+            showInRow
             values={backerData}
           >
             <AutoFormSubmit>
