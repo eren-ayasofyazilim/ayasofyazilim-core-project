@@ -156,6 +156,7 @@ export default function Page({
           createFormSchema.convertors || {},
         ),
         dependencies: createFormSchema.dependencies,
+        fieldConfig: { withoutBorder: true },
       },
       callback: async (e) => {
         const transformedData = parseFormValues(createFormSchema, e);
@@ -245,6 +246,7 @@ export default function Page({
       formSchema: editFormSchemaZod,
       dependencies: formData.editFormSchema?.dependencies,
       convertor: formData.tableSchema.convertors,
+      fieldConfig: { withoutBorder: true },
     };
   }
 
