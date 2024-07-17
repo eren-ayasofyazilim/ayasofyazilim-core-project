@@ -17,11 +17,11 @@ import {
   NavigationBadge,
   NavigationBadgeProps,
 } from "@repo/ui/navigation-badge";
-
 import { PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import { useState } from "react";
+
 export type MainLayoutProps = {
   appName: string;
   children: JSX.Element;
@@ -46,7 +46,7 @@ export function MainLayout({
   navigationItems,
   topBarComponent,
 }: MainLayoutProps) {
-  const [minNavbar, setMinNavbar] = React.useState(false);
+  const [minNavbar, setMinNavbar] = useState(false);
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <div
@@ -85,48 +85,51 @@ export function MainLayout({
           </Button>
         </div>
         <ScrollArea className="grow bg-white pt-4 overflow-auto flex flex-col h-full [&>div>div]:h-full [&>div>div]:flex">
-          <div className="flex flex-col space-between h-full">
-            {Menu({ minNavbar, navigationItems })}
-          </div>
+          <Menu minNavbar={minNavbar} navigationItems={navigationItems} />
         </ScrollArea>
       </div>
-      <div className="grow overflow-hidden flex flex-col">
+      <div className="flex flex-col flex-1">
         <div
           className={`min-h-16 max-h-16 bg-white w-full px-4 flex items-center justify-end border-b ${minNavbar ? "pl-14" : ""}`}
         >
           {topBarComponent}
         </div>
-        <div className="grow bg-slate-50 p-0 overflow-hidden">{children}</div>
+        <div className="bg-slate-50 p-0 overflow-hidden flex-1 pb-3">
+          {children}
+        </div>
       </div>
     </div>
   );
 }
-
-export function Menu({
-  minNavbar,
-  navigationItems,
-}: {
+interface IMenuProps {
   minNavbar: boolean;
   navigationItems: NavigationItem[];
-}) {
+}
+
+export function Menu({ minNavbar, navigationItems }: IMenuProps) {
   return (
     <Accordion
       type="single"
       collapsible
       className={`${minNavbar ? "w-16" : "w-full"} h-full max-h-[calc(100%-4rem)] pt-4 inline-table`}
     >
-      {navigationItems.map((item: NavigationItem) => {
-        return MenuItem(item, false, minNavbar);
-      })}
+      {navigationItems.map((item: NavigationItem) => (
+        <MenuItem
+          key={item.key}
+          item={item}
+          isFromSubMenu={false}
+          minNavbar={minNavbar}
+        />
+      ))}
     </Accordion>
   );
 }
-
-export function MenuItem(
-  item: NavigationItem,
-  isFromSubMenu?: boolean,
-  minNavbar?: boolean
-) {
+interface IMenuItemProps {
+  item: NavigationItem;
+  isFromSubMenu?: boolean;
+  minNavbar?: boolean;
+}
+export function MenuItem({ item, isFromSubMenu, minNavbar }: IMenuItemProps) {
   return (
     <AccordionItem
       value={item.key}
@@ -134,25 +137,34 @@ export function MenuItem(
       className={`border-0 p-0 ${minNavbar ? "w-16" : "w-full"}`}
       data-has-child={item.submenu ? true : false}
     >
-      {MenuItemTrigger(item, isFromSubMenu, minNavbar)}
-      {MenuItemContent(item)}
+      <MenuItemTrigger
+        item={item}
+        isFromSubMenu={isFromSubMenu}
+        minNavbar={minNavbar}
+      />
+      <MenuItemContent item={item} />
     </AccordionItem>
   );
 }
-export function MenuItemContent(item: NavigationItem) {
+export function MenuItemContent({ item }: { item: NavigationItem }) {
   let submenus = null;
   if (item.submenu) {
-    submenus = item.submenu.map((submenuitem: NavigationItem) => {
-      return MenuItem(submenuitem, true);
-    });
+    submenus = item.submenu.map((subMenuItem: NavigationItem) => (
+      <MenuItem key={subMenuItem.key} item={subMenuItem} isFromSubMenu={true} />
+    ));
   }
   return <AccordionContent className="p-0">{submenus}</AccordionContent>;
 }
-export function MenuItemTrigger(
-  item: NavigationItem,
-  isFromSubMenu?: boolean,
-  minNavbar?: boolean
-) {
+interface IMenuItemTriggerProps {
+  item: NavigationItem;
+  isFromSubMenu?: boolean;
+  minNavbar?: boolean;
+}
+export function MenuItemTrigger({
+  item,
+  isFromSubMenu,
+  minNavbar,
+}: IMenuItemTriggerProps) {
   const pathname = usePathname().split("/")[2];
   const isActive = pathname ? "/" + pathname === item.href : item.href === "/";
   if (item.submenu) {
@@ -179,11 +191,7 @@ export function MenuItemTrigger(
               {item.title}
             </div>
           )}
-          {item.badge && !minNavbar ? (
-            <NavigationBadge {...item.badge} />
-          ) : (
-            <></>
-          )}
+          {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
         </AccordionTrigger>
       </Tooltip>
     );
@@ -215,11 +223,7 @@ export function MenuItemTrigger(
               {item.title}
             </div>
           )}
-          {item.badge && !minNavbar ? (
-            <NavigationBadge {...item.badge} />
-          ) : (
-            <></>
-          )}
+          {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
         </Link>
       </AccordionTrigger>
     </Tooltip>

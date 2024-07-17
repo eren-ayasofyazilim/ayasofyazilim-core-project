@@ -1,6 +1,6 @@
 "use server";
 
-import MainLayout from "@repo/ayasofyazilim-ui/templates/main-layout";
+import LandingPageLayout from "@repo/ayasofyazilim-ui/templates/landing-page-layout";
 import LanguageSelector from "@repo/ui/language-selector";
 import Header from "@repo/ui/upwithcrowd/header";
 import type { linksProp } from "@repo/ui/upwithcrowd/navbar";
@@ -113,7 +113,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     resources,
   };
   return (
-    <MainLayout
+    <LandingPageLayout
       HeaderComponent={
         <Navbar
           appName={appName}
@@ -146,10 +146,9 @@ export default async function Layout({ children, params }: LayoutProps) {
           variant="hirevision"
         />
       }
-      childScrollArea={false}
       mainClassName="p-0 md:p-0 w-full"
     >
       {children}
-    </MainLayout>
+    </LandingPageLayout>
   );
 }

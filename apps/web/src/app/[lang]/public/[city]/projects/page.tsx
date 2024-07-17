@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
   return (
     <div className="container h-full mt-20">
       {(projectData.totalCount || 0) > 0 ? (
-        <ScrollArea className="p-2 pt-0 h-full grow">
+        <ScrollArea className="p-2 pt-0 h-full ">
           {fundableProjects.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold mb-8 mt-10 text-center">
