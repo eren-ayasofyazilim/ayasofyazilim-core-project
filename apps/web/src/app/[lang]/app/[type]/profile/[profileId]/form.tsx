@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ScrollBar } from "@/components/ui/scroll-area";
 import ConfirmDialog from "@repo/ayasofyazilim-ui/molecules/confirmation-modal";
 import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import AutoForm, {
@@ -122,34 +121,30 @@ export function BackerForm({
           </Button>
         )}
       </div>
-
-      <ScrollArea className="w-full">
-        <ScrollBar forceMount />
-        <div className="max-h-[500px]">
-          <AutoForm
-            className="pb-10"
-            fieldConfig={{
-              generalInformation: {
-                phoneNumber: {
-                  fieldType: "phone",
-                  inputProps: {
-                    showLabel: true,
-                  },
+      <ScrollArea className="h-full ">
+        <AutoForm
+          className="pb-10"
+          fieldConfig={{
+            generalInformation: {
+              phoneNumber: {
+                fieldType: "phone",
+                inputProps: {
+                  showLabel: true,
                 },
               },
-            }}
-            formSchema={formSchema[formType]}
-            onSubmit={(formData) => {
-              submitFormData(formData);
-            }}
-            showInRow
-            values={backerData}
-          >
-            <AutoFormSubmit>
-              <>Kaydet</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </div>
+            },
+          }}
+          formSchema={formSchema[formType]}
+          onSubmit={(formData) => {
+            submitFormData(formData);
+          }}
+          showInRow
+          values={backerData}
+        >
+          <AutoFormSubmit>
+            <>Kaydet</>
+          </AutoFormSubmit>
+        </AutoForm>
       </ScrollArea>
 
       <ConfirmDialog
