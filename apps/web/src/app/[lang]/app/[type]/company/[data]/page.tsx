@@ -28,7 +28,7 @@ async function controlledFetch(
   options: RequestInit,
   onSuccess: (data?: any) => void,
   successMessage = "Successful",
-  showToast = true,
+  showToast = true
 ) {
   try {
     const getData = await fetch(url, options);
@@ -149,7 +149,7 @@ const dataConfig: Record<string, tableData> = {
 
 function convertEnumField(
   value: string | number,
-  enumArray: string[],
+  enumArray: string[]
 ): string | number {
   if (typeof value === "number") {
     return enumArray[value];
@@ -196,7 +196,7 @@ export default function Page({
       } as RequestInit,
       onData,
       "",
-      false,
+      false
     ).catch();
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
@@ -207,9 +207,10 @@ export default function Page({
       formSchema: createZodObject(
         createFormSchema.schema,
         createFormSchema.formPositions || [],
-        createFormSchema.convertors || {},
+        createFormSchema.convertors || {}
       ),
       dependencies: createFormSchema.dependencies,
+      fieldConfig: { withoutBorder: true },
     },
     callback: async (e) => {
       const transformedData = parseFormValues(createFormSchema, e);
@@ -220,7 +221,7 @@ export default function Page({
           body: JSON.stringify(transformedData),
         },
         getRoles,
-        "Added Successfully",
+        "Added Successfully"
       );
     },
   };
@@ -234,7 +235,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
@@ -262,7 +263,7 @@ export default function Page({
         }),
       },
       getRoles,
-      "Updated Successfully",
+      "Updated Successfully"
     );
   };
 
@@ -274,7 +275,7 @@ export default function Page({
         body: JSON.stringify(row.id),
       },
       getRoles,
-      "Deleted Successfully",
+      "Deleted Successfully"
     );
   };
 
@@ -282,7 +283,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     return newSchema;
   }
@@ -296,6 +297,7 @@ export default function Page({
       autoFormArgs: {
         formSchema: editFormSchemaZod,
         dependencies: dataConfig[params.data].editFormSchema.dependencies,
+        fieldConfig: { withoutBorder: true },
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],
