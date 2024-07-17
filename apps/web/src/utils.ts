@@ -1,7 +1,7 @@
 import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
+import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
-import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { defaultResources } from "./resources";
 
 type LocalizationDto =
@@ -24,19 +24,13 @@ export async function getLocalizationResources(languageCode: string): Promise<
 > {
   try {
     const response = await fetch(
-      `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`,
+      `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
     );
     return ((await response.json()) as LocalizationDto).resources || {};
   } catch (error) {
     return defaultResources || {};
   }
 }
-
-// async function localeServerSide() {
-//   const { cookies } = await import("next/headers");
-//   const cookieStore = cookies();
-//   return cookieStore.get("locale")?.value ?? "en";
-// }
 
 function getLocale(locale?: string): string {
   if (locale) return locale;
@@ -68,7 +62,7 @@ export function getBaseLink(
   withLocale?: boolean,
   locale?: string,
   withAppType?: boolean,
-  appType?: string,
+  appType?: string
 ) {
   // check if location first character is a slash
   let newLocation = location;
@@ -92,11 +86,14 @@ export interface JsonSchema {
     | "number"
     | "array"
     | "toggle"
-    | "select";
+    | "select"
+    | "phone";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
+  minLength?: number;
   pattern?: RegExp;
+  refine?: { params?: object; callback: (v: any) => boolean };
   format?: "date-time" | "email" | "uuid";
   description?: string | undefined;
   nullable?: boolean;
@@ -124,7 +121,7 @@ function isSchemaType(object: any): object is SchemaType {
 export function createZodObject(
   schema: SchemaType,
   positions: any[],
-  convertors?: Record<string, any>,
+  convertors?: Record<string, any>
 ): ZodObjectOrWrapped {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
@@ -135,7 +132,7 @@ export function createZodObject(
       Object.keys(props.properties).forEach(() => {
         zodSchema[element] = createZodObject(
           props,
-          Object.keys(props.properties),
+          Object.keys(props.properties)
         );
       });
     } else if (isJsonSchema(props)) {
@@ -156,7 +153,7 @@ export function createZodObject(
         ) {
           newProps.type = "select";
           newProps.enum = convertors[element].data.map(
-            (e: any) => e[convertors[element].get],
+            (e: any) => e[convertors[element].get]
           );
         }
         zodType = createZodType(newProps, isRequired);
@@ -190,7 +187,10 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
     case "string":
       zodType = z.string({ description: schema.displayName });
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
+      if (schema.minLength) zodType = zodType.min(schema.minLength);
       if (schema.pattern) zodType = zodType.regex(RegExp(schema.pattern));
+      if (schema.refine)
+        zodType = zodType.refine(schema.refine.callback, schema.refine.params);
       if (schema.format === "email") zodType = zodType.email();
       if (schema.default) zodType = zodType.default(schema.default);
       if (schema.format === "date-time") zodType = z.coerce.date();
@@ -217,10 +217,11 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
         zodType = createZodObject(schema, Object.keys(schema.properties));
       }
       break;
+
     case "array":
       if (schema.items?.properties) {
         zodType = z.array(
-          createZodObject(schema.items, Object.keys(schema.items.properties)),
+          createZodObject(schema.items, Object.keys(schema.items.properties))
         );
       } else {
         zodType = z.array(z.unknown());

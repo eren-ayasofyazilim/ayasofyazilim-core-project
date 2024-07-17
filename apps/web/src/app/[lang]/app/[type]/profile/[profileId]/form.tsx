@@ -7,6 +7,7 @@ import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import { PhoneNumberUtil } from "google-libphonenumber";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { postBacker, postIndividual, putBacker } from "../actions";
@@ -15,11 +16,13 @@ import { onDeleteClick } from "../page";
 
 function initBackerData(backer: any) {
   const data = {
-    telephone: backer.telephone,
     address: backer.address,
     generalInformation: {
-      name: [backer.name],
+      name: backer.name,
       emailAddress: backer.emailAddress,
+      phoneNumber: backer?.localNumber
+        ? `+${backer?.areaCode}${backer?.localNumber}`
+        : "+90",
     },
   };
   return data;
@@ -55,11 +58,41 @@ export function BackerForm({
       put: putBacker,
     },
   };
+  const isPhoneValid = (phone: string) => {
+    try {
+      const phoneUtil = PhoneNumberUtil.getInstance();
+      return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+    } catch (error) {
+      return false;
+    }
+  };
+
   function submitFormData(formData: any) {
+    const isValid = isPhoneValid(formData.generalInformation.phoneNumber);
+    if (!isValid) {
+      return;
+    }
+    //PUT servisi henüz hazır değil
+    const submitData = {
+      name: formData.generalInformation.name,
+      emailAdress: formData.generalInformation.emailAddress,
+      telephones: [
+        {
+          areaCode: formData.generalInformation.phoneNumber
+            .split("+")[1]
+            .substring(0, 3),
+          localNumber: formData.generalInformation.phoneNumber
+            .split("+")[1]
+            .substring(3),
+        },
+      ],
+      address: formData.address,
+    };
+
     if (profileId === "new") {
-      functionTypes[formType].post(formData);
+      functionTypes[formType].post(submitData);
     } else {
-      functionTypes[formType].put(profileId, formData);
+      functionTypes[formType].put(profileId, submitData);
     }
   }
   function handleDeleteBacker(_backer: any) {
@@ -94,8 +127,18 @@ export function BackerForm({
         <ScrollBar forceMount />
         <div className="max-h-[500px]">
           <AutoForm
-            // id="backer-form-new"
             className="pb-10"
+            showInRow
+            fieldConfig={{
+              generalInformation: {
+                phoneNumber: {
+                  fieldType: "phone",
+                  inputProps: {
+                    showLabel: true,
+                  },
+                },
+              },
+            }}
             formSchema={formSchema[formType]}
             onSubmit={(formData) => {
               submitFormData(formData);
