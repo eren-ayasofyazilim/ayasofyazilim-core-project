@@ -1,3 +1,4 @@
+import { PhoneNumberUtil } from "google-libphonenumber";
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { z } from "zod";
 import { createZodObject } from "src/utils";
@@ -44,29 +45,14 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
           type: "string",
           format: "email",
         },
+        phoneNumber: {
+          type: "string",
+          nullable: false,
+          minLength: 10,
+        },
       },
     },
-    telephone: {
-      type: "object",
-      properties: {
-        extraProperties: {
-          type: "object",
-          additionalProperties: {},
-          nullable: true,
-          readOnly: true,
-        },
-        areaCode: {
-          type: "string",
-        },
-        localNumber: {
-          type: "string",
-        },
-        ituCountryCode: {
-          type: "string",
-        },
-      },
-      additionalProperties: false,
-    },
+
     address: {
       type: "object",
       properties: {
@@ -132,28 +118,23 @@ const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
           type: "string",
           format: "email",
         },
-      },
-    },
-    telephone: {
-      type: "object",
-      properties: {
-        extraProperties: {
-          type: "object",
-          additionalProperties: {},
-          nullable: true,
-          readOnly: true,
-        },
-        areaCode: {
+        phoneNumber: {
           type: "string",
-          nullable: true,
-        },
-        localNumber: {
-          type: "string",
-          nullable: true,
-        },
-        ituCountryCode: {
-          type: "string",
-          nullable: true,
+          refine: {
+            params: {
+              message: "Geçerli bir telefon numarası giriniz.",
+            },
+            callback: (value: string) => {
+              try {
+                const phoneUtil = PhoneNumberUtil.getInstance();
+                return phoneUtil.isValidNumber(
+                  phoneUtil.parseAndKeepRawInput(value),
+                );
+              } catch (error) {
+                return false;
+              }
+            },
+          },
         },
       },
     },

@@ -1,7 +1,7 @@
 import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
+import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
-import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import { defaultResources } from "./resources";
 
 type LocalizationDto =
@@ -31,12 +31,6 @@ export async function getLocalizationResources(languageCode: string): Promise<
     return defaultResources || {};
   }
 }
-
-// async function localeServerSide() {
-//   const { cookies } = await import("next/headers");
-//   const cookieStore = cookies();
-//   return cookieStore.get("locale")?.value ?? "en";
-// }
 
 function getLocale(locale?: string): string {
   if (locale) return locale;
@@ -92,11 +86,14 @@ export interface JsonSchema {
     | "number"
     | "array"
     | "toggle"
-    | "select";
+    | "select"
+    | "phone";
   isRequired?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
+  minLength?: number;
   pattern?: RegExp;
+  refine?: { params?: object; callback: (v: any) => boolean };
   format?: "date-time" | "email" | "uuid";
   description?: string | undefined;
   nullable?: boolean;
@@ -190,7 +187,10 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
     case "string":
       zodType = z.string({ description: schema.displayName });
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
+      if (schema.minLength) zodType = zodType.min(schema.minLength);
       if (schema.pattern) zodType = zodType.regex(RegExp(schema.pattern));
+      if (schema.refine)
+        zodType = zodType.refine(schema.refine.callback, schema.refine.params);
       if (schema.format === "email") zodType = zodType.email();
       if (schema.default) zodType = zodType.default(schema.default);
       if (schema.format === "date-time") zodType = z.coerce.date();
@@ -217,6 +217,7 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
         zodType = createZodObject(schema, Object.keys(schema.properties));
       }
       break;
+
     case "array":
       if (schema.items?.properties) {
         zodType = z.array(
