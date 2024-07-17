@@ -239,6 +239,7 @@ const App: React.FC = () => {
             createFormSchema.schema,
             createFormSchema.formPositions || [],
           ),
+          fieldConfig: { withoutBorder: true },
         },
         callback: (e, _triggerData) => {
           const formData = { ...e, ParentId: selectedUnit?.id };
@@ -294,6 +295,7 @@ const App: React.FC = () => {
         formSchema: z.object({
           targetUnit: DynamicEnum.default(placeholder),
         }),
+        fieldConfig: { withoutBorder: true },
       },
       callback: (e, _triggerData) => {
         const _selectedUnit = unitOptions.find(
