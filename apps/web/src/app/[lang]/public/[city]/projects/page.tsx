@@ -7,12 +7,21 @@ import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getProjectsServer } from "../../../app/[type]/projects/action";
 
-export default async function Page({ params }: { params: { lang: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { lang: string; city: string };
+}) {
   const projectData = await getProjectsServer();
-
+  const appName = params.city;
   const { languageData } = await getResourceData(params.lang);
 
-  const projectURL = getBaseLink("projects", true, params.lang, true);
+  const projectURL = getBaseLink(
+    `${appName}/projects`,
+    true,
+    params.lang,
+    true,
+  );
 
   const fundableProjects =
     projectData.items?.filter(
