@@ -32,15 +32,11 @@ export async function getAccountServiceClient() {
   });
 }
 
-export function getProjectServiceClient(): ProjectServiceClient {
+export async function getProjectServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
   return new ProjectServiceClient({
-    BASE: process.env.BASE_URL ?? "",
-    HEADERS,
-  });
-}
-
-export function getProjectServiceDetailClient(): ProjectServiceClient {
-  return new ProjectServiceClient({
+    TOKEN: token,
     BASE: process.env.BASE_URL ?? "",
     HEADERS,
   });
