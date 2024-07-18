@@ -1,19 +1,19 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
+import * as path from "path";
+
+// check if the current directry is
+
+const directory = path.join(__dirname, "tests");
+const authFile = path.join(directory, "playwright", ".auth", "user.json");
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-let directory = __dirname;
-if (!directory.endsWith(`apps\\web`)) {
-  directory = directory + "\\apps\\web\\";
-}
-const authFile = directory + "\\playwright\\.auth\\user.json";
-
 require("dotenv").config();
 dotenv.config({
-  path: directory + "\\.env",
+  path: __dirname + "\\.env",
 });
 
 /**
@@ -93,7 +93,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev -- --port 3000",
+    command: "pnpm run dev",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
   },
