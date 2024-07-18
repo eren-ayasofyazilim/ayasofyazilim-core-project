@@ -38,13 +38,13 @@ test.describe("Main Page testing", () => {
     await page.getByRole("link", { name: "Admin Center" }).click();
     await page.goto("/en/app/admin");
     await expect(
-      page.getByRole("link", { name: "Identity Management" })
+      page.getByRole("link", { name: "Identity Management" }),
     ).toBeVisible();
     await page.getByRole("link", { name: "Profile" }).click();
     await expect(page.getByRole("link", { name: "Profile" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Campaigns" })).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Language Management" })
+      page.getByRole("link", { name: "Language Management" }),
     ).toBeVisible();
     await expect(page.getByRole("link", { name: "New admin" })).toBeVisible();
     await page.getByRole("link", { name: "New admin" }).click();
