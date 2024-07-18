@@ -56,18 +56,18 @@ export default defineConfig({
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
-        storageState: authFile,
+        // storageState: authFile,
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"],
     },
 
     {
       name: "webkit",
       use: {
         ...devices["Desktop Safari"],
-        storageState: authFile,
+        // storageState: authFile,
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"],
     },
 
     /* Test against mobile viewports. */
