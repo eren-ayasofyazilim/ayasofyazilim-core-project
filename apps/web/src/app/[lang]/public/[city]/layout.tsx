@@ -6,6 +6,7 @@ import Header from "@repo/ui/upwithcrowd/header";
 import type { linksProp } from "@repo/ui/upwithcrowd/navbar";
 import Navbar from "@repo/ui/upwithcrowd/navbar";
 import { Projector, ShieldAlert, Worm } from "lucide-react";
+import Link from "next/link";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
@@ -20,6 +21,7 @@ interface LayoutProps {
 export default async function Layout({ children, params }: LayoutProps) {
   const { languageData, resources } = await getResourceData(params.lang);
   const appName = params.city;
+  const config = getConfig(appName);
 
   const session = await auth();
   const user = session?.user;
@@ -148,7 +150,148 @@ export default async function Layout({ children, params }: LayoutProps) {
       }
       mainClassName="p-0 md:p-0 w-full"
     >
-      {children}
+      <>
+        {children}
+        <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden">
+          {/* <div className="absolute pointer-events-none inset-[-50%] flex items-center justify-center dark:bg-slate-900 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
+          <img
+            alt=""
+            className="w-full absolute pointer-events-none z-0 opacity-20"
+            src={config.images.footer}
+          />
+          <div
+            className="w-full hidden h-full absolute inset-0 pointer-events-none opacity-10"
+            style={{
+              backgroundImage: `url(${config.images.second})`,
+            }}
+          />
+          <div className="container flex flex-col h-full justify-center gap-20">
+            <div className="mx-auto">
+              {/* <div className={"tracking-widest text-2xl font-bold text-white"}>
+              UPWITH
+              <span className="text-primary">{config.logo}</span>
+            </div> */}
+              <img alt="" className="mx-auto" src={config.logo} />
+            </div>
+            <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-5 gap-6 col-span-2">
+              <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
+                <h3 className="text-md font-bold">Kurumsal</h3>
+                <div className="grid text-sm">
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Hakkımızda
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Platform Ortaklık Yapısı
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Blog
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    S.S.S
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    İletişim
+                  </Link>
+                </div>
+              </div>
+              <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
+                <h3 className="text-md font-bold">Paydaşlarımız</h3>
+                <div className="grid text-sm">
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Merkezi Kayıt İstanbul
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Takas İstanbul
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    İstanbul Ticaret Odası
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    E-Devlet
+                  </Link>
+                </div>
+              </div>
+              <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
+                <h3 className="text-md font-bold">Yatırımcı</h3>
+                <div className="grid text-sm">
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Nasıl Yatırım Yapılır?
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Aktif Projeler
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Tamamlanmış Projeler
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Gelecek Projeler
+                  </Link>
+                </div>
+              </div>
+              <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
+                <h3 className="text-md font-bold">Girişimci</h3>
+                <div className="grid text-sm">
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Nasıl Proje Oluşturulur?
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Proje Oluştur
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Gerekli Belgeler
+                  </Link>
+                </div>
+              </div>
+              <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">
+                <h3 className="text-md font-bold">Dokümantasyon</h3>
+                <div className="grid text-sm">
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Değerlendirme Politikası
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Bilgi Güvenliği Politikası
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Çıkar Çatışması Politikası
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Kalite Politikası
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Rüşvet ve Yolsuzlukla Mücadele
+                  </Link>
+                  <Link className="text-slate-200 hover:text-white" href="#">
+                    Kara Para ile Mücadele Politikası
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="md:h-10 py-4 bg-slate-800/50 text-sm w-full items-center flex z-5">
+            <div className="container flex justify-between items-center flex-col gap-4 md:flex-row">
+              {/* <h1>UPWITH{config.logo} 2024 Tüm hakları saklıdır.</h1> */}
+              <h1>{config.full} 2024 Tüm hakları saklıdır.</h1>
+              <div className="flex items-center gap-4 flex-col md:flex-row">
+                <Link className="text-slate-200 hover:text-white" href="#">
+                  Genel Risk Bildirimi
+                </Link>
+                <Link className="text-slate-200 hover:text-white" href="#">
+                  Üyelik Sözleşmesi
+                </Link>
+                <Link className="text-slate-200 hover:text-white" href="#">
+                  KVKK Bildirimi
+                </Link>
+                <Link className="text-slate-200 hover:text-white" href="#">
+                  Kampanya Sözleşmesi
+                </Link>
+                <Link className="text-slate-200 hover:text-white" href="#">
+                  Faaliyet Raporu ve Finansal Tablolar
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     </LandingPageLayout>
   );
 }
