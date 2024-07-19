@@ -486,7 +486,6 @@ export const dataConfig: Record<string, any> = {
     },
     organization: {},
   },
-
   auditLogs: {
     displayName: "Audit Logs",
     default: "auditLogs",
@@ -512,7 +511,6 @@ export const dataConfig: Record<string, any> = {
       filterBy: "userName",
     },
   },
-
   textTemplates: {
     displayName: "TextTemplates",
     default: "textTemplates",

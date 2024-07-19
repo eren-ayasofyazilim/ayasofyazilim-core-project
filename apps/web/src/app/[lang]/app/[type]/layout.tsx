@@ -77,6 +77,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       },
     ],
     isLoggedIn: Boolean(user),
+    className: "bg-transparent",
     signOutFunction: signOutServer,
     languageData,
   };
