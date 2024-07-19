@@ -91,7 +91,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang,
+        params.lang
       ),
       type: "admin",
       appType: "upwithcrowd",
@@ -207,7 +207,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       }
     >
-      {children}
+      <div className="mt-5 mx-10 ">{children}</div>
     </MainLayout>
   );
 }
