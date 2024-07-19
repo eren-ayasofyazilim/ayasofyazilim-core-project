@@ -93,7 +93,7 @@ export interface JsonSchema {
   maxLength?: number;
   minLength?: number;
   pattern?: RegExp;
-  refine?: { params?: object; callback: (v: any) => boolean };
+  refine?: { params?: object; callback: (_value: any) => boolean };
   format?: "date-time" | "email" | "uuid";
   description?: string | undefined;
   nullable?: boolean;

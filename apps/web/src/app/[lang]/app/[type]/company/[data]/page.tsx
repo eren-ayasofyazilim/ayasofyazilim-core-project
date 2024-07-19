@@ -26,7 +26,7 @@ import {
 async function controlledFetch(
   url: string,
   options: RequestInit,
-  onSuccess: (data?: any) => void,
+  onSuccess: (_data?: any) => void,
   successMessage = "Successful",
   showToast = true,
 ) {
@@ -54,7 +54,7 @@ interface formModifier {
     sourceField: string;
     type: DependencyType;
     targetField: string;
-    when: (value: any) => boolean;
+    when: (_value: any) => boolean;
   }[];
 }
 

@@ -13,7 +13,7 @@ import { dataConfig } from "../../data";
 async function controlledFetch(
   url: string,
   options: RequestInit,
-  onSuccess: (data?: any) => void,
+  onSuccess: (_data?: any) => void,
   successMessage = "Successful",
   showToast = true,
 ) {

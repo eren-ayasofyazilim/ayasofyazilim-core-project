@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
-import { Checkbox } from "@/components/ui/checkbox";
-import type { Table, Row } from "@tanstack/react-table";
-import { fetchRoles, fetchUsers } from "./action";
+import type { Row, Table } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 import type { Role, User } from "./action";
+import { fetchRoles, fetchUsers } from "./action";
 
 interface SelectAllCheckboxProps<T> {
   table: Table<T>;
   selectedItems: Set<string>;
-  handleToggleAll: (value: boolean, rows: Row<T>[]) => void;
+  handleToggleAll: (_value: boolean, _rows: Row<T>[]) => void;
 }
 
 function SelectAllCheckbox<T>({
@@ -44,7 +44,7 @@ function SelectAllCheckbox<T>({
 interface RowCheckboxProps<T> {
   row: Row<T>;
   selectedItems: Set<string>;
-  handleToggleItem: (id: string) => void;
+  handleToggleItem: (_id: string) => void;
 }
 
 function RowCheckbox<T>({
@@ -67,62 +67,64 @@ function RowCheckbox<T>({
   );
 }
 
+interface enchancedColumnsProps<T> {
+  columns: {
+    header: string;
+    accessorKey: keyof T;
+    cell?: (_row: any) => JSX.Element;
+  }[];
+  checkboxColumnKey: keyof T;
+  selectedItems: Set<string>;
+  handleToggleAll: (_value: boolean, _rows: Row<T>[]) => void;
+  handleToggleItem: (_id: string) => void;
+}
+
 const enhancedColumns = <T,>({
   columns,
   checkboxColumnKey,
   selectedItems,
   handleToggleAll,
   handleToggleItem,
-}: {
-  columns: {
-    header: string;
-    accessorKey: keyof T;
-    cell?: (row: any) => JSX.Element;
-  }[];
-  checkboxColumnKey: keyof T;
-  selectedItems: Set<string>;
-  handleToggleAll: (value: boolean, rows: Row<T>[]) => void;
-  handleToggleItem: (id: string) => void;
-}) => [
-  {
-    id: "select",
-    header: ({ table }: { table: Table<any> }) => (
-      <SelectAllCheckbox<T>
-        handleToggleAll={handleToggleAll}
-        selectedItems={selectedItems}
-        table={table}
-      />
-    ),
-    cell: ({ row }: { row: Row<T> }) => (
-      <RowCheckbox<T>
-        handleToggleItem={handleToggleItem}
-        row={row}
-        selectedItems={selectedItems}
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  ...columns.map((column) => {
-    if (column.accessorKey === checkboxColumnKey) {
-      return {
-        ...column,
-      };
-    }
-    return column;
-  }),
-];
+}: enchancedColumnsProps<T>) => [
+    {
+      id: "select",
+      header: ({ table }: { table: Table<any> }) => (
+        <SelectAllCheckbox<T>
+          handleToggleAll={handleToggleAll}
+          selectedItems={selectedItems}
+          table={table}
+        />
+      ),
+      cell: ({ row }: { row: Row<T> }) => (
+        <RowCheckbox<T>
+          handleToggleItem={handleToggleItem}
+          row={row}
+          selectedItems={selectedItems}
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    ...columns.map((column) => {
+      if (column.accessorKey === checkboxColumnKey) {
+        return {
+          ...column,
+        };
+      }
+      return column;
+    }),
+  ];
 
 interface GenericModalProps<T> {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (selectedItems: T[]) => void;
+  onSave: (_selectedItems: T[]) => void;
   addedItems: T[];
   fetchItems: () => Promise<T[]>;
   columns: {
     header: string;
     accessorKey: keyof T;
-    cell?: (row: any) => JSX.Element;
+    cell?: (_row: any) => JSX.Element;
   }[];
   filterBy: string;
   title: string;
