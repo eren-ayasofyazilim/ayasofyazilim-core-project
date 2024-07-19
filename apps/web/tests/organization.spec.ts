@@ -9,7 +9,7 @@ test("adding new organization", async ({ page }) => {
   await page.getByLabel("Display Name *").fill("Test Organization");
   await page.getByText("Save Changes").click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization" })
+    page.locator("li").filter({ hasText: "Test Organization" }),
   ).toBeVisible();
 });
 
@@ -82,7 +82,7 @@ test("edit organization", async ({ page }) => {
   await page.getByLabel("Display Name *").fill("Test Organization edit");
   await page.getByText("Save Changes").click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization edit" })
+    page.locator("li").filter({ hasText: "Test Organization edit" }),
   ).toBeVisible();
 });
 
