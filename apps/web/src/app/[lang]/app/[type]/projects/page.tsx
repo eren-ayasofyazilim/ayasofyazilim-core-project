@@ -23,13 +23,13 @@ export default async function Page({
     true,
     params.lang,
     true,
-    params.type
+    params.type,
   );
   return (
     <div className="flex flex-col gap-2">
       <PageHeader
-        title={"Projeler"}
-        description={"Buradan projeleri görüntüleyebilirsiniz."}
+        description="Buradan projeleri görüntüleyebilirsiniz."
+        title="Projeler"
       />
       {params.type === "entrepreneur" && (
         <div className=" flex flex-row flex-wrap justify-end items-center">

@@ -14,12 +14,12 @@ export default async function Page({
   return (
     <>
       <PageHeader
-        title={profileId === "new" ? "Profil Oluştur" : "Profilini Düzenle"}
         description={
           profileId === "new"
             ? "Buradan yeni bir yatırım profili oluşturabilirsiniz."
             : "Yatırımcı profilinizi buradan düzenleyebilirsiniz."
         }
+        title={profileId === "new" ? "Profil Oluştur" : "Profilini Düzenle"}
       />
 
       <BackerForm
