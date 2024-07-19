@@ -9,10 +9,10 @@ test("adding new organization", async ({ page }) => {
   await page.getByLabel("Display Name *").fill("Test Organization");
   await page.getByText("Save Changes").click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization" })
+    page.locator("li").filter({ hasText: "Test Organization" }),
   ).toBeVisible();
   await expect(page.getByRole("status")).toContainText(
-    "Organization unit added successfully"
+    "Organization unit added successfully",
   );
 });
 
@@ -72,7 +72,7 @@ test("add sub unit to organization", async ({ page }) => {
   await page.getByLabel("Display Name *").fill("Test Organization sub");
   await page.getByText("Save Changes").click();
   await expect(page.getByRole("status")).toContainText(
-    "Organization unit added successfully"
+    "Organization unit added successfully",
   );
 });
 
@@ -91,7 +91,7 @@ test("move all users from organization", async ({ page }) => {
     .click();
   await page.getByText("Save Changes").click();
   await expect(page.getByRole("status")).toContainText(
-    "Users moved successfully"
+    "Users moved successfully",
   );
 });
 
@@ -107,10 +107,10 @@ test("edit organization", async ({ page }) => {
   await page.getByLabel("Display Name *").fill("Test Organization edit");
   await page.getByText("Save Changes").click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization edit" })
+    page.locator("li").filter({ hasText: "Test Organization edit" }),
   ).toBeVisible();
   await expect(page.getByRole("status")).toContainText(
-    "Organization unit updated successfully"
+    "Organization unit updated successfully",
   );
 });
 
@@ -124,9 +124,9 @@ test("delete organization", async ({ page }) => {
   await page.getByRole("menuitem", { name: "Delete" }).click();
   await page.getByRole("button", { name: "Yes" }).click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization" })
+    page.locator("li").filter({ hasText: "Test Organization" }),
   ).not.toBeVisible();
   await expect(page.getByRole("status")).toContainText(
-    "Organization unit deleted successfully"
+    "Organization unit deleted successfully",
   );
 });
