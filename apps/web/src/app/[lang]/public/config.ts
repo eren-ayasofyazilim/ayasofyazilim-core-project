@@ -7,7 +7,7 @@ import { getBaseLink } from "src/utils";
 export const cityConfigs: Record<string, any> = {
   bursa: {
     key: "bursa",
-    link: getBaseLink("/", true),
+    link: getBaseLink("/public/bursa", true),
     with: "Bursa ile",
     its: "Bursa'nın",
     full: "Bursa Sanayi Odası",
@@ -27,7 +27,7 @@ export const cityConfigs: Record<string, any> = {
   },
   konya: {
     key: "konya",
-    link: getBaseLink("/", true),
+    link: getBaseLink("/public/konya", true),
     with: "Konya ile",
     its: "Konya'nın",
     full: "Konya Sanayi Odası",
@@ -47,7 +47,7 @@ export const cityConfigs: Record<string, any> = {
   },
   istanbul: {
     key: "istanbul",
-    link: getBaseLink("/", true),
+    link: getBaseLink("/public/istanbul", true),
     with: "İstanbul ile",
     its: "İstanbul'un",
     full: "İstanbul Sanayi Odası",
@@ -67,7 +67,7 @@ export const cityConfigs: Record<string, any> = {
   },
   sakarya: {
     key: "sakarya",
-    link: getBaseLink("/", true),
+    link: getBaseLink("/public/sakarya", true),
     with: "Sakarya ile",
     its: "Sakarya'nın",
     full: "Sakarya Sanayi Odası",
