@@ -40,8 +40,8 @@ export default async function Page({
   return (
     <>
       <PageHeader
-        description="Yatırımcı profillerinizi buradan oluşturabilir veya görüntüleyebilirsiniz."
         title="Yatırımcı Profillerim"
+        description="Yatırımcı profillerinizi buradan oluşturabilir veya görüntüleyebilirsiniz."
       />
 
       <div className="flex justify-end flex-row mb-2">

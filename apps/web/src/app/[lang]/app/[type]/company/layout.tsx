@@ -97,8 +97,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <PageHeader
-        description={pageHeader[path as keyof typeof pageHeader].description}
         title={pageHeader[path as keyof typeof pageHeader].title}
+        description={pageHeader[path as keyof typeof pageHeader].description}
       />
       <SectionLayout
         defaultActiveSectionId={path}
