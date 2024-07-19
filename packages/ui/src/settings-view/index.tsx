@@ -415,6 +415,7 @@ export function SettingsView({
           name:
             resources?.SettingService?.texts[group.displayName] ??
             group.displayName,
+          value: content,
         };
       })}
       defaultActiveSectionId={activeGroup?.key || list.groups[0].key}

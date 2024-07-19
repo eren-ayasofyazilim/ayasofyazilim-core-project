@@ -5,7 +5,7 @@
 
 
 
-Önbellekten gelmeyi belirli bir süreyle sınırlamak ya da kapatmak için revalidate kullanılmalı.
+Önbellekten gelmeyi belirli bir süreyle sınırlamak ya da kapatmak için [revalidate](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#time-based-revalidation) kullanılmalı.
 ```ts
 // revalidate kullanabilmek için sayfanın başına use server yazılmamış olması gerekiyor.
 // use client yazılmadığı sürece next.js server component olarak davrandığı için bu bir sorun teşkil etmiyor.
@@ -32,7 +32,7 @@ export default async function Page() {
 }
 ```
 
-Önbellekten gelmeyi tamamen engellemek için next.js'in unstable_noStore'u da kullanılabilir.
+Önbellekten gelmeyi tamamen engellemek için next.js'in [unstable_noStore](https://nextjs.org/docs/app/api-reference/functions/unstable_noStore)'u da kullanılabilir.
 
 ```ts
 "use server";
