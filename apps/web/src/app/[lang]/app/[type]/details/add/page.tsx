@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import type {
-  Step,
-} from "@repo/ayasofyazilim-ui/organisms/form-stepper";
+import type { Step } from "@repo/ayasofyazilim-ui/organisms/form-stepper";
 import FormStepper from "@repo/ayasofyazilim-ui/organisms/form-stepper";
 import { z } from "zod";
 import { Card } from "@/components/ui/card";
