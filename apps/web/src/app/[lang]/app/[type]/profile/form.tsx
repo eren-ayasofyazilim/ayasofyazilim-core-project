@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Spinner from "@repo/ayasofyazilim-ui/molecules/spinner";
-import { SectionNavbarBase } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import { SectionLayoutNavbar } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { Edit } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,12 +12,9 @@ export default function Form({ backerProfiles }: any) {
 
   return (
     <Card className="m-auto">
-      <SectionNavbarBase
+      <SectionLayoutNavbar
         activeSectionId="default"
-        navContainerClassName="shadow-none border"
         sections={[{ id: "default", name: "Yatırımcı Profillerim" }]}
-        showContentInSamePage
-        showScrollArea={false}
       />
       <div className="flex flex-col bg-white">
         {isLoading ? (
