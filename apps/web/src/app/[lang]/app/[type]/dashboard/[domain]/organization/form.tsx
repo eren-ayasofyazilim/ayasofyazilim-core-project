@@ -86,34 +86,34 @@ const enhancedColumns = <T,>({
   handleToggleAll,
   handleToggleItem,
 }: enchancedColumnsProps<T>) => [
-    {
-      id: "select",
-      header: ({ table }: { table: Table<any> }) => (
-        <SelectAllCheckbox<T>
-          handleToggleAll={handleToggleAll}
-          selectedItems={selectedItems}
-          table={table}
-        />
-      ),
-      cell: ({ row }: { row: Row<T> }) => (
-        <RowCheckbox<T>
-          handleToggleItem={handleToggleItem}
-          row={row}
-          selectedItems={selectedItems}
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    ...columns.map((column) => {
-      if (column.accessorKey === checkboxColumnKey) {
-        return {
-          ...column,
-        };
-      }
-      return column;
-    }),
-  ];
+  {
+    id: "select",
+    header: ({ table }: { table: Table<any> }) => (
+      <SelectAllCheckbox<T>
+        handleToggleAll={handleToggleAll}
+        selectedItems={selectedItems}
+        table={table}
+      />
+    ),
+    cell: ({ row }: { row: Row<T> }) => (
+      <RowCheckbox<T>
+        handleToggleItem={handleToggleItem}
+        row={row}
+        selectedItems={selectedItems}
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  ...columns.map((column) => {
+    if (column.accessorKey === checkboxColumnKey) {
+      return {
+        ...column,
+      };
+    }
+    return column;
+  }),
+];
 
 interface GenericModalProps<T> {
   isOpen: boolean;
