@@ -13,7 +13,7 @@ async function getProjects() {
     const projectData = await client.project.getApiProjectServiceProjects();
     const fundableProjects =
       projectData.items?.filter(
-        (i) => ProjectStatusEnums[i.status || 0] !== "IN_DRAFT_STAGE"
+        (i) => ProjectStatusEnums[i.status || 0] !== "IN_DRAFT_STAGE",
       ) || [];
     return fundableProjects;
   }
@@ -34,7 +34,7 @@ export default async function Page({
     `${appName}/projects`,
     true,
     params.lang,
-    true
+    true,
   );
 
   return (
