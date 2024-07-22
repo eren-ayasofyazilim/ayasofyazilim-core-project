@@ -89,6 +89,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   const configSelected = getConfig(appName);
 
   const userNavigation = {
+    className: "bg-transparent",
     loginURL: getBaseLink(`login`, true, params.lang),
     registerURL: getBaseLink(`register`, true, params.lang),
     user,
