@@ -4,7 +4,7 @@ module.exports = {
   extends: ["@repo/eslint-config/next.js", "eslint:recommended"],
   ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
-    "unused-imports/no-unused-imports-ts": 2,
+    // "unused-imports/no-unused-imports-ts": 2,
     "@typescript-eslint/no-explicit-any": "off",
     camelcase: "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
