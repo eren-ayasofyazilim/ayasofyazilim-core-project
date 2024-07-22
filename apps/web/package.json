@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
+    "unirefund": "env-cmd -f env/.env.unirefund next dev --port 3000",
+    "upwithcrowd": "env-cmd -f env/.env.upwithcrowd next dev --port 3100",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -27,6 +29,7 @@
     "@vercel/blob": "0.22.1",
     "cal-sans": "^1.0.1",
     "dotenv": "^16.4.5",
+    "env-cmd": "^10.1.0",
     "geist": "^1.3.0",
     "google-libphonenumber": "^3.2.37",
     "lucide-react": "0.363.0",
