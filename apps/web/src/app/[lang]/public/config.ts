@@ -25,6 +25,26 @@ export const cityConfigs: Record<string, any> = {
       footer: "https://i.hizliresim.com/97pq8fz.png",
     },
   },
+  kizilay: {
+    key: "kizilay",
+    link: getBaseLink("/public/kizilay", true),
+    with: "Kızılay ile",
+    its: "Kızılay'nın",
+    full: "Kızılay",
+    logo: "https://i.imgur.com/DcMTM9v.png",
+    texts: {
+      hero: "Ortak aklın gücüyle geleceğe",
+    },
+    colors: {
+      primary: "",
+      secondary: "",
+    },
+    images: {
+      hero: "",
+      second: konya.src,
+      footer: "https://i.hizliresim.com/97pq8fz.png",
+    },
+  },
   konya: {
     key: "konya",
     link: getBaseLink("/public/konya", true),
