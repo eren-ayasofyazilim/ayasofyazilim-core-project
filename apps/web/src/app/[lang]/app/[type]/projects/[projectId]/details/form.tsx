@@ -4,7 +4,6 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
-import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto } from "@ayasofyazilim/saas/ProjectService";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
 import { useState } from "react";
@@ -14,10 +13,7 @@ import {
 } from "../../action";
 
 export interface IStatusFormProps {
-  resources: Record<
-    string,
-    Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationResourceDto
-  >;
+  resources: any;
   projectId: string;
   sectionData:
     | {
@@ -55,7 +51,7 @@ export default function ProjectForm({
       const updatedProjectInformation =
         await updateProjectSectionRelationServer(
           section.sectionRelationId,
-          editorContent,
+          editorContent
         );
       return updatedProjectInformation;
     }
@@ -63,7 +59,7 @@ export default function ProjectForm({
     const createdProjectInformation = await createProjectSectionRelationServer(
       projectId,
       editorId,
-      editorContent,
+      editorContent
     );
     return createdProjectInformation;
   }

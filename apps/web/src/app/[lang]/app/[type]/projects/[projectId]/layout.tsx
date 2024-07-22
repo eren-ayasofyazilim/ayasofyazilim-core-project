@@ -1,5 +1,9 @@
 "use client";
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import {
+  SectionLayout,
+  SectionLayoutContent,
+} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
 import { getBaseLink } from "src/utils";
 
@@ -22,18 +26,21 @@ export default function Layout({ children }: { children: JSX.Element }) {
       link: getBaseLink(`app/${type}/projects/${projectId}/details`, true),
       name: "Proje Detayı",
     },
-    {
-      id: "preview",
-      link: getBaseLink(`app/${type}/projects/${projectId}/preview`, true),
-      name: "Önizleme",
-    },
+    // {
+    //   id: "preview",
+    //   link: getBaseLink(`app/${type}/projects/${projectId}/preview`, true),
+    //   name: "Önizleme",
+    // },
   ];
   return (
     <SectionLayout
-      content={children}
       defaultActiveSectionId={activeSection}
-      openOnNewPage
       sections={navbarItems}
-    />
+      linkElement={Link}
+    >
+      <SectionLayoutContent sectionId={activeSection}>
+        {children}
+      </SectionLayoutContent>
+    </SectionLayout>
   );
 }
