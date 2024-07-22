@@ -1,3 +1,4 @@
+/* eslint-disable -- Reason: we have used this enums in multiple files. */
 export enum ProjectStatusEnums {
   IN_DRAFT_STAGE, //taslak 0
   SENT_FOR_APPROVAL, //onaya yollandı 1

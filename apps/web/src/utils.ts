@@ -37,11 +37,11 @@ function getLocale(locale?: string): string {
   // FIXME: This is a temporary solution for eslint
   if (isServerSide()) {
     //   return localeServerSide();
-    return "en";
+    return "tr";
   }
   const pathname = window.location.pathname;
   const pathnameParts = pathname.split("/");
-  return pathnameParts[1] ?? "en";
+  return pathnameParts[1] ?? "tr";
 }
 function getAppType(appType?: string) {
   if (appType === "public") return `${appType}/`;
@@ -93,7 +93,7 @@ export interface JsonSchema {
   maxLength?: number;
   minLength?: number;
   pattern?: RegExp;
-  refine?: { params?: object; callback: (v: any) => boolean };
+  refine?: { params?: object; callback: (_value: any) => boolean };
   format?: "date-time" | "email" | "uuid";
   description?: string | undefined;
   nullable?: boolean;

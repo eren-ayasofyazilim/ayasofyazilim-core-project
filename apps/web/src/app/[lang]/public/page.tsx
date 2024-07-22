@@ -10,7 +10,7 @@ export default function Page() {
       content: city,
       footer: "",
       cta: {
-        text: "Go to city page",
+        text: "İlerleyin",
         href: getBaseLink(`public/${city}`, true),
       },
     };

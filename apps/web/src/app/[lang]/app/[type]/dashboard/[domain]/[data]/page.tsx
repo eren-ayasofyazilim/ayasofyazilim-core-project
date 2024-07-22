@@ -13,7 +13,7 @@ import { dataConfig } from "../../data";
 async function controlledFetch(
   url: string,
   options: RequestInit,
-  onSuccess: (data?: any) => void,
+  onSuccess: (_data?: any) => void,
   successMessage = "Successful",
   showToast = true,
 ) {
@@ -156,6 +156,7 @@ export default function Page({
           createFormSchema.convertors || {},
         ),
         dependencies: createFormSchema.dependencies,
+        fieldConfig: { withoutBorder: true },
       },
       callback: async (e) => {
         const transformedData = parseFormValues(createFormSchema, e);
@@ -245,6 +246,7 @@ export default function Page({
       formSchema: editFormSchemaZod,
       dependencies: formData.editFormSchema?.dependencies,
       convertor: formData.tableSchema.convertors,
+      fieldConfig: { withoutBorder: true },
     };
   }
 

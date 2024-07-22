@@ -10,36 +10,34 @@ import { revalidatePath } from "next/cache";
 import { getProjectServiceClient } from "src/lib";
 
 export async function getProjectByIdServer(projectId: string) {
-  "use server";
   try {
-    return getProjectServiceClient().project.getApiProjectServiceProjectsDetailById(
-      {
-        id: projectId,
-      },
-    );
+    const client = await getProjectServiceClient();
+    return await client.project.getApiProjectServiceProjectsDetailById({
+      id: projectId,
+    });
   } catch (error) {
     return {};
   }
 }
 export async function getProjectsServer() {
-  "use server";
   try {
-    return await getProjectServiceClient().project.getApiProjectServiceProjects();
+    const client = await getProjectServiceClient();
+    return await client.project.getApiProjectServiceProjects();
   } catch (error) {
     return {} as GetApiProjectServiceProjectsResponse;
   }
 }
+
 export async function createNewProjectServer(
   body: PostApiProjectServiceProjectsData["requestBody"],
 ) {
   "use server";
   try {
-    const client = getProjectServiceClient();
+    const client = await getProjectServiceClient();
     const response = await client.project.postApiProjectServiceProjects({
       requestBody: body,
     });
-    revalidatePath("/[lang]/app/[type]/projects", "page");
-    revalidatePath("/[lang]/public/projects", "page");
+    revalidatePath("/");
     return {
       status: 200,
       projectData: response,
@@ -57,15 +55,12 @@ export async function updateProjectServer(
 ) {
   "use server";
   try {
-    const client = getProjectServiceClient();
+    const client = await getProjectServiceClient();
     const response = await client.project.putApiProjectServiceProjectsById({
       id,
       requestBody: body,
     });
-    revalidatePath("/[lang]/app/[type]/projects", "page");
-    revalidatePath("/[lang]/app/[type]/projects/[projectId]", "page");
-    revalidatePath("/[lang]/public/projects", "page");
-    revalidatePath("/[lang]/public/projects/[projectId]", "page");
+    revalidatePath("/");
     return {
       status: 200,
       projectData: response,
@@ -83,15 +78,12 @@ export async function updateProjectStatusServer(
 ) {
   "use server";
   try {
-    const client = getProjectServiceClient();
+    const client = await getProjectServiceClient();
     const response = await client.project.putApiProjectServiceProjectsStatus({
       projectId: id,
       status: body,
     });
-    revalidatePath("/[lang]/app/[type]/projects", "page");
-    revalidatePath("/[lang]/app/[type]/projects/[projectId]", "page");
-    revalidatePath("/[lang]/public/projects", "page");
-    revalidatePath("/[lang]/public/projects/[projectId]", "page");
+    revalidatePath("/");
     return {
       status: 200,
       projectData: response,
@@ -108,14 +100,11 @@ export async function deleteProjectServer(
 ) {
   "use server";
   try {
-    const client = getProjectServiceClient();
+    const client = await getProjectServiceClient();
     const response = await client.project.deleteApiProjectServiceProjectsById({
       id: body.id,
     });
-    revalidatePath("/[lang]/app/[type]/projects", "page");
-    revalidatePath("/[lang]/app/[type]/[projectId]", "page");
-    revalidatePath("/[lang]/public/projects", "page");
-    revalidatePath("/[lang]/public/projects/[projectId]", "page");
+    revalidatePath("/");
     return {
       status: 200,
       projectData: response,
@@ -130,9 +119,10 @@ export async function deleteProjectServer(
 export async function getDefaultProjectSectionsServer() {
   "use server";
   try {
-    const client =
-      await getProjectServiceClient().projectSection.getApiProjectServiceProjectSection();
-    return client;
+    const client = await getProjectServiceClient();
+    const response =
+      await client.projectSection.getApiProjectServiceProjectSection();
+    return response;
   } catch (error) {
     return {
       items: [],
@@ -140,18 +130,6 @@ export async function getDefaultProjectSectionsServer() {
     };
   }
 }
-// export async function getProjectSectionsServer(projectId: string) {
-//   "use server";
-//   try {
-//     const client =
-//       await getProjectServiceClient().projectSectionRelation.getApiProjectSectionRelationServiceProjectSectionRelation();
-
-//     return client.items?.filter(
-//       (i) => i.projectId === projectId
-//     ) as Volo_Abp_Application_Dtos_PagedResultDto_1["items"];
-//   } catch (error) {}
-//   return [] as Array<AbpForDeploy_ProjectService_ProjectSections_CreateUpdateProjectSectionDto>;
-// }
 export async function createProjectSectionRelationServer(
   projectId: string,
   projectSectionId: string,
@@ -160,7 +138,7 @@ export async function createProjectSectionRelationServer(
   return new Promise((resolve) => {
     (async () => {
       try {
-        const client = getProjectServiceClient();
+        const client = await getProjectServiceClient();
         await client.projectSectionRelation.postApiProjectServiceProjectSectionRelation(
           {
             requestBody: {
@@ -171,6 +149,7 @@ export async function createProjectSectionRelationServer(
           },
         );
         resolve("OK");
+        revalidatePath("/");
       } catch (error: any) {
         resolve(error?.body?.error?.message);
       }
@@ -184,7 +163,7 @@ export async function updateProjectSectionRelationServer(
   return new Promise((resolve) => {
     (async () => {
       try {
-        const client = getProjectServiceClient();
+        const client = await getProjectServiceClient();
         const data =
           await client.projectSectionRelation.getApiProjectServiceProjectSectionRelationById(
             {
@@ -200,6 +179,7 @@ export async function updateProjectSectionRelationServer(
           },
         );
         resolve("OK");
+        revalidatePath("/");
       } catch (error: any) {
         resolve(error?.body?.error?.message);
       }

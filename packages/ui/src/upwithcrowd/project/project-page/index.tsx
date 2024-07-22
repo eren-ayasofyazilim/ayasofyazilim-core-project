@@ -70,6 +70,15 @@ export default function ProjectPage({
     );
   }
 
+  const defaultImages = {
+    "172c8633-7ef7-8fcc-bfd3-3a13d3b9ec5c":
+      "https://kapilendo-public.imgix.net/files/projects/wimao-oy/b4e25953-bea3-4509-9996-5dc9f0e5ebb6_Wimao-Oy-Project-Header-1920x1080px-2.png",
+    "57192532-b844-3345-c26f-3a13d26c24b7":
+      "https://kapilendo-public.imgix.net/files/projects/resonandina/44bf7d13-1951-4cb4-bd99-f57c2d027d7b_Resonandina_Project-Header-1920x1080px.png",
+    "d8c7b654-8b14-6909-fd6b-3a13d3914912":
+      "https://kapilendo-public.imgix.net/files/projects/b86b24b0-ffa8-4da7-bb0d-ddcdedf0202d_WellO2-Oy-Project-Header-1920x1080px-3.png",
+  };
+
   const daysLeftToComplete = getDateDifferanceInDays();
   const collectedFundPercentage = getCollectedFundPercentage();
   const fundCollectionType = getFundCollectionType(
@@ -94,18 +103,25 @@ export default function ProjectPage({
       ),
     });
   }
-
   return (
     <div className="w-full">
       <div className="flex flex-col">
-        <div className="md:h-[600px] md:bg-[url('https://placehold.co/1920x600')] bg-cover bg-no-repeat bg-center ">
+        <div
+          className={"md:h-[600px]  bg-cover bg-no-repeat bg-center"}
+          style={{
+            backgroundImage: `url(${defaultImages?.[projectData.id as keyof typeof defaultImages] || "https://placehold.co/1920x600"})`,
+          }}
+        >
           <img
-            src="https://placehold.co/1920x600"
+            src={
+              defaultImages?.[projectData.id as keyof typeof defaultImages] ||
+              "https://placehold.co/1920x600"
+            }
             alt="image"
             className="w-full mt-20 mb-10 md:hidden"
           />
           <div className="container flex items-end justify-between h-full">
-            <div className="flex flex-col gap-2 mb-5">
+            <div className="flex flex-col gap-2 mb-5 p-4 rounded-md bg-white/80">
               <div className="text-4xl font-bold">
                 {projectData.projectName}
               </div>

@@ -26,7 +26,7 @@ import {
 async function controlledFetch(
   url: string,
   options: RequestInit,
-  onSuccess: (data?: any) => void,
+  onSuccess: (_data?: any) => void,
   successMessage = "Successful",
   showToast = true,
 ) {
@@ -54,7 +54,7 @@ interface formModifier {
     sourceField: string;
     type: DependencyType;
     targetField: string;
-    when: (value: any) => boolean;
+    when: (_value: any) => boolean;
   }[];
 }
 
@@ -210,6 +210,7 @@ export default function Page({
         createFormSchema.convertors || {},
       ),
       dependencies: createFormSchema.dependencies,
+      fieldConfig: { withoutBorder: true },
     },
     callback: async (e) => {
       const transformedData = parseFormValues(createFormSchema, e);
@@ -296,6 +297,7 @@ export default function Page({
       autoFormArgs: {
         formSchema: editFormSchemaZod,
         dependencies: dataConfig[params.data].editFormSchema.dependencies,
+        fieldConfig: { withoutBorder: true },
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],

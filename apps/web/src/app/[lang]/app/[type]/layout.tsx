@@ -208,7 +208,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       }
     >
-      {children}
+      <div className="mt-5 mx-10 ">{children}</div>
     </MainLayout>
   );
 }

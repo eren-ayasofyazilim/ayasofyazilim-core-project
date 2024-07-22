@@ -14,11 +14,11 @@ export default async function Page({
 }) {
   const { projectId, lang } = params;
   const { languageData } = await getResourceData(lang);
-
+  const client = await getProjectServiceClient();
   const { project: projectData, projectSectionRelations: projectSectionData } =
-    await getProjectServiceClient().project.getApiProjectServiceProjectsDetailById(
-      { id: projectId },
-    );
+    await client.project.getApiProjectServiceProjectsDetailById({
+      id: projectId,
+    });
 
   if (!projectData) return null;
 

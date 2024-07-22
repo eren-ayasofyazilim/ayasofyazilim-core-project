@@ -13,7 +13,7 @@ interface ILocaleProviderProps {
   lang: string;
 }
 interface ILocaleContextProps {
-  changeLocale?: (cultureName: string) => void;
+  changeLocale?: (_cultureName: string) => void;
   resources: Record<string, ResourceDto>;
   cultureName: string | undefined;
 }
