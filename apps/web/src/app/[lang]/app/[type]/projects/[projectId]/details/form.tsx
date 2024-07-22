@@ -51,7 +51,7 @@ export default function ProjectForm({
       const updatedProjectInformation =
         await updateProjectSectionRelationServer(
           section.sectionRelationId,
-          editorContent
+          editorContent,
         );
       return updatedProjectInformation;
     }
@@ -59,7 +59,7 @@ export default function ProjectForm({
     const createdProjectInformation = await createProjectSectionRelationServer(
       projectId,
       editorId,
-      editorContent
+      editorContent,
     );
     return createdProjectInformation;
   }

@@ -23,7 +23,7 @@ export default async function Page({ params }: any) {
     true,
     params.lang,
     true,
-    params.type
+    params.type,
   );
 
   return (

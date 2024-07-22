@@ -35,8 +35,8 @@ export default function Layout({ children }: { children: JSX.Element }) {
   return (
     <SectionLayout
       defaultActiveSectionId={activeSection}
-      sections={navbarItems}
       linkElement={Link}
+      sections={navbarItems}
     >
       <SectionLayoutContent sectionId={activeSection}>
         {children}
