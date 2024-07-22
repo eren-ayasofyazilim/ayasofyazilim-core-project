@@ -37,7 +37,7 @@ export default function Layout({ children, params }: LayoutProps) {
           true,
           params.lang,
           true,
-          params.type
+          params.type,
         ),
       }));
     setNavbarItems(tempNavbarItems);
@@ -47,9 +47,9 @@ export default function Layout({ children, params }: LayoutProps) {
     <>
       {navbarItems.length > 0 && (
         <SectionLayout
-          sections={navbarItems}
           defaultActiveSectionId={path}
           linkElement={Link}
+          sections={navbarItems}
         >
           <SectionLayoutContent sectionId={path}>
             {children}
