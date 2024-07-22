@@ -170,7 +170,7 @@ export default function ProjectForm({
         type="single"
         value={accordionTab}
       >
-        <AccordionItem className="my-2 border" value="item-1">
+        <AccordionItem className="border" value="item-1">
           <AccordionStepperHeader
             checked={
               !(

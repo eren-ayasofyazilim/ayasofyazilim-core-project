@@ -1,8 +1,7 @@
 "use server";
 
-import { Card } from "@/components/ui/card";
-import { redirect } from "next/navigation";
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
+import { redirect } from "next/navigation";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
@@ -28,16 +27,16 @@ export default async function Page({ params }: any) {
   );
 
   return (
-    <div className="flex flex-row gap-3 relative w-full container mt-8">
-      <Card className="p-6 basis-3/5">
+    <div className="flex flex-row gap-3 relative w-full">
+      <div className="basis-full">
         <ProjectForm
           languageData={languageData}
           profileType={type}
           projectData={projectData}
           projectId={projectId}
         />
-      </Card>
-      <div className="basis-2/5">
+      </div>
+      <div className="basis-2/5 min-w-72">
         <ProjectCard
           ProjectStatusEnums={ProjectStatusEnums}
           languageData={languageData}

@@ -1,8 +1,7 @@
 "use server";
 
-import { Card } from "@/components/ui/card";
-import { redirect } from "next/navigation";
 import type { GetApiProjectServiceProjectSectionResponse } from "@ayasofyazilim/saas/ProjectService";
+import { redirect } from "next/navigation";
 import { getLocalizationResources } from "src/utils";
 import {
   getDefaultProjectSectionsServer,
@@ -37,14 +36,12 @@ export default async function Page({ params }: any) {
     redirect(`/app/${type}/projects`);
   }
   return (
-    <div className="relative w-full container mt-8">
-      <Card className="p-6 w-full">
-        <ProjectForm
-          projectId={projectId}
-          resources={resources}
-          sectionData={usedSections || []}
-        />
-      </Card>
+    <div className="relative w-full">
+      <ProjectForm
+        projectId={projectId}
+        resources={resources}
+        sectionData={usedSections || []}
+      />
     </div>
   );
 }
