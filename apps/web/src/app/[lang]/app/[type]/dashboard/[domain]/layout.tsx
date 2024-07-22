@@ -1,6 +1,10 @@
 "use client";
 
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import {
+  SectionLayout,
+  SectionLayoutContent,
+} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getResourceDataClient } from "src/language-data/AbpUiNavigation/navbar";
@@ -33,7 +37,7 @@ export default function Layout({ children, params }: LayoutProps) {
           true,
           params.lang,
           true,
-          params.type,
+          params.type
         ),
       }));
     setNavbarItems(tempNavbarItems);
@@ -43,15 +47,14 @@ export default function Layout({ children, params }: LayoutProps) {
     <>
       {navbarItems.length > 0 && (
         <SectionLayout
-          className="w-full"
-          content={children}
-          contentClassName=""
-          defaultActiveSectionId={path}
-          isScrollArea
-          openOnNewPage
           sections={navbarItems}
-          vertical={false}
-        />
+          defaultActiveSectionId={path}
+          linkElement={Link}
+        >
+          <SectionLayoutContent sectionId={path}>
+            {children}
+          </SectionLayoutContent>
+        </SectionLayout>
       )}
     </>
   );
