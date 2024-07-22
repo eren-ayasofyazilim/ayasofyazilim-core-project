@@ -6,8 +6,7 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const navbarItems = [
   {
@@ -42,10 +41,6 @@ const navbarItems = [
     link: "tax_offices",
   },
 ];
-function isPathValid(path: string) {
-  const validPaths = navbarItems.map((item) => item.id);
-  return validPaths.includes(path);
-}
 
 interface LayoutProps {
   children: JSX.Element;
@@ -84,15 +79,8 @@ const pageHeader = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const path = pathname.split("company/")[1];
-
-  useEffect(() => {
-    if (!path || !isPathValid(path)) {
-      router.push("company/merchants");
-    }
-  }, []);
 
   return (
     <div>

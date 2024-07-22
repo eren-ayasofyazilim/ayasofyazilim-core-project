@@ -138,7 +138,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "company",
       title: languageData.Companies,
-      href: getBaseLink(`app/${type}/company`, true, params.lang),
+      href: getBaseLink(`app/${type}/company/merchants`, true, params.lang),
       icon: <Building2 className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
@@ -208,7 +208,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       }
     >
-      <div className="mt-5 mx-10 ">{children}</div>
+      <div className="mt-5 mx-10 h-[calc(100vh-84px)]">{children}</div>
     </MainLayout>
   );
 }
