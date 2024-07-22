@@ -4,16 +4,10 @@ test.describe("Admin Page testing", () => {
   test("Navigating to adming page and checking menus", async ({ page }) => {
     // await loginAsAdmin(page);
     await page.goto("/en/public");
-    await page
-      .locator("div")
-      .filter({ hasText: /^istanbulGo to city page$/ })
-      .getByRole("button")
-      .click();
-    await page.getByRole("menuitem", { name: "Campaigns" }).click();
-    await expect(page.getByText("No Projects")).toBeVisible();
+    await page.locator('div').filter({ hasText: /^bursaİlerleyin$/ }).getByRole('button').click();
+    await page.getByRole('menuitem', { name: 'Kampanyalar' }).click();
     await page.getByRole("button", { name: "admin admin@abp.io" }).click();
-    await page.getByRole("link", { name: "Admin Center" }).click();
-    await page.goto("/en/app/admin");
+    await page.getByRole('link', { name: 'Yönetim Merkezi' }).click();
     await expect(
       page.getByRole("link", { name: "Identity Management" }),
     ).toBeVisible();

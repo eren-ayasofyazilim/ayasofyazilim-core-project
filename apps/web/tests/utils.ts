@@ -13,11 +13,7 @@ export async function loginAsAdmin(page: Page) {
     .fill(process.env.TEST_PASSWORD as string);
   await page.getByRole("button", { name: "Login" }).click();
   await page.url();
-  await page
-    .locator("div")
-    .filter({ hasText: /^istanbulGo to city page$/ })
-    .getByRole("button")
-    .click();
+  await page.locator('div').filter({ hasText: /^bursaİlerleyin$/ }).getByRole('button').click();
   await page.url();
   await page.waitForURL("**/public");
   //   await page.getByRole("button", { name: "admin admin@abp.io" }).click();
