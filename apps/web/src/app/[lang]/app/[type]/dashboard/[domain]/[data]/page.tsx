@@ -72,9 +72,9 @@ export default function Page({
 }: {
   params: { data: string; domain: string };
 }): JSX.Element {
+  const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [formData, setFormData] = useState<tableData>(
     dataConfig[params.domain][params.data],
   );
@@ -104,7 +104,9 @@ export default function Page({
     setFormData(tempData);
   }
 
-  function getRoles() {
+  function getRoles(page: number) {
+    const _fetchLink = `${fetchLink}?page=${page}`;
+    setIsLoading(true);
     function onData(data: any) {
       let returnData = data;
       if (!data?.items) {
@@ -133,7 +135,7 @@ export default function Page({
       setIsLoading(false);
     }
     controlledFetch(
-      fetchLink,
+      _fetchLink,
       {
         method: "GET",
       } as RequestInit,
@@ -175,8 +177,6 @@ export default function Page({
 
   useEffect(() => {
     processConvertors();
-    setIsLoading(true);
-    getRoles();
   }, []);
 
   function parseFormValues(schema: formModifier, data: any) {
@@ -270,8 +270,10 @@ export default function Page({
       cards={[]}
       columnsData={columnsData}
       data={roles?.items}
+      fetchRequest={getRoles}
       filterBy={formData.filterBy}
       isLoading={isLoading}
+      rowCount={roles?.totalCount || 0}
       withCards={false}
       withTable
     />
