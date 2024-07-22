@@ -45,20 +45,8 @@ import { addNewTranslationServer } from "./action";
 
 interface IDataTableDemo {
   lang: string;
-  resources: Record<
-    string,
-    {
-      texts?: Record<string, string> | null | undefined;
-      baseResources?: string[] | null | undefined;
-    }
-  >;
-  defaultResources: Record<
-    string,
-    {
-      texts?: Record<string, string> | null | undefined;
-      baseResources?: string[] | null | undefined;
-    }
-  >;
+  resources: any;
+  defaultResources: any;
 }
 
 export interface Language {
