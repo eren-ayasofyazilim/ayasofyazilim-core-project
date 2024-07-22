@@ -3,7 +3,7 @@ import { test, expect, Page } from "@playwright/test";
 async function clickOrganizationImage(
   page: Page,
   organizationName: string,
-  imageIndex: number
+  imageIndex: number,
 ) {
   await page
     .locator("li")
@@ -15,13 +15,13 @@ async function clickOrganizationImage(
 
 async function expectOrganizationVisible(page: Page, organizationName: string) {
   await expect(
-    page.locator("li").filter({ hasText: organizationName })
+    page.locator("li").filter({ hasText: organizationName }),
   ).toBeVisible();
 }
 
 async function expectStatusMessage(
   page: Page,
-  message: string | RegExp | readonly (string | RegExp)[]
+  message: string | RegExp | readonly (string | RegExp)[],
 ) {
   await expect(page.getByRole("status")).toContainText(message);
 }
@@ -51,7 +51,7 @@ test("add users and roles to organization", async ({ page }) => {
   await userStatusMessage.waitFor({ state: "visible" });
   await expect(userStatusMessage).toContainText("Users added successfully");
   await expect(
-    page.getByRole("cell", { name: "admin", exact: true })
+    page.getByRole("cell", { name: "admin", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("cell", { name: "admin@abp.io" })).toBeVisible();
   await page.getByRole("button", { name: "Roles" }).click();
@@ -113,7 +113,7 @@ test("add users and roles to sub-unit organization", async ({ page }) => {
   await userStatusMessage.waitFor({ state: "visible" });
   await expect(userStatusMessage).toContainText("Users added successfully");
   await expect(
-    page.getByRole("cell", { name: "admin", exact: true })
+    page.getByRole("cell", { name: "admin", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("cell", { name: "admin@abp.io" })).toBeVisible();
   await page.getByRole("button", { name: "Roles" }).click();
@@ -203,7 +203,7 @@ test("delete organization", async ({ page }) => {
   await page.getByRole("menuitem", { name: "Delete" }).click();
   await page.getByRole("button", { name: "Yes" }).click();
   await expect(
-    page.locator("li").filter({ hasText: "Test Organization" })
+    page.locator("li").filter({ hasText: "Test Organization" }),
   ).not.toBeVisible();
   await expectStatusMessage(page, "Organization unit deleted successfully");
 });
