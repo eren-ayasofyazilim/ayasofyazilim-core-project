@@ -92,7 +92,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang
+        params.lang,
       ),
       type: "admin",
       appType: "upwithcrowd",
@@ -138,7 +138,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     {
       key: "company",
       title: languageData.Companies,
-      href: getBaseLink(`app/${type}/company`, true, params.lang),
+      href: getBaseLink(`app/${type}/company/merchants`, true, params.lang),
       icon: <Building2 className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
