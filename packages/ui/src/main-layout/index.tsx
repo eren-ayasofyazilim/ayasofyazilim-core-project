@@ -88,7 +88,7 @@ export function MainLayout({
           <Menu minNavbar={minNavbar} navigationItems={navigationItems} />
         </ScrollArea>
       </div>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 overflow-auto">
         <div
           className={`min-h-16 max-h-16 bg-white w-full px-4 flex items-center justify-end border-b ${minNavbar ? "pl-14" : ""}`}
         >

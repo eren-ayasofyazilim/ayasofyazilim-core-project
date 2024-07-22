@@ -590,7 +590,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-row p-4 bg-gray-50 w-full">
+      <div className="flex flex-row w-full min-h-[50vh]">
         <Card className="m-2 shadow-lg pb-4 w-1/2">
           <CardHeader>
             <div className="flex justify-between items-center">
