@@ -1,6 +1,9 @@
 "use server";
 
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
+import {
+  SectionLayout,
+  SectionLayoutContent,
+} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { getBaseLink, getLocalizationResources } from "src/utils";
 import { DataTableDemo } from "./form";
 
@@ -12,26 +15,19 @@ export default async function Page({ params }: { params: { lang: string } }) {
     {
       id: "general",
       link: getBaseLink(`projects`, true),
-      name: "Dil",
+      name: "Dil Yönetimi",
     },
   ];
 
   return (
-    <SectionLayout
-      content={
-        <div className="relative w-full container mt-4">
-          <div className="flex flex-col gap-2">
-            <DataTableDemo
-              defaultResources={defaultResources}
-              lang={params.lang}
-              resources={resources}
-            />
-          </div>
-        </div>
-      }
-      defaultActiveSectionId="general"
-      openOnNewPage
-      sections={navbarItems}
-    />
+    <SectionLayout defaultActiveSectionId="general" sections={navbarItems}>
+      <SectionLayoutContent sectionId="general">
+        <DataTableDemo
+          defaultResources={defaultResources}
+          lang={params.lang}
+          resources={resources}
+        />
+      </SectionLayoutContent>
+    </SectionLayout>
   );
 }
