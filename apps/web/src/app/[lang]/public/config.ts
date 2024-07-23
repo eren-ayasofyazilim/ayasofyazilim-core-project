@@ -31,7 +31,7 @@ export const cityConfigs: Record<string, any> = {
     with: "Kızılay ile",
     its: "Kızılay'nın",
     full: "Kızılay",
-    logo: "https://i.imgur.com/DcMTM9v.png",
+    logo: "https://i.imgur.com/lhcxiC4.png",
     texts: {
       hero: "Ortak aklın gücüyle geleceğe",
     },
