@@ -173,29 +173,20 @@ function HirevisionNavbar({
   languageData: any;
 }): JSX.Element {
   const [isFixed, setIsFixed] = useState(false);
-  const scrollThreshold = 200;
+  const scrollThreshold = 50;
 
   useEffect(() => {
-    let el = document.querySelector("#scroll-area > div");
-    // let el = document.body;
-    if (el === null) return;
-    const handleScroll = () => {
-      setIsFixed(el.scrollTop >= scrollThreshold);
-    };
-    el.addEventListener("scroll", handleScroll);
-
-    return () => {
-      el.removeEventListener("scroll", handleScroll);
-    };
+    function onScroll() {
+      setIsFixed((window.scrollY || 0) >= scrollThreshold);
+    }
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   return (
     <nav
-      className={`w-full flex justify-between items-center gap-4 px-12 h-20 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
+      className={`w-full flex justify-between items-center gap-4 px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
     >
-      {/* <div className={"tracking-widest text-2xl font-bold"}>
-        UPWITH
-        <span className="text-primary">{appName.toLocaleUpperCase()}</span>
-      </div> */}
       <Link href={config.link}>
         <img src={config.logo} className="h-14" />
       </Link>
@@ -227,9 +218,6 @@ function HirevisionNavbar({
                 {languageData.Register}
               </Button>
             </Link>
-            {/* <Badge className="absolute bg-black left-2/4 translate-x-[-50%] pointer-events-none">
-              or
-            </Badge> */}
           </div>
         )}
         {languageSelector ? languageSelector : <></>}
