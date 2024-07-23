@@ -29,6 +29,7 @@
   "FundCollectionTypeSHRE": "Equity-based",
   "FundCollectionTypeDBIT": "Debt-based",
   "FundableAmount": "Fundable Amount",
+  "ProjectStartDateInfo": "The date your project will start raising funds",
   "FundableAmountInfo": "The investment amount you aim to raise for your project.",
   "AdditionalFundingInfo": "Should additional funding be collected beyond the specified amount when your project reaches its funding goal?",
   "AdditionalFundingYes": "Yes",
