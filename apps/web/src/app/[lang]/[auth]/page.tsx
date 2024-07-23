@@ -1,6 +1,8 @@
 "use client";
 import type { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
-import type { authTypes } from "@repo/ayasofyazilim-ui/pages/auth";
+import type {
+  authTypes,
+} from "@repo/ayasofyazilim-ui/pages/auth";
 import { Auth, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Logo } from "@repo/ui/logo";
 import Error from "next/error";
@@ -28,7 +30,7 @@ export default function Page(): JSX.Element {
   );
   if (!isAuthType(authTypeParam)) {
     return (
-      <Error statusCode={404} title={resources.AbpUi.texts?.PageNotFound} />
+      <Error statusCode={404} title={resources.AbpUi?.texts?.PageNotFound} />
     );
   }
 
@@ -76,7 +78,7 @@ export default function Page(): JSX.Element {
   };
 
   //ResetPassword end
-  let props = {};
+  let props: any;
   switch (authTypeParam) {
     case "login":
       props = {
@@ -107,8 +109,8 @@ export default function Page(): JSX.Element {
         passwordRequirements: {
           passwordRequiredLength: 5,
           passwordRequiredUniqueCharsLength: 3,
-          passwordRequiresDigit: 1,
-          passwordRequiresLower: 1,
+          passwordRequiresDigit: true,
+          passwordRequiresLower: true,
           passwordRequiresNonAlphanumeric: true,
           passwordRequiresUniqueChars: true,
           passwordRequiresUpper: true,
@@ -133,7 +135,7 @@ export default function Page(): JSX.Element {
                 const res = await response.json();
                 if (!res) {
                   setErrorMessage(
-                    resources.AbpIdentity.texts?.[
+                    resources.AbpIdentity?.texts?.[
                       "Volo.Abp.Identity:InvalidToken"
                     ],
                   );

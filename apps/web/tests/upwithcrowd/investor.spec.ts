@@ -7,7 +7,7 @@ test.describe("Investor Page testing", () => {
     await page
       .locator("div")
       .filter({ hasText: /^bursaİlerleyin$/ })
-      .getByRole("button")
+      .getByRole("link")
       .click();
     await page.getByRole("button", { name: "admin admin@abp.io" }).click();
     await page.getByRole("link", { name: "Yatırımcı Merkezi" }).click();

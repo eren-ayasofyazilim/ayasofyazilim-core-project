@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const navigationSections = sectionItems.map((item) => {
     return {
       ...item,
-      name: resources.AbpForDeploy.texts?.[item.name] ?? item.defaultName,
+      name: resources.AbpForDeploy?.texts?.[item.name] ?? item.defaultName,
     };
   });
   return (
