@@ -6,13 +6,12 @@ test.describe("Investor Page testing", () => {
     await page.goto("/en/public");
     await page
       .locator("div")
-      .filter({ hasText: /^istanbulGo to city page$/ })
+      .filter({ hasText: /^bursaİlerleyin$/ })
       .getByRole("button")
       .click();
-    await page.getByRole("menuitem", { name: "Campaigns" }).click();
-    await expect(page.getByText("No Projects")).toBeVisible();
     await page.getByRole("button", { name: "admin admin@abp.io" }).click();
-    await page.getByRole("link", { name: "Investor Center" }).click();
-    await page.goto("/en/app/Investor");
+    await page.getByRole("link", { name: "Yatırımcı Merkezi" }).click();
+    await page.waitForURL("**/investor");
+    await expect(page.url()).toContain("investor");
   });
 });

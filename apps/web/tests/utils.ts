@@ -15,7 +15,7 @@ export async function loginAsAdmin(page: Page) {
   await page.url();
   await page
     .locator("div")
-    .filter({ hasText: /^istanbulGo to city page$/ })
+    .filter({ hasText: /^bursaİlerleyin$/ })
     .getByRole("button")
     .click();
   await page.url();

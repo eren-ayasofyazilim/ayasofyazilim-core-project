@@ -133,3 +133,6 @@ apps/web/lint-output.txt
 playwright/.auth/user.json
 apps/web/tests/playwright/.auth/user.json
 apps/web/tests/apps/web/tests/playwright/.auth/user.json
+apps/web/env/.env.unirefund
+apps/web/env/.env.upwithcrowd
+apps/web/type-check-output.txt

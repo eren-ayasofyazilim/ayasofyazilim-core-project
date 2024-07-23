@@ -11,10 +11,9 @@ test.describe("Main Page testing", () => {
     }
     const cityLocator = page
       .locator("div")
-      .filter({ hasText: /^Go to city page$/ })
+      .filter({ hasText: /^İlerleyin$$/ })
       .getByRole("button");
     await expect(cityLocator).toHaveCount(cities.length);
-
     let index = 0;
     for (let city of cities) {
       await cityLocator.nth(index).click();
