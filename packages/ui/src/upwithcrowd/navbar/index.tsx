@@ -185,7 +185,7 @@ function HirevisionNavbar({
 
   return (
     <nav
-      className={`w-full flex justify-between items-center gap-4 px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white border-b backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm"}`}
+      className={`transition-colors duration-1000 w-full flex justify-between border-b items-center gap-4 px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white  backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm border-b-transparent"}`}
     >
       <Link href={config.link}>
         <img src={config.logo} className="h-14" />
