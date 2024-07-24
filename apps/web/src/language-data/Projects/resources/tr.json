@@ -28,6 +28,7 @@
   "FundCollectionTypeInfo": "Projenin türü.",
   "FundCollectionTypeSHRE": "Hisse bazlı",
   "FundCollectionTypeDBIT": "Borç bazlı",
+  "ProjectStartDateInfo": "Projenizin fon toplamaya başlayacağı tarih",
   "FundableAmount": "Fonlama Tutarı",
   "FundableAmountInfo": "Projenize toplamak istediğiniz yatırım tutarı.",
   "AdditionalFundingInfo": "Projeniz fonlanabilir tutara ulaştığında belirttiğiniz tutara kadar ekstra fon toplanmaya devam edilmeli mi?",

@@ -62,7 +62,9 @@ export async function getResourceData(lang: string) {
     FundableAmountInfo:
       projectResource?.FundableAmountInfo ||
       "The amount of investment you want to make in your project.",
-
+    ProjectStartDateInfo:
+      projectResource?.ProjectStartDateInfo ||
+      "The date your project will start raising funds",
     AdditionalFundingInfo:
       projectResource?.AdditionalFundingInfo ||
       "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
