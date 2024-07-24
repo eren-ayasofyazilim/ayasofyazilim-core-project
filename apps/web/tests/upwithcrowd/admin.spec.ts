@@ -7,7 +7,7 @@ test.describe("Admin Page testing", () => {
     await page
       .locator("div")
       .filter({ hasText: /^bursaİlerleyin$/ })
-      .getByRole("button")
+      .getByRole("link")
       .click();
     await page.getByRole("menuitem", { name: "Kampanyalar" }).click();
     await page.getByRole("button", { name: "admin admin@abp.io" }).click();

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { Building2Icon, User } from "lucide-react";
 import Link from "next/link";
-import { deleteBacker, getBackers, getBackersIndividuals } from "./actions";
+import { getBackers, getBackersIndividuals } from "./actions";
 import Form from "./form";
 
 async function getBackerProfiles() {
@@ -23,12 +23,7 @@ async function getBackerProfiles() {
   });
   return _backerProfiles;
 }
-export async function onDeleteClick(backerId: string) {
-  "use server";
-  await deleteBacker(backerId || "");
-  const backerProfilesPostDelete = await getBackerProfiles();
-  return backerProfilesPostDelete;
-}
+
 export default async function Page({
   params,
 }: {

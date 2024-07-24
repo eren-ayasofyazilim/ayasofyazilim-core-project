@@ -43,13 +43,14 @@ function createConfig(
   item: UniRefund_SettingService_Items_GroupItemDto,
   resources: any
 ) {
+  const key = item?.key || "";
   let config = {
-    [item.key]: {
+    [key]: {
       description: description(
-        resources?.SettingService?.texts?.[item.description] ?? item.description
+        resources?.SettingService?.texts?.[item?.description || ""] ?? item.description
       ),
       displayName:
-        resources?.SettingService?.texts?.[item.displayName] ??
+        resources?.SettingService?.texts?.[item?.displayName || ""] ??
         item.displayName,
     },
   };
@@ -60,13 +61,14 @@ function createConfig(
       item.valueType.name as AllowedValueTypeModelNameStringEnum
     )
   ) {
+    const key = item?.key || "";
     Object.assign(config, {
-      [item.key]: {
+      [key]: {
         fieldType: convertValueTypeNameToFieldType(
           item.valueType.name as AllowedValueTypeModelNameStringEnum
         ),
         displayName:
-          resources?.SettingService?.texts?.[item.displayName] ??
+          resources?.SettingService?.texts?.[item?.displayName || ""] ??
           item.displayName,
       },
     });
@@ -86,14 +88,15 @@ function subField(
               return createConfig(subsubitem, resources);
             }
           );
+          const key = subitem?.key || "";
           return {
-            [subitem.key]: {
+            [key]: {
               ...Object.assign({}, ...Object.values(subsubitemconfigs)),
               displayName:
-                resources?.SettingService?.texts?.[subitem.displayName] ??
+                resources?.SettingService?.texts?.[subitem?.displayName || ""] ??
                 subitem.displayName,
               description: description(
-                resources?.SettingService?.texts?.[subitem.description] ??
+                resources?.SettingService?.texts?.[subitem?.description || ""] ??
                   subitem.description
               ),
             },
@@ -102,14 +105,15 @@ function subField(
         return createConfig(subitem, resources);
       }
     );
+    const key = item?.key || "";
     let subs = {
-      [item.key]: {
+      [key]: {
         ...Object.assign({}, ...Object.values(subitemconfigs)),
         displayName:
-          resources?.SettingService?.texts?.[item.displayName] ??
+          resources?.SettingService?.texts?.[item?.displayName || ""] ??
           item.displayName,
         description: description(
-          resources?.SettingService?.texts?.[item.description] ??
+          resources?.SettingService?.texts?.[item?.description || ""] ??
             item.description
         ),
       },
@@ -123,7 +127,7 @@ function createFieldConfig(
   object: UniRefund_SettingService_Groups_GroupDto,
   resources: any
 ): AutoFormTypes.FieldConfig<{ [x: string]: any }> {
-  let configs = object.items.map(
+  let configs = object?.items?.map(
     (item: UniRefund_SettingService_Items_GroupItemDto) => {
       if (item.subItems && item.subItems.length > 0) {
         return subField(item, resources);
@@ -132,7 +136,7 @@ function createFieldConfig(
       }
     }
   );
-  let config = Object.assign({}, ...Object.values(configs));
+  let config = Object.assign({}, ...Object.values(configs || {}));
   return config;
 }
 
@@ -144,7 +148,7 @@ type createBondType = {
 type bondType = {
   sourceField: string;
   targetField: string;
-  type: AutoFormTypes.DependencyType;
+  type?: AutoFormTypes.DependencyType;
   hasParentField: boolean;
   when: (val: any) => boolean;
 };
@@ -164,11 +168,10 @@ function createBonds(sett: createBondType): bondType[] {
     let sourceField = sett.parentField
       ? `${sett.parentField}.${bond.key}`
       : bond.key;
-
     let createdBond: bondType = {
       sourceField: sourceField ?? "", //bond.key is not nullable fix it
       targetField: sett.targetField,
-      type: bond.type,
+      type: bond.type as AutoFormTypes.DependencyType,
       hasParentField: sett.parentField ? true : false,
       when: (val: any) => createSafeRegexp(val, bond.pattern),
     };
@@ -178,29 +181,29 @@ function createBonds(sett: createBondType): bondType[] {
 function createDependencies(
   group: UniRefund_SettingService_Groups_GroupDto
 ): AutoFormTypes.Dependency<{ [x: string]: any }>[] {
-  let bonds = group.items.map(
+  let bonds = group?.items?.map(
     (item: UniRefund_SettingService_Items_GroupItemDto) => {
       if (item.subItems && item.subItems.length > 0) {
         let subitembonds = item.subItems.map(
           (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
             return createBonds({
-              bonds: subitem.bonds,
-              targetField: subitem.key,
-              parentField: item.key,
+              bonds: subitem.bonds || [],
+              targetField: subitem.key || "",
+              parentField: item.key || "",
             });
           }
         );
         let x = createBonds({
-          bonds: item.bonds,
-          targetField: item.key,
+          bonds: item.bonds || [],
+          targetField: item.key || "",
         });
         subitembonds.push(x);
-        return subitembonds.filter((bond: bondType) => bond).flat();
+        return subitembonds.filter((bond: bondType[]) => bond).flat();
       } else {
         if (item.bonds && item.bonds.length > 0) {
           return createBonds({
             bonds: item.bonds,
-            targetField: item.key,
+            targetField: item.key || "",
           });
         }
       }
@@ -240,11 +243,12 @@ function convertValueTypeNameToSchemaType(
 function createProperties(
   item: UniRefund_SettingService_Items_GroupItemDto
 ): any {
+  const key = item?.key || "";
   if (!item.valueType) return;
   if (item.subItems && item.subItems.length > 0)
-    return { [item.key]: createSchema(undefined, item) };
+    return { [key]: createSchema(undefined, item) };
   return {
-    [item.key]: createJsonSchema(item),
+    [key]: createJsonSchema(item),
   };
 }
 //Creates item & parent schema
@@ -256,11 +260,11 @@ function createSchema(
   if (group) {
     properties = Object.assign(
       {},
-      ...group.items.map(
+      ...group?.items?.map(
         (item: UniRefund_SettingService_Items_GroupItemDto) => {
           return createProperties(item);
         }
-      )
+      ) || []
     );
   } else if (item) {
     if (item.isApplicable && item.subItems && item.subItems.length > 0) {
@@ -276,9 +280,10 @@ function createSchema(
         )
       );
   }
+  const key = (group ? group.key : item ? item.key : "") || "";
   return {
-    displayName: group ? group.key : item ? item.key : "",
-    required: [group ? group.key : item ? item.key : ""],
+    displayName: key,
+    required: [key],
     type: "object",
     properties: properties,
     additionalProperties: false,
@@ -296,7 +301,7 @@ function createJsonSchema(
     isReadOnly: item.isActive ?? false,
     maxLength: item.valueType?.validator?.properties?.maxValue,
     default: item.defaultValue,
-    displayName: item.displayName ?? item.key,
+    displayName: (item.displayName ?? item.key) || "",
   };
   if (item.valueType && item.valueType.name === "SelectionStringValueType") {
     schema = {
@@ -352,22 +357,22 @@ export function SettingsView({
   resources?: any;
 }) {
   const [activeGroup, setActiveGroup] =
-    useState<UniRefund_SettingService_Groups_GroupDto>(() => {
-      const test = list.groups.find(
+    useState<UniRefund_SettingService_Groups_GroupDto | undefined>(() => {
+      const test = list?.groups?.find(
         (item: UniRefund_SettingService_Items_GroupItemDto) => item.key === path
       );
       if (test) return test;
-      return list.groups[0];
+      return list?.groups?.[0];
     });
 
   const [content, setContent] = useState<React.ReactElement>(() => {
-    const group = activeGroup || list.groups[0];
+    const group = activeGroup || list?.groups?.[0] || {};
     let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
-      group.items.map(
+      group.items?.map(
         (item: UniRefund_SettingService_Items_GroupItemDto) => item.key
-      )
+      ) || []
     ) as AutoFormUtils.ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
@@ -377,23 +382,23 @@ export function SettingsView({
     window.history.pushState(
       null,
       "",
-      window.location.href.replace("home", list.groups[0].key)
+      window.location.href.replace("home", list?.groups?.[0].key || "")
     );
   }, []);
 
   function onSectionChange(sectionId: string) {
     // console.log(sectionId); //sholdnt be called twice
-    if (sectionId === activeGroup.key) return;
+    if (sectionId === activeGroup?.key) return;
     const group =
-      list.groups.find(
+      list?.groups?.find(
         (s: UniRefund_SettingService_Groups_GroupDto) => s.key === sectionId
-      ) || list.groups[0];
+      ) || list?.groups?.[0] || {}; 
     let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
-      group.items.map(
-        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key
-      )
+      group?.items?.map(
+        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key 
+      ) || []
     ) as AutoFormUtils.ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
@@ -403,13 +408,13 @@ export function SettingsView({
     window.history.pushState(
       null,
       "",
-      window.location.href.replace(activeGroup.key, sectionId)
+      window.location.href.replace(activeGroup?.key || "", sectionId)
     );
     setActiveGroup(group);
   }
   return (
     <SectionLayout
-      sections={list.groups.map((group: any, index: any) => {
+      sections={list?.groups?.map((group: any, index: any) => {
         return {
           id: group.key,
           name:
@@ -417,8 +422,14 @@ export function SettingsView({
             group.displayName,
           value: content,
         };
-      })}
-      defaultActiveSectionId={activeGroup?.key || list.groups[0].key}
+      }) || [
+        {
+          id: "default",
+          name: "Default",
+          value: content,
+        },
+      ]}
+      defaultActiveSectionId={activeGroup?.key || list?.groups?.[0].key || ""}
       openOnNewPage={false}
       showContentInSamePage={true}
       onSectionChange={onSectionChange}

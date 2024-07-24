@@ -33,9 +33,19 @@ export default function Page() {
           ),
         }),
         fieldConfig: {
-          withoutBorder: true,
+          all: {
+            withoutBorder: false,
+            inputProps: {
+              showLabel: true,
+              className: "w-full",
+            },
+          },
           taxes: {
-            withoutBorder: true,
+            withoutBorder: false,
+            inputProps: {
+              showLabel: true,
+              className: "bg-red-500",
+            },
           },
         },
       },

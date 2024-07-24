@@ -9,9 +9,13 @@ import AutoForm, {
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { postBacker, postIndividual, putBacker } from "../actions";
+import {
+  deleteBacker,
+  postBacker,
+  postIndividual,
+  putBacker,
+} from "../actions";
 import { formSchema } from "../data";
-import { onDeleteClick } from "../page";
 
 function initBackerData(backer: any) {
   const data = {
@@ -99,7 +103,7 @@ export function BackerForm({
       title: "Profili Sil",
       description: `"${_backer.name}" isimli profili silmek istediğinize emin misiniz?`,
       onConfirm: () => {
-        onDeleteClick(_backer.backerId).then(() => {
+        deleteBacker(_backer.backerId).then(() => {
           router.back();
         });
         setIsConfirmDialogOpen(false);

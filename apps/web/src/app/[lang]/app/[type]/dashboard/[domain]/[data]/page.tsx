@@ -90,9 +90,9 @@ export default function Page({
           if (value.type === "async" && typeof value.data === "function") {
             try {
               const tempValue = await value.data();
-              if (tempData[schema]?.convertors) {
-                tempData[schema].convertors[key].data = tempValue;
-                tempData[schema].convertors[key].type = "async";
+              if (dataConvertors[key]) {
+                dataConvertors[key].data = tempValue;
+                dataConvertors[key].type = "async";
               }
             } catch (error) {
               toast.error(`Feild to fetch ${`${key} ${value}`} data`);

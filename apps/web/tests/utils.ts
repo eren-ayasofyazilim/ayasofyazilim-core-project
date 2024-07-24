@@ -12,11 +12,11 @@ export async function loginAsAdmin(page: Page) {
     .getByPlaceholder("Password")
     .fill(process.env.TEST_PASSWORD as string);
   await page.getByRole("button", { name: "Login" }).click();
-  await page.url();
+  await page.waitForURL("**/public");
   await page
     .locator("div")
     .filter({ hasText: /^bursaİlerleyin$/ })
-    .getByRole("button")
+    .getByRole("link")
     .click();
   await page.url();
   await page.waitForURL("**/public");
