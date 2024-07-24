@@ -2,12 +2,19 @@
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { revalidatePath } from "next/cache";
 
-async function dangerouslyGetToken(project: string) {
+const IS_LIVE = process.env.NODE_ENV === "production";
+
+function getBaseUrl(project: string) {
+  if (project === "upwithcrowd") {
+    return IS_LIVE
+      ? "http://192.168.1.105:44326"
+      : "http://192.168.1.105:44325";
+  }
+  return IS_LIVE ? "http://192.168.1.105:44336" : "http://192.168.1.105:44335";
+}
+async function dangerouslyGetToken(baseURL: string) {
   "use server";
-  const baseURL =
-    project === "upwithcrowd"
-      ? "http://192.168.1.105:44325"
-      : "http://192.168.1.105:44335";
+
   const TOKEN_URL = `${baseURL}/connect/token`;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -17,7 +24,7 @@ async function dangerouslyGetToken(project: string) {
     grant_type: "password",
     client_id: "Angular",
     username: "admin",
-    password: project === "upwithcrowd" ? "1q2w3E*" : "123Aa!",
+    password: "123Aa!",
     scope:
       "AccountService IdentityService SaasService AdministrationService phone roles profile address email offline_access",
   };
@@ -34,12 +41,8 @@ async function dangerouslyGetToken(project: string) {
 }
 
 async function getAdministrationServiceClient(project: string) {
-  const baseURL =
-    project === "upwithcrowd"
-      ? "http://192.168.1.105:44325"
-      : "http://192.168.1.105:44335";
-  const response = await dangerouslyGetToken(project);
-
+  const baseURL = getBaseUrl(project);
+  const response = await dangerouslyGetToken(baseURL);
   return new AdministrationServiceClient({
     BASE: baseURL,
     TOKEN: response?.access_token,
