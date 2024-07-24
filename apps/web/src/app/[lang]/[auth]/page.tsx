@@ -1,8 +1,6 @@
 "use client";
 import type { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/reset-password-form";
-import type {
-  authTypes,
-} from "@repo/ayasofyazilim-ui/pages/auth";
+import type { authTypes } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Auth, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Logo } from "@repo/ui/logo";
 import Error from "next/error";

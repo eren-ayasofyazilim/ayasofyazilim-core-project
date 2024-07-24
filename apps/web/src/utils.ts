@@ -22,11 +22,11 @@ export type resourceResult = Record<
 >;
 
 export async function getLocalizationResources(
-  languageCode: string,
+  languageCode: string
 ): Promise<resourceResult> {
   try {
     const response = await fetch(
-      `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`,
+      `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`
     );
     return ((await response.json()) as LocalizationDto).resources || {};
   } catch (error) {
@@ -64,7 +64,7 @@ export function getBaseLink(
   withLocale?: boolean,
   locale?: string,
   withAppType?: boolean,
-  appType?: string,
+  appType?: string
 ) {
   // check if location first character is a slash
   let newLocation = location;
@@ -128,7 +128,7 @@ function isSchemaType(object: any): object is SchemaType {
 export function createZodObject(
   schema: any,
   positions: any[],
-  convertors?: Record<string, any>,
+  convertors?: Record<string, any>
 ): ZodObjectOrWrapped {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
@@ -139,7 +139,7 @@ export function createZodObject(
       Object.keys(props.properties || {}).forEach(() => {
         zodSchema[element] = createZodObject(
           props,
-          Object.keys(props.properties || {}),
+          Object.keys(props.properties || {})
         );
       });
     } else if (isJsonSchema(props)) {
@@ -160,7 +160,7 @@ export function createZodObject(
         ) {
           newProps.type = "select";
           newProps.enum = convertors[element].data.map(
-            (e: any) => e[convertors[element].get],
+            (e: any) => e[convertors[element].get]
           );
         }
         zodType = createZodType(newProps, isRequired);
@@ -221,14 +221,17 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
     case "object":
       zodType = z.object({});
       if (schema.properties) {
-        zodType = createZodObject(schema as SchemaType, Object.keys(schema));
+        zodType = createZodObject(
+          schema as SchemaType,
+          Object.keys(schema.properties)
+        );
       }
       break;
 
     case "array":
       if (schema.items?.properties) {
         zodType = z.array(
-          createZodObject(schema.items, Object.keys(schema.items.properties)),
+          createZodObject(schema.items, Object.keys(schema.items.properties))
         );
       } else {
         zodType = z.array(z.unknown());
