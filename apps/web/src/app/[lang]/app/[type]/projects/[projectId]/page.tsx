@@ -25,7 +25,6 @@ export default async function Page({ params }: any) {
     true,
     params.type,
   );
-
   return (
     <div className="flex flex-row gap-3 relative w-full">
       <div className="basis-full">
@@ -43,7 +42,7 @@ export default async function Page({ params }: any) {
           project={projectData}
           projectURL={`${projectURL}/${projectData.id}`}
         />
-        {type === "entreperneur" &&
+        {type === "entrepreneur" &&
           projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE && (
             <StatusForm
               actionText={languageData.SEND_FOR_APPROVAL}
