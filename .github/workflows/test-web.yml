@@ -25,6 +25,21 @@ jobs:
         pnpm install
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v2.0
+      with:
+        directory: "apps/web"
+        file_name: .env
+        fail_on_empty: false
+        sort_keys: false
+        envkey_TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        envkey_TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        envkey_AUTH_TRUST_HOST: ${{ secrets.TRUST_HOST }}
+        envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}  
+        envkey_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        envkey_APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
+        envkey_BASE_URL: ${{ secrets.BASE_URL }}
+        envkey_PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     - name: build web app
       run: pnpm run build:web
     - name: start web app
