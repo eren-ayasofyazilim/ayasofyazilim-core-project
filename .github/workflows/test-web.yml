@@ -20,7 +20,9 @@ jobs:
         node-version: 20
         cache: 'pnpm'
     - name: Install dependencies
-      run: npm install -g pnpm && pnpm install
+      run: | 
+        npm install -g pnpm
+        pnpm install
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
     - name: build web app
