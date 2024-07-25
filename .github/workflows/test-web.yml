@@ -9,9 +9,30 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: self-hosted
+    env: 
+      TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+      TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+      AUTH_TRUST_HOST: ${{ secrets.TRUST_HOST }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}  
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+      PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     steps:
     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
     - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v2.0.3
+      with:
+        directory: "apps/web"
+        file_name: .env
+        fail_on_empty: true
+        sort_keys: false
+        envkey_TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        envkey_APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
+        envkey_PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
+    - name: show .env file
+      run: cd .\apps\web cat .env
     - uses: actions/checkout@v4
       with:
         submodules: true
@@ -26,11 +47,11 @@ jobs:
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
     - name: Make envfile
-      uses: SpicyPizza/create-envfile@v2.0
+      uses: SpicyPizza/create-envfile@v2.0.3
       with:
-        directory: "apss/web"
+        directory: "apps/web"
         file_name: .env
-        fail_on_empty: false
+        fail_on_empty: true
         sort_keys: false
         envkey_TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
         envkey_TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
