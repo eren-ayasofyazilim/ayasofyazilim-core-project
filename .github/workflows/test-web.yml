@@ -70,7 +70,9 @@ jobs:
     - name: Start web app and wait for it to be ready
       run: pnpm run start:web 
     - name: Run Playwright tests
-      run: pnpm exec playwright test
+      run: |
+        cd .\apps\web 
+        pnpm exec playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
