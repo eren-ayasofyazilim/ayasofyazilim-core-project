@@ -20,7 +20,8 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "precommit": "prettier --check . && next lint --fix && tsc --noEmit "
   },
   "dependencies": {
     "@auth/core": "^0.30.0",
