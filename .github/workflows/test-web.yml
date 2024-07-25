@@ -9,6 +9,7 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: self-hosted
+    environment: upwithcrowd
     env: 
       TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
       TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
