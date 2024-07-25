@@ -13,18 +13,20 @@ jobs:
     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
     - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
     - uses: actions/checkout@v4
+      with:
+        submodule: true
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
-        submodules: true
+        node-version: 20
+        cache: 'pnpm'
     - name: Install dependencies
-      run: npm ci
+      run: pnpm install
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: build web app
-      run: npm run build:web
+      run: pnpm run build:web
     - name: start web app
-      run: npm run start:web
+      run: pnpm run start:web
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
