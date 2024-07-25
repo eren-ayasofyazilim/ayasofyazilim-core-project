@@ -32,7 +32,9 @@ jobs:
         envkey_APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
         envkey_PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     - name: show .env file
-      run: cd .\apps\web cat .env
+      run: | 
+        cd .\apps\web 
+        cat .env
     - uses: actions/checkout@v4
       with:
         submodules: true
