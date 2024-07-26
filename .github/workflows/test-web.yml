@@ -67,8 +67,8 @@ jobs:
     #     envkey_PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     # - name: build web app
     #   run: pnpm run build:web
-    - name: Start web app and wait for it to be ready
-      run: pnpm run start:web 
+    #- name: Start web app and wait for it to be ready
+    #  run: pnpm run start:web 
     - name: Run Playwright tests
       run: |
         cd .\apps\web 
