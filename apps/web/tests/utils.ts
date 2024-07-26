@@ -9,7 +9,7 @@ export async function loginAsAdmin(page: Page) {
     .fill(process.env.TEST_USERNAME as string);
   await page.getByPlaceholder("name@example.com").press("Tab");
   await page.keyboard.insertText(process.env.TEST_PASSWORD as string);
-  await page.getByRole("button", { name: "Login" }).click();
+  await page.getByRole("button", { name: "Giriş" }).click();
   await page.waitForURL("**/public");
   await page
     .locator("div")
