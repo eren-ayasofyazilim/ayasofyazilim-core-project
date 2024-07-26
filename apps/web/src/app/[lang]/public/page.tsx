@@ -7,7 +7,7 @@ export default function Page() {
     return {
       title: "",
       description: "",
-      content: city,
+      content: cityConfigs[city].name,
       footer: "",
       cta: {
         text: "İlerleyin",
