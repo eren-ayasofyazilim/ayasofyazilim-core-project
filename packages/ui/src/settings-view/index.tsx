@@ -382,7 +382,6 @@ export function SettingsView({
   }, []);
 
   function onSectionChange(sectionId: string) {
-    // console.log(sectionId); //sholdnt be called twice
     if (sectionId === activeGroup.key) return;
     const group =
       list.groups.find(

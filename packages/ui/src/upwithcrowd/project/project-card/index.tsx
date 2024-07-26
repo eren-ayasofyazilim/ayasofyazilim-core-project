@@ -102,7 +102,7 @@ export default function ProjectCard({
   return (
     <div
       key={project.id}
-      className={`bg-white border rounded-md flex ${horizontal ? "flex-row" : "flex-col basis-1/3"}`}
+      className={`bg-white border rounded-md flex ${horizontal ? "flex-row" : "flex-col  basis-11/12 md:basis-1/3"}`}
     >
       <div className={horizontal ? "basis-2/4 relative" : "relative"}>
         <img

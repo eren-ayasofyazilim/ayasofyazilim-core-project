@@ -1,11 +1,10 @@
-import Button from "@repo/ayasofyazilim-ui/molecules/button";
-import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
-import Link from "next/link";
-import { currencyFormatter, getFundCollectionType } from "../project-card";
-import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { CardContent } from "@repo/ayasofyazilim-ui/atoms/card";
+import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
+import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
 import { TiptapLayout } from "@repo/ayasofyazilim-ui/templates/tiptap-layout";
+import Link from "next/link";
 import Invest from "../../../invest";
+import { currencyFormatter, getFundCollectionType } from "../project-card";
 
 interface IProjectCardProps {
   languageData: any;
@@ -87,22 +86,22 @@ export default function ProjectPage({
   );
   const investmentDetails = getInvestmentDetails();
 
-  if (user && !isPreview) {
-    sectionsData.push({
-      key: "invest",
-      id: "invest",
-      name: languageData.Invest,
-      value: (
-        <Invest
-          user={user}
-          languageData={languageData}
-          name={projectData.name || ""}
-          description={projectData.definition || ""}
-          investmentDetails={investmentDetails}
-        />
-      ),
-    });
-  }
+  // if (user && !isPreview) {
+  //   sectionsData.push({
+  //     key: "invest",
+  //     id: "invest",
+  //     name: languageData.Invest,
+  //     value: (
+  //       <Invest
+  //         user={user}
+  //         languageData={languageData}
+  //         name={projectData.name || ""}
+  //         description={projectData.definition || ""}
+  //         investmentDetails={investmentDetails}
+  //       />
+  //     ),
+  //   });
+  // }
   return (
     <div className="w-full">
       <div className="flex flex-col">
@@ -120,7 +119,7 @@ export default function ProjectPage({
             alt="image"
             className="w-full mt-20 mb-10 md:hidden"
           />
-          <div className="container flex items-end justify-between h-full">
+          <div className="container items-end justify-between h-full hidden md:flex">
             <div className="flex flex-col gap-2 mb-5 p-4 rounded-md bg-white/80">
               <div className="text-4xl font-bold">{projectData.name}</div>
               <div className="text-2xl ">{projectData.definition}</div>
@@ -132,6 +131,19 @@ export default function ProjectPage({
               />
               <div>OnePlanet</div>
             </div>
+          </div>
+        </div>
+        <div className="container items-end justify-between h-full  md:hidden py-8">
+          <div className="flex flex-col gap-2 items-center mb-4">
+            <img
+              className="h-16 w-16 object-cover"
+              src="https://placehold.co/40x40/EEE/000"
+            />
+            <div>OnePlanet</div>
+          </div>
+          <div className="flex flex-col gap-2 rounded-md bg-white/80">
+            <div className="text-2xl font-bold">{projectData.name}</div>
+            <div className="text-xl ">{projectData.definition}</div>
           </div>
         </div>
         <div className="bg-white pb-16">
@@ -251,9 +263,9 @@ export default function ProjectPage({
               </div>
             </div>
             <div className="basis-2/3 gap-2 flex flex-col">
-              <div className="m-auto flex gap-2 justify-around w-full">
-                <CardContent className="w-full">
-                  <div className="flex flex-row flex-wrap mt-5">
+              <div className="mt-1.5 md:m-auto flex gap-2 justify-end md:justify-around w-full">
+                <CardContent className="md:w-full p-0 md:p-6">
+                  <div className="flex md:flex-row flex-col flex-wrap md:mt-5">
                     <div className="basis-1/2 mb-3">
                       <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
                         <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
@@ -304,12 +316,10 @@ export default function ProjectPage({
         </div>
       </div>
 
-      <div className="bg-white">
-        <TiptapLayout
-          sections={sectionsData || []}
-          defaultActiveSectionId={"general"}
-        />
-      </div>
+      <TiptapLayout
+        sections={sectionsData || []}
+        defaultActiveSectionId={"general"}
+      />
     </div>
   );
 }

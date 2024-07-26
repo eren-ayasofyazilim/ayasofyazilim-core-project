@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: any }) {
     true,
     params.lang,
     true,
-    params.type
+    params.type,
   );
   return (
     <div className="flex flex-row gap-3 relative w-full">

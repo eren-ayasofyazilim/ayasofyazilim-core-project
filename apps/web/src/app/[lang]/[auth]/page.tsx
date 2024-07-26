@@ -165,7 +165,9 @@ export default function Page(): JSX.Element {
     >
       <div className="bg-slate-100 flex flex-auto justify-center items-center">
         {appName === "UPWITHCROWD" ? (
-          <div className="font-bold text-5xl text-[#f15656]">UPWITHCROWD</div>
+          <div className="font-bold text-2xl md:text-5xl text-[#f15656]">
+            UPWITHCROWD
+          </div>
         ) : (
           <Logo textProps={{ className: "h-16" }} variant="text" />
         )}
