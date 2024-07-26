@@ -88,10 +88,7 @@ export default function ProjectCard({
     languageData,
     project.fundCollectionType
   );
-  const projectStartDate = getProjectStartDate(
-    languageData,
-    project.projectStartDate
-  );
+  const projectStartDate = getProjectStartDate(languageData, project.startDate);
   const projectStatus = ProjectStatusEnums[project.status || 0];
 
   const defaultImages = {
@@ -139,11 +136,9 @@ export default function ProjectCard({
         )}
         <div className="py-4 px-6 flex flex-col gap-2 border-b">
           <h3 className="font-semibold leading-none tracking-tight hover:underline">
-            <Link href={projectURL}>{project.projectName}</Link>
+            <Link href={projectURL}>{project.name}</Link>
           </h3>
-          <p className="text-sm text-muted-foreground">
-            {project.projectDefinition}
-          </p>
+          <p className="text-sm text-muted-foreground">{project.definition}</p>
         </div>
 
         <div className="py-4 px-6 flex flex-col gap-2">

@@ -38,66 +38,67 @@ const clients: Clients = {
               ProductGroups:
                 organization?.productGroups?.map((pg) => pg.name) || [],
               Address:
-                organization?.contactInformation?.address?.[0]?.fullAddress ||
+                organization?.contactInformation?.addresses?.[0]?.fullAddress ||
                 "",
             };
           }) || []
         );
       },
-      post: async (formdata: any) => {
-        return merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
-          {
-            requestBody: {
-              entityInformationTypes: [
-                {
-                  organizations: [
-                    {
-                      name: formdata.Company,
-                      taxpayerId: "string",
-                      legalStatusCode: "string",
-                      customerNumber: formdata.CustomerNumber,
-                      contactInformation: {
-                        startDate: "2024-06-27T10:53:06.853Z",
-                        endDate: "2024-06-27T10:53:06.853Z",
-                        telephone: [
-                          {
-                            areaCode: "string",
-                            localNumber: "string",
-                            ituCountryCode: "string",
-                          },
-                        ],
-                        address: [
-                          {
-                            typeCode: 0,
-                            addressLine: "string",
-                            city: "string",
-                            terriority: "string",
-                            postalCode: "string",
-                            country: "string",
-                            fullAddress: formdata.Address,
-                          },
-                        ],
-                        email: [
-                          {
-                            emailAddress: "string",
-                          },
-                        ],
-                      },
-                      productGroups: [
-                        {
-                          name: formdata.ProductGroups,
-                          vatRate: 0,
-                          productCode: "string",
-                          isActive: true,
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-        );
+      post: (formdata: any) => {
+        return formdata;
+        // return merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
+        //   {
+        //     requestBody: {
+        //       entityInformationTypes: [
+        //         {
+        //           organizations: [
+        //             {
+        //               name: formdata.Company,
+        //               taxpayerId: "string",
+        //               legalStatusCode: "string",
+        //               customerNumber: formdata.CustomerNumber,
+        //               contactInformation: {
+        //                 startDate: "2024-06-27T10:53:06.853Z",
+        //                 endDate: "2024-06-27T10:53:06.853Z",
+        //                 telephone: [
+        //                   {
+        //                     areaCode: "string",
+        //                     localNumber: "string",
+        //                     ituCountryCode: "string",
+        //                   },
+        //                 ],
+        //                 address: [
+        //                   {
+        //                     typeCode: 0,
+        //                     addressLine: "string",
+        //                     city: "string",
+        //                     terriority: "string",
+        //                     postalCode: "string",
+        //                     country: "string",
+        //                     fullAddress: formdata.Address,
+        //                   },
+        //                 ],
+        //                 email: [
+        //                   {
+        //                     emailAddress: "string",
+        //                   },
+        //                 ],
+        //               },
+        //               productGroups: [
+        //                 {
+        //                   name: formdata.ProductGroups,
+        //                   vatRate: 0,
+        //                   productCode: "string",
+        //                   isActive: true,
+        //                 },
+        //               ],
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //     },
+        //   },
+        // );
       },
     };
   },
@@ -334,7 +335,7 @@ const clients: Clients = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     // return status 404
@@ -357,7 +358,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -372,7 +373,7 @@ export async function POST(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Something went wrong");
@@ -381,7 +382,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -396,7 +397,7 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -414,7 +415,7 @@ export async function PUT(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Something went wrong");

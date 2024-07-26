@@ -27,7 +27,7 @@ import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";
-import { createNewProjectServer } from "../action";
+import { createNewProjectServer } from "../../action";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
@@ -35,8 +35,12 @@ export const numberFormatter = new Intl.NumberFormat("tr", {
 
 export interface INewProjectFormProps {
   languageData: any;
+  fundraiserId: string;
 }
-export default function NewProjectForm({ languageData }: INewProjectFormProps) {
+export default function NewProjectForm({
+  languageData,
+  fundraiserId,
+}: INewProjectFormProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({
@@ -50,7 +54,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
       fundCollectionType: "",
       status: 0,
       type: 0,
-      fundraiserId: "",
+      fundraiserId,
     });
 
   const [error, setError] = useState<string>();
@@ -291,7 +295,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                 <Link
                   href={getBaseLink(
                     `app/entrepreneur/projects/${projectId}`,
-                    true
+                    true,
                   )}
                 >
                   {languageData.ViewProject}

@@ -96,8 +96,8 @@ export default function ProjectPage({
         <Invest
           user={user}
           languageData={languageData}
-          name={projectData.projectName || ""}
-          description={projectData.projectDefinition || ""}
+          name={projectData.name || ""}
+          description={projectData.definition || ""}
           investmentDetails={investmentDetails}
         />
       ),
@@ -122,10 +122,8 @@ export default function ProjectPage({
           />
           <div className="container flex items-end justify-between h-full">
             <div className="flex flex-col gap-2 mb-5 p-4 rounded-md bg-white/80">
-              <div className="text-4xl font-bold">
-                {projectData.projectName}
-              </div>
-              <div className="text-2xl ">{projectData.projectDefinition}</div>
+              <div className="text-4xl font-bold">{projectData.name}</div>
+              <div className="text-2xl ">{projectData.definition}</div>
             </div>
             <div className="flex flex-col gap-2 items-center mb-5">
               <img
@@ -160,8 +158,8 @@ export default function ProjectPage({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b>
-                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
-                      ? new Date(projectData.projectStartDate || 0)
+                    {projectData.startDate !== "0001-01-01T00:00:00"
+                      ? new Date(projectData.startDate || 0)
                           .toLocaleString("tr", {
                             day: "2-digit",
                             month: "2-digit",
@@ -179,7 +177,7 @@ export default function ProjectPage({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b className="text-[#08985a]">
-                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
+                    {projectData.startDate !== "0001-01-01T00:00:00"
                       ? daysLeftToComplete > 0
                         ? `${daysLeftToComplete} ${languageData.DaysLeft}`
                         : languageData.CampaignEnded
@@ -194,7 +192,7 @@ export default function ProjectPage({
                 <div className="text-muted bg-muted bg-muted/50"></div>
                 <div>
                   <b>
-                    {projectData.projectStartDate !== "0001-01-01T00:00:00"
+                    {projectData.startDate !== "0001-01-01T00:00:00"
                       ? new Date(projectData.projectEndDate || 0)
                           .toLocaleString("tr", {
                             day: "2-digit",
