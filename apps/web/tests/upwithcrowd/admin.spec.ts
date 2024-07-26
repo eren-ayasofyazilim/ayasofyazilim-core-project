@@ -13,13 +13,13 @@ test.describe("Admin Page testing", () => {
     await page.getByRole("button", { name: "admin admin@abp.io" }).click();
     await page.getByRole("link", { name: "Yönetim Merkezi" }).click();
     await expect(
-      page.getByRole("link", { name: "Identity Management" }),
+      page.getByRole("link", { name: "Kimlik Yönetimi" }),
     ).toBeVisible();
-    await page.getByRole("link", { name: "Profile" }).click();
-    await expect(page.getByRole("link", { name: "Profile" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Campaigns" })).toBeVisible();
+    await page.getByRole("link", { name: "Profil" }).click();
+    await expect(page.getByRole("link", { name: "Profil" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Kampanyalar" })).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Language Management" }),
+      page.getByRole("link", { name: "Dil Yönetimi" }),
     ).toBeVisible();
     await expect(page.getByRole("link", { name: "New admin" })).toBeVisible();
     await page.getByRole("link", { name: "New admin" }).click();
