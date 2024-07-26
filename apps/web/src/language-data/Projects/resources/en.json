@@ -10,6 +10,7 @@
   "CollectedAmount": "Collected Amount",
   "TargetAmount": "Target Amount",
   "Investor": "Investor",
+  "ProjectsToOpenForInvestmentSoon": "Projects to open for investment soon",
   "QualifiedInvestor": "Qualified Investor",
   "Invest": "Invest",
   "TargetReached": "Target reached %{target}",
