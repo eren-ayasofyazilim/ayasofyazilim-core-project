@@ -5,7 +5,7 @@ test.describe("Main Page testing", () => {
     // await loginAsAdmin(page);
     await page.goto("/en/public");
     await page.getByText("konya").click();
-    const cities = ["bursa", "kizilay" ,"konya", "istanbul", "sakarya"];
+    const cities = ["bursa", "kizilay", "konya", "istanbul", "sakarya"];
     for (const city of cities) {
       await expect(page.getByText(city)).toBeVisible();
     }
