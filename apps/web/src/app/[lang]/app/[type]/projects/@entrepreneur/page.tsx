@@ -17,8 +17,13 @@ export default async function Page({
 }: {
   params: { lang: string; type: string };
 }) {
-  const { pendingProjects, fundableProjects, fundedProjects, draftProjects } =
-    await getUsersProjectsServer();
+  const {
+    pendingProjects,
+    fundableProjects,
+    fundedProjects,
+    draftProjects,
+    rejectedProjects,
+  } = await getUsersProjectsServer();
   const { languageData } = await getResourceData(params.lang);
 
   const projectURL = getBaseLink(
@@ -48,6 +53,7 @@ export default async function Page({
         defaultActiveSectionId="fundable"
         sections={[
           { id: "fundable", name: "Yayında olan projeler" },
+          { id: "rejected", name: "Reddedilen projeler" },
           { id: "draft", name: "Taslak Projeler" },
           { id: "sent-for-approval", name: "Onay bekleyen projeler" },
           { id: "completed", name: "Sona ermiş projeler" },
@@ -59,6 +65,14 @@ export default async function Page({
             languageData={languageData}
             placeHolderText="Henüz yayında olan bir projeniz yok."
             projectList={fundableProjects}
+            projectURL={projectURL}
+          />
+        </SectionLayoutContent>
+        <SectionLayoutContent sectionId="rejected">
+          <Project
+            languageData={languageData}
+            placeHolderText="Reddedilen bir projeniz yok."
+            projectList={rejectedProjects}
             projectURL={projectURL}
           />
         </SectionLayoutContent>

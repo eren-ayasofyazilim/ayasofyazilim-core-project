@@ -4,16 +4,19 @@ import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { redirect } from "next/navigation";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
+import { getProjectServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
-import { getProjectByIdServer } from "../action";
 import ProjectForm from "./form";
-import StatusForm from "./status-form";
 
-export default async function Page({ params }: any) {
-  const { projectId, type } = params;
+export default async function Page({ params }: { params: any }) {
+  const { projectId } = params;
   const { languageData } = await getResourceData(params.lang);
-  const projectData = (await getProjectByIdServer(projectId)).project;
 
+  const client = await getProjectServiceClient();
+  const { project: projectData } =
+    await client.projectPublic.getApiProjectServicePublicProjectsDetailById({
+      id: projectId,
+    });
   if (!projectData) {
     redirect(`/app/${params.type}/projects`);
   }
@@ -23,14 +26,13 @@ export default async function Page({ params }: any) {
     true,
     params.lang,
     true,
-    params.type,
+    params.type
   );
   return (
     <div className="flex flex-row gap-3 relative w-full">
       <div className="basis-full">
         <ProjectForm
           languageData={languageData}
-          profileType={type}
           projectData={projectData}
           projectId={projectId}
         />
@@ -40,15 +42,8 @@ export default async function Page({ params }: any) {
           ProjectStatusEnums={ProjectStatusEnums}
           languageData={languageData}
           project={projectData}
-          projectURL={`${projectURL}/${projectData.id}`}
+          projectURL={`${projectURL}/${projectId}`}
         />
-        {type === "entrepreneur" &&
-          projectData.status === ProjectStatusEnums.IN_DRAFT_STAGE && (
-            <StatusForm
-              actionText={languageData.SEND_FOR_APPROVAL}
-              projectId={projectId}
-            />
-          )}
       </div>
     </div>
   );

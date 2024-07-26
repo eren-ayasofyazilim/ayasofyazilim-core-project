@@ -58,6 +58,9 @@ export async function getUsersProjectsServer() {
     const pendingProjects = projectData.filter(
       (project) => project.status === ProjectStatusEnums.SENT_FOR_APPROVAL,
     );
+    const rejectedProjects = projectData.filter(
+      (project) => project.status === ProjectStatusEnums.NOT_APPROVED,
+    );
     const fundableProjects = projectData.filter(
       (project) => project.status === ProjectStatusEnums.FUNDABLE,
     );
@@ -65,7 +68,38 @@ export async function getUsersProjectsServer() {
       (project) => (project.status || 0) > ProjectStatusEnums.FUNDABLE,
     );
 
-    return { pendingProjects, fundableProjects, fundedProjects, draftProjects };
+    return {
+      pendingProjects,
+      fundableProjects,
+      fundedProjects,
+      draftProjects,
+      rejectedProjects,
+    };
+  } catch (error) {
+    return {
+      pendingProjects: [],
+      fundableProjects: [],
+      fundedProjects: [],
+      draftProjects: [],
+      rejectedProjects: [],
+    };
+  }
+}
+export async function getAdminProjectsServer() {
+  try {
+    const pendingProjects =
+      (await getProjectsServer(ProjectStatusEnums.SENT_FOR_APPROVAL)).items ||
+      [];
+    const fundableProjects =
+      (await getProjectsServer(ProjectStatusEnums.FUNDABLE)).items || [];
+    const fundedProjects =
+      (await getProjectsServer(ProjectStatusEnums.FUNDABLE)).items || [];
+
+    return {
+      pendingProjects,
+      fundableProjects,
+      fundedProjects,
+    };
   } catch (error) {
     return {
       pendingProjects: [],
@@ -75,7 +109,6 @@ export async function getUsersProjectsServer() {
     };
   }
 }
-
 export async function createNewProjectServer(
   body: PostApiProjectServiceProjectsData["requestBody"],
 ) {

@@ -21,11 +21,11 @@ export default function Layout({ children }: { children: JSX.Element }) {
       link: getBaseLink(`app/${type}/projects/${projectId}`, true),
       name: "Genel Bilgiler",
     },
-    {
-      id: "details",
-      link: getBaseLink(`app/${type}/projects/${projectId}/details`, true),
-      name: "Proje Detayı",
-    },
+    // {
+    //   id: "details",
+    //   link: getBaseLink(`app/${type}/projects/${projectId}/details`, true),
+    //   name: "Proje Detayı",
+    // },
     // {
     //   id: "preview",
     //   link: getBaseLink(`app/${type}/projects/${projectId}/preview`, true),
