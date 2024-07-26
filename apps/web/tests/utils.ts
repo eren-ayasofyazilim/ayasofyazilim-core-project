@@ -8,10 +8,7 @@ export async function loginAsAdmin(page: Page) {
     .getByPlaceholder("name@example.com")
     .fill(process.env.TEST_USERNAME as string);
   await page.getByPlaceholder("name@example.com").press("Tab");
-  console.log(process.env.TEST_PASSWORD, process.env.TEST_USERNAME);
-  await page
-    .getByPlaceholder("Password")
-    .fill(process.env.TEST_PASSWORD as string);
+  await page.keyboard.insertText(process.env.TEST_PASSWORD as string);
   await page.getByRole("button", { name: "Login" }).click();
   await page.waitForURL("**/public");
   await page
