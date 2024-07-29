@@ -7,6 +7,7 @@ import { getBaseLink } from "src/utils";
 export const cityConfigs: Record<string, any> = {
   bursa: {
     key: "bursa",
+    name: "Bursa",
     link: getBaseLink("/public/bursa", true),
     with: "Bursa ile",
     its: "Bursa'nın",
@@ -27,11 +28,12 @@ export const cityConfigs: Record<string, any> = {
   },
   kizilay: {
     key: "kizilay",
+    name: "Kızılay",
     link: getBaseLink("/public/kizilay", true),
     with: "Kızılay ile",
     its: "Kızılay'nın",
     full: "Kızılay",
-    logo: "https://i.imgur.com/lhcxiC4.png",
+    logo: "https://i.imgur.com/ahhmuxe.png",
     texts: {
       hero: "Ortak aklın gücüyle geleceğe",
     },
@@ -47,6 +49,7 @@ export const cityConfigs: Record<string, any> = {
   },
   konya: {
     key: "konya",
+    name: "Konya",
     link: getBaseLink("/public/konya", true),
     with: "Konya ile",
     its: "Konya'nın",
@@ -67,6 +70,7 @@ export const cityConfigs: Record<string, any> = {
   },
   istanbul: {
     key: "istanbul",
+    name: "İstanbul",
     link: getBaseLink("/public/istanbul", true),
     with: "İstanbul ile",
     its: "İstanbul'un",
@@ -87,6 +91,7 @@ export const cityConfigs: Record<string, any> = {
   },
   sakarya: {
     key: "sakarya",
+    name: "Sakarya",
     link: getBaseLink("/public/sakarya", true),
     with: "Sakarya ile",
     its: "Sakarya'nın",

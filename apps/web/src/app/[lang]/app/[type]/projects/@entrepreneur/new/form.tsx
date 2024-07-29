@@ -27,7 +27,7 @@ import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";
-import { createNewProjectServer } from "../action";
+import { createNewProjectServer } from "../../action";
 
 export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
@@ -35,13 +35,26 @@ export const numberFormatter = new Intl.NumberFormat("tr", {
 
 export interface INewProjectFormProps {
   languageData: any;
+  fundraiserId: string;
 }
-export default function NewProjectForm({ languageData }: INewProjectFormProps) {
+export default function NewProjectForm({
+  languageData,
+  fundraiserId,
+}: INewProjectFormProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({
       additionalFundRate: "0",
       fundableAmount: 0,
+      name: "",
+      definition: "",
+      cashValue: 0,
+      fundNominalAmount: 0,
+      overFunding: "",
+      fundCollectionType: "",
+      status: 0,
+      type: 0,
+      fundraiserId,
     });
 
   const [error, setError] = useState<string>();
@@ -69,10 +82,10 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
         <StepperContent
           canGoBack={false}
           isNextDisabled={
-            !formValues.projectName ||
-            formValues.projectName.length < 4 ||
-            !formValues.projectDefinition ||
-            formValues.projectDefinition.length < 4
+            !formValues.name ||
+            formValues.name.length < 4 ||
+            !formValues.definition ||
+            formValues.definition.length < 4
           }
           title={languageData.CreateProject}
         >
@@ -87,10 +100,10 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                 onChange={(e) => {
                   setFormValues({
                     ...formValues,
-                    projectName: e.target.value,
+                    name: e.target.value,
                   });
                 }}
-                value={formValues.projectName || ""}
+                value={formValues.name || ""}
               />
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.ProjectNameInfo}
@@ -104,10 +117,10 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                 onChange={(e) => {
                   setFormValues({
                     ...formValues,
-                    projectDefinition: e.target.value,
+                    definition: e.target.value,
                   });
                 }}
-                value={formValues.projectDefinition || ""}
+                value={formValues.definition || ""}
               />
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.ProjectDescriptionInfo}
@@ -307,7 +320,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                     {languageData.ProjectName}:
                   </h3>
                   <span className="text-md font-semibold max-w-sm">
-                    {formValues.projectName}
+                    {formValues.name}
                   </span>
                 </div>
                 <div className="flex items-end justify-between gap-4 w-full items-center">
@@ -315,7 +328,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                     {languageData.ProjectDescription}:
                   </h3>
                   <span className="text-md font-semibold max-w-sm">
-                    {formValues.projectDefinition}
+                    {formValues.definition}
                   </span>
                 </div>
                 <div className="flex items-end justify-between gap-4 w-full items-center">
@@ -351,7 +364,7 @@ export default function NewProjectForm({ languageData }: INewProjectFormProps) {
                     {languageData.AdditionalFundingRate}:
                   </h3>
                   <span className="text-md font-semibold max-w-sm">
-                    {formValues.additionalFundRate ?? 0}%
+                    {formValues.additionalFundRate}%
                   </span>
                 </div>
               </div>
