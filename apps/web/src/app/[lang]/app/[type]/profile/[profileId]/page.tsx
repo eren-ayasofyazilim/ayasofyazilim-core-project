@@ -9,7 +9,12 @@ export default async function Page({
   params: { lang: string; type: string; profileId: string };
 }) {
   const { profileId, type } = params;
-  const backer = profileId === "new" ? { type } : await getBacker(profileId);
+  const backer =
+    profileId === "new"
+      ? {
+          type,
+        }
+      : await getBacker(profileId);
 
   return (
     <>

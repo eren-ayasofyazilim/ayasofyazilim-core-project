@@ -8,15 +8,13 @@ export async function loginAsAdmin(page: Page) {
     .getByPlaceholder("name@example.com")
     .fill(process.env.TEST_USERNAME as string);
   await page.getByPlaceholder("name@example.com").press("Tab");
-  await page
-    .getByPlaceholder("Password")
-    .fill(process.env.TEST_PASSWORD as string);
-  await page.getByRole("button", { name: "Login" }).click();
-  await page.url();
+  await page.keyboard.insertText(process.env.TEST_PASSWORD as string);
+  await page.getByRole("button", { name: "Giriş" }).click();
+  await page.waitForURL("**/public");
   await page
     .locator("div")
     .filter({ hasText: /^bursaİlerleyin$/ })
-    .getByRole("button")
+    .getByRole("link")
     .click();
   await page.url();
   await page.waitForURL("**/public");

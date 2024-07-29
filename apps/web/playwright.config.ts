@@ -30,7 +30,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: process.env.CI ? [["html"], ["github"]] : "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -52,23 +52,23 @@ export default defineConfig({
       dependencies: ["setup"],
     },
 
-    {
-      name: "firefox",
-      use: {
-        ...devices["Desktop Firefox"],
-        // storageState: authFile,
-      },
-      // dependencies: ["setup"],
-    },
+    // {
+    //   name: "firefox",
+    //   use: {
+    //     ...devices["Desktop Firefox"],
+    //     // storageState: authFile,
+    //   },
+    //   // dependencies: ["setup"],
+    // },
 
-    {
-      name: "webkit",
-      use: {
-        ...devices["Desktop Safari"],
-        // storageState: authFile,
-      },
-      // dependencies: ["setup"],
-    },
+    // {
+    //   name: "webkit",
+    //   use: {
+    //     ...devices["Desktop Safari"],
+    //     // storageState: authFile,
+    //   },
+    //   // dependencies: ["setup"],
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -91,10 +91,10 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "pnpm run dev",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-  },
+  // /* Run your local dev server before starting the tests */
+  // webServer: {
+  //   command: "pnpm run dev",
+  //   url: "http://127.0.0.1:3000",
+  //   reuseExistingServer: !process.env.CI,
+  // },
 });

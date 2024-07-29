@@ -5,14 +5,14 @@ test.describe("Main Page testing", () => {
     // await loginAsAdmin(page);
     await page.goto("/en/public");
     await page.getByText("konya").click();
-    const cities = ["bursa", "konya", "istanbul", "sakarya"];
+    const cities = ["bursa", "kizilay", "konya", "istanbul", "sakarya"];
     for (const city of cities) {
       await expect(page.getByText(city)).toBeVisible();
     }
     const cityLocator = page
       .locator("div")
       .filter({ hasText: /^İlerleyin$$/ })
-      .getByRole("button");
+      .getByRole("link");
     await expect(cityLocator).toHaveCount(cities.length);
     let index = 0;
     for (let city of cities) {

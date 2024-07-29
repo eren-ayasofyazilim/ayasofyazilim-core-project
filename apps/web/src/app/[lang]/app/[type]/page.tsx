@@ -452,7 +452,7 @@ export default function Page() {
   );
 }
 
-export function AreaChartHero({ item }: any) {
+function AreaChartHero({ item }: any) {
   return (
     <AreaChart
       categories={["SolarPanels", "Inverters"]}
@@ -465,7 +465,7 @@ export function AreaChartHero({ item }: any) {
     />
   );
 }
-export function BarChartHero({ item }: any) {
+function BarChartHero({ item }: any) {
   return (
     <BarChart
       categories={item.categories}
@@ -479,10 +479,10 @@ export function BarChartHero({ item }: any) {
     />
   );
 }
-export function BarListHero({ item }: any) {
+function BarListHero({ item }: any) {
   return <BarList data={item.data} />;
 }
-export function CategoryBarHero({ item }: any) {
+function CategoryBarHero({ item }: any) {
   return (
     <CategoryBar
       className="mx-auto p-4 w-full"
@@ -492,7 +492,7 @@ export function CategoryBarHero({ item }: any) {
     />
   );
 }
-export function LineChartHero({ item }: any) {
+function LineChartHero({ item }: any) {
   return (
     <LineChart
       categories={["SolarPanels", "Inverters"]}

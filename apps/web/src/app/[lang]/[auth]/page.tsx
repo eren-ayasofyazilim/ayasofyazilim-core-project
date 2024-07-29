@@ -28,7 +28,7 @@ export default function Page(): JSX.Element {
   );
   if (!isAuthType(authTypeParam)) {
     return (
-      <Error statusCode={404} title={resources.AbpUi.texts?.PageNotFound} />
+      <Error statusCode={404} title={resources.AbpUi?.texts?.PageNotFound} />
     );
   }
 
@@ -76,7 +76,7 @@ export default function Page(): JSX.Element {
   };
 
   //ResetPassword end
-  let props = {};
+  let props: any;
   switch (authTypeParam) {
     case "login":
       props = {
@@ -107,8 +107,8 @@ export default function Page(): JSX.Element {
         passwordRequirements: {
           passwordRequiredLength: 5,
           passwordRequiredUniqueCharsLength: 3,
-          passwordRequiresDigit: 1,
-          passwordRequiresLower: 1,
+          passwordRequiresDigit: true,
+          passwordRequiresLower: true,
           passwordRequiresNonAlphanumeric: true,
           passwordRequiresUniqueChars: true,
           passwordRequiresUpper: true,
@@ -133,7 +133,7 @@ export default function Page(): JSX.Element {
                 const res = await response.json();
                 if (!res) {
                   setErrorMessage(
-                    resources.AbpIdentity.texts?.[
+                    resources.AbpIdentity?.texts?.[
                       "Volo.Abp.Identity:InvalidToken"
                     ],
                   );

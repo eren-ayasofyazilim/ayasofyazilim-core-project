@@ -12,16 +12,18 @@ export function isServerSide() {
   return typeof window === "undefined";
 }
 
-export async function getLocalizationResources(languageCode: string): Promise<
-  Record<
-    string,
-    | {
-        texts?: Record<string, string> | null | undefined;
-        baseResources?: string[] | null | undefined;
-      }
-    | undefined
-  >
-> {
+export type resourceResult = Record<
+  string,
+  | {
+      texts?: Record<string, string> | null | undefined;
+      baseResources?: string[] | null | undefined;
+    }
+  | undefined
+>;
+
+export async function getLocalizationResources(
+  languageCode: string,
+): Promise<resourceResult> {
   try {
     const response = await fetch(
       `http://${process.env.HOSTNAME}:${process.env.PORT}/api/?lang=${languageCode}`,
@@ -101,38 +103,43 @@ export interface JsonSchema {
   default?: any;
   properties?: Record<string, JsonSchema>;
   displayName: string;
+  items?: SchemaType;
+  additionalProperties?: boolean;
 }
 //group
 export interface SchemaType {
   required?: readonly string[];
   type: string;
-  displayName: string;
-  properties: Record<string, JsonSchema | SchemaType>;
-  additionalProperties: boolean;
+  displayName?: string;
+  properties?: Record<string, JsonSchema | SchemaType>;
+  additionalProperties?: boolean;
+  items?: SchemaType;
 }
 
 function isJsonSchema(object: any): object is JsonSchema {
+  if (!object) return false;
   return "type" in object;
 }
 function isSchemaType(object: any): object is SchemaType {
   return object && "required" in object;
 }
 
+// schema: SchemaType
 export function createZodObject(
-  schema: SchemaType,
+  schema: any,
   positions: any[],
   convertors?: Record<string, any>,
 ): ZodObjectOrWrapped {
   const zodSchema: Record<string, ZodSchema> = {};
   positions.forEach((element: string) => {
     if (element === "extraProperties") return;
-    const props = schema.properties[element];
+    const props = schema?.properties?.[element];
     const isRequired = schema.required?.includes(element) || false;
     if (isSchemaType(props)) {
-      Object.keys(props.properties).forEach(() => {
+      Object.keys(props.properties || {}).forEach(() => {
         zodSchema[element] = createZodObject(
           props,
-          Object.keys(props.properties),
+          Object.keys(props.properties || {}),
         );
       });
     } else if (isJsonSchema(props)) {
@@ -186,12 +193,12 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
   switch (schema.type) {
     case "string":
       zodType = z.string({ description: schema.displayName });
+      if (schema.format === "email") zodType = zodType.email();
       if (schema.maxLength) zodType = zodType.max(schema.maxLength);
       if (schema.minLength) zodType = zodType.min(schema.minLength);
       if (schema.pattern) zodType = zodType.regex(RegExp(schema.pattern));
       if (schema.refine)
         zodType = zodType.refine(schema.refine.callback, schema.refine.params);
-      if (schema.format === "email") zodType = zodType.email();
       if (schema.default) zodType = zodType.default(schema.default);
       if (schema.format === "date-time") zodType = z.coerce.date();
       break;
@@ -214,7 +221,10 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
     case "object":
       zodType = z.object({});
       if (schema.properties) {
-        zodType = createZodObject(schema, Object.keys(schema.properties));
+        zodType = createZodObject(
+          schema as SchemaType,
+          Object.keys(schema.properties),
+        );
       }
       break;
 

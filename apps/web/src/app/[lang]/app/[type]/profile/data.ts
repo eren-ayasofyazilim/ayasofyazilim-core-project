@@ -93,6 +93,7 @@ const $UpwithCrowd_BackerService_Organizations_CreateOrganizationDto = {
 } as const;
 
 const $UpwithCrowd_BackerService_Individuals_CreateIndividualDto = {
+  displayName: "",
   type: "object",
   properties: {
     extraProperties: {
