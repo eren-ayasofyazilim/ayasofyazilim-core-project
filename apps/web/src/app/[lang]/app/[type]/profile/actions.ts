@@ -5,7 +5,7 @@ import { getBackerServiceClient } from "src/lib";
 
 function populateCustomFormData(formdata: any) {
   const customFormData = {
-    entityInformationTypes: [
+    entityInformations: [
       {
         organizations: [
           {
@@ -28,7 +28,7 @@ function populateCustomFormData(formdata: any) {
 
 function populateIndividual(formdata: any) {
   const customFormData = {
-    entityInformationTypes: [
+    entityInformations: [
       {
         individuals: [
           {

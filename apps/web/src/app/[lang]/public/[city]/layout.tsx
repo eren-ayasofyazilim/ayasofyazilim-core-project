@@ -153,7 +153,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     >
       <>
         {children}
-        <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden">
+        <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden flex-wrap">
           {/* <div className="absolute pointer-events-none inset-[-50%] flex items-center justify-center dark:bg-slate-900 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
           <img
             alt=""

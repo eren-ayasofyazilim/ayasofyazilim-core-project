@@ -10,14 +10,21 @@ import { getConfig } from "../config";
 async function getProjects() {
   if (process.env.APPLICATION_NAME === "UPWITHCROWD") {
     const client = await getProjectServiceClient();
-    const projectData = await client.project.getApiProjectServiceProjects();
-    const fundableProjects =
-      projectData.items?.filter(
-        (i) => ProjectStatusEnums[i.status || 0] !== "IN_DRAFT_STAGE",
-      ) || [];
-    return fundableProjects;
+    const fundableProjects = (
+      await client.projectPublic.getApiProjectServicePublicProjects({
+        status: ProjectStatusEnums.FUNDABLE,
+        maxResultCount: 4,
+      })
+    ).items;
+    const projectsWillStartSoon = (
+      await client.projectPublic.getApiProjectServicePublicProjects({
+        status: ProjectStatusEnums.APPROVED,
+        maxResultCount: 4,
+      })
+    ).items;
+    return { fundableProjects, projectsWillStartSoon };
   }
-  return [];
+  return { projectsWillStartSoon: [], fundableProjects: [] };
 }
 export default async function Page({
   params,
@@ -27,7 +34,7 @@ export default async function Page({
   const appName = params.city;
   const config = getConfig(appName);
 
-  const fundableProjects = await getProjects();
+  const { fundableProjects, projectsWillStartSoon } = await getProjects();
 
   const { languageData } = await getResourceData(params.lang);
   const projectURL = getBaseLink(
@@ -43,6 +50,7 @@ export default async function Page({
       fundableProjects={fundableProjects}
       languageData={languageData}
       projectURL={projectURL}
+      projectsWillStartSoon={projectsWillStartSoon}
     />
   );
 }
