@@ -5,12 +5,10 @@ import {
   SectionLayout,
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
-import { PackageSearch } from "lucide-react";
-import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getAdminProjectsServer } from "../action";
+import { Project } from "../project";
 
 export default async function Page({
   params,
@@ -29,7 +27,7 @@ export default async function Page({
     true,
     params.lang,
     true,
-    params.type,
+    params.type
   );
 
   return (
@@ -48,68 +46,29 @@ export default async function Page({
         vertical
       >
         <SectionLayoutContent sectionId="fundable">
-          {fundableProjects.map((project) => (
-            <ProjectCard
-              ProjectStatusEnums={ProjectStatusEnums}
-              actionText={languageData.ViewProject}
-              horizontal
-              key={project.id}
-              languageData={languageData}
-              project={project}
-              projectURL={`${projectURL}/${project.id}`}
-            />
-          ))}
-          {!fundableProjects.length && (
-            <div className="flex h-full">
-              <div className="flex flex-col items-center m-auto">
-                <PackageSearch color="#222" size={120} />
-                <h3 className="mt-2">Henüz yayında olan bir projeniz yok.</h3>
-              </div>
-            </div>
-          )}
+          <Project
+            languageData={languageData}
+            placeHolderText="Henüz yayında olan bir projeniz yok."
+            projectList={fundableProjects}
+            projectURL={projectURL}
+          />
         </SectionLayoutContent>
 
         <SectionLayoutContent sectionId="sent-for-approval">
-          {pendingProjects.map((project) => (
-            <ProjectCard
-              ProjectStatusEnums={ProjectStatusEnums}
-              actionText={languageData.ViewProject}
-              horizontal
-              key={project.id}
-              languageData={languageData}
-              project={project}
-              projectURL={`${projectURL}/${project.id}`}
-            />
-          ))}
-          {!pendingProjects.length && (
-            <div className="flex h-full">
-              <div className="flex flex-col items-center m-auto">
-                <PackageSearch color="#222" size={120} />
-                <h3 className="mt-2">Henüz onay bekleyen bir projeniz yok.</h3>
-              </div>
-            </div>
-          )}
+          <Project
+            languageData={languageData}
+            placeHolderText="Henüz onay bekleyen bir projeniz yok."
+            projectList={pendingProjects}
+            projectURL={projectURL}
+          />
         </SectionLayoutContent>
         <SectionLayoutContent sectionId="completed">
-          {fundedProjects.map((project) => (
-            <ProjectCard
-              ProjectStatusEnums={ProjectStatusEnums}
-              actionText={languageData.ViewProject}
-              horizontal
-              key={project.id}
-              languageData={languageData}
-              project={project}
-              projectURL={`${projectURL}/${project.id}`}
-            />
-          ))}
-          {!fundedProjects.length && (
-            <div className="flex h-full">
-              <div className="flex flex-col items-center m-auto">
-                <PackageSearch color="#222" size={120} />
-                <h3 className="mt-2">Henüz sona ermiş bir projeniz yok.</h3>
-              </div>
-            </div>
-          )}
+          <Project
+            languageData={languageData}
+            placeHolderText="Henüz sona ermiş bir projeniz yok."
+            projectList={fundedProjects}
+            projectURL={projectURL}
+          />
         </SectionLayoutContent>
       </SectionLayout>
     </div>

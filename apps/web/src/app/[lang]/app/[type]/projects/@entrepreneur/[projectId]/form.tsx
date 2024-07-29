@@ -41,7 +41,7 @@ import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
 import { CalendarIcon } from "lucide-react";
-import { redirect } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProjectStatusEnums } from "src/enums/project";
 import { deleteProjectServer, updateProjectServer } from "../../action";
@@ -61,6 +61,7 @@ export default function ProjectForm({
   languageData,
   projectData,
 }: IProjectFormProps) {
+  // const router = useRouter();
   const [formValues, setFormValues] =
     useState<GetApiProjectServiceProjectsByIdResponse>(projectData);
 
@@ -140,7 +141,8 @@ export default function ProjectForm({
       return;
     }
     toast.success("Başarılı.");
-    redirect("/projects");
+    //redirect to projects page with router
+    // router.refresh();
   }
   return (
     <>

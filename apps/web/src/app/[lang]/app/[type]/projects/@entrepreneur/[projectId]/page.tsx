@@ -19,6 +19,7 @@ export default async function Page({ params }: any) {
     await client.projectPublic.getApiProjectServicePublicProjectsDetailById({
       id: projectId,
     });
+
   if (!projectData) {
     redirect(`/app/${params.type}/projects`);
   }

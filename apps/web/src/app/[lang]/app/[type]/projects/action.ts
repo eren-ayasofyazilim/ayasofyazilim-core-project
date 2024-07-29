@@ -21,6 +21,19 @@ export async function getProjectByIdServer(projectId: string) {
     return {} as GetApiProjectServiceProjectsByIdResponse;
   }
 }
+export async function getPublicProjectByIdServer(projectId: string) {
+  try {
+    const client = await getProjectServiceClient();
+
+    const { project, projectSectionRelations } =
+      await client.projectPublic.getApiProjectServicePublicProjectsDetailById({
+        id: projectId,
+      });
+    return { project, projectSectionRelations };
+  } catch (error) {
+    return { project: null, projectSectionRelations: null };
+  }
+}
 
 export async function getProjectsServer(
   status?: 0 | 2 | 1 | 3 | 4 | 5 | 6 | 7 | undefined,
@@ -67,6 +80,9 @@ export async function getUsersProjectsServer() {
     const fundedProjects = projectData.filter(
       (project) => (project.status || 0) > ProjectStatusEnums.FUNDABLE,
     );
+    const approvedProjects = projectData.filter(
+      (project) => project.status === ProjectStatusEnums.APPROVED,
+    );
 
     return {
       pendingProjects,
@@ -74,11 +90,13 @@ export async function getUsersProjectsServer() {
       fundedProjects,
       draftProjects,
       rejectedProjects,
+      approvedProjects,
     };
   } catch (error) {
     return {
       pendingProjects: [],
       fundableProjects: [],
+      approvedProjects: [],
       fundedProjects: [],
       draftProjects: [],
       rejectedProjects: [],

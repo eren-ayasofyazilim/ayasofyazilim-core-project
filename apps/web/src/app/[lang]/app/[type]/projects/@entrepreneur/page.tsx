@@ -10,7 +10,7 @@ import Link from "next/link";
 import { getResourceData } from "src/language-data/Projects/projects";
 import { getBaseLink } from "src/utils";
 import { getUsersProjectsServer } from "../action";
-import { Project } from "../layout";
+import { Project } from "../project";
 
 export default async function Page({
   params,
@@ -20,6 +20,7 @@ export default async function Page({
   const {
     pendingProjects,
     fundableProjects,
+    // approvedProjects,
     fundedProjects,
     draftProjects,
     rejectedProjects,
@@ -53,6 +54,7 @@ export default async function Page({
         defaultActiveSectionId="fundable"
         sections={[
           { id: "fundable", name: "Yayında olan projeler" },
+          // { id: "approved", name: "Onaylanan projeler" },
           { id: "rejected", name: "Reddedilen projeler" },
           { id: "draft", name: "Taslak Projeler" },
           { id: "sent-for-approval", name: "Onay bekleyen projeler" },
@@ -68,6 +70,14 @@ export default async function Page({
             projectURL={projectURL}
           />
         </SectionLayoutContent>
+        {/* <SectionLayoutContent sectionId="approved">
+          <Project
+            languageData={languageData}
+            placeHolderText="Henüz onaylanan bir projeniz yok."
+            projectList={approvedProjects}
+            projectURL={projectURL}
+          />
+        </SectionLayoutContent> */}
         <SectionLayoutContent sectionId="rejected">
           <Project
             languageData={languageData}
