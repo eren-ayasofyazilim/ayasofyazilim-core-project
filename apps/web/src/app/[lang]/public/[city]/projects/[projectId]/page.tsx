@@ -16,7 +16,7 @@ export default async function Page({
   const { languageData } = await getResourceData(lang);
   const client = await getProjectServiceClient();
   const { project: projectData, projectSectionRelations: projectSectionData } =
-    await client.project.getApiProjectServiceProjectsDetailById({
+    await client.projectPublic.getApiProjectServicePublicProjectsDetailById({
       id: projectId,
     });
 

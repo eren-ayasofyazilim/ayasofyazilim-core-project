@@ -47,7 +47,8 @@ function createConfig(
   let config = {
     [key]: {
       description: description(
-        resources?.SettingService?.texts?.[item?.description || ""] ?? item.description
+        resources?.SettingService?.texts?.[item?.description || ""] ??
+          item.description
       ),
       displayName:
         resources?.SettingService?.texts?.[item?.displayName || ""] ??
@@ -93,11 +94,13 @@ function subField(
             [key]: {
               ...Object.assign({}, ...Object.values(subsubitemconfigs)),
               displayName:
-                resources?.SettingService?.texts?.[subitem?.displayName || ""] ??
-                subitem.displayName,
+                resources?.SettingService?.texts?.[
+                  subitem?.displayName || ""
+                ] ?? subitem.displayName,
               description: description(
-                resources?.SettingService?.texts?.[subitem?.description || ""] ??
-                  subitem.description
+                resources?.SettingService?.texts?.[
+                  subitem?.description || ""
+                ] ?? subitem.description
               ),
             },
           };
@@ -260,11 +263,11 @@ function createSchema(
   if (group) {
     properties = Object.assign(
       {},
-      ...group?.items?.map(
+      ...(group?.items?.map(
         (item: UniRefund_SettingService_Items_GroupItemDto) => {
           return createProperties(item);
         }
-      ) || []
+      ) || [])
     );
   } else if (item) {
     if (item.isApplicable && item.subItems && item.subItems.length > 0) {
@@ -356,14 +359,15 @@ export function SettingsView({
   list: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   resources?: any;
 }) {
-  const [activeGroup, setActiveGroup] =
-    useState<UniRefund_SettingService_Groups_GroupDto | undefined>(() => {
-      const test = list?.groups?.find(
-        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key === path
-      );
-      if (test) return test;
-      return list?.groups?.[0];
-    });
+  const [activeGroup, setActiveGroup] = useState<
+    UniRefund_SettingService_Groups_GroupDto | undefined
+  >(() => {
+    const test = list?.groups?.find(
+      (item: UniRefund_SettingService_Items_GroupItemDto) => item.key === path
+    );
+    if (test) return test;
+    return list?.groups?.[0];
+  });
 
   const [content, setContent] = useState<React.ReactElement>(() => {
     const group = activeGroup || list?.groups?.[0] || {};
@@ -392,12 +396,14 @@ export function SettingsView({
     const group =
       list?.groups?.find(
         (s: UniRefund_SettingService_Groups_GroupDto) => s.key === sectionId
-      ) || list?.groups?.[0] || {}; 
+      ) ||
+      list?.groups?.[0] ||
+      {};
     let schema = createSchema(group);
     const formSchema = createZodObject(
       schema,
       group?.items?.map(
-        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key 
+        (item: UniRefund_SettingService_Items_GroupItemDto) => item.key
       ) || []
     ) as AutoFormUtils.ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
@@ -414,21 +420,23 @@ export function SettingsView({
   }
   return (
     <SectionLayout
-      sections={list?.groups?.map((group: any, index: any) => {
-        return {
-          id: group.key,
-          name:
-            resources?.SettingService?.texts[group.displayName] ??
-            group.displayName,
-          value: content,
-        };
-      }) || [
-        {
-          id: "default",
-          name: "Default",
-          value: content,
-        },
-      ]}
+      sections={
+        list?.groups?.map((group: any, index: any) => {
+          return {
+            id: group.key,
+            name:
+              resources?.SettingService?.texts[group.displayName] ??
+              group.displayName,
+            value: content,
+          };
+        }) || [
+          {
+            id: "default",
+            name: "Default",
+            value: content,
+          },
+        ]
+      }
       defaultActiveSectionId={activeGroup?.key || list?.groups?.[0].key || ""}
       openOnNewPage={false}
       showContentInSamePage={true}

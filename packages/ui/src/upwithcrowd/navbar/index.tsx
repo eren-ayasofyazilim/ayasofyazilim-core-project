@@ -15,6 +15,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import AppLogo from "../app-logo";
 import { ProfileMenu } from "../profile-menu";
+import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export type link = {
   text: string;
@@ -172,28 +174,80 @@ function HirevisionNavbar({
   userNavigation?: any;
   languageData: any;
 }): JSX.Element {
-  const [isFixed, setIsFixed] = useState(false);
   const scrollThreshold = 50;
+  const [isFixed, setIsFixed] = useState(
+    (window?.scrollY || 0) >= scrollThreshold
+  );
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     function onScroll() {
-      setIsFixed((window.scrollY || 0) >= scrollThreshold);
+      setIsFixed((window?.scrollY || 0) >= scrollThreshold);
     }
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   return (
     <nav
-      className={`transition-colors duration-1000 w-full flex justify-between border-b items-center gap-4 px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white  backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm border-b-transparent"}`}
+      className={`transition-colors md:duration-500 w-full flex justify-between border-b items-center gap-4 px-4 md:px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white  backdrop-blur-sm" : isMenuOpen ? "bg-white fixed backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm border-b-transparent"}`}
     >
       <Link href={config.link}>
-        <img src={config.logo} className="h-14" />
+        <img src={config.logo} className="h-8 lg:h-14" />
       </Link>
-      <Menubar className="border-0 bg-transparent shadow-none p-none">
+
+      <Button
+        variant={"ghost"}
+        className="p-0 md:hidden"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        <Menu />
+      </Button>
+      {isMenuOpen && (
+        <div className="absolute h-[100vh] top-16 left-0 right-0 w-full z-50 md:hidden">
+          <Menubar className="flex-col p-1 h-full border-b bg-white">
+            {links.map((link) => MenuCreator(link))}
+            <hr className="w-full my-4" />
+            <div className="gap-4 items-center flex flex-col">
+              {user ? (
+                <ProfileMenu
+                  minNavbar={false}
+                  {...userNavigation}
+                  languageData={languageData}
+                />
+              ) : (
+                <div className="grid-cols-2 items-center relative justify-center  grid">
+                  <Link href={userNavigation.loginURL}>
+                    <Button
+                      variant={"outline"}
+                      className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all border-r-0 rounded-r-none"
+                    >
+                      {languageData.LogIn}
+                    </Button>
+                  </Link>
+                  <Link href={userNavigation.registerURL}>
+                    <Button
+                      variant={"outline"}
+                      className="min-w-24 bg-transparent border-black text-black hover:text-white hover:bg-black hover:scale-110 transition-all rounded-l-none"
+                    >
+                      {languageData.Register}
+                    </Button>
+                  </Link>
+                </div>
+              )}
+              {languageSelector ? languageSelector : <></>}
+            </div>
+          </Menubar>
+        </div>
+      )}
+      <Menubar className="border-0 bg-transparent shadow-none p-none hidden md:flex">
         {links.map((link) => MenuCreator(link))}
       </Menubar>
-      <div className="flex gap-4 items-center ">
+      <div className="gap-4 items-center hidden md:flex">
         {user ? (
           <ProfileMenu
             minNavbar={false}
@@ -201,7 +255,7 @@ function HirevisionNavbar({
             languageData={languageData}
           />
         ) : (
-          <div className="grid grid-cols-2 items-center relative justify-center">
+          <div className="grid-cols-2 items-center relative justify-center hidden md:grid">
             <Link href={userNavigation.loginURL}>
               <Button
                 variant={"outline"}

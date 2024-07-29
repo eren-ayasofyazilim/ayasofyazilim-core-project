@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/sonner";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { useState } from "react";
 import { ProjectStatusEnums } from "src/enums/project";
-import { updateProjectStatusServer } from "../action";
+import { updateProjectStatusServer } from "../../action";
 
 export interface IStatusFormProps {
   projectId: string;

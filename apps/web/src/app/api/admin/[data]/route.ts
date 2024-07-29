@@ -237,7 +237,6 @@ export async function GET(
     return new Response(JSON.stringify(data));
   } catch (error: unknown) {
     if (isApiError(error)) {
-      // console.log(error);
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       const message = body.error?.message || error.statusText;
       return errorResponse(message, error.status);
