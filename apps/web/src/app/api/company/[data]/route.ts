@@ -1,6 +1,5 @@
 import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
 import { ApiError } from "@ayasofyazilim/saas/IdentityService";
-import type { GetApiMerchantServiceMerchantsDetailResponse } from "@ayasofyazilim/saas/MerchantService";
 import type { NextRequest } from "next/server";
 import {
   getIdentityServiceClient,
@@ -20,85 +19,48 @@ function isApiError(error: unknown): error is ApiError {
 const clients: Clients = {
   merchants: async () => {
     const client = await getMerchantServiceClient();
-    const merchant = client.merchant;
+    const merchant = client.organization;
 
     return {
       get: async () => {
-        const getDetails: GetApiMerchantServiceMerchantsDetailResponse =
-          await merchant.getApiMerchantServiceMerchantsDetail({
-            maxResultCount: 1000,
-          });
-        return (
-          getDetails.items?.map((item) => {
-            const organization =
-              item.entityInformations?.[0]?.organizations?.[0];
-            return {
-              Company: organization?.name || "",
-              CustomerNumber: organization?.customerNumber || "",
-              ProductGroups:
-                organization?.productGroups?.map((pg) => pg.name) || [],
-              Address:
-                organization?.contactInformation?.addresses?.[0]?.fullAddress ||
-                "",
-            };
-          }) || []
-        );
-      },
-      post: (formdata: any) => {
-        return formdata;
-        // return merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
-        //   {
-        //     requestBody: {
-        //       entityInformationTypes: [
-        //         {
-        //           organizations: [
-        //             {
-        //               name: formdata.Company,
-        //               taxpayerId: "string",
-        //               legalStatusCode: "string",
-        //               customerNumber: formdata.CustomerNumber,
-        //               contactInformation: {
-        //                 startDate: "2024-06-27T10:53:06.853Z",
-        //                 endDate: "2024-06-27T10:53:06.853Z",
-        //                 telephone: [
-        //                   {
-        //                     areaCode: "string",
-        //                     localNumber: "string",
-        //                     ituCountryCode: "string",
-        //                   },
-        //                 ],
-        //                 address: [
-        //                   {
-        //                     typeCode: 0,
-        //                     addressLine: "string",
-        //                     city: "string",
-        //                     terriority: "string",
-        //                     postalCode: "string",
-        //                     country: "string",
-        //                     fullAddress: formdata.Address,
-        //                   },
-        //                 ],
-        //                 email: [
-        //                   {
-        //                     emailAddress: "string",
-        //                   },
-        //                 ],
-        //               },
-        //               productGroups: [
-        //                 {
-        //                   name: formdata.ProductGroups,
-        //                   vatRate: 0,
-        //                   productCode: "string",
-        //                   isActive: true,
-        //                 },
-        //               ],
-        //             },
-        //           ],
-        //         },
-        //       ],
-        //     },
-        //   },
-        // );
+        const getDetails =
+          await merchant.getApiMerchantServiceOrganizationsDetail();
+
+        return getDetails.items?.map((organization) => {
+          const contactInfo = organization.contactInformation || {};
+          const telephone = contactInfo.telephones?.[0] || {};
+          const address = contactInfo.addresses?.[0] || {};
+          const email = contactInfo.emails?.[0] || {};
+          const productGroup = organization.productGroups?.[0] || {};
+
+          return {
+            id: organization.id || "",
+            name: organization.name || "",
+            taxpayerId: organization.taxpayerId || "",
+            legalStatusCode: organization.legalStatusCode || "",
+            customerNumber: organization.customerNumber || "",
+            areaCode: telephone.areaCode || "",
+            localNumber: telephone.localNumber || "",
+            ituCountryCode: telephone.ituCountryCode || "",
+            primaryFlag: telephone.primaryFlag || false,
+            telephoneTypeCode: telephone.typeCode || 0,
+            addressLine: address.addressLine || "",
+            city: address.city || "",
+            terriority: address.terriority || "",
+            postalCode: address.postalCode || "",
+            country: address.country || "",
+            fullAddress: address.fullAddress || "",
+            addressPrimaryFlag: address.primaryFlag || false,
+            addressTypeCode: address.typeCode || 0,
+            emailAddress: email.emailAddress || "",
+            emailPrimaryFlag: email.primaryFlag || false,
+            emailTypeCode: email.typeCode || 0,
+            productName: productGroup.name || "",
+            vatRate: productGroup.vatRate || 0,
+            productCode: productGroup.productCode || "",
+            isActive: productGroup.isActive || false,
+          };
+        });
       },
     };
   },
@@ -335,7 +297,7 @@ const clients: Clients = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     // return status 404
@@ -358,7 +320,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -373,7 +335,7 @@ export async function POST(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Something went wrong");
@@ -382,7 +344,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -397,7 +359,7 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -415,7 +377,7 @@ export async function PUT(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Something went wrong");
