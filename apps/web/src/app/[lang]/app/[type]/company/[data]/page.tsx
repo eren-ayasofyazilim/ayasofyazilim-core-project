@@ -22,7 +22,6 @@ import {
   $showRefund_points,
   $showTax_free,
 } from "./schemas.gen";
-
 async function controlledFetch(
   url: string,
   options: RequestInit,
@@ -44,7 +43,6 @@ async function controlledFetch(
     toast.error("Something went wrong 3 ");
   }
 }
-
 interface formModifier {
   formPositions?: string[];
   excludeList?: string[];
@@ -57,7 +55,6 @@ interface formModifier {
     when: (_value: any) => boolean;
   }[];
 }
-
 interface tableData {
   createFormSchema: formModifier;
   editFormSchema: formModifier;
@@ -67,21 +64,107 @@ interface tableData {
 
 const dataConfig: Record<string, tableData> = {
   merchants: {
-    filterBy: "Company",
+    filterBy: "name",
     createFormSchema: {
-      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      formPositions: [
+        "name",
+        "taxpayerId",
+        "legalStatusCode",
+        "customerNumber",
+        "areaCode",
+        "localNumber",
+        "ituCountryCode",
+        "primaryFlag",
+        "telephoneTypeCode",
+        "addressLine",
+        "city",
+        "terriority",
+        "postalCode",
+        "country",
+        "fullAddress",
+        "addressPrimaryFlag",
+        "addressTypeCode",
+        "emailAddress",
+        "emailPrimaryFlag",
+        "emailTypeCode",
+        "productName",
+        "vatRate",
+        "productCode",
+        "isActive",
+      ],
+
       schema: $createMerchants,
     },
     editFormSchema: {
-      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      formPositions: [
+        "name",
+        "taxpayerId",
+        "legalStatusCode",
+        "customerNumber",
+        "areaCode",
+        "localNumber",
+        "ituCountryCode",
+        "primaryFlag",
+        "telephoneTypeCode",
+        "addressLine",
+        "city",
+        "terriority",
+        "postalCode",
+        "country",
+        "fullAddress",
+        "addressPrimaryFlag",
+        "addressTypeCode",
+        "emailAddress",
+        "emailPrimaryFlag",
+        "emailTypeCode",
+        "productName",
+        "vatRate",
+        "productCode",
+        "isActive",
+      ],
       schema: $editMerchants,
     },
     tableSchema: {
-      formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
+      excludeList: [
+        "id",
+        "creationTime",
+        "creatorId",
+        "lastModificationTime",
+        "lastModifierId",
+        "isDeleted",
+        "deleterId",
+        "deletionTime",
+        "parentCompanyId",
+      ],
+      formPositions: [
+        "name",
+        "taxpayerId",
+        "legalStatusCode",
+        "customerNumber",
+        "areaCode",
+        "localNumber",
+        "ituCountryCode",
+        "primaryFlag",
+        "telephoneTypeCode",
+        "addressLine",
+        "city",
+        "terriority",
+        "postalCode",
+        "country",
+        "fullAddress",
+        "addressPrimaryFlag",
+        "addressTypeCode",
+        "emailAddress",
+        "emailPrimaryFlag",
+        "emailTypeCode",
+        "productName",
+        "vatRate",
+        "productCode",
+        "isActive",
+      ],
       schema: $showMerchants,
     },
   },
-
   refund_points: {
     createFormSchema: {
       formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
@@ -97,7 +180,6 @@ const dataConfig: Record<string, tableData> = {
     },
     filterBy: "Company",
   },
-
   customs: {
     createFormSchema: {
       formPositions: ["Company", "CustomerNumber", "ProductGroups", "Address"],
@@ -113,7 +195,6 @@ const dataConfig: Record<string, tableData> = {
     },
     filterBy: "Company",
   },
-
   tax_free: {
     filterBy: "Company",
     createFormSchema: {
@@ -129,7 +210,6 @@ const dataConfig: Record<string, tableData> = {
       excludeList: ["Company", "CustomerNumber", "ProductGroups", "Address"],
     },
   },
-
   tax_offices: {
     filterBy: "Company",
     createFormSchema: {
@@ -146,7 +226,6 @@ const dataConfig: Record<string, tableData> = {
     },
   },
 };
-
 function convertEnumField(
   value: string | number,
   enumArray: string[],
@@ -156,7 +235,6 @@ function convertEnumField(
   }
   return enumArray.indexOf(value);
 }
-
 export default function Page({
   params,
 }: {
@@ -165,7 +243,6 @@ export default function Page({
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchLink = getBaseLink(`/api/company/${params.data}`);
-
   function getRoles() {
     function onData(data: any) {
       let returnData = data;
@@ -225,12 +302,10 @@ export default function Page({
       );
     },
   };
-
   useEffect(() => {
     setIsLoading(true);
     getRoles();
   }, []);
-
   function parseFormValues(schema: formModifier, data: any) {
     const newSchema = createZodObject(
       schema.schema,
@@ -244,13 +319,11 @@ export default function Page({
       Object.entries(schema.convertors).forEach(([key, value]) => {
         returnObject[key] = convertEnumField(returnObject[key], value);
       });
-
       return returnObject;
     });
     const parsed = transformedSchema.parse(data);
     return parsed;
   }
-
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
     controlledFetch(
@@ -266,7 +339,6 @@ export default function Page({
       "Updated Successfully",
     );
   };
-
   const onDelete = (e: any, row: any) => {
     controlledFetch(
       fetchLink,
@@ -278,7 +350,6 @@ export default function Page({
       "Deleted Successfully",
     );
   };
-
   function convertZod(schema: formModifier) {
     const newSchema = createZodObject(
       schema.schema,
@@ -289,7 +360,6 @@ export default function Page({
   }
   const editFormSchema = dataConfig[params.data].editFormSchema;
   const editFormSchemaZod = convertZod(editFormSchema);
-
   const columnsData: columnsType = {
     type: "Auto",
     data: {
@@ -307,7 +377,6 @@ export default function Page({
       onDelete,
     },
   };
-
   return (
     <Dashboard
       action={action}
