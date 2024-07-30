@@ -1,6 +1,5 @@
 import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
 import { ApiError } from "@ayasofyazilim/saas/IdentityService";
-import type { GetApiMerchantServiceMerchantsDetailResponse } from "@ayasofyazilim/saas/MerchantService";
 import type { NextRequest } from "next/server";
 import {
   getIdentityServiceClient,
@@ -20,86 +19,188 @@ function isApiError(error: unknown): error is ApiError {
 const clients: Clients = {
   merchants: async () => {
     const client = await getMerchantServiceClient();
-    const merchant = client.merchant;
+    const merchant = client.organization;
 
     return {
       get: async () => {
-        const getDetails: GetApiMerchantServiceMerchantsDetailResponse =
-          await merchant.getApiMerchantServiceMerchantsDetail({
-            maxResultCount: 1000,
+        const getDetails =
+          await merchant.getApiMerchantServiceOrganizationsDetail();
+
+        return getDetails.items?.map((organization) => {
+          const contactInfo = organization.contactInformation || {};
+          const telephone = contactInfo.telephones?.[0] || {};
+          const address = contactInfo.addresses?.[0] || {};
+          const email = contactInfo.emails?.[0] || {};
+          const productGroup = organization.productGroups?.[0] || {};
+
+          return {
+            id: organization.id || "",
+            name: organization.name || "",
+            taxpayerId: organization.taxpayerId || "",
+            legalStatusCode: organization.legalStatusCode || "",
+            customerNumber: organization.customerNumber || "",
+            areaCode: telephone.areaCode || "",
+            localNumber: telephone.localNumber || "",
+            ituCountryCode: telephone.ituCountryCode || "",
+            primaryFlag: telephone.primaryFlag || false,
+            telephoneTypeCode: telephone.typeCode || 0,
+            addressLine: address.addressLine || "",
+            city: address.city || "",
+            terriority: address.terriority || "",
+            postalCode: address.postalCode || "",
+            country: address.country || "",
+            fullAddress: address.fullAddress || "",
+            addressPrimaryFlag: address.primaryFlag || false,
+            addressTypeCode: address.typeCode || 0,
+            emailAddress: email.emailAddress || "",
+            emailPrimaryFlag: email.primaryFlag || false,
+            emailTypeCode: email.typeCode || 0,
+            productName: productGroup.name || "",
+            vatRate: productGroup.vatRate || 0,
+            productCode: productGroup.productCode || "",
+            isActive: productGroup.isActive || false,
+          };
+        });
+      },
+      post: async (formdata: any) =>
+        merchant.postApiMerchantServiceOrganizations({
+          requestBody: {
+            name: formdata.name,
+            taxpayerId: formdata.taxpayerId,
+            legalStatusCode: formdata.legalStatusCode,
+            customerNumber: formdata.customerNumber,
+            contactInformation: {
+              telephones: [
+                {
+                  areaCode: formdata.areaCode,
+                  localNumber: formdata.localNumber,
+                  ituCountryCode: formdata.ituCountryCode,
+                  primaryFlag: formdata.primaryFlag,
+                  typeCode: formdata.telephoneTypeCode,
+                },
+              ],
+              addresses: [
+                {
+                  addressLine: formdata.addressLine,
+                  city: formdata.city,
+                  terriority: formdata.terriority,
+                  postalCode: formdata.postalCode,
+                  country: formdata.country,
+                  fullAddress: formdata.fullAddress,
+                  primaryFlag: formdata.addressPrimaryFlag,
+                  typeCode: formdata.addressTypeCode,
+                },
+              ],
+              emails: [
+                {
+                  emailAddress: formdata.emailAddress,
+                  primaryFlag: formdata.emailPrimaryFlag,
+                  typeCode: formdata.emailTypeCode,
+                },
+              ],
+            },
+            productGroups: [
+              {
+                name: formdata.productName,
+                vatRate: formdata.vatRate,
+                productCode: formdata.productCode,
+                isActive: formdata.isActive,
+              },
+            ],
+          },
+          entityInformationTypeId: "e5f7f9e0-ceee-71f6-7b93-3a136c155b82",
+        }),
+      put: async (requestBody: {
+        id: string;
+        requestBody: {
+          name: string;
+          taxpayerId: string;
+          legalStatusCode: string;
+          customerNumber: string;
+          areaCode: string;
+          localNumber: string;
+          ituCountryCode: string;
+          primaryFlag: boolean;
+          telephoneTypeCode: number;
+          addressLine: string;
+          city: string;
+          terriority: string;
+          postalCode: string;
+          country: string;
+          fullAddress: string;
+          addressPrimaryFlag: boolean;
+          addressTypeCode: number;
+          emailAddress: string;
+          emailPrimaryFlag: boolean;
+          emailTypeCode: number;
+          productName: string;
+          vatRate: number;
+          productCode: string;
+          isActive: boolean;
+        };
+      }) => {
+        const currentDetails =
+          await merchant.getApiMerchantServiceOrganizationsDetailById({
+            id: requestBody.id,
           });
-        return (
-          getDetails.items?.map((item) => {
-            const organization =
-              item.entityInformations?.[0]?.organizations?.[0];
-            return {
-              Company: organization?.name || "",
-              CustomerNumber: organization?.customerNumber || "",
-              ProductGroups:
-                organization?.productGroups?.map((pg) => pg.name) || [],
-              Address:
-                organization?.contactInformation?.addresses?.[0]?.fullAddress ||
-                "",
-            };
-          }) || []
-        );
+
+        const updatedDetails = {
+          ...currentDetails,
+          name: requestBody.requestBody.name,
+          taxpayerId: requestBody.requestBody.taxpayerId,
+          legalStatusCode: requestBody.requestBody.legalStatusCode,
+          customerNumber: requestBody.requestBody.customerNumber,
+          contactInformation: {
+            ...currentDetails.contactInformation,
+            telephones: [
+              {
+                ...currentDetails.contactInformation?.telephones?.[0],
+                areaCode: requestBody.requestBody.areaCode,
+                localNumber: requestBody.requestBody.localNumber,
+                ituCountryCode: requestBody.requestBody.ituCountryCode,
+                primaryFlag: requestBody.requestBody.primaryFlag,
+                typeCode: requestBody.requestBody.telephoneTypeCode,
+              },
+            ],
+            addresses: [
+              {
+                ...currentDetails.contactInformation?.addresses?.[0],
+                addressLine: requestBody.requestBody.addressLine,
+                city: requestBody.requestBody.city,
+                terriority: requestBody.requestBody.terriority,
+                postalCode: requestBody.requestBody.postalCode,
+                country: requestBody.requestBody.country,
+                fullAddress: requestBody.requestBody.fullAddress,
+                primaryFlag: requestBody.requestBody.addressPrimaryFlag,
+                typeCode: requestBody.requestBody.addressTypeCode,
+              },
+            ],
+            emails: [
+              {
+                ...currentDetails.contactInformation?.emails?.[0],
+                emailAddress: requestBody.requestBody.emailAddress,
+                primaryFlag: requestBody.requestBody.emailPrimaryFlag,
+                typeCode: requestBody.requestBody.emailTypeCode,
+              },
+            ],
+          },
+          productGroups: [
+            {
+              ...currentDetails.productGroups?.[0],
+              name: requestBody.requestBody.productName,
+              vatRate: requestBody.requestBody.vatRate,
+              productCode: requestBody.requestBody.productCode,
+              isActive: requestBody.requestBody.isActive,
+            },
+          ],
+        };
+
+        return merchant.putApiMerchantServiceOrganizations({
+          requestBody: updatedDetails as any,
+        });
       },
-      post: (formdata: any) => {
-        return formdata;
-        // return merchant.postApiMerchantServiceMerchantsCreateMerchantWithComponents(
-        //   {
-        //     requestBody: {
-        //       entityInformationTypes: [
-        //         {
-        //           organizations: [
-        //             {
-        //               name: formdata.Company,
-        //               taxpayerId: "string",
-        //               legalStatusCode: "string",
-        //               customerNumber: formdata.CustomerNumber,
-        //               contactInformation: {
-        //                 startDate: "2024-06-27T10:53:06.853Z",
-        //                 endDate: "2024-06-27T10:53:06.853Z",
-        //                 telephone: [
-        //                   {
-        //                     areaCode: "string",
-        //                     localNumber: "string",
-        //                     ituCountryCode: "string",
-        //                   },
-        //                 ],
-        //                 address: [
-        //                   {
-        //                     typeCode: 0,
-        //                     addressLine: "string",
-        //                     city: "string",
-        //                     terriority: "string",
-        //                     postalCode: "string",
-        //                     country: "string",
-        //                     fullAddress: formdata.Address,
-        //                   },
-        //                 ],
-        //                 email: [
-        //                   {
-        //                     emailAddress: "string",
-        //                   },
-        //                 ],
-        //               },
-        //               productGroups: [
-        //                 {
-        //                   name: formdata.ProductGroups,
-        //                   vatRate: 0,
-        //                   productCode: "string",
-        //                   isActive: true,
-        //                 },
-        //               ],
-        //             },
-        //           ],
-        //         },
-        //       ],
-        //     },
-        //   },
-        // );
-      },
+      delete: async (id: string) =>
+        merchant.deleteApiMerchantServiceOrganizations({ id }),
     };
   },
 
