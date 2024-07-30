@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("test", async ({ page }) => {
+test("create delete backer test", async ({ page }) => {
   test.setTimeout(120000);
   const name = "Test Backer #" + Date.now();
   await page.goto("http://localhost:3000/en/public");
