@@ -9,7 +9,6 @@ import { useState } from "react";
 
 export default function Form({ backerProfiles }: any) {
   const [isLoading, setIsLoading] = useState(false);
-
   return (
     <Card className="m-auto">
       <SectionLayoutNavbar
@@ -38,16 +37,17 @@ export default function Form({ backerProfiles }: any) {
                 </div>
               </div>
               <div className="ml-auto">
-                <Link href={`profile/${i.backerId}`}>
-                  <Button
-                    onClick={() => {
-                      setIsLoading(true);
-                    }}
-                    variant="link"
-                  >
+                <Button
+                  onClick={() => {
+                    setIsLoading(true);
+                  }}
+                  variant="link"
+                  asChild
+                >
+                  <Link href={`profile/${i.backerId}`} title={i.name}>
                     <Edit className="w-5 h-5 text-muted-foreground" />
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </div>
           ))
