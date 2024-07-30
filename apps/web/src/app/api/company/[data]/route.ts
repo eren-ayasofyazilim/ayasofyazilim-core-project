@@ -199,6 +199,8 @@ const clients: Clients = {
           requestBody: updatedDetails as any,
         });
       },
+      delete: async (id: string) =>
+        merchant.deleteApiMerchantServiceOrganizations({ id }),
     };
   },
 
