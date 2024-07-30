@@ -110,6 +110,95 @@ const clients: Clients = {
           },
           entityInformationTypeId: "e5f7f9e0-ceee-71f6-7b93-3a136c155b82",
         }),
+      put: async (requestBody: {
+        id: string;
+        requestBody: {
+          name: string;
+          taxpayerId: string;
+          legalStatusCode: string;
+          customerNumber: string;
+          areaCode: string;
+          localNumber: string;
+          ituCountryCode: string;
+          primaryFlag: boolean;
+          telephoneTypeCode: number;
+          addressLine: string;
+          city: string;
+          terriority: string;
+          postalCode: string;
+          country: string;
+          fullAddress: string;
+          addressPrimaryFlag: boolean;
+          addressTypeCode: number;
+          emailAddress: string;
+          emailPrimaryFlag: boolean;
+          emailTypeCode: number;
+          productName: string;
+          vatRate: number;
+          productCode: string;
+          isActive: boolean;
+        };
+      }) => {
+        const currentDetails =
+          await merchant.getApiMerchantServiceOrganizationsDetailById({
+            id: requestBody.id,
+          });
+
+        const updatedDetails = {
+          ...currentDetails,
+          name: requestBody.requestBody.name,
+          taxpayerId: requestBody.requestBody.taxpayerId,
+          legalStatusCode: requestBody.requestBody.legalStatusCode,
+          customerNumber: requestBody.requestBody.customerNumber,
+          contactInformation: {
+            ...currentDetails.contactInformation,
+            telephones: [
+              {
+                ...currentDetails.contactInformation?.telephones?.[0],
+                areaCode: requestBody.requestBody.areaCode,
+                localNumber: requestBody.requestBody.localNumber,
+                ituCountryCode: requestBody.requestBody.ituCountryCode,
+                primaryFlag: requestBody.requestBody.primaryFlag,
+                typeCode: requestBody.requestBody.telephoneTypeCode,
+              },
+            ],
+            addresses: [
+              {
+                ...currentDetails.contactInformation?.addresses?.[0],
+                addressLine: requestBody.requestBody.addressLine,
+                city: requestBody.requestBody.city,
+                terriority: requestBody.requestBody.terriority,
+                postalCode: requestBody.requestBody.postalCode,
+                country: requestBody.requestBody.country,
+                fullAddress: requestBody.requestBody.fullAddress,
+                primaryFlag: requestBody.requestBody.addressPrimaryFlag,
+                typeCode: requestBody.requestBody.addressTypeCode,
+              },
+            ],
+            emails: [
+              {
+                ...currentDetails.contactInformation?.emails?.[0],
+                emailAddress: requestBody.requestBody.emailAddress,
+                primaryFlag: requestBody.requestBody.emailPrimaryFlag,
+                typeCode: requestBody.requestBody.emailTypeCode,
+              },
+            ],
+          },
+          productGroups: [
+            {
+              ...currentDetails.productGroups?.[0],
+              name: requestBody.requestBody.productName,
+              vatRate: requestBody.requestBody.vatRate,
+              productCode: requestBody.requestBody.productCode,
+              isActive: requestBody.requestBody.isActive,
+            },
+          ],
+        };
+
+        return merchant.putApiMerchantServiceOrganizations({
+          requestBody: updatedDetails as any,
+        });
+      },
     };
   },
 
