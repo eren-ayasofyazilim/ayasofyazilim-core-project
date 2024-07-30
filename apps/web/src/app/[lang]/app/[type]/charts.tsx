@@ -398,7 +398,7 @@ export default function Charts() {
     setListOrder(
       list.map((item: any, index: any) => {
         return { ...item, order: index + 1 };
-      })
+      }),
     );
   }
   function handleEditMode() {
