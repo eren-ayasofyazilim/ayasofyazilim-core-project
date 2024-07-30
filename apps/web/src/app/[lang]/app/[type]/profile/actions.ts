@@ -1,6 +1,7 @@
 "use server";
 
 import type { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
+import { revalidatePath } from "next/cache";
 import { getBackerServiceClient } from "src/lib";
 
 function populateCustomFormData(formdata: any) {
@@ -9,17 +10,23 @@ function populateCustomFormData(formdata: any) {
       {
         organizations: [
           {
-            name: formdata.companyName,
+            name: formdata.name,
             taxpayerId: formdata.taxpayerId,
             legalStatusCode: formdata.legalStatusCode,
             customerNumber: formdata.customerNumber,
             contactInformation: {
-              telephones: [{ ...formdata.telephone }],
+              telephones: formdata.telephone,
               addresses: [{ ...formdata.address }],
               emails: [{ emailAddress: formdata.emailAddress }],
             },
           },
         ],
+      },
+    ],
+    affiliations: [
+      {
+        name: "string",
+        description: "string",
       },
     ],
   };
@@ -40,17 +47,9 @@ function populateIndividual(formdata: any) {
               officialName: formdata.name,
             },
             contactInformation: {
-              telephones: [{ ...formdata.telephone }],
-              addresses: [
-                {
-                  ...formdata.address,
-                },
-              ],
-              emails: [
-                {
-                  emailAddress: formdata.emailAddress,
-                },
-              ],
+              telephones: formdata.telephone,
+              addresses: [{ ...formdata.address }],
+              emails: [{ emailAddress: formdata.emailAddress }],
             },
             personalSummaries: [
               {
@@ -65,6 +64,12 @@ function populateIndividual(formdata: any) {
         ],
       },
     ],
+    affiliations: [
+      {
+        name: "string",
+        description: "string",
+      },
+    ],
   };
   return customFormData;
 }
@@ -76,6 +81,7 @@ export async function postBacker(formdata: any) {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
       requestBody: populateCustomFormData(formdata),
     });
+    revalidatePath("/");
   } catch (e) {
     result = { error: e };
   }
@@ -90,6 +96,7 @@ export async function postIndividual(formdata: any) {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
       requestBody: populateIndividual(formdata),
     });
+    revalidatePath("/");
   } catch (e) {
     result = { error: e };
   }
@@ -131,6 +138,7 @@ export async function deleteBacker(backerId: string) {
   const result = await client.backer.deleteApiBackerServiceBackers({
     id: backerId,
   });
+  revalidatePath("");
   return result;
 }
 
@@ -140,6 +148,7 @@ export async function putBacker(backerId: string, formdata: any) {
     id: backerId,
     requestBody: populateCustomFormData(formdata),
   });
+  revalidatePath("/");
   return result;
 }
 

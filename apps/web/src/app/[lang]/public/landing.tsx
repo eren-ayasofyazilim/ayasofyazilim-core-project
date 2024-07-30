@@ -241,7 +241,7 @@ export default function Page({
         <div className="text-3xl text-center font-bold mb-8">
           Yakında Yatırma Açılacak Projeler
         </div>
-        <div className="flex flex-row flex-wrap gap-3 justify-center">
+        <div className="flex flex-row flex-wrap gap-3 justify-center mb-5">
           {projectsWillStartSoon?.map((project: any) => (
             <ProjectCard
               ProjectStatusEnums={ProjectStatusEnums}
