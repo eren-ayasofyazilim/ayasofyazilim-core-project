@@ -27,7 +27,7 @@ export default async function Page({
     true,
     params.lang,
     true,
-    params.type
+    params.type,
   );
 
   return (
