@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("test", async ({ page }) => {
+test("create update and delete project", async ({ page }) => {
   test.setTimeout(120000);
   const name = "Test Project #" + Date.now();
   const tiptap =
@@ -137,12 +137,12 @@ test("test", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Reddet" }).nth(1)).toBeVisible(
     {
       timeout: 15000,
-    },
+    }
   );
   await page.getByRole("button", { name: "Reddet" }).nth(1).click();
 
   await expect(
-    page.getByLabel("Ek Fonlama").getByText("Ek Fonlama"),
+    page.getByLabel("Ek Fonlama").getByText("Ek Fonlama")
   ).toBeVisible({
     timeout: 15000,
   });
@@ -160,7 +160,7 @@ test("test", async ({ page }) => {
     .click();
 
   await expect(
-    page.getByRole("button", { name: "Değerlendirmeyi Tamamla" }),
+    page.getByRole("button", { name: "Değerlendirmeyi Tamamla" })
   ).toBeVisible({
     timeout: 15000,
   });
