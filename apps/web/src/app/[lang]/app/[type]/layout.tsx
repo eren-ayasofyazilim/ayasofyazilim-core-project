@@ -47,7 +47,14 @@ export default async function Layout({ children, params }: LayoutProps) {
   const session = await auth();
   const user = session?.user;
 
-  const arrayOf = ["identity"];
+  const arrayOf = [
+    "openiddict",
+    "admin",
+    "saas",
+    "identity",
+    "auditLogs",
+    "textTemplates",
+  ];
   const userNavigation = {
     username: user?.userName ?? "undefined",
     initials: user?.name?.substring(0, 2).toUpperCase(),
@@ -92,10 +99,10 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang,
+        params.lang
       ),
       type: "admin",
-      appType: "upwithcrowd",
+      appType: "admin",
       icon: <Presentation className="text-slate-500 w-4" />,
     }));
 
@@ -115,7 +122,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       icon: <Presentation className="text-slate-500 w-4" />,
       submenu: dashboards,
       type: "admin",
-      appType: "admin",
+      appType: "unirefund",
     },
     ...dashboards,
     {
