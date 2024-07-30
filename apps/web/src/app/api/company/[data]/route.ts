@@ -436,7 +436,7 @@ const clients: Clients = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { data: string } }
+  { params }: { params: { data: string } },
 ) {
   if (!clients[params.data]) {
     // return status 404
@@ -459,7 +459,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { data: string } }
+  { params }: { params: { data: string } },
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -474,7 +474,7 @@ export async function POST(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status
+        error.status,
       );
     }
     return errorResponse("Something went wrong");
@@ -483,7 +483,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { data: string } }
+  { params }: { params: { data: string } },
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -498,7 +498,7 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { data: string } }
+  { params }: { params: { data: string } },
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -516,7 +516,7 @@ export async function PUT(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status
+        error.status,
       );
     }
     return errorResponse("Something went wrong");
