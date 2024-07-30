@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: any }) {
           projectId={projectId}
         />
       </div>
-      <div className="basis-2/5 min-w-72">
+      <div className="basis-2/5 min-w-72 max-w-96">
         <ProjectCard
           ProjectStatusEnums={ProjectStatusEnums}
           languageData={languageData}

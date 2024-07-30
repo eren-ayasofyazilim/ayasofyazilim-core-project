@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
 import ConfirmDialog from "@repo/ayasofyazilim-ui/molecules/confirmation-modal";
-import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -139,37 +138,36 @@ export function BackerForm({
           </Button>
         )}
       </div>
-      <ScrollArea className="h-full ">
-        <AutoForm
-          className="pb-10"
-          fieldConfig={{
-            generalInformation: {
-              phoneNumber: {
-                fieldType: "phone",
-                inputProps: {
-                  showLabel: true,
-                },
+      {/* <ScrollArea className="h-full "> */}
+      <AutoForm
+        className="pb-10"
+        fieldConfig={{
+          generalInformation: {
+            phoneNumber: {
+              fieldType: "phone",
+              inputProps: {
+                showLabel: true,
               },
             },
-          }}
-          formSchema={formSchema[formType]}
-          onSubmit={(formData) => {
-            submitFormData(formData);
-          }}
-          showInRow
-          values={backerData}
-        >
-          {isCreated ||
-          (profileId !== "new-organization" &&
-            profileId !== "new-individual") ? (
-            <></>
-          ) : (
-            <AutoFormSubmit>
-              <>Kaydet</>
-            </AutoFormSubmit>
-          )}
-        </AutoForm>
-      </ScrollArea>
+          },
+        }}
+        formSchema={formSchema[formType]}
+        onSubmit={(formData) => {
+          submitFormData(formData);
+        }}
+        showInRow
+        values={backerData}
+      >
+        {isCreated ||
+        (profileId !== "new-organization" && profileId !== "new-individual") ? (
+          <></>
+        ) : (
+          <AutoFormSubmit>
+            <>Kaydet</>
+          </AutoFormSubmit>
+        )}
+      </AutoForm>
+      {/* </ScrollArea> */}
 
       <ConfirmDialog
         description={confirmDialogContent.description}

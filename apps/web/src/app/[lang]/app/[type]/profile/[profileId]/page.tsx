@@ -23,11 +23,15 @@ export default async function Page({
     <>
       <PageHeader
         description={
-          profileId === "new"
+          profileId === "new-individual" || profileId === "new-organization"
             ? "Buradan yeni bir yatırım profili oluşturabilirsiniz."
             : "Yatırımcı profilinizi buradan düzenleyebilirsiniz."
         }
-        title={profileId === "new" ? "Profil Oluştur" : "Profilini Düzenle"}
+        title={
+          profileId === "new-individual" || profileId === "new-organization"
+            ? "Profil Oluştur"
+            : "Profilini Düzenle"
+        }
       />
 
       <BackerForm
