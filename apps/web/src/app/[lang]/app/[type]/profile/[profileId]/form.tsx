@@ -138,7 +138,6 @@ export function BackerForm({
           </Button>
         )}
       </div>
-      {/* <ScrollArea className="h-full "> */}
       <AutoForm
         className="pb-10"
         fieldConfig={{
@@ -167,7 +166,6 @@ export function BackerForm({
           </AutoFormSubmit>
         )}
       </AutoForm>
-      {/* </ScrollArea> */}
 
       <ConfirmDialog
         description={confirmDialogContent.description}

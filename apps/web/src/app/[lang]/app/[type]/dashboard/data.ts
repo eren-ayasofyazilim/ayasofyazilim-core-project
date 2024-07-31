@@ -193,7 +193,7 @@ export const dataConfig: Record<string, any> = {
     },
     scopes: {
       createFormSchema: {
-        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
       },
       tableSchema: {
@@ -201,7 +201,7 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
       },
       editFormSchema: {
-        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
       },
       filterBy: "name",
@@ -223,7 +223,7 @@ export const dataConfig: Record<string, any> = {
           cultureName: {
             data: async () => {
               return fetch(getBaseLink("api/admin/culture")).then((data) =>
-                data.json(),
+                data.json()
               );
             },
             covertTo: "displayName",
@@ -234,7 +234,7 @@ export const dataConfig: Record<string, any> = {
           uiCultureName: {
             data: async () => {
               return fetch(getBaseLink("api/admin/culture")).then((data) =>
-                data.json(),
+                data.json()
               );
             },
             covertTo: "displayName",
@@ -307,7 +307,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
+                data.json()
               );
             },
             get: "displayName",
@@ -336,7 +336,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: async () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
+                data.json()
               );
             },
             covertTo: "editionName",
@@ -362,7 +362,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: async () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
+                data.json()
               );
             },
             covertTo: "editionName",
