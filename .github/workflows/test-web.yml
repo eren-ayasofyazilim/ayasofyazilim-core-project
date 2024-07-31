@@ -82,6 +82,6 @@ jobs:
     - name: connect to SSH
       run: |
         ssh ubuntu
-        cd ~/frontend/dev_upwithcrowd
+        cd "~/frontend/dev_upwithcrowd"
         chmod 777 publish.sh
         ./publish.sh 1453
