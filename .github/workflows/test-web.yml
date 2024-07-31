@@ -80,9 +80,4 @@ jobs:
     #     path: apps/web/playwright-report/
     #     retention-days: 30
     - name: Execute remote script
-      run: |
-        ssh ubuntu << 'EOF'
-        cd ~/frontend/dev_upwithcrowd
-        chmod 777 publish.sh
-        ./publish.sh 1453
-        EOF
+      run: ssh ubuntu "cd ~/frontend/dev_upwithcrowd && chmod 777 publish.sh && ./publish.sh 1453"
