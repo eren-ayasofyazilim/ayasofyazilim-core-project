@@ -63,7 +63,6 @@ test.describe("Upwithcrowd Backer test", () => {
   });
 
   test("create backer individual", async ({ page }) => {
-    
     await page.getByRole("button", { name: "Yeni Profil" }).click();
     await page.getByRole("link", { name: "Bireysel Profil" }).click();
     await page.getByLabel("Name", { exact: true }).click();
@@ -94,7 +93,6 @@ test.describe("Upwithcrowd Backer test", () => {
   });
 
   test("delete backer individual", async ({ page }) => {
-    
     await page.getByRole("link", { name: name }).click();
     await page.getByRole("button", { name: "Profili Sil" }).click();
     await page.getByRole("button", { name: "Evet" }).click();
