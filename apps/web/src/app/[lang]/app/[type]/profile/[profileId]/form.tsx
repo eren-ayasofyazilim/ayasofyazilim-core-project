@@ -22,9 +22,13 @@ function initBackerData(backer: any) {
     address: backer.address,
     generalInformation: {
       name: backer.name,
+      companyName: backer.companyName,
+      taxpayerId: backer.taxpayerId,
+      legalStatusCode: backer.legalStatusCode,
+      customerNumber: backer.customerNumber,
       emailAddress: backer.emailAddress,
-      phoneNumber: backer?.localNumber
-        ? `+${backer?.areaCode}${backer?.localNumber}`
+      phoneNumber: backer?.telephone?.localNumber
+        ? `+${backer?.telephone?.areaCode}${backer?.telephone?.localNumber}`
         : "+90",
     },
   };
@@ -62,6 +66,7 @@ export function BackerForm({
       put: putBacker,
     },
   };
+
   const isPhoneValid = (phone: string) => {
     try {
       const phoneUtil = PhoneNumberUtil.getInstance();

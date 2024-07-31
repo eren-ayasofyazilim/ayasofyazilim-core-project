@@ -112,7 +112,7 @@ export default function ProjectForm({
 
       const result = await updateProjectServer(
         projectId,
-        formValues as PutApiProjectServiceProjectsByIdData["requestBody"],
+        formValues as PutApiProjectServiceProjectsByIdData["requestBody"]
       );
       if (result.status === 200) {
         setIsSubmitDisabled(true);
@@ -147,7 +147,12 @@ export default function ProjectForm({
         type="single"
         value={accordionTab}
       >
-        <AccordionItem className="border" value="basic-information">
+        <AccordionItem
+          className={
+            isChecked.generalInformation ? "border" : "border border-red-300"
+          }
+          value="basic-information"
+        >
           <AccordionStepperHeader checked={isChecked.generalInformation}>
             Temel Bilgiler
           </AccordionStepperHeader>
@@ -203,7 +208,9 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.budget ? "border my-2" : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.budget}
           value="budget"
         >
@@ -281,7 +288,11 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.additionalFunding
+              ? "border my-2"
+              : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.additionalFunding}
           value="additional-funding"
         >
@@ -360,7 +371,9 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.date ? "border my-2" : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.date}
           value="date"
         >
@@ -376,7 +389,7 @@ export default function ProjectForm({
                       className={cn(
                         "w-[280px] justify-start text-left font-normal",
                         !formValues.startDate &&
-                          "text-muted-foreground border-red-500",
+                          "text-muted-foreground border-red-500"
                       )}
                       variant="outline"
                     >
