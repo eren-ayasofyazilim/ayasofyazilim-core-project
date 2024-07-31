@@ -79,9 +79,5 @@ jobs:
     #     name: playwright-report
     #     path: apps/web/playwright-report/
     #     retention-days: 30
-    - name: connect to SSH
-      run: |
-        ssh ubuntu
-        cd "~/frontend/dev_upwithcrowd"
-        chmod 777 publish.sh
-        ./publish.sh 1453
+    - name: Execute remote script
+      run: ssh ubuntu "cd ~/frontend/dev_upwithcrowd && chmod 777 publish.sh && ./publish.sh 1453"
