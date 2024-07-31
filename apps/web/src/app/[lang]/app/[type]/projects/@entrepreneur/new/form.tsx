@@ -290,7 +290,7 @@ export default function NewProjectForm({
                 <Link
                   href={getBaseLink(
                     `app/entrepreneur/projects/${projectId}`,
-                    true
+                    true,
                   )}
                 >
                   {languageData.ViewProject}
