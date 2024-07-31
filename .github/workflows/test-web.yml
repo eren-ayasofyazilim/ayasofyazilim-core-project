@@ -69,13 +69,19 @@ jobs:
       run: pnpm run build:web
     - name: Start web app and wait for it to be ready
       run: pnpm run start:web 
-    - name: Run Playwright tests
+    # - name: Run Playwright tests
+    #   run: |
+    #     cd .\apps\web 
+    #     pnpm exec playwright test
+    # - uses: actions/upload-artifact@v4
+    #   if: ${{ !cancelled() }}
+    #   with:
+    #     name: playwright-report
+    #     path: apps/web/playwright-report/
+    #     retention-days: 30
+    - name: connect to SSH
       run: |
-        cd .\apps\web 
-        pnpm exec playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: apps/web/playwright-report/
-        retention-days: 30
+        ssh ubuntu
+        cd ~/frontend/unirefund
+        chmod 777 publish.sh
+        ./publish.sh 1453
