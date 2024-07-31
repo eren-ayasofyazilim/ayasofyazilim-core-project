@@ -72,7 +72,7 @@ export default function NewProjectForm({
     setLoading(false);
   }
   return (
-    <Card className="p-6">
+    <Card className="px-6 py-4">
       <Stepper
         activeTabIndex={activeTabIndex}
         nextButtonText={languageData.Next}
@@ -93,7 +93,7 @@ export default function NewProjectForm({
             <h4 className="text-2xl font-bold text-black">
               {languageData.CreateProject}
             </h4>
-            <div className="grid w-full items-center gap-3 mt-4">
+            <div className="grid w-full items-center gap-3 mt-2">
               <Label htmlFor="projectName">{languageData.ProjectName}</Label>
               <Input
                 id="projectName"
@@ -142,7 +142,7 @@ export default function NewProjectForm({
               {languageData.ProjectDetails}
             </h4>
 
-            <div className="grid w-full items-center gap-3 mt-4 ">
+            <div className="grid w-full items-center gap-3 mt-2 ">
               <Label htmlFor="fundCollectionType">
                 {languageData.FundCollectionType}
               </Label>
@@ -175,7 +175,7 @@ export default function NewProjectForm({
                 {languageData.FundCollectionTypeInfo}
               </p>
             </div>
-            <div className="grid w-full items-center gap-3 mt-4 ">
+            <div className="grid w-full items-center gap-3 mt-2 ">
               <div className="relative">
                 <NumericInput
                   direction="column"
@@ -210,7 +210,7 @@ export default function NewProjectForm({
               {languageData.AdditionalFunding}
             </h4>
 
-            <div className="grid w-full items-center gap-3 mt-4 ">
+            <div className="grid w-full items-center gap-3 mt-2 ">
               <Label htmlFor="overFunding">
                 {languageData.AdditionalFunding}
               </Label>
@@ -249,7 +249,7 @@ export default function NewProjectForm({
               >
                 <AccordionItem value="item-1">
                   <AccordionContent>
-                    <div className="grid w-full items-center gap-3 mt-4 ">
+                    <div className="grid w-full items-center gap-3 mt-2 ">
                       <div className="relative">
                         <NumericInput
                           direction="column"
