@@ -1,4 +1,32 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
+import { expectStatusMessage } from "tests/utils";
+
+async function fillCommonInformation(page: Page){
+  await page.getByLabel("Email Address").click();
+  await page.getByLabel("Email Address").fill("abc@asd.com");
+  await page.locator('input[type="tel"]').click();
+  await page.keyboard.type("5555555555");
+  await page
+      .locator("div")
+      .filter({ hasText: /^Type Code01$/ })
+      .getByRole("combobox")
+      .click();
+    await page.getByLabel("1", { exact: true }).click();
+    await page.getByLabel("Address Line").click();
+    await page.getByLabel("Address Line").fill("adres");
+    await page.getByLabel("Address Line").press("Tab");
+    await page.getByLabel("City", { exact: true }).fill("adres");
+    await page.getByLabel("City", { exact: true }).press("Tab");
+    await page.getByLabel("Terriority").fill("adres");
+    await page.getByLabel("Terriority").press("Tab");
+    await page.getByLabel("Postal Code").fill("100");
+    await page.getByLabel("Postal Code").press("Tab");
+    await page.getByLabel("Country", { exact: true }).fill("adres");
+    await page.getByLabel("Country", { exact: true }).press("Tab");
+    await page.getByLabel("Full Address").fill("adres");
+    await page.getByRole("button", { name: "Kaydet" }).click();
+    await expectStatusMessage(page, "Profil oluşturuldu.");
+} 
 
 test.describe("Upwithcrowd Backer test", () => {
   test.setTimeout(120000);
@@ -27,32 +55,7 @@ test.describe("Upwithcrowd Backer test", () => {
     await page.getByLabel("Legal Status Code").fill("1");
     await page.getByLabel("Customer Number").click();
     await page.getByLabel("Customer Number").fill("12");
-    await page.getByLabel("Email Address").click();
-    await page.getByLabel("Email Address").fill("asd@asd.com");
-    await page.locator('input[type="tel"]').click();
-
-    await page.keyboard.type("5555555555");
-    await page
-      .locator("div")
-      .filter({ hasText: /^Type Code01$/ })
-      .getByRole("combobox")
-      .click();
-    await page.getByLabel("1", { exact: true }).click();
-    await page.getByLabel("Address Line").click();
-    await page.getByLabel("Address Line").fill("adres");
-    await page.getByLabel("City", { exact: true }).fill("ad");
-    await page.getByLabel("City", { exact: true }).click();
-    await page.getByLabel("City", { exact: true }).fill("adres");
-    await page.getByLabel("Terriority").click();
-    await page.getByLabel("Terriority").fill("adres");
-    await page.getByLabel("Postal Code").click();
-    await page.getByLabel("Postal Code").fill("2");
-    await page.getByLabel("Country", { exact: true }).fill("ad");
-    await page.getByLabel("Country", { exact: true }).click();
-    await page.getByLabel("Country", { exact: true }).fill("adres");
-    await page.getByLabel("Full Address").click();
-    await page.getByLabel("Full Address").fill("adres");
-    await page.getByRole("button", { name: "Kaydet" }).click();
+    await fillCommonInformation(page);
   });
 
   test("delete backer company", async ({ page }) => {
@@ -60,6 +63,7 @@ test.describe("Upwithcrowd Backer test", () => {
     await page.getByRole("link", { name: name }).click();
     await page.getByRole("button", { name: "Profili Sil" }).click();
     await page.getByRole("button", { name: "Evet" }).click();
+    await expectStatusMessage(page, "Profil silindi.");
   });
 
   test("create backer individual", async ({ page }) => {
@@ -67,34 +71,13 @@ test.describe("Upwithcrowd Backer test", () => {
     await page.getByRole("link", { name: "Bireysel Profil" }).click();
     await page.getByLabel("Name", { exact: true }).click();
     await page.getByLabel("Name", { exact: true }).fill(name);
-    await page.getByLabel("Email Address").click();
-    await page.getByLabel("Email Address").fill("abc@asd.com");
-    await page.locator('input[type="tel"]').click();
-    await page.keyboard.type("5555555555");
-    await page
-      .locator("div")
-      .filter({ hasText: /^Type Code01$/ })
-      .getByRole("combobox")
-      .click();
-    await page.getByLabel("1", { exact: true }).click();
-    await page.getByLabel("Address Line").click();
-    await page.getByLabel("Address Line").fill("adres");
-    await page.getByLabel("Address Line").press("Tab");
-    await page.getByLabel("City", { exact: true }).fill("adres");
-    await page.getByLabel("City", { exact: true }).press("Tab");
-    await page.getByLabel("Terriority").fill("adres");
-    await page.getByLabel("Terriority").press("Tab");
-    await page.getByLabel("Postal Code").fill("100");
-    await page.getByLabel("Postal Code").press("Tab");
-    await page.getByLabel("Country", { exact: true }).fill("adres");
-    await page.getByLabel("Country", { exact: true }).press("Tab");
-    await page.getByLabel("Full Address").fill("adres");
-    await page.getByRole("button", { name: "Kaydet" }).click();
+    await fillCommonInformation(page);
   });
 
   test("delete backer individual", async ({ page }) => {
     await page.getByRole("link", { name: name }).click();
     await page.getByRole("button", { name: "Profili Sil" }).click();
     await page.getByRole("button", { name: "Evet" }).click();
+    await expectStatusMessage(page, "Profil silindi.");
   });
 });

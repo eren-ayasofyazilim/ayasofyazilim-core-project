@@ -1,4 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
+import { expectStatusMessage } from "./utils";
 
 async function clickOrganizationImage(
   page: Page,
@@ -19,12 +20,7 @@ async function expectOrganizationVisible(page: Page, organizationName: string) {
   ).toBeVisible();
 }
 
-async function expectStatusMessage(
-  page: Page,
-  message: string | RegExp | readonly (string | RegExp)[],
-) {
-  await expect(page.getByRole("status")).toContainText(message);
-}
+
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/en/app/admin");

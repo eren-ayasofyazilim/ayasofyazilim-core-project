@@ -119,6 +119,9 @@ export function BackerForm({
       onConfirm: () => {
         deleteBacker(profileId).then(() => {
           router.back();
+          toast.success("Profil silindi.");
+        }).catch(() => {
+          toast.error("Bir hata oluştu.");
         });
         setIsConfirmDialogOpen(false);
       },
