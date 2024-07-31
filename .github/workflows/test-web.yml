@@ -80,6 +80,6 @@ jobs:
     #     path: apps/web/playwright-report/
     #     retention-days: 30
     - name: Run unierfund
-      run: ssh ubuntu "cd ~/frontend/dev_unierfund && chmod 777 publish.sh && ./publish.sh 1453 unirefund_web"
+      run: ssh ubuntu "cd ~/frontend/dev_unierefund && chmod 777 publish.sh && ./publish.sh 1453 unirefund_web"
     - name: Run upwithcrowd
       run: ssh ubuntu "cd ~/frontend/dev_upwithcrowd && chmod 777 publish.sh && ./publish.sh 2020 upwithcrowd_web"
