@@ -8,22 +8,22 @@ import {
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto } from "@ayasofyazilim/saas/ProjectService";
 import { default as CustomButton } from "@repo/ayasofyazilim-ui/molecules/button";
 import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
+import SelectTabs, {
+  SelectTabsContent,
+} from "@repo/ayasofyazilim-ui/molecules/select-tabs";
 import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
-import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
+import {
+  Blocks,
+  CircleCheckBigIcon,
+  CircleXIcon,
+  HandCoins,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getBaseLink } from "src/utils";
@@ -147,29 +147,25 @@ export default function NewProjectForm({
                 {languageData.FundCollectionType}
               </Label>
               <div className="relative">
-                <Select
-                  onValueChange={(value) => {
-                    setFormValues({
-                      ...formValues,
-                      fundCollectionType: value,
-                    });
-                  }}
+                <SelectTabs
                   value={formValues.fundCollectionType || ""}
+                  onValueChange={(value) => {
+                    setFormValues({ ...formValues, fundCollectionType: value });
+                  }}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="SHRE">
-                        {languageData.FundCollectionTypeSHRE}
-                      </SelectItem>
-                      <SelectItem value="DBIT">
-                        {languageData.FundCollectionTypeDBIT}
-                      </SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  <SelectTabsContent value="SHRE">
+                    <div className="flex flex-row gap-1 items-center">
+                      <Blocks />
+                      {languageData.FundCollectionTypeSHRE}
+                    </div>
+                  </SelectTabsContent>
+                  <SelectTabsContent value="DBIT">
+                    <div className="flex flex-row gap-1 items-center">
+                      <HandCoins />
+                      {languageData.FundCollectionTypeDBIT}
+                    </div>
+                  </SelectTabsContent>
+                </SelectTabs>
               </div>
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.FundCollectionTypeInfo}
@@ -215,26 +211,25 @@ export default function NewProjectForm({
                 {languageData.AdditionalFunding}
               </Label>
               <div className="relative">
-                <Select
-                  onValueChange={(value) => {
+                <SelectTabs
+                  onValueChange={(value: string) => {
                     setFormValues({ ...formValues, overFunding: value });
                   }}
                   value={formValues.overFunding || ""}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="Y">
-                        {languageData.AdditionalFundingYes}
-                      </SelectItem>
-                      <SelectItem value="N">
-                        {languageData.AdditionalFundingNo}
-                      </SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  <SelectTabsContent value="Y">
+                    <div className="flex flex-row gap-1 items-center">
+                      <Blocks />
+                      {languageData.AdditionalFundingYes}
+                    </div>
+                  </SelectTabsContent>
+                  <SelectTabsContent value="N">
+                    <div className="flex flex-row gap-1 items-center">
+                      <HandCoins />
+                      {languageData.AdditionalFundingNo}
+                    </div>
+                  </SelectTabsContent>
+                </SelectTabs>
               </div>
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.AdditionalFundingInfo}
@@ -295,7 +290,7 @@ export default function NewProjectForm({
                 <Link
                   href={getBaseLink(
                     `app/entrepreneur/projects/${projectId}`,
-                    true,
+                    true
                   )}
                 >
                   {languageData.ViewProject}
