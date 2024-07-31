@@ -20,8 +20,6 @@ async function expectOrganizationVisible(page: Page, organizationName: string) {
   ).toBeVisible();
 }
 
-
-
 test.beforeEach(async ({ page }) => {
   await page.goto("/en/app/admin");
   await page.getByRole("link", { name: "Identity Management" }).click();

@@ -117,12 +117,14 @@ export function BackerForm({
       title: "Profili Sil",
       description: `"${_backer.name}" isimli profili silmek istediğinize emin misiniz?`,
       onConfirm: () => {
-        deleteBacker(profileId).then(() => {
-          router.back();
-          toast.success("Profil silindi.");
-        }).catch(() => {
-          toast.error("Bir hata oluştu.");
-        });
+        deleteBacker(profileId)
+          .then(() => {
+            router.back();
+            toast.success("Profil silindi.");
+          })
+          .catch(() => {
+            toast.error("Bir hata oluştu.");
+          });
         setIsConfirmDialogOpen(false);
       },
     });
