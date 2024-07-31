@@ -104,6 +104,7 @@ export function BackerForm({
       if (result.id) {
         toast.success("Profil oluşturuldu.");
         setIsCreated(true);
+        router.back();
       } else {
         toast.error("Bir hata oluştu.");
       }
