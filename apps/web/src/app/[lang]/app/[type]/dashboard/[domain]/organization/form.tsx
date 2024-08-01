@@ -67,7 +67,7 @@ function RowCheckbox<T>({
   );
 }
 
-interface enchancedColumnsProps<T> {
+interface EnchancedColumnsProps<T> {
   columns: {
     header: string;
     accessorKey: keyof T;
@@ -85,7 +85,7 @@ const enhancedColumns = <T,>({
   selectedItems,
   handleToggleAll,
   handleToggleItem,
-}: enchancedColumnsProps<T>) => [
+}: EnchancedColumnsProps<T>) => [
   {
     id: "select",
     header: ({ table }: { table: Table<any> }) => (

@@ -33,14 +33,14 @@ export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
 
-export interface INewProjectFormProps {
+export interface NewProjectFormProps {
   languageData: any;
   fundraiserId: string;
 }
 export default function NewProjectForm({
   languageData,
   fundraiserId,
-}: INewProjectFormProps) {
+}: NewProjectFormProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({

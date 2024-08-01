@@ -46,7 +46,7 @@ const defaultFormValuesValidation = {
   startDate: undefined,
   fundCollectionType: undefined,
 };
-export interface IProjectFormProps {
+export interface ProjectFormProps {
   languageData: any;
   projectData: GetApiProjectServiceProjectsByIdResponse;
   projectId: string;
@@ -55,7 +55,7 @@ export default function ProjectForm({
   projectId,
   languageData,
   projectData,
-}: IProjectFormProps) {
+}: ProjectFormProps) {
   const [formValues, setFormValues] =
     useState<GetApiProjectServiceProjectsByIdResponse>(projectData);
   const [formValuesValidation, setFormValuesValidation] = useState<
