@@ -17,7 +17,13 @@ import { getBackers, getBackersIndividuals } from "./actions";
 import Form from "./form";
 
 async function getBackerProfiles() {
-  const _backerProfiles: any = [];
+  const _backerProfiles: {
+    name: string | null | undefined;
+    legalStatusCode: string | null | undefined;
+    taxpayerId: string | null | undefined;
+    backerId: string | null | undefined;
+    icon: JSX.Element;
+  }[] = [];
   const backersCompanies = await getBackers();
   const backersIndividual = await getBackersIndividuals();
 

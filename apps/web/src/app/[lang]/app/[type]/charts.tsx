@@ -394,9 +394,9 @@ const DashboardJson = {
 export default function Charts() {
   const [sortableEditMode, setSortableEditMode] = useState(false);
   const [listOrder, setListOrder] = useState(DashboardJson.items);
-  function getLatestList(list: any) {
+  function getLatestList(list: typeof DashboardJson.items) {
     setListOrder(
-      list.map((item: any, index: any) => {
+      list.map((item, index: number) => {
         return { ...item, order: index + 1 };
       }),
     );
