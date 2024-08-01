@@ -57,7 +57,7 @@ export default function ProfileForm({
         }
 
         const profileResponse = await updateUserProfileServer(
-          userDataForm as any,
+          userDataForm as any
         );
         if (profileResponse.status === 200) {
           toast.success("Başarılı.");
@@ -76,7 +76,7 @@ export default function ProfileForm({
       return;
     }
     setIsLoading(true);
-    update();
+    void update();
   }
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {

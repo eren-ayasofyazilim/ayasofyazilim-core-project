@@ -24,7 +24,7 @@ export default function Page(): JSX.Element {
   const searchParams = useSearchParams();
   const authTypeParam = params.auth as authTypes;
   const [errorMessage, setErrorMessage] = useState<string | null | undefined>(
-    null,
+    null
   );
   if (!isAuthType(authTypeParam)) {
     return (
@@ -51,7 +51,7 @@ export default function Page(): JSX.Element {
   //ResetPassword start
   const onResetPasswordSubmit = async (values: ResetPasswordFormDataType) => {
     return new Promise((resolve, reject) => {
-      (async () => {
+      void (async () => {
         try {
           const response = await fetch("./api/auth/reset-password", {
             method: "POST",
@@ -117,7 +117,7 @@ export default function Page(): JSX.Element {
       };
       const verifyResetToken = async () => {
         await new Promise((resolve, reject) => {
-          (async () => {
+          void (async () => {
             try {
               const response = await fetch("./api/post", {
                 method: "POST",
@@ -135,7 +135,7 @@ export default function Page(): JSX.Element {
                   setErrorMessage(
                     resources.AbpIdentity?.texts?.[
                       "Volo.Abp.Identity:InvalidToken"
-                    ],
+                    ]
                   );
                 }
                 resolve("");
@@ -150,7 +150,7 @@ export default function Page(): JSX.Element {
           })();
         });
       };
-      verifyResetToken();
+      void verifyResetToken();
       break;
     }
   }

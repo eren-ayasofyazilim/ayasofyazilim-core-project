@@ -20,9 +20,9 @@ export default function StatusForm({
   function onSendToApprovalClick() {
     setIsLoading(true);
     try {
-      updateProjectStatusServer(
+      void updateProjectStatusServer(
         projectId,
-        ProjectStatusEnums.SENT_FOR_APPROVAL,
+        ProjectStatusEnums.SENT_FOR_APPROVAL
       ).then((response) => {
         if (response.status === 200) {
           toast.success("Başarılı.");

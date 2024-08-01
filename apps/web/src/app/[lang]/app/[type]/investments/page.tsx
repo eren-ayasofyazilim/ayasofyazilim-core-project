@@ -99,7 +99,7 @@ function generateColumns() {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
-                  navigator.clipboard.writeText(payment.id);
+                  void navigator.clipboard.writeText(payment.id);
                 }}
               >
                 Copy payment ID

@@ -4,7 +4,6 @@ module.exports = {
   extends: ["@repo/eslint-config/next.js", "eslint:recommended"],
   ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
-    "@typescript-eslint/no-floating-promises": "off", // Asla aktif etmeyin -bir dost
     "@typescript-eslint/no-unsafe-return": "off", // /dashboard/[domain]/[data]/page.tsx, company/[data]/page.tsx, src/utils.ts içinde hatalar var
     "@typescript-eslint/no-explicit-any": "off",
     camelcase: "off",
