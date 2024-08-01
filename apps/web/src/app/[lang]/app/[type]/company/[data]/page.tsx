@@ -289,17 +289,20 @@ export default function Page({
       dependencies: createFormSchema.dependencies,
       fieldConfig: { withoutBorder: true },
     },
-    callback: async (e) => {
-      const transformedData = parseFormValues(createFormSchema, e);
-      await controlledFetch(
-        fetchLink,
-        {
-          method: "POST",
-          body: JSON.stringify(transformedData),
-        },
-        getRoles,
-        "Added Successfully",
-      );
+    callback: (e) => {
+      async function onData() {
+        const transformedData = parseFormValues(createFormSchema, e);
+        await controlledFetch(
+          fetchLink,
+          {
+            method: "POST",
+            body: JSON.stringify(transformedData),
+          },
+          getRoles,
+          "Added Successfully",
+        );
+      }
+      onData();
     },
   };
   useEffect(() => {

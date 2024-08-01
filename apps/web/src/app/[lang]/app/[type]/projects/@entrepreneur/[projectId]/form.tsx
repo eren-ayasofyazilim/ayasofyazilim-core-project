@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -105,38 +106,43 @@ export default function ProjectForm({
     };
   }, [formValues]);
 
-  async function onSaveClick() {
+  function onSaveClick() {
     setIsLoading(true);
     try {
       formValues.status = ProjectStatusEnums.IN_DRAFT_STAGE;
 
-      const result = await updateProjectServer(
+      updateProjectServer(
         projectId,
-        formValues as PutApiProjectServiceProjectsByIdData["requestBody"]
-      );
-      if (result.status === 200) {
-        setIsSubmitDisabled(true);
-        toast.success("Başarılı.");
-      } else {
-        toast.error(result.message);
-      }
+        formValues as PutApiProjectServiceProjectsByIdData["requestBody"],
+      ).then((response) => {
+        if (response.status === 200) {
+          setIsSubmitDisabled(true);
+          toast.success("Basarıyla kaydedildi.");
+        } else {
+          toast.error(response.message);
+        }
+        setIsLoading(false);
+      });
     } catch (error: any) {
       toast.error(error.message);
-    } finally {
       setIsLoading(false);
     }
   }
-  async function onDeleteClick() {
+  function onDeleteClick() {
     setIsLoading(true);
     try {
-      await deleteProjectServer({ id: projectId });
+      deleteProjectServer({ id: projectId }).then((response) => {
+        if (response.status === 200) {
+          toast.success("Başarılı.");
+          return;
+        }
+        toast.error(response.message);
+        setIsLoading(false);
+      });
     } catch (error: any) {
       toast.error(error.message);
       return;
     }
-    toast.success("Başarılı.");
-    //redirect to projects page with router
-    // router.refresh();
   }
   return (
     <>
@@ -389,7 +395,7 @@ export default function ProjectForm({
                       className={cn(
                         "w-[280px] justify-start text-left font-normal",
                         !formValues.startDate &&
-                          "text-muted-foreground border-red-500"
+                          "text-muted-foreground border-red-500",
                       )}
                       variant="outline"
                     >
@@ -460,15 +466,17 @@ export default function ProjectForm({
             </DialogHeader>
 
             <DialogFooter>
-              <form action={onDeleteClick}>
-                <CustomButton
-                  disabled={isLoading}
-                  isLoading={isLoading}
-                  type="submit"
-                >
-                  Projeyi Sil
-                </CustomButton>
-              </form>
+              <DialogClose asChild>
+                <form action={onDeleteClick}>
+                  <CustomButton
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                    type="submit"
+                  >
+                    Projeyi Sil
+                  </CustomButton>
+                </form>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
