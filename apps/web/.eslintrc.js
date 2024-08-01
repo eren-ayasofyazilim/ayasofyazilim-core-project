@@ -5,11 +5,11 @@ module.exports = {
   ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
     "@typescript-eslint/no-floating-promises": "off", // Asla aktif etmeyin -bir dost
+    "@typescript-eslint/no-unsafe-return": "off", // /dashboard/[domain]/[data]/page.tsx, company/[data]/page.tsx, src/utils.ts içinde hatalar var
     "@typescript-eslint/no-explicit-any": "off",
     camelcase: "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-call": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     // "@typescript-eslint/naming-convention": "off",

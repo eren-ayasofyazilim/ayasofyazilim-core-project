@@ -265,7 +265,7 @@ export async function createOrUpdateProjectSectionRelationServer(
     }
     revalidatePath("/");
     return response;
-  } catch (error: any) {
+  } catch (error) {
     return error;
   }
 }
