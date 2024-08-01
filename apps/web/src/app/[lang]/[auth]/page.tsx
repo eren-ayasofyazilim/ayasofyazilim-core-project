@@ -3,7 +3,7 @@ import type { ResetPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules
 import type { authTypes } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Auth, isAuthType } from "@repo/ayasofyazilim-ui/pages/auth";
 import { Logo } from "@repo/ui/logo";
-import Error from "next/error";
+import NextError from "next/error";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
@@ -24,11 +24,14 @@ export default function Page(): JSX.Element {
   const searchParams = useSearchParams();
   const authTypeParam = params.auth as authTypes;
   const [errorMessage, setErrorMessage] = useState<string | null | undefined>(
-    null
+    null,
   );
   if (!isAuthType(authTypeParam)) {
     return (
-      <Error statusCode={404} title={resources.AbpUi?.texts?.PageNotFound} />
+      <NextError
+        statusCode={404}
+        title={resources.AbpUi?.texts?.PageNotFound}
+      />
     );
   }
 
@@ -67,9 +70,10 @@ export default function Page(): JSX.Element {
             return;
           }
           const result = await response.json();
-          reject(result.error.code);
-        } catch (e) {
-          reject(e);
+
+          reject(new Error(result.error.code));
+        } catch (e: any) {
+          reject(new Error(e));
         }
       })();
     });
@@ -135,17 +139,17 @@ export default function Page(): JSX.Element {
                   setErrorMessage(
                     resources.AbpIdentity?.texts?.[
                       "Volo.Abp.Identity:InvalidToken"
-                    ]
+                    ],
                   );
                 }
                 resolve("");
               } else {
                 const result = await response.json();
                 setErrorMessage(result.error.code);
-                reject(result.error.code);
+                reject(new Error(result.error.code));
               }
-            } catch (e) {
-              reject(e);
+            } catch (e: any) {
+              reject(new Error(e));
             }
           })();
         });
