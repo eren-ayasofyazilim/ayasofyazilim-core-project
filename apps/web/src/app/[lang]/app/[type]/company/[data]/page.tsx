@@ -44,7 +44,7 @@ async function controlledFetch(
     toast.error("Something went wrong 3 ");
   }
 }
-interface formModifier {
+interface FormModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
@@ -56,14 +56,14 @@ interface formModifier {
     when: (_value: any) => boolean;
   }[];
 }
-interface tableData {
-  createFormSchema: formModifier;
-  editFormSchema: formModifier;
-  tableSchema: formModifier;
+interface TableData {
+  createFormSchema: FormModifier;
+  editFormSchema: FormModifier;
+  tableSchema: FormModifier;
   filterBy: string;
 }
 
-const dataConfig: Record<string, tableData> = {
+const dataConfig: Record<string, TableData> = {
   merchants: {
     filterBy: "name",
     createFormSchema: {
@@ -290,24 +290,27 @@ export default function Page({
       dependencies: createFormSchema.dependencies,
       fieldConfig: { withoutBorder: true },
     },
-    callback: async (e) => {
-      const transformedData = parseFormValues(createFormSchema, e);
-      await controlledFetch(
-        fetchLink,
-        {
-          method: "POST",
-          body: JSON.stringify(transformedData),
-        },
-        getRoles,
-        "Added Successfully",
-      );
+    callback: (e) => {
+      async function onData() {
+        const transformedData = parseFormValues(createFormSchema, e);
+        await controlledFetch(
+          fetchLink,
+          {
+            method: "POST",
+            body: JSON.stringify(transformedData),
+          },
+          getRoles,
+          "Added Successfully",
+        );
+      }
+      onData();
     },
   };
   useEffect(() => {
     setIsLoading(true);
     getRoles();
   }, []);
-  function parseFormValues(schema: formModifier, data: any) {
+  function parseFormValues(schema: FormModifier, data: any) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
@@ -351,7 +354,7 @@ export default function Page({
       "Deleted Successfully",
     );
   };
-  function convertZod(schema: formModifier) {
+  function convertZod(schema: FormModifier) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],

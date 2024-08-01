@@ -7,7 +7,7 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject, getBaseLink } from "src/utils";
-import type { formModifier, tableData } from "../../data";
+import type { FormModifier, TableData } from "../../data";
 import { dataConfig } from "../../data";
 
 async function controlledFetch(
@@ -75,7 +75,7 @@ export default function Page({
   const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [formData, setFormData] = useState<tableData>(
+  const [formData, setFormData] = useState<TableData>(
     dataConfig[params.domain][params.data],
   );
 
@@ -160,9 +160,9 @@ export default function Page({
         dependencies: createFormSchema.dependencies,
         fieldConfig: { withoutBorder: true },
       },
-      callback: async (e) => {
+      callback: (e) => {
         const transformedData = parseFormValues(createFormSchema, e);
-        await controlledFetch(
+        controlledFetch(
           fetchLink,
           {
             method: "POST",
@@ -179,7 +179,7 @@ export default function Page({
     processConvertors();
   }, []);
 
-  function parseFormValues(schema: formModifier, data: any) {
+  function parseFormValues(schema: FormModifier, data: any) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
@@ -230,7 +230,7 @@ export default function Page({
     );
   };
 
-  function convertZod(schema: formModifier) {
+  function convertZod(schema: FormModifier) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
