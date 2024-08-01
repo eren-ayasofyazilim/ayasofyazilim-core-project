@@ -1,0 +1,32 @@
+name: Lint
+run-name: Linting the repo 🚀
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: self-hosted
+    steps:
+    - run: echo "🎉 The job is linting the project"
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: | 
+        npm install -g pnpm
+        pnpm install
+    - name: Lint Action
+      uses: wearerequired/lint-action@v2.3.0
+      with:
+          eslint: true
+          eslint_auto_fix: true
+          prettier: true
+          prettier_auto_fix: true
+          tsc: true
+          tsc_auto_fix: true
+            
