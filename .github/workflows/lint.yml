@@ -25,8 +25,11 @@ jobs:
       with:
           eslint: true
           eslint_auto_fix: true
+          eslint_dir: apps/web
           prettier: true
           prettier_auto_fix: true
+          prettier_dir: apps/web
           tsc: true
           tsc_auto_fix: true
+          tsc_dir: apps/web
             
