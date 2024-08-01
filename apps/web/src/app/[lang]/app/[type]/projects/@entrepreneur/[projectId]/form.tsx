@@ -113,7 +113,7 @@ export default function ProjectForm({
 
       void updateProjectServer(
         projectId,
-        formValues as PutApiProjectServiceProjectsByIdData["requestBody"]
+        formValues as PutApiProjectServiceProjectsByIdData["requestBody"],
       ).then((response) => {
         if (response.status === 200) {
           setIsSubmitDisabled(true);
@@ -141,7 +141,6 @@ export default function ProjectForm({
       });
     } catch (error: any) {
       toast.error(error.message);
-      
     }
   }
   return (
@@ -395,7 +394,7 @@ export default function ProjectForm({
                       className={cn(
                         "w-[280px] justify-start text-left font-normal",
                         !formValues.startDate &&
-                          "text-muted-foreground border-red-500"
+                          "text-muted-foreground border-red-500",
                       )}
                       variant="outline"
                     >

@@ -26,7 +26,7 @@ function SelectAllCheckbox<T>({
 }: SelectAllCheckboxProps<T>) {
   const rows = table.getRowModel().rows;
   const isAllSelected = rows.every((row: Row<T>) =>
-    selectedItems.has((row.original as User | Role).id)
+    selectedItems.has((row.original as User | Role).id),
   );
 
   return (
@@ -151,7 +151,7 @@ export function GenericModal<T extends { id: string }>({
       const loadItems = async () => {
         const _items = await fetchItems();
         const filteredItems = _items.filter(
-          (item) => !addedItems.some((addedItem) => addedItem.id === item.id)
+          (item) => !addedItems.some((addedItem) => addedItem.id === item.id),
         );
         setItems(filteredItems);
         setSelectedItems(new Set(addedItems.map((item) => item.id)));

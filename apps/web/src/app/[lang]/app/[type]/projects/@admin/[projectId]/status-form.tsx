@@ -17,7 +17,7 @@ export default function StatusForm({ projectId, actionText }: StatusFormProps) {
     try {
       void updateProjectStatusServer(
         projectId,
-        ProjectStatusEnums.SENT_FOR_APPROVAL
+        ProjectStatusEnums.SENT_FOR_APPROVAL,
       ).then((response) => {
         if (response.status === 200) {
           toast.success("Başarılı.");
