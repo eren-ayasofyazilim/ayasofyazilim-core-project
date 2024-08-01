@@ -160,9 +160,9 @@ export default function Page({
         dependencies: createFormSchema.dependencies,
         fieldConfig: { withoutBorder: true },
       },
-      callback: async (e) => {
+      callback: (e) => {
         const transformedData = parseFormValues(createFormSchema, e);
-        await controlledFetch(
+        controlledFetch(
           fetchLink,
           {
             method: "POST",

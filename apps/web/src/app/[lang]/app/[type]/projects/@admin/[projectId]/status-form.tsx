@@ -12,22 +12,22 @@ export interface StatusFormProps {
 export default function StatusForm({ projectId, actionText }: StatusFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  async function onSendToApprovalClick() {
+  function onSendToApprovalClick() {
     setIsLoading(true);
     try {
-      const result = await updateProjectStatusServer(
+      updateProjectStatusServer(
         projectId,
         ProjectStatusEnums.SENT_FOR_APPROVAL,
-      );
-
-      if (result.status === 200) {
-        toast.success("Başarılı.");
-      } else {
-        toast.error(result.message);
-      }
+      ).then((response) => {
+        if (response.status === 200) {
+          toast.success("Başarılı.");
+        } else {
+          toast.error(response.message);
+        }
+        setIsLoading(false);
+      });
     } catch (error: any) {
       toast.error(error.message);
-    } finally {
       setIsLoading(false);
     }
   }

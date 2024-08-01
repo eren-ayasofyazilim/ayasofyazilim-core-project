@@ -61,15 +61,16 @@ export default function NewProjectForm({
   const [loading, setLoading] = useState(false);
   const [projectId, setProjectId] = useState<string>();
 
-  async function createNewProject() {
+  function createNewProject() {
     setLoading(true);
-    const response = await createNewProjectServer(formValues);
-    if (response.status === 200 && response.projectData) {
-      setProjectId(response.projectData.id);
-    } else {
-      setError(response.message);
-    }
-    setLoading(false);
+    createNewProjectServer(formValues).then((response) => {
+      if (response.status === 200 && response.projectData) {
+        setProjectId(response.projectData.id);
+      } else {
+        setError(response.message);
+      }
+      setLoading(false);
+    });
   }
   return (
     <Card className="px-6 py-4">
