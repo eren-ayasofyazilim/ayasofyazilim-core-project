@@ -8,7 +8,4 @@ module.exports = {
       allowedOrigins: ["localhost:3000", "*.devtunnels.ms:3000"],
     },
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
