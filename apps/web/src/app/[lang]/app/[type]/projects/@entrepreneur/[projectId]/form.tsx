@@ -141,7 +141,7 @@ export default function ProjectForm({
       });
     } catch (error: any) {
       toast.error(error.message);
-      return;
+      
     }
   }
   return (
