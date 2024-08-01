@@ -2,8 +2,8 @@
 
 import TipTapEditor from "@repo/ayasofyazilim-ui/organisms/tiptap";
 import ProjectPage from "@repo/ui/upwithcrowd/project/project-page";
-import { auth } from "auth";
 import { PackageSearch } from "lucide-react";
+import { auth } from "auth";
 import { getPublicProjectByIdServer } from "src/app/[lang]/app/[type]/projects/action";
 import { ProjectStatusEnums } from "src/enums/project";
 import { getResourceData } from "src/language-data/Projects/projects";

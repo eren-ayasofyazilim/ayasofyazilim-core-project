@@ -25,8 +25,8 @@ export default function ProjectForm({ sectionData }: ProjectFormProps) {
     .filter((section) => (section.sectionRelationValue?.length || 0) > 10)
     .map((section, index) => {
       return {
-        id: section.sectionId || `item${index}`,
-        name: section.sectionName || `item${index}`,
+        id: section.sectionId || `item-${index}`,
+        name: section.sectionName || `item-${index}`,
       };
     });
 
@@ -44,7 +44,6 @@ export default function ProjectForm({ sectionData }: ProjectFormProps) {
           sectionId={section.sectionId || `item${index}`}
         >
           <TipTapEditor
-            key={section.sectionId + "-editor" || `item${index}-editor`}
             canEditable={false}
             editOnStart={false}
             editorContent={
@@ -53,6 +52,11 @@ export default function ProjectForm({ sectionData }: ProjectFormProps) {
                 : undefined
             }
             editorId={section.sectionId}
+            key={
+              section.sectionId
+                ? `${section.sectionId}-editor`
+                : `item-${index}-editor`
+            }
           />
         </SectionLayoutContent>
       ))}

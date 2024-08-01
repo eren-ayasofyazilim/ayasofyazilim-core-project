@@ -38,11 +38,11 @@ export default function Form({ backerProfiles }: any) {
               </div>
               <div className="ml-auto">
                 <Button
+                  asChild
                   onClick={() => {
                     setIsLoading(true);
                   }}
                   variant="link"
-                  asChild
                 >
                   <Link href={`profile/${i.backerId}`} title={i.name}>
                     <Edit className="w-5 h-5 text-muted-foreground" />
