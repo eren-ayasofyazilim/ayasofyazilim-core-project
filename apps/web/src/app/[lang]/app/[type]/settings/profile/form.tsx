@@ -9,9 +9,9 @@ import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { updateUserProfileServer } from "action";
 import { createZodObject } from "src/utils";
-import Image from "next/image";
 
 const inputs: (keyof Volo_Abp_Account_ProfileDto)[] = [
   "userName",

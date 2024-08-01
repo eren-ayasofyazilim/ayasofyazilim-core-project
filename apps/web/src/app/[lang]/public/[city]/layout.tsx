@@ -7,12 +7,12 @@ import type { linksProp } from "@repo/ui/upwithcrowd/navbar";
 import Navbar from "@repo/ui/upwithcrowd/navbar";
 import { Projector, ShieldAlert, Worm } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getConfig } from "../config";
-import Image from "next/image";
 
 interface LayoutProps {
   params: { lang: string; city: string };
