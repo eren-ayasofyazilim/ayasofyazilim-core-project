@@ -148,10 +148,10 @@ export default function NewProjectForm({
               </Label>
               <div className="relative">
                 <SelectTabs
-                  value={formValues.fundCollectionType || ""}
                   onValueChange={(value) => {
                     setFormValues({ ...formValues, fundCollectionType: value });
                   }}
+                  value={formValues.fundCollectionType || ""}
                 >
                   <SelectTabsContent value="SHRE">
                     <div className="flex flex-row gap-1 items-center">
