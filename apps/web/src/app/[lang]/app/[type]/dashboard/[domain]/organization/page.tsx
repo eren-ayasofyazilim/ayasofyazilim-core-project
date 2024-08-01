@@ -142,37 +142,41 @@ const App: React.FC = () => {
   }, []);
 
   const editUnit = useCallback(
-    async (formData: { displayName: string }, _triggerData: { id: string }) => {
-      try {
-        const response = await fetch(
-          getBaseLink(`api/organization/organizationEdit`),
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: _triggerData.id,
-              requestBody: { displayName: formData.displayName },
-            }),
-          },
-        );
-        if (response.ok) {
-          toast.success("Organization unit updated successfully");
-          fetchAndUpdateUnits();
-          setTriggerData({});
-          setOpen(false);
-        } else {
-          const errorData = await response.json();
-          toast.error(
-            errorData.message || "Failed to update organization unit",
+    (formData: { displayName: string }, _triggerData: { id: string }) => {
+      async function edit() {
+        try {
+          const response = await fetch(
+            getBaseLink(`api/organization/organizationEdit`),
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: _triggerData.id,
+                requestBody: { displayName: formData.displayName },
+              }),
+            }
           );
+          if (response.ok) {
+            toast.success("Organization unit updated successfully");
+            fetchAndUpdateUnits();
+            setTriggerData({});
+            setOpen(false);
+          } else {
+            const errorData = await response.json();
+            toast.error(
+              errorData.message || "Failed to update organization unit"
+            );
+          }
+        } catch (error) {
+          toast.error("An error occurred while updating the organization unit");
         }
-      } catch (error) {
-        toast.error("An error occurred while updating the organization unit");
       }
+
+      edit();
     },
-    [],
+    []
   );
 
   const handleEditUnitClick = useCallback(() => {
@@ -180,7 +184,7 @@ const App: React.FC = () => {
       autoFormArgs: {
         formSchema: createZodObject(
           editFormSchema.schema,
-          editFormSchema.formPositions || [],
+          editFormSchema.formPositions || []
         ),
       },
       callback: editUnit,
@@ -198,7 +202,7 @@ const App: React.FC = () => {
   const addNewUnit = useCallback(
     async (
       formData: { displayName: string },
-      _triggerData?: { id: string },
+      _triggerData?: { id: string }
     ) => {
       try {
         const response = await fetch(getBaseLink("api/admin/organization"), {
@@ -225,7 +229,7 @@ const App: React.FC = () => {
         toast.error("An error occurred while saving the organization unit");
       }
     },
-    [],
+    []
   );
 
   const handleAddUnitClick = useCallback(
@@ -237,7 +241,7 @@ const App: React.FC = () => {
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
-            createFormSchema.formPositions || [],
+            createFormSchema.formPositions || []
           ),
           fieldConfig: { withoutBorder: true },
         },
@@ -254,7 +258,7 @@ const App: React.FC = () => {
       setTriggerData({ id: _selectedUnitId });
       setOpen(true);
     },
-    [organizationUnits],
+    [organizationUnits]
   );
 
   const handleMoveAllUsersClick = useCallback(() => {
@@ -263,7 +267,7 @@ const App: React.FC = () => {
       return;
     }
     const availableUnits = organizationUnits.filter(
-      (u) => u.id !== selectedUnitId,
+      (u) => u.id !== selectedUnitId
     );
     const unitOptions = availableUnits.map((unit) => {
       const parentUnit = organizationUnits.find((u) => u.id === unit.parentId);
@@ -283,7 +287,7 @@ const App: React.FC = () => {
       placeholder,
       ...unitOptions.map(
         (u) =>
-          `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""}`,
+          `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""}`
       ),
     ]);
     setTriggerData({
@@ -302,7 +306,7 @@ const App: React.FC = () => {
           (u) =>
             `${u.displayName} ${
               u.parentName ? `Parent: ${u.parentName}` : ""
-            }` === e.targetUnit,
+            }` === e.targetUnit
         );
         if (!_selectedUnit) {
           toast.error("Selected unit not found");
@@ -322,28 +326,36 @@ const App: React.FC = () => {
     setConfirmDialogContent({
       title: "Are You Sure",
       description: `Are you sure you want to delete the organization unit "${unitName}" ?`,
-      onConfirm: async () => {
-        try {
-          const response = await fetch(getBaseLink(`api/admin/organization`), {
-            method: "DELETE",
-            body: JSON.stringify(unitId),
-          });
-          if (response.ok) {
-            toast.success("Organization unit deleted successfully");
-            fetchAndUpdateUnits();
-            setSelectedUnitId(undefined);
-            setTriggerData({});
-            setOpen(false);
-          } else {
-            const errorData = await response.json();
+      onConfirm: () => {
+        async function confirm() {
+          try {
+            const response = await fetch(
+              getBaseLink(`api/admin/organization`),
+              {
+                method: "DELETE",
+                body: JSON.stringify(unitId),
+              }
+            );
+            if (response.ok) {
+              toast.success("Organization unit deleted successfully");
+              fetchAndUpdateUnits();
+              setSelectedUnitId(undefined);
+              setTriggerData({});
+              setOpen(false);
+            } else {
+              const errorData = await response.json();
+              toast.error(
+                errorData.message || "Failed to delete organization unit"
+              );
+            }
+          } catch (error) {
             toast.error(
-              errorData.message || "Failed to delete organization unit",
+              "An error occurred while deleting the organization unit"
             );
           }
-        } catch (error) {
-          toast.error("An error occurred while deleting the organization unit");
+          setIsConfirmDialogOpen(false);
         }
-        setIsConfirmDialogOpen(false);
+        confirm();
       },
     });
     setIsConfirmDialogOpen(true);
@@ -352,7 +364,7 @@ const App: React.FC = () => {
   const handleMoveUsers = useCallback(
     async (
       formData: { targetUnitId: string },
-      _triggerData: { id: string },
+      _triggerData: { id: string }
     ) => {
       if (!selectedUnitId) {
         toast.error("Please select a unit");
@@ -360,7 +372,7 @@ const App: React.FC = () => {
       }
       try {
         const targetUnit = organizationUnits.find(
-          (unit) => unit.id === formData.targetUnitId,
+          (unit) => unit.id === formData.targetUnitId
         );
         if (!targetUnit) {
           toast.error("Target unit not found");
@@ -377,7 +389,7 @@ const App: React.FC = () => {
               id: _triggerData.id,
               organizationId: targetUnit.id,
             }),
-          },
+          }
         );
         if (response.ok) {
           fetchUsersAndRoles();
@@ -392,7 +404,7 @@ const App: React.FC = () => {
       }
       setOpen(false);
     },
-    [selectedUnitId, unitUsers],
+    [selectedUnitId, unitUsers]
   );
 
   const optionsDropdownContent = useCallback(
@@ -414,7 +426,7 @@ const App: React.FC = () => {
             handleDeleteUnit(
               selectedUnitId ?? "",
               organizationUnits.find((i) => i.id === selectedUnitId)
-                ?.displayName ?? "",
+                ?.displayName ?? ""
             );
           }}
         >
@@ -422,170 +434,194 @@ const App: React.FC = () => {
         </DropdownMenuItem>
       </>
     ),
-    [selectedUnitId, unitUsers],
+    [selectedUnitId, unitUsers]
   );
 
   const handleAddUsers = useCallback(
-    async (selectedUsers: User[]) => {
-      const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
-      );
-      if (selectedUnit && selectedUsers.length > 0) {
-        try {
-          const response = await fetch(
-            getBaseLink(`api/organization/organizationUser`),
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: selectedUnit.id,
-                requestBody: { userIds: selectedUsers.map((user) => user.id) },
-              }),
-            },
-          );
-          if (response.ok) {
-            toast.success("Users added successfully");
-            const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
-            setUnitUsers(updatedUsers);
-          } else {
-            const errorData = await response.json();
-            toast.error(errorData.message || "Failed to add users");
+    (selectedUsers: User[]) => {
+      async function addUser() {
+        const selectedUnit = organizationUnits.find(
+          (i) => i.id === selectedUnitId
+        );
+        if (selectedUnit && selectedUsers.length > 0) {
+          try {
+            const response = await fetch(
+              getBaseLink(`api/organization/organizationUser`),
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: selectedUnit.id,
+                  requestBody: {
+                    userIds: selectedUsers.map((user) => user.id),
+                  },
+                }),
+              }
+            );
+            if (response.ok) {
+              toast.success("Users added successfully");
+              const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
+              setUnitUsers(updatedUsers);
+            } else {
+              const errorData = await response.json();
+              toast.error(errorData.message || "Failed to add users");
+            }
+          } catch (error) {
+            toast.error("An error occurred while adding the users");
           }
-        } catch (error) {
-          toast.error("An error occurred while adding the users");
+        } else if (selectedUsers.length === 0) {
+          toast.error("No users selected");
         }
-      } else if (selectedUsers.length === 0) {
-        toast.error("No users selected");
+        setIsUserModalOpen(false);
       }
-      setIsUserModalOpen(false);
+      addUser();
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleAddRoles = useCallback(
-    async (selectedRoles: Role[]) => {
-      const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
-      );
-      if (selectedUnit && selectedRoles.length > 0) {
-        try {
-          const response = await fetch(
-            getBaseLink(`api/organization/organizationRole`),
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: selectedUnit.id,
-                requestBody: { roleIds: selectedRoles.map((role) => role.id) },
-              }),
-            },
-          );
-          if (response.ok) {
-            toast.success("Roles added successfully");
-            const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
-            setUnitRoles(updatedRoles);
-          } else {
-            const errorData = await response.json();
-            toast.error(errorData.message || "Failed to add roles");
+    (selectedRoles: Role[]) => {
+      async function addRoles() {
+        const selectedUnit = organizationUnits.find(
+          (i) => i.id === selectedUnitId
+        );
+        if (selectedUnit && selectedRoles.length > 0) {
+          try {
+            const response = await fetch(
+              getBaseLink(`api/organization/organizationRole`),
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: selectedUnit.id,
+                  requestBody: {
+                    roleIds: selectedRoles.map((role) => role.id),
+                  },
+                }),
+              }
+            );
+            if (response.ok) {
+              toast.success("Roles added successfully");
+              const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
+              setUnitRoles(updatedRoles);
+            } else {
+              const errorData = await response.json();
+              toast.error(errorData.message || "Failed to add roles");
+            }
+          } catch (error) {
+            toast.error("An error occurred while adding the roles");
           }
-        } catch (error) {
-          toast.error("An error occurred while adding the roles");
+        } else if (selectedRoles.length === 0) {
+          toast.error("No roles selected");
         }
-      } else if (selectedRoles.length === 0) {
-        toast.error("No roles selected");
+        setIsRoleModalOpen(false);
       }
-      setIsRoleModalOpen(false);
+      addRoles();
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleDeleteUser = useCallback(
     (userId: string, userName: string) => {
       const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
+        (i) => i.id === selectedUnitId
       );
       if (selectedUnit) {
         setConfirmDialogContent({
           title: "Are You Sure",
           description: `Are you sure you want to remove the user "${userName}" from organization unit "${selectedUnit.displayName}" ?`,
-          onConfirm: async () => {
-            try {
-              const response = await fetch(
-                getBaseLink(`api/organization/organizationUser`),
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    id: selectedUnit.id,
-                    memberId: userId,
-                  }),
-                },
-              );
-              if (response.ok) {
-                toast.success("User deleted successfully");
-                const updatedUsers = await fetchUsersForUnit(selectedUnit.id);
-                setUnitUsers(updatedUsers);
-              } else {
-                const errorData = await response.json();
-                toast.error(errorData.message || "Failed to delete user");
+          onConfirm: () => {
+            async function confirm() {
+              if (selectedUnit) {
+                try {
+                  const response = await fetch(
+                    getBaseLink(`api/organization/organizationUser`),
+                    {
+                      method: "DELETE",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        id: selectedUnit.id,
+                        memberId: userId,
+                      }),
+                    }
+                  );
+                  if (response.ok) {
+                    toast.success("User deleted successfully");
+                    const updatedUsers = await fetchUsersForUnit(
+                      selectedUnit.id
+                    );
+                    setUnitUsers(updatedUsers);
+                  } else {
+                    const errorData = await response.json();
+                    toast.error(errorData.message || "Failed to delete user");
+                  }
+                } catch (error) {
+                  toast.error("An error occurred while deleting the user");
+                }
+                setIsConfirmDialogOpen(false);
               }
-            } catch (error) {
-              toast.error("An error occurred while deleting the user");
             }
-            setIsConfirmDialogOpen(false);
+            confirm();
           },
         });
         setIsConfirmDialogOpen(true);
       }
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleDeleteRole = useCallback(
     (roleId: string, roleName: string) => {
       const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
+        (i) => i.id === selectedUnitId
       );
       if (selectedUnit) {
         setConfirmDialogContent({
           title: "Are You Sure",
           description: `Are you sure you want to remove the role "${roleName}" from organization unit "${selectedUnit.displayName}" ?`,
-          onConfirm: async () => {
-            try {
-              const response = await fetch(
-                getBaseLink(`api/organization/organizationRole`),
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ id: selectedUnit.id, roleId }),
-                },
-              );
-              if (response.ok) {
-                toast.success("Role deleted successfully");
-                const updatedRoles = await fetchRolesForUnit(selectedUnit.id);
-                setUnitRoles(updatedRoles);
-              } else {
-                const errorData = await response.json();
-                toast.error(errorData.message || "Failed to delete role");
+          onConfirm: () => {
+            async function confirm() {
+              if (selectedUnit) {
+                try {
+                  const response = await fetch(
+                    getBaseLink(`api/organization/organizationRole`),
+                    {
+                      method: "DELETE",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ id: selectedUnit.id, roleId }),
+                    }
+                  );
+                  if (response.ok) {
+                    toast.success("Role deleted successfully");
+                    const updatedRoles = await fetchRolesForUnit(
+                      selectedUnit.id
+                    );
+                    setUnitRoles(updatedRoles);
+                  } else {
+                    const errorData = await response.json();
+                    toast.error(errorData.message || "Failed to delete role");
+                  }
+                } catch (error) {
+                  toast.error("An error occurred while deleting the role");
+                }
+                setIsConfirmDialogOpen(false);
               }
-            } catch (error) {
-              toast.error("An error occurred while deleting the role");
             }
-            setIsConfirmDialogOpen(false);
+            confirm();
           },
         });
         setIsConfirmDialogOpen(true);
       }
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   return (

@@ -15,7 +15,6 @@ module.exports = {
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/prefer-promise-reject-errors": "off",
     "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/no-misused-promises": "off",
     "no-await-in-loop": "off",
     "import/no-cycle": "off",
   },

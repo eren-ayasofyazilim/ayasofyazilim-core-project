@@ -67,29 +67,29 @@ export default function ProjectForm({
   const [accordionTab, setAccordionTab] = useState("item-1");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function onEvaluateClick() {
+  function onEvaluateClick() {
     if (isLoading) return;
     setIsLoading(true);
     try {
       const isApproved =
         Object.values(formValuesValidation).filter((i) => i === false)
           .length === 0;
-      const result = await updateProjectStatusServer(
+      updateProjectStatusServer(
         projectId,
         isApproved
           ? ProjectStatusEnums.APPROVED
-          : ProjectStatusEnums.NOT_APPROVED,
-      );
-      setFormValuesValidationChanged(false);
-      if (result.status === 200) {
-        toast.success("Başarılı.");
-      } else {
-        toast.error(result.message);
-      }
+          : ProjectStatusEnums.NOT_APPROVED
+      ).then((response) => {
+        setFormValuesValidationChanged(false);
+        if (response.status === 200) {
+          toast.success("Başarılı.");
+        } else {
+          toast.error(response.message);
+        }
+        setIsLoading(false);
+      });
     } catch (error: any) {
       toast.error(error.message);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -431,7 +431,7 @@ export default function ProjectForm({
                             slider={false}
                             subLabel=""
                             value={parseInt(
-                              formValues.additionalFundRate || "0",
+                              formValues.additionalFundRate || "0"
                             )}
                           />
                           <p className="text-[0.8rem] text-muted-foreground mt-2">
@@ -514,7 +514,7 @@ export default function ProjectForm({
                       <Button
                         className={cn(
                           "w-[280px] justify-start text-left font-normal",
-                          !formValues.startDate && "text-muted-foreground",
+                          !formValues.startDate && "text-muted-foreground"
                         )}
                         variant="outline"
                       >
@@ -594,7 +594,7 @@ export default function ProjectForm({
                 isLoading ||
                 !formValuesValidationChanged ||
                 Object.values(formValuesValidation).filter(
-                  (i) => i === undefined,
+                  (i) => i === undefined
                 ).length !== 0
               }
               isLoading={isLoading}
