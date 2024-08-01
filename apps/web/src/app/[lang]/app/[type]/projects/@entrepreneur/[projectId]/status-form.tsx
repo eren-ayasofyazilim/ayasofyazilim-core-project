@@ -17,12 +17,12 @@ export default function StatusForm({
 }: IStatusFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-   function onSendToApprovalClick() {
+  function onSendToApprovalClick() {
     setIsLoading(true);
     try {
-       updateProjectStatusServer(
+      updateProjectStatusServer(
         projectId,
-        ProjectStatusEnums.SENT_FOR_APPROVAL
+        ProjectStatusEnums.SENT_FOR_APPROVAL,
       ).then((response) => {
         if (response.status === 200) {
           toast.success("Başarılı.");
