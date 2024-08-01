@@ -134,7 +134,7 @@ export default function Page({
       setRoles({ ...returnData, items: transformedData });
       setIsLoading(false);
     }
-    controlledFetch(
+    void controlledFetch(
       _fetchLink,
       {
         method: "GET",
@@ -162,7 +162,7 @@ export default function Page({
       },
       callback: (e) => {
         const transformedData = parseFormValues(createFormSchema, e);
-        controlledFetch(
+        void controlledFetch(
           fetchLink,
           {
             method: "POST",
@@ -176,7 +176,7 @@ export default function Page({
   }
 
   useEffect(() => {
-    processConvertors();
+    void processConvertors();
   }, []);
 
   function parseFormValues(schema: FormModifier, data: any) {
@@ -204,7 +204,7 @@ export default function Page({
 
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "PUT",
@@ -219,7 +219,7 @@ export default function Page({
   };
 
   const onDelete = (e: any, row: any) => {
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "DELETE",

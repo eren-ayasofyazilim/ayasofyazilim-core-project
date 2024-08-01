@@ -157,7 +157,7 @@ export function GenericModal<T extends { id: string }>({
         setSelectedItems(new Set(addedItems.map((item) => item.id)));
         setLoading(false);
       };
-      loadItems();
+      void loadItems();
     } else {
       setSelectedItems(new Set());
     }

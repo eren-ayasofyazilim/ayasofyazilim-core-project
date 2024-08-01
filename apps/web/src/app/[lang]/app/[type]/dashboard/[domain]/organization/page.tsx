@@ -104,11 +104,11 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Users");
 
   useEffect(() => {
-    fetchAndUpdateUnits();
+    void fetchAndUpdateUnits();
   }, []);
 
   useEffect(() => {
-    fetchUsersAndRoles();
+    void fetchUsersAndRoles();
   }, [selectedUnitId]);
 
   const fetchUsersAndRoles = useCallback(async () => {
@@ -160,7 +160,7 @@ const App: React.FC = () => {
           );
           if (response.ok) {
             toast.success("Organization unit updated successfully");
-            fetchAndUpdateUnits();
+            void fetchAndUpdateUnits();
             setTriggerData({});
             setOpen(false);
           } else {
@@ -174,7 +174,7 @@ const App: React.FC = () => {
         }
       }
 
-      edit();
+      void edit();
     },
     [],
   );
@@ -218,7 +218,7 @@ const App: React.FC = () => {
 
         if (response.ok) {
           toast.success("Organization unit added successfully");
-          fetchAndUpdateUnits();
+          void fetchAndUpdateUnits();
           setTriggerData({});
           setOpen(false);
         } else {
@@ -247,7 +247,7 @@ const App: React.FC = () => {
         },
         callback: (e, _triggerData) => {
           const formData = { ...e, ParentId: selectedUnit?.id };
-          addNewUnit(formData, _triggerData);
+          void addNewUnit(formData, _triggerData);
           return true;
         },
         cta: "New organization unit",
@@ -313,7 +313,7 @@ const App: React.FC = () => {
           return false;
         }
         const formData = { targetUnitId: _selectedUnit.id };
-        handleMoveUsers(formData, _triggerData);
+        void handleMoveUsers(formData, _triggerData);
         return true;
       },
       cta: "Move all Users",
@@ -338,7 +338,7 @@ const App: React.FC = () => {
             );
             if (response.ok) {
               toast.success("Organization unit deleted successfully");
-              fetchAndUpdateUnits();
+              void fetchAndUpdateUnits();
               setSelectedUnitId(undefined);
               setTriggerData({});
               setOpen(false);
@@ -355,7 +355,7 @@ const App: React.FC = () => {
           }
           setIsConfirmDialogOpen(false);
         }
-        confirm();
+        void confirm();
       },
     });
     setIsConfirmDialogOpen(true);
@@ -392,7 +392,7 @@ const App: React.FC = () => {
           },
         );
         if (response.ok) {
-          fetchUsersAndRoles();
+          void fetchUsersAndRoles();
           toast.success("Users moved successfully");
           setTriggerData({});
         } else {
@@ -476,7 +476,7 @@ const App: React.FC = () => {
         }
         setIsUserModalOpen(false);
       }
-      addUser();
+      void addUser();
     },
     [selectedUnitId],
   );
@@ -520,7 +520,7 @@ const App: React.FC = () => {
         }
         setIsRoleModalOpen(false);
       }
-      addRoles();
+      void addRoles();
     },
     [selectedUnitId],
   );
@@ -567,7 +567,7 @@ const App: React.FC = () => {
                 setIsConfirmDialogOpen(false);
               }
             }
-            confirm();
+            void confirm();
           },
         });
         setIsConfirmDialogOpen(true);
@@ -615,7 +615,7 @@ const App: React.FC = () => {
                 setIsConfirmDialogOpen(false);
               }
             }
-            confirm();
+            void confirm();
           },
         });
         setIsConfirmDialogOpen(true);

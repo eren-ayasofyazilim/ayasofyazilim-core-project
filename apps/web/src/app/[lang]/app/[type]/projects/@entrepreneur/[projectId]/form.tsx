@@ -111,7 +111,7 @@ export default function ProjectForm({
     try {
       formValues.status = ProjectStatusEnums.IN_DRAFT_STAGE;
 
-      updateProjectServer(
+      void updateProjectServer(
         projectId,
         formValues as PutApiProjectServiceProjectsByIdData["requestBody"],
       ).then((response) => {
@@ -131,7 +131,7 @@ export default function ProjectForm({
   function onDeleteClick() {
     setIsLoading(true);
     try {
-      deleteProjectServer({ id: projectId }).then((response) => {
+      void deleteProjectServer({ id: projectId }).then((response) => {
         if (response.status === 200) {
           toast.success("Başarılı.");
           return;

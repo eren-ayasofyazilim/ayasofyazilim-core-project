@@ -267,7 +267,7 @@ export default function Page({
       setRoles({ ...returnData, items: transformedData });
       setIsLoading(false);
     }
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "GET",
@@ -303,7 +303,7 @@ export default function Page({
           "Added Successfully",
         );
       }
-      onData();
+      void onData();
     },
   };
   useEffect(() => {
@@ -330,7 +330,7 @@ export default function Page({
   }
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "PUT",
@@ -344,7 +344,7 @@ export default function Page({
     );
   };
   const onDelete = (e: any, row: any) => {
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "DELETE",

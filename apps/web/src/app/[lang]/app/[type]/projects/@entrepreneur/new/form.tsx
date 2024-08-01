@@ -63,7 +63,7 @@ export default function NewProjectForm({
 
   function createNewProject() {
     setLoading(true);
-    createNewProjectServer(formValues).then((response) => {
+    void createNewProjectServer(formValues).then((response) => {
       if (response.status === 200 && response.projectData) {
         setProjectId(response.projectData.id);
       } else {

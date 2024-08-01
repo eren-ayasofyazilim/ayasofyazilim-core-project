@@ -76,7 +76,7 @@ export default function ProfileForm({
       return;
     }
     setIsLoading(true);
-    update();
+    void update();
   }
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {

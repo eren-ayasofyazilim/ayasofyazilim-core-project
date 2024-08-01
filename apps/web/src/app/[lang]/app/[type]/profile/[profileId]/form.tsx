@@ -163,7 +163,7 @@ export function BackerForm({
         }}
         formSchema={formSchema[formType]}
         onSubmit={(formData) => {
-          submitFormData(formData);
+          void submitFormData(formData);
         }}
         showInRow
         values={backerData}

@@ -74,7 +74,7 @@ export default function ProjectForm({
       const isApproved =
         Object.values(formValuesValidation).filter((i) => i === false)
           .length === 0;
-      updateProjectStatusServer(
+      void updateProjectStatusServer(
         projectId,
         isApproved
           ? ProjectStatusEnums.APPROVED

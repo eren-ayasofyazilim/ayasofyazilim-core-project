@@ -20,7 +20,7 @@ export default function StatusForm({
   function onSendToApprovalClick() {
     setIsLoading(true);
     try {
-      updateProjectStatusServer(
+      void updateProjectStatusServer(
         projectId,
         ProjectStatusEnums.SENT_FOR_APPROVAL,
       ).then((response) => {
