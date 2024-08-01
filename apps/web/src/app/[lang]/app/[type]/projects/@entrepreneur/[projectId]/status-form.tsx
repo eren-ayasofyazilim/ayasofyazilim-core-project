@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ProjectStatusEnums } from "src/enums/project";
 import { updateProjectStatusServer } from "../../action";
 
-export interface IStatusFormProps {
+export interface StatusFormProps {
   projectId: string;
   actionText: string;
   disabled?: boolean;
@@ -14,7 +14,7 @@ export default function StatusForm({
   projectId,
   actionText,
   disabled,
-}: IStatusFormProps) {
+}: StatusFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   function onSendToApprovalClick() {

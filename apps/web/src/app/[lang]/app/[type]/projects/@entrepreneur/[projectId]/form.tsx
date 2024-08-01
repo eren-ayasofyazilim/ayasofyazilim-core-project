@@ -45,7 +45,7 @@ export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
 
-export interface IProjectFormProps {
+export interface ProjectFormProps {
   languageData: any;
   projectData: GetApiProjectServiceProjectsByIdResponse;
   projectId: string;
@@ -55,7 +55,7 @@ export default function ProjectForm({
   projectId,
   languageData,
   projectData,
-}: IProjectFormProps) {
+}: ProjectFormProps) {
   // const router = useRouter();
   const [formValues, setFormValues] =
     useState<GetApiProjectServiceProjectsByIdResponse>(projectData);

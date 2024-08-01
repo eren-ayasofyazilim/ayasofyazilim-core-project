@@ -12,7 +12,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
-    "@typescript-eslint/naming-convention": "off",
+    // "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/prefer-promise-reject-errors": "off",
     "no-await-in-loop": "off",
     "import/no-cycle": "off",

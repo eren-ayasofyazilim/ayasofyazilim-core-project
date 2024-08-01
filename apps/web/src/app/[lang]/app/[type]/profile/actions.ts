@@ -103,7 +103,7 @@ export async function postIndividual(formdata: any) {
   return result;
 }
 
-export interface IBackersProps {
+export interface BackersProps {
   name: string | null | undefined;
   legalStatusCode: string | null | undefined;
   taxpayerId: string | null | undefined;
@@ -130,7 +130,7 @@ export async function getBackers() {
       backerId: id,
     });
   }
-  return returnArray as IBackersProps[];
+  return returnArray as BackersProps[];
 }
 
 export async function deleteBacker(backerId: string) {

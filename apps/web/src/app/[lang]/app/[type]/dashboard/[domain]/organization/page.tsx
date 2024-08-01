@@ -51,18 +51,18 @@ function getChildrens(parentId: string, data: OrganizationUnit[]) {
   return childrens;
 }
 
-export interface IFormModifierProps {
+export interface FormModifierProps {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
 }
 
-export interface ITableDataProps {
-  createFormSchema: IFormModifierProps;
-  editFormSchema: IFormModifierProps;
+export interface TableDataProps {
+  createFormSchema: FormModifierProps;
+  editFormSchema: FormModifierProps;
 }
 
-const dataConfig: Record<string, ITableDataProps> = {
+const dataConfig: Record<string, TableDataProps> = {
   organization: {
     createFormSchema: {
       formPositions: ["displayName"],

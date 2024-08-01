@@ -5,7 +5,7 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 
-export interface IProjectFormProps {
+export interface ProjectFormProps {
   projectId: string;
   sectionData:
     | {
@@ -19,7 +19,7 @@ export interface IProjectFormProps {
     | null;
   canSectionsEditable: boolean;
 }
-export default function ProjectForm({ sectionData }: IProjectFormProps) {
+export default function ProjectForm({ sectionData }: ProjectFormProps) {
   if (!sectionData) return <></>;
   const sections = sectionData
     .filter((section) => (section.sectionRelationValue?.length || 0) > 10)
