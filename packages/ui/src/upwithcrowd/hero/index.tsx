@@ -6,6 +6,7 @@ import { cn } from "../../utils";
 import { createNoise3D } from "simplex-noise";
 import { AnimatePresence, motion } from "framer-motion";
 import AppLogo from "../app-logo";
+import Image from "next/image";
 
 type HeroProps = {
   variant: "invesdor" | "hirevision" | "stripe";
@@ -26,7 +27,7 @@ export function Hero({ variant = "invesdor", config }: HeroProps) {
                 UPWITH
                 <span className="text-primary">{config?.logo || "KONYA"}</span>
               </div> */}
-              <img src={config.logo} />
+              <Image alt="" src={config.logo} />
               <span className="text-xl text-slate-700">
                 SPK Lisanslı kitle fonlama platformu.
               </span>
@@ -85,7 +86,7 @@ export function Hero({ variant = "invesdor", config }: HeroProps) {
                 UPWITH
                 <span className="text-primary">{config?.logo || "KONYA"}</span>
               </div> */}
-              <img src={config.logo} />
+              <Image alt="" src={config.logo} />
               <span className="text-xl text-slate-700">
                 SPK Lisanslı kitle fonlama platformu.
               </span>

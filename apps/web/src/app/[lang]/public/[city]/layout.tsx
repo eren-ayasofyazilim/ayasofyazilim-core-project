@@ -12,6 +12,7 @@ import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getConfig } from "../config";
+import Image from "next/image";
 
 interface LayoutProps {
   params: { lang: string; city: string };
@@ -154,7 +155,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       <>
         {children}
         <div className="pt-20 w-full text-white bg-slate-900  bg-dot-slate-300/[0.2] relative flex items-center justify-center flex flex-col gap-20 overflow-hidden flex-wrap">
-          <img
+          <Image
             alt=""
             className="w-full absolute pointer-events-none z-0 opacity-20"
             src={config.images.footer}
@@ -167,7 +168,7 @@ export default async function Layout({ children, params }: LayoutProps) {
           />
           <div className="container flex flex-col h-full justify-center gap-20">
             <div className="mx-auto">
-              <img alt="" className="mx-auto" src={config.logo} />
+              <Image alt="" className="mx-auto" src={config.logo} />
             </div>
             <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-5 gap-6 col-span-2">
               <div className="items-center text-center lg:text-left lg:items-start flex flex-col gap-2">

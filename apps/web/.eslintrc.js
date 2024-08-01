@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: ["unused-imports"],
-  extends: ["@repo/eslint-config/next.js", "eslint:recommended"],
+  extends: ["@repo/eslint-config/next.js", "eslint:recommended", "prettier"],
   ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
     "@typescript-eslint/no-floating-promises": "off", // Asla aktif etmeyin -bir dost
