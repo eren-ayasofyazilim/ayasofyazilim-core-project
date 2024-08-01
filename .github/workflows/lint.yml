@@ -20,16 +20,14 @@ jobs:
       run: | 
         npm install -g pnpm
         pnpm install
-    - name: Lint Action
-      uses: wearerequired/lint-action@v2.3.0
+    - name: Lint 
+      run: | 
+        cd apps/web
+        pnpm format
+        pnpm precommit
+    - name: commit
+      uses: EndBug/add-and-commit@v9
       with:
-          eslint: true
-          eslint_auto_fix: true
-          eslint_dir: apps/web
-          prettier: true
-          prettier_auto_fix: true
-          prettier_dir: apps/web
-          tsc: true
-          tsc_auto_fix: true
-          tsc_dir: apps/web
+        default_author: github_actions
+
             
