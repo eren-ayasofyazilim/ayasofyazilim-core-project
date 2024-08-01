@@ -46,7 +46,7 @@ async function getBackerProfiles() {
 export default async function Page() {
   noStore();
   const backerProfiles = await getBackerProfiles();
-
+  //await new Promise((resolve) => setTimeout(resolve, 10000));
   return (
     <>
       <PageHeader
