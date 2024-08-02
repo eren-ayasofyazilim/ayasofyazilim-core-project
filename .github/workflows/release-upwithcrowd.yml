@@ -1,11 +1,11 @@
-name: Playwright Tests
+name: Release upwithcrowd
 run-name: ${{ github.actor }} is taking upwithcrowd live 🚀
 on:
   push:
     branches: [ upwithcrowd ]
 
 jobs:
-  test:
+  release_upwithcrowd:
     timeout-minutes: 60
     runs-on: self-hosted
     steps:

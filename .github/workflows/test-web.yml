@@ -1,12 +1,12 @@
-name: Playwright Tests
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Publish dev websites
+run-name: ${{ github.actor }} is publishing projectt to dev 🚀
 on:
   push:
     branches: [ main, master ]
   # pull_request_target:
   #   branches: [ main, master ]
 jobs:
-  test:
+  Publish_dev_websites:
     timeout-minutes: 60
     runs-on: self-hosted
     environment: upwithcrowd

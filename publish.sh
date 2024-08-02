@@ -8,6 +8,8 @@ fi
 # create variable for pm2 process name
 pm2_process_name="$2"
 echo -e '\e[1m\e[34mPulling code from remote..\e[0m\n'
+git clean -fd
+git submodule foreach --recursive git clean -fd
 git fetch --all
 git reset --hard origin/main
 # update github repo
