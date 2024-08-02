@@ -176,24 +176,28 @@ export interface BackersProps {
   customerNumber?: string | null | undefined;
 }
 export async function getBackers() {
-  const client = await getBackerServiceClient();
-  const result = await client.backer.getApiBackerServiceBackers({
-    maxResultCount: 1000,
-  });
-  const itemsIds = result.items?.map((item) => item.id) || [];
   const returnArray = [];
-  for (const id of itemsIds) {
-    const item = await client.backer.getApiBackerServiceBackersDetailById({
-      id: id || "",
+  try {
+    const client = await getBackerServiceClient();
+    const result = await client.backer.getApiBackerServiceBackers({
+      maxResultCount: 1000,
     });
-    const organization = item.entityInformations?.[0]?.organizations?.[0];
-    if (!organization) continue;
-    returnArray.push({
-      name: organization.name,
-      legalStatusCode: organization.legalStatusCode,
-      taxpayerId: organization.taxpayerId,
-      backerId: id,
-    });
+    const itemsIds = result.items?.map((item) => item.id) || [];
+    for (const id of itemsIds) {
+      const item = await client.backer.getApiBackerServiceBackersDetailById({
+        id: id || "",
+      });
+      const organization = item.entityInformations?.[0]?.organizations?.[0];
+      if (!organization) continue;
+      returnArray.push({
+        name: organization.name,
+        legalStatusCode: organization.legalStatusCode,
+        taxpayerId: organization.taxpayerId,
+        backerId: id,
+      });
+    }
+  } catch (e) {
+    return [] as BackersProps[];
   }
   return returnArray as BackersProps[];
 }
@@ -250,24 +254,28 @@ export async function getBacker(profileId: string) {
 }
 
 export async function getBackersIndividuals() {
-  const client = await getBackerServiceClient();
-  const result = await client.backer.getApiBackerServiceBackers({
-    maxResultCount: 1000,
-  });
-  const itemsIds = result.items?.map((item) => item.id) || [];
   const returnArray = [];
-  for (const id of itemsIds) {
-    const item = await client.backer.getApiBackerServiceBackersDetailById({
-      id: id || "",
+  try {
+    const client = await getBackerServiceClient();
+    const result = await client.backer.getApiBackerServiceBackers({
+      maxResultCount: 1000,
     });
-    const individual = item.entityInformations?.[0]?.individuals?.[0];
-    if (!individual) continue;
-    returnArray.push({
-      name: individual.name?.name,
-      legalStatusCode: individual.name?.salutation,
-      taxpayerId: individual.name?.id,
-      backerId: id,
-    });
+    const itemsIds = result.items?.map((item) => item.id) || [];
+    for (const id of itemsIds) {
+      const item = await client.backer.getApiBackerServiceBackersDetailById({
+        id: id || "",
+      });
+      const individual = item.entityInformations?.[0]?.individuals?.[0];
+      if (!individual) continue;
+      returnArray.push({
+        name: individual.name?.name,
+        legalStatusCode: individual.name?.salutation,
+        taxpayerId: individual.name?.id,
+        backerId: id,
+      });
+    }
+  } catch (e) {
+    return [] as BackersProps[];
   }
   return returnArray;
 }
