@@ -1,6 +1,10 @@
 "use server";
 
-import type { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
+import type {
+  BackerServiceClient,
+  PostApiBackerServiceBackersWithComponentsData,
+  PutApiBackerServiceBackersData,
+} from "@ayasofyazilim/saas/BackerService";
 import { revalidatePath } from "next/cache";
 import { getBackerServiceClient } from "src/lib";
 
@@ -8,6 +12,7 @@ function populateCustomFormData(formdata: any) {
   const customFormData = {
     entityInformations: [
       {
+        partyType: 1,
         organizations: [
           {
             name: formdata.name,
@@ -37,6 +42,7 @@ function populateIndividual(formdata: any) {
   const customFormData = {
     entityInformations: [
       {
+        partyType: 0,
         individuals: [
           {
             name: {
@@ -79,7 +85,9 @@ export async function postBacker(formdata: any) {
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
-      requestBody: populateCustomFormData(formdata),
+      requestBody: populateCustomFormData(
+        formdata
+      ) as PostApiBackerServiceBackersWithComponentsData["requestBody"],
     });
     revalidatePath("/");
   } catch (e) {
@@ -94,7 +102,9 @@ export async function postIndividual(formdata: any) {
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
-      requestBody: populateIndividual(formdata),
+      requestBody: populateIndividual(
+        formdata
+      ) as PostApiBackerServiceBackersWithComponentsData["requestBody"],
     });
     revalidatePath("/");
   } catch (e) {
@@ -146,7 +156,9 @@ export async function putBacker(backerId: string, formdata: any) {
   const client: BackerServiceClient = await getBackerServiceClient();
   const result = await client.backer.putApiBackerServiceBackers({
     id: backerId,
-    requestBody: populateCustomFormData(formdata),
+    requestBody: populateCustomFormData(
+      formdata
+    ) as PutApiBackerServiceBackersData["requestBody"],
   });
   revalidatePath("/");
   return result;
