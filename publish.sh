@@ -9,7 +9,7 @@ fi
 pm2_process_name="$2"
 echo -e '\e[1m\e[34mPulling code from remote..\e[0m\n'
 git clean -xfd
-git submodule foreach --recursive git clean -xfd
+git submodule foreach --recursive git clean -fd
 git fetch --all
 # update github repo
 git pull --recurse-submodules
