@@ -17,7 +17,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import AppLogo from "../app-logo";
 import { ProfileMenu } from "../profile-menu";
-import Image from "next/image";
 
 export type link = {
   text: string;
@@ -198,7 +197,7 @@ function HirevisionNavbar({
       className={`transition-colors md:duration-500 w-full flex justify-between border-b items-center gap-4 px-4 md:px-12 h-16 top-0 left-0 z-50 ${isFixed ? "fixed bg-white  backdrop-blur-sm" : isMenuOpen ? "bg-white fixed backdrop-blur-sm" : "absolute bg-white/10 hover:bg-white/40 backdrop-blur-sm border-b-transparent"}`}
     >
       <Link href={config.link}>
-        <Image alt="" src={config.logo} className="h-8 lg:h-14" />
+        <img src={config.logo} className="h-8 lg:h-14" />
       </Link>
 
       <Button

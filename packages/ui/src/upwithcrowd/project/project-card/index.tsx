@@ -1,6 +1,5 @@
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import Progress from "@repo/ayasofyazilim-ui/molecules/progress";
-import Image from "next/image";
 import Link from "next/link";
 
 export const currencyFormatter = new Intl.NumberFormat("tr", {
@@ -106,8 +105,7 @@ export default function ProjectCard({
       className={`bg-white border rounded-md flex ${horizontal ? "flex-row mb-4" : "flex-col max-w-96 basis-11/12 md:basis-1/3"}`}
     >
       <div className={horizontal ? "basis-2/4 relative" : "relative"}>
-        <Image
-          alt=""
+        <img
           src={
             defaultImages?.[project.id as keyof typeof defaultImages] ||
             "https://placehold.co/1920x600"
