@@ -6,6 +6,7 @@ import { BentoGrid, BentoGridItem } from "@repo/ui/upwithcrowd/bento-grid";
 import { Brands } from "@repo/ui/upwithcrowd/brands";
 import { FlipWords, Hero } from "@repo/ui/upwithcrowd/hero";
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
+import Image from "next/image";
 import { ProjectStatusEnums } from "src/enums/project";
 
 const BrandList = [
@@ -55,7 +56,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/thumbcache/homepage_blog/uploads/blogs/blog-6662d10e87010.webp"
@@ -79,7 +80,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6662cf2c5b936.webp"
@@ -103,7 +104,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6662cbc4f1975.webp"
@@ -128,7 +129,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-665d874515335.webp"
@@ -153,7 +154,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6630fd88724bf.webp"
@@ -180,7 +181,7 @@ const items = [
     ),
     header: (
       <div className="w-full h-full flex rounded-md overflow-hidden">
-        <img
+        <Image
           alt=""
           className="h-full w-auto"
           src="https://valu.com.tr/uploads/blogs/blog-6630fd6b43c03.webp"
@@ -259,7 +260,7 @@ export default function Page({
         <div className="container grid md:grid-cols-2 justify-center gap-6">
           <div className="flex flex-col gap-6 justify-center h-full">
             <h1 className="text-2xl md:text-5xl text-center font-bold">
-              <img alt="" className="m-auto" src={config.logo} />
+              <Image alt="" className="m-auto" src={config.logo} />
               aracılığıyla girişim şirketlerinde hisse sahibi olabilirsiniz.
             </h1>
             <p className="text-l">
@@ -272,7 +273,7 @@ export default function Page({
             </div>
           </div>
           <div className="h-full">
-            <img
+            <Image
               alt=""
               className="max-h-[500px]"
               src="https://kapilendo-public.imgix.net/files/undefined/40740ec4-1931-44c8-8b9b-e7bcc383f732_funded_projects_invesdor_EN.png?w=1028&auto=format,compress&fit=crop&crop=right&min-h=580"
@@ -281,7 +282,7 @@ export default function Page({
         </div>
       </div>
       <h3 className="text-2xl md:text-5xl font-bold text-center w-full max-w-4xl mx-auto my-20 md:flex flex-col md:flex-row flex-wrap  items-center gap-0 hidden ">
-        <img alt="" className="mr-4" src={config.logo} /> ile
+        <Image alt="" className="mr-4" src={config.logo} /> ile
         <FlipWords
           className="text-black min-w-[230px] text-center md:text-left"
           words={["yatırımcı", "girişimci"]}
@@ -309,7 +310,7 @@ export default function Page({
           ))}
         </BentoGrid>
         <div className="flex absolute top-60 z-0 w-full opacity-10 grayscale hidden">
-          <img alt="" className="w-full" src={config.images.footer} />
+          <Image alt="" className="w-full" src={config.images.footer} />
         </div>
       </div>
     </div>

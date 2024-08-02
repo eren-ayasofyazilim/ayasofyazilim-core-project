@@ -2,7 +2,7 @@
 import type { ForgotPasswordFormDataType } from "@repo/ayasofyazilim-ui/molecules/forms/forgot-password-form";
 import type { NextRequest } from "next/server";
 
-export async function POST(reqest: NextRequest) {
+export async function POST(reqest: NextRequest): Promise<Response> {
   const { email } = (await reqest.json()) as ForgotPasswordFormDataType;
 
   // get request body

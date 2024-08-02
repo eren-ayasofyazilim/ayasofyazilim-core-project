@@ -1,7 +1,7 @@
 "use server";
 import type { NextRequest } from "next/server";
 
-export async function POST(reqest: NextRequest) {
+export async function POST(reqest: NextRequest): Promise<Response> {
   const { password, resetToken, userId } = (await reqest.json()) as {
     password: string;
     resetToken: string;

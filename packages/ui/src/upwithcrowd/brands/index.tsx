@@ -11,6 +11,7 @@ import {
   CarouselItem,
 } from "@repo/ayasofyazilim-ui/atoms/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
+import Image from "next/image";
 
 type BrandType = {
   title: string;
@@ -37,7 +38,7 @@ export function Brands({ brands }: { brands: BrandType[] }) {
               className="basis-1/3 md:basis-1/4 lg:basis-1/6 grow flex items-center justify-center p-4"
             >
               <div className="flex items-center justify-center max-w-32 grayscale-0 hover:grayscale-0 transition-all">
-                <img src={brand.href} className="h-auto w-full " />
+                <Image alt="" src={brand.href} className="h-auto w-full " />
               </div>
             </CarouselItem>
           ))}
