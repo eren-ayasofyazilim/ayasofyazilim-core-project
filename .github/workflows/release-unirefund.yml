@@ -1,11 +1,11 @@
-name: Playwright Tests
+name: Release Unirefund
 run-name: ${{ github.actor }} is taking unirefund live 🚀
 on:
   push:
     branches: [ unirefund ]
 
 jobs:
-  test:
+  release_unirefund:
     timeout-minutes: 60
     runs-on: self-hosted
     steps:
