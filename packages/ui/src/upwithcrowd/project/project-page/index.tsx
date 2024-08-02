@@ -119,7 +119,7 @@ export default function ProjectPage({
             alt="image"
             className="w-full mt-20 mb-10 md:hidden"
           />
-          <div className="flex flex-col gap-2 items-center mb-4 absolute bottom-0 right-3 text-xs">
+          <div className="flex flex-col gap-2 items-center mb-4 absolute bottom-0 right-3 text-xs md:hidden">
             <img
               className="h-10 w-10 object-cover"
               src="https://placehold.co/40x40/EEE/000"
