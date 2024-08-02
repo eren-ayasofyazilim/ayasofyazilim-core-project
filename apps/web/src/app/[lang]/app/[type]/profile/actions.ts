@@ -7,9 +7,47 @@ import type {
 } from "@ayasofyazilim/saas/BackerService";
 import { revalidatePath } from "next/cache";
 import { getBackerServiceClient } from "src/lib";
-
-function populateCustomFormData(formdata: any) {
-  const customFormData = {
+function populateCustomFormDataPost(formdata: any) {
+  const customFormData: PostApiBackerServiceBackersWithComponentsData["requestBody"] =
+    {
+      entityInformations: [
+        {
+          partyType: 1,
+          organizations: [
+            {
+              name: formdata.name,
+              taxpayerId: formdata.taxpayerId,
+              legalStatusCode: formdata.legalStatusCode,
+              customerNumber: formdata.customerNumber,
+              contactInformation: {
+                startDate: "2024-07-04T08:12:58.923Z", //kaldırılacak
+                endDate: "2028-07-04T08:12:58.923Z", //kaldırılacak
+                telephones: formdata.telephone,
+                addresses: [{ ...formdata.address }],
+                emails: [
+                  {
+                    emailAddress: formdata.emailAddress,
+                    primaryFlag: true,
+                    typeCode: 1,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      affiliations: [
+        {
+          name: "string",
+          description: "string",
+          affiliationTypeCode: 0,
+        },
+      ],
+    };
+  return customFormData;
+}
+function populateCustomFormDataPut(formdata: any) {
+  const customFormData: PutApiBackerServiceBackersData["requestBody"] = {
     entityInformations: [
       {
         partyType: 1,
@@ -20,9 +58,17 @@ function populateCustomFormData(formdata: any) {
             legalStatusCode: formdata.legalStatusCode,
             customerNumber: formdata.customerNumber,
             contactInformation: {
+              startDate: "2024-07-04T08:12:58.923Z", //kaldırılacak
+              endDate: "2028-07-04T08:12:58.923Z", //kaldırılacak
               telephones: formdata.telephone,
               addresses: [{ ...formdata.address }],
-              emails: [{ emailAddress: formdata.emailAddress }],
+              emails: [
+                {
+                  emailAddress: formdata.emailAddress,
+                  primaryFlag: true,
+                  typeCode: 1,
+                },
+              ],
             },
           },
         ],
@@ -30,53 +76,66 @@ function populateCustomFormData(formdata: any) {
     ],
     affiliations: [
       {
+        id: "string",
+        backerId: "string",
         name: "string",
         description: "string",
+        affiliationTypeCode: 0,
+        partyId: "0",
       },
     ],
   };
   return customFormData;
 }
-
-function populateIndividual(formdata: any) {
-  const customFormData = {
-    entityInformations: [
-      {
-        partyType: 0,
-        individuals: [
-          {
-            name: {
-              salutation: formdata.name,
-              name: formdata.name,
-              suffix: formdata.name,
-              mailingName: formdata.name,
-              officialName: formdata.name,
-            },
-            contactInformation: {
-              telephones: formdata.telephone,
-              addresses: [{ ...formdata.address }],
-              emails: [{ emailAddress: formdata.emailAddress }],
-            },
-            personalSummaries: [
-              {
-                date: "2024-07-04T08:12:58.923Z",
-                birthDate: "2024-07-04T08:12:58.923Z",
-                ethnicity: "string",
-                maritalStatusCode: "string",
-                religiousAffiliationName: "string",
+function populateIndividualPost(formdata: any) {
+  const customFormData: PostApiBackerServiceBackersWithComponentsData["requestBody"] =
+    {
+      entityInformations: [
+        {
+          partyType: 0,
+          individuals: [
+            {
+              name: {
+                salutation: formdata.name,
+                name: formdata.name,
+                suffix: formdata.name,
+                mailingName: formdata.name,
+                officialName: formdata.name,
               },
-            ],
-          },
-        ],
-      },
-    ],
-    affiliations: [
-      {
-        name: "string",
-        description: "string",
-      },
-    ],
-  };
+              contactInformation: {
+                startDate: "2024-07-04T08:12:58.923Z", //kaldırılacak
+                endDate: "2028-07-04T08:12:58.923Z", //kaldırılacak
+                telephones: formdata.telephone,
+                addresses: [{ ...formdata.address }],
+                emails: [
+                  {
+                    emailAddress: formdata.emailAddress,
+                    primaryFlag: true,
+                    typeCode: 1,
+                  },
+                ],
+              },
+              personalSummaries: [
+                {
+                  date: "2024-07-04T08:12:58.923Z",
+                  birthDate: "2024-07-04T08:12:58.923Z",
+                  ethnicity: "string",
+                  maritalStatusCode: "string",
+                  religiousAffiliationName: "string",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      affiliations: [
+        {
+          name: "string",
+          description: "string",
+          affiliationTypeCode: 0,
+        },
+      ],
+    };
   return customFormData;
 }
 
@@ -85,9 +144,7 @@ export async function postBacker(formdata: any) {
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
-      requestBody: populateCustomFormData(
-        formdata
-      ) as PostApiBackerServiceBackersWithComponentsData["requestBody"],
+      requestBody: populateCustomFormDataPost(formdata),
     });
     revalidatePath("/");
   } catch (e) {
@@ -102,9 +159,7 @@ export async function postIndividual(formdata: any) {
   let result;
   try {
     result = await client.backer.postApiBackerServiceBackersWithComponents({
-      requestBody: populateIndividual(
-        formdata
-      ) as PostApiBackerServiceBackersWithComponentsData["requestBody"],
+      requestBody: populateIndividualPost(formdata),
     });
     revalidatePath("/");
   } catch (e) {
@@ -156,9 +211,7 @@ export async function putBacker(backerId: string, formdata: any) {
   const client: BackerServiceClient = await getBackerServiceClient();
   const result = await client.backer.putApiBackerServiceBackers({
     id: backerId,
-    requestBody: populateCustomFormData(
-      formdata
-    ) as PutApiBackerServiceBackersData["requestBody"],
+    requestBody: populateCustomFormDataPut(formdata),
   });
   revalidatePath("/");
   return result;
