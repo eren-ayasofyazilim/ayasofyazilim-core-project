@@ -46,7 +46,6 @@ async function getBackerProfiles() {
 export default async function Page() {
   noStore();
   const backerProfiles = await getBackerProfiles();
-
   return (
     <>
       <PageHeader
