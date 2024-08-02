@@ -8,9 +8,8 @@ fi
 # create variable for pm2 process name
 pm2_process_name="$2"
 echo -e '\e[1m\e[34mPulling code from remote..\e[0m\n'
-git clean -xfd
-git submodule foreach --recursive git clean -xfd
 git fetch --all
+git reset --hard origin/main
 # update github repo
 git pull --recurse-submodules
 # echo -e '\e[1m\e[34m\nChecking for new yarn version and installing..\e[0m\n'

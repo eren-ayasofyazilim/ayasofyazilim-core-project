@@ -5,7 +5,6 @@ import { TiptapLayout } from "@repo/ayasofyazilim-ui/templates/tiptap-layout";
 import Link from "next/link";
 import Invest from "../../../invest";
 import { currencyFormatter, getFundCollectionType } from "../project-card";
-import Image from "next/image";
 
 interface IProjectCardProps {
   languageData: any;
@@ -112,7 +111,7 @@ export default function ProjectPage({
             backgroundImage: `url(${defaultImages?.[projectData.id as keyof typeof defaultImages] || "https://placehold.co/1920x600"})`,
           }}
         >
-          <Image
+          <img
             src={
               defaultImages?.[projectData.id as keyof typeof defaultImages] ||
               "https://placehold.co/1920x600"
@@ -121,8 +120,7 @@ export default function ProjectPage({
             className="w-full mt-20 mb-10 md:hidden"
           />
           <div className="flex flex-col gap-2 items-center mb-4 absolute bottom-0 right-3 text-xs">
-            <Image
-              alt=""
+            <img
               className="h-10 w-10 object-cover"
               src="https://placehold.co/40x40/EEE/000"
             />
@@ -134,8 +132,7 @@ export default function ProjectPage({
               <div className="text-2xl ">{projectData.definition}</div>
             </div>
             <div className="flex flex-col gap-2 items-center mb-5">
-              <Image
-                alt=""
+              <img
                 className="h-16 w-16 object-cover"
                 src="https://placehold.co/40x40/FFF/000"
               />

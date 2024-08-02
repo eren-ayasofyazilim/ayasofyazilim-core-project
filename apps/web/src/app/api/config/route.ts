@@ -1,6 +1,6 @@
 import { getAccountServiceClient } from "src/lib";
 
-export async function GET(): Promise<Response> {
+export async function GET() {
   const client = await getAccountServiceClient();
   const result =
     await client.abpApplicationConfiguration.getApiAbpApplicationConfiguration({

@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: ["unused-imports"],
-  extends: ["@repo/eslint-config/next.js", "eslint:recommended", "prettier"],
+  extends: ["@repo/eslint-config/next.js", "eslint:recommended"],
   ignorePatterns: ["**/language-management/form.tsx", "**/vendor/*.js"],
   rules: {
     /* Should be disabled */

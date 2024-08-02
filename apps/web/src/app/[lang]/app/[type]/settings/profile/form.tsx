@@ -9,7 +9,6 @@ import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { updateUserProfileServer } from "action";
 import { createZodObject } from "src/utils";
 
@@ -114,7 +113,7 @@ export default function ProfileForm({
       </div>
       <div className="basis-1/4 min-w-[100px] pt-4">
         <div className="relative m-auto w-64 h-64">
-          <Image
+          <img
             alt=""
             className="rounded-full border-4 border-gray-200 w-full h-full object-cover"
             src={selectedImage}
