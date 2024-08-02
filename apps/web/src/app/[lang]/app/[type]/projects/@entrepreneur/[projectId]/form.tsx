@@ -22,14 +22,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -39,9 +31,11 @@ import type {
 } from "@ayasofyazilim/saas/ProjectService";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
 import { NumericInput } from "@repo/ayasofyazilim-ui/molecules/numeric-input";
+import SelectTabs, {
+  SelectTabsContent,
+} from "@repo/ayasofyazilim-ui/molecules/select-tabs";
 import { AccordionStepperHeader } from "@repo/ayasofyazilim-ui/organisms/accordion-stepper-header";
-import { CalendarIcon } from "lucide-react";
-// import { useRouter } from "next/navigation";
+import { Blocks, CalendarIcon, HandCoins } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProjectStatusEnums } from "src/enums/project";
 import { deleteProjectServer, updateProjectServer } from "../../action";
@@ -118,7 +112,7 @@ export default function ProjectForm({
 
       const result = await updateProjectServer(
         projectId,
-        formValues as PutApiProjectServiceProjectsByIdData["requestBody"],
+        formValues as PutApiProjectServiceProjectsByIdData["requestBody"]
       );
       if (result.status === 200) {
         setIsSubmitDisabled(true);
@@ -153,7 +147,12 @@ export default function ProjectForm({
         type="single"
         value={accordionTab}
       >
-        <AccordionItem className="border" value="basic-information">
+        <AccordionItem
+          className={
+            isChecked.generalInformation ? "border" : "border border-red-300"
+          }
+          value="basic-information"
+        >
           <AccordionStepperHeader checked={isChecked.generalInformation}>
             Temel Bilgiler
           </AccordionStepperHeader>
@@ -209,7 +208,9 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.budget ? "border my-2" : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.budget}
           value="budget"
         >
@@ -222,7 +223,7 @@ export default function ProjectForm({
                 {languageData.FundCollectionType}
               </Label>
               <div className="relative">
-                <Select
+                <SelectTabs
                   disabled={isInputEditDisabled}
                   onValueChange={(value) => {
                     setFormValues({
@@ -232,20 +233,19 @@ export default function ProjectForm({
                   }}
                   value={formValues.fundCollectionType || ""}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="SHRE">
-                        {languageData.FundCollectionTypeSHRE}
-                      </SelectItem>
-                      <SelectItem value="DBIT">
-                        {languageData.FundCollectionTypeDBIT}
-                      </SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  <SelectTabsContent value="SHRE">
+                    <div className="flex flex-row gap-1 items-center">
+                      <Blocks />
+                      {languageData.FundCollectionTypeSHRE}
+                    </div>
+                  </SelectTabsContent>
+                  <SelectTabsContent value="DBIT">
+                    <div className="flex flex-row gap-1 items-center">
+                      <HandCoins />
+                      {languageData.FundCollectionTypeDBIT}
+                    </div>
+                  </SelectTabsContent>
+                </SelectTabs>
               </div>
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.FundCollectionTypeInfo}
@@ -288,7 +288,11 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.additionalFunding
+              ? "border my-2"
+              : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.additionalFunding}
           value="additional-funding"
         >
@@ -301,27 +305,26 @@ export default function ProjectForm({
                 {languageData.AdditionalFunding}
               </Label>
               <div className="relative">
-                <Select
+                <SelectTabs
                   disabled={isInputEditDisabled}
                   onValueChange={(value) => {
                     setFormValues({ ...formValues, overFunding: value });
                   }}
                   value={formValues.overFunding || ""}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="Y">
-                        {languageData.AdditionalFundingYes}
-                      </SelectItem>
-                      <SelectItem value="N">
-                        {languageData.AdditionalFundingNo}
-                      </SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  <SelectTabsContent value="Y">
+                    <div className="flex flex-row gap-1 items-center">
+                      <Blocks />
+                      {languageData.AdditionalFundingYes}
+                    </div>
+                  </SelectTabsContent>
+                  <SelectTabsContent value="N">
+                    <div className="flex flex-row gap-1 items-center">
+                      <HandCoins />
+                      {languageData.AdditionalFundingNo}
+                    </div>
+                  </SelectTabsContent>
+                </SelectTabs>
               </div>
               <p className="text-[0.8rem] text-muted-foreground">
                 {languageData.AdditionalFundingInfo}
@@ -368,7 +371,9 @@ export default function ProjectForm({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem
-          className="my-2 border"
+          className={
+            isChecked.date ? "border my-2" : "my-2 border border-red-300"
+          }
           disabled={isAccordionTabDisabled.date}
           value="date"
         >
@@ -384,7 +389,7 @@ export default function ProjectForm({
                       className={cn(
                         "w-[280px] justify-start text-left font-normal",
                         !formValues.startDate &&
-                          "text-muted-foreground border-red-500",
+                          "text-muted-foreground border-red-500"
                       )}
                       variant="outline"
                     >

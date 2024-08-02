@@ -193,7 +193,7 @@ export const dataConfig: Record<string, any> = {
     },
     scopes: {
       createFormSchema: {
-        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
       },
       tableSchema: {
@@ -201,7 +201,7 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
       },
       editFormSchema: {
-        formPositions: ["name", "displayName", "description" /*"resources"*/],
+        formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
       },
       filterBy: "name",

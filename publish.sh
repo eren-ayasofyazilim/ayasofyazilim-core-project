@@ -1,7 +1,12 @@
 #!/bin/bash
 set -e
+if [ -z "$2" ]
+then
+  echo -e '\e[1m\e[31mApp name not provided. Please provide an app name.\e[0m\n'
+  exit 1
+fi
 # create variable for pm2 process name
-pm2_process_name="Unirefund Web"
+pm2_process_name="$2"
 echo -e '\e[1m\e[34mPulling code from remote..\e[0m\n'
 # update github repo
 git pull --recurse-submodules
