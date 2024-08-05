@@ -211,6 +211,7 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
       if (schema.default) zodType = zodType.default(schema.default === "true");
       break;
     case "integer":
+    case "number":
       if (schema.enum) {
         const stringEnums = schema.enum.map((e: any) => e.toString());
         zodType = z.enum(stringEnums as [string, ...string[]]);

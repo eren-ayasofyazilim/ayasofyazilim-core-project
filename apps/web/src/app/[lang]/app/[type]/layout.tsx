@@ -99,10 +99,10 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang,
+        params.lang
       ),
       type: "admin",
-      appType: "admin",
+      appType: "upwithcrowd",
       icon: <Presentation className="text-slate-500 w-4" />,
     }));
 

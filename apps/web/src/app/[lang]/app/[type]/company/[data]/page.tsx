@@ -10,7 +10,6 @@ import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/org
 import { createZodObject, getBaseLink } from "src/utils";
 import {
   $createCustoms,
-  $createMerchants,
   $createRefund_points,
   $createTax_free,
   $editCustoms,
@@ -22,13 +21,13 @@ import {
   $showRefund_points,
   $showTax_free,
 } from "./schemas.gen";
-
+import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
 async function controlledFetch(
   url: string,
   options: RequestInit,
   onSuccess: (_data?: any) => void,
   successMessage = "Successful",
-  showToast = true,
+  showToast = true
 ) {
   try {
     const getData = await fetch(url, options);
@@ -72,29 +71,10 @@ const dataConfig: Record<string, TableData> = {
         "taxpayerId",
         "legalStatusCode",
         "customerNumber",
-        "areaCode",
-        "localNumber",
-        "ituCountryCode",
-        "primaryFlag",
-        "telephoneTypeCode",
-        "addressLine",
-        "city",
-        "terriority",
-        "postalCode",
-        "country",
-        "fullAddress",
-        "addressPrimaryFlag",
-        "addressTypeCode",
-        "emailAddress",
-        "emailPrimaryFlag",
-        "emailTypeCode",
-        "productName",
-        "vatRate",
-        "productCode",
-        "isActive",
+        "contactInformation",
+        "productGroups",
       ],
-
-      schema: $createMerchants,
+      schema: $UniRefund_MerchantService_Organizations_CreateOrganizationDto,
     },
     editFormSchema: {
       formPositions: [
@@ -229,7 +209,7 @@ const dataConfig: Record<string, TableData> = {
 };
 function convertEnumField(
   value: string | number,
-  enumArray: string[],
+  enumArray: string[]
 ): string | number {
   if (typeof value === "number") {
     return enumArray[value];
@@ -274,7 +254,7 @@ export default function Page({
       } as RequestInit,
       onData,
       "",
-      false,
+      false
     ).catch();
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
@@ -285,10 +265,24 @@ export default function Page({
       formSchema: createZodObject(
         createFormSchema.schema,
         createFormSchema.formPositions || [],
-        createFormSchema.convertors || {},
+        createFormSchema.convertors || {}
       ),
       dependencies: createFormSchema.dependencies,
-      fieldConfig: { withoutBorder: true },
+      fieldConfig: {
+        withoutBorder: true,
+        contactInformation: {
+          telephones: {
+            withoutBorder: true,
+          },
+          emails: {
+            withoutBorder: true,
+          },
+          addresses: {
+            withoutBorder: true,
+          },
+        },
+        productGroups: { withoutBorder: true },
+      },
     },
     callback: (e) => {
       async function onData() {
@@ -300,7 +294,7 @@ export default function Page({
             body: JSON.stringify(transformedData),
           },
           getRoles,
-          "Added Successfully",
+          "Added Successfully"
         );
       }
       void onData();
@@ -314,7 +308,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
@@ -340,7 +334,7 @@ export default function Page({
         }),
       },
       getRoles,
-      "Updated Successfully",
+      "Updated Successfully"
     );
   };
   const onDelete = (e: any, row: any) => {
@@ -351,14 +345,14 @@ export default function Page({
         body: JSON.stringify(row.id),
       },
       getRoles,
-      "Deleted Successfully",
+      "Deleted Successfully"
     );
   };
   function convertZod(schema: FormModifier) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     return newSchema;
   }
