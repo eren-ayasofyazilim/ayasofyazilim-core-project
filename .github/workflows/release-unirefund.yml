@@ -11,4 +11,4 @@ jobs:
     steps:
     - run: echo "🎉 Going Live!"
     - name: Release unirefund
-      run: ssh ubuntu "cd ~/frontend/prod_unirefund && chmod 777 publish.sh && ./publish.sh 3575 unirefund_prod"
+      run: ssh ubuntu "cd ~/frontend/unirefund_prod && chmod 777 publish.sh && ./publish.sh 3575 unirefund_prod"
