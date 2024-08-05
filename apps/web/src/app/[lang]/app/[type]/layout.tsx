@@ -25,7 +25,7 @@ import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
 
-type navigationItmes = NavigationItem & {
+type NavigationItmes = NavigationItem & {
   type: string | string[];
   appType?: string;
 };
@@ -106,7 +106,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       icon: <Presentation className="text-slate-500 w-4" />,
     }));
 
-  const navigationItems: navigationItmes[] = [
+  const navigationItems: NavigationItmes[] = [
     {
       key: "reports",
       title: navbarResources["Menu:Reports"],

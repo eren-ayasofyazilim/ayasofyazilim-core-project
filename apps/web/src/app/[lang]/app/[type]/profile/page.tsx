@@ -3,9 +3,6 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { Building2Icon, User } from "lucide-react";
 import Link from "next/link";
-import { getBackers, getBackersIndividuals } from "./actions";
-import Form from "./form";
-
 import { unstable_noStore as noStore } from "next/cache";
 import {
   DropdownMenu,
@@ -16,8 +13,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/ayasofyazilim-ui/molecules/dropdown-menu";
+import { getBackers, getBackersIndividuals } from "./actions";
+import Form from "./form";
+
 async function getBackerProfiles() {
-  const _backerProfiles: any = [];
+  const _backerProfiles: {
+    name: string | null | undefined;
+    legalStatusCode: string | null | undefined;
+    taxpayerId: string | null | undefined;
+    backerId: string | null | undefined;
+    icon: JSX.Element;
+  }[] = [];
   const backersCompanies = await getBackers();
   const backersIndividual = await getBackersIndividuals();
 
@@ -40,7 +46,6 @@ async function getBackerProfiles() {
 export default async function Page() {
   noStore();
   const backerProfiles = await getBackerProfiles();
-
   return (
     <>
       <PageHeader

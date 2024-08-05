@@ -22,9 +22,13 @@ function initBackerData(backer: any) {
     address: backer.address,
     generalInformation: {
       name: backer.name,
+      companyName: backer.companyName,
+      taxpayerId: backer.taxpayerId,
+      legalStatusCode: backer.legalStatusCode,
+      customerNumber: backer.customerNumber,
       emailAddress: backer.emailAddress,
-      phoneNumber: backer?.localNumber
-        ? `+${backer?.areaCode}${backer?.localNumber}`
+      phoneNumber: backer?.telephone?.localNumber
+        ? `+${backer?.telephone?.areaCode}${backer?.telephone?.localNumber}`
         : "+90",
     },
   };
@@ -62,6 +66,7 @@ export function BackerForm({
       put: putBacker,
     },
   };
+
   const isPhoneValid = (phone: string) => {
     try {
       const phoneUtil = PhoneNumberUtil.getInstance();
@@ -104,6 +109,7 @@ export function BackerForm({
       if (result.id) {
         toast.success("Profil oluşturuldu.");
         setIsCreated(true);
+        router.back();
       } else {
         toast.error("Bir hata oluştu.");
       }
@@ -116,9 +122,14 @@ export function BackerForm({
       title: "Profili Sil",
       description: `"${_backer.name}" isimli profili silmek istediğinize emin misiniz?`,
       onConfirm: () => {
-        deleteBacker(profileId).then(() => {
-          router.back();
-        });
+        deleteBacker(profileId)
+          .then(() => {
+            router.back();
+            toast.success("Profil silindi.");
+          })
+          .catch(() => {
+            toast.error("Bir hata oluştu.");
+          });
         setIsConfirmDialogOpen(false);
       },
     });
@@ -138,7 +149,6 @@ export function BackerForm({
           </Button>
         )}
       </div>
-      {/* <ScrollArea className="h-full "> */}
       <AutoForm
         className="pb-10"
         fieldConfig={{
@@ -153,7 +163,7 @@ export function BackerForm({
         }}
         formSchema={formSchema[formType]}
         onSubmit={(formData) => {
-          submitFormData(formData);
+          void submitFormData(formData);
         }}
         showInRow
         values={backerData}
@@ -167,7 +177,6 @@ export function BackerForm({
           </AutoFormSubmit>
         )}
       </AutoForm>
-      {/* </ScrollArea> */}
 
       <ConfirmDialog
         description={confirmDialogContent.description}
