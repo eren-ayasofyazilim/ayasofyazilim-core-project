@@ -5,7 +5,7 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 
-export interface IProjectFormProps {
+export interface ProjectFormProps {
   projectId: string;
   sectionData:
     | {
@@ -19,14 +19,14 @@ export interface IProjectFormProps {
     | null;
   canSectionsEditable: boolean;
 }
-export default function ProjectForm({ sectionData }: IProjectFormProps) {
+export default function ProjectForm({ sectionData }: ProjectFormProps) {
   if (!sectionData) return <></>;
   const sections = sectionData
     .filter((section) => (section.sectionRelationValue?.length || 0) > 10)
     .map((section, index) => {
       return {
-        id: section.sectionId || `item${index}`,
-        name: section.sectionName || `item${index}`,
+        id: section.sectionId || `item-${index}`,
+        name: section.sectionName || `item-${index}`,
       };
     });
 
@@ -44,7 +44,6 @@ export default function ProjectForm({ sectionData }: IProjectFormProps) {
           sectionId={section.sectionId || `item${index}`}
         >
           <TipTapEditor
-            key={section.sectionId + "-editor" || `item${index}-editor`}
             canEditable={false}
             editOnStart={false}
             editorContent={
@@ -53,6 +52,11 @@ export default function ProjectForm({ sectionData }: IProjectFormProps) {
                 : undefined
             }
             editorId={section.sectionId}
+            key={
+              section.sectionId
+                ? `${section.sectionId}-editor`
+                : `item-${index}-editor`
+            }
           />
         </SectionLayoutContent>
       ))}

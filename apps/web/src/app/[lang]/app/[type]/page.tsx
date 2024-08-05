@@ -1,4 +1,4 @@
-import { env } from "process";
+import { env } from "node:process";
 import Charts from "./charts";
 
 export default function Page() {

@@ -1,14 +1,14 @@
-name: Playwright Tests
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Release upwithcrowd
+run-name: ${{ github.actor }} is taking upwithcrowd live 🚀
 on:
   push:
     branches: [ upwithcrowd ]
 
 jobs:
-  test:
+  release_upwithcrowd:
     timeout-minutes: 60
     runs-on: self-hosted
     steps:
     - run: echo "🎉 Going Live!"
     - name: Release upwithcrowd
-      run: ssh ubuntu "cd ~/frontend/prod_upwithcrowd && chmod 777 publish.sh && ./publish.sh 3599 upwithcrowd_prod"
+      run: ssh ubuntu "cd ~/frontend/upwithcrowd_prod && chmod 777 publish.sh && ./publish.sh 3599 upwithcrowd_prod"

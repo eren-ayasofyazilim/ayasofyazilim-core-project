@@ -22,6 +22,7 @@ import {
   $showRefund_points,
   $showTax_free,
 } from "./schemas.gen";
+
 async function controlledFetch(
   url: string,
   options: RequestInit,
@@ -43,7 +44,7 @@ async function controlledFetch(
     toast.error("Something went wrong 3 ");
   }
 }
-interface formModifier {
+interface FormModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
@@ -55,14 +56,14 @@ interface formModifier {
     when: (_value: any) => boolean;
   }[];
 }
-interface tableData {
-  createFormSchema: formModifier;
-  editFormSchema: formModifier;
-  tableSchema: formModifier;
+interface TableData {
+  createFormSchema: FormModifier;
+  editFormSchema: FormModifier;
+  tableSchema: FormModifier;
   filterBy: string;
 }
 
-const dataConfig: Record<string, tableData> = {
+const dataConfig: Record<string, TableData> = {
   merchants: {
     filterBy: "name",
     createFormSchema: {
@@ -266,7 +267,7 @@ export default function Page({
       setRoles({ ...returnData, items: transformedData });
       setIsLoading(false);
     }
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "GET",
@@ -289,24 +290,27 @@ export default function Page({
       dependencies: createFormSchema.dependencies,
       fieldConfig: { withoutBorder: true },
     },
-    callback: async (e) => {
-      const transformedData = parseFormValues(createFormSchema, e);
-      await controlledFetch(
-        fetchLink,
-        {
-          method: "POST",
-          body: JSON.stringify(transformedData),
-        },
-        getRoles,
-        "Added Successfully",
-      );
+    callback: (e) => {
+      async function onData() {
+        const transformedData = parseFormValues(createFormSchema, e);
+        await controlledFetch(
+          fetchLink,
+          {
+            method: "POST",
+            body: JSON.stringify(transformedData),
+          },
+          getRoles,
+          "Added Successfully",
+        );
+      }
+      void onData();
     },
   };
   useEffect(() => {
     setIsLoading(true);
     getRoles();
   }, []);
-  function parseFormValues(schema: formModifier, data: any) {
+  function parseFormValues(schema: FormModifier, data: any) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
@@ -326,7 +330,7 @@ export default function Page({
   }
   const onEdit = (data: any, row: any, editFormSchema: any) => {
     const parsedData = parseFormValues(editFormSchema, data);
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "PUT",
@@ -340,7 +344,7 @@ export default function Page({
     );
   };
   const onDelete = (e: any, row: any) => {
-    controlledFetch(
+    void controlledFetch(
       fetchLink,
       {
         method: "DELETE",
@@ -350,7 +354,7 @@ export default function Page({
       "Deleted Successfully",
     );
   };
-  function convertZod(schema: formModifier) {
+  function convertZod(schema: FormModifier) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],

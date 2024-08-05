@@ -33,14 +33,14 @@ export const numberFormatter = new Intl.NumberFormat("tr", {
   maximumFractionDigits: 0,
 });
 
-export interface INewProjectFormProps {
+export interface NewProjectFormProps {
   languageData: any;
   fundraiserId: string;
 }
 export default function NewProjectForm({
   languageData,
   fundraiserId,
-}: INewProjectFormProps) {
+}: NewProjectFormProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [formValues, setFormValues] =
     useState<UpwithCrowd_ProjectService_ProjectsDto_CreateProjectDto>({
@@ -61,15 +61,16 @@ export default function NewProjectForm({
   const [loading, setLoading] = useState(false);
   const [projectId, setProjectId] = useState<string>();
 
-  async function createNewProject() {
+  function createNewProject() {
     setLoading(true);
-    const response = await createNewProjectServer(formValues);
-    if (response.status === 200 && response.projectData) {
-      setProjectId(response.projectData.id);
-    } else {
-      setError(response.message);
-    }
-    setLoading(false);
+    void createNewProjectServer(formValues).then((response) => {
+      if (response.status === 200 && response.projectData) {
+        setProjectId(response.projectData.id);
+      } else {
+        setError(response.message);
+      }
+      setLoading(false);
+    });
   }
   return (
     <Card className="px-6 py-4">
@@ -148,10 +149,10 @@ export default function NewProjectForm({
               </Label>
               <div className="relative">
                 <SelectTabs
-                  value={formValues.fundCollectionType || ""}
                   onValueChange={(value) => {
                     setFormValues({ ...formValues, fundCollectionType: value });
                   }}
+                  value={formValues.fundCollectionType || ""}
                 >
                   <SelectTabsContent value="SHRE">
                     <div className="flex flex-row gap-1 items-center">

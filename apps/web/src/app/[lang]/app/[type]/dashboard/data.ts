@@ -35,7 +35,7 @@ import {
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
 
-export interface formModifier {
+export interface FormModifier {
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
@@ -48,10 +48,10 @@ export interface formModifier {
   }[];
 }
 
-export interface tableData {
-  createFormSchema?: formModifier;
-  editFormSchema?: formModifier;
-  tableSchema: formModifier;
+export interface TableData {
+  createFormSchema?: FormModifier;
+  editFormSchema?: FormModifier;
+  tableSchema: FormModifier;
   filterBy: string;
 }
 
