@@ -3,6 +3,8 @@ run-name: Linting the repo 🚀
 on:
   pull_request_target:
     branches: [ main ]
+permissions: 
+  pull-requests: write
 jobs:
   lint_project:
     timeout-minutes: 60
