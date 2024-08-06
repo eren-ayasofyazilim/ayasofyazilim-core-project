@@ -32,7 +32,7 @@ function getLocaleFromBrowser(request: NextRequest) {
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
   const locales = i18n.locales;
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages(
-    locales
+    locales,
   );
   return matchLocale(languages, locales, i18n.defaultLocale);
 }
@@ -78,7 +78,7 @@ export const middleware = auth((request: NextAuthRequest) => {
   }
   function redirectToLogin(locale: string, req: NextRequest) {
     return NextResponse.redirect(
-      new URL(`/${locale}/login?redirect=${req.nextUrl.pathname}`, hostURL)
+      new URL(`/${locale}/login?redirect=${req.nextUrl.pathname}`, hostURL),
     );
   }
   // function redirectToProfile(locale: string) {
@@ -119,7 +119,7 @@ export const middleware = auth((request: NextAuthRequest) => {
     //   `(No locale provided type 1) Wrong redirection to pathName:${pathName}`
     // );
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
+      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL),
     );
   }
 
@@ -133,7 +133,7 @@ export const middleware = auth((request: NextAuthRequest) => {
     //   `(No locale provided type 2) Wrong redirection to pathName:${pathName}`
     // );
     return NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL)
+      new URL(`/${locale}${request.nextUrl.pathname}`, hostURL),
     );
   }
 
