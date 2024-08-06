@@ -78,7 +78,7 @@ export default function ProjectForm({
         projectId,
         isApproved
           ? ProjectStatusEnums.APPROVED
-          : ProjectStatusEnums.NOT_APPROVED
+          : ProjectStatusEnums.NOT_APPROVED,
       ).then((response) => {
         setFormValuesValidationChanged(false);
         if (response.status === 200) {
@@ -433,7 +433,7 @@ export default function ProjectForm({
                             slider={false}
                             subLabel=""
                             value={parseInt(
-                              formValues.additionalFundRate || "0"
+                              formValues.additionalFundRate || "0",
                             )}
                           />
                           <p className="text-[0.8rem] text-muted-foreground mt-2">
@@ -516,7 +516,7 @@ export default function ProjectForm({
                       <Button
                         className={cn(
                           "w-[280px] justify-start text-left font-normal",
-                          !formValues.startDate && "text-muted-foreground"
+                          !formValues.startDate && "text-muted-foreground",
                         )}
                         variant="outline"
                       >
@@ -591,7 +591,7 @@ export default function ProjectForm({
                 isLoading ||
                 !formValuesValidationChanged ||
                 Object.values(formValuesValidation).filter(
-                  (i) => i === undefined
+                  (i) => i === undefined,
                 ).length !== 0
               }
               isLoading={isLoading}
