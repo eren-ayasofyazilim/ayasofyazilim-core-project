@@ -1,5 +1,6 @@
 "use client";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
+import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import { useEffect, useState } from "react";
 import type {
   tableAction,
@@ -146,33 +147,42 @@ export default function Page({
   }
 
   const createFormSchema = formData.createFormSchema;
-  let action: tableAction | undefined;
+  let action: tableAction[] | undefined;
   if (createFormSchema) {
-    action = {
-      cta: `New ${params.data}`,
-      description: `Create a new ${params.data}`,
-      autoFormArgs: {
-        formSchema: createZodObject(
-          createFormSchema.schema,
-          createFormSchema.formPositions || [],
-          createFormSchema.convertors || {},
-        ),
-        dependencies: createFormSchema.dependencies,
-        fieldConfig: { withoutBorder: true },
+    action = [
+      {
+        cta: `New ${params.data}`,
+        description: `Create a new ${params.data}`,
+        autoFormArgs: {
+          formSchema: createZodObject(
+            createFormSchema.schema,
+            createFormSchema.formPositions || [],
+            createFormSchema.convertors || {},
+          ),
+          dependencies: createFormSchema.dependencies,
+          fieldConfig: { withoutBorder: true },
+        },
+        callback: (e) => {
+          const transformedData = parseFormValues(createFormSchema, e);
+          void controlledFetch(
+            fetchLink,
+            {
+              method: "POST",
+              body: JSON.stringify(transformedData),
+            },
+            getRoles,
+            "Added Successfully",
+          );
+        },
       },
-      callback: (e) => {
-        const transformedData = parseFormValues(createFormSchema, e);
-        void controlledFetch(
-          fetchLink,
-          {
-            method: "POST",
-            body: JSON.stringify(transformedData),
-          },
-          getRoles,
-          "Added Successfully",
-        );
+      {
+        cta: `Export CSV`,
+        description: `Export CSV`,
+        callback: () => {
+          jsonToCSV(roles, params.data);
+        },
       },
-    };
+    ];
   }
 
   useEffect(() => {
