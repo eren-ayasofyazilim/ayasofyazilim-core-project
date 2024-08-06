@@ -40,7 +40,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    toast.error("Something went wrong 3 ");
+    toast.error("Fetch error");
   }
 }
 interface FormModifier {

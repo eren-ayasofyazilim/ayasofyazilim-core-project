@@ -17,6 +17,9 @@ const errorResponse = (message: string, status = 400) =>
   new Response(JSON.stringify({ message }), { status });
 
 function isApiError(error: unknown): error is ApiError {
+  if ((error as ApiError).name === "ApiError") {
+    return true;
+  }
   return error instanceof ApiError;
 }
 
@@ -154,6 +157,22 @@ const clients: Clients = {
     const languages = client.languages;
     return {
       get: async () => languages.getApiLanguageManagementLanguagesCultureList(),
+    };
+  },
+  language_set_default: async () => {
+    const client = await getAdministrationServiceClient();
+    const languages = client.languages;
+    return {
+      put: async ({ id }: { id: string }) => {
+        const result =
+          await languages.putApiLanguageManagementLanguagesByIdSetAsDefault({
+            id: id,
+          });
+        if (result === undefined) {
+          return "success";
+        }
+        return result;
+      },
     };
   },
   securityLogs: async (page: number) => {
@@ -297,17 +316,18 @@ export async function PUT(
   try {
     const roles = await client.put({
       id: requestBody.id,
-      requestBody: JSON.parse(requestBody.requestBody),
+      requestBody:
+        requestBody.requestBody === undefined ? "" : requestBody.requestBody,
     });
     return new Response(JSON.stringify(roles));
   } catch (error: unknown) {
     if (isApiError(error)) {
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
-        body.error?.message || "Something went wrong",
+        body.error?.message || "Uknonw error occured on the server side",
         error.status,
       );
     }
-    return errorResponse("Something went wrong");
+    return errorResponse("Uknonw error occured on the client/server side 1");
   }
 }
