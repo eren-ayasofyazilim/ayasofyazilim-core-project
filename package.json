@@ -18,7 +18,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "precommit": "turbo lint && turbo type-check",
-    "precommit:web": "npm run format:web && turbo lint --filter web && turbo type-check --filter web"
+    "precommit:web": "npm run format:web && turbo lint --filter web && turbo type-check --filter web",
+    "precommit:lintstaged": "cd apps/web && npx lint-staged"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.1",
