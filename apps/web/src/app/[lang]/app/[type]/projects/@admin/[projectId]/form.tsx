@@ -303,39 +303,41 @@ export default function ProjectForm({
                 </div>
               </div>
             </div>
-            <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
-              <CustomButton
-                className="w-[120px]"
-                onClick={() => {
-                  setFormValuesValidation({
-                    ...formValuesValidation,
-                    fundCollectionType: false,
-                    fundableAmount: false,
-                  });
-                  setFormValuesValidationChanged(true);
-                  setAccordionTab("item-3");
-                }}
-                variant="destructive"
-              >
-                Reddet
-              </CustomButton>
+            {projectData.status === ProjectStatusEnums.SENT_FOR_APPROVAL && (
+              <div className="mt-8 flex flex-row flex-wrap justify-end gap-4">
+                <CustomButton
+                  className="w-[120px]"
+                  onClick={() => {
+                    setFormValuesValidation({
+                      ...formValuesValidation,
+                      fundCollectionType: false,
+                      fundableAmount: false,
+                    });
+                    setFormValuesValidationChanged(true);
+                    setAccordionTab("item-3");
+                  }}
+                  variant="destructive"
+                >
+                  Reddet
+                </CustomButton>
 
-              <CustomButton
-                className="w-[120px]"
-                customVariant="success"
-                onClick={() => {
-                  setFormValuesValidation({
-                    ...formValuesValidation,
-                    fundCollectionType: true,
-                    fundableAmount: true,
-                  });
-                  setFormValuesValidationChanged(true);
-                  setAccordionTab("item-3");
-                }}
-              >
-                Onayla
-              </CustomButton>
-            </div>
+                <CustomButton
+                  className="w-[120px]"
+                  customVariant="success"
+                  onClick={() => {
+                    setFormValuesValidation({
+                      ...formValuesValidation,
+                      fundCollectionType: true,
+                      fundableAmount: true,
+                    });
+                    setFormValuesValidationChanged(true);
+                    setAccordionTab("item-3");
+                  }}
+                >
+                  Onayla
+                </CustomButton>
+              </div>
+            )}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem className="my-2 border" value="item-3">
@@ -531,12 +533,7 @@ export default function ProjectForm({
                         fromDate={new Date()}
                         initialFocus
                         mode="single"
-                        onSelect={(value) => {
-                          setFormValues({
-                            ...formValues,
-                            startDate: value?.toISOString() || "",
-                          });
-                        }}
+                        disabled
                         selected={new Date(formValues.startDate || 0)}
                       />
                     </PopoverContent>

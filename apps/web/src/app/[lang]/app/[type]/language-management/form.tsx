@@ -269,9 +269,9 @@ export function DataTableDemo({
 
         <Dialog>
           <DialogTrigger asChild>
-            <CustomButton className="ml-auto" variant="outline">
+            <Button className="ml-auto" variant="outline">
               Yeni Çeviri
-            </CustomButton>
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -398,7 +398,7 @@ export function DataTableDemo({
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
-            <CustomButton variant="outline">JSON'dan Çeviri Ekle</CustomButton>
+            <Button variant="outline">JSON'dan Çeviri Ekle</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

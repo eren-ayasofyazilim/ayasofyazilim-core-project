@@ -423,6 +423,7 @@ export default function ProjectForm({
                           startDate: value?.toISOString() || "",
                         });
                       }}
+                      disabled={isInputEditDisabled}
                       selected={new Date(formValues.startDate || 0)}
                     />
                   </PopoverContent>
