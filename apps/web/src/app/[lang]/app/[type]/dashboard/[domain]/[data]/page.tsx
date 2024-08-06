@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type {
   tableAction,
   columnsType,
+  MenuAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -29,7 +30,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    toast.error("Something went wrong 3 ");
+    toast.error("Fetch error: " + String(error));
   }
 }
 
@@ -105,7 +106,11 @@ export default function Page({
     setFormData(tempData);
   }
 
-  function getRoles(page: number) {
+  function getRoles(_page: number) {
+    let page = _page;
+    if (typeof page !== "number") {
+      page = 0;
+    }
     const _fetchLink = `${fetchLink}?page=${page}`;
     setIsLoading(true);
     function onData(data: any) {
@@ -259,7 +264,10 @@ export default function Page({
       fieldConfig: { withoutBorder: true },
     };
   }
-
+  let actionList: MenuAction[] = [];
+  if (formData.tableSchema.actionList) {
+    actionList = formData.tableSchema.actionList(controlledFetch, getRoles);
+  }
   const columnsData: columnsType = {
     type: "Auto",
     data: {
@@ -271,6 +279,7 @@ export default function Page({
         onEdit(data, row, editFormSchema);
       },
       onDelete,
+      actionList: actionList,
     },
   };
 

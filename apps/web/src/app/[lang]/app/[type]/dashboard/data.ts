@@ -32,10 +32,12 @@ import {
   $Volo_Saas_Host_Dtos_SaasTenantDto,
   $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
 } from "@ayasofyazilim/saas/SaasService";
+import { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
 
 export interface FormModifier {
+  actionList?: (controlledFetch: unknown, getRoles: unknown) => MenuAction[];
   formPositions?: string[];
   excludeList?: string[];
   schema: any;
@@ -251,9 +253,24 @@ export const dataConfig: Record<string, any> = {
           "creationTime",
           "creatorId",
           "flagIcon",
-          "isDefaultLanguage",
         ],
         schema: $Volo_Abp_LanguageManagement_Dto_LanguageDto,
+        actionList: (controlledFetch: any, getRoles: any) => [
+          {
+            cta: "Set As Default Language",
+            callback: (e: any, row: any) => {
+              void controlledFetch(
+                getBaseLink(`/api/admin/language_set_default`),
+                {
+                  method: "PUT",
+                  body: JSON.stringify({ id: row.id }),
+                },
+                getRoles,
+                "Default Language Set Successfully",
+              );
+            },
+          },
+        ],
       },
       editFormSchema: {
         formPositions: ["displayName", "isEnabled"],
