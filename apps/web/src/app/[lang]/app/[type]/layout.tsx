@@ -99,7 +99,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang,
+        params.lang
       ),
       type: "admin",
       appType: "upwithcrowd",
@@ -138,6 +138,14 @@ export default async function Layout({ children, params }: LayoutProps) {
       key: "Details",
       title: languageData.Details,
       href: getBaseLink(`app/${type}/details`, true, params.lang),
+      icon: <FileBadge className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "unirefund",
+    },
+    {
+      key: "Template",
+      title: languageData.Template,
+      href: getBaseLink(`app/${type}/template/rebate`, true, params.lang),
       icon: <FileBadge className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
