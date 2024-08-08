@@ -8,6 +8,7 @@ function getLanguageData(resources: any) {
     Profile: navigationResource?.Profile || "Profile", // "Profil",
     Details: navigationResource?.Details || "Details", // "Detaylar",
     Companies: navigationResource?.Companies || "Companies", // "Sirketler",
+    Template: navigationResource?.Template || "Template", // "Template",
     CountrySettings: navigationResource?.CountrySettings || "Country Settings", //"Ülke Ayarları",
     Settings: navigationResource?.Settings || "Settings", // "Ayarlar",
     LanguageManagement:
