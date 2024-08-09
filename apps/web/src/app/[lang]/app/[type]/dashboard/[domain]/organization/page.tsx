@@ -34,6 +34,7 @@ import {
 } from "./action";
 import { ConfirmDialog, RoleModal, UserModal } from "./form";
 
+
 function getChildrens(parentId: string, data: OrganizationUnit[]) {
   const childrens: TreeViewElement[] = [];
   data
@@ -181,13 +182,16 @@ const App: React.FC = () => {
 
   const handleEditUnitClick = useCallback(() => {
     setAction({
+      type: "Dialog",
       autoFormArgs: {
         formSchema: createZodObject(
           editFormSchema.schema,
           editFormSchema.formPositions || []
         ),
       },
-      callback: editUnit,
+      callback: (e, _triggerData) => {
+        editUnit(e, _triggerData as { id: string });
+      },
       cta: "Edit Unit",
       description: "Edit the name of the organization unit",
     });
@@ -238,6 +242,7 @@ const App: React.FC = () => {
         ? organizationUnits.find((i) => i.id === _selectedUnitId)
         : null;
       setAction({
+        type: "Dialog",
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
@@ -246,15 +251,18 @@ const App: React.FC = () => {
           fieldConfig: { withoutBorder: true },
         },
         callback: (e, _triggerData) => {
-          const formData = { ...e, ParentId: selectedUnit?.id };
-          void addNewUnit(formData, _triggerData);
+          let tableData: { id: string };
+          if (typeof _triggerData === "object" && _triggerData !== null && "id" in _triggerData) {
+            tableData = _triggerData as { id: string };
+            const formData = { ...e, ParentId: selectedUnit?.id };
+            void addNewUnit(formData, tableData);
+          }
           return true;
         },
         cta: "New organization unit",
         description: selectedUnit
           ? `Parent: ${selectedUnit.displayName}`
           : "Create a new organization unit",
-        type: "Dialog",
       });
       setTriggerData({ id: _selectedUnitId });
       setOpen(true);
@@ -295,32 +303,33 @@ const App: React.FC = () => {
       displayName: selectedUnit?.displayName,
       id: selectedUnitId,
     });
-    setAction({
-      autoFormArgs: {
-        formSchema: z.object({
-          targetUnit: DynamicEnum.default(placeholder),
-        }),
-        fieldConfig: { withoutBorder: true },
-      },
-      callback: (e, _triggerData) => {
-        const _selectedUnit = unitOptions.find(
-          (u) =>
-            `${u.displayName} ${
-              u.parentName ? `Parent: ${u.parentName}` : ""
-            }` === e.targetUnit
-        );
-        if (!_selectedUnit) {
-          toast.error("Selected unit not found");
-          return false;
-        }
-        const formData = { targetUnitId: _selectedUnit.id };
-        void handleMoveUsers(formData, _triggerData);
-        return true;
-      },
-      cta: "Move all Users",
-      description: `Move all users from ${selectedUnit?.displayName} to:`,
-      type: "Dialog",
-    });
+    setAction(
+      {
+        type: "Dialog",
+        autoFormArgs: {
+          formSchema: z.object({
+            targetUnit: DynamicEnum.default(placeholder),
+          }),
+          fieldConfig: { withoutBorder: true },
+        },
+        callback: (e, _triggerData) => {
+          const _selectedUnit = unitOptions.find(
+            (u) =>
+              `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""
+              }` === e.targetUnit
+          );
+          if (!_selectedUnit) {
+            toast.error("Selected unit not found");
+            return false;
+          }
+          const formData = { targetUnitId: _selectedUnit.id };
+          void handleMoveUsers(formData, _triggerData as { id: string });
+          return true;
+        },
+        cta: "Move all Users",
+        description: `Move all users from ${selectedUnit?.displayName} to:`,
+      }
+    );
     setOpen(true);
   }, [selectedUnitId, unitUsers]);
 
@@ -715,47 +724,47 @@ const App: React.FC = () => {
                   <TableBody>
                     {activeTab === "Users" && unitUsers.length > 0
                       ? unitUsers.map((user) => (
-                          <TableRow key={user.id}>
-                            <TableCell>{user.userName}</TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                onClick={() => {
-                                  handleDeleteUser(user.id, user.userName);
-                                }}
-                                variant="link"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                        <TableRow key={user.id}>
+                          <TableCell>{user.userName}</TableCell>
+                          <TableCell>{user.email}</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              onClick={() => {
+                                handleDeleteUser(user.id, user.userName);
+                              }}
+                              variant="link"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
                       : activeTab === "Users" && (
-                          <TableRow>
-                            <TableCell>No data available</TableCell>
-                          </TableRow>
-                        )}
+                        <TableRow>
+                          <TableCell>No data available</TableCell>
+                        </TableRow>
+                      )}
                     {activeTab === "Roles" && unitRoles.length > 0
                       ? unitRoles.map((role) => (
-                          <TableRow key={role.id}>
-                            <TableCell>{role.name}</TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                onClick={() => {
-                                  handleDeleteRole(role.id, role.name);
-                                }}
-                                variant="link"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                        <TableRow key={role.id}>
+                          <TableCell>{role.name}</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              onClick={() => {
+                                handleDeleteRole(role.id, role.name);
+                              }}
+                              variant="link"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
                       : activeTab === "Roles" && (
-                          <TableRow>
-                            <TableCell>No data available</TableCell>
-                          </TableRow>
-                        )}
+                        <TableRow>
+                          <TableCell>No data available</TableCell>
+                        </TableRow>
+                      )}
                   </TableBody>
                 </Table>
                 <p className="text-sm mt-10">
@@ -769,14 +778,14 @@ const App: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-      {open ? (
+      {open ? (action !== undefined && (
         <AutoformDialog
           action={action}
           onOpenChange={setOpen}
           open={open}
           triggerData={triggerData}
         />
-      ) : null}
+      )) : null}
       <ConfirmDialog
         description={confirmDialogContent.description}
         isOpen={isConfirmDialogOpen}
