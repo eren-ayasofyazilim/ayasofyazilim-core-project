@@ -34,6 +34,7 @@ import {
 } from "./action";
 import { ConfirmDialog, RoleModal, UserModal } from "./form";
 
+
 function getChildrens(parentId: string, data: OrganizationUnit[]) {
   const childrens: TreeViewElement[] = [];
   data
@@ -156,7 +157,7 @@ const App: React.FC = () => {
                 id: _triggerData.id,
                 requestBody: { displayName: formData.displayName },
               }),
-            },
+            }
           );
           if (response.ok) {
             toast.success("Organization unit updated successfully");
@@ -166,7 +167,7 @@ const App: React.FC = () => {
           } else {
             const errorData = await response.json();
             toast.error(
-              errorData.message || "Failed to update organization unit",
+              errorData.message || "Failed to update organization unit"
             );
           }
         } catch (error) {
@@ -176,18 +177,21 @@ const App: React.FC = () => {
 
       void edit();
     },
-    [],
+    []
   );
 
   const handleEditUnitClick = useCallback(() => {
     setAction({
+      type: "Dialog",
       autoFormArgs: {
         formSchema: createZodObject(
           editFormSchema.schema,
-          editFormSchema.formPositions || [],
+          editFormSchema.formPositions || []
         ),
       },
-      callback: editUnit,
+      callback: (e, _triggerData) => {
+        editUnit(e, _triggerData as { id: string });
+      },
       cta: "Edit Unit",
       description: "Edit the name of the organization unit",
     });
@@ -202,7 +206,7 @@ const App: React.FC = () => {
   const addNewUnit = useCallback(
     async (
       formData: { displayName: string },
-      _triggerData?: { id: string },
+      _triggerData?: { id: string }
     ) => {
       try {
         const response = await fetch(getBaseLink("api/admin/organization"), {
@@ -229,7 +233,7 @@ const App: React.FC = () => {
         toast.error("An error occurred while saving the organization unit");
       }
     },
-    [],
+    []
   );
 
   const handleAddUnitClick = useCallback(
@@ -238,16 +242,21 @@ const App: React.FC = () => {
         ? organizationUnits.find((i) => i.id === _selectedUnitId)
         : null;
       setAction({
+        type: "Dialog",
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
-            createFormSchema.formPositions || [],
+            createFormSchema.formPositions || []
           ),
           fieldConfig: { withoutBorder: true },
         },
         callback: (e, _triggerData) => {
-          const formData = { ...e, ParentId: selectedUnit?.id };
-          void addNewUnit(formData, _triggerData);
+          let tableData: { id: string };
+          if (typeof _triggerData === "object" && _triggerData !== null && "id" in _triggerData) {
+            tableData = _triggerData as { id: string };
+            const formData = { ...e, ParentId: selectedUnit?.id };
+            void addNewUnit(formData, tableData);
+          }
           return true;
         },
         cta: "New organization unit",
@@ -258,7 +267,7 @@ const App: React.FC = () => {
       setTriggerData({ id: _selectedUnitId });
       setOpen(true);
     },
-    [organizationUnits],
+    [organizationUnits]
   );
 
   const handleMoveAllUsersClick = useCallback(() => {
@@ -267,7 +276,7 @@ const App: React.FC = () => {
       return;
     }
     const availableUnits = organizationUnits.filter(
-      (u) => u.id !== selectedUnitId,
+      (u) => u.id !== selectedUnitId
     );
     const unitOptions = availableUnits.map((unit) => {
       const parentUnit = organizationUnits.find((u) => u.id === unit.parentId);
@@ -287,38 +296,40 @@ const App: React.FC = () => {
       placeholder,
       ...unitOptions.map(
         (u) =>
-          `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""}`,
+          `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""}`
       ),
     ]);
     setTriggerData({
       displayName: selectedUnit?.displayName,
       id: selectedUnitId,
     });
-    setAction({
-      autoFormArgs: {
-        formSchema: z.object({
-          targetUnit: DynamicEnum.default(placeholder),
-        }),
-        fieldConfig: { withoutBorder: true },
-      },
-      callback: (e, _triggerData) => {
-        const _selectedUnit = unitOptions.find(
-          (u) =>
-            `${u.displayName} ${
-              u.parentName ? `Parent: ${u.parentName}` : ""
-            }` === e.targetUnit,
-        );
-        if (!_selectedUnit) {
-          toast.error("Selected unit not found");
-          return false;
-        }
-        const formData = { targetUnitId: _selectedUnit.id };
-        void handleMoveUsers(formData, _triggerData);
-        return true;
-      },
-      cta: "Move all Users",
-      description: `Move all users from ${selectedUnit?.displayName} to:`,
-    });
+    setAction(
+      {
+        type: "Dialog",
+        autoFormArgs: {
+          formSchema: z.object({
+            targetUnit: DynamicEnum.default(placeholder),
+          }),
+          fieldConfig: { withoutBorder: true },
+        },
+        callback: (e, _triggerData) => {
+          const _selectedUnit = unitOptions.find(
+            (u) =>
+              `${u.displayName} ${u.parentName ? `Parent: ${u.parentName}` : ""
+              }` === e.targetUnit
+          );
+          if (!_selectedUnit) {
+            toast.error("Selected unit not found");
+            return false;
+          }
+          const formData = { targetUnitId: _selectedUnit.id };
+          void handleMoveUsers(formData, _triggerData as { id: string });
+          return true;
+        },
+        cta: "Move all Users",
+        description: `Move all users from ${selectedUnit?.displayName} to:`,
+      }
+    );
     setOpen(true);
   }, [selectedUnitId, unitUsers]);
 
@@ -334,7 +345,7 @@ const App: React.FC = () => {
               {
                 method: "DELETE",
                 body: JSON.stringify(unitId),
-              },
+              }
             );
             if (response.ok) {
               toast.success("Organization unit deleted successfully");
@@ -345,12 +356,12 @@ const App: React.FC = () => {
             } else {
               const errorData = await response.json();
               toast.error(
-                errorData.message || "Failed to delete organization unit",
+                errorData.message || "Failed to delete organization unit"
               );
             }
           } catch (error) {
             toast.error(
-              "An error occurred while deleting the organization unit",
+              "An error occurred while deleting the organization unit"
             );
           }
           setIsConfirmDialogOpen(false);
@@ -364,7 +375,7 @@ const App: React.FC = () => {
   const handleMoveUsers = useCallback(
     async (
       formData: { targetUnitId: string },
-      _triggerData: { id: string },
+      _triggerData: { id: string }
     ) => {
       if (!selectedUnitId) {
         toast.error("Please select a unit");
@@ -372,7 +383,7 @@ const App: React.FC = () => {
       }
       try {
         const targetUnit = organizationUnits.find(
-          (unit) => unit.id === formData.targetUnitId,
+          (unit) => unit.id === formData.targetUnitId
         );
         if (!targetUnit) {
           toast.error("Target unit not found");
@@ -389,7 +400,7 @@ const App: React.FC = () => {
               id: _triggerData.id,
               organizationId: targetUnit.id,
             }),
-          },
+          }
         );
         if (response.ok) {
           void fetchUsersAndRoles();
@@ -404,7 +415,7 @@ const App: React.FC = () => {
       }
       setOpen(false);
     },
-    [selectedUnitId, unitUsers],
+    [selectedUnitId, unitUsers]
   );
 
   const optionsDropdownContent = useCallback(
@@ -426,7 +437,7 @@ const App: React.FC = () => {
             handleDeleteUnit(
               selectedUnitId ?? "",
               organizationUnits.find((i) => i.id === selectedUnitId)
-                ?.displayName ?? "",
+                ?.displayName ?? ""
             );
           }}
         >
@@ -434,14 +445,14 @@ const App: React.FC = () => {
         </DropdownMenuItem>
       </>
     ),
-    [selectedUnitId, unitUsers],
+    [selectedUnitId, unitUsers]
   );
 
   const handleAddUsers = useCallback(
     (selectedUsers: User[]) => {
       async function addUser() {
         const selectedUnit = organizationUnits.find(
-          (i) => i.id === selectedUnitId,
+          (i) => i.id === selectedUnitId
         );
         if (selectedUnit && selectedUsers.length > 0) {
           try {
@@ -458,7 +469,7 @@ const App: React.FC = () => {
                     userIds: selectedUsers.map((user) => user.id),
                   },
                 }),
-              },
+              }
             );
             if (response.ok) {
               toast.success("Users added successfully");
@@ -478,14 +489,14 @@ const App: React.FC = () => {
       }
       void addUser();
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleAddRoles = useCallback(
     (selectedRoles: Role[]) => {
       async function addRoles() {
         const selectedUnit = organizationUnits.find(
-          (i) => i.id === selectedUnitId,
+          (i) => i.id === selectedUnitId
         );
         if (selectedUnit && selectedRoles.length > 0) {
           try {
@@ -502,7 +513,7 @@ const App: React.FC = () => {
                     roleIds: selectedRoles.map((role) => role.id),
                   },
                 }),
-              },
+              }
             );
             if (response.ok) {
               toast.success("Roles added successfully");
@@ -522,13 +533,13 @@ const App: React.FC = () => {
       }
       void addRoles();
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleDeleteUser = useCallback(
     (userId: string, userName: string) => {
       const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
+        (i) => i.id === selectedUnitId
       );
       if (selectedUnit) {
         setConfirmDialogContent({
@@ -549,12 +560,12 @@ const App: React.FC = () => {
                         id: selectedUnit.id,
                         memberId: userId,
                       }),
-                    },
+                    }
                   );
                   if (response.ok) {
                     toast.success("User deleted successfully");
                     const updatedUsers = await fetchUsersForUnit(
-                      selectedUnit.id,
+                      selectedUnit.id
                     );
                     setUnitUsers(updatedUsers);
                   } else {
@@ -573,13 +584,13 @@ const App: React.FC = () => {
         setIsConfirmDialogOpen(true);
       }
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   const handleDeleteRole = useCallback(
     (roleId: string, roleName: string) => {
       const selectedUnit = organizationUnits.find(
-        (i) => i.id === selectedUnitId,
+        (i) => i.id === selectedUnitId
       );
       if (selectedUnit) {
         setConfirmDialogContent({
@@ -597,12 +608,12 @@ const App: React.FC = () => {
                         "Content-Type": "application/json",
                       },
                       body: JSON.stringify({ id: selectedUnit.id, roleId }),
-                    },
+                    }
                   );
                   if (response.ok) {
                     toast.success("Role deleted successfully");
                     const updatedRoles = await fetchRolesForUnit(
-                      selectedUnit.id,
+                      selectedUnit.id
                     );
                     setUnitRoles(updatedRoles);
                   } else {
@@ -621,7 +632,7 @@ const App: React.FC = () => {
         setIsConfirmDialogOpen(true);
       }
     },
-    [selectedUnitId],
+    [selectedUnitId]
   );
 
   return (
@@ -713,47 +724,47 @@ const App: React.FC = () => {
                   <TableBody>
                     {activeTab === "Users" && unitUsers.length > 0
                       ? unitUsers.map((user) => (
-                          <TableRow key={user.id}>
-                            <TableCell>{user.userName}</TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                onClick={() => {
-                                  handleDeleteUser(user.id, user.userName);
-                                }}
-                                variant="link"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                        <TableRow key={user.id}>
+                          <TableCell>{user.userName}</TableCell>
+                          <TableCell>{user.email}</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              onClick={() => {
+                                handleDeleteUser(user.id, user.userName);
+                              }}
+                              variant="link"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
                       : activeTab === "Users" && (
-                          <TableRow>
-                            <TableCell>No data available</TableCell>
-                          </TableRow>
-                        )}
+                        <TableRow>
+                          <TableCell>No data available</TableCell>
+                        </TableRow>
+                      )}
                     {activeTab === "Roles" && unitRoles.length > 0
                       ? unitRoles.map((role) => (
-                          <TableRow key={role.id}>
-                            <TableCell>{role.name}</TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                onClick={() => {
-                                  handleDeleteRole(role.id, role.name);
-                                }}
-                                variant="link"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                        <TableRow key={role.id}>
+                          <TableCell>{role.name}</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              onClick={() => {
+                                handleDeleteRole(role.id, role.name);
+                              }}
+                              variant="link"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
                       : activeTab === "Roles" && (
-                          <TableRow>
-                            <TableCell>No data available</TableCell>
-                          </TableRow>
-                        )}
+                        <TableRow>
+                          <TableCell>No data available</TableCell>
+                        </TableRow>
+                      )}
                   </TableBody>
                 </Table>
                 <p className="text-sm mt-10">
@@ -767,14 +778,14 @@ const App: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-      {open ? (
+      {open ? (action !== undefined && (
         <AutoformDialog
           action={action}
           onOpenChange={setOpen}
           open={open}
           triggerData={triggerData}
         />
-      ) : null}
+      )) : null}
       <ConfirmDialog
         description={confirmDialogContent.description}
         isOpen={isConfirmDialogOpen}

@@ -30,14 +30,13 @@ export default function Layout({ children, params }: LayoutProps) {
       .filter(([e]) => e !== "displayName" && e !== "default")
       .map(([key]: [any, any]) => ({
         id: `${params.domain}/${key}`,
-        name:
-          languageData[`Identity:${key}` as keyof typeof languageData] || key,
+        name: languageData[`Identity:${key}`] || key,
         link: getBaseLink(
           `dashboard/${params.domain}/${key}`,
           true,
           params.lang,
           true,
-          params.type,
+          params.type
         ),
       }));
     setNavbarItems(tempNavbarItems);
