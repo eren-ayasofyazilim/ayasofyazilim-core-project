@@ -74,63 +74,6 @@ function AmountCell({ getValue, row: { index }, column: { id }, table }: any) {
   );
 }
 
-function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
-  const initialValue = getValue() as string | undefined;
-  const [value, setValue] = useState<string | undefined>(initialValue);
-
-  const onChange = (newValue: string): void => {
-    setValue(newValue);
-    table.options.meta?.updateData(index, id, newValue);
-  };
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  return (
-    <Select onValueChange={onChange} value={value}>
-      <SelectTrigger className="w-full text-center">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="All">All</SelectItem>
-        <SelectItem value="Cash">Cash</SelectItem>
-        <SelectItem value="Credit or Debit Card">
-          Credit or Debit Card
-        </SelectItem>
-        <SelectItem value="Alipay">Alipay</SelectItem>
-        <SelectItem value="WeChat">WeChat</SelectItem>
-        <SelectItem value="Cash via partner">Cash via partner</SelectItem>
-        <SelectItem value="Refund later">Refund later</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-}
-
-function PercentCell({ getValue, row: { index }, column: { id }, table }: any) {
-  const initialValue = getValue();
-  const [value, setValue] = useState(initialValue);
-
-  const onBlur = (): void => {
-    table.options.meta?.updateData(index, id, value);
-  };
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  return (
-    <Input
-      onBlur={onBlur}
-      onChange={(e) => {
-        setValue(e.target.value);
-      }}
-      type="number"
-      value={value as string}
-    />
-  );
-}
-
 const feescolumns: ColumnDef<Record<string, any>>[] = [
   {
     id: "select",
@@ -174,6 +117,115 @@ const feescolumns: ColumnDef<Record<string, any>>[] = [
   },
 ];
 
+function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
+  const setupValue = getValue() as string | undefined;
+  const [value, setValue] = useState<string | undefined>(setupValue);
+
+  const onChange = (newValue: string): void => {
+    setValue(newValue);
+    table.options.meta?.updateData(index, id, newValue);
+  };
+
+  useEffect(() => {
+    setValue(setupValue);
+  }, [setupValue]);
+
+  return (
+    <Select onValueChange={onChange} value={value}>
+      <SelectTrigger className="w-full text-center">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="All">All</SelectItem>
+        <SelectItem value="Cash">Cash</SelectItem>
+        <SelectItem value="Credit or Debit Card">
+          Credit or Debit Card
+        </SelectItem>
+        <SelectItem value="Alipay">Alipay</SelectItem>
+        <SelectItem value="WeChat">WeChat</SelectItem>
+        <SelectItem value="Cash via partner">Cash via partner</SelectItem>
+        <SelectItem value="Refund later">Refund later</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
+function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
+  const fixedFeeValue = getValue();
+  const [value, setValue] = useState(fixedFeeValue);
+
+  const onBlur = (): void => {
+    table.options.meta?.updateData(index, id, value);
+  };
+
+  useEffect(() => {
+    setValue(fixedFeeValue);
+  }, [fixedFeeValue]);
+
+  return (
+    <Input
+      onBlur={onBlur}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      type="number"
+      value={value as string}
+    />
+  );
+}
+
+function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
+  const variableFeeValue = getValue() as string | undefined;
+  const [value, setValue] = useState<string | undefined>(variableFeeValue);
+
+  const onChange = (newValue: string): void => {
+    setValue(newValue);
+    table.options.meta?.updateData(index, id, newValue);
+  };
+
+  useEffect(() => {
+    setValue(variableFeeValue);
+  }, [variableFeeValue]);
+
+  return (
+    <Select onValueChange={onChange} value={value}>
+      <SelectTrigger className="w-full text-center">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="All">% of GC</SelectItem>
+        <SelectItem value="Cash">% of GC without VAT</SelectItem>
+        <SelectItem value="Alipay">% of VAT</SelectItem>
+        <SelectItem value="WeChat">% of SIS</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
+function PercentCell({ getValue, row: { index }, column: { id }, table }: any) {
+  const percentValue = getValue();
+  const [value, setValue] = useState(percentValue);
+
+  const onBlur = (): void => {
+    table.options.meta?.updateData(index, id, value);
+  };
+
+  useEffect(() => {
+    setValue(percentValue);
+  }, [percentValue]);
+
+  return (
+    <Input
+      onBlur={onBlur}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      type="number"
+      value={value as string}
+    />
+  );
+}
+
 const setupcolumns: ColumnDef<Record<string, any>>[] = [
   {
     id: "select",
@@ -202,12 +254,12 @@ const setupcolumns: ColumnDef<Record<string, any>>[] = [
   {
     accessorKey: "fixedfee",
     header: () => <div className="text-center">Fixed fee</div>,
-    cell: (props) => <AmountCell {...props} />,
+    cell: (props) => <Fixedfee {...props} />,
   },
   {
     accessorKey: "variablefee",
     header: () => <div className="text-center">Variable fee</div>,
-    cell: (props) => <SetupCell {...props} />,
+    cell: (props) => <Variablefee {...props} />,
   },
   {
     accessorKey: "percent",
@@ -255,6 +307,15 @@ function Rebate() {
     return Object.values(row).every((value) => value === "" || value === null);
   };
 
+  const feesHeaders = { name: "", amount: "" };
+
+  const setupHeaders = {
+    refundmethod: "",
+    fixedfee: "",
+    variablefee: "",
+    percent: "",
+  };
+
   return (
     <div className="flex flex-row w-full h-full ">
       <Card className="bg-transparent border-0 shadow-none w-full overflow-auto pb-16 m-0">
@@ -282,6 +343,7 @@ function Rebate() {
             </div>
             <div className="overflow-auto">
               <DataTable
+                Headertable={feesHeaders}
                 columnsData={{
                   type: "Custom",
                   data: feescolumns,
@@ -300,6 +362,7 @@ function Rebate() {
             </div>
             <div className="overflow-auto">
               <DataTable
+                Headertable={setupHeaders}
                 columnsData={{
                   type: "Custom",
                   data: setupcolumns,
