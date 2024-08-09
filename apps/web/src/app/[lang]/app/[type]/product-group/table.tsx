@@ -41,6 +41,7 @@ const columnData: columnsType = {
 };
 export default function Table({ productGroupData }: any): JSX.Element {
   const [activeSectionId, setActiveSectionId] = useState("default");
+  const isProductGroupProvided = Boolean(productGroupData);
   return (
     <Card className="m-auto">
       <SectionLayoutNavbar
@@ -56,6 +57,7 @@ export default function Table({ productGroupData }: any): JSX.Element {
           columnsData={columnData}
           data={productGroupData}
           filterBy="name"
+          isLoading={!isProductGroupProvided}
           rowCount={productGroupData.length}
         />
       </div>
