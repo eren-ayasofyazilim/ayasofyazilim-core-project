@@ -1,7 +1,7 @@
 import React from "react";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Button from "@repo/ayasofyazilim-ui/molecules/button";
 
 const columns = [
   {
