@@ -32,7 +32,7 @@ import {
   $Volo_Saas_Host_Dtos_SaasTenantDto,
   $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
 } from "@ayasofyazilim/saas/SaasService";
-import { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
 

@@ -414,6 +414,7 @@ export default function ProjectForm({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
+                      disabled={isInputEditDisabled}
                       fromDate={new Date()}
                       initialFocus
                       mode="single"
@@ -423,7 +424,6 @@ export default function ProjectForm({
                           startDate: value?.toISOString() || "",
                         });
                       }}
-                      disabled={isInputEditDisabled}
                       selected={new Date(formValues.startDate || 0)}
                     />
                   </PopoverContent>

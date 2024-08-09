@@ -6,7 +6,7 @@ import { SectionLayoutNavbar } from "@repo/ayasofyazilim-ui/templates/section-la
 export default function Page() {
   return (
     <>
-      <PageHeader isLoading={true} />
+      <PageHeader isLoading />
 
       <div className="flex justify-end flex-row my-2">
         <Skeleton className="h-9 w-40 bg-gray-200" />

@@ -30,7 +30,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    toast.error("Fetch error: " + String(error));
+    toast.error(`Fetch error: ${  String(error)}`);
   }
 }
 
@@ -279,7 +279,7 @@ export default function Page({
         onEdit(data, row, editFormSchema);
       },
       onDelete,
-      actionList: actionList,
+      actionList,
     },
   };
 

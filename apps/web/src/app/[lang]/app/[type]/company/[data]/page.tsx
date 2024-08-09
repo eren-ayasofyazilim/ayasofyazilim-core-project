@@ -7,6 +7,7 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
 import { createZodObject, getBaseLink } from "src/utils";
 import {
   $createCustoms,
@@ -21,7 +22,7 @@ import {
   $showRefund_points,
   $showTax_free,
 } from "./schemas.gen";
-import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
+
 async function controlledFetch(
   url: string,
   options: RequestInit,
