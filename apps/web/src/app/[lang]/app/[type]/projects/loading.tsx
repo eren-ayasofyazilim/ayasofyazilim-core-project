@@ -10,7 +10,7 @@ export default function Page() {
       <div className="flex justify-end flex-row my-2">
         <Skeleton className="h-9 w-40 bg-gray-200" />
       </div>
-      <SectionLayoutSkeleton vertical={true} />
+      <SectionLayoutSkeleton vertical />
     </div>
   );
 }

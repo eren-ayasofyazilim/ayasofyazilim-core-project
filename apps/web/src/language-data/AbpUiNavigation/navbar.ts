@@ -9,6 +9,7 @@ function getLanguageData(resources: any): Record<string, string> {
     Details: navigationResource?.Details || "Details", // "Detaylar",
     ProductGroups: navigationResource?.ProductGroups || "Product Groups",
     Companies: navigationResource?.Companies || "Companies", // "Sirketler",
+    Template: navigationResource?.Template || "Template", // "Template",
     CountrySettings: navigationResource?.CountrySettings || "Country Settings", //"Ülke Ayarları",
     Settings: navigationResource?.Settings || "Settings", // "Ayarlar",
     LanguageManagement:
