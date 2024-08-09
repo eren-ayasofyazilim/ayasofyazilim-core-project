@@ -1,12 +1,11 @@
 "use client";
-import { Card } from "@/components/ui/card";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
-import type {
-  columnsType,
-} from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { columnsType } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
+import { Card } from "@repo/ayasofyazilim-ui/atoms/card";
 import { SectionLayoutNavbar } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import { useState } from "react";
+import React, { useState } from "react";
+
 
 const columnData: columnsType = {
   type: "Custom",
@@ -40,7 +39,7 @@ const columnData: columnsType = {
     },
   ],
 };
-export default function Form({ productGroupData }: any): JSX.Element {
+export default function Table({ productGroupData }: any): JSX.Element {
   const [activeSectionId, setActiveSectionId] = useState("default");
   return (
     <Card className="m-auto">
@@ -56,7 +55,7 @@ export default function Form({ productGroupData }: any): JSX.Element {
         <DataTable
           columnsData={columnData}
           data={productGroupData}
-          filterBy="result"
+          filterBy="name"
           rowCount={productGroupData.length}
         />
       </div>

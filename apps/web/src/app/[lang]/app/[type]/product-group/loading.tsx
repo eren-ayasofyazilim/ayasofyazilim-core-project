@@ -1,7 +1,8 @@
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@repo/ayasofyazilim-ui/atoms/card";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { SectionLayoutNavbar } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import { Skeleton } from "@/components/ui/skeleton";
+import React from "react";
 
 export default function Page(): JSX.Element {
   return (

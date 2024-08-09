@@ -1,6 +1,7 @@
 // "use server";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-import Form from "./form";
+import React from "react";
+import Table from "./table";
 
 function getProductGroup() {
   const productGroupData = {
@@ -217,7 +218,7 @@ export default function Page(): JSX.Element {
           </DropdownMenuContent>
         </DropdownMenu>
       </div> */}
-      <Form productGroupData={productGroupData} />
+      <Table productGroupData={productGroupData} />
     </>
   );
 }
