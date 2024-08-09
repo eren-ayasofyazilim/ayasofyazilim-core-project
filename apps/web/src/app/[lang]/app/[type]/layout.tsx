@@ -7,6 +7,7 @@ import {
   Building2,
   DollarSign,
   FileBadge,
+  Group,
   Home,
   LanguagesIcon,
   LayoutDashboard,
@@ -35,7 +36,10 @@ interface LayoutProps {
 }
 const appName = process.env.APPLICATION_NAME || "UNIREFUND";
 
-export default async function Layout({ children, params }: LayoutProps) {
+export default async function Layout({
+  children,
+  params,
+}: LayoutProps): Promise<JSX.Element> {
   const types = ["admin", "user", "entrepreneur", "investor"];
   const { type } = params;
   if (!types.includes(type)) {
@@ -143,6 +147,14 @@ export default async function Layout({ children, params }: LayoutProps) {
       appType: "unirefund",
     },
     {
+      key: "productGroup",
+      title: languageData.ProductGroups,
+      href: getBaseLink(`app/${type}/product-group`, true, params.lang),
+      icon: <Group className="text-slate-500 w-4" />,
+      type: "admin",
+      appType: "unirefund",
+    },
+    {
       key: "Template",
       title: languageData.Template,
       href: getBaseLink(`app/${type}/template/rebate`, true, params.lang),
@@ -166,6 +178,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       type: "admin",
       appType: "unirefund",
     },
+
     {
       key: "settings",
       title: languageData.Settings,

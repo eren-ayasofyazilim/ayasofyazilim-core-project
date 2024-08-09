@@ -1,12 +1,13 @@
 import { getLocalizationResources } from "src/utils";
 
-function getLanguageData(resources: any) {
+function getLanguageData(resources: any): Record<string, string> {
   const navigationResource = resources?.AbpUiNavigation?.texts;
   return {
     HomePage: navigationResource?.HomePage || "Home Page", // "Ana Sayfa",
     Dashboard: navigationResource?.Dashboard || "Dashboard", // "Kontrol Paneli",
     Profile: navigationResource?.Profile || "Profile", // "Profil",
     Details: navigationResource?.Details || "Details", // "Detaylar",
+    ProductGroups: navigationResource?.ProductGroups || "Product Groups",
     Companies: navigationResource?.Companies || "Companies", // "Sirketler",
     Template: navigationResource?.Template || "Template", // "Template",
     CountrySettings: navigationResource?.CountrySettings || "Country Settings", //"Ülke Ayarları",
@@ -51,7 +52,10 @@ function getLanguageData(resources: any) {
     Add: resources?.AbpUiNavigation?.texts?.Add || "Add",
   };
 }
-export async function getResourceData(lang: string) {
+export async function getResourceData(lang: string): Promise<{
+  languageData: Record<string, string>;
+  resources: any;
+}> {
   const resources = await getLocalizationResources(lang);
   const languageData = getLanguageData(resources);
   return {
@@ -59,7 +63,7 @@ export async function getResourceData(lang: string) {
     resources,
   };
 }
-export function getResourceDataClient(resources: any) {
+export function getResourceDataClient(resources: any): Record<string, string> {
   const languageData = getLanguageData(resources);
   return languageData;
 }

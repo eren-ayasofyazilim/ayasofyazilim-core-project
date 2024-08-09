@@ -530,10 +530,10 @@ export default function ProjectForm({
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
                       <Calendar
+                        disabled
                         fromDate={new Date()}
                         initialFocus
                         mode="single"
-                        disabled
                         selected={new Date(formValues.startDate || 0)}
                       />
                     </PopoverContent>

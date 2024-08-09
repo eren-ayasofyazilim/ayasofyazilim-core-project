@@ -7,6 +7,7 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
 import { createZodObject, getBaseLink } from "src/utils";
 import {
   $createCustoms,
@@ -21,13 +22,13 @@ import {
   $showRefund_points,
   $showTax_free,
 } from "./schemas.gen";
-import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
+
 async function controlledFetch(
   url: string,
   options: RequestInit,
   onSuccess: (_data?: any) => void,
   successMessage = "Successful",
-  showToast = true,
+  showToast = true
 ) {
   try {
     const getData = await fetch(url, options);
@@ -209,7 +210,7 @@ const dataConfig: Record<string, TableData> = {
 };
 function convertEnumField(
   value: string | number,
-  enumArray: string[],
+  enumArray: string[]
 ): string | number {
   if (typeof value === "number") {
     return enumArray[value];
@@ -254,7 +255,7 @@ export default function Page({
       } as RequestInit,
       onData,
       "",
-      false,
+      false
     ).catch();
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
@@ -265,7 +266,7 @@ export default function Page({
       formSchema: createZodObject(
         createFormSchema.schema,
         createFormSchema.formPositions || [],
-        createFormSchema.convertors || {},
+        createFormSchema.convertors || {}
       ),
       dependencies: createFormSchema.dependencies,
       fieldConfig: {
@@ -294,11 +295,12 @@ export default function Page({
             body: JSON.stringify(transformedData),
           },
           getRoles,
-          "Added Successfully",
+          "Added Successfully"
         );
       }
       void onData();
     },
+    type: "Dialog",
   };
   useEffect(() => {
     setIsLoading(true);
@@ -308,7 +310,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
@@ -334,7 +336,7 @@ export default function Page({
         }),
       },
       getRoles,
-      "Updated Successfully",
+      "Updated Successfully"
     );
   };
   const onDelete = (e: any, row: any) => {
@@ -345,14 +347,14 @@ export default function Page({
         body: JSON.stringify(row.id),
       },
       getRoles,
-      "Deleted Successfully",
+      "Deleted Successfully"
     );
   };
   function convertZod(schema: FormModifier) {
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {},
+      schema.convertors || {}
     );
     return newSchema;
   }

@@ -166,7 +166,7 @@ const clients: Clients = {
       put: async ({ id }: { id: string }) => {
         const result =
           await languages.putApiLanguageManagementLanguagesByIdSetAsDefault({
-            id: id,
+            id,
           });
         if (result === undefined) {
           return "success";
