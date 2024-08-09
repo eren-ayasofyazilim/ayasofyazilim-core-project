@@ -36,6 +36,7 @@ jobs:
       with:
         commit-message: "ci: lint"
         delete-branch: true
+        base: main
         branch: ${{ github.run_id }}
         title: "ci: lint [auto]"
         assignees: |
