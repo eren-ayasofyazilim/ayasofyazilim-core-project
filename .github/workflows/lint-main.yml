@@ -30,5 +30,15 @@ jobs:
       uses: EndBug/add-and-commit@v9
       with:
         default_author: github_actions
-
+        new_branch: ${{ github.run_id }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        commit-message: "ci: lint"
+        delete-branch: true
+        branch: ${{ github.run_id }}
+        title: "ci: lint [auto]"
+        assignees: |
+          ${{ github.actor }}
+          a0m0rajab
             
