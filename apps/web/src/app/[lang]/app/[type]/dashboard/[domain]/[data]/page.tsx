@@ -3,8 +3,8 @@ import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import { useEffect, useState } from "react";
 import type {
-  tableAction,
-  columnsType,
+  TableAction,
+  ColumnsType,
   MenuAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
@@ -154,7 +154,7 @@ export default function Page({
   }
 
   const createFormSchema = formData.createFormSchema;
-  let action: tableAction[] | undefined;
+  let action: TableAction[] | undefined;
   if (createFormSchema) {
     action = [
       {
@@ -271,7 +271,7 @@ export default function Page({
   if (formData.tableSchema.actionList) {
     actionList = formData.tableSchema.actionList(controlledFetch, getRoles);
   }
-  const columnsData: columnsType = {
+  const columnsData: ColumnsType = {
     type: "Auto",
     data: {
       callback: getRoles,
