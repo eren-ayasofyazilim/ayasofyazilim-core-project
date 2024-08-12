@@ -109,8 +109,13 @@ const feescolumns: ColumnDef<Record<string, any>>[] = [
   {
     accessorKey: "actions",
     enableHiding: false,
-    cell: () => (
-      <Button variant="ghost">
+    cell: ({ row, table }) => (
+      <Button
+        onClick={() => {
+          table.options.meta?.removeRow(row.index, "actions", null);
+        }}
+        variant="ghost"
+      >
         <TrashIcon className="w-4 h-4 text-red-500" />
       </Button>
     ),
@@ -193,10 +198,10 @@ function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="All">% of GC</SelectItem>
-        <SelectItem value="Cash">% of GC without VAT</SelectItem>
-        <SelectItem value="Alipay">% of VAT</SelectItem>
-        <SelectItem value="WeChat">% of SIS</SelectItem>
+        <SelectItem value="% of GC">% of GC</SelectItem>
+        <SelectItem value="% of GC without VAT">% of GC without VAT</SelectItem>
+        <SelectItem value="% of VAT">% of VAT</SelectItem>
+        <SelectItem value="% of SIS">% of SIS</SelectItem>
       </SelectContent>
     </Select>
   );
@@ -269,8 +274,13 @@ const setupcolumns: ColumnDef<Record<string, any>>[] = [
   {
     accessorKey: "actions",
     enableHiding: false,
-    cell: () => (
-      <Button variant="ghost">
+    cell: ({ row, table }) => (
+      <Button
+        onClick={() => {
+          table.options.meta?.removeRow(row.index, "actions", null);
+        }}
+        variant="ghost"
+      >
         <Trash2Icon className="w-4 h-4 text-red-500" />
       </Button>
     ),
@@ -279,28 +289,23 @@ const setupcolumns: ColumnDef<Record<string, any>>[] = [
 
 function Rebate() {
   const [autoFormData, setAutoFormData] = useState<Record<string, any>>({});
-  const [feesData] = useState(initialFeesData);
-  const [setupData] = useState(initialSetupData);
+  const [feesData, setFeesData] = useState(initialFeesData);
+  const [setupData, setSetupData] = useState(initialSetupData);
 
   const handleFormChange = (newFormData: any): void => {
     setAutoFormData(newFormData);
   };
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     const filteredFeesData = feesData.filter((row) => !isRowEmpty(row));
     const filteredSetupData = setupData.filter((row) => !isRowEmpty(row));
 
     const payload: any = {
       autoFormData,
+      feesData: filteredFeesData,
+      setupData: filteredSetupData,
     };
-
-    if (filteredFeesData.length > 0) {
-      payload.feesData = filteredFeesData;
-    }
-
-    if (filteredSetupData.length > 0) {
-      payload.setupData = filteredSetupData;
-    }
+    return payload;
   };
 
   const isRowEmpty = (row: any): boolean => {
@@ -320,7 +325,8 @@ function Rebate() {
     <div className="flex flex-row w-full h-full ">
       <Card className="bg-transparent border-0 shadow-none w-full overflow-auto pb-16 m-0">
         <CardHeader className="text-2xl font-bold flex flex-row gap-2 items-center">
-          <EditIcon className="text-slate-600 w-6" /> Edit Template Information
+          <EditIcon className="text-slate-600 w-6" />
+          Edit Template Information
         </CardHeader>
         <CardContent>
           <div className="px-9 [&>div>form>div]:space-y-4">
@@ -350,6 +356,7 @@ function Rebate() {
                 }}
                 data={feesData}
                 editable
+                onDataUpdate={() => { setFeesData(initialFeesData); }}
                 showView={false}
               />
             </div>
@@ -369,6 +376,7 @@ function Rebate() {
                 }}
                 data={setupData}
                 editable
+                onDataUpdate={() => { setSetupData(initialSetupData); }}
                 showView={false}
               />
             </div>
