@@ -30,7 +30,7 @@ async function controlledFetch(
       showToast && toast.success(successMessage);
     }
   } catch (error) {
-    toast.error(`Fetch error: ${  String(error)}`);
+    toast.error(`Fetch error: ${String(error)}`);
   }
 }
 
@@ -106,12 +106,14 @@ export default function Page({
     setFormData(tempData);
   }
 
-  function getRoles(_page: number) {
+  function getRoles(_page: number, _filter?: string) {
     let page = _page;
+    const filter = _filter || "";
     if (typeof page !== "number") {
       page = 0;
     }
-    const _fetchLink = `${fetchLink}?page=${page}`;
+
+    const _fetchLink = `${fetchLink}?page=${page}&filter=${filter}`;
     setIsLoading(true);
     function onData(data: any) {
       let returnData = data;
