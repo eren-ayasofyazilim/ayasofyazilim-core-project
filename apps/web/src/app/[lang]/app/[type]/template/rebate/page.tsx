@@ -16,7 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { TrashIcon, Trash2Icon, EditIcon } from "lucide-react";
+import { Trash2Icon, EditIcon } from "lucide-react";
 
 const formSchema = z.object({
   Name: z.string(),
@@ -116,7 +116,7 @@ const feescolumns: ColumnDef<Record<string, any>>[] = [
         }}
         variant="ghost"
       >
-        <TrashIcon className="w-4 h-4 text-red-500" />
+        <Trash2Icon className="w-4 h-4 text-red-500" />
       </Button>
     ),
   },
@@ -356,7 +356,9 @@ function Rebate() {
                 }}
                 data={feesData}
                 editable
-                onDataUpdate={() => { setFeesData(initialFeesData); }}
+                onDataUpdate={() => {
+                  setFeesData(initialFeesData);
+                }}
                 showView={false}
               />
             </div>
@@ -376,7 +378,9 @@ function Rebate() {
                 }}
                 data={setupData}
                 editable
-                onDataUpdate={() => { setSetupData(initialSetupData); }}
+                onDataUpdate={() => {
+                  setSetupData(initialSetupData);
+                }}
                 showView={false}
               />
             </div>
