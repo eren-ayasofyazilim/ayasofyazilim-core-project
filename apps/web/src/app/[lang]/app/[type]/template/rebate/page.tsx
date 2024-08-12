@@ -64,6 +64,7 @@ function AmountCell({ getValue, row: { index }, column: { id }, table }: any) {
 
   return (
     <Input
+      min={0}
       onBlur={onBlur}
       onChange={(e) => {
         setValue(e.target.value);
@@ -169,6 +170,7 @@ function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
 
   return (
     <Input
+      min={0}
       onBlur={onBlur}
       onChange={(e) => {
         setValue(e.target.value);
@@ -221,6 +223,7 @@ function PercentCell({ getValue, row: { index }, column: { id }, table }: any) {
 
   return (
     <Input
+      min={0}
       onBlur={onBlur}
       onChange={(e) => {
         setValue(e.target.value);
