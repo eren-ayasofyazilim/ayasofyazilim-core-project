@@ -310,9 +310,9 @@ const data = [
 function MyDataTable() {
   return (
     <div>
-      <div className="mt-4  flex justify-end-between">
-        <Input placeholder="SIS" />
-        <Button className="mx-9">Calculate</Button>
+      <div className="mt-4 flex justify-end-between">
+        <Input placeholder="SIS" type="number" />
+        <Button className="ml-9">Calculate</Button>
       </div>
       <DataTable
         columnsData={{
