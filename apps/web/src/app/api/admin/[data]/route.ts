@@ -41,7 +41,7 @@ const clients: Clients = {
       delete: async (id: string) => role.deleteApiIdentityRolesById({ id }),
     };
   },
-  user: async (page: number) => {
+  user: async (page: number, filter: string) => {
     const client = await getIdentityServiceClient();
     const user = client.user;
     return {
@@ -49,6 +49,7 @@ const clients: Clients = {
         user.getApiIdentityUsers({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
       post: async (requestBody: any) =>
         user.postApiIdentityUsers({ requestBody }),
@@ -69,7 +70,7 @@ const clients: Clients = {
       delete: async (id: string) => edition.deleteApiSaasEditionsById({ id }),
     };
   },
-  tenant: async (page: number) => {
+  tenant: async (page: number, filter: string) => {
     const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {
@@ -77,6 +78,7 @@ const clients: Clients = {
         tenant.getApiSaasTenants({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
       post: async (requestBody: any) =>
         tenant.postApiSaasTenants({ requestBody }),
@@ -85,7 +87,7 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  claimType: async (page: number) => {
+  claimType: async (page: number, filter: string) => {
     const client = await getIdentityServiceClient();
     const claimType = client.claimType;
     return {
@@ -93,6 +95,7 @@ const clients: Clients = {
         claimType.getApiIdentityClaimTypes({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
       post: async (requestBody: any) =>
         claimType.postApiIdentityClaimTypes({ requestBody }),
@@ -102,7 +105,7 @@ const clients: Clients = {
         claimType.deleteApiIdentityClaimTypesById({ id }),
     };
   },
-  applications: async (page: number) => {
+  applications: async (page: number, filter: string) => {
     const client = await getIdentityServiceClient();
     const applications = client.applications;
     return {
@@ -110,6 +113,7 @@ const clients: Clients = {
         applications.getApiOpeniddictApplications({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
       post: async (requestBody: any) =>
         applications.postApiOpeniddictApplications({ requestBody }),
@@ -119,7 +123,7 @@ const clients: Clients = {
         applications.deleteApiOpeniddictApplications({ id }),
     };
   },
-  scopes: async (page: number) => {
+  scopes: async (page: number, filter: string) => {
     const client = await getIdentityServiceClient();
     const scopes = client.scopes;
     return {
@@ -127,7 +131,9 @@ const clients: Clients = {
         scopes.getApiOpeniddictScopes({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
+
       post: async (requestBody: any) =>
         scopes.postApiOpeniddictScopes({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -135,7 +141,7 @@ const clients: Clients = {
       delete: async (id: string) => scopes.deleteApiOpeniddictScopes({ id }),
     };
   },
-  languages: async (page: number) => {
+  languages: async (page: number, filter: string) => {
     const client = await getAdministrationServiceClient();
     const languages = client.languages;
     return {
@@ -143,6 +149,7 @@ const clients: Clients = {
         languages.getApiLanguageManagementLanguages({
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
       post: async (requestBody: any) =>
         languages.postApiLanguageManagementLanguages({ requestBody }),
@@ -166,7 +173,7 @@ const clients: Clients = {
       put: async ({ id }: { id: string }) => {
         const result =
           await languages.putApiLanguageManagementLanguagesByIdSetAsDefault({
-            id: id,
+            id,
           });
         if (result === undefined) {
           return "success";
@@ -183,6 +190,7 @@ const clients: Clients = {
         securityLogs.getApiIdentitySecurityLogs({
           maxResultCount: 10,
           skipCount: page * 10,
+          //filter: filter,
         }),
     };
   },
@@ -195,6 +203,7 @@ const clients: Clients = {
         auditLogs.getApiAuditLoggingAuditLogs({
           maxResultCount: 10,
           skipCount: page * 10,
+          //filter: filter,
         }),
     };
   },
@@ -207,11 +216,12 @@ const clients: Clients = {
         textTemplates.getApiTextTemplateManagementTemplateDefinitions({
           maxResultCount: 10,
           skipCount: page * 10,
+          //filter: filter,
         }),
     };
   },
 
-  languageTexts: async (page: number) => {
+  languageTexts: async (page: number, filter: string) => {
     const client = await getAdministrationServiceClient();
     const languageTexts = client.languageTexts;
     return {
@@ -221,6 +231,7 @@ const clients: Clients = {
           targetCultureName,
           maxResultCount: 10,
           skipCount: page * 10,
+          filter,
         }),
     };
   },
@@ -242,15 +253,16 @@ const clients: Clients = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   const searchParams = request.nextUrl.searchParams;
   const page = searchParams.get("page");
+  const filter = searchParams.get("filter");
   if (!clients[params.data]) {
     // return status 404
     return errorResponse("Invalid data type");
   }
-  const client = await clients[params.data](page);
+  const client = await clients[params.data](page, filter);
   try {
     const data = await client.get();
     return new Response(JSON.stringify(data));
@@ -267,7 +279,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -282,7 +294,7 @@ export async function POST(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Something went wrong",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Something went wrong");
@@ -291,7 +303,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -306,7 +318,7 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { data: string } },
+  { params }: { params: { data: string } }
 ) {
   if (!clients[params.data]) {
     return errorResponse("Invalid data type");
@@ -325,7 +337,7 @@ export async function PUT(
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
         body.error?.message || "Uknonw error occured on the server side",
-        error.status,
+        error.status
       );
     }
     return errorResponse("Uknonw error occured on the client/server side 1");
