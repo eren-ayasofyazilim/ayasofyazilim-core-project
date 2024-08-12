@@ -2,8 +2,8 @@
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import type {
-  tableAction,
-  columnsType,
+  TableAction,
+  ColumnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
@@ -259,7 +259,7 @@ export default function Page({
     ).catch();
   }
   const createFormSchema = dataConfig[params.data].createFormSchema;
-  const action: tableAction = {
+  const action: TableAction = {
     cta: `New ${params.data}`,
     description: `Create a new ${params.data}`,
     autoFormArgs: {
@@ -360,7 +360,7 @@ export default function Page({
   }
   const editFormSchema = dataConfig[params.data].editFormSchema;
   const editFormSchemaZod = convertZod(editFormSchema);
-  const columnsData: columnsType = {
+  const columnsData: ColumnsType = {
     type: "Auto",
     data: {
       callback: getRoles,
