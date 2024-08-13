@@ -41,19 +41,20 @@ const clients: Clients = {
       delete: async (id: string) => role.deleteApiIdentityRolesById({ id }),
     };
   },
-  user: async (page: number, _filter: string) => {
+  user: async () => {
     const client = await getIdentityServiceClient();
     const user = client.user;
 
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
     return {
-      get: async () =>
-        user.getApiIdentityUsers({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return user.getApiIdentityUsers({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
       post: async (requestBody: any) =>
         user.postApiIdentityUsers({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -73,19 +74,20 @@ const clients: Clients = {
       delete: async (id: string) => edition.deleteApiSaasEditionsById({ id }),
     };
   },
-  tenant: async (page: number, _filter: string) => {
+  tenant: async () => {
     const client = await getSaasServiceClient();
     const tenant = client.tenant;
 
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
     return {
-      get: async () =>
-        tenant.getApiSaasTenants({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return tenant.getApiSaasTenants({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
       post: async (requestBody: any) =>
         tenant.postApiSaasTenants({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -93,18 +95,20 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  claimType: async (page: number, _filter: string) => {
+  claimType: async () => {
     const client = await getIdentityServiceClient();
     const claimType = client.claimType;
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
+
     return {
-      get: async () =>
-        claimType.getApiIdentityClaimTypes({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return claimType.getApiIdentityClaimTypes({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
       post: async (requestBody: any) =>
         claimType.postApiIdentityClaimTypes({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -113,18 +117,20 @@ const clients: Clients = {
         claimType.deleteApiIdentityClaimTypesById({ id }),
     };
   },
-  applications: async (page: number, _filter: string) => {
+  applications: async () => {
     const client = await getIdentityServiceClient();
     const applications = client.applications;
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
+
     return {
-      get: async () =>
-        applications.getApiOpeniddictApplications({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return applications.getApiOpeniddictApplications({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
       post: async (requestBody: any) =>
         applications.postApiOpeniddictApplications({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -133,18 +139,20 @@ const clients: Clients = {
         applications.deleteApiOpeniddictApplications({ id }),
     };
   },
-  scopes: async (page: number, _filter: string) => {
+  scopes: async () => {
     const client = await getIdentityServiceClient();
     const scopes = client.scopes;
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
+
     return {
-      get: async () =>
-        scopes.getApiOpeniddictScopes({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return scopes.getApiOpeniddictScopes({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
 
       post: async (requestBody: any) =>
         scopes.postApiOpeniddictScopes({ requestBody }),
@@ -153,18 +161,20 @@ const clients: Clients = {
       delete: async (id: string) => scopes.deleteApiOpeniddictScopes({ id }),
     };
   },
-  languages: async (page: number, _filter: string) => {
+  languages: async () => {
     const client = await getAdministrationServiceClient();
     const languages = client.languages;
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
+
     return {
-      get: async () =>
-        languages.getApiLanguageManagementLanguages({
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return languages.getApiLanguageManagementLanguages({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
       post: async (requestBody: any) =>
         languages.postApiLanguageManagementLanguages({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -196,22 +206,21 @@ const clients: Clients = {
       },
     };
   },
-  securityLogs: async (page: number, filter: string) => {
+  securityLogs: async () => {
     const client = await getIdentityServiceClient();
     const securityLogs = client.securityLog;
 
-    const f = JSON.parse(filter || "{}");
-    const userName = f?.userName;
-    const clientId = f?.clientId;
-    const identity = f?.identity;
-    const applicationName = f?.applicationName;
-    const correlationId = f?.correlationId;
-    const startTime = f?.startTime;
-    const endTime = f?.endTime;
-
     return {
-      get: async () =>
-        securityLogs.getApiIdentitySecurityLogs({
+      get: async (page: number, filter: string) => {
+        const parsedFilter = JSON.parse(filter || "{}");
+        const userName = parsedFilter?.userName;
+        const clientId = parsedFilter?.clientId;
+        const identity = parsedFilter?.identity;
+        const applicationName = parsedFilter?.applicationName;
+        const correlationId = parsedFilter?.correlationId;
+        const startTime = parsedFilter?.startTime;
+        const endTime = parsedFilter?.endTime;
+        return securityLogs.getApiIdentitySecurityLogs({
           maxResultCount: 10,
           skipCount: page * 10,
           userName,
@@ -221,29 +230,29 @@ const clients: Clients = {
           correlationId,
           startTime,
           endTime,
-        }),
+        });
+      },
     };
   },
 
-  auditLogs: async (page: number, filter: string) => {
+  auditLogs: async () => {
     const client = await getAdministrationServiceClient();
     const auditLogs = client.auditLogs;
 
-    const f = JSON.parse(filter || "{}");
-    const userName = f?.userName;
-    const url = f?.url;
-    const clientIpAddress = f?.clientIpAddress;
-    const applicationName = f?.applicationName;
-    const correlationId = f?.correlationId;
-    const startTime = f?.startTime;
-    const endTime = f?.endTime;
-    const httpMethod = f?.httpMethod;
-    const maxExecutionDuration = f?.maxExecutionDuration;
-    const minExecutionDuration = f?.minExecutionDuration;
-
     return {
-      get: async () =>
-        auditLogs.getApiAuditLoggingAuditLogs({
+      get: async (page: number, filter: string) => {
+        const parsedFilter = JSON.parse(filter || "{}");
+        const userName = parsedFilter?.userName;
+        const url = parsedFilter?.url;
+        const clientIpAddress = parsedFilter?.clientIpAddress;
+        const applicationName = parsedFilter?.applicationName;
+        const correlationId = parsedFilter?.correlationId;
+        const startTime = parsedFilter?.startTime;
+        const endTime = parsedFilter?.endTime;
+        const httpMethod = parsedFilter?.httpMethod;
+        const maxExecutionDuration = parsedFilter?.maxExecutionDuration;
+        const minExecutionDuration = parsedFilter?.minExecutionDuration;
+        return auditLogs.getApiAuditLoggingAuditLogs({
           maxResultCount: 10,
           skipCount: page * 10,
           startTime,
@@ -256,15 +265,16 @@ const clients: Clients = {
           httpMethod,
           maxExecutionDuration,
           minExecutionDuration,
-        }),
+        });
+      },
     };
   },
 
-  textTemplates: async (page: number) => {
+  textTemplates: async () => {
     const client = await getAdministrationServiceClient();
     const textTemplates = client.textTemplateDefinitions;
     return {
-      get: async () =>
+      get: async (page: number) =>
         textTemplates.getApiTextTemplateManagementTemplateDefinitions({
           maxResultCount: 10,
           skipCount: page * 10,
@@ -273,20 +283,27 @@ const clients: Clients = {
     };
   },
 
-  languageTexts: async (page: number, _filter: string) => {
+  languageTexts: async () => {
     const client = await getAdministrationServiceClient();
     const languageTexts = client.languageTexts;
-    const f = JSON.parse(_filter || "{}");
-    const filter = f?.filter;
+
     return {
-      get: async (baseCultureName = "en", targetCultureName = "tr") =>
-        languageTexts.getApiLanguageManagementLanguageTexts({
+      get: async (
+        page: number,
+        _filter: string,
+        baseCultureName = "en",
+        targetCultureName = "tr"
+      ) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return languageTexts.getApiLanguageManagementLanguageTexts({
           baseCultureName,
           targetCultureName,
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
-        }),
+        });
+      },
     };
   },
 
@@ -316,9 +333,9 @@ export async function GET(
     // return status 404
     return errorResponse("Invalid data type");
   }
-  const client = await clients[params.data](page, filter);
+  const client = await clients[params.data]();
   try {
-    const data = await client.get();
+    const data = await client.get(page, filter);
     return new Response(JSON.stringify(data));
   } catch (error: unknown) {
     if (isApiError(error)) {

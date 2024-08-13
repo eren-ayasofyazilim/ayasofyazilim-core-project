@@ -54,7 +54,6 @@ export interface TableData {
   createFormSchema?: FormModifier;
   editFormSchema?: FormModifier;
   tableSchema: FormModifier;
-  filterBy: string;
 }
 
 export const dataConfig: Record<string, any> = {
@@ -62,7 +61,9 @@ export const dataConfig: Record<string, any> = {
     displayName: "open id",
     default: "applications",
     applications: {
-      filterBy: "displayName",
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: [
           "applicationType",
@@ -194,6 +195,9 @@ export const dataConfig: Record<string, any> = {
       },
     },
     scopes: {
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_CreateScopeInput,
@@ -206,13 +210,15 @@ export const dataConfig: Record<string, any> = {
         formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
       },
-      filterBy: "name",
     },
   },
   admin: {
     displayName: "Admin Management",
     default: "languages",
     languages: {
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: [
           "cultureName",
@@ -276,21 +282,22 @@ export const dataConfig: Record<string, any> = {
         formPositions: ["displayName", "isEnabled"],
         schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
       },
-      filterBy: "displayName",
     },
     languageTexts: {
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       tableSchema: {
         excludeList: ["cultureName", "baseCultureName"],
         schema: $Volo_Abp_LanguageManagement_Dto_LanguageTextDto,
       },
-      filterBy: "userName",
     },
   },
   saas: {
     displayName: "Saas Management",
     default: "edition",
     edition: {
-      filterBy: "displayName",
+      detailedFilters: [],
       createFormSchema: {
         formPositions: ["displayName"],
         schema: $Volo_Saas_Host_Dtos_EditionCreateDto,
@@ -305,7 +312,9 @@ export const dataConfig: Record<string, any> = {
       },
     },
     tenant: {
-      filterBy: "name",
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: [
           "name",
@@ -405,6 +414,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "Identity Management",
     default: "role",
     role: {
+      detailedFilters: [],
       createFormSchema: {
         formPositions: ["name", "isDefault", "isPublic"],
         schema: $Volo_Abp_Identity_IdentityRoleCreateDto,
@@ -417,9 +427,11 @@ export const dataConfig: Record<string, any> = {
         excludeList: ["id", "extraProperties", "concurrencyStamp"],
         schema: $Volo_Abp_Identity_IdentityRoleDto,
       },
-      filterBy: "name",
     },
     user: {
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: ["email", "password", "userName"],
         schema: $Volo_Abp_Identity_IdentityUserCreateDto,
@@ -449,11 +461,12 @@ export const dataConfig: Record<string, any> = {
         ],
         schema: $Volo_Abp_Identity_IdentityUserDto,
       },
-      filterBy: "email",
     },
 
     claimType: {
-      filterBy: "displayName",
+      detailedFilters: [
+        { name: "filter", displayName: "Search", type: "string", value: "" },
+      ],
       createFormSchema: {
         formPositions: [
           "name",
@@ -506,7 +519,45 @@ export const dataConfig: Record<string, any> = {
       },
     },
     securityLogs: {
-      filterBy: "applicationName",
+      detailedFilters: [
+        {
+          name: "startTime",
+          displayName: "Start Time",
+          type: "date",
+          value: "",
+        },
+        { name: "endTime", displayName: "End Time", type: "date", value: "" },
+        {
+          name: "userName",
+          displayName: "User Name",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "applicationName",
+          displayName: "Application Name",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "clientId",
+          displayName: "Client Id",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "identity",
+          displayName: "Identity",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "correlationId",
+          displayName: "Correlation Id",
+          type: "string",
+          value: "",
+        },
+      ],
       tableSchema: {
         excludeList: [
           "id",
@@ -524,6 +575,58 @@ export const dataConfig: Record<string, any> = {
     displayName: "Audit Logs",
     default: "auditLogs",
     auditLogs: {
+      detailedFilters: [
+        {
+          name: "startTime",
+          displayName: "Start Time",
+          type: "date",
+          value: "",
+        },
+        { name: "endTime", displayName: "End Time", type: "date", value: "" },
+        {
+          name: "userName",
+          displayName: "User Name",
+          type: "string",
+          value: "",
+        },
+        { name: "Url", displayName: "Url", type: "string", value: "" },
+        {
+          name: "applicationName",
+          displayName: "Application Name",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "clientIpAddress",
+          displayName: "Client Ip Address",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "httpMethod",
+          displayName: "Http Method",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "minExecutionDuration",
+          displayName: "Min Execution Duration",
+          type: "number",
+          value: "",
+        },
+        {
+          name: "maxExecutionDuration",
+          displayName: "Max Execution Duration",
+          type: "number",
+          value: "",
+        },
+        {
+          name: "correlationId",
+          displayName: "Correlation Id",
+          type: "string",
+          value: "",
+        },
+      ],
       tableSchema: {
         excludeList: [
           "id",
@@ -542,7 +645,6 @@ export const dataConfig: Record<string, any> = {
         ],
         schema: $Volo_Abp_AuditLogging_AuditLogDto,
       },
-      filterBy: "userName",
     },
   },
   textTemplates: {
@@ -554,7 +656,6 @@ export const dataConfig: Record<string, any> = {
         schema:
           $Volo_Abp_TextTemplateManagement_TextTemplates_TemplateDefinitionDto,
       },
-      filterBy: "displayName",
     },
   },
 };
