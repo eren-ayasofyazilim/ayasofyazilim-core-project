@@ -12,6 +12,7 @@ jobs:
     runs-on: self-hosted
     permissions:
       pull-requests: write
+      contents: write
     steps:
     - run: echo "🎉 The job is linting the project"
     - uses: actions/checkout@v4
