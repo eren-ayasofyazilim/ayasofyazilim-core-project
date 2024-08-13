@@ -12,38 +12,6 @@ interface LayoutProps {
     children: JSX.Element;
 }
 
-const pageHeader: Record<string, any> = {
-    merchants: {
-        title: "Satıcılar",
-        description:
-            "Satıcıları buradan oluşturabilir veya başka bir yerde güncelleyebilirsiniz.",
-        link: "company/merchants",
-    },
-    refund_points: {
-        title: "Iade Puanları",
-        description:
-            "İade puanlarını buradan oluşturabilir veya başka bir yerde güncelleyebilirsiniz.",
-        link: "company/merchants",
-    },
-    customs: {
-        title: "Temsilciler",
-        description:
-            "Temsilcileri buradan oluşturabilir veya başka bir yerde güncelleyebilirsiniz.",
-        link: "company/merchants",
-    },
-    tax_free: {
-        title: "Vergi Dönuşümleri",
-        description:
-            "Vergi dönuşümlerini buradan oluşturabilir veya başka bir yerde güncelleyebilirsiniz.",
-        link: "company/merchants",
-    },
-    tax_offices: {
-        title: "Vergi Ofisleri",
-        description:
-            "Vergi ofislerini buradan oluşturabilir veya başka bir yerde güncelleyebilirsiniz.",
-    },
-};
-
 export default function Layout({ children }: LayoutProps): JSX.Element {
     const pathname = usePathname();
     const path = pathname.split("en/app/admin/")[1];
@@ -51,13 +19,8 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
     return (
         <div>
             <PageHeader
-                description={
-                    pageHeader[path]?.description ||
-                    "Page description"
-                }
-                title={
-                    pageHeader[path]?.title || "Page title"
-                }
+                description="Tag details"
+                title="Tag"
             />
             <SectionLayout
                 defaultActiveSectionId={path}
