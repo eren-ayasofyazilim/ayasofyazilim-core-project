@@ -55,7 +55,6 @@ export default function Table({ productGroupData }: any): JSX.Element {
         <DataTable
           columnsData={columnData}
           data={productGroupData}
-          filterBy="name"
           isLoading={!isProductGroupProvided}
           rowCount={productGroupData.length}
         />

@@ -379,11 +379,8 @@ export default function Page({
       cards={[]}
       columnsData={columnsData}
       data={roles?.items}
-      detailedFilter={
-        detailedFilters[params.data]
-      }
+      detailedFilter={detailedFilters[params.data]}
       fetchRequest={getRoles}
-      filterBy={formData.filterBy}
       isLoading={isLoading}
       rowCount={roles?.totalCount || 0}
       withCards={false}

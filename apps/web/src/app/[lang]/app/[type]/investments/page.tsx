@@ -187,7 +187,6 @@ export default function Page() {
           data: columns,
         }}
         data={data}
-        filterBy="test"
         withCards
         withTable
       />
