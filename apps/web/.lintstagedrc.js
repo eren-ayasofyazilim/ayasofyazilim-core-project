@@ -5,7 +5,10 @@ const buildEslintCommand = (filenames) =>
     .map((f) => path.relative(process.cwd(), f))
     .join(" --file ")}`;
 
+const buildPrettierCommand = (filenames) =>
+  `prettier --write ${filenames.join(" ")}`;
+
 module.exports = {
-  "*.{js,jsx,ts,tsx}": [buildEslintCommand, "prettier --write ."],
+  "*.{js,jsx,ts,tsx}": [buildEslintCommand, buildPrettierCommand],
   "**/*.ts?(x)": () => "tsc -p tsconfig.json --noEmit",
 };
