@@ -1,6 +1,6 @@
-export const $schema_details = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  title: "TransactionSchema",
+import type { SchemaType } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+
+export const $schema_details: SchemaType = {
   type: "object",
   displayName: "Example Schema Display Name", // Add this line
   properties: {
@@ -10,7 +10,7 @@ export const $schema_details = {
     },
     date: {
       type: "string",
-      format: "date",
+      format: "date-time",
       description: "The date of the transaction.",
     },
     traveller: {
