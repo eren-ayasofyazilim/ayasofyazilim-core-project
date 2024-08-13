@@ -292,7 +292,7 @@ const clients: Clients = {
         page: number,
         _filter: string,
         baseCultureName = "en",
-        targetCultureName = "tr"
+        targetCultureName = "tr",
       ) => {
         const parsedFilter = JSON.parse(_filter || "{}");
         const filter = parsedFilter?.filter;

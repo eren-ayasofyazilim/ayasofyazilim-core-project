@@ -396,7 +396,7 @@ export default function Charts() {
     setListOrder(
       list.map((item, index: number) => {
         return { ...item, order: index + 1 };
-      })
+      }),
     );
   }
   function handleEditMode() {
