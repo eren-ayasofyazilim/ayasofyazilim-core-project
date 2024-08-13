@@ -103,7 +103,7 @@ export default async function Layout({
       href: getBaseLink(
         `app/${type}/dashboard/${key}/${value.default}`,
         true,
-        params.lang
+        params.lang,
       ),
       type: "admin",
       appType: "upwithcrowd",
