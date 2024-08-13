@@ -26,7 +26,7 @@ function SelectAllCheckbox<T>({
 }: SelectAllCheckboxProps<T>) {
   const rows = table.getRowModel().rows;
   const isAllSelected = rows.every((row: Row<T>) =>
-    selectedItems.has((row.original as User | Role).id),
+    selectedItems.has((row.original as User | Role).id)
   );
 
   return (
@@ -126,7 +126,6 @@ interface GenericModalProps<T> {
     accessorKey: keyof T;
     cell?: (_row: any) => JSX.Element;
   }[];
-  filterBy: string;
   title: string;
   checkboxColumnKey: keyof T;
 }
@@ -138,7 +137,6 @@ export function GenericModal<T extends { id: string }>({
   addedItems,
   fetchItems,
   columns,
-  filterBy,
   title,
   checkboxColumnKey,
 }: GenericModalProps<T>) {
@@ -151,7 +149,7 @@ export function GenericModal<T extends { id: string }>({
       const loadItems = async () => {
         const _items = await fetchItems();
         const filteredItems = _items.filter(
-          (item) => !addedItems.some((addedItem) => addedItem.id === item.id),
+          (item) => !addedItems.some((addedItem) => addedItem.id === item.id)
         );
         setItems(filteredItems);
         setSelectedItems(new Set(addedItems.map((item) => item.id)));
@@ -211,7 +209,6 @@ export function GenericModal<T extends { id: string }>({
         <DataTable
           columnsData={{ type: "Custom", data: columnsData }}
           data={items}
-          filterBy={filterBy}
           isLoading={loading}
         />
         <DialogFooter>
@@ -243,7 +240,6 @@ export const UserModal: React.FC<
       },
     ]}
     fetchItems={fetchUsers}
-    filterBy="userName"
     title="Select users"
   />
 );
@@ -264,7 +260,6 @@ export const RoleModal: React.FC<
       },
     ]}
     fetchItems={fetchRoles}
-    filterBy="name"
     title="Select roles"
   />
 );

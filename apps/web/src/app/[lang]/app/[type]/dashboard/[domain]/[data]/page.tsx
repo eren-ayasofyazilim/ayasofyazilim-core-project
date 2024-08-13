@@ -1,13 +1,13 @@
 "use client";
-import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
+import { toast } from "@/components/ui/sonner";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
-import { useEffect, useState } from "react";
 import type {
-  TableAction,
   ColumnsType,
   MenuAction,
+  TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
-import { toast } from "@/components/ui/sonner";
+import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
+import { useEffect, useState } from "react";
 import { createZodObject, getBaseLink } from "src/utils";
 import type { FormModifier, TableData } from "../../data";
 import { dataConfig } from "../../data";
@@ -80,7 +80,8 @@ export default function Page({
   const [formData, setFormData] = useState<TableData>(
     dataConfig[params.domain][params.data]
   );
-
+  const detailedFilters =
+    dataConfig[params.domain][params.data]?.detailedFilters || [];
   async function processConvertors() {
     const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
@@ -292,8 +293,8 @@ export default function Page({
       cards={[]}
       columnsData={columnsData}
       data={roles?.items}
+      detailedFilter={detailedFilters}
       fetchRequest={getRoles}
-      filterBy={formData.filterBy}
       isLoading={isLoading}
       rowCount={roles?.totalCount || 0}
       withCards={false}

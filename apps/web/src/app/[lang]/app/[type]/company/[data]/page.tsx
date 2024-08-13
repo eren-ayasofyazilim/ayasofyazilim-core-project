@@ -383,7 +383,6 @@ export default function Page({
       cards={[]}
       columnsData={columnsData}
       data={roles?.items}
-      filterBy={dataConfig[params.data].filterBy}
       isLoading={isLoading}
       withCards={false}
       withTable
