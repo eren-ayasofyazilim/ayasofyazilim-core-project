@@ -334,7 +334,6 @@ const DashboardJson = {
             ],
           }}
           data={top5Chains}
-          filterBy="result"
         />
       ),
       className: "",
@@ -383,7 +382,6 @@ const DashboardJson = {
             ],
           }}
           data={top5Stores}
-          filterBy="result"
         />
       ),
       className: "",
@@ -398,7 +396,7 @@ export default function Charts() {
     setListOrder(
       list.map((item, index: number) => {
         return { ...item, order: index + 1 };
-      }),
+      })
     );
   }
   function handleEditMode() {
