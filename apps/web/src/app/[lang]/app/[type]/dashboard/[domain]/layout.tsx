@@ -36,7 +36,7 @@ export default function Layout({ children, params }: LayoutProps) {
           true,
           params.lang,
           true,
-          params.type
+          params.type,
         ),
       }));
     setNavbarItems(tempNavbarItems);

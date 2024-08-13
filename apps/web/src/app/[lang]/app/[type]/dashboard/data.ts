@@ -231,7 +231,7 @@ export const dataConfig: Record<string, any> = {
           cultureName: {
             data: async () => {
               return fetch(getBaseLink("api/admin/culture")).then((data) =>
-                data.json()
+                data.json(),
               );
             },
             covertTo: "displayName",
@@ -242,7 +242,7 @@ export const dataConfig: Record<string, any> = {
           uiCultureName: {
             data: async () => {
               return fetch(getBaseLink("api/admin/culture")).then((data) =>
-                data.json()
+                data.json(),
               );
             },
             covertTo: "displayName",
@@ -272,7 +272,7 @@ export const dataConfig: Record<string, any> = {
                   body: JSON.stringify({ id: row.id }),
                 },
                 getRoles,
-                "Default Language Set Successfully"
+                "Default Language Set Successfully",
               );
             },
           },
@@ -333,7 +333,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json()
+                data.json(),
               );
             },
             get: "displayName",
@@ -362,7 +362,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: async () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json()
+                data.json(),
               );
             },
             covertTo: "editionName",
@@ -388,7 +388,7 @@ export const dataConfig: Record<string, any> = {
           editionId: {
             data: async () => {
               return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json()
+                data.json(),
               );
             },
             covertTo: "editionName",

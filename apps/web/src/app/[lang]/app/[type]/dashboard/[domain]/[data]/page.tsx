@@ -17,7 +17,7 @@ async function controlledFetch(
   options: RequestInit,
   onSuccess: (_data?: any) => void,
   successMessage = "Successful",
-  showToast = true
+  showToast = true,
 ) {
   try {
     const getData = await fetch(url, options);
@@ -39,7 +39,7 @@ function convertEnumField(
   enumArray: {
     data: string[];
     type: "enum";
-  }
+  },
 ): string | number {
   const data = enumArray.data;
   if (typeof value === "number") {
@@ -78,7 +78,7 @@ export default function Page({
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formData, setFormData] = useState<TableData>(
-    dataConfig[params.domain][params.data]
+    dataConfig[params.domain][params.data],
   );
   const detailedFilters =
     dataConfig[params.domain][params.data]?.detailedFilters || [];
@@ -150,7 +150,7 @@ export default function Page({
       } as RequestInit,
       onData,
       "",
-      false
+      false,
     );
   }
 
@@ -165,7 +165,7 @@ export default function Page({
           formSchema: createZodObject(
             createFormSchema.schema,
             createFormSchema.formPositions || [],
-            createFormSchema.convertors || {}
+            createFormSchema.convertors || {},
           ),
           dependencies: createFormSchema.dependencies,
           fieldConfig: { withoutBorder: true },
@@ -179,7 +179,7 @@ export default function Page({
               body: JSON.stringify(transformedData),
             },
             getRoles,
-            "Added Successfully"
+            "Added Successfully",
           );
         },
         type: "Dialog",
@@ -202,7 +202,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {}
+      schema.convertors || {},
     );
     if (!schema.convertors) return newSchema.parse(data);
     const transformedSchema = newSchema.transform((val) => {
@@ -233,7 +233,7 @@ export default function Page({
         }),
       },
       getRoles,
-      "Updated Successfully"
+      "Updated Successfully",
     );
   };
 
@@ -245,7 +245,7 @@ export default function Page({
         body: JSON.stringify(row.id),
       },
       getRoles,
-      "Deleted Successfully"
+      "Deleted Successfully",
     );
   };
 
@@ -253,7 +253,7 @@ export default function Page({
     const newSchema = createZodObject(
       schema.schema,
       schema.formPositions || [],
-      schema.convertors || {}
+      schema.convertors || {},
     );
     return newSchema;
   }
