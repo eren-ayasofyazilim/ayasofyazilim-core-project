@@ -8,6 +8,8 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import { z } from "zod";
 import { createZodObject, getBaseLink } from "src/utils";
 import type { FormModifier, TableData } from "../../data";
 import { dataConfig } from "../../data";
@@ -168,7 +170,11 @@ export default function Page({
             createFormSchema.convertors || {},
           ),
           dependencies: createFormSchema.dependencies,
-          fieldConfig: { withoutBorder: true },
+          fieldConfig: {
+            all: {
+              withoutBorder: true,
+            },
+          },
         },
         callback: (e) => {
           const transformedData = parseFormValues(createFormSchema, e);
@@ -258,14 +264,21 @@ export default function Page({
     return newSchema;
   }
   const editFormSchema = formData.editFormSchema;
-  let editFormSchemaZod, autoformEditArgs;
+  let editFormSchemaZod,
+    autoformEditArgs: AutoFormProps = {
+      formSchema: z.object({}),
+    };
   if (editFormSchema) {
     editFormSchemaZod = convertZod(editFormSchema);
     autoformEditArgs = {
       formSchema: editFormSchemaZod,
       dependencies: formData.editFormSchema?.dependencies,
-      convertor: formData.tableSchema.convertors,
-      fieldConfig: { withoutBorder: true },
+      // convertor: formData.tableSchema.convertors,
+      fieldConfig: {
+        all: {
+          withoutBorder: true,
+        },
+      },
     };
   }
   let actionList: MenuAction[] = [];

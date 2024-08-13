@@ -247,7 +247,11 @@ const App: React.FC = () => {
             createFormSchema.schema,
             createFormSchema.formPositions || [],
           ),
-          fieldConfig: { withoutBorder: true },
+          fieldConfig: {
+            all: {
+              withoutBorder: true,
+            },
+          },
         },
         callback: (e, _triggerData) => {
           let tableData: { id: string };
@@ -312,7 +316,9 @@ const App: React.FC = () => {
         formSchema: z.object({
           targetUnit: DynamicEnum.default(placeholder),
         }),
-        fieldConfig: { withoutBorder: true },
+        fieldConfig: {
+          all: { withoutBorder: true },
+        },
       },
       callback: (e, _triggerData) => {
         const _selectedUnit = unitOptions.find(

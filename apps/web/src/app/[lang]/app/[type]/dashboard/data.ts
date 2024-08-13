@@ -33,6 +33,7 @@ import {
   $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
 } from "@ayasofyazilim/saas/SaasService";
 import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
 
@@ -42,12 +43,7 @@ export interface FormModifier {
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-  dependencies?: {
-    sourceField: string;
-    type: DependencyType;
-    targetField: string;
-    when: (_value: any) => boolean;
-  }[];
+  dependencies?: AutoFormProps["dependencies"];
 }
 
 export interface TableData {
