@@ -356,7 +356,9 @@ function Rebate() {
                 }}
                 data={feesData}
                 editable
-                onDataUpdate={() => { setFeesData(initialFeesData); }}
+                onDataUpdate={() => {
+                  setFeesData(initialFeesData);
+                }}
                 showView={false}
               />
             </div>
@@ -376,7 +378,9 @@ function Rebate() {
                 }}
                 data={setupData}
                 editable
-                onDataUpdate={() => { setSetupData(initialSetupData); }}
+                onDataUpdate={() => {
+                  setSetupData(initialSetupData);
+                }}
                 showView={false}
               />
             </div>

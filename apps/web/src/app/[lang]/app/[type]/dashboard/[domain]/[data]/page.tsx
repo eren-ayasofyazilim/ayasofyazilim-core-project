@@ -6,6 +6,7 @@ import type {
   TableAction,
   ColumnsType,
   MenuAction,
+  ColumnFilter,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -68,6 +69,92 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
     return returnValue[ConvertorValue.post];
   }
 }
+
+const detailedFilters: Record<string, ColumnFilter[]> = {
+  applications: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  scopes: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  languages: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  languageTexts: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  edition: [],
+  tenant: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  role: [],
+  user: [{ name: "filter", displayName: "Search", type: "string", value: "" }],
+  claimType: [
+    { name: "filter", displayName: "Search", type: "string", value: "" },
+  ],
+  securityLogs: [
+    { name: "startTime", displayName: "Start Time", type: "date", value: "" },
+    { name: "endTime", displayName: "End Time", type: "date", value: "" },
+    { name: "userName", displayName: "User Name", type: "string", value: "" },
+    {
+      name: "applicationName",
+      displayName: "Application Name",
+      type: "string",
+      value: "",
+    },
+    { name: "clientId", displayName: "Client Id", type: "string", value: "" },
+    { name: "identity", displayName: "Identity", type: "string", value: "" },
+    {
+      name: "correlationId",
+      displayName: "Correlation Id",
+      type: "string",
+      value: "",
+    },
+  ],
+  auditLogs: [
+    { name: "startTime", displayName: "Start Time", type: "date", value: "" },
+    { name: "endTime", displayName: "End Time", type: "date", value: "" },
+    { name: "userName", displayName: "User Name", type: "string", value: "" },
+    { name: "Url", displayName: "Url", type: "string", value: "" },
+    {
+      name: "applicationName",
+      displayName: "Application Name",
+      type: "string",
+      value: "",
+    },
+    {
+      name: "clientIpAddress",
+      displayName: "Client Ip Address",
+      type: "string",
+      value: "",
+    },
+    {
+      name: "httpMethod",
+      displayName: "Http Method",
+      type: "string",
+      value: "",
+    },
+    {
+      name: "minExecutionDuration",
+      displayName: "Min Execution Duration",
+      type: "number",
+      value: "",
+    },
+    {
+      name: "maxExecutionDuration",
+      displayName: "Max Execution Duration",
+      type: "number",
+      value: "",
+    },
+    {
+      name: "correlationId",
+      displayName: "Correlation Id",
+      type: "string",
+      value: "",
+    },
+  ],
+  organization: [],
+};
 
 export default function Page({
   params,
@@ -292,6 +379,9 @@ export default function Page({
       cards={[]}
       columnsData={columnsData}
       data={roles?.items}
+      detailedFilter={
+        detailedFilters[params.data]
+      }
       fetchRequest={getRoles}
       filterBy={formData.filterBy}
       isLoading={isLoading}
