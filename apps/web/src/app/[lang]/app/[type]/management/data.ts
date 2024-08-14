@@ -9,28 +9,6 @@ import {
   $UniRefund_SettingService_Vats_UpdateVatDto,
   $UniRefund_SettingService_Vats_VatDto,
 } from "@ayasofyazilim/saas/SettingService";
-import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-
-export interface FormModifier {
-  actionList?: (controlledFetch: unknown, getRoles: unknown) => MenuAction[];
-  formPositions?: string[];
-  excludeList?: string[];
-  schema: any;
-  convertors?: Record<string, any>;
-  dependencies?: {
-    sourceField: string;
-    targetField: string;
-    when: (_value: any) => boolean;
-  }[];
-}
-
-export interface TableData {
-  createFormSchema?: FormModifier;
-  editFormSchema?: FormModifier;
-  tableSchema: FormModifier;
-  filterBy: string;
-  title?: string;
-}
 
 export const dataConfigOfManagement: Record<string, any> = {
   setting: {
