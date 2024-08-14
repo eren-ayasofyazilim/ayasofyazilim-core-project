@@ -400,7 +400,9 @@ export async function PUT(
     const roles = await client.put({
       id: requestBody.id,
       requestBody:
-        requestBody.requestBody === undefined ? "" : requestBody.requestBody,
+        requestBody.requestBody === undefined
+          ? ""
+          : JSON.parse(requestBody.requestBody),
     });
     return new Response(JSON.stringify(roles));
   } catch (error: unknown) {
