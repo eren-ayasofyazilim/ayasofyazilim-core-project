@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 "use client";
 import { toast } from "@/components/ui/sonner";
 import CustomButton from "@repo/ayasofyazilim-ui/molecules/button";
