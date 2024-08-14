@@ -3,25 +3,14 @@ import type {
   Volo_Abp_Identity_IdentityRoleCreateDto,
   Volo_Abp_Identity_IdentityRoleUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
-import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import type { NextRequest } from "next/server";
 import {
   getAdministrationServiceClient,
   getIdentityServiceClient,
   getSaasServiceClient,
 } from "src/lib";
-
-type Clients = Record<string, any>;
-
-const errorResponse = (message: string, status = 400) =>
-  new Response(JSON.stringify({ message }), { status });
-
-function isApiError(error: unknown): error is ApiError {
-  if ((error as ApiError).name === "ApiError") {
-    return true;
-  }
-  return error instanceof ApiError;
-}
+import type { Clients } from "../../util";
+import { errorResponse, isApiError } from "../../util";
 
 const clients: Clients = {
   role: async () => {

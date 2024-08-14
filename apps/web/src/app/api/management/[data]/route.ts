@@ -1,16 +1,8 @@
 import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
-import { ApiError } from "@ayasofyazilim/saas/IdentityService";
 import type { NextRequest } from "next/server";
 import { getSettingServiceClient } from "src/lib";
-
-type Clients = Record<string, any>;
-
-const errorResponse = (message: string, status = 400) =>
-  new Response(JSON.stringify({ message }), { status });
-
-function isApiError(error: unknown): error is ApiError {
-  return error instanceof ApiError;
-}
+import type { Clients } from "../../util";
+import { errorResponse, isApiError } from "../../util";
 
 const clients: Clients = {
   vats: async () => {
