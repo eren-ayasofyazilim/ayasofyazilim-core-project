@@ -295,6 +295,8 @@ export default function Page({
       onEdit: (data, row) => {
         onEdit(data, row, editFormSchema);
       },
+      dialogTitle: `Edit ${formData.title?.toLowerCase()}`,
+      dialogDescription: `Edit selected ${formData.title?.toLowerCase()}`,
       onDelete,
       actionList,
     },
