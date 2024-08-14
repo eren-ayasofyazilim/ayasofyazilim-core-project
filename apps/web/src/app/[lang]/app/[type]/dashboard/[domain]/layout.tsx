@@ -28,17 +28,19 @@ export default function Layout({ children, params }: LayoutProps) {
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
       .filter(([e]) => e !== "displayName" && e !== "default")
-      .map(([key]: [any, any]) => ({
-        id: `${params.domain}/${key}`,
-        name: languageData[`Identity:${key}`] || key,
-        link: getBaseLink(
-          `dashboard/${params.domain}/${key}`,
-          true,
-          params.lang,
-          true,
-          params.type,
-        ),
-      }));
+      .map((item: any) => {
+        return {
+          id: `${params.domain}/${item[0]}`,
+          name: languageData[`Identity:${item[0]}`] || item[1].title || item[0],
+          link: getBaseLink(
+            `dashboard/${params.domain}/${item[0]}`,
+            true,
+            params.lang,
+            true,
+            params.type,
+          ),
+        };
+      });
     setNavbarItems(tempNavbarItems);
   }, []);
 

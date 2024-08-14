@@ -50,6 +50,7 @@ export interface TableData {
   createFormSchema?: FormModifier;
   editFormSchema?: FormModifier;
   tableSchema: FormModifier;
+  title?: string;
 }
 
 export const dataConfig: Record<string, any> = {
@@ -57,6 +58,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "open id",
     default: "applications",
     applications: {
+      title: "Application",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -191,6 +193,7 @@ export const dataConfig: Record<string, any> = {
       },
     },
     scopes: {
+      title: "Scope",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -212,6 +215,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "Admin Management",
     default: "languages",
     languages: {
+      title: "Language",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -280,6 +284,7 @@ export const dataConfig: Record<string, any> = {
       },
     },
     languageTexts: {
+      title: "Language Text",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -293,6 +298,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "Saas Management",
     default: "edition",
     edition: {
+      title: "Edition",
       detailedFilters: [],
       createFormSchema: {
         formPositions: ["displayName"],
@@ -308,6 +314,7 @@ export const dataConfig: Record<string, any> = {
       },
     },
     tenant: {
+      title: "Tenant",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -410,6 +417,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "Identity Management",
     default: "role",
     role: {
+      title: "Role",
       detailedFilters: [],
       createFormSchema: {
         formPositions: ["name", "isDefault", "isPublic"],
@@ -425,6 +433,7 @@ export const dataConfig: Record<string, any> = {
       },
     },
     user: {
+      title: "User",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -458,8 +467,8 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_Identity_IdentityUserDto,
       },
     },
-
     claimType: {
+      title: "Claim Type",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
       ],
@@ -515,6 +524,7 @@ export const dataConfig: Record<string, any> = {
       },
     },
     securityLogs: {
+      title: "Security Logs",
       detailedFilters: [
         {
           name: "startTime",
@@ -565,12 +575,15 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_Identity_IdentitySecurityLogDto,
       },
     },
-    organization: {},
+    organization: {
+      title: "Organization",
+    },
   },
   auditLogs: {
     displayName: "Audit Logs",
     default: "auditLogs",
     auditLogs: {
+      title: "Audit Logs",
       detailedFilters: [
         {
           name: "startTime",
@@ -647,6 +660,7 @@ export const dataConfig: Record<string, any> = {
     displayName: "TextTemplates",
     default: "textTemplates",
     textTemplates: {
+      title: "Text Templates",
       tableSchema: {
         excludeList: ["name", "additionalProperties"],
         schema:
