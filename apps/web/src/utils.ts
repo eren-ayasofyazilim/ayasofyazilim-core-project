@@ -217,7 +217,7 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
         zodType = z.enum(stringEnums as [string, ...string[]]);
         break;
       }
-      zodType = z.number().int();
+      zodType = z.coerce.number();
       break;
     case "object":
       zodType = z.object({});
