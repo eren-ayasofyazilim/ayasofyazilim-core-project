@@ -7,6 +7,7 @@ import {
   Building2,
   DollarSign,
   FileBadge,
+  Folder,
   Group,
   Home,
   LanguagesIcon,
@@ -25,6 +26,7 @@ import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
+import { dataConfigOfManagement } from "./management/data";
 
 type NavigationItmes = NavigationItem & {
   type: string | string[];
@@ -59,6 +61,8 @@ export default async function Layout({
     "auditLogs",
     "textTemplates",
   ];
+  const arrayOfManagement = ["setting"];
+
   const userNavigation = {
     username: user?.userName ?? "undefined",
     initials: user?.name?.substring(0, 2).toUpperCase(),
@@ -110,6 +114,24 @@ export default async function Layout({
       icon: <Presentation className="text-slate-500 w-4" />,
     }));
 
+  const managements = Object.entries(dataConfigOfManagement)
+    .filter((i) => arrayOfManagement.includes(i[0]))
+    .map(([key, value]) => ({
+      key,
+      title:
+        languageData[
+          value.displayName.replaceAll(" ", "") as keyof typeof languageData
+        ] || value.displayName,
+      href: getBaseLink(
+        `app/${type}/management/${key}/${value.default}`,
+        true,
+        params.lang,
+      ),
+      type: "admin",
+      appType: " ",
+      icon: <SlidersHorizontal className="text-slate-500 w-4" />,
+    }));
+
   const navigationItems: NavigationItmes[] = [
     {
       key: "reports",
@@ -129,6 +151,16 @@ export default async function Layout({
       appType: "unirefund",
     },
     ...dashboards,
+    {
+      key: "management",
+      title: languageData.Management,
+      href: getBaseLink(`app/${type}/management`, true, params.lang),
+      icon: <Folder className="text-slate-500 w-4" />,
+      submenu: managements,
+      type: "admin",
+      appType: "unirefund",
+    },
+    ...managements,
     {
       key: "profile",
       title: languageData.Profile,

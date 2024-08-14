@@ -5,6 +5,7 @@ function getLanguageData(resources: any): Record<string, string> {
   return {
     HomePage: navigationResource?.HomePage || "Home Page", // "Ana Sayfa",
     Dashboard: navigationResource?.Dashboard || "Dashboard", // "Kontrol Paneli",
+    Management: navigationResource?.Management || "Management", // "Kontrol Paneli",
     Profile: navigationResource?.Profile || "Profile", // "Profil",
     Details: navigationResource?.Details || "Details", // "Detaylar",
     ProductGroups: navigationResource?.ProductGroups || "Product Groups",
