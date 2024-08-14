@@ -12,6 +12,7 @@ jobs:
     runs-on: self-hosted
     permissions:
       pull-requests: write
+      contents: write
     steps:
     - run: echo "🎉 The job is linting the project"
     - uses: actions/checkout@v4
@@ -28,14 +29,16 @@ jobs:
       run: | 
         npm install -g pnpm
         pnpm install
-    - name: Lint 
-      run: | 
-        cd apps/web
-        pnpm format
-        pnpm precommit
+    - name: go to apps/web
+      run: cd apps/web
+    - name: format 
+      run: pnpm format
+    - name: lint
+      run: pnpm lint:fix
+    - name: Check types
+      run: pnpm type-check
     - name: commit
       uses: EndBug/add-and-commit@v9
       with:
         default_author: github_actions
-
-            
+        push: true

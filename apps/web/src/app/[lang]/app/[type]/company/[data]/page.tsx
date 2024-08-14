@@ -6,8 +6,10 @@ import type {
   ColumnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { toast } from "@/components/ui/sonner";
-import type { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
+import type { Dependency } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { $UniRefund_MerchantService_Organizations_CreateOrganizationDto } from "@ayasofyazilim/saas/MerchantService";
+import type { z } from "zod";
+import type { SchemaType } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { createZodObject, getBaseLink } from "src/utils";
 import {
   $createCustoms,
@@ -49,12 +51,7 @@ interface FormModifier {
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
-  dependencies?: {
-    sourceField: string;
-    type: DependencyType;
-    targetField: string;
-    when: (_value: any) => boolean;
-  }[];
+  dependencies?: Dependency<z.infer<SchemaType>>[];
 }
 interface TableData {
   createFormSchema: FormModifier;
@@ -270,7 +267,6 @@ export default function Page({
       ),
       dependencies: createFormSchema.dependencies,
       fieldConfig: {
-        withoutBorder: true,
         contactInformation: {
           telephones: {
             withoutBorder: true,
@@ -367,7 +363,11 @@ export default function Page({
       autoFormArgs: {
         formSchema: editFormSchemaZod,
         dependencies: dataConfig[params.data].editFormSchema.dependencies,
-        fieldConfig: { withoutBorder: true },
+        fieldConfig: {
+          all: {
+            withoutBorder: true,
+          },
+        },
       },
       tableType: dataConfig[params.data].tableSchema.schema,
       excludeList: dataConfig[params.data].tableSchema.excludeList || [],
