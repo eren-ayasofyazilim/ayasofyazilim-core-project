@@ -10,8 +10,8 @@ import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { z } from "zod";
+import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
-import type { FormModifier, TableData } from "../../data";
 import { dataConfig } from "../../data";
 
 async function controlledFetch(

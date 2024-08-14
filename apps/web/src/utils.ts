@@ -2,6 +2,8 @@ import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocal
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
+import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { defaultResources } from "./resources";
 
 type LocalizationDto =
@@ -116,12 +118,56 @@ export interface SchemaType {
   items?: SchemaType;
 }
 
+export interface FormModifier {
+  actionList?: (controlledFetch: unknown, getRoles: unknown) => MenuAction[];
+  formPositions?: string[];
+  excludeList?: string[];
+  schema: any;
+  convertors?: Record<string, any>;
+  dependencies?: AutoFormProps["dependencies"];
+}
+
+export interface TableData {
+  createFormSchema?: FormModifier;
+  editFormSchema?: FormModifier;
+  tableSchema: FormModifier;
+  title?: string;
+}
+
 function isJsonSchema(object: any): object is JsonSchema {
   if (!object) return false;
   return "type" in object;
 }
 function isSchemaType(object: any): object is SchemaType {
   return object && "required" in object;
+}
+
+export function generateNavigationItems(
+  dataConfig: Record<string, any>,
+  arrayOfKeys: string[],
+  languageData: Record<string, string>,
+  baseType: string,
+  baseRoute: string,
+  paramsLang: string,
+  icon: JSX.Element,
+) {
+  return Object.entries(dataConfig)
+    .filter((i) => arrayOfKeys.includes(i[0]))
+    .map(([key, value]) => ({
+      key,
+      title:
+        languageData[
+          value.displayName.replaceAll(" ", "") as keyof typeof languageData
+        ] || value.displayName,
+      href: getBaseLink(
+        `app/${baseType}/${baseRoute}/${key}/${value.default}`,
+        true,
+        paramsLang,
+      ),
+      type: "admin",
+      appType: "",
+      icon,
+    }));
 }
 
 // schema: SchemaType

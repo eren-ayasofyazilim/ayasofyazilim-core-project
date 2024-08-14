@@ -24,7 +24,7 @@ import { redirect } from "next/navigation";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
-import { getBaseLink } from "src/utils";
+import { generateNavigationItems, getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
 
@@ -96,42 +96,25 @@ export default async function Layout({
     signOutFunction: signOutServer,
     languageData,
   };
-  const dashboards = Object.entries(dataConfig)
-    .filter((i) => arrayOf.includes(i[0]))
-    .map(([key, value]) => ({
-      key,
-      title:
-        languageData[
-          value.displayName.replaceAll(" ", "") as keyof typeof languageData
-        ] || value.displayName,
-      href: getBaseLink(
-        `app/${type}/dashboard/${key}/${value.default}`,
-        true,
-        params.lang,
-      ),
-      type: "admin",
-      appType: "upwithcrowd",
-      icon: <Presentation className="text-slate-500 w-4" />,
-    }));
+  const dashboards = generateNavigationItems(
+    dataConfig,
+    arrayOf,
+    languageData,
+    type,
+    "dashboard",
+    params.lang,
+    <Presentation className="text-slate-500 w-4" />,
+  );
 
-  const managements = Object.entries(dataConfigOfManagement)
-    .filter((i) => arrayOfManagement.includes(i[0]))
-    .map(([key, value]) => ({
-      key,
-      title:
-        languageData[
-          value.displayName.replaceAll(" ", "") as keyof typeof languageData
-        ] || value.displayName,
-      href: getBaseLink(
-        `app/${type}/management/${key}/${value.default}`,
-        true,
-        params.lang,
-      ),
-      type: "admin",
-      appType: " ",
-      icon: <SlidersHorizontal className="text-slate-500 w-4" />,
-    }));
-
+  const managements = generateNavigationItems(
+    dataConfigOfManagement,
+    arrayOfManagement,
+    languageData,
+    type,
+    "management",
+    params.lang,
+    <SlidersHorizontal className="text-slate-500 w-4" />,
+  );
   const navigationItems: NavigationItmes[] = [
     {
       key: "reports",
