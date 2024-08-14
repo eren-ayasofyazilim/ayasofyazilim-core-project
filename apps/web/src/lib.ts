@@ -52,9 +52,13 @@ export async function getSaasServiceClient() {
   });
 }
 
-export function getSettingServiceClient(): SettingServiceClient {
+export async function getSettingServiceClient(): Promise<SettingServiceClient> {
+  const session = await auth();
+  const token = session?.access_token;
   return new SettingServiceClient({
     BASE: process.env.BASE_URL,
+    TOKEN: token,
+    HEADERS,
   });
 }
 

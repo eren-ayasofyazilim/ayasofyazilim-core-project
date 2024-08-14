@@ -12,7 +12,7 @@ import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { z } from "zod";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
-import { dataConfig } from "../../data";
+import { dataConfigOfManagement } from "../../data";
 
 async function controlledFetch(
   url: string,
@@ -76,14 +76,14 @@ export default function Page({
 }: {
   params: { data: string; domain: string };
 }): JSX.Element {
-  const fetchLink = getBaseLink(`/api/admin/${params.data}`);
+  const fetchLink = getBaseLink(`/api/management/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formData, setFormData] = useState<TableData>(
-    dataConfig[params.domain][params.data],
+    dataConfigOfManagement[params.domain][params.data],
   );
   const detailedFilters =
-    dataConfig[params.domain][params.data]?.detailedFilters || [];
+    dataConfigOfManagement[params.domain][params.data]?.detailedFilters || [];
   async function processConvertors() {
     const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
@@ -169,7 +169,6 @@ export default function Page({
             createFormSchema.formPositions || [],
             createFormSchema.convertors || {},
           ),
-          dependencies: createFormSchema.dependencies,
           fieldConfig: {
             all: {
               withoutBorder: true,
@@ -272,7 +271,6 @@ export default function Page({
     editFormSchemaZod = convertZod(editFormSchema);
     autoformEditArgs = {
       formSchema: editFormSchemaZod,
-      dependencies: formData.editFormSchema?.dependencies,
       // convertor: formData.tableSchema.convertors,
       fieldConfig: {
         all: {

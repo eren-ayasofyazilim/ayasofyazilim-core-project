@@ -32,26 +32,8 @@ import {
   $Volo_Saas_Host_Dtos_SaasTenantDto,
   $Volo_Saas_Host_Dtos_SaasTenantUpdateDto,
 } from "@ayasofyazilim/saas/SaasService";
-import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { DependencyType } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/types";
 import { getBaseLink } from "src/utils";
-
-export interface FormModifier {
-  actionList?: (controlledFetch: unknown, getRoles: unknown) => MenuAction[];
-  formPositions?: string[];
-  excludeList?: string[];
-  schema: any;
-  convertors?: Record<string, any>;
-  dependencies?: AutoFormProps["dependencies"];
-}
-
-export interface TableData {
-  createFormSchema?: FormModifier;
-  editFormSchema?: FormModifier;
-  tableSchema: FormModifier;
-  title?: string;
-}
 
 export const dataConfig: Record<string, any> = {
   openiddict: {
