@@ -20,6 +20,8 @@ export default function Page(): JSX.Element {
       onEdit: () => {
         // console.log(data);
       },
+      dialogDescription: "",
+      dialogTitle: "",
       autoFormArgs: {
         formSchema: createZodObject(
           $schema_details,
