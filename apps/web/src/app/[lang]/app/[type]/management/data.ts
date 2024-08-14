@@ -80,13 +80,13 @@ export const dataConfigOfManagement: Record<string, any> = {
       },
       editFormSchema: {
         formPositions: [
+          "name",
           "articleCode",
           "unitCode",
           "companyType",
+          "nonFood",
           "active",
           "food",
-          "nonFood",
-          "name",
         ],
         schema: $UniRefund_SettingService_ProductGroups_UpdateProductGroupDto,
         dependencies: [],
