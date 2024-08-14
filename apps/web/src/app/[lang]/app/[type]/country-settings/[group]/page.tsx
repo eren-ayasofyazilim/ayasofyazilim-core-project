@@ -16,8 +16,9 @@ export default async function Page({
 
   let countrySettings;
   try {
-    countrySettings =
-      await getSettingServiceClient().countrySetting.getApiSettingServiceCountrySettings();
+    countrySettings = await (
+      await getSettingServiceClient()
+    ).countrySetting.getApiSettingServiceCountrySettings();
   } catch (e) {
     countrySettings = mockSettingsResponse;
   }
