@@ -2,6 +2,7 @@
 
 import { SettingsView } from "@repo/ui/settings-view";
 import { Card } from "@/components/ui/card";
+import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
 import { mockSettingsResponse } from "./mock-settings-response";
@@ -14,11 +15,11 @@ export default async function Page({
   const group = params.group;
   const lang = params.lang;
 
-  let countrySettings;
+  let countrySettings: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   try {
-    countrySettings = await (
-      await getSettingServiceClient()
-    ).countrySetting.getApiSettingServiceCountrySettings();
+    const client = await getSettingServiceClient();
+    countrySettings =
+      (await client.countrySetting.getApiSettingServiceCountrySettings()) as UniRefund_SettingService_CountrySettings_CountrySettingDto;
   } catch (e) {
     countrySettings = mockSettingsResponse;
   }
