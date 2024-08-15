@@ -10,6 +10,7 @@ import {
   $UniRefund_SettingService_Vats_UpdateVatDto,
   $UniRefund_SettingService_Vats_VatDto,
 } from "@ayasofyazilim/saas/SettingService";
+import { getBaseLink } from "src/utils";
 
 export const dataConfigOfManagement: Record<string, any> = {
   setting: {
@@ -20,12 +21,34 @@ export const dataConfigOfManagement: Record<string, any> = {
       createFormSchema: {
         formPositions: ["percent", "minimumTotalAmount", "countryId", "active"],
         schema: $UniRefund_SettingService_Vats_CreateVatDto,
-        dependencies: [],
+        convertors: {
+          countryId: {
+            data: () => {
+              return fetch(getBaseLink("api/management/country")).then((data) =>
+                data.json(),
+              );
+            },
+            get: "name",
+            post: "id",
+            type: "async",
+          },
+        },
       },
       editFormSchema: {
         formPositions: ["percent", "minimumTotalAmount", "countryId", "active"],
         schema: $UniRefund_SettingService_Vats_UpdateVatDto,
-        dependencies: [],
+        convertors: {
+          countryId: {
+            data: () => {
+              return fetch(getBaseLink("api/management/country")).then((data) =>
+                data.json(),
+              );
+            },
+            get: "name",
+            post: "id",
+            type: "async",
+          },
+        },
       },
       tableSchema: {
         excludeList: [
@@ -39,7 +62,6 @@ export const dataConfigOfManagement: Record<string, any> = {
           "deletionTime",
         ],
         schema: $UniRefund_SettingService_Vats_VatDto,
-        dependencies: [],
       },
     },
     productGroups: {
@@ -55,7 +77,24 @@ export const dataConfigOfManagement: Record<string, any> = {
           "food",
         ],
         schema: $UniRefund_SettingService_ProductGroups_CreateProductGroupDto,
-        dependencies: [],
+        convertors: {
+          unitCode: {
+            data: ["Qnt", "Bag", "Box"],
+            type: "enum",
+          },
+          companyType: {
+            data: [
+              "Government",
+              "Tax free",
+              "Customs",
+              "Refund point",
+              "Merchant",
+              "Exchange",
+              "Tour guide",
+            ],
+            type: "enum",
+          },
+        },
       },
       editFormSchema: {
         formPositions: [
@@ -68,7 +107,24 @@ export const dataConfigOfManagement: Record<string, any> = {
           "food",
         ],
         schema: $UniRefund_SettingService_ProductGroups_UpdateProductGroupDto,
-        dependencies: [],
+        convertors: {
+          unitCode: {
+            data: ["Qnt", "Bag", "Box"],
+            type: "enum",
+          },
+          companyType: {
+            data: [
+              "Government",
+              "Tax free",
+              "Customs",
+              "Refund point",
+              "Merchant",
+              "Exchange",
+              "Tour guide",
+            ],
+            type: "enum",
+          },
+        },
       },
       tableSchema: {
         excludeList: [
@@ -80,25 +136,63 @@ export const dataConfigOfManagement: Record<string, any> = {
           "isDeleted",
           "deleterId",
           "deletionTime",
+          "language",
         ],
         schema: $UniRefund_SettingService_ProductGroups_ProductGroupDto,
-        dependencies: [],
+        convertors: {
+          unitCode: {
+            data: ["Qnt", "Bag", "Box"],
+            type: "enum",
+          },
+          companyType: {
+            data: [
+              "Government",
+              "Tax free",
+              "Customs",
+              "Refund point",
+              "Merchant",
+              "Exchange",
+              "Tour guide",
+            ],
+            type: "enum",
+          },
+        },
       },
     },
     productGroupsVats: {
       title: "Product Group VAT",
       filterBy: "",
       createFormSchema: {
-        formPositions: ["productGroup", "countryId", "vat", "active"],
+        formPositions: ["productGroupId", "countryId", "vatId", "active"],
         schema:
           $UniRefund_SettingService_ProductGroupVats_CreateProductGroupVatDto,
-        dependencies: [],
+        convertors: {
+          // productGroupId: {
+          //   data: () => {
+          //     return fetch(getBaseLink("api/management/productGroups")).then(
+          //       (data) => data.json(),
+          //     );
+          //   },
+          //   get: "name",
+          //   post: "id",
+          //   type: "async",
+          // },
+          // vatId: {
+          //   data: () => {
+          //     return fetch(getBaseLink("api/management/vats")).then((data) =>
+          //       data.json(),
+          //     );
+          //   },
+          //   get: "percent",
+          //   post: "id",
+          //   type: "async",
+          // },
+        },
       },
       editFormSchema: {
-        formPositions: ["productGroup", "countryId", "vat", "active"],
+        formPositions: ["productGroupId", "countryId", "vatId", "active"],
         schema:
           $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
-        dependencies: [],
       },
       tableSchema: {
         excludeList: [
@@ -112,7 +206,6 @@ export const dataConfigOfManagement: Record<string, any> = {
           "deletionTime",
         ],
         schema: $UniRefund_SettingService_ProductGroupVats_ProductGroupVatDto,
-        dependencies: [],
       },
     },
   },
