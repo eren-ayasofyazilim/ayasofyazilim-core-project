@@ -11,6 +11,7 @@ import {
   $UniRefund_SettingService_Vats_VatDto,
 } from "@ayasofyazilim/saas/SettingService";
 import { getBaseLink } from "src/utils";
+
 const settingsCovnertor = {
   unitCode: {
     data: ["Qnt", "Bag", "Box"],
@@ -28,7 +29,7 @@ const settingsCovnertor = {
     ],
     type: "enum",
   },
-}
+};
 
 export const dataConfigOfManagement: Record<string, any> = {
   setting: {
