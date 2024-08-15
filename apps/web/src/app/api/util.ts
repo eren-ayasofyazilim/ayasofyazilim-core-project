@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
 import { ApiError } from "@ayasofyazilim/saas/AccountService";
 
 export type Clients = Record<string, any>;

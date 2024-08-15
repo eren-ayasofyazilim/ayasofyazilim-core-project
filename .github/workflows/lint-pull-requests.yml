@@ -3,6 +3,10 @@ run-name: Linting the Pull request 🚀
 on:
   pull_request_target:
     branches: [ main ]
+    types:
+      - opened
+      - synchronize
+      - edited
 permissions: 
   pull-requests: write
   contents: write

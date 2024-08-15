@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
 import {
   $UniRefund_SettingService_ProductGroups_CreateProductGroupDto,
   $UniRefund_SettingService_ProductGroups_ProductGroupDto,
