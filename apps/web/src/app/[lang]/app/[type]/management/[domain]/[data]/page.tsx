@@ -162,8 +162,8 @@ export default function Page({
   if (createFormSchema) {
     action = [
       {
-        cta: `New ${params.data}`,
-        description: `Create a new ${params.data}`,
+        cta: `New ${formData.title}`,
+        description: `Create a new ${formData.title}`,
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
