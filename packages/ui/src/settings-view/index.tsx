@@ -156,7 +156,7 @@ type bondType = {
   when: (val: any) => boolean;
 };
 
-function createSafeRegexp(val: any, pattern: string | undefined | null) {
+function createSafeRegex(val: any, pattern: string | undefined | null) {
   let x = val;
   try {
     x = new RegExp(pattern || "").test(val);
@@ -176,7 +176,7 @@ function createBonds(sett: createBondType): bondType[] {
       targetField: sett.targetField,
       type: bond.type as AutoFormTypes.DependencyType,
       hasParentField: sett.parentField ? true : false,
-      when: (val: any) => createSafeRegexp(val, bond.pattern),
+      when: (val: any) => createSafeRegex(val, bond.pattern),
     };
     return createdBond;
   });
@@ -270,18 +270,19 @@ function createSchema(
       ) || []),
     );
   } else if (item) {
-    if (item.isApplicable && item.subItems && item.subItems.length > 0) {
+    if (item.subItems && item.subItems.length > 0) {
       //appliable ve child var
     }
-    if (item.subItems && item.subItems.length > 0)
+    if (item.subItems && item.subItems.length > 0) {
       properties = Object.assign(
         {},
-        ...item.subItems.map(
+        ...(item.subItems.map(
           (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
             return createProperties(subitem);
           },
-        ),
+        ) || []),
       );
+    }
   }
   const key = (group ? group.key : item ? item.key : "") || "";
   return {
@@ -359,15 +360,15 @@ export function SettingsView({
   list: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   resources?: any;
 }) {
+  function initialActiveGroup() {
+    const activeGroupByPath = list.groups?.find((item) => item.key === path);
+    if (activeGroupByPath) return activeGroupByPath;
+    return list?.groups?.[0];
+  }
+
   const [activeGroup, setActiveGroup] = useState<
     UniRefund_SettingService_Groups_GroupDto | undefined
-  >(() => {
-    const test = list?.groups?.find(
-      (item: UniRefund_SettingService_Items_GroupItemDto) => item.key === path,
-    );
-    if (test) return test;
-    return list?.groups?.[0];
-  });
+  >(initialActiveGroup);
 
   const [content, setContent] = useState<React.ReactElement>(() => {
     const group = activeGroup || list?.groups?.[0] || {};
