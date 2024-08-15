@@ -276,11 +276,11 @@ function createSchema(
     if (item.subItems && item.subItems.length > 0) {
       properties = Object.assign(
         {},
-        ...item.subItems.map(
+        ...(item.subItems.map(
           (subitem: UniRefund_SettingService_Items_GroupItemDto) => {
             return createProperties(subitem);
           },
-        ),
+        ) || []),
       );
     }
   }
