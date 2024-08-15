@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
+/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
 import {
   $UniRefund_SettingService_ProductGroups_CreateProductGroupDto,
   $UniRefund_SettingService_ProductGroups_ProductGroupDto,
