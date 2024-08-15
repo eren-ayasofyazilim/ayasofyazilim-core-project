@@ -273,7 +273,7 @@ function createSchema(
     if (item.subItems && item.subItems.length > 0) {
       //appliable ve child var
     }
-    if (item.subItems && item.subItems.length > 0)
+    if (item.subItems && item.subItems.length > 0) {
       properties = Object.assign(
         {},
         ...item.subItems.map(
@@ -282,6 +282,7 @@ function createSchema(
           },
         ),
       );
+    }
   }
   const key = (group ? group.key : item ? item.key : "") || "";
   return {
