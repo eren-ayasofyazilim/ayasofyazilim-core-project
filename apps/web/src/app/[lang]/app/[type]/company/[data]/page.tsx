@@ -375,8 +375,6 @@ export default function Page({
       onEdit: (data, row) => {
         onEdit(data, row, editFormSchema);
       },
-      dialogDescription: "",
-      dialogTitle: "",
       onDelete,
     },
   };
