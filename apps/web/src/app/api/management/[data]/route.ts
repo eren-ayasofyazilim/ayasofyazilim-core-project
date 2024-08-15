@@ -24,7 +24,7 @@ const clients: Clients = {
     const client = await getSettingServiceClient();
     const productGroups = client.productGroup;
     return {
-      get: () => productGroups.getApiSettingServiceProductGroup({}),
+      get: () => productGroups.getApiSettingServiceProductGroup(),
       post: async (requestBody: any) =>
         productGroups.postApiSettingServiceProductGroup({ requestBody }),
       put: async (data: any) => {
@@ -40,7 +40,7 @@ const clients: Clients = {
     const client = await getSettingServiceClient();
     const productGroupVats = client.productGroupVat;
     return {
-      get: () => productGroupVats.getApiSettingServiceProductGroupVat({}),
+      get: () => productGroupVats.getApiSettingServiceProductGroupVat(),
       post: async (requestBody: any) =>
         productGroupVats.postApiSettingServiceProductGroupVat({ requestBody }),
       put: async (data: any) => {
@@ -49,6 +49,29 @@ const clients: Clients = {
       },
       delete: async (id: string) =>
         productGroupVats.deleteApiSettingServiceProductGroupVat({ id }),
+    };
+  },
+
+  country: () => {
+    return {
+      get: () => [
+        {
+          id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          name: "Turkey",
+        },
+        {
+          id: "1fa85f64-5717-4562-b3fc-2c963f66afa6",
+          name: "Germany",
+        },
+        {
+          id: "2fa85f64-5717-4562-b3fc-2c963f66afa6",
+          name: "USA",
+        },
+        {
+          id: "4fa85f64-5717-4562-b3fc-2c963f66afa6",
+          name: "France",
+        },
+      ],
     };
   },
 };
