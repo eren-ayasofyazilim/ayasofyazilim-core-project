@@ -198,8 +198,8 @@ importers:
         specifier: ^0.30.0
         version: 0.30.0
       '@ayasofyazilim/saas':
-        specifier: ^0.0.28
-        version: 0.0.28(openapi-types@12.1.3)
+        specifier: ^0.0.29
+        version: 0.0.29(openapi-types@12.1.3)
       '@formatjs/intl-localematcher':
         specifier: ^0.5.4
         version: 0.5.4
@@ -416,7 +416,7 @@ importers:
         version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
       '@tiptap-pro/extension-drag-handle':
         specifier: 2.8.1
-        version: 2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.3)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
+        version: 2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.4)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
       '@tiptap-pro/extension-drag-handle-react':
         specifier: 2.8.1
         version: 2.8.1(@tiptap-pro/extension-drag-handle@2.8.1)(@tiptap/pm@2.3.0)(@tiptap/react@2.3.0)(react-dom@18.2.0)(react@18.2.0)
@@ -857,8 +857,8 @@ importers:
         version: 4.0.1
     devDependencies:
       '@ayasofyazilim/saas':
-        specifier: ^0.0.28
-        version: 0.0.28(openapi-types@12.1.3)
+        specifier: ^0.0.29
+        version: 0.0.29(openapi-types@12.1.3)
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../config-eslint
@@ -1033,8 +1033,8 @@ packages:
       typescript: 5.4.5
     dev: false
 
-  /@ayasofyazilim/saas@0.0.28(openapi-types@12.1.3):
-    resolution: {integrity: sha512-bfRZkGhxXqS3Fnp2B0Kd1gvDi57DFTGCB2udO6fB4BKPaFBv0lP2jOY3kxlHFXKNeLJd+4ps/k7gHWXY3Pwr5Q==}
+  /@ayasofyazilim/saas@0.0.29(openapi-types@12.1.3):
+    resolution: {integrity: sha512-7ImBE1xrle0RGOy3lm6kG/1hwJXyvtnV71KsnztIqRnnrtmZh/jcvrcpSoUNb3gdqkdKnmB16wa424fEMSyXgw==}
     hasBin: true
     dependencies:
       '@apidevtools/swagger-parser': 10.1.0(openapi-types@12.1.3)
@@ -7834,14 +7834,14 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
-      '@tiptap-pro/extension-drag-handle': 2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.3)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
+      '@tiptap-pro/extension-drag-handle': 2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.4)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
       '@tiptap/pm': 2.3.0
       '@tiptap/react': 2.3.0(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@tiptap-pro/extension-drag-handle@2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.3)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12):
+  /@tiptap-pro/extension-drag-handle@2.8.1(@tiptap-pro/extension-node-range@2.10.11)(@tiptap/core@2.4.0)(@tiptap/extension-collaboration@2.6.4)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12):
     resolution: {integrity: sha512-j745s4AEjmO0JnkVc72MQwBKk9iRJxamjXqSiqSUSLtAlIZTad6XB4Gw450gVIQaN+KG6VxX0K2iKzXaPOG9Zg==}
     peerDependencies:
       '@tiptap-pro/extension-node-range': ^2.7.7
@@ -7852,7 +7852,7 @@ packages:
     dependencies:
       '@tiptap-pro/extension-node-range': 2.10.11(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)
       '@tiptap/core': 2.4.0(@tiptap/pm@2.3.0)
-      '@tiptap/extension-collaboration': 2.6.3(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
+      '@tiptap/extension-collaboration': 2.6.4(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12)
       '@tiptap/pm': 2.3.0
       tippy.js: 6.3.7
       y-prosemirror: 1.2.12(prosemirror-model@1.22.3)(prosemirror-state@1.4.3)(prosemirror-view@1.33.6)(y-protocols@1.0.6)(yjs@13.6.18)
@@ -7989,11 +7989,11 @@ packages:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.3.0)
     dev: false
 
-  /@tiptap/extension-collaboration@2.6.3(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12):
-    resolution: {integrity: sha512-NE8crFq87kneuZpAvGhZpM7fhtnn9rG6ZaMwF9GmHbVCoqaaezdBMz9xim7NYAsH77BjEpumc9tx0qCCqcqp7g==}
+  /@tiptap/extension-collaboration@2.6.4(@tiptap/core@2.4.0)(@tiptap/pm@2.3.0)(y-prosemirror@1.2.12):
+    resolution: {integrity: sha512-CTLrIgjeCiceieD23JxuEvyf6NcvA90t0Ul1kLqlFMnkpB5VZLfLG0uf5DKGnIFZvH4xYsxAUIto7YB+lRPjiw==}
     peerDependencies:
-      '@tiptap/core': ^2.6.3
-      '@tiptap/pm': ^2.6.3
+      '@tiptap/core': ^2.6.4
+      '@tiptap/pm': ^2.6.4
       y-prosemirror: ^1.2.11
     dependencies:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.3.0)
