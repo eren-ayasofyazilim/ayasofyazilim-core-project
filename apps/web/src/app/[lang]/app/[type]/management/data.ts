@@ -11,6 +11,24 @@ import {
   $UniRefund_SettingService_Vats_VatDto,
 } from "@ayasofyazilim/saas/SettingService";
 import { getBaseLink } from "src/utils";
+const settingsCovnertor = {
+  unitCode: {
+    data: ["Qnt", "Bag", "Box"],
+    type: "enum",
+  },
+  companyType: {
+    data: [
+      "Government",
+      "Tax free",
+      "Customs",
+      "Refund point",
+      "Merchant",
+      "Exchange",
+      "Tour guide",
+    ],
+    type: "enum",
+  },
+}
 
 export const dataConfigOfManagement: Record<string, any> = {
   setting: {
@@ -78,22 +96,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         ],
         schema: $UniRefund_SettingService_ProductGroups_CreateProductGroupDto,
         convertors: {
-          unitCode: {
-            data: ["Qnt", "Bag", "Box"],
-            type: "enum",
-          },
-          companyType: {
-            data: [
-              "Government",
-              "Tax free",
-              "Customs",
-              "Refund point",
-              "Merchant",
-              "Exchange",
-              "Tour guide",
-            ],
-            type: "enum",
-          },
+          ...settingsCovnertor,
         },
       },
       editFormSchema: {
@@ -107,24 +110,7 @@ export const dataConfigOfManagement: Record<string, any> = {
           "food",
         ],
         schema: $UniRefund_SettingService_ProductGroups_UpdateProductGroupDto,
-        convertors: {
-          unitCode: {
-            data: ["Qnt", "Bag", "Box"],
-            type: "enum",
-          },
-          companyType: {
-            data: [
-              "Government",
-              "Tax free",
-              "Customs",
-              "Refund point",
-              "Merchant",
-              "Exchange",
-              "Tour guide",
-            ],
-            type: "enum",
-          },
-        },
+        convertors: { ...settingsCovnertor },
       },
       tableSchema: {
         excludeList: [
@@ -140,22 +126,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         ],
         schema: $UniRefund_SettingService_ProductGroups_ProductGroupDto,
         convertors: {
-          unitCode: {
-            data: ["Qnt", "Bag", "Box"],
-            type: "enum",
-          },
-          companyType: {
-            data: [
-              "Government",
-              "Tax free",
-              "Customs",
-              "Refund point",
-              "Merchant",
-              "Exchange",
-              "Tour guide",
-            ],
-            type: "enum",
-          },
+          ...settingsCovnertor,
         },
       },
     },
