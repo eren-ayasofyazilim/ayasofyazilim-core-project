@@ -19,7 +19,7 @@ export default async function Page({
   try {
     const client = await getSettingServiceClient();
     countrySettings =
-      (await client.countrySetting.getApiSettingServiceCountrySettings()) as UniRefund_SettingService_CountrySettings_CountrySettingDto;
+      await client.countrySetting.getApiSettingServiceCountrySettings();
   } catch (e) {
     countrySettings = mockSettingsResponse;
   }
