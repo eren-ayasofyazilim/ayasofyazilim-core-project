@@ -1,6 +1,4 @@
 "use client";
-
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,32 +13,29 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
   const path = pathname.split("en/app/admin/")[1];
 
   return (
-    <div>
-      <PageHeader description="Tag details" title="Tag" />
-      <SectionLayout
-        defaultActiveSectionId={path}
-        linkElement={Link}
-        sections={[
-          {
-            id: "details",
-            name: "Details",
-            link: getBaseLink("app/admin/details", true),
-          },
-          {
-            id: "add",
-            name: "add",
-            link: getBaseLink("app/admin/details/add", true),
-          },
-          {
-            id: "id",
-            name: "id",
-            link: getBaseLink("app/admin/details/id", true),
-          },
-        ]}
-        vertical
-      >
-        <div className="w-full p-5 overflow-auto h-full flex-1">{children}</div>
-      </SectionLayout>
-    </div>
+    <SectionLayout
+      defaultActiveSectionId={path}
+      linkElement={Link}
+      sections={[
+        {
+          id: "details",
+          name: "Details",
+          link: getBaseLink("app/admin/details", true),
+        },
+        {
+          id: "add",
+          name: "add",
+          link: getBaseLink("app/admin/details/add", true),
+        },
+        {
+          id: "id",
+          name: "id",
+          link: getBaseLink("app/admin/details/id", true),
+        },
+      ]}
+      vertical
+    >
+      <div className="w-full p-5 overflow-auto h-full flex-1">{children}</div>
+    </SectionLayout>
   );
 }
