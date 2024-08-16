@@ -102,12 +102,12 @@ function feescolumns(languageData: any): ColumnDef<Record<string, any>>[] {
     {
       accessorKey: "name",
       header: () => <div className="text-center">{languageData.Name}</div>,
-      cell: (props) => <NameCell {...props} languageData={languageData} />,
+      cell: (props) => <NameCell {...props} />,
     },
     {
       accessorKey: "amount",
       header: () => <div className="text-center">{languageData.Amount}</div>,
-      cell: (props) => <AmountCell {...props} languageData={languageData} />,
+      cell: (props) => <AmountCell {...props} />,
     },
     {
       accessorKey: "actions",
@@ -275,19 +275,19 @@ function setupcolumns(languageData: any): ColumnDef<Record<string, any>>[] {
     {
       accessorKey: "fixedfee",
       header: () => <div className="text-center">{languageData.FixedFee}</div>,
-      cell: (props) => <Fixedfee {...props} languageData={languageData} />,
+      cell: (props) => <Fixedfee {...props} />,
     },
     {
       accessorKey: "variablefee",
       header: () => (
         <div className="text-center">{languageData.VariableFee}</div>
       ),
-      cell: (props) => <Variablefee {...props} languageData={languageData} />,
+      cell: (props) => <Variablefee {...props} />,
     },
     {
       accessorKey: "percent",
       header: () => <div className="text-center">%{languageData.Percent}</div>,
-      cell: (props) => <PercentCell {...props} languageData={languageData} />,
+      cell: (props) => <PercentCell {...props} />,
     },
     {
       accessorKey: "actions",
