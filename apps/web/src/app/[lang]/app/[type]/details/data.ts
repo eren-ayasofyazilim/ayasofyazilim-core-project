@@ -46,7 +46,18 @@ export const $schema_details: SchemaType = {
   ],
   additionalProperties: false,
 };
-export const $schema_list = [
+
+export interface TaxFreeTag {
+  taxFreeTagFacturaNumber: string;
+  date: string;
+  traveller: string;
+  company: string;
+  salesAmount: number;
+  refund: number;
+  status: "Completed" | "Pending" | "Cancelled";
+}
+
+export const $schema_list: TaxFreeTag[] = [
   {
     taxFreeTagFacturaNumber: "TF123456",
     date: "2024-08-01",
@@ -183,3 +194,159 @@ export const $schema_list = [
     status: "Cancelled",
   },
 ];
+
+const generateTagsFromSchemaList = (schemaList: typeof $schema_list) => {
+  return schemaList.map((item, index) => {
+    let statusValue = 1;
+    switch (item.status) {
+      case "Completed":
+        statusValue = 1;
+        break;
+      case "Pending":
+        statusValue = 2;
+        break;
+      default:
+        statusValue = 3;
+        break;
+    }
+    return {
+      Id: `TAG${index + 1}`, // Example tag ID, you can generate it based on your needs
+      Summary: {
+        Tag: item.taxFreeTagFacturaNumber,
+        Status: statusValue,
+        RefundMethod: 2, // Assuming a default value, adjust based on your logic
+        IssuedDate: item.date,
+        ExpireDate: "2024-12-31", // Default value, adjust based on your logic
+      },
+      ExportValidation: {
+        Id: `EV${index + 1}`, // Example export validation ID
+        ExportDate: item.date,
+        ExportLocation: 101, // Example location, adjust based on your logic
+        StampType: 3, // Example stamp type, adjust based on your logic
+      },
+      Refund: {
+        Id: `R${index + 1}`, // Example refund ID
+        SubmissionDate: item.date,
+        PaidDate: item.status === "Completed" ? "2024-08-13" : "", // Example logic for PaidDate
+        RefundLocation: {
+          ID: "RL001", // Example refund location ID
+          Name: "Refund Location Name", // Example refund location name
+        },
+        Status: statusValue,
+        RefundMethod: 2, // Assuming a default value, adjust based on your logic
+      },
+      Invoicing: {
+        Id: `INV${index + 1}`, // Example invoicing ID
+        InvoicingDate: "2024-08-09", // Default value, adjust based on your logic
+        InvoicingNumber: `INV000${index + 1}`, // Example invoicing number
+        InvoicingStatus: item.status === "Completed" ? 1 : 2, // Example logic for invoicing status
+      },
+      Merchant: {
+        Id: `M${index + 1}`, // Example merchant ID
+        Name: item.company, // Using the company name as the merchant name
+        ProductGroups: [
+          {
+            Id: `PG001`, // Example product group ID
+            Description: "Product Group 1", // Example product group description
+          },
+        ],
+        Address: {
+          Id: `A${index + 1}`, // Example address ID
+          FullText: "1234 Sample Street, City, Country", // Example address, adjust based on your logic
+        },
+      },
+      Traveller: {
+        Id: `T${index + 1}`, // Example traveller ID
+        TravelDocumentNumber: "TN123456789", // Example travel document number
+        CountryOfResidenceCode: 100, // Example country code
+        CountryOfResidence: "Country Name", // Example country name
+        NationalityCode: 200, // Example nationality code
+        Nationality: "Nationality Name", // Example nationality name
+        Name: item.traveller.split(" ")[0], // Assuming first name from traveller name
+        Surname: item.traveller.split(" ")[1], // Assuming surname from traveller name
+      },
+      Trip: {
+        Id: `TR${index + 1}`, // Example trip ID
+        VisitingDate: "2024-08-01", // Default value, adjust based on your logic
+        DepartureDate: "2024-08-05", // Default value, adjust based on your logic
+        FlightNumber: "FL1234", // Example flight number
+        DepartingAirport: {
+          Id: "DA001", // Example departing airport ID
+          Name: "Departing Airport Name", // Example departing airport name
+        },
+        DestinationAirport: {
+          Id: "DA002", // Example destination airport ID
+          Name: "Destination Airport Name", // Example destination airport name
+        },
+      },
+      Invoices: [
+        {
+          Id: `I${index + 1}`,
+          Number: `INV00${index + 1}`,
+          Currency: {
+            Id: "CUR001",
+            Currency: "USD",
+            CurrencySymbol: "$",
+          },
+          TotalAmount: item.salesAmount,
+          InvoiceLines: [
+            {
+              Id: `IL001`,
+              ProductGroup: {
+                Id: "PG001",
+                Description: "Product Group 1",
+              },
+              Amount: item.salesAmount / 2, // Example logic to split sales amount
+              Vat: {
+                Id: "VAT001",
+                Rate: 5.0,
+                Amount: (item.salesAmount / 2) * 0.05, // Example VAT calculation
+                VatBase: (item.salesAmount / 2) * 0.95, // Example VAT base calculation
+              },
+            },
+          ],
+        },
+      ],
+      Totals: [
+        {
+          Description: "Amount",
+          Amount: item.salesAmount,
+        },
+        {
+          Description: "Refund",
+          Amount: item.refund,
+        },
+        {
+          Description: "Income",
+          Amount: item.salesAmount - item.refund,
+        },
+      ],
+      Earnings: [
+        {
+          Description: "Total Earnings",
+          Amount: item.salesAmount * 0.02, // Example earnings calculation
+        },
+        {
+          Description: "Customer Earnings",
+          Amount: item.refund * 0.01, // Example customer earnings calculation
+        },
+        {
+          Description: "Refund point Earnings",
+          Amount: item.refund * 0.005, // Example refund point earnings calculation
+        },
+        {
+          Description: "Merchant Earnings",
+          Amount: (item.salesAmount - item.refund) * 0.01, // Example merchant earnings calculation
+        },
+      ],
+    };
+  });
+};
+
+export function getIndexOfTagByFacturaId(facturaId: string) {
+  return $schema_list.findIndex(
+    (item) => item.taxFreeTagFacturaNumber === facturaId,
+  );
+}
+
+export const tags = generateTagsFromSchemaList($schema_list);
