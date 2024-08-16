@@ -1,10 +1,9 @@
 "use server";
 
-import { SettingsView } from "@repo/ui/settings-view";
-import { Card } from "@/components/ui/card";
 import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
+import CountrySettingsPage from "./group";
 import { mockSettingsResponse } from "./mock-settings-response";
 
 export default async function Page({
@@ -25,8 +24,10 @@ export default async function Page({
   }
   const resources = await getLocalizationResources(lang);
   return (
-    <Card className="overflow-hidden h-full">
-      <SettingsView list={countrySettings} path={group} resources={resources} />
-    </Card>
+    <CountrySettingsPage
+      list={countrySettings}
+      path={group}
+      resources={resources}
+    />
   );
 }
