@@ -1,0 +1,21 @@
+{
+  "HomePage": "Ana Sayfa",
+  "EditTemplate": "Şablon Bilgilerini Düzenle",
+  "RebateSet": "İade kurulumu",
+  "ProcessingFees": "İşlem ücretleri",
+  "CancelButton": "İptal",
+  "SaveButton": "Kaydet",
+  "RefundMethod": "İade Yöntemi",
+  "FixedFee": "Sabit ücret",
+  "VariableFee": "Değişken ücret",
+  "Percent": "Yüzde",
+  "Name": "Ad",
+  "Amount": "Tutar",
+  "All": "Hepsi",
+  "Cash": "Nakit",
+  "CreditOrDebitCard": "Kredi veya Banka Kartı",
+  "Alipay": "Alipay",
+  "WeChat": "WeChat",
+  "CashViaPartner": "Ortak Aracılığıyla Nakit",
+  "RefundLater": "Daha Sonra İade"
+}
