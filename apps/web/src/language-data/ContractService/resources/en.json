@@ -1,0 +1,21 @@
+{
+  "HomePage": "Home",
+  "EditTemplate": "Edit Template Information",
+  "RebateSet": "Rebate set up",
+  "ProcessingFees": "Processing fees",
+  "CancelButton": "Cancel",
+  "SaveButton": "Save",
+  "RefundMethod": "Refund Method",
+  "FixedFee": "Fixed fee",
+  "VariableFee": "Variable fee",
+  "Percent": "percent",
+  "Name": "Name",
+  "Amount": "Amount",
+  "All": "All",
+  "Cash": "Cash",
+  "CreditOrDebitCard": "Credit or debit card",
+  "Alipay": "Alipay",
+  "WeChat": "WeChat",
+  "CashViaPartner": "Cash via partner",
+  "RefundLater": "Refund later"
+}

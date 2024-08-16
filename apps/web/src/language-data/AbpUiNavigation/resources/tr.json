@@ -37,5 +37,6 @@
   "Identity:claimType": "Talep Türleri",
   "Identity:securityLogs": "Güvenlik Kayıtları",
   "SaasManagement": "SaaS Yönetimi",
-  "Investmensts": "Yatırımlar"
+  "Investmensts": "Yatırımlar",
+  "Management": "Yönetim"
 }
