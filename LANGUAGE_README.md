@@ -16,6 +16,8 @@
 9. 'src/language-data/AbpUiNavigation/resources/AbpUiNavigation/tr.json' dosyasına girdiğiniz key'i ve karşılık gelen türkçe çevirisini ekleyin.
 10. 'src/language-data/AbpUiNavigation/resources/AbpUiNavigation' dizininde bulunan dosyaya çevirilerinizi ekleyin. Örneğin 'src/language-data/AbpUiNavigation/resources/AbpUiNavigation/navbar.ts' dosyasında getLanguageData fonksiyonunun içine.
 
+PR Example:https://github.com/ayasofyazilim-clomerce/ayasofyazilim-core-project/pull/514
+
 ## JSON'dan çeviri girme
 
 1. 'src/language-data/AbpUiNavigation/resources/AbpUiNavigation/en.json' dosyasına bir key ve karşılık gelen ingilizce çevirisini ekleyin.
