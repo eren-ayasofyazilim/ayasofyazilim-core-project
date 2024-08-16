@@ -9,7 +9,6 @@ import {
   DollarSign,
   FileBadge,
   Folder,
-  Group,
   Home,
   LanguagesIcon,
   LayoutDashboard,
@@ -153,20 +152,11 @@ export default async function Layout({
       type: ["admin", "user", "entrepreneur", "investor"],
       appType: "upwithcrowd",
     },
-
     {
       key: "Details",
       title: languageData.Details,
       href: getBaseLink(`app/${type}/details`, true, params.lang),
       icon: <FileBadge className="text-slate-500 w-4" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-    {
-      key: "productGroup",
-      title: languageData.ProductGroups,
-      href: getBaseLink(`app/${type}/product-group`, true, params.lang),
-      icon: <Group className="text-slate-500 w-4" />,
       type: "admin",
       appType: "unirefund",
     },
@@ -194,7 +184,6 @@ export default async function Layout({
       type: "admin",
       appType: "unirefund",
     },
-
     {
       key: "settings",
       title: languageData.Settings,
