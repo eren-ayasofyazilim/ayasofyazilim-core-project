@@ -260,6 +260,7 @@ export default function Page({
   const action: TableAction = {
     cta: `New ${params.data}`,
     description: `Create a new ${params.data}`,
+    componentType: "Autoform",
     autoFormArgs: {
       formSchema: createZodObject(
         createFormSchema.schema,

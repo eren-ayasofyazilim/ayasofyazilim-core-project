@@ -17,7 +17,7 @@ import {
   $Volo_Abp_Identity_OrganizationUnitUpdateDto,
 } from "@ayasofyazilim/saas/IdentityService";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
-import type { tableAction } from "@repo/ayasofyazilim-ui/molecules/dialog";
+import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/dialog";
 import AutoformDialog from "@repo/ayasofyazilim-ui/molecules/dialog";
 import { TreeView } from "@repo/ayasofyazilim-ui/molecules/tree-view";
 import { SectionNavbarBase } from "@repo/ayasofyazilim-ui/templates/section-layout";
@@ -88,7 +88,7 @@ const App: React.FC = () => {
   >([]);
   const [selectedUnitId, setSelectedUnitId] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
-  const [action, setAction] = useState<tableAction | undefined>(undefined);
+  const [action, setAction] = useState<TableAction | undefined>(undefined);
   const [unitUsers, setUnitUsers] = useState<User[]>([]);
   const [unitRoles, setUnitRoles] = useState<Role[]>([]);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -183,6 +183,7 @@ const App: React.FC = () => {
   const handleEditUnitClick = useCallback(() => {
     setAction({
       type: "Dialog",
+      componentType: "Autoform",
       autoFormArgs: {
         formSchema: createZodObject(
           editFormSchema.schema,
@@ -243,6 +244,7 @@ const App: React.FC = () => {
         : null;
       setAction({
         type: "Dialog",
+        componentType: "Autoform",
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
@@ -313,6 +315,7 @@ const App: React.FC = () => {
     });
     setAction({
       type: "Dialog",
+      componentType: "Autoform",
       autoFormArgs: {
         formSchema: z.object({
           targetUnit: DynamicEnum.default(placeholder),
