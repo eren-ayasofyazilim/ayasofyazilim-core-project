@@ -168,9 +168,9 @@ export default function Page(): JSX.Element {
       onLangChange={changeLocale}
       resources={resources}
     >
-      <div className="bg-slate-100 flex flex-auto justify-center items-center">
+      <div className="flex flex-auto items-center justify-center bg-slate-100">
         {appName === "UPWITHCROWD" ? (
-          <div className="font-bold text-2xl md:text-5xl text-[#f15656]">
+          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
             UPWITHCROWD
           </div>
         ) : (
