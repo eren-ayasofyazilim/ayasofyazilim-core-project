@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const fundraiserId = "f9796807-de53-b21a-ac35-3a1327c610af";
   return (
     <div className="h-full overflow-hidden">
-      <div className="w-10/12 overflow-auto max-w-3xl mx-auto h-full">
+      <div className="mx-auto h-full w-10/12 max-w-3xl overflow-auto">
         <NewProjectForm
           fundraiserId={fundraiserId}
           languageData={languageData}

@@ -21,7 +21,7 @@ export default function CountrySettingsPage({
     );
   }
   return (
-    <Card className="overflow-hidden h-full">
+    <Card className="h-full overflow-hidden">
       <SettingsView
         list={list}
         onSettingPageChange={onSettingPageChange}

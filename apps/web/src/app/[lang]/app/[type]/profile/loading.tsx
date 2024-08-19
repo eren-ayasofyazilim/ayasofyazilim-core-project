@@ -8,7 +8,7 @@ export default function Page() {
     <>
       <PageHeader isLoading />
 
-      <div className="flex justify-end flex-row my-2">
+      <div className="my-2 flex flex-row justify-end">
         <Skeleton className="h-9 w-40 bg-gray-200" />
       </div>
       <Card className="m-auto">
@@ -19,20 +19,20 @@ export default function Page() {
         <div className="flex flex-col bg-white">
           {[1, 2, 3].map((i) => (
             <div
-              className="border flex flex-row px-5 py-3 items-center"
+              className="flex flex-row items-center border px-5 py-3"
               key={i}
             >
-              <Skeleton className="h-7 w-7 mb-1 bg-gray-200" />
+              <Skeleton className="mb-1 h-7 w-7 bg-gray-200" />
               <div className="ml-4">
                 <div>
-                  <Skeleton className="h-5 mb-1.5 w-full bg-gray-200 w-40" />
+                  <Skeleton className="mb-1.5 h-5 w-40 w-full bg-gray-200" />
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  <Skeleton className="h-4 w-full bg-gray-200 w-32" />
+                <div className="text-muted-foreground text-sm">
+                  <Skeleton className="h-4 w-32 w-full bg-gray-200" />
                 </div>
               </div>
               <div className="ml-auto">
-                <Skeleton className="h-8 mb-1 w-full bg-gray-200 w-20" />
+                <Skeleton className="mb-1 h-8 w-20 w-full bg-gray-200" />
               </div>
             </div>
           ))}

@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
   ];
 
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className="flex h-full flex-col gap-2">
       <PageHeader
         description="Buradan dil ekleyebilir ya da güncelleyebilirsiniz."
         title="Dil Yönetimi"

@@ -30,7 +30,7 @@ export default function Page() {
   // );
 
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className="flex h-full flex-col gap-2">
       <PageHeader
         description="Buradan yatırım yaptığınız projeleri görüntüleyebilirsiniz."
         title="Projeler"
@@ -43,7 +43,7 @@ export default function Page() {
         <SectionLayoutContent sectionId="fundable">
           {!fundedProjects.length && (
             <div className="flex h-full">
-              <div className="flex flex-col items-center m-auto">
+              <div className="m-auto flex flex-col items-center">
                 <PackageSearch color="#222" size={120} />
                 <h3 className="mt-2">
                   Henüz yatırım yaptığınız bir proje yok.
