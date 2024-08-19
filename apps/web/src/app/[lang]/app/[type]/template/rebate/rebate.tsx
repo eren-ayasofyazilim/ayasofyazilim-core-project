@@ -119,7 +119,7 @@ function feescolumns(languageData: any): ColumnDef<Record<string, any>>[] {
           }}
           variant="ghost"
         >
-          <Trash2Icon className="w-4 h-4 text-red-500" />
+          <Trash2Icon className="h-4 w-4 text-red-500" />
         </Button>
       ),
     },
@@ -299,7 +299,7 @@ function setupcolumns(languageData: any): ColumnDef<Record<string, any>>[] {
           }}
           variant="ghost"
         >
-          <Trash2Icon className="w-4 h-4 text-red-500" />
+          <Trash2Icon className="h-4 w-4 text-red-500" />
         </Button>
       ),
     },
@@ -341,10 +341,10 @@ function Rebate({ languageData }: any) {
   };
 
   return (
-    <div className="flex flex-row w-full h-full ">
-      <Card className="bg-transparent border-0 shadow-none w-full overflow-auto pb-16 m-0">
-        <CardHeader className="text-2xl font-bold flex flex-row gap-2 items-center">
-          <EditIcon className="text-slate-600 w-6" />
+    <div className="flex h-full w-full flex-row ">
+      <Card className="m-0 w-full overflow-auto border-0 bg-transparent pb-16 shadow-none">
+        <CardHeader className="flex flex-row items-center gap-2 text-2xl font-bold">
+          <EditIcon className="w-6 text-slate-600" />
           {languageData.EditTemplate}
         </CardHeader>
         <CardContent>
@@ -361,12 +361,12 @@ function Rebate({ languageData }: any) {
             />
           </div>
 
-          <div className="p-4 mt-4">
+          <div className="mt-4 p-4">
             <div className="relative flex items-center">
               <span className="text-lg font-medium">
                 {languageData.ProcessingFees}
               </span>
-              <div className="flex-grow border-t border-gray-300 ml-4" />
+              <div className="ml-4 flex-grow border-t border-gray-300" />
             </div>
             <div className="overflow-auto">
               <DataTable
@@ -385,12 +385,12 @@ function Rebate({ languageData }: any) {
             </div>
           </div>
 
-          <div className="p-4 mt-4">
+          <div className="mt-4 p-4">
             <div className="relative flex items-center">
               <span className="text-lg font-medium">
                 {languageData.RebateSet}
               </span>
-              <div className="flex-grow border-t border-gray-300 ml-4" />
+              <div className="ml-4 flex-grow border-t border-gray-300" />
             </div>
             <div className="overflow-auto">
               <DataTable
@@ -408,7 +408,7 @@ function Rebate({ languageData }: any) {
               />
             </div>
           </div>
-          <div className="px-9 mt-4 flex gap-5 justify-end">
+          <div className="mt-4 flex justify-end gap-5 px-9">
             <Button className=" w-40 ">{languageData.CancelButton}</Button>
             <Button className=" w-40 " onClick={handleSubmit}>
               {languageData.SaveButton}

@@ -53,10 +53,10 @@ export default function Page() {
   ];
 
   return (
-    <div className="w-full mx-auto max-w-3xl">
-      <div className="flex flex-col items-center justify-start mb-8 w-full">
-        <div className="flex-row p-4 w-10/12 ">
-          <Card className="cantainer p-6 h-full">
+    <div className="mx-auto w-full max-w-3xl">
+      <div className="mb-8 flex w-full flex-col items-center justify-start">
+        <div className="w-10/12 flex-row p-4 ">
+          <Card className="cantainer h-full p-6">
             <FormStepper steps={steps} />
           </Card>
         </div>

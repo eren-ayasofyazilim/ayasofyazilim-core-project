@@ -35,7 +35,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
       ]}
       vertical
     >
-      <div className="w-full p-5 overflow-auto h-full flex-1">{children}</div>
+      <div className="h-full w-full flex-1 overflow-auto p-5">{children}</div>
     </SectionLayout>
   );
 }

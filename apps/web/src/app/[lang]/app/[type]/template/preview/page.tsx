@@ -310,7 +310,7 @@ const data = [
 function MyDataTable() {
   return (
     <div>
-      <div className="mt-4 flex justify-end-between">
+      <div className="justify-end-between mt-4 flex">
         <Input placeholder="SIS" type="number" />
         <Button className="ml-9">Calculate</Button>
       </div>
