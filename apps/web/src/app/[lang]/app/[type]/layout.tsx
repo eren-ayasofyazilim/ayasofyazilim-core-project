@@ -125,7 +125,7 @@ export default async function Layout({
     type,
     "crm",
     params.lang,
-    <SlidersHorizontal className="text-slate-500 w-4" />,
+    <SlidersHorizontal className="w-4 text-slate-500" />,
   );
   const navigationItems: NavigationItmes[] = [
     {
@@ -160,7 +160,7 @@ export default async function Layout({
       key: "crm",
       title: languageData.Crm,
       href: getBaseLink(`app/${type}/crm`, true, params.lang),
-      icon: <Folder className="text-slate-500 w-4" />,
+      icon: <Folder className="w-4 text-slate-500" />,
       submenu: crms,
       type: "admin",
       appType: "unirefund",
