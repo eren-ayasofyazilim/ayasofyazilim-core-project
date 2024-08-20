@@ -64,7 +64,7 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
     return;
   }
   const returnValue = ConvertorValue.data.find((item: any) => {
-    return item[ConvertorValue.get] === value;
+    return String(item[ConvertorValue.get]) === String(value);
   });
 
   if (returnValue) {
