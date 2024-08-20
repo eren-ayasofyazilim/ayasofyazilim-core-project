@@ -15,13 +15,13 @@ export default function Page(): JSX.Element {
       tableType: $schema_details,
       excludeList: [],
       callback: () => {
-        // console.log(data);
+        //
       },
       onDelete: () => {
-        // console.log(data);
+        //
       },
       onEdit: () => {
-        // console.log(data);
+        //
       },
       actionList: [
         {
