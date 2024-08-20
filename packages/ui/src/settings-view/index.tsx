@@ -322,7 +322,7 @@ function Content(
   dependencies: AutoFormTypes.Dependency<{ [x: string]: any }>[],
 ) {
   return (
-    <div className="flex flex-col gap-4 min-w-3xl mx-auto max-w-3xl w-full px-4 py-8">
+    <div className="min-w-3xl mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-8">
       <AutoForm
         className="w-full"
         formSchema={formSchema}
@@ -340,7 +340,7 @@ function Content(
 function description(text: string) {
   if (!text) return text;
   if (text.length < 100)
-    return <div className="text-sm text-muted-foreground">{text}</div>;
+    return <div className="text-muted-foreground text-sm">{text}</div>;
   return (
     <Tooltip>
       <TooltipTrigger className="text-muted-foreground">
@@ -394,7 +394,6 @@ export function SettingsView({
   }, []);
 
   function onSectionChange(sectionId: string) {
-    // console.log(sectionId); //sholdnt be called twice
     if (sectionId === activeGroup?.key) return;
     const group =
       list?.groups?.find(
