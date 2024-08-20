@@ -23,6 +23,7 @@
     "precommit:lintstaged": "cd apps/web && npx lint-staged"
   },
   "devDependencies": {
+    "turbo": "^2.0.14",
     "@playwright/test": "^1.44.1",
     "@repo/typescript-config": "workspace:*",
     "eslint": "8.57.0",
@@ -35,7 +36,6 @@
     "node": ">=18"
   },
   "dependencies": {
-    "turbo": "^2.0.14",
     "playwright": "^1.45.3"
   }
 }
