@@ -24,7 +24,7 @@ export default async function Page({
     return (
       <div className="h-full">
         <div className="flex h-full">
-          <div className="flex flex-col items-center m-auto">
+          <div className="m-auto flex flex-col items-center">
             <PackageSearch color="#222" size={120} />
             <h3 className="mt-2">Proje bulunamadı.</h3>
           </div>

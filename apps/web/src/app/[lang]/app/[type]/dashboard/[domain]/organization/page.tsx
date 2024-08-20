@@ -649,13 +649,13 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-row w-full min-h-[50vh]">
-        <Card className="m-2 shadow-lg pb-4 w-1/2">
+      <div className="flex min-h-[50vh] w-full flex-row">
+        <Card className="m-2 w-1/2 pb-4 shadow-lg">
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <h2 className="text-xl">Organization Tree</h2>
               <Button
-                className="bg-primary text-white py-2 px-4 rounded"
+                className="bg-primary rounded px-4 py-2 text-white"
                 onClick={() => {
                   setSelectedUnitId(undefined);
                   setTriggerData({});
@@ -679,7 +679,7 @@ const App: React.FC = () => {
             )}
           </CardContent>
         </Card>
-        <Card className="m-2 shadow-lg pb-4 w-1/2">
+        <Card className="m-2 w-1/2 pb-4 shadow-lg">
           <CardContent>
             <SectionNavbarBase
               activeSectionId={activeTab}
@@ -696,11 +696,11 @@ const App: React.FC = () => {
             />
             {selectedUnitId ? (
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex justify-end w-full">
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex w-full justify-end">
                     {activeTab === "Users" ? (
                       <Button
-                        className="bg-primary text-white py-2 px-4 rounded"
+                        className="bg-primary rounded px-4 py-2 text-white"
                         onClick={() => {
                           setIsUserModalOpen(true);
                         }}
@@ -709,7 +709,7 @@ const App: React.FC = () => {
                       </Button>
                     ) : (
                       <Button
-                        className="bg-primary text-white py-2 px-4 rounded"
+                        className="bg-primary rounded px-4 py-2 text-white"
                         onClick={() => {
                           setIsRoleModalOpen(true);
                         }}
@@ -746,7 +746,7 @@ const App: React.FC = () => {
                                 }}
                                 variant="link"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
                             </TableCell>
                           </TableRow>
@@ -767,7 +767,7 @@ const App: React.FC = () => {
                                 }}
                                 variant="link"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
                             </TableCell>
                           </TableRow>
@@ -779,7 +779,7 @@ const App: React.FC = () => {
                         )}
                   </TableBody>
                 </Table>
-                <p className="text-sm mt-10">
+                <p className="mt-10 text-sm">
                   {activeTab === "Users" ? unitUsers.length : unitRoles.length}{" "}
                   total
                 </p>

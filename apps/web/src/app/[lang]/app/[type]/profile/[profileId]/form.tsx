@@ -138,7 +138,7 @@ export function BackerForm({
   }
   return (
     <>
-      <div className="flex justify-end flex-row mb-2">
+      <div className="mb-2 flex flex-row justify-end">
         {profileId !== "new-organization" && profileId !== "new-individual" && (
           <Button
             onClick={() => {

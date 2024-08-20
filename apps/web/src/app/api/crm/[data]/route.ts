@@ -153,8 +153,7 @@ const clients: Clients = {
         merchant.deleteApiMerchantServiceOrganizations({ id }),
     };
   },
-
-  refund_points: async () => {
+  refundPoints: async () => {
     const client = await getIdentityServiceClient();
     const user = client.user;
     return {
@@ -297,7 +296,7 @@ const clients: Clients = {
       delete: async (id: string) => edition.deleteApiSaasEditionsById({ id }),
     };
   },
-  tax_free: async () => {
+  taxFree: async () => {
     const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {
@@ -309,7 +308,7 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  tax_offices: async () => {
+  taxOffices: async () => {
     const client = await getSaasServiceClient();
     const tenant = client.tenant;
     return {

@@ -355,10 +355,12 @@ export function SettingsView({
   list,
   resources,
   path,
+  onSettingPageChange,
 }: {
   path: string;
   list: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   resources?: any;
+  onSettingPageChange: (oldPath: string, newPath: string) => void;
 }) {
   function initialActiveGroup() {
     const activeGroupByPath = list.groups?.find((item) => item.key === path);
@@ -411,13 +413,9 @@ export function SettingsView({
     const dependencies = createDependencies(group);
 
     setContent(Content(fieldConfig, formSchema, dependencies));
-
-    // window.history.pushState(
-    //   null,
-    //   "",
-    //   window.location.href.replace(activeGroup?.key || "", sectionId)
-    // );
     setActiveGroup(group);
+    if (onSettingPageChange)
+      onSettingPageChange(activeGroup?.key || "", sectionId);
   }
   return (
     <SectionLayout

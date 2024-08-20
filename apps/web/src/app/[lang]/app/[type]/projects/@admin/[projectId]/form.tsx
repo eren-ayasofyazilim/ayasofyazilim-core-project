@@ -138,7 +138,7 @@ export default function ProjectForm({
 
           <AccordionContent className="px-6">
             <div className="w-full">
-              <div className="grid w-full items-center gap-3 mt-4">
+              <div className="mt-4 grid w-full items-center gap-3">
                 <Label htmlFor="projectName">{languageData.ProjectName}</Label>
                 <Input
                   disabled
@@ -151,11 +151,11 @@ export default function ProjectForm({
                   }}
                   value={formValues.name || ""}
                 />
-                <p className="text-[0.8rem] text-muted-foreground">
+                <p className="text-muted-foreground text-[0.8rem]">
                   {languageData.ProjectNameInfo}
                 </p>
               </div>
-              <div className="grid w-full items-center gap-3 mt-4">
+              <div className="mt-4 grid w-full items-center gap-3">
                 <Label htmlFor="projectDefinition">
                   {languageData.ProjectDescription}
                 </Label>
@@ -169,7 +169,7 @@ export default function ProjectForm({
                   }}
                   value={formValues.definition || ""}
                 />
-                <p className="text-[0.8rem] text-muted-foreground">
+                <p className="text-muted-foreground text-[0.8rem]">
                   {languageData.ProjectDescriptionInfo}
                 </p>
               </div>
@@ -247,7 +247,7 @@ export default function ProjectForm({
           </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
-              <div className="grid w-full items-center gap-3 mt-4 ">
+              <div className="mt-4 grid w-full items-center gap-3 ">
                 <Label htmlFor="fundCollectionType">
                   {languageData.FundCollectionType}
                 </Label>
@@ -277,11 +277,11 @@ export default function ProjectForm({
                     </SelectContent>
                   </Select>
                 </div>
-                <p className="text-[0.8rem] text-muted-foreground">
+                <p className="text-muted-foreground text-[0.8rem]">
                   {languageData.FundCollectionTypeInfo}
                 </p>
               </div>
-              <div className="grid w-full items-center gap-3 mt-4 ">
+              <div className="mt-4 grid w-full items-center gap-3 ">
                 <div className="relative">
                   <NumericInput
                     direction="column"
@@ -298,7 +298,7 @@ export default function ProjectForm({
                     subLabel=""
                     value={formValues.fundableAmount || 0}
                   />
-                  <p className="text-[0.8rem] text-muted-foreground mt-2">
+                  <p className="text-muted-foreground mt-2 text-[0.8rem]">
                     {languageData.FundableAmountInfo}
                   </p>
                 </div>
@@ -375,7 +375,7 @@ export default function ProjectForm({
           </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
-              <div className="grid w-full items-center gap-3 mt-4 ">
+              <div className="mt-4 grid w-full items-center gap-3 ">
                 <Label htmlFor="overFunding">
                   {languageData.AdditionalFunding}
                 </Label>
@@ -402,7 +402,7 @@ export default function ProjectForm({
                     </SelectContent>
                   </Select>
                 </div>
-                <p className="text-[0.8rem] text-muted-foreground">
+                <p className="text-muted-foreground text-[0.8rem]">
                   {languageData.AdditionalFundingInfo}
                 </p>
               </div>
@@ -415,7 +415,7 @@ export default function ProjectForm({
                 >
                   <AccordionItem value="item-1">
                     <AccordionContent>
-                      <div className="grid w-full items-center gap-3 mt-4 ">
+                      <div className="mt-4 grid w-full items-center gap-3 ">
                         <div className="relative">
                           <NumericInput
                             direction="column"
@@ -437,7 +437,7 @@ export default function ProjectForm({
                               formValues.additionalFundRate || "0",
                             )}
                           />
-                          <p className="text-[0.8rem] text-muted-foreground mt-2">
+                          <p className="text-muted-foreground mt-2 text-[0.8rem]">
                             {languageData.AdditionalFundingRateInfo}
                           </p>
                         </div>
@@ -510,7 +510,7 @@ export default function ProjectForm({
           </AccordionStepperHeader>
           <AccordionContent className="px-6">
             <div className="w-full">
-              <div className="grid w-full items-center gap-3 mt-4 ">
+              <div className="mt-4 grid w-full items-center gap-3 ">
                 <div className="relative">
                   <Popover>
                     <PopoverTrigger asChild>
@@ -540,7 +540,7 @@ export default function ProjectForm({
                     </PopoverContent>
                   </Popover>
                 </div>
-                <p className="text-[0.8rem] text-muted-foreground">
+                <p className="text-muted-foreground text-[0.8rem]">
                   {languageData.ProjectStartDateInfo}
                 </p>
               </div>

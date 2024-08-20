@@ -48,7 +48,7 @@ export default async function Page({ params }: any) {
     params.type,
   );
   return (
-    <div className="flex flex-row gap-3 relative w-full">
+    <div className="relative flex w-full flex-row gap-3">
       <div className="basis-full">
         <ProjectForm
           languageData={languageData}
@@ -57,7 +57,7 @@ export default async function Page({ params }: any) {
           projectId={projectId}
         />
       </div>
-      <div className="basis-2/5 min-w-72 max-w-96">
+      <div className="min-w-72 max-w-96 basis-2/5">
         <ProjectCard
           ProjectStatusEnums={ProjectStatusEnums}
           languageData={languageData}

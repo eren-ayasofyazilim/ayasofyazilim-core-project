@@ -4,10 +4,10 @@ import { SectionLayoutSkeleton } from "@repo/ayasofyazilim-ui/templates/section-
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className="flex h-full flex-col gap-2">
       <PageHeader isLoading />
 
-      <div className="flex justify-end flex-row my-2">
+      <div className="my-2 flex flex-row justify-end">
         <Skeleton className="h-9 w-40 bg-gray-200" />
       </div>
       <SectionLayoutSkeleton vertical />
