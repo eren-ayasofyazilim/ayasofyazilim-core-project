@@ -164,6 +164,7 @@ export default function Page({
       {
         cta: `New ${formData.title}`,
         description: `Create a new ${formData.title}`,
+        componentType: "Autoform",
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,

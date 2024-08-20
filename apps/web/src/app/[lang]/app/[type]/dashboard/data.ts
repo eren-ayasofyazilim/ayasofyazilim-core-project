@@ -187,7 +187,17 @@ export const dataConfig: Record<string, any> = {
       tableSchema: {
         excludeList: ["id", "buildIn"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
+        actionList: () => [
+          {
+            type: "SubContentDialog",
+            cta: "Değişiklik Geçmişi",
+            callback: () => {
+              return "Değişiklik yok";
+            },
+          },
+        ],
       },
+
       editFormSchema: {
         formPositions: ["name", "displayName", "description"],
         schema: $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
