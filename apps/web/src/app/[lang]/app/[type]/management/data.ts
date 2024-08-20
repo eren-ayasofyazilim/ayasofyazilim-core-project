@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
+import type {
+  GetApiSettingServiceProductGroupResponse,
+  GetApiSettingServiceVatDetailResponse,
+} from "@ayasofyazilim/saas/SettingService";
 import {
   $UniRefund_SettingService_ProductGroups_CreateProductGroupDto,
   $UniRefund_SettingService_ProductGroups_ProductGroupDto,
   $UniRefund_SettingService_ProductGroups_UpdateProductGroupDto,
   $UniRefund_SettingService_ProductGroupVats_CreateProductGroupVatDto,
-  $UniRefund_SettingService_ProductGroupVats_ProductGroupVatDto,
+  $UniRefund_SettingService_ProductGroupVats_ProductGroupVatDetailDto,
   $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
   $UniRefund_SettingService_Vats_CreateVatDto,
   $UniRefund_SettingService_Vats_UpdateVatDto,
-  $UniRefund_SettingService_Vats_VatDto,
+  $UniRefund_SettingService_Vats_VatDetailDto,
 } from "@ayasofyazilim/saas/SettingService";
 import { getBaseLink } from "src/utils";
 
@@ -43,8 +47,8 @@ export const dataConfigOfManagement: Record<string, any> = {
         convertors: {
           countryId: {
             data: () => {
-              return fetch(getBaseLink("api/management/country")).then((data) =>
-                data.json(),
+              return fetch(getBaseLink("api/management/country")).then(
+                (_data) => _data.json(),
               );
             },
             get: "name",
@@ -54,20 +58,8 @@ export const dataConfigOfManagement: Record<string, any> = {
         },
       },
       editFormSchema: {
-        formPositions: ["percent", "minimumTotalAmount", "countryId", "active"],
+        formPositions: ["percent", "minimumTotalAmount", "active"],
         schema: $UniRefund_SettingService_Vats_UpdateVatDto,
-        convertors: {
-          countryId: {
-            data: () => {
-              return fetch(getBaseLink("api/management/country")).then((data) =>
-                data.json(),
-              );
-            },
-            get: "name",
-            post: "id",
-            type: "async",
-          },
-        },
       },
       tableSchema: {
         excludeList: [
@@ -79,8 +71,9 @@ export const dataConfigOfManagement: Record<string, any> = {
           "isDeleted",
           "deleterId",
           "deletionTime",
+          "countryId",
         ],
-        schema: $UniRefund_SettingService_Vats_VatDto,
+        schema: $UniRefund_SettingService_Vats_VatDetailDto,
       },
     },
     productGroups: {
@@ -139,30 +132,52 @@ export const dataConfigOfManagement: Record<string, any> = {
         schema:
           $UniRefund_SettingService_ProductGroupVats_CreateProductGroupVatDto,
         convertors: {
-          // productGroupId: {
-          //   data: () => {
-          //     return fetch(getBaseLink("api/management/productGroups")).then(
-          //       (data) => data.json(),
-          //     );
-          //   },
-          //   get: "name",
-          //   post: "id",
-          //   type: "async",
-          // },
-          // vatId: {
-          //   data: () => {
-          //     return fetch(getBaseLink("api/management/vats")).then((data) =>
-          //       data.json(),
-          //     );
-          //   },
-          //   get: "percent",
-          //   post: "id",
-          //   type: "async",
-          // },
+          productGroupId: {
+            data: () =>
+              fetch(
+                getBaseLink("api/management/productGroups?maxResultCount=1000"),
+              )
+                .then((data) => data.json())
+                .then(
+                  (jsonData: GetApiSettingServiceProductGroupResponse) =>
+                    jsonData.items,
+                ),
+            get: "name",
+            post: "id",
+            type: "async",
+          },
+          vatId: {
+            data: () => {
+              return fetch(
+                getBaseLink("api/management/vats?maxResultCount=1000"),
+                {},
+              ).then((data) =>
+                data
+                  .json()
+                  .then(
+                    (jsonData: GetApiSettingServiceVatDetailResponse) =>
+                      jsonData.items,
+                  ),
+              );
+            },
+            get: "percent",
+            post: "id",
+            type: "async",
+          },
+          countryId: {
+            data: () => {
+              return fetch(getBaseLink("api/management/country")).then((data) =>
+                data.json(),
+              );
+            },
+            get: "name",
+            post: "id",
+            type: "async",
+          },
         },
       },
       editFormSchema: {
-        formPositions: ["productGroupId", "countryId", "vatId", "active"],
+        formPositions: ["active"],
         schema:
           $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
       },
@@ -176,8 +191,12 @@ export const dataConfigOfManagement: Record<string, any> = {
           "isDeleted",
           "deleterId",
           "deletionTime",
+          "productGroupId",
+          "countryId",
+          "vatId",
         ],
-        schema: $UniRefund_SettingService_ProductGroupVats_ProductGroupVatDto,
+        schema:
+          $UniRefund_SettingService_ProductGroupVats_ProductGroupVatDetailDto,
       },
     },
   },
