@@ -206,8 +206,8 @@ export function createZodObject(
           typeof convertors[element].data !== "function"
         ) {
           newProps.type = "select";
-          newProps.enum = convertors[element].data.map(
-            (e: any) => e[convertors[element].get],
+          newProps.enum = convertors[element].data.map((e: any) =>
+            String(e[convertors[element].get]),
           );
         }
         zodType = createZodType(newProps, isRequired);
