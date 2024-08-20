@@ -27,6 +27,7 @@ import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { generateNavigationItems, getBaseLink } from "src/utils";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
+import { dataConfigOfCrm } from "./crm/data";
 
 type NavigationItmes = NavigationItem & {
   type: string | string[];
@@ -62,6 +63,7 @@ export default async function Layout({
     "textTemplates",
   ];
   const arrayOfManagement = ["setting"];
+  const arrayOfCrm = ["companies"];
 
   const userNavigation = {
     username: user?.userName ?? "undefined",
@@ -115,6 +117,16 @@ export default async function Layout({
     params.lang,
     <SlidersHorizontal className="w-4 text-slate-500" />,
   );
+
+  const crms = generateNavigationItems(
+    dataConfigOfCrm,
+    arrayOfCrm,
+    languageData,
+    type,
+    "crm",
+    params.lang,
+    <SlidersHorizontal className="w-4 text-slate-500" />,
+  );
   const navigationItems: NavigationItmes[] = [
     {
       key: "reports",
@@ -144,6 +156,16 @@ export default async function Layout({
       appType: "unirefund",
     },
     ...managements,
+    {
+      key: "crm",
+      title: languageData.Crm,
+      href: getBaseLink(`app/${type}/crm`, true, params.lang),
+      icon: <Folder className="w-4 text-slate-500" />,
+      submenu: crms,
+      type: "admin",
+      appType: "unirefund",
+    },
+    ...crms,
     {
       key: "profile",
       title: languageData.Profile,
