@@ -28,14 +28,14 @@
     "eslint": "8.57.0",
     "husky": "^8.0.0",
     "prettier": "3.2.5",
-    "prettier-plugin-tailwindcss": "0.5.11",
-    "turbo": "latest"
+    "prettier-plugin-tailwindcss": "0.5.11"
   },
   "packageManager": "pnpm@9.1.2",
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
+    "turbo": "^2.0.14",
     "playwright": "^1.45.3"
   }
 }
