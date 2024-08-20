@@ -10,29 +10,39 @@ const clients: Clients = {
     const client = await getSettingServiceClient();
     const vats = client.vat;
     return {
-      get: async () => vats.getApiSettingServiceVat(),
+      get: async (page: number, maxResultCount: any) =>
+        vats.getApiSettingServiceVatDetail({
+          maxResultCount: maxResultCount || 10,
+          skipCount: page * 10,
+        }),
       post: async (requestBody: any) =>
         vats.postApiSettingServiceVat({ requestBody }),
-      put: async (data: any) => {
-        data.requestBody.id = data.id;
-        return vats.putApiSettingServiceVat(data);
+      put: async ({ id, requestBody }: { id: string; requestBody: any }) => {
+        return vats.putApiSettingServiceVatById({
+          id,
+          requestBody,
+        });
       },
-      delete: async (id: string) => vats.deleteApiSettingServiceVat({ id }),
+      delete: async (id: string) => vats.deleteApiSettingServiceVatById({ id }),
     };
   },
   productGroups: async () => {
     const client = await getSettingServiceClient();
     const productGroups = client.productGroup;
     return {
-      get: () => productGroups.getApiSettingServiceProductGroup(),
+      get: (page: number, maxResultCount: number) =>
+        productGroups.getApiSettingServiceProductGroup({
+          maxResultCount: maxResultCount || 10,
+          skipCount: page * 10,
+        }),
       post: async (requestBody: any) =>
         productGroups.postApiSettingServiceProductGroup({ requestBody }),
       put: async (data: any) => {
         data.requestBody.id = data.id;
-        return productGroups.putApiSettingServiceProductGroup(data);
+        return productGroups.putApiSettingServiceProductGroupById(data);
       },
       delete: async (id: string) =>
-        productGroups.deleteApiSettingServiceProductGroup({ id }),
+        productGroups.deleteApiSettingServiceProductGroupById({ id }),
     };
   },
 
@@ -40,15 +50,19 @@ const clients: Clients = {
     const client = await getSettingServiceClient();
     const productGroupVats = client.productGroupVat;
     return {
-      get: () => productGroupVats.getApiSettingServiceProductGroupVat(),
+      get: (page: number) =>
+        productGroupVats.getApiSettingServiceProductGroupVatDetail({
+          maxResultCount: 10,
+          skipCount: page * 10,
+        }),
       post: async (requestBody: any) =>
         productGroupVats.postApiSettingServiceProductGroupVat({ requestBody }),
       put: async (data: any) => {
         data.requestBody.id = data.id;
-        return productGroupVats.putApiSettingServiceProductGroupVat(data);
+        return productGroupVats.putApiSettingServiceProductGroupVatById(data);
       },
       delete: async (id: string) =>
-        productGroupVats.deleteApiSettingServiceProductGroupVat({ id }),
+        productGroupVats.deleteApiSettingServiceProductGroupVatById({ id }),
     };
   },
 
@@ -58,18 +72,6 @@ const clients: Clients = {
         {
           id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           name: "Turkey",
-        },
-        {
-          id: "1fa85f64-5717-4562-b3fc-2c963f66afa6",
-          name: "Germany",
-        },
-        {
-          id: "2fa85f64-5717-4562-b3fc-2c963f66afa6",
-          name: "USA",
-        },
-        {
-          id: "4fa85f64-5717-4562-b3fc-2c963f66afa6",
-          name: "France",
         },
       ],
     };
@@ -82,14 +84,14 @@ export async function GET(
 ) {
   const searchParams = request.nextUrl.searchParams;
   const page = searchParams.get("page");
-  const filter = searchParams.get("filter");
+  const maxResultCount = searchParams.get("maxResultCount");
   if (!clients[params.data]) {
     // return status 404
     return errorResponse("Invalid data type");
   }
-  const client = await clients[params.data](page, filter);
+  const client = await clients[params.data]();
   try {
-    const data = await client.get();
+    const data = await client.get(page, maxResultCount);
     return new Response(JSON.stringify(data));
   } catch (error: unknown) {
     if (isApiError(error)) {
@@ -153,17 +155,20 @@ export async function PUT(
   try {
     const roles = await client.put({
       id: requestBody.id,
-      requestBody: JSON.parse(requestBody.requestBody),
+      requestBody:
+        requestBody.requestBody === undefined
+          ? ""
+          : JSON.parse(requestBody.requestBody),
     });
     return new Response(JSON.stringify(roles));
   } catch (error: unknown) {
     if (isApiError(error)) {
       const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
       return errorResponse(
-        body.error?.message || "Something went wrong",
+        body.error?.message || "Uknonw error occured on the server side",
         error.status,
       );
     }
-    return errorResponse("Something went wrong");
+    return errorResponse("Uknonw error occured on the client/server side 1");
   }
 }
