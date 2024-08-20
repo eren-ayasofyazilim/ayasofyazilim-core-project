@@ -133,15 +133,16 @@ export const dataConfigOfManagement: Record<string, any> = {
           $UniRefund_SettingService_ProductGroupVats_CreateProductGroupVatDto,
         convertors: {
           productGroupId: {
-            data: () =>
-              fetch(
+            data: () => {
+              return fetch(
                 getBaseLink("api/management/productGroups?maxResultCount=1000"),
               )
                 .then((data) => data.json())
                 .then(
                   (jsonData: GetApiSettingServiceProductGroupResponse) =>
                     jsonData.items,
-                ),
+                );
+            },
             get: "name",
             post: "id",
             type: "async",
@@ -150,15 +151,12 @@ export const dataConfigOfManagement: Record<string, any> = {
             data: () => {
               return fetch(
                 getBaseLink("api/management/vats?maxResultCount=1000"),
-                {},
-              ).then((data) =>
-                data
-                  .json()
-                  .then(
-                    (jsonData: GetApiSettingServiceVatDetailResponse) =>
-                      jsonData.items,
-                  ),
-              );
+              )
+                .then((data) => data.json())
+                .then(
+                  (jsonData: GetApiSettingServiceVatDetailResponse) =>
+                    jsonData.items,
+                );
             },
             get: "percent",
             post: "id",
