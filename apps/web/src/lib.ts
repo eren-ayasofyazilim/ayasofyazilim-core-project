@@ -1,8 +1,8 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
+import { CRMServiceClient } from "@ayasofyazilim/saas/CRMService";
 import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
-import { MerchantServiceClient } from "@ayasofyazilim/saas/MerchantService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
@@ -82,10 +82,10 @@ export async function getBackerServiceClient(): Promise<BackerServiceClient> {
   });
 }
 
-export async function getMerchantServiceClient() {
+export async function getCRMServiceClient() {
   const session = await auth();
   const token = session?.access_token;
-  return new MerchantServiceClient({
+  return new CRMServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
     HEADERS,
