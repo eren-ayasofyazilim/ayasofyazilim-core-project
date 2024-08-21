@@ -363,7 +363,7 @@ export function SettingsView({
   onSettingPageChange: (oldPath: string, newPath: string) => void;
 }) {
   function initialActiveGroup() {
-    const activeGroupByPath = list.groups?.find((item) => item.key === path);
+    const activeGroupByPath = list.groups?.find((item: {key: string}) => item.key === path);
     if (activeGroupByPath) return activeGroupByPath;
     return list?.groups?.[0];
   }

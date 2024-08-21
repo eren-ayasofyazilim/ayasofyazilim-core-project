@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
-
-import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 import type {
   Volo_Abp_Identity_IdentityRoleCreateDto,
   Volo_Abp_Identity_IdentityRoleUpdateDto,
@@ -12,7 +10,7 @@ import {
   getSaasServiceClient,
 } from "src/lib";
 import type { Clients } from "../../util";
-import { errorResponse, isApiError } from "../../util";
+import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../util";
 
 const clients: Clients = {
   role: async () => {
@@ -20,15 +18,16 @@ const clients: Clients = {
     const role = client.role;
     return {
       get: async () => role.getApiIdentityRolesAll(),
-      post: async (requestBody: Volo_Abp_Identity_IdentityRoleCreateDto) =>
-        role.postApiIdentityRoles({ requestBody }),
-      put: async ({
-        id,
-        requestBody,
-      }: {
-        id: string;
-        requestBody: Volo_Abp_Identity_IdentityRoleUpdateDto;
-      }) => role.putApiIdentityRolesById({ id, requestBody }),
+      post: async (requestBody: unknown) => {
+        return role.postApiIdentityRoles({ requestBody } as {
+          requestBody: Volo_Abp_Identity_IdentityRoleCreateDto;
+        });
+      },
+      put: async ({ id, requestBody }: { id: string; requestBody: unknown }) =>
+        role.putApiIdentityRolesById({ id, requestBody } as {
+          id: string;
+          requestBody: Volo_Abp_Identity_IdentityRoleUpdateDto;
+        }),
       delete: async (id: string) => role.deleteApiIdentityRolesById({ id }),
     };
   },
@@ -282,9 +281,11 @@ const clients: Clients = {
       get: async (
         page: number,
         _filter: string,
-        baseCultureName = "en",
-        targetCultureName = "tr",
+        _baseCultureName = "en",
+        _targetCultureName = "tr",
       ) => {
+        const baseCultureName = _baseCultureName as string;
+        const targetCultureName = _targetCultureName as string;
         const parsedFilter = JSON.parse(_filter || "{}");
         const filter = parsedFilter?.filter;
         return languageTexts.getApiLanguageManagementLanguageTexts({
@@ -317,93 +318,26 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  const searchParams = request.nextUrl.searchParams;
-  const page = searchParams.get("page");
-  const filter = searchParams.get("filter");
-  if (!clients[params.data]) {
-    // return status 404
-    return errorResponse("Invalid data type");
-  }
-  const client = await clients[params.data]();
-  try {
-    const data = await client.get(page, filter);
-    return new Response(JSON.stringify(data));
-  } catch (error: unknown) {
-    if (isApiError(error)) {
-      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      const message = body.error?.message || error.statusText;
-      return errorResponse(message, error.status);
-    }
-    const errorText = `${(error as any)?.statusText} ${(error as any)?.status}`;
-    return errorResponse(errorText, (error as any)?.status);
-  }
+  return commonGET(request, { params }, clients);
 }
 
 export async function POST(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    return errorResponse("Invalid data type");
-  }
-  const client = await clients[params.data](request);
-  const requestBody = await request.json();
-  try {
-    const roles = await client.post(requestBody);
-    return new Response(JSON.stringify(roles));
-  } catch (error: unknown) {
-    if (isApiError(error)) {
-      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      return errorResponse(
-        body.error?.message || "Something went wrong",
-        error.status,
-      );
-    }
-    return errorResponse("Something went wrong");
-  }
+  return commonPOST(request, { params }, clients);
 }
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    return errorResponse("Invalid data type");
-  }
-  let retVal = "something went wrong";
-  const client = await clients[params.data](request);
-  const id = await request.json();
-  const deleteById = await client.delete(id);
-  if (deleteById === undefined) retVal = "successfull";
-  return new Response(JSON.stringify(retVal));
+  return commonDELETE(request, { params }, clients);
 }
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    return errorResponse("Invalid data type");
-  }
-  const client = await clients[params.data](request);
-  const requestBody = await request.json();
-  try {
-    const roles = await client.put({
-      id: requestBody.id,
-      requestBody:
-        requestBody.requestBody === undefined
-          ? ""
-          : JSON.parse(requestBody.requestBody),
-    });
-    return new Response(JSON.stringify(roles));
-  } catch (error: unknown) {
-    if (isApiError(error)) {
-      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      return errorResponse(
-        body.error?.message || "Uknonw error occured on the server side",
-        error.status,
-      );
-    }
-    return errorResponse("Uknonw error occured on the client/server side 1");
-  }
+  return commonPUT(request, { params }, clients);
 }
