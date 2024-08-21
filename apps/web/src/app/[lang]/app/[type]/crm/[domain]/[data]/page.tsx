@@ -163,33 +163,8 @@ export default function Page({
     action = [
       {
         cta: `New ${formData.title}`,
-        description: `Create a new ${formData.title}`,
-        componentType: "Autoform",
-        autoFormArgs: {
-          formSchema: createZodObject(
-            createFormSchema.schema,
-            createFormSchema.formPositions || [],
-            createFormSchema.convertors || {},
-          ),
-          fieldConfig: {
-            all: {
-              withoutBorder: true,
-            },
-          },
-        },
-        callback: (e) => {
-          const transformedData = parseFormValues(createFormSchema, e);
-          void controlledFetch(
-            fetchLink,
-            {
-              method: "POST",
-              body: JSON.stringify(transformedData),
-            },
-            getRoles,
-            "Added Successfully",
-          );
-        },
-        type: "Dialog",
+        type: "NewPage",
+        href: "/app/admin/crm/companies/merchants/new",
       },
       {
         cta: `Export CSV`,
