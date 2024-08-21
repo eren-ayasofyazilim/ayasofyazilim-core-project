@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
-import type { Volo_Abp_Http_RemoteServiceErrorResponse } from "@ayasofyazilim/saas/AccountService";
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
 import type { NextRequest } from "next/server";
 import { getIdentityServiceClient } from "src/lib";
-import { errorResponse, isApiError } from "../../util";
+import { commonDELETE, commonGET, commonPUT } from "../../util";
 
 const clients: Record<string, any> = {
   organizationUser: async () => {
@@ -105,67 +104,21 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    // return status 404
-    return errorResponse("Invalid data type");
-  }
-  const client = await clients[params.data](request);
   const url = new URL(request.url);
-  const id = url.searchParams.get("id");
-
-  try {
-    const data = await client.get({ id });
-    return new Response(JSON.stringify(data));
-  } catch (error: unknown) {
-    if (isApiError(error)) {
-      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      const message = body.error?.message || error.statusText;
-      return errorResponse(message, error.status);
-    }
-    const errorText = `${(error as any)?.statusText} ${(error as any)?.status}`;
-    return errorResponse(errorText, (error as any)?.status);
-  }
+  const id = url.searchParams.get("id") || "";
+  return commonGET(request, { params }, clients, id);
 }
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    return errorResponse("Invalid data type");
-  }
-  let retVal = "something went wrong";
-  const client = await clients[params.data](request);
-  const id = await request.json();
-  const deleteById = await client.delete(id);
-  if (deleteById === undefined) retVal = "successfull";
-  return new Response(JSON.stringify(retVal));
+  return commonDELETE(request, { params }, clients);
 }
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: { data: string } },
 ) {
-  if (!clients[params.data]) {
-    return errorResponse("Invalid data type", 404);
-  }
-  const client = await clients[params.data](request);
-  const requestBody = await request.json();
-  try {
-    const result = await client.put({
-      id: requestBody.id,
-      requestBody: requestBody.requestBody,
-      organizationId: requestBody.organizationId,
-    });
-    return new Response(JSON.stringify(result), { status: 200 });
-  } catch (error: unknown) {
-    if (isApiError(error)) {
-      const body = error.body as Volo_Abp_Http_RemoteServiceErrorResponse;
-      return errorResponse(
-        body.error?.message || "Something went wrong",
-        error.status,
-      );
-    }
-    return errorResponse("Something went wrong", 500);
-  }
+  return commonPUT(request, { params }, clients);
 }
