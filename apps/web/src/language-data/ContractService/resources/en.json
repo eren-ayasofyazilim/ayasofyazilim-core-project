@@ -17,5 +17,27 @@
   "Alipay": "Alipay",
   "WeChat": "WeChat",
   "CashViaPartner": "Cash via partner",
-  "RefundLater": "Refund later"
+  "RefundLater": "Refund later",
+
+  "Refund": "Refund",
+  "RefundTables": "Refund tables",
+  "RefundTables.Details": "Details",
+  "RefundTables.Create.Title": "New refund table",
+  "RefundTables.Create.Description": "Create a new refund table",
+  "RefundTables.Edit.Title": "Edit refund table",
+  "RefundTables.Edit.Description": "Edit selected refund table",
+  "RefundTables.Delete.Title": "Delete refund table",
+  "RefundTables.Delete.Description": "Are you sure you want to delete this refund table?",
+
+  "RefundTables.Name": "Name",
+  "RefundTables.ValidFrom": "Valid from",
+  "RefundTables.ValidTo": "Valid to",
+  "RefundTables.IsDefault": "Is default",
+  "RefundTables.IsBundling": "Is bundling",
+  "RefundTables.LastModificationTime": "Last modification time",
+  "RefundTables.Actions": "Actions",
+  "RefundTables.Edit": "Edit",
+  "RefundTables.Delete": "Delete",
+  "RefundTables.Cancel": "Cancel",
+  "RefundTables.Save": "Save"
 }

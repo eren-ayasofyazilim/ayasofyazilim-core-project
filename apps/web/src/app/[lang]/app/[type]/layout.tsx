@@ -5,7 +5,6 @@ import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
-  Building2,
   DollarSign,
   FileBadge,
   Folder,
@@ -25,9 +24,9 @@ import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { generateNavigationItems, getBaseLink } from "src/utils";
+import { dataConfigOfCrm } from "./crm/data";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
-import { dataConfigOfCrm } from "./crm/data";
 
 type NavigationItmes = NavigationItem & {
   type: string | string[];
@@ -191,14 +190,6 @@ export default async function Layout({
       appType: "unirefund",
     },
     {
-      key: "company",
-      title: languageData.Companies,
-      href: getBaseLink(`app/${type}/company/merchants`, true, params.lang),
-      icon: <Building2 className="w-4 text-slate-500" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-    {
       key: "countrySettings",
       title: languageData.CountrySettings,
       href: getBaseLink(`app/${type}/country-settings/home`, true, params.lang),
@@ -237,6 +228,43 @@ export default async function Layout({
       href: getBaseLink(`app/${type}/investments`, true, params.lang),
       type: "investor",
       appType: "admin",
+    },
+    {
+      key: "contracts",
+      appType: "unirefund",
+      type: "admin",
+      title: languageData.Contracts,
+      href: getBaseLink(`app/${type}/contracts`, true, params.lang),
+      icon: <FileBadge className="w-4 text-slate-500" />,
+      submenu: [
+        {
+          key: "contracts",
+          title: languageData.Contracts,
+          href: getBaseLink(
+            `app/${type}/contracts/contracts`,
+            true,
+            params.lang,
+          ),
+        },
+        {
+          key: "rebateTables",
+          title: languageData.RebateTables,
+          href: getBaseLink(
+            `app/${type}/contracts/rebate/company-settings`,
+            true,
+            params.lang,
+          ),
+        },
+        {
+          key: "refundTables",
+          title: languageData.RefundTables,
+          href: getBaseLink(
+            `app/${type}/contracts/refund/refund-tables`,
+            true,
+            params.lang,
+          ),
+        },
+      ],
     },
   ];
 
