@@ -238,6 +238,43 @@ export default async function Layout({
       type: "investor",
       appType: "admin",
     },
+    {
+      key: "contracts",
+      appType: "unirefund",
+      type: "admin",
+      title: languageData.Contracts,
+      href: getBaseLink(`app/${type}/contracts`, true, params.lang),
+      icon: <FileBadge className="w-4 text-slate-500" />,
+      submenu: [
+        {
+          key: "contracts",
+          title: languageData.Contracts,
+          href: getBaseLink(
+            `app/${type}/contracts/contracts`,
+            true,
+            params.lang,
+          ),
+        },
+        {
+          key: "rebateTables",
+          title: languageData.RebateTables,
+          href: getBaseLink(
+            `app/${type}/contracts/rebate/company-settings`,
+            true,
+            params.lang,
+          ),
+        },
+        {
+          key: "refundTables",
+          title: languageData.RefundTables,
+          href: getBaseLink(
+            `app/${type}/contracts/refund/refund-tables`,
+            true,
+            params.lang,
+          ),
+        },
+      ],
+    },
   ];
 
   const filteredNavigationItems = navigationItems.filter((item) => {
