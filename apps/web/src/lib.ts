@@ -6,6 +6,7 @@ import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
+import { ContractServiceClient } from "@ayasofyazilim/saas/ContractService";
 import { auth } from "auth";
 
 const HEADERS = {
@@ -56,6 +57,16 @@ export async function getSettingServiceClient(): Promise<SettingServiceClient> {
   const session = await auth();
   const token = session?.access_token;
   return new SettingServiceClient({
+    BASE: process.env.BASE_URL,
+    TOKEN: token,
+    HEADERS,
+  });
+}
+
+export async function getContractServiceClient(): Promise<ContractServiceClient> {
+  const session = await auth();
+  const token = session?.access_token;
+  return new ContractServiceClient({
     BASE: process.env.BASE_URL,
     TOKEN: token,
     HEADERS,
