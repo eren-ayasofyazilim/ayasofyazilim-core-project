@@ -5,7 +5,6 @@ import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
-  Building2,
   DollarSign,
   FileBadge,
   Folder,
@@ -25,9 +24,9 @@ import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
 import { generateNavigationItems, getBaseLink } from "src/utils";
+import { dataConfigOfCrm } from "./crm/data";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
-import { dataConfigOfCrm } from "./crm/data";
 
 type NavigationItmes = NavigationItem & {
   type: string | string[];
@@ -187,14 +186,6 @@ export default async function Layout({
       title: languageData.Template,
       href: getBaseLink(`app/${type}/template/rebate`, true, params.lang),
       icon: <FileBadge className="w-4 text-slate-500" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-    {
-      key: "company",
-      title: languageData.Companies,
-      href: getBaseLink(`app/${type}/company/merchants`, true, params.lang),
-      icon: <Building2 className="w-4 text-slate-500" />,
       type: "admin",
       appType: "unirefund",
     },
