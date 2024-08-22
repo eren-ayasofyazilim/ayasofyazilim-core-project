@@ -1,40 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
 import type { NextRequest } from "next/server";
 import { getIdentityServiceClient } from "src/lib";
+import type { Clients } from "../../util";
 import { commonDELETE, commonGET, commonPUT } from "../../util";
 
-const clients: Record<string, any> = {
+const clients: Clients = {
   organizationUser: async () => {
     const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
-      get: async ({
-        id,
-        maxResultCount = 1000,
-      }: {
-        id: string;
-        maxResultCount: number;
-      }) =>
-        organization.getApiIdentityOrganizationUnitsByIdMembers({
+      get: async (page, filter, _args) => {
+        return organization.getApiIdentityOrganizationUnitsByIdMembers({
+          id: _args as string,
+          maxResultCount: page === 0 ? 10 : page,
+        });
+      },
+      put: async ({ id, requestBody }) => {
+        const _requestBody = requestBody as { userIds: string[] };
+        return organization.putApiIdentityOrganizationUnitsByIdMembers({
           id,
-          maxResultCount,
-        }),
-      put: async ({
-        id,
-        requestBody,
-      }: {
-        id: string;
-        requestBody: { userIds: string[] };
-      }) =>
-        organization.putApiIdentityOrganizationUnitsByIdMembers({
-          id,
-          requestBody,
-        }),
-      delete: async ({ id, memberId }: { id: string; memberId: string }) =>
-        organization.deleteApiIdentityOrganizationUnitsByIdMembersByMemberId({
-          id,
-          memberId,
-        }),
+          requestBody: _requestBody,
+        });
+      },
+      delete: async (id, args) => {
+        const memberId = args as string;
+        return organization.deleteApiIdentityOrganizationUnitsByIdMembersByMemberId(
+          {
+            id,
+            memberId,
+          },
+        );
+      },
     };
   },
 
@@ -42,32 +38,23 @@ const clients: Record<string, any> = {
     const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
-      get: async ({
-        id,
-        maxResultCount = 1000,
-      }: {
-        id: string;
-        maxResultCount: number;
-      }) =>
-        organization.getApiIdentityOrganizationUnitsByIdRoles({
+      get: async (page, filter, _args) => {
+        return organization.getApiIdentityOrganizationUnitsByIdRoles({
+          id: _args as string,
+          maxResultCount: page === 0 ? 10 : page,
+        });
+      },
+      put: async ({ id, requestBody }) => {
+        const _requestBody = requestBody as { roleIds: string[] };
+        return organization.putApiIdentityOrganizationUnitsByIdRoles({
           id,
-          maxResultCount,
-        }),
-      put: async ({
-        id,
-        requestBody,
-      }: {
-        id: string;
-        requestBody: { roleIds: string[] };
-      }) =>
-        organization.putApiIdentityOrganizationUnitsByIdRoles({
-          id,
-          requestBody,
-        }),
-      delete: async ({ id, roleId }: { id: string; roleId: string }) =>
+          requestBody: _requestBody,
+        });
+      },
+      delete: async (id, args) =>
         organization.deleteApiIdentityOrganizationUnitsByIdRolesByRoleId({
           id,
-          roleId,
+          roleId: args as string,
         }),
     };
   },
@@ -76,17 +63,12 @@ const clients: Record<string, any> = {
     const client = await getIdentityServiceClient();
     const organization = client.organizationUnit;
     return {
-      put: async ({
-        id,
-        organizationId,
-      }: {
-        id: string;
-        organizationId: string;
-      }) =>
-        organization.putApiIdentityOrganizationUnitsByIdMoveAllUsers({
+      put: async ({ id, requestBody }) => {
+        return organization.putApiIdentityOrganizationUnitsByIdMoveAllUsers({
           id,
-          organizationId,
-        }),
+          organizationId: requestBody as string,
+        });
+      },
     };
   },
 
