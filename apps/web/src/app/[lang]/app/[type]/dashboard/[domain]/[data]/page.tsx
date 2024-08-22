@@ -244,7 +244,7 @@ export default function Page({
     );
   };
 
-  const onDelete = (e: any, row: any) => {
+  const onDelete = (row: any) => {
     void controlledFetch(
       fetchLink,
       {
@@ -289,29 +289,19 @@ export default function Page({
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
-      callback: getRoles,
-      autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
-      onEdit: (data, row) => {
-        onEdit(data, row, editFormSchema);
-      },
-      dialogTitle: `Edit ${formData.title?.toLowerCase()}`,
-      dialogDescription: `Edit selected ${formData.title?.toLowerCase()}`,
-      onDelete,
       actionList,
     },
   };
-  if (params.data === "scopes") {
-    columnsData.data.actionList?.push({
-      type: "Dialog",
-      cta: "Değişiklik Geçmişi",
-      loadingContent: <>Loading...</>,
-      description: "Değişiklik Geçmişi",
-      componentType: "CustomComponent",
-      content: <>Bir değişiklik yok.</>,
-    });
-  }
+
+  columnsData.data.actionList?.push({
+    cta: `Delete  `,
+    type: "Action",
+    callback: (data) => {
+      onDelete(data);
+    },
+  });
   columnsData.data.actionList?.push({
     cta: `Edit  `,
     description: `Edit `,
@@ -322,6 +312,17 @@ export default function Page({
       onEdit(data, row, editFormSchema);
     },
   });
+
+  if (params.data === "scopes") {
+    columnsData.data.actionList?.push({
+      type: "Dialog",
+      cta: "Değişiklik Geçmişi",
+      loadingContent: <>Loading...</>,
+      description: "Değişiklik Geçmişi",
+      componentType: "CustomComponent",
+      content: <>Bir değişiklik yok.</>,
+    });
+  }
   return (
     <Dashboard
       action={action}

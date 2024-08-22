@@ -218,7 +218,7 @@ export default function Page({
     );
   };
 
-  const onDelete = (e: any, row: any) => {
+  const onDelete = (row: any) => {
     void controlledFetch(
       fetchLink,
       {
@@ -262,20 +262,28 @@ export default function Page({
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
-      callback: getRoles,
-      autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
-      onEdit: (data, row) => {
-        onEdit(data, row, editFormSchema);
-      },
-      dialogTitle: `Edit ${formData.title?.toLowerCase()}`,
-      dialogDescription: `Edit selected ${formData.title?.toLowerCase()}`,
-      onDelete,
       actionList,
     },
   };
-
+  columnsData.data.actionList?.push({
+    cta: `Delete  `,
+    type: "Action",
+    callback: (data) => {
+      onDelete(data);
+    },
+  });
+  columnsData.data.actionList?.push({
+    cta: `Edit  `,
+    description: `Edit `,
+    type: "Dialog",
+    componentType: "Autoform",
+    autoFormArgs: autoformEditArgs,
+    callback: (data, row) => {
+      onEdit(data, row, editFormSchema);
+    },
+  });
   return (
     <Dashboard
       action={action}
