@@ -26,7 +26,8 @@ export default function Page(): JSX.Element {
       actionList: [
         {
           cta: "Open in new page",
-          callback(e, originalRow: TaxFreeTag) {
+          type: "Action",
+          callback: (originalRow: TaxFreeTag) => {
             router.push(
               getBaseLink(
                 `app/admin/details/${originalRow.taxFreeTagFacturaNumber}`,
@@ -38,7 +39,7 @@ export default function Page(): JSX.Element {
       autoFormArgs: {
         formSchema: createZodObject(
           $schema_details,
-          Object.keys($schema_details.properties),
+          $schema_details.properties && Object.keys($schema_details.properties),
         ),
       },
     },

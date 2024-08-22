@@ -4,12 +4,11 @@ import { toast } from "@/components/ui/sonner";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
   ColumnsType,
-  MenuAction,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { z } from "zod";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -281,7 +280,7 @@ export default function Page({
       },
     };
   }
-  let actionList: MenuAction[] = [];
+  let actionList: TableAction[] = [];
   if (formData.tableSchema.actionList) {
     actionList = formData.tableSchema.actionList(controlledFetch, getRoles);
   }
