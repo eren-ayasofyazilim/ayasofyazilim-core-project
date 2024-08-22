@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto } from "@ayasofyazilim/saas/AccountService";
+import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
-import type { MenuAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { defaultResources } from "./resources";
 
 type LocalizationDto =
@@ -120,7 +120,7 @@ export interface SchemaType {
 }
 
 export interface FormModifier {
-  actionList?: (controlledFetch: unknown, getRoles: unknown) => MenuAction[];
+  actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
   formPositions?: string[];
   excludeList?: string[];
   schema: any;

@@ -4,12 +4,11 @@ import { toast } from "@/components/ui/sonner";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
   ColumnsType,
-  MenuAction,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { z } from "zod";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -245,7 +244,7 @@ export default function Page({
     );
   };
 
-  const onDelete = (e: any, row: any) => {
+  const onDelete = (row: any) => {
     void controlledFetch(
       fetchLink,
       {
@@ -283,27 +282,47 @@ export default function Page({
       },
     };
   }
-  let actionList: MenuAction[] = [];
+  let actionList: TableAction[] = [];
   if (formData.tableSchema.actionList) {
     actionList = formData.tableSchema.actionList(controlledFetch, getRoles);
   }
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
-      callback: getRoles,
-      autoFormArgs: autoformEditArgs,
       tableType: formData.tableSchema.schema,
       excludeList: formData.tableSchema.excludeList || [],
-      onEdit: (data, row) => {
-        onEdit(data, row, editFormSchema);
-      },
-      dialogTitle: `Edit ${formData.title?.toLowerCase()}`,
-      dialogDescription: `Edit selected ${formData.title?.toLowerCase()}`,
-      onDelete,
       actionList,
     },
   };
 
+  columnsData.data.actionList?.push({
+    cta: `Delete  `,
+    type: "Action",
+    callback: (data) => {
+      onDelete(data);
+    },
+  });
+  columnsData.data.actionList?.push({
+    cta: `Edit  `,
+    description: `Edit `,
+    type: "Dialog",
+    componentType: "Autoform",
+    autoFormArgs: autoformEditArgs,
+    callback: (data, row) => {
+      onEdit(data, row, editFormSchema);
+    },
+  });
+
+  if (params.data === "scopes") {
+    columnsData.data.actionList?.push({
+      type: "Dialog",
+      cta: "Değişiklik Geçmişi",
+      loadingContent: <>Loading...</>,
+      description: "Değişiklik Geçmişi",
+      componentType: "CustomComponent",
+      content: <>Bir değişiklik yok.</>,
+    });
+  }
   return (
     <Dashboard
       action={action}
