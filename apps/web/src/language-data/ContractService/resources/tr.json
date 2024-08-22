@@ -17,5 +17,27 @@
   "Alipay": "Alipay",
   "WeChat": "WeChat",
   "CashViaPartner": "Ortak Aracılığıyla Nakit",
-  "RefundLater": "Daha Sonra İade"
+  "RefundLater": "Daha Sonra İade",
+
+  "Refund": "İade",
+  "RefundTables": "İade Tabloları",
+  "RefundTables.Details": "Detaylar",
+  "RefundTables.Create.Title": "Yeni iade tablosu",
+  "RefundTables.Create.Description": "Yeni bir iade tablosu oluşturun",
+  "RefundTables.Edit.Title": "İade tablosunu düzenle",
+  "RefundTables.Edit.Description": "Seçili idae tablosunu düzenle",
+  "RefundTables.Delete.Confirm": "Bu iade tablosunu silmek istediğinizden emin misiniz?",
+  "RefundTables.Delete.Confirm.Title": "İade tablosunu sil",
+
+  "RefundTables.Name": "Tablo adı",
+  "RefundTables.ValidFrom": "Geçerli başlangıç tarihi",
+  "RefundTables.ValidTo": "Geçerli bitiş tarihi",
+  "RefundTables.IsDefault": "Varsayılan",
+  "RefundTables.IsBundling": "Paketleme Durumu",
+  "RefundTables.LastModificationTime": "Son değişiklik",
+  "RefundTables.Actions": "İşlemler",
+  "RefundTables.Edit": "Düzenle",
+  "RefundTables.Delete": "Sil",
+  "RefundTables.Cancel": "Vazgeç",
+  "RefundTables.Save": "Kaydet"
 }
