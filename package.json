@@ -20,7 +20,8 @@
     "prepare": "husky install",
     "precommit": "turbo lint && turbo type-check",
     "precommit:web": "npm run format:web && turbo lint --filter web && turbo type-check --filter web",
-    "precommit:lintstaged": "cd apps/web && npx lint-staged"
+    "precommit:lintstaged": "cd apps/web && npx lint-staged",
+    "unused": "npx knip"
   },
   "devDependencies": {
     "turbo": "^2.0.14",
