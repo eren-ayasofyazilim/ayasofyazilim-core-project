@@ -22,13 +22,10 @@ const clients: Clients = {
           requestBody: _requestBody,
         });
       },
-      delete: async (id, args) => {
-        const memberId = args as string;
+      delete: async (id) => {
+        const returnObject = id as unknown as { id: string; memberId: string };
         return organization.deleteApiIdentityOrganizationUnitsByIdMembersByMemberId(
-          {
-            id,
-            memberId,
-          },
+          returnObject,
         );
       },
     };
@@ -51,11 +48,12 @@ const clients: Clients = {
           requestBody: _requestBody,
         });
       },
-      delete: async (id, args) =>
-        organization.deleteApiIdentityOrganizationUnitsByIdRolesByRoleId({
-          id,
-          roleId: args as string,
-        }),
+      delete: async (id) => {
+        const returnObject = id as unknown as { id: string; roleId: string };
+        return organization.deleteApiIdentityOrganizationUnitsByIdRolesByRoleId(
+          returnObject,
+        );
+      },
     };
   },
 
