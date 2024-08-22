@@ -13,6 +13,9 @@ function getLanguageData(resources: any): Record<string, string> {
     Companies: navigationResource?.Companies || "Companies", // "Sirketler",
     Template: navigationResource?.Template || "Template", // "Template",
     CountrySettings: navigationResource?.CountrySettings || "Country Settings", //"Ülke Ayarları",
+    Contracts: navigationResource?.Contracts || "Contracts", //"Anlaşmalar",
+    RebateTables: navigationResource?.RebateTables || "Rebate Tables", //"Rebate Tabloları",
+    RefundTables: navigationResource?.RefundTables || "Refund Tables", //"Rebate Tabloları",
     Settings: navigationResource?.Settings || "Settings", // "Ayarlar",
     LanguageManagement:
       navigationResource?.LanguageManagement || "Language Management", //"Dil Yönetimi",
