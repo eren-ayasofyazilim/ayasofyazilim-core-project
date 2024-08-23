@@ -25,7 +25,7 @@ export interface Client {
     id: string;
     requestBody: unknown;
   }) => Promise<unknown>;
-  delete: (id: string) => Promise<unknown>;
+  delete: (id: string, ...args: unknown[]) => Promise<unknown>;
 }
 export type AasyncFunction = () => Promise<Partial<Client>>;
 
@@ -79,7 +79,7 @@ export async function commonGET(
   const searchParams = request.nextUrl.searchParams;
   const page = Number(searchParams.get("page"));
   const filter = searchParams.get("filter") || "";
-  const maxResultCount = Number(searchParams.get("maxResultCount"));
+  const maxResultCount = Number(searchParams.get("maxResultCount")) || 10;
   if (!Object.keys(clients).includes(params.data)) {
     // return status 404
     return errorResponse("Invalid data type");
@@ -150,9 +150,18 @@ export async function commonPUT(
       `Request is not valid, no put function in the ${params.data} client`,
     );
   try {
-    let id: string | undefined, _requestBody: string | undefined;
+    let id: string | undefined,
+      _requestBody: string | undefined,
+      organizationId: string | undefined;
     if (requestBody && typeof requestBody === "object" && "id" in requestBody) {
       id = requestBody.id as string;
+    }
+    if (
+      requestBody &&
+      typeof requestBody === "object" &&
+      "organizationId" in requestBody
+    ) {
+      organizationId = requestBody.organizationId as string;
     }
     if (
       requestBody &&
@@ -161,11 +170,14 @@ export async function commonPUT(
     ) {
       _requestBody = requestBody.requestBody as string;
     }
+    if (typeof _requestBody === "object") {
+      _requestBody = JSON.stringify(_requestBody);
+    }
     const requestBodyObject: unknown =
       _requestBody === undefined ? "" : JSON.parse(_requestBody);
     const roles = await client.put({
       id: id || "",
-      requestBody: requestBodyObject,
+      requestBody: organizationId || requestBodyObject,
     });
     return new Response(JSON.stringify(roles));
   } catch (error: unknown) {
