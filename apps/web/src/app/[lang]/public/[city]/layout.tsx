@@ -1,4 +1,3 @@
- 
 "use server";
 
 import LandingPageLayout from "@repo/ayasofyazilim-ui/templates/landing-page-layout";

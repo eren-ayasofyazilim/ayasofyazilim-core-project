@@ -1,4 +1,3 @@
- 
 "use server";
 import LanguageSelector from "@repo/ui/language-selector";
 import type { NavigationItem } from "@repo/ui/main-layout";
