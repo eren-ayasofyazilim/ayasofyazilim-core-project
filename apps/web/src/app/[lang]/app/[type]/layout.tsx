@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
 "use server";
 import LanguageSelector from "@repo/ui/language-selector";
 import type { NavigationItem } from "@repo/ui/main-layout";

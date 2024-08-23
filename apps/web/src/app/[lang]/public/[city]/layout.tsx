@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
 "use server";
 
 import LandingPageLayout from "@repo/ayasofyazilim-ui/templates/landing-page-layout";

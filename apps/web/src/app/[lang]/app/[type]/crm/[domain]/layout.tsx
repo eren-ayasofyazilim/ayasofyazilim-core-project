@@ -21,8 +21,7 @@ interface LayoutProps {
 export default function Layout({ children, params }: LayoutProps) {
   const [navbarItems, setNavbarItems] = useState<any>([]);
   const { resources } = useLocale();
-
-  const languageData = getResourceDataClient(resources);
+  const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
   const path = pathname.split("crm/")[1];
 

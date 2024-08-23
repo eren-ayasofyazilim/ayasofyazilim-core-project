@@ -1,121 +1,147 @@
 import { getLocalizationResources } from "src/utils";
+import tr from "./resources/tr.json";
+import en from "./resources/en.json";
 
+const data: Record<string, Record<string, string>> = {
+  tr,
+  en,
+};
 export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const projectResource = resources.ProjectService?.texts;
   const accountResource = resources.AbpAccount?.texts;
   const uiResource = resources.AbpUi?.texts;
   const languageData = {
-    Next: uiResource?.PagerNext || "Next",
-    Previous: uiResource?.PagerPrevious || "Previous",
-    Summary: uiResource?.Summary || "Summary",
-    Projects: projectResource?.Projects || "Projects",
-    LogIn: resources.AbpUiNavigation?.texts?.LogIn || "Login",
-    DaysLeft: projectResource?.DaysLeft || "Days left",
-    InvestNow: projectResource?.InvestNow || "Invest Now",
+    Next: uiResource?.PagerNext || data[lang].Next,
+    Previous: uiResource?.PagerPrevious || data[lang].Previous,
+    Summary: uiResource?.Summary || data[lang].Summary,
+    Projects: projectResource?.Projects || data[lang].Projects,
+    LogIn: resources.AbpUiNavigation?.texts?.LogIn || data[lang].LogIn,
+    DaysLeft: projectResource?.DaysLeft || data[lang].DaysLeft,
+    InvestNow: projectResource?.InvestNow || data[lang].InvestNow,
     InvestmentOpportunities:
-      projectResource?.InvestmentOpportunities || "Investment Opportunitiesies",
+      projectResource?.InvestmentOpportunities ||
+      data[lang].InvestmentOpportunities,
     ProjectsToOpenForInvestmentSoon:
       projectResource?.ProjectsToOpenForInvestmentSoon ||
       "Projects to open for investment soon",
-    StartingSoon: projectResource?.StartingSoon || "Starting Soon",
+    StartingSoon: projectResource?.StartingSoon || data[lang].StartingSoon,
     CampaignStartDate:
-      projectResource?.CampaignStartDate || "Campaign start date",
-    CampaignEndDate: projectResource?.CampaignEndDate || "Campaign end date",
-    CampaignEnded: projectResource?.CampaignEnded || "Campaign Ended",
-    CollectedAmount: projectResource?.CollectedAmount || "Collected amount",
-    TargetAmount: projectResource?.TargetAmount || "Target amount",
-    Investor: projectResource?.Investor || "Investor",
+      projectResource?.CampaignStartDate || data[lang].CampaignStartDate,
+    CampaignEndDate:
+      projectResource?.CampaignEndDate || data[lang].CampaignEndDate,
+    CampaignEnded: projectResource?.CampaignEnded || data[lang].CampaignEnded,
+    CollectedAmount:
+      projectResource?.CollectedAmount || data[lang].CollectedAmount,
+    TargetAmount: projectResource?.TargetAmount || data[lang].TargetAmount,
+    Investor: projectResource?.Investor || data[lang].Investor,
     QualifiedInvestor:
-      projectResource?.QualifiedInvestor || "Qualified Investor",
-    Invest: projectResource?.Invest || "Invest",
-    TargetReached:
-      projectResource?.TargetReached || "{target}% of target reached",
-    CreateProject: projectResource?.CreateProject || "Create Project",
-    ProjectDetails: projectResource?.ProjectDetails || "Project Details",
+      projectResource?.QualifiedInvestor || data[lang].QualifiedInvestor,
+    Invest: projectResource?.Invest || data[lang].Invest,
+    TargetReached: projectResource?.TargetReached || data[lang].TargetReached,
+    CreateProject: projectResource?.CreateProject || data[lang].CreateProject,
+    ProjectDetails:
+      projectResource?.ProjectDetails || data[lang].ProjectDetails,
     AdditionalFunding:
-      projectResource?.AdditionalFunding || "Additional Funding",
-    ViewProject: projectResource?.ViewProject || "View Project",
+      projectResource?.AdditionalFunding || data[lang].AdditionalFunding,
+    ViewProject: projectResource?.ViewProject || data[lang].ViewProject,
     "Messages:ProjectCreated":
       projectResource?.["Messages:ProjectCreated"] ||
-      "The project has been created successfully.",
+      data[lang]["Messages:ProjectCreated"],
     "Messages:ProjectCreationError":
       projectResource?.["Messages:ProjectCreationError"] ||
-      "An error occurred while creating the project.",
-    ProjectName: projectResource?.ProjectName || "Project name",
+      data[lang]["Messages:ProjectCreationError"],
+    ProjectName: projectResource?.ProjectName || data[lang].ProjectName,
     ProjectNameInfo:
-      projectResource?.ProjectNameInfo ||
-      "A headline that describes your project in a way that attracts investors' attention.",
+      projectResource?.ProjectNameInfo || data[lang].ProjectNameInfo,
     ProjectDescription:
-      projectResource?.ProjectDescription || "Project description",
+      projectResource?.ProjectDescription || data[lang].ProjectDescription,
     ProjectDescriptionInfo:
       projectResource?.ProjectDescriptionInfo ||
-      "Briefly describe your project in a way that attracts investors' attention.",
-    FundCollectionType: projectResource?.FundCollectionType || "Project type",
+      data[lang].ProjectDescriptionInfo,
+    FundCollectionType:
+      projectResource?.FundCollectionType || data[lang].FundCollectionType,
     FundCollectionTypeInfo:
-      projectResource?.FundCollectionTypeInfo || "Type of your project.",
+      projectResource?.FundCollectionTypeInfo ||
+      data[lang].FundCollectionTypeInfo,
     FundCollectionTypeSHRE:
-      projectResource?.FundCollectionTypeSHRE || "Share based",
+      projectResource?.FundCollectionTypeSHRE ||
+      data[lang].FundCollectionTypeSHRE,
     FundCollectionTypeDBIT:
-      projectResource?.FundCollectionTypeDBIT || "Dept based",
-    FundableAmount: projectResource?.FundableAmount || "Fundable amount",
+      projectResource?.FundCollectionTypeDBIT ||
+      data[lang].FundCollectionTypeDBIT,
+    FundableAmount:
+      projectResource?.FundableAmount || data[lang].FundableAmount,
     FundableAmountInfo:
-      projectResource?.FundableAmountInfo ||
-      "The amount of investment you want to make in your project.",
+      projectResource?.FundableAmountInfo || data[lang].FundableAmountInfo,
     ProjectStartDateInfo:
-      projectResource?.ProjectStartDateInfo ||
-      "The date your project will start raising funds",
+      projectResource?.ProjectStartDateInfo || data[lang].ProjectStartDateInfo,
     AdditionalFundingInfo:
       projectResource?.AdditionalFundingInfo ||
-      "When your project reaches the fundable amount, should extra funds continue to be collected up to the amount you specify?",
-    AdditionalFundingYes: projectResource?.AdditionalFundingYes || "Yes",
-    AdditionalFundingNo: projectResource?.AdditionalFundingNo || "No",
+      data[lang].AdditionalFundingInfo,
+    AdditionalFundingYes:
+      projectResource?.AdditionalFundingYes || data[lang].AdditionalFundingYes,
+    AdditionalFundingNo:
+      projectResource?.AdditionalFundingNo || data[lang].AdditionalFundingNo,
     AdditionalFundingRate:
-      projectResource?.AdditionalFundingRate || "Rate of additional funding",
+      projectResource?.AdditionalFundingRate ||
+      data[lang].AdditionalFundingRate,
     AdditionalFundingRateInfo:
       projectResource?.AdditionalFundingRateInfo ||
-      "The rate of additional funding that will be collected in case your project is overfunded.",
+      data[lang].AdditionalFundingRateInfo,
     "IHaveReadAndAccept {0}":
-      projectResource?.["IHaveReadAndAccept {0}"] || "I have read and accept",
+      projectResource?.["IHaveReadAndAccept {0}"] ||
+      data[lang]["IHaveReadAndAccept {0}"],
     EFTOrMoneyTransfer:
-      projectResource?.EFTOrMoneyTransfer || "EFT/Money Transfer",
+      projectResource?.EFTOrMoneyTransfer || data[lang].EFTOrMoneyTransfer,
     RiskDeclarationForm:
-      projectResource?.RiskDeclarationForm || "Risk Declaration Form",
+      projectResource?.RiskDeclarationForm || data[lang].RiskDeclarationForm,
     ProjectInformationForm:
-      projectResource?.ProjectInformationForm || "Project Information Form",
+      projectResource?.ProjectInformationForm ||
+      data[lang].ProjectInformationForm,
     IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice:
       projectResource?.IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice ||
-      "I acknowledge that the investment platform does not give investment advices.",
-    CreditCard: projectResource?.CreditCard || "Credit Card",
+      data[lang]
+        .IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice,
+    CreditCard: projectResource?.CreditCard || data[lang].CreditCard,
     YouCanInvestWithCreditCardOrEft:
       projectResource?.YouCanInvestWithCreditCardOrEft ||
-      "You can invest with Credit Card or Eft",
-    InvestmentAmount: projectResource?.InvestmentAmount || "Investment Amount",
-    InvestmentMethod: projectResource?.InvestmentMethod || "Investment Method",
-    RemainingTime: projectResource?.RemainingTime || "Remaining Time",
+      data[lang].YouCanInvestWithCreditCardOrEft,
+    InvestmentAmount:
+      projectResource?.InvestmentAmount || data[lang].InvestmentAmount,
+    InvestmentMethod:
+      projectResource?.InvestmentMethod || data[lang].InvestmentMethod,
+    RemainingTime: projectResource?.RemainingTime || data[lang].RemainingTime,
     QualifiedFundRate:
-      projectResource?.QualifiedFundRate || "Qualified Fund Rate",
-    InvestingProfile: projectResource?.InvestingProfile || "Investing Profile",
-    Share: projectResource?.Share || "Share",
-    "DisplayName:Email": accountResource?.["DisplayName:Email"] || "Email",
+      projectResource?.QualifiedFundRate || data[lang].QualifiedFundRate,
+    InvestingProfile:
+      projectResource?.InvestingProfile || data[lang].InvestingProfile,
+    Share: projectResource?.Share || data[lang].Share,
+    "DisplayName:Email":
+      accountResource?.["DisplayName:Email"] || data[lang]["DisplayName:Email"],
     "DisplayName:PhoneNumber":
-      accountResource?.["DisplayName:Phone"] || "Phone",
-    "DisplayName:Name": accountResource?.["DisplayName:Name"] || "Name",
+      accountResource?.["DisplayName:Phone"] || data[lang]["DisplayName:Phone"],
+    "DisplayName:Name":
+      accountResource?.["DisplayName:Name"] || data[lang]["DisplayName:Name"],
     "DisplayName:Surname":
-      accountResource?.["DisplayName:Surname"] || "Surname",
+      accountResource?.["DisplayName:Surname"] ||
+      data[lang]["DisplayName:Surname"],
 
     SEND_FOR_APPROVAL:
-      projectResource?.SEND_FOR_APPROVAL || "Send for Approval",
-    IN_DRAFT_STAGE: projectResource?.IN_DRAFT_STAGE || "Draft",
+      projectResource?.SEND_FOR_APPROVAL || data[lang].SEND_FOR_APPROVAL,
+    IN_DRAFT_STAGE:
+      projectResource?.IN_DRAFT_STAGE || data[lang].IN_DRAFT_STAGE,
     SENT_FOR_APPROVAL:
-      projectResource?.SENT_FOR_APPROVAL || "Sent for Approval",
-    NOT_APPROVED: projectResource?.NOT_APPROVED || "Rejected",
-    APPROVED: projectResource?.APPROVED || "Approved",
-    FUNDABLE: projectResource?.FUNDABLE || "Fundable",
-    FUNDING_SUCCESSFUL: projectResource?.FUNDING_SUCCESSFUL || "Successful",
+      projectResource?.SENT_FOR_APPROVAL || data[lang].SENT_FOR_APPROVAL,
+    NOT_APPROVED: projectResource?.NOT_APPROVED || data[lang].NOT_APPROVED,
+    APPROVED: projectResource?.APPROVED || data[lang].APPROVED,
+    FUNDABLE: projectResource?.FUNDABLE || data[lang].FUNDABLE,
+    FUNDING_SUCCESSFUL:
+      projectResource?.FUNDING_SUCCESSFUL || data[lang].FUNDING_SUCCESSFUL,
     FUNDING_UNSUCCESSFUL:
-      projectResource?.FUNDING_UNSUCCESSFUL || "Unsuccessful",
-    FUNDING_COMPLETED: projectResource?.FUNDING_COMPLETED || "Completed",
+      projectResource?.FUNDING_UNSUCCESSFUL || data[lang].FUNDING_UNSUCCESSFUL,
+    FUNDING_COMPLETED:
+      projectResource?.FUNDING_COMPLETED || data[lang].FUNDING_COMPLETED,
   };
   return {
     languageData,
