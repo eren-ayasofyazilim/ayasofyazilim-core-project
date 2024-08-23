@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
+import type { ResourceResult } from "src/utils";
 import { getLocalizationResources } from "src/utils";
-import tr from "./resources/tr.json";
 import en from "./resources/en.json";
+import tr from "./resources/tr.json";
 
 const data: Record<string, Record<string, string>> = {
   tr,
   en,
 };
 
-function getLanguageData(resources: any, lang: string): Record<string, string> {
-  const navigationResource = resources?.AbpUiNavigation?.texts;
+function getLanguageData(
+  resources: ResourceResult,
+  lang: string,
+): Record<string, string> {
+  const navigationResource = resources.AbpUiNavigation?.texts;
   return {
     HomePage: navigationResource?.HomePage || data[lang].HomePage,
     Dashboard: navigationResource?.Dashboard || data[lang].Dashboard,
@@ -75,7 +78,7 @@ function getLanguageData(resources: any, lang: string): Record<string, string> {
 }
 export async function getResourceData(lang: string): Promise<{
   languageData: Record<string, string>;
-  resources: any;
+  resources: ResourceResult;
 }> {
   const resources = await getLocalizationResources(lang);
   const languageData = getLanguageData(resources, lang);
@@ -85,7 +88,7 @@ export async function getResourceData(lang: string): Promise<{
   };
 }
 export function getResourceDataClient(
-  resources: any,
+  resources: ResourceResult,
   lang: string,
 ): Record<string, string> {
   const languageData = getLanguageData(resources, lang);
