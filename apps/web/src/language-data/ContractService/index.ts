@@ -1,17 +1,14 @@
-import type { ResourceResult } from "src/utils";
+import type { LanguageDataType, ResourceResult } from "src/utils";
 import { getLocalizationResources } from "src/utils";
-import tr from "./resources/tr.json";
 import en from "./resources/en.json";
+import tr from "./resources/tr.json";
 
-const data: Record<string, Record<string, string>> = {
+const data: LanguageDataType = {
   tr,
   en,
 };
 
-function getLanguageData(
-  resources: ResourceResult,
-  lang: string,
-): Record<string, string> {
+function getLanguageData(resources: ResourceResult, lang: string) {
   const resource = resources.ContractService?.texts;
   const navigationResource = resources.Navigation?.texts;
   return {
@@ -128,10 +125,7 @@ function getLanguageData(
       data.en["RefundTables.Save"],
   };
 }
-export async function getResourceData(lang: string): Promise<{
-  languageData: Record<string, string>;
-  resources: ResourceResult;
-}> {
+export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const languageData = getLanguageData(resources, lang);
   return {
@@ -139,10 +133,7 @@ export async function getResourceData(lang: string): Promise<{
     resources,
   };
 }
-export function getResourceDataClient(
-  resources: ResourceResult,
-  lang: string,
-): Record<string, string> {
+export function getResourceDataClient(resources: ResourceResult, lang: string) {
   const languageData = getLanguageData(resources, lang);
   return languageData;
 }

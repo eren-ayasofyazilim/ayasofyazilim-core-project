@@ -11,6 +11,13 @@ type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
 export type ResourcesDto = LocalizationDto["resources"];
 
+type En = Record<string, string>;
+type Other = Record<string, string | undefined>;
+export interface LanguageDataType {
+  en: En;
+  [key: string]: Other;
+}
+
 export function isServerSide() {
   return typeof window === "undefined";
 }

@@ -1,8 +1,9 @@
+import type { LanguageDataType } from "src/utils";
 import { getLocalizationResources } from "src/utils";
-import tr from "./resources/tr.json";
 import en from "./resources/en.json";
+import tr from "./resources/tr.json";
 
-const data: Record<string, Record<string, string>> = {
+const data: LanguageDataType = {
   tr,
   en,
 };
@@ -90,11 +91,13 @@ export async function getResourceData(lang: string) {
     "Messages:ProjectCreated":
       projectResource?.["Messages:ProjectCreated"] ||
       data[lang]["Messages:ProjectCreated"] ||
-      data.en["Messages:ProjectCreated"],
+      data.en["Messages:ProjectCreated"] ||
+      "",
     "Messages:ProjectCreationError":
       projectResource?.["Messages:ProjectCreationError"] ||
       data[lang]["Messages:ProjectCreationError"] ||
-      data.en["Messages:ProjectCreationError"],
+      data.en["Messages:ProjectCreationError"] ||
+      "",
     ProjectName:
       projectResource?.ProjectName ||
       data[lang].ProjectName ||
@@ -162,7 +165,8 @@ export async function getResourceData(lang: string) {
     "IHaveReadAndAccept {0}":
       projectResource?.["IHaveReadAndAccept {0}"] ||
       data[lang]["IHaveReadAndAccept {0}"] ||
-      data.en["IHaveReadAndAccept {0}"],
+      data.en["IHaveReadAndAccept {0}"] ||
+      "",
     EFTOrMoneyTransfer:
       projectResource?.EFTOrMoneyTransfer ||
       data[lang].EFTOrMoneyTransfer ||
@@ -212,19 +216,23 @@ export async function getResourceData(lang: string) {
     "DisplayName:Email":
       accountResource?.["DisplayName:Email"] ||
       data[lang]["DisplayName:Email"] ||
-      data.en["DisplayName:Email"],
+      data.en["DisplayName:Email"] ||
+      "",
     "DisplayName:PhoneNumber":
       accountResource?.["DisplayName:Phone"] ||
       data[lang]["DisplayName:Phone"] ||
-      data.en["DisplayName:Phone"],
+      data.en["DisplayName:Phone"] ||
+      "",
     "DisplayName:Name":
       accountResource?.["DisplayName:Name"] ||
       data[lang]["DisplayName:Name"] ||
-      data.en["DisplayName:Name"],
+      data.en["DisplayName:Name"] ||
+      "",
     "DisplayName:Surname":
       accountResource?.["DisplayName:Surname"] ||
       data[lang]["DisplayName:Surname"] ||
-      data.en["DisplayName:Surname"],
+      data.en["DisplayName:Surname"] ||
+      "",
     SEND_FOR_APPROVAL:
       projectResource?.SEND_FOR_APPROVAL ||
       data[lang].SEND_FOR_APPROVAL ||

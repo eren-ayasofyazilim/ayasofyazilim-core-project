@@ -1,17 +1,14 @@
-import type { ResourceResult } from "src/utils";
+import type { LanguageDataType, ResourceResult } from "src/utils";
 import { getLocalizationResources } from "src/utils";
 import en from "./resources/en.json";
 import tr from "./resources/tr.json";
 
-const data: Record<string, Record<string, string>> = {
+const data: LanguageDataType = {
   tr,
   en,
 };
 
-function getLanguageData(
-  resources: ResourceResult,
-  lang: string,
-): Record<string, string> {
+function getLanguageData(resources: ResourceResult, lang: string) {
   const navigationResource = resources.AbpUiNavigation?.texts;
   return {
     HomePage:
@@ -68,15 +65,18 @@ function getLanguageData(
     "Identity:role":
       navigationResource?.["Identity:role"] ||
       data[lang]["Identity:role"] ||
-      data.en["Identity:role"],
+      data.en["Identity:role"] ||
+      "",
     "Identity:user":
       navigationResource?.["Identity:user"] ||
       data[lang]["Identity:user"] ||
-      data.en["Identity:user"],
+      data.en["Identity:user"] ||
+      "",
     "Identity:claimType":
       navigationResource?.["Identity:claimType"] ||
       data[lang]["Identity:claimType"] ||
-      data.en["Identity:claimType"],
+      data.en["Identity:claimType"] ||
+      "",
 
     Investor:
       navigationResource?.Investor || data[lang].Investor || data.en.Investor,
@@ -146,10 +146,7 @@ function getLanguageData(
     Add: navigationResource?.Add || data[lang].Add || data.en.Add,
   };
 }
-export async function getResourceData(lang: string): Promise<{
-  languageData: Record<string, string>;
-  resources: ResourceResult;
-}> {
+export async function getResourceData(lang: string) {
   const resources = await getLocalizationResources(lang);
   const languageData = getLanguageData(resources, lang);
   return {
@@ -157,10 +154,7 @@ export async function getResourceData(lang: string): Promise<{
     resources,
   };
 }
-export function getResourceDataClient(
-  resources: ResourceResult,
-  lang: string,
-): Record<string, string> {
+export function getResourceDataClient(resources: ResourceResult, lang: string) {
   const languageData = getLanguageData(resources, lang);
   return languageData;
 }

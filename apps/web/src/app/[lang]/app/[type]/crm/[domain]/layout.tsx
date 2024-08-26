@@ -31,7 +31,10 @@ export default function Layout({ children, params }: LayoutProps) {
       .map(([key, value]: [string, any]) => {
         return {
           id: `${params.domain}/${key}`,
-          name: languageData[`merchant:${key}`] || value.title || key,
+          name:
+            languageData[`merchant:${key}` as keyof typeof languageData] ||
+            value.title ||
+            key,
           link: getBaseLink(
             `crm/${params.domain}/${key}`,
             true,
