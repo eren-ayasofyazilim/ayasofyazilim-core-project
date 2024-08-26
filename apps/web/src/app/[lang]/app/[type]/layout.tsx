@@ -1,5 +1,4 @@
 "use server";
-import LanguageSelector from "@repo/ui/language-selector";
 import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
@@ -69,28 +68,31 @@ export default async function Layout({
     user,
     email: user?.email ?? undefined,
     imageURL: "https://github.com/shadcn.png",
-    menuLinks: [
-      {
-        href: getBaseLink(`public`, true, params.lang),
-        title: languageData.HomePage,
-        icon: <Home className="mr-2 h-4 w-4" />,
-      },
-      {
-        href: getBaseLink(`app/admin`, true, params.lang),
-        title: languageData.AdminCenter,
-        icon: <ShieldAlert className="mr-2 h-4 w-4" />,
-      },
-      {
-        href: getBaseLink(`app/entrepreneur`, true, params.lang),
-        title: languageData.EntrepreneurCenter,
-        icon: <Projector className="mr-2 h-4 w-4" />,
-      },
-      {
-        href: getBaseLink(`app/investor`, true, params.lang),
-        title: languageData.InvestorCenter,
-        icon: <Worm className="mr-2 h-4 w-4" />,
-      },
-    ],
+    menuLinks:
+      appName === "UNIREFUND"
+        ? []
+        : [
+            {
+              href: getBaseLink(`public`, true, params.lang),
+              title: languageData.HomePage,
+              icon: <Home className="mr-2 h-4 w-4" />,
+            },
+            {
+              href: getBaseLink(`app/admin`, true, params.lang),
+              title: languageData.AdminCenter,
+              icon: <ShieldAlert className="mr-2 h-4 w-4" />,
+            },
+            {
+              href: getBaseLink(`app/entrepreneur`, true, params.lang),
+              title: languageData.EntrepreneurCenter,
+              icon: <Projector className="mr-2 h-4 w-4" />,
+            },
+            {
+              href: getBaseLink(`app/investor`, true, params.lang),
+              title: languageData.InvestorCenter,
+              icon: <Worm className="mr-2 h-4 w-4" />,
+            },
+          ],
     isLoggedIn: Boolean(user),
     className: "bg-transparent",
     signOutFunction: signOutServer,
@@ -280,11 +282,10 @@ export default async function Layout({
       navigationItems={filteredNavigationItems}
       topBarComponent={
         <div className="mr-5 flex w-min gap-4">
-          <ProfileMenu {...userNavigation} />
-          <LanguageSelector
+          <ProfileMenu
+            {...userNavigation}
             baseLink={getBaseLink("", false)}
             cultureName={params.lang}
-            menuAlign="end"
             resources={resources}
           />
         </div>
