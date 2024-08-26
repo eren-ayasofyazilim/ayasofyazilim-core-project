@@ -12,7 +12,7 @@ type LocalizationDto =
 export type ResourcesDto = LocalizationDto["resources"];
 
 type En = Record<string, string>;
-type Other = Record<string, string | undefined>;
+type Other = Record<string, string | undefined> | undefined;
 export interface LanguageDataType {
   en: En;
   [key: string]: Other;
