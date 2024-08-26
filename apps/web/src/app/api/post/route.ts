@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
 "use server";
 import type { NextRequest } from "next/server";
 
 export async function POST(reqest: NextRequest) {
   const { body, url } = (await reqest.json()) as {
-    body: any;
+    body: unknown;
     url: string;
   };
   const headers = new Headers();

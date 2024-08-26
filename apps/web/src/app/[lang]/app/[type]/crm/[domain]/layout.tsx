@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 "use client";
 
+import type { ISection } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import {
   SectionLayout,
   SectionLayoutContent,
@@ -15,11 +15,17 @@ import { dataConfigOfCrm } from "../data";
 
 interface LayoutProps {
   children: JSX.Element;
-  params?: any;
+  params: {
+    lang: string;
+    domain: string;
+    type: string;
+  };
 }
 
+type SectionNavbarItems = ISection[];
+
 export default function Layout({ children, params }: LayoutProps) {
-  const [navbarItems, setNavbarItems] = useState<any>([]);
+  const [navbarItems, setNavbarItems] = useState<SectionNavbarItems>([]);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
@@ -28,13 +34,20 @@ export default function Layout({ children, params }: LayoutProps) {
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfigOfCrm[params.domain])
       .filter(([e]) => e !== "displayName" && e !== "default")
-      .map(([key, value]: [string, any]) => {
+      .map(([key, value]: [string, unknown]) => {
+        let name = languageData[`merchant:${key}` as keyof typeof languageData];
+        if (
+          value &&
+          typeof value === "object" &&
+          "title" in value &&
+          value.title &&
+          typeof value.title === "string"
+        ) {
+          name = value.title;
+        }
         return {
           id: `${params.domain}/${key}`,
-          name:
-            languageData[`merchant:${key}` as keyof typeof languageData] ||
-            value.title ||
-            key,
+          name: name || key,
           link: getBaseLink(
             `crm/${params.domain}/${key}`,
             true,
