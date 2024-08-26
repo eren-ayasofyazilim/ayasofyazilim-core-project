@@ -11,16 +11,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/dropdown-menu";
-import { ChevronDown, LogOut, PlusCircle, User, UserPlus } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import Link from "next/link";
-import { cn } from "../../utils";
+import LanguageSelector from "../../language-selector";
+import { cn, ResourceResult } from "../../utils";
 
 export type MenuLinkItem = {
   key?: string;
@@ -32,10 +29,13 @@ export type MenuLinkItem = {
 export type ProfileMenuProps = {
   className?: string;
   user: any;
+  resources?: ResourceResult;
   imageURL?: string;
   menuLinks?: MenuLinkItem[];
   signOutFunction?: any;
   languageData?: any;
+  cultureName?: string;
+  baseLink: string;
   minNavbar?: boolean;
 };
 export function ProfileMenu({
@@ -44,7 +44,10 @@ export function ProfileMenu({
   signOutFunction,
   className,
   imageURL,
+  resources,
   languageData,
+  cultureName,
+  baseLink,
 }: ProfileMenuProps) {
   return (
     <DropdownMenu>
@@ -52,8 +55,8 @@ export function ProfileMenu({
         <Button
           variant="outline"
           className={cn(
-            "flex items-center gap-3 w-full focus-visible:ring-0  hover:drop-shadow-sm  px-3 py-1 transition-shadow duration-500 rounded-md h-auto",
-            className
+            "flex h-auto w-full items-center gap-3  rounded-md  px-3 py-1 transition-shadow duration-500 hover:drop-shadow-sm focus-visible:ring-0",
+            className,
           )}
         >
           <Avatar>
@@ -62,9 +65,9 @@ export function ProfileMenu({
               {user.userName?.substring(0, 2) ?? "U"}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col gap-1 w-full">
-            <h3 className="leading-none font-semibold text-sm">{user.name}</h3>
-            <h6 className="leading-none text-muted-foreground text-xs">
+          <div className="flex w-full flex-col gap-1">
+            <h3 className="text-sm font-semibold leading-none">{user.name}</h3>
+            <h6 className="text-muted-foreground text-xs leading-none">
               {user.email}
             </h6>
           </div>
@@ -74,7 +77,7 @@ export function ProfileMenu({
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>{languageData.MyAccount}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <UserPlus className="mr-2 h-4 w-4" />
             <span>{languageData.ChangeProfile}</span>
@@ -94,7 +97,7 @@ export function ProfileMenu({
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
           {menuLinks?.map((link) => (
             <Link key={link.title} href={link.href}>
@@ -105,9 +108,7 @@ export function ProfileMenu({
             </Link>
           ))}
         </DropdownMenuGroup>
-
         {menuLinks && menuLinks.length > 0 && <DropdownMenuSeparator />}
-
         {signOutFunction && (
           <DropdownMenuItem
             className="cursor-pointer"
@@ -118,6 +119,19 @@ export function ProfileMenu({
             <LogOut className="mr-2 h-4 w-4" />
             <span>{languageData.LogOut}</span>
           </DropdownMenuItem>
+        )}
+        {cultureName && (
+          <>
+            <DropdownMenuSeparator />
+            <div className="mx-auto w-6 cursor-pointer px-0 py-1">
+              <LanguageSelector
+                baseLink={baseLink}
+                cultureName={cultureName}
+                menuAlign="end"
+                resources={resources}
+              />
+            </div>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
