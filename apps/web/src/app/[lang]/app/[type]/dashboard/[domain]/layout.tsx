@@ -32,7 +32,10 @@ export default function Layout({ children, params }: LayoutProps) {
       .map(([key, value]: [string, any]) => {
         return {
           id: `${params.domain}/${key}`,
-          name: languageData[`Identity:${key}`] || value.title || key,
+          name:
+            languageData[`Identity:${key}` as keyof typeof languageData] ||
+            value.title ||
+            key,
           link: getBaseLink(
             `dashboard/${params.domain}/${key}`,
             true,
