@@ -189,7 +189,7 @@ export default function Page() {
         cards={cards}
         columnsData={{
           type: "Custom",
-          data: columns,
+          data: { columns },
         }}
         data={data}
         withCards
