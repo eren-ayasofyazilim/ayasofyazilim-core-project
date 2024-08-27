@@ -1,8 +1,60 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
+/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
 import type { NextRequest } from "next/server";
+import type { CreateMerchants } from "src/app/[lang]/app/[type]/crm/[domain]/[data]/new/page";
 import { getCRMServiceClient } from "src/lib";
 import type { Clients } from "../../util";
 import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../util";
+
+function createRequestBody(formData: CreateMerchants) {
+  return {
+    requestBody: {
+      entityInformationTypes: [
+        {
+          organizations: [
+            {
+              name: formData.name,
+              taxpayerId: formData.taxpayerId,
+              legalStatusCode: formData.legalStatusCode,
+              customerNumber: formData.customerNumber,
+              contactInformations: [
+                {
+                  telephones: [
+                    {
+                      areaCode: formData.areaCode,
+                      localNumber: formData.localNumber,
+                      ituCountryCode: formData.ituCountryCode,
+                      primaryFlag: formData.primaryFlag,
+                      typeCode: formData.telephoneTypeCode,
+                    },
+                  ],
+                  addresses: [
+                    {
+                      addressLine: formData.addressLine,
+                      city: formData.city,
+                      terriority: formData.terriority,
+                      postalCode: formData.postalCode,
+                      country: formData.country,
+                      fullAddress: formData.fullAddress,
+                      primaryFlag: formData.addressPrimaryFlag,
+                      typeCode: formData.addressTypeCode,
+                    },
+                  ],
+                  emails: [
+                    {
+                      emailAddress: formData.emailAddress,
+                      primaryFlag: formData.emailPrimaryFlag,
+                      typeCode: formData.emailTypeCode,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  };
+}
 
 const clients: Clients = {
   merchants: async () => {
@@ -16,8 +68,12 @@ const clients: Clients = {
           skipCount: page * 10,
         });
       },
-      post: async (requestBody: any) =>
-        merchant.postApiCrmServiceMerchantsWithComponents({ requestBody }),
+      post: async (formData: unknown) => {
+        await merchant.postApiCrmServiceMerchantsWithComponents(
+          createRequestBody(formData as CreateMerchants),
+        );
+      },
+
       delete: async (id: string) =>
         merchant.deleteApiCrmServiceMerchantsWithComponentsById({ id }),
     };
@@ -33,10 +89,11 @@ const clients: Clients = {
           skipCount: page * 10,
         });
       },
-      post: async (requestBody: any) =>
-        refundPoint.postApiCrmServiceRefundPointsWithComponents({
-          requestBody,
-        }),
+      post: async (formData: unknown) => {
+        await refundPoint.postApiCrmServiceRefundPointsWithComponents(
+          createRequestBody(formData as CreateMerchants),
+        );
+      },
       delete: async (id: string) =>
         refundPoint.deleteApiCrmServiceRefundPointsWithComponentsById({ id }),
     };
@@ -52,10 +109,11 @@ const clients: Clients = {
           skipCount: page * 10,
         });
       },
-      post: async (requestBody: any) =>
-        customs.postApiCrmServiceCustomsWithComponents({
-          requestBody,
-        }),
+      post: async (formData: unknown) => {
+        await customs.postApiCrmServiceCustomsWithComponents(
+          createRequestBody(formData as CreateMerchants),
+        );
+      },
       delete: async (id: string) =>
         customs.deleteApiCrmServiceCustomsWithComponentsById({ id }),
     };
@@ -71,10 +129,11 @@ const clients: Clients = {
           skipCount: page * 10,
         });
       },
-      post: async (requestBody: any) =>
-        taxFree.postApiCrmServiceTaxFreesWithComponents({
-          requestBody,
-        }),
+      post: async (formData: unknown) => {
+        await taxFree.postApiCrmServiceTaxFreesWithComponents(
+          createRequestBody(formData as CreateMerchants),
+        );
+      },
       delete: async (id: string) =>
         taxFree.deleteApiCrmServiceTaxFreesWithComponentsById({ id }),
     };
@@ -90,10 +149,11 @@ const clients: Clients = {
           skipCount: page * 10,
         });
       },
-      post: async (requestBody: any) =>
-        taxOffices.postApiCrmServiceTaxOfficesWithComponents({
-          requestBody,
-        }),
+      post: async (formData: unknown) => {
+        await taxOffices.postApiCrmServiceTaxOfficesWithComponents(
+          createRequestBody(formData as CreateMerchants),
+        );
+      },
       delete: async (id: string) =>
         taxOffices.deleteApiCrmServiceTaxOfficesWithComponentsById({ id }),
     };

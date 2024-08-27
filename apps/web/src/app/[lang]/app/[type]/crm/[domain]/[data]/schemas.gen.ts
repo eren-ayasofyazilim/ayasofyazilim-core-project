@@ -21,17 +21,20 @@ export const $createMerchants = {
       minLength: 0,
       type: "string",
     },
+    ituCountryCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
     areaCode: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    localNumber: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
+    telephoneTypeCode: {
+      type: "integer",
     },
-    ituCountryCode: {
+    localNumber: {
       maxLength: 64,
       minLength: 0,
       type: "string",
@@ -39,19 +42,12 @@ export const $createMerchants = {
     primaryFlag: {
       type: "boolean",
     },
-    telephoneTypeCode: {
-      type: "integer",
-    },
     addressLine: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    city: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
+
     terriority: {
       maxLength: 64,
       minLength: 0,
@@ -67,42 +63,31 @@ export const $createMerchants = {
       minLength: 0,
       type: "string",
     },
+    city: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
     fullAddress: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    addressPrimaryFlag: {
-      type: "boolean",
-    },
     addressTypeCode: {
       type: "integer",
+    },
+    addressPrimaryFlag: {
+      type: "boolean",
     },
     emailAddress: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    emailPrimaryFlag: {
-      type: "boolean",
-    },
     emailTypeCode: {
       type: "integer",
     },
-    productName: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    vatRate: {
-      type: "integer",
-    },
-    productCode: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    isActive: {
+    emailPrimaryFlag: {
       type: "boolean",
     },
   },
@@ -328,7 +313,102 @@ export const $editMerchants = {
   },
 } as const;
 
-export const $createRefund_points = {
+export const $createrefundPoints = {
+  type: "object",
+  properties: {
+    name: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    taxpayerId: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    legalStatusCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    customerNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    ituCountryCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    areaCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    telephoneTypeCode: {
+      type: "integer",
+    },
+    localNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    addressLine: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+
+    terriority: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    postalCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    country: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    city: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    fullAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    addressTypeCode: {
+      type: "integer",
+    },
+    addressPrimaryFlag: {
+      type: "boolean",
+    },
+    emailAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    emailTypeCode: {
+      type: "integer",
+    },
+    emailPrimaryFlag: {
+      type: "boolean",
+    },
+  },
+} as const;
+
+export const $editRerefundPoints = {
   required: ["name"],
   type: "object",
   properties: {
@@ -355,34 +435,7 @@ export const $createRefund_points = {
   },
 } as const;
 
-export const $editRefund_points = {
-  required: ["name"],
-  type: "object",
-  properties: {
-    Company: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    CustomerNumber: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    ProductGroups: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    Address: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-  },
-} as const;
-
-export const $showRefund_points = {
+export const $showRerefundPoints = {
   required: ["name"],
   type: "object",
   properties: {
@@ -410,28 +463,96 @@ export const $showRefund_points = {
 } as const;
 
 export const $createCustoms = {
-  required: ["name"],
   type: "object",
   properties: {
-    Company: {
+    name: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    CustomerNumber: {
+    taxpayerId: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    ProductGroups: {
+    legalStatusCode: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    Address: {
+    customerNumber: {
       maxLength: 64,
       minLength: 0,
       type: "string",
+    },
+    ituCountryCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    areaCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    telephoneTypeCode: {
+      type: "integer",
+    },
+    localNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    addressLine: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+
+    terriority: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    postalCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    country: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    city: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    fullAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    addressTypeCode: {
+      type: "integer",
+    },
+    addressPrimaryFlag: {
+      type: "boolean",
+    },
+    emailAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    emailTypeCode: {
+      type: "integer",
+    },
+    emailPrimaryFlag: {
+      type: "boolean",
     },
   },
 } as const;
@@ -490,7 +611,102 @@ export const $showCustoms = {
   },
 } as const;
 
-export const $createTax_free = {
+export const $createtaxFree = {
+  type: "object",
+  properties: {
+    name: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    taxpayerId: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    legalStatusCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    customerNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    ituCountryCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    areaCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    telephoneTypeCode: {
+      type: "integer",
+    },
+    localNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    addressLine: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+
+    terriority: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    postalCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    country: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    city: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    fullAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    addressTypeCode: {
+      type: "integer",
+    },
+    addressPrimaryFlag: {
+      type: "boolean",
+    },
+    emailAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    emailTypeCode: {
+      type: "integer",
+    },
+    emailPrimaryFlag: {
+      type: "boolean",
+    },
+  },
+} as const;
+
+export const $edittaxFree = {
   required: ["name"],
   type: "object",
   properties: {
@@ -517,7 +733,7 @@ export const $createTax_free = {
   },
 } as const;
 
-export const $editTax_free = {
+export const $showtaxFree = {
   required: ["name"],
   type: "object",
   properties: {
@@ -544,29 +760,97 @@ export const $editTax_free = {
   },
 } as const;
 
-export const $showTax_free = {
-  required: ["name"],
+export const $createtaxOffices = {
   type: "object",
   properties: {
-    Company: {
+    name: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    CustomerNumber: {
+    taxpayerId: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    ProductGroups: {
+    legalStatusCode: {
       maxLength: 64,
       minLength: 0,
       type: "string",
     },
-    Address: {
+    customerNumber: {
       maxLength: 64,
       minLength: 0,
       type: "string",
+    },
+    ituCountryCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    areaCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    telephoneTypeCode: {
+      type: "integer",
+    },
+    localNumber: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    addressLine: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+
+    terriority: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    postalCode: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    country: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    city: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    fullAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    addressTypeCode: {
+      type: "integer",
+    },
+    addressPrimaryFlag: {
+      type: "boolean",
+    },
+    emailAddress: {
+      maxLength: 64,
+      minLength: 0,
+      type: "string",
+    },
+    emailTypeCode: {
+      type: "integer",
+    },
+    emailPrimaryFlag: {
+      type: "boolean",
     },
   },
 } as const;
