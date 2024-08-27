@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: we need to fix this*/
 import type { NextRequest } from "next/server";
+import type { PostApiCrmServiceMerchantsWithComponentsData } from "@ayasofyazilim/saas/CRMService";
 import type { CreateMerchants } from "src/app/[lang]/app/[type]/crm/[domain]/[data]/new/page";
 import { getCRMServiceClient } from "src/lib";
 import type { Clients } from "../../util";
 import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../util";
 
-function createRequestBody(formData: CreateMerchants) {
+function createRequestBody(
+  formData: CreateMerchants,
+): PostApiCrmServiceMerchantsWithComponentsData {
   return {
     requestBody: {
       entityInformationTypes: [
@@ -61,7 +63,7 @@ const clients: Clients = {
     const client = await getCRMServiceClient();
     const merchant = client.merchant;
     return {
-      get: async (page: number, filter, _maxResultCount: any) => {
+      get: async (page: number, filter, _maxResultCount: unknown) => {
         const maxResultCount = Number(_maxResultCount) || 10;
         return merchant.getApiCrmServiceMerchants({
           maxResultCount: maxResultCount || 10,
@@ -82,7 +84,7 @@ const clients: Clients = {
     const client = await getCRMServiceClient();
     const refundPoint = client.refundPoint;
     return {
-      get: async (page: number, filter, _maxResultCount: any) => {
+      get: async (page: number, filter, _maxResultCount: unknown) => {
         const maxResultCount = Number(_maxResultCount) || 10;
         return refundPoint.getApiCrmServiceRefundPoints({
           maxResultCount: maxResultCount || 10,
@@ -102,7 +104,7 @@ const clients: Clients = {
     const client = await getCRMServiceClient();
     const customs = client.customs;
     return {
-      get: async (page: number, filter, _maxResultCount: any) => {
+      get: async (page: number, filter, _maxResultCount: unknown) => {
         const maxResultCount = Number(_maxResultCount) || 10;
         return customs.getApiCrmServiceCustoms({
           maxResultCount: maxResultCount || 10,
@@ -122,7 +124,7 @@ const clients: Clients = {
     const client = await getCRMServiceClient();
     const taxFree = client.taxFree;
     return {
-      get: async (page: number, filter, _maxResultCount: any) => {
+      get: async (page: number, filter, _maxResultCount: unknown) => {
         const maxResultCount = Number(_maxResultCount) || 10;
         return taxFree.getApiCrmServiceTaxFrees({
           maxResultCount: maxResultCount || 10,
@@ -142,7 +144,7 @@ const clients: Clients = {
     const client = await getCRMServiceClient();
     const taxOffices = client.taxOffice;
     return {
-      get: async (page: number, filter, _maxResultCount: any) => {
+      get: async (page: number, filter, _maxResultCount: unknown) => {
         const maxResultCount = Number(_maxResultCount) || 10;
         return taxOffices.getApiCrmServiceTaxOffices({
           maxResultCount: maxResultCount || 10,
