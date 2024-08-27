@@ -373,7 +373,7 @@ function Rebate({ languageData }: any) {
                 Headertable={feesHeaders}
                 columnsData={{
                   type: "Custom",
-                  data: feescolumns(languageData),
+                  data: { columns: feescolumns(languageData) },
                 }}
                 data={feesData}
                 editable
@@ -397,7 +397,7 @@ function Rebate({ languageData }: any) {
                 Headertable={setupHeaders}
                 columnsData={{
                   type: "Custom",
-                  data: setupcolumns(languageData),
+                  data: { columns: setupcolumns(languageData) },
                 }}
                 data={setupData}
                 editable

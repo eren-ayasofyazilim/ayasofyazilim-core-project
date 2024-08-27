@@ -316,7 +316,7 @@ function MyDataTable() {
       </div>
       <DataTable
         columnsData={{
-          data: columns,
+          data: { columns },
           type: "Custom",
         }}
         data={data}

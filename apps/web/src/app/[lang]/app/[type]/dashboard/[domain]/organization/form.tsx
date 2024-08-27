@@ -208,7 +208,7 @@ export function GenericModal<T extends { id: string }>({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DataTable
-          columnsData={{ type: "Custom", data: columnsData }}
+          columnsData={{ type: "Custom", data: { columns: columnsData } }}
           data={items}
           isLoading={loading}
         />

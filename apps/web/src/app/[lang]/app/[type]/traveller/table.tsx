@@ -2,6 +2,8 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { ColumnDef } from "@tanstack/react-table";
+import { useRouter } from "next/navigation";
+import { getBaseLink } from "src/utils";
 
 //pasaportid, country id, country name, (residence & nationality)
 const data = [
@@ -71,12 +73,30 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 export default function Table() {
+  const router = useRouter();
   return (
     <Dashboard
       cards={[]}
-      columnsData={{ type: "Custom", data: columns }}
+      columnsData={{
+        type: "Custom",
+        data: {
+          columns,
+          actionList: [
+            {
+              cta: "Open in new page",
+              type: "Action",
+              callback: (originalRow: { id: string }) => {
+                router.push(
+                  getBaseLink(`app/admin/traveller/${originalRow.id}`),
+                );
+              },
+            },
+          ],
+        },
+      }}
       data={data}
       //  fetchRequest={getRoles}
+
       isLoading={false}
       rowCount={1}
       withCards={false}

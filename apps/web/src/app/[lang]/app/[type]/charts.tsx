@@ -306,33 +306,35 @@ const DashboardJson = {
         <DataTable
           columnsData={{
             type: "Custom",
-            data: [
-              {
-                id: "select",
-                enableSorting: false,
-                enableHiding: false,
-              },
-              {
-                accessorKey: "result",
-                header: "Result",
-              },
-              {
-                accessorKey: "tags",
-                header: "Tags",
-              },
-              {
-                accessorKey: "sales",
-                header: "Sales",
-              },
-              {
-                accessorKey: "vat",
-                header: "VAT",
-              },
-              {
-                accessorKey: "atv",
-                header: "ATV",
-              },
-            ],
+            data: {
+              columns: [
+                {
+                  id: "select",
+                  enableSorting: false,
+                  enableHiding: false,
+                },
+                {
+                  accessorKey: "result",
+                  header: "Result",
+                },
+                {
+                  accessorKey: "tags",
+                  header: "Tags",
+                },
+                {
+                  accessorKey: "sales",
+                  header: "Sales",
+                },
+                {
+                  accessorKey: "vat",
+                  header: "VAT",
+                },
+                {
+                  accessorKey: "atv",
+                  header: "ATV",
+                },
+              ],
+            },
           }}
           data={top5Chains}
         />
@@ -350,37 +352,39 @@ const DashboardJson = {
         <DataTable
           columnsData={{
             type: "Custom",
-            data: [
-              {
-                id: "select",
-                enableSorting: false,
-                enableHiding: false,
-              },
-              {
-                accessorKey: "result",
-                header: "Result",
-              },
-              {
-                accessorKey: "tags",
-                header: "Tags",
-              },
-              {
-                accessorKey: "%ofTotal",
-                header: "% Of Total",
-              },
-              {
-                accessorKey: "sis",
-                header: "SIS",
-              },
-              {
-                accessorKey: "vat",
-                header: "VAT",
-              },
-              {
-                accessorKey: "atv",
-                header: "ATV",
-              },
-            ],
+            data: {
+              columns: [
+                {
+                  id: "select",
+                  enableSorting: false,
+                  enableHiding: false,
+                },
+                {
+                  accessorKey: "result",
+                  header: "Result",
+                },
+                {
+                  accessorKey: "tags",
+                  header: "Tags",
+                },
+                {
+                  accessorKey: "%ofTotal",
+                  header: "% Of Total",
+                },
+                {
+                  accessorKey: "sis",
+                  header: "SIS",
+                },
+                {
+                  accessorKey: "vat",
+                  header: "VAT",
+                },
+                {
+                  accessorKey: "atv",
+                  header: "ATV",
+                },
+              ],
+            },
           }}
           data={top5Stores}
         />
