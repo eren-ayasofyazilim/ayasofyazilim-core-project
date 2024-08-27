@@ -21,13 +21,29 @@
 
   "Refund": "Refund",
   "RefundTables": "Refund tables",
-  "RefundTables.Details": "Details",
+
   "RefundTables.Create.Title": "New refund table",
   "RefundTables.Create.Description": "Create a new refund table",
+  "RefundTables.Create.Submit": "Submit",
+
   "RefundTables.Edit.Title": "Edit refund table",
   "RefundTables.Edit.Description": "Edit selected refund table",
+  "RefundTables.Edit.Submit": "Submit",
+
   "RefundTables.Delete.Title": "Delete refund table",
   "RefundTables.Delete.Description": "Are you sure you want to delete this refund table?",
+
+  "RefundTables.Details": "Details",
+  "RefundTables.Details.FilterBy {0}": "Filter by {}",
+  "RefundTables.Details.Save": "Save",
+  "RefundTables.Details.Delete": "Delete",
+  "RefundTables.Details.Create.Title": "Create Rule",
+  "RefundTables.Details.Create.Description": "Create a new rule",
+  "RefundTables.Details.Create.Submit": "Submit",
+  "RefundTables.Details.Edit.Title": "Edit rule",
+  "RefundTables.Details.Edit.Description": "Edit selected rule",
+  "RefundTables.Details.Delete.Confirm": "Are you sure you want to delete this rule?",
+  "RefundTables.Details.Delete.Confirm.Title": "Delete rule",
 
   "RefundTables.Name": "Name",
   "RefundTables.ValidFrom": "Valid from",
