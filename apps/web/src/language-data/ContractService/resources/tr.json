@@ -21,13 +21,29 @@
 
   "Refund": "İade",
   "RefundTables": "İade Tabloları",
-  "RefundTables.Details": "Detaylar",
+
   "RefundTables.Create.Title": "Yeni iade tablosu",
   "RefundTables.Create.Description": "Yeni bir iade tablosu oluşturun",
+  "RefundTables.Create.Submit": "Oluştur",
+
   "RefundTables.Edit.Title": "İade tablosunu düzenle",
-  "RefundTables.Edit.Description": "Seçili idae tablosunu düzenle",
-  "RefundTables.Delete.Confirm": "Bu iade tablosunu silmek istediğinizden emin misiniz?",
-  "RefundTables.Delete.Confirm.Title": "İade tablosunu sil",
+  "RefundTables.Edit.Description": "Seçili iade tablosunu düzenle",
+  "RefundTables.Edit.Submit": "Kaydet",
+
+  "RefundTables.Delete.Title": "Bu iade tablosunu silmek istediğinizden emin misiniz?",
+  "RefundTables.Delete.Description": "İade tablosunu sil",
+
+  "RefundTables.Details": "Detaylar",
+  "RefundTables.Details.FilterBy {0}": "{} göre filtrele",
+  "RefundTables.Details.Save": "Kaydet",
+  "RefundTables.Details.Delete": "Sil",
+  "RefundTables.Details.Create.Title": "Yeni kural",
+  "RefundTables.Details.Create.Description": "Yeni kural oluşturun",
+  "RefundTables.Details.Create.Submit": "Oluştur",
+  "RefundTables.Details.Edit.Title": "Kuralı düzenle",
+  "RefundTables.Details.Edit.Description": "Seçili kuralı düzenle",
+  "RefundTables.Details.Delete.Confirm": "Bu kuralı silmek istediğinizden emin misiniz?",
+  "RefundTables.Details.Delete.Confirm.Title": "Kuralı sil",
 
   "RefundTables.Name": "Tablo adı",
   "RefundTables.ValidFrom": "Geçerli başlangıç tarihi",
