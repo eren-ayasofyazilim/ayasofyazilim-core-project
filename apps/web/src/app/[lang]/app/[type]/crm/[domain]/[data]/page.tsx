@@ -80,10 +80,10 @@ export default function Page({
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formData, setFormData] = useState<TableData>(
-    dataConfigOfCrm[params.domain][params.data],
+    dataConfigOfCrm[params.domain].pages[params.data],
   );
   const detailedFilters =
-    dataConfigOfCrm[params.domain][params.data]?.detailedFilters || [];
+    dataConfigOfCrm[params.domain].pages[params.data].detailedFilters || [];
   async function processConvertors() {
     const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
