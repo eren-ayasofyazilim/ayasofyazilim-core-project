@@ -51,7 +51,7 @@ export default function Page({
       if (response.ok) {
         toast.success(`${params.data} added successfully`);
       } else {
-        const errorData: { message: string } = (await response.json()) as {
+        const errorData = (await response.json()) as {
           message: string;
         };
         toast.error(errorData.message || `Failed to add ${params.data}`);
