@@ -1,14 +1,14 @@
 import {
-  $UniRefund_CRMService_Merchants_MerchantProfileDto,
-  $UniRefund_CRMService_RefundPoints_RefundPointDto,
   // $UniRefund_CRMService_Customss_CreateCustomsDto,
   // $UniRefund_CRMService_Merchants_CreateMerchantDto,
   // $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
   // $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
   // $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Customss_CustomsProfileDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
   $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+  $UniRefund_CRMService_Merchants_RefundPointProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
 import type { TableData } from "src/utils";
 import {
@@ -119,7 +119,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         // },
         tableSchema: {
           excludeList: ["id"],
-          schema: $UniRefund_CRMService_RefundPoints_RefundPointDto,
+          schema: $UniRefund_CRMService_Merchants_RefundPointProfileDto,
         },
       },
       customs: {
