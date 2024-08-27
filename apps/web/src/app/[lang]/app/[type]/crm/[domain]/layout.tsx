@@ -32,7 +32,7 @@ export default function Layout({ children, params }: LayoutProps) {
   const path = pathname.split("crm/")[1];
 
   useEffect(() => {
-    const tempNavbarItems = Object.entries(dataConfigOfCrm[params.domain])
+    const tempNavbarItems = Object.entries(dataConfigOfCrm[params.domain].pages)
       .filter(([e]) => e !== "displayName" && e !== "default")
       .map(([key, value]: [string, unknown]) => {
         let name = languageData[`merchant:${key}` as keyof typeof languageData];

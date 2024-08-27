@@ -10,6 +10,7 @@ import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "../../data";
@@ -163,7 +164,7 @@ export default function Page({
       {
         cta: `New ${formData.title}`,
         type: "NewPage",
-        href: "/app/admin/crm/companies/merchants/new",
+        href: `/app/admin/crm/companies/${params.data}/new`,
       },
       {
         cta: `Export CSV`,
@@ -284,6 +285,17 @@ export default function Page({
       onEdit(data, row, editFormSchema);
     },
   });
+  const router = useRouter();
+  columnsData.data.actionList?.push({
+    cta: " details",
+    type: "Action",
+    callback: (row) => {
+      router.push(
+        getBaseLink(`app/admin/crm/companies/${params.data}/details/${row.id}`),
+      );
+    },
+  });
+
   return (
     <Dashboard
       action={action}
