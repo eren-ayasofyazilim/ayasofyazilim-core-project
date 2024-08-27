@@ -22,8 +22,6 @@ import {
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
@@ -98,22 +96,13 @@ export default function RefundHeader({
   }
   return (
     <>
-      <div className="mb-5 flex items-center gap-4 [&>div]:mb-0">
-        <Button
-          asChild
-          className="size-12 rounded-xl"
-          size="icon"
-          variant="outline"
-        >
-          <Link href={getBaseLink("app/admin/contracts/refund/refund-tables")}>
-            <ArrowLeft />
-          </Link>
-        </Button>
-        <PageHeader
-          description={`${details.validFrom} - ${details.validTo}`}
-          title={details.name || ""}
-        />
-      </div>
+      <PageHeader
+        description={`${details.validFrom} - ${details.validTo}`}
+        onBackButtonClick={() => {
+          router.push(getBaseLink("app/admin/contracts/refund/refund-tables"));
+        }}
+        title={details.name || ""}
+      />
       <Card className="h-[500px] overflow-auto p-4">
         <AutoForm
           className="grid grid-cols-2 items-start gap-4 space-y-0"
