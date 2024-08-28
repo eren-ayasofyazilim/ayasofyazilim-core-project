@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
         title={languageData.Traveller}
       />
       <Card className="h-full p-5">
-        <Table />
+        <Table languageData={languageData} />
       </Card>
     </>
   );

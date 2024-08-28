@@ -17,6 +17,7 @@ export interface TravellerServiceResource {
   EmailInformation: string;
   AddressInformation: string;
   TelephoneInformation: string;
+  Edit: string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -52,6 +53,7 @@ function getLanguageData(
       data[lang]?.TelephoneInformation ||
       data.en.TelephoneInformation,
     Save: uiResource?.Save || data[lang]?.Save || data.en.Save,
+    Edit: uiResource?.Edit || data[lang]?.Edit || data.en.Edit,
   };
 }
 export async function getResourceData(lang: string) {
