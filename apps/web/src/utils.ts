@@ -9,6 +9,7 @@ import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src
 import type { ZodSchema } from "zod";
 import { z } from "zod";
 import { defaultResources } from "./resources";
+import type { AbpUiNavigationResource } from "./language-data/AbpUiNavigation";
 
 type LocalizationDto =
   Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocalizationDto;
@@ -158,7 +159,7 @@ function isSchemaType(object: any): object is SchemaType {
 export function generateNavigationItems(
   dataConfig: Record<string, any>,
   arrayOfKeys: string[],
-  languageData: Record<string, string>,
+  languageData: AbpUiNavigationResource,
   baseType: string,
   baseRoute: string,
   paramsLang: string,
