@@ -1,4 +1,4 @@
-import type { LanguageDataType } from "src/utils";
+import type { LanguageDataType, ResourceResult } from "src/utils";
 import { getLocalizationResources } from "src/utils";
 import en from "./resources/en.json";
 import tr from "./resources/tr.json";
@@ -7,13 +7,87 @@ const data: LanguageDataType = {
   tr,
   en,
 };
-export async function getResourceData(lang: string) {
-  const resources = await getLocalizationResources(lang);
+
+export interface ProjectServiceResult {
+  Next: string;
+  Previous: string;
+  Summary: string;
+  Projects: string;
+  LogIn: string;
+  HomePage: string;
+  DaysLeft: string;
+  InvestNow: string;
+  Invest: string;
+  Share: string;
+  InvestmentOpportunities: string;
+  ProjectsToOpenForInvestmentSoon: string;
+  StartingSoon: string;
+  CampaignStartDate: string;
+  CampaignEndDate: string;
+  CampaignEnded: string;
+  CollectedAmount: string;
+  TargetAmount: string;
+  Investor: string;
+  QualifiedInvestor: string;
+  TargetReached: string;
+  CreateProject: string;
+  ProjectDetails: string;
+  AdditionalFunding: string;
+  ViewProject: string;
+  "Messages:ProjectCreated": string;
+  "Messages:ProjectCreationError": string;
+  ProjectName: string;
+  ProjectNameInfo: string;
+  ProjectDescription: string;
+  ProjectDescriptionInfo: string;
+  FundCollectionType: string;
+  FundCollectionTypeInfo: string;
+  FundCollectionTypeSHRE: string;
+  FundCollectionTypeDBIT: string;
+  FundableAmount: string;
+  FundableAmountInfo: string;
+  ProjectStartDateInfo: string;
+  AdditionalFundingInfo: string;
+  AdditionalFundingYes: string;
+  AdditionalFundingNo: string;
+  AdditionalFundingRate: string;
+  AdditionalFundingRateInfo: string;
+  "IHaveReadAndAccept {0}": string;
+  EFTOrMoneyTransfer: string;
+  RiskDeclarationForm: string;
+  ProjectInformationForm: string;
+  IAcknowledgeThatTheInvestmentPlatformDoesNotGiveInvestmentAdvice: string;
+  CreditCard: string;
+  YouCanInvestWithCreditCardOrEft: string;
+  InvestmentAmount: string;
+  InvestmentMethod: string;
+  RemainingTime: string;
+  QualifiedFundRate: string;
+  InvestingProfile: string;
+  "DisplayName:Email": string;
+  "DisplayName:PhoneNumber": string;
+  "DisplayName:Name": string;
+  "DisplayName:Surname": string;
+  SEND_FOR_APPROVAL: string;
+  IN_DRAFT_STAGE: string;
+  SENT_FOR_APPROVAL: string;
+  NOT_APPROVED: string;
+  APPROVED: string;
+  FUNDABLE: string;
+  FUNDING_SUCCESSFUL: string;
+  FUNDING_UNSUCCESSFUL: string;
+  FUNDING_COMPLETED: string;
+}
+
+function getLanguageData(
+  resources: ResourceResult,
+  lang: string,
+): ProjectServiceResult {
   const projectResource = resources.ProjectService?.texts;
   const accountResource = resources.AbpAccount?.texts;
   const uiResource = resources.AbpUi?.texts;
   const navigationResource = resources.AbpUiNavigation?.texts;
-  const languageData = {
+  return {
     Next: uiResource?.PagerNext || data[lang]?.Next || data.en.Next,
     Previous:
       uiResource?.PagerPrevious || data[lang]?.Previous || data.en.Previous,
@@ -266,8 +340,18 @@ export async function getResourceData(lang: string) {
       data[lang]?.FUNDING_COMPLETED ||
       data.en.FUNDING_COMPLETED,
   };
+}
+
+export async function getResourceData(lang: string) {
+  const resources = await getLocalizationResources(lang);
+  const languageData = getLanguageData(resources, lang);
   return {
     languageData,
     resources,
   };
+}
+
+export function getResourceDataClient(resources: ResourceResult, lang: string) {
+  const languageData = getLanguageData(resources, lang);
+  return languageData;
 }

@@ -7,7 +7,7 @@ import {
 // import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { PackageSearch } from "lucide-react";
 // import { ProjectStatusEnums } from "src/enums/project";
-// import { getResourceData } from "src/language-data/Projects/projects";
+// import { getResourceData } from "src/language-data/ProjectService";
 // import { getBaseLink } from "src/utils";
 // import { getAdminProjectsServer, getUsersProjectsServer } from "../action";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";

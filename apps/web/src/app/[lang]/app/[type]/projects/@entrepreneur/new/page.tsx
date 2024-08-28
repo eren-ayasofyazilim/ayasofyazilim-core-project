@@ -1,6 +1,6 @@
 "use server";
 
-import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/ProjectService";
 import NewProjectForm from "./form";
 
 export default async function Page({ params }: { params: { lang: string } }) {

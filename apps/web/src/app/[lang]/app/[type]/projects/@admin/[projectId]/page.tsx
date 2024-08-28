@@ -4,7 +4,7 @@
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { redirect } from "next/navigation";
 import { ProjectStatusEnums } from "src/enums/project";
-import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/ProjectService";
 import { getBaseLink } from "src/utils";
 import { getPublicProjectByIdServer } from "../../action";
 import ProjectForm from "./form";

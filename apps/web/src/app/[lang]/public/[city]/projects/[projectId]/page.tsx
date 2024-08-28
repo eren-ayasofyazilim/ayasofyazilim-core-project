@@ -7,7 +7,7 @@ import { PackageSearch } from "lucide-react";
 import { auth } from "auth";
 import { getPublicProjectByIdServer } from "src/app/[lang]/app/[type]/projects/action";
 import { ProjectStatusEnums } from "src/enums/project";
-import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/ProjectService";
 
 export default async function Page({
   params,
