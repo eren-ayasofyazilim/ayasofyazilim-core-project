@@ -14,7 +14,7 @@ import {
   SectionLayout,
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { createZodObject, getBaseLink } from "src/utils";
 
@@ -91,14 +91,12 @@ export default function Form({
   travellerId: string;
   languageData: TravellerServiceResource;
 }) {
-  const router = useRouter();
   return (
     <>
       <PageHeader
+        LinkElement={Link}
         description={languageData.TravellerDescription}
-        onBackButtonClick={() => {
-          router.replace(getBaseLink("app/admin/traveller"));
-        }}
+        href={getBaseLink("app/admin/traveller")}
         title={`${languageData.TravellerDetail} - ${travellerId}`}
       />
 

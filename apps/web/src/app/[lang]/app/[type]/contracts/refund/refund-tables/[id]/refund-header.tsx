@@ -22,6 +22,7 @@ import {
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
@@ -97,10 +98,9 @@ export default function RefundHeader({
   return (
     <>
       <PageHeader
+        LinkElement={Link}
         description={`${details.validFrom} - ${details.validTo}`}
-        onBackButtonClick={() => {
-          router.push(getBaseLink("app/admin/contracts/refund/refund-tables"));
-        }}
+        href={getBaseLink("/app/admin/contracts/refund/refund-tables")}
         title={details.name || ""}
       />
       <Card className="h-[500px] overflow-auto p-4">
