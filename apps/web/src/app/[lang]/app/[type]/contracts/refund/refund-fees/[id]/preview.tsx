@@ -1,3 +1,3 @@
 export default function Preview() {
-  return <div>Preview Refund Fee</div>;
+  return <div>Preview will be here</div>;
 }

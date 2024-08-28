@@ -55,5 +55,31 @@
   "RefundTables.Edit": "Edit",
   "RefundTables.Delete": "Delete",
   "RefundTables.Cancel": "Cancel",
-  "RefundTables.Save": "Save"
+  "RefundTables.Save": "Save",
+
+  "RefundFees.Page.List.Title": "Refund Fees",
+  "RefundFees.Page.List.Description": "Manage refund fees",
+  "RefundFees.Page.List.Create": "Create new",
+  "RefundFees.Page.List.Details": "Details",
+  "RefundFees.Page.List.Deactivate": "Deactivate",
+  "RefundFees.Page.List.Create.Save": "Save",
+
+  "RefundFees.Page.Edit.Edit": "Edit",
+  "RefundFees.Page.Edit.Preview": "Preview",
+  "RefundFees.Page.Edit.Title": "Edit refund fee {0}",
+  "RefundFees.Page.Edit.Description": "Edit refund fee",
+  "RefundFees.Page.Edit.Delete": "Delete",
+  "RefundFees.Page.Edit.Save": "Save",
+
+  "RefundFees.Page.Edit.Fee.Edit": "Edit",
+  "RefundFees.Page.Edit.Fee.Edit.Title": "Edit refund fee setup",
+  "RefundFees.Page.Edit.Fee.Edit.Description": "Edit refund fee setup",
+  "RefundFees.Page.Edit.Fee.Edit.Save": "Save",
+
+  "RefundFees.Page.Edit.Fee.Create": "Create new",
+  "RefundFees.Page.Edit.Fee.Create.Title": "New refund fee setup",
+  "RefundFees.Page.Edit.Fee.Create.Description": "Create new refund fee setup",
+  "RefundFees.Page.Edit.Fee.Create.Save": "Save",
+
+  "RefundFees.Page.Edit.Fee.Delete": "Delete"
 }

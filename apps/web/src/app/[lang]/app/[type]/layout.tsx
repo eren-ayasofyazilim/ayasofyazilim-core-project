@@ -274,6 +274,15 @@ export default async function Layout({
             params.lang,
           ),
         },
+        {
+          key: "refundFees",
+          title: languageData.RefundFees,
+          href: getBaseLink(
+            `app/${type}/contracts/refund/refund-fees`,
+            true,
+            params.lang,
+          ),
+        },
       ],
     },
   ];

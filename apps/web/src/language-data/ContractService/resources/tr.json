@@ -55,5 +55,31 @@
   "RefundTables.Edit": "Düzenle",
   "RefundTables.Delete": "Sil",
   "RefundTables.Cancel": "Vazgeç",
-  "RefundTables.Save": "Kaydet"
+  "RefundTables.Save": "Kaydet",
+
+  "RefundFees.Page.List.Title": "İade Ücretleri",
+  "RefundFees.Page.List.Description": "İade ücretlerini yönetin",
+  "RefundFees.Page.List.Create": "Yeni iade ücreti oluştur",
+  "RefundFees.Page.List.Details": "Detaylar",
+  "RefundFees.Page.List.Deactivate": "Pasif et",
+  "RefundFees.Page.List.Create.Save": "Kaydet",
+
+  "RefundFees.Page.Edit.Edit": "Düzenle",
+  "RefundFees.Page.Edit.Preview": "Önizleme",
+  "RefundFees.Page.Edit.Title": "İade ücretini düzenle {0}",
+  "RefundFees.Page.Edit.Description": "İade ücretini düzenle",
+  "RefundFees.Page.Edit.Delete": "Sil",
+  "RefundFees.Page.Edit.Save": "Kaydet",
+
+  "RefundFees.Page.Edit.Fee.Edit": "Düzenle",
+  "RefundFees.Page.Edit.Fee.Edit.Title": "Ücret düzenini düzenle",
+  "RefundFees.Page.Edit.Fee.Edit.Description": "Ücret düzenini düzenleyin",
+  "RefundFees.Page.Edit.Fee.Edit.Save": "Kaydet",
+
+  "RefundFees.Page.Edit.Fee.Create": "Yeni düzen oluştur",
+  "RefundFees.Page.Edit.Fee.Create.Title": "Yeni ücret düzeni",
+  "RefundFees.Page.Edit.Fee.Create.Description": "Yeni ücret düzeni oluşturun",
+  "RefundFees.Page.Edit.Fee.Create.Save": "Kaydet",
+
+  "RefundFees.Page.Edit.Fee.Delete": "Sil"
 }
