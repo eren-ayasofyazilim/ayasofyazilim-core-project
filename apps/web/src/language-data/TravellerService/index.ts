@@ -17,6 +17,8 @@ export interface TravellerServiceResource {
   EmailInformation: string;
   AddressInformation: string;
   TelephoneInformation: string;
+  NewTraveller: string;
+  NewTravellerDescription: string;
   Edit: string;
 }
 function getLanguageData(
@@ -32,10 +34,18 @@ function getLanguageData(
       resource?.TravellerDetail ||
       data[lang]?.TravellerDetail ||
       data.en.TravellerDetail,
+    NewTraveller:
+      resource?.NewTraveller ||
+      data[lang]?.NewTraveller ||
+      data.en.NewTraveller,
     TravellerDescription:
       resource?.TravellerDescription ||
       data[lang]?.TravellerDescription ||
       data.en.TravellerDescription,
+    NewTravellerDescription:
+      resource?.NewTravellerDescription ||
+      data[lang]?.NewTravellerDescription ||
+      data.en.NewTravellerDescription,
     PersonalInformation:
       resource?.PersonalInformation ||
       data[lang]?.PersonalInformation ||
