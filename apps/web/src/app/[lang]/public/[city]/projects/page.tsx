@@ -3,7 +3,7 @@
 import ProjectCard from "@repo/ui/upwithcrowd/project/project-card";
 import { PackageSearch } from "lucide-react";
 import { ProjectStatusEnums } from "src/enums/project";
-import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/ProjectService";
 import { getProjectServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 

@@ -8,7 +8,54 @@ const data: LanguageDataType = {
   en,
 };
 
-function getLanguageData(resources: ResourceResult, lang: string) {
+export interface AbpUiNavigationResource {
+  HomePage: string;
+  Dashboard: string;
+  Crm: string;
+  Management: string;
+  Profile: string;
+  Companies: string;
+  Template: string;
+  Details: string;
+  Contracts: string;
+  RebateTables: string;
+  LogIn: string;
+  RefundTables: string;
+  Add: string;
+  CountrySettings: string;
+  Settings: string;
+  IdentityManagement: string;
+  LanguageManagement: string;
+  SaasManagement: string;
+  "Identity:role": string;
+  Contact: string;
+  "Identity:user": string;
+  "Identity:claimType": string;
+  BoardOfDirectors: string;
+  Investor: string;
+  SupportCenter: string;
+  Invest: string;
+  Entrepreneur: string;
+  SubmitYourProject: string;
+  HowDoIFindTheNecessaryFunds: string;
+  Institutional: string;
+  AboutUs: string;
+  OurTeam: string;
+  Traveller: string;
+  LogOut: string;
+  InvestingCommittee: string;
+  Campaigns: string;
+  AdminCenter: string;
+  EntrepreneurCenter: string;
+  InvestorCenter: string;
+  ChangeProfile: string;
+  Register: string;
+  MyAccount: string;
+}
+function getLanguageData(
+  resources: ResourceResult,
+  lang: string,
+): AbpUiNavigationResource {
   const navigationResource = resources.AbpUiNavigation?.texts;
   return {
     HomePage:

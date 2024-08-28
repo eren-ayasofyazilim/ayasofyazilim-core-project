@@ -7,7 +7,7 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
-import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/ProjectService";
 import { getBaseLink } from "src/utils";
 import { getUsersProjectsServer } from "../action";
 import { Project } from "../project";
