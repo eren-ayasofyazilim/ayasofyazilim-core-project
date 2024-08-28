@@ -4,7 +4,7 @@ import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_115,
+  Volo_Abp_Application_Dtos_PagedResultDto_111,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as listSchema,
@@ -23,7 +23,7 @@ import { getRefundTableHeaders, postRefundTableHeaders } from "../../action";
 
 export default function Page({ params }: { params: { lang: string } }) {
   const [list, setList] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_115>();
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_111>();
   const [resources, setResources] = useState<Record<string, string>>();
   const includeList = [
     "name",
