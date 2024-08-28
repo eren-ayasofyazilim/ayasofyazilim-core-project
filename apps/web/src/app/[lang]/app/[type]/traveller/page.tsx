@@ -1,14 +1,17 @@
+"use server";
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
+import { getResourceData } from "src/language-data/TravellerService";
 import Table from "./table";
 
-export default function Page() {
+export default async function Page({ params }: { params: { lang: string } }) {
+  const { languageData } = await getResourceData(params.lang);
   return (
     <>
       <PageHeader
-        description="Buradan yolcuları görüntüleyebilirsiniz."
-        title="Yolcu"
+        description={languageData.TravellerDescription}
+        title={languageData.Traveller}
       />
       <Card className="h-full p-5">
         <Table />
