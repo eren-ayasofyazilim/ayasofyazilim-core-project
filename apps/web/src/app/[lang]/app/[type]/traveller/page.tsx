@@ -1,9 +1,18 @@
-// "use server";
 import React from "react";
-// import { getResourceData } from "src/language-data/ContractService";
+import { Card } from "@/components/ui/card";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import Table from "./table";
 
 export default function Page() {
-  // const { languageData } = await getResourceData(params.lang);
-  return <Table />;
+  return (
+    <>
+      <PageHeader
+        description="Buradan yolcuları görüntüleyebilirsiniz."
+        title="Yolcu"
+      />
+      <Card className="h-full p-5">
+        <Table />
+      </Card>
+    </>
+  );
 }

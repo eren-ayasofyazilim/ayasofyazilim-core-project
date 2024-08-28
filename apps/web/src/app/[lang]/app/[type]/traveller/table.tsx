@@ -83,7 +83,7 @@ export default function Table() {
           columns,
           actionList: [
             {
-              cta: "Open in new page",
+              cta: "Edit",
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(
