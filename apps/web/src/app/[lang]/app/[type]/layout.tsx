@@ -291,7 +291,7 @@ export default async function Layout({
         </div>
       }
     >
-      <div className="mx-10 mt-5 h-[calc(100vh-104px)]">{children}</div>
+      <div className="mx-10 mt-5 h-[calc(100vh-164px)]">{children}</div>
     </MainLayout>
   );
 }

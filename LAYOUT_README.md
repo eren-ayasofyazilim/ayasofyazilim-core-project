@@ -4,7 +4,7 @@
 
 ```html
 <!-- Ekran boyutundan 104px (ekran yüksekliği navbar'ın yüksekliği kadar azaltılmış) yüksekliğinde sayfa içeriği boyutumuz var. -->
-<div className="mt-5 mx-10 h-[calc(100vh-104px)]">
+<div className="mt-5 mx-10 h-[calc(100vh-164px)]">
   <!-- children -->
 </div>
 ```
