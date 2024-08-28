@@ -9,6 +9,7 @@ import {
   Home,
   LanguagesIcon,
   LayoutDashboard,
+  Plane,
   Presentation,
   Projector,
   ShieldAlert,
@@ -175,6 +176,14 @@ export default async function Layout({
       appType: "upwithcrowd",
     },
     {
+      key: "traveller",
+      title: languageData.Traveller,
+      href: getBaseLink(`app/${type}/traveller`, true, params.lang),
+      icon: <Plane className="w-4 text-slate-500" />,
+      type: "admin",
+      appType: "unirefund",
+    },
+    {
       key: "Details",
       title: languageData.Details,
       href: getBaseLink(`app/${type}/details`, true, params.lang),
@@ -291,7 +300,7 @@ export default async function Layout({
         </div>
       }
     >
-      <div className="mx-10 mt-5 h-[calc(100vh-104px)]">{children}</div>
+      <div className="mx-10 mt-5 h-[calc(100vh-164px)]">{children}</div>
     </MainLayout>
   );
 }

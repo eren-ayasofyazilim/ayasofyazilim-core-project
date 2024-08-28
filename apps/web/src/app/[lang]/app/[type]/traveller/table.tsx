@@ -3,9 +3,9 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
+import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 
-//pasaportid, country id, country name, (residence & nationality)
 const data = [
   {
     id: "bf9793cf-b402-5113-9858-3a148c836c34",
@@ -72,7 +72,11 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div>{row.getValue("residenceCountryName")}</div>,
   },
 ];
-export default function Table() {
+export default function Table({
+  languageData,
+}: {
+  languageData: TravellerServiceResource;
+}) {
   const router = useRouter();
   return (
     <Dashboard
@@ -83,7 +87,7 @@ export default function Table() {
           columns,
           actionList: [
             {
-              cta: "Open in new page",
+              cta: languageData.Edit,
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(

@@ -1,11 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment -- TODO: we need to fix this*/
-// "use server";
+"use server";
 
-// import { getResourceData } from "src/language-data/Projects/projects";
+import { getResourceData } from "src/language-data/TravellerService";
+import Form from "./form";
 
-export default function Page({ params }: any) {
+export default async function Page({
+  params,
+}: {
+  params: { travellerId: string; lang: string };
+}) {
   const { travellerId } = params;
-  //   const { languageData } = await getResourceData(params.lang);
-
-  return <div className="">id: {travellerId}</div>;
+  const { languageData } = await getResourceData(params.lang);
+  return <Form languageData={languageData} travellerId={travellerId} />;
 }
