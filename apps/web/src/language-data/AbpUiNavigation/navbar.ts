@@ -144,6 +144,10 @@ function getLanguageData(resources: ResourceResult, lang: string) {
       data[lang]?.MyAccount ||
       data.en.MyAccount,
     Add: navigationResource?.Add || data[lang]?.Add || data.en.Add,
+    Traveller:
+      navigationResource?.Traveller ||
+      data[lang]?.Traveller ||
+      data.en.Traveller,
   };
 }
 export async function getResourceData(lang: string) {

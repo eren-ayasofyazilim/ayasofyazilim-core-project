@@ -9,6 +9,7 @@ import {
   Home,
   LanguagesIcon,
   LayoutDashboard,
+  Plane,
   Presentation,
   Projector,
   ShieldAlert,
@@ -173,6 +174,14 @@ export default async function Layout({
       icon: <UserCircle className="w-4 text-slate-500" />,
       type: ["admin", "user", "entrepreneur", "investor"],
       appType: "upwithcrowd",
+    },
+    {
+      key: "traveller",
+      title: languageData.Traveller,
+      href: getBaseLink(`app/${type}/traveller`, true, params.lang),
+      icon: <Plane className="w-4 text-slate-500" />,
+      type: "admin",
+      appType: "unirefund",
     },
     {
       key: "Details",
