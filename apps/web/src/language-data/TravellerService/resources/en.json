@@ -1,6 +1,8 @@
 {
   "Traveller": "Traveller",
   "TravellerDetail": "Traveller Detail",
+  "NewTraveller": "New Traveller",
+  "NewTravellerDescription": "Add new traveller.",
   "TravellerDescription": "You can view the passengers from here.",
   "PersonalInformation": "Personal Information",
   "EmailInformation": "Email Information",
