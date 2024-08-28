@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getResourceDataClient } from "src/language-data/AbpUiNavigation/navbar";
+import { getResourceDataClient } from "src/language-data/AbpUiNavigation";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "../data";

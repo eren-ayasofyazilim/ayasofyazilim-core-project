@@ -10,7 +10,7 @@ import Link from "next/link";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getBaseLink } from "src/utils";
-import { getResourceData } from "src/language-data/AbpUiNavigation/navbar";
+import { getResourceData } from "src/language-data/AbpUiNavigation";
 import { getConfig } from "../config";
 
 interface LayoutProps {
