@@ -27,8 +27,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
 import {
-  deleteRefundTableHeaders,
-  getRefundTableHeadersDetailById,
+  deleteRefundTableHeadersById,
+  getRefundTableHeadersById,
 } from "../../../action";
 import { RefundRules } from "./refund-rule";
 
@@ -37,7 +37,7 @@ export default function RefundHeader({
   params,
 }: {
   languageData: Record<string, string>;
-  params: { lang: string; id: string };
+  params: { lang: string; id: string; type: string };
 }): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function RefundHeader({
   const router = useRouter();
 
   useEffect(() => {
-    void getRefundTableHeadersDetailById({ id: params.id }).then((response) => {
+    void getRefundTableHeadersById({ id: params.id }).then((response) => {
       if (response.type === "success") {
         setDetails(response.data);
         setTableData(response.data.refundTableDetails || []);
@@ -66,7 +66,7 @@ export default function RefundHeader({
 
   function handleRefundTableHeadersDelete() {
     setLoading(true);
-    void deleteRefundTableHeaders({
+    void deleteRefundTableHeadersById({
       id: params.id,
     }).then((response) => {
       if (response.type === "success") {
@@ -100,7 +100,9 @@ export default function RefundHeader({
       <PageHeader
         LinkElement={Link}
         description={`${details.validFrom} - ${details.validTo}`}
-        href={getBaseLink("/app/admin/contracts/refund/refund-tables")}
+        href={getBaseLink(
+          `${params.lang}/app/${params.type}/contracts/refund/refund-tables`,
+        )}
         title={details.name || ""}
       />
       <Card className="h-[500px] overflow-auto p-4">
