@@ -6,10 +6,9 @@ import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "../../../../data";
-import Link from "next/link";
 
 export interface CreateMerchants {
   name: string;
@@ -42,7 +41,6 @@ export default function Page({
     domain: string;
   };
 }) {
-  const router = useRouter();
   const handleSave = async (formData: CreateMerchants) => {
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
@@ -68,20 +66,20 @@ export default function Page({
   return (
     <>
       <PageHeader
-        title="Add New"
-        description="Add New"
         LinkElement={Link}
+        description="Add New"
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        title="Add New"
       />
       <div className="flex h-full w-full flex-row">
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent shadow-none">
           <CardContent>
             <AutoForm
+              formClassName="pb-40 "
               formSchema={formSchemaByData(params.data)}
               onSubmit={(val) => {
                 void handleSave(val as CreateMerchants);
               }}
-              formClassName="pb-40 "
             >
               <AutoFormSubmit className="float-right">
                 Save Changes
