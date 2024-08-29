@@ -5,9 +5,19 @@
   "RefundPoints": "Refund Points",
   "RefundPoints.New": "New Refund Point",
   "Customs": "Customs",
-  "Custom.New": "New Custom",
+  "Customs.New": "New Custom",
   "TaxFree": "Tax Free",
   "TaxFree.New": "New Tax Free",
   "TaxOffices": "Tax Office",
-  "TaxOffices.New": "New Tax Office"
+  "TaxOffices.New": "New Tax Office",
+  "Merchants.Edit": "Edit Merchant",
+  "RefundPoints.Edit": "Edit Refund Point",
+  "Customs.Edit": "Edit Custom",
+  "TaxFree.Edit": "Edit Tax Free",
+  "TaxOffices.Edit": "Edit Tax Office",
+  "Organization": "Organization",
+  "Email": "Email",
+  "Telephone": "Telephone",
+  "Address": "Address",
+  "Save": "Save"
 }

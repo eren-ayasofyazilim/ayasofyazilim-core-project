@@ -8,7 +8,11 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../../../data";
 
 export interface CreateMerchants {
@@ -40,9 +44,15 @@ export default function Page({
   params: {
     data: string;
     domain: string;
+    lang: string;
   };
 }) {
   const router = useRouter();
+  const [_formData] = useState<TableData>(
+    dataConfigOfCrm[params.domain].pages[params.data],
+  );
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const handleSave = async (formData: CreateMerchants) => {
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
@@ -72,9 +82,17 @@ export default function Page({
     <>
       <PageHeader
         LinkElement={Link}
-        description={`Add New ${params.data}`}
+        description={
+          languageData[
+            `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+          ]
+        }
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
-        title={`Add New ${params.data}`}
+        title={
+          languageData[
+            `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+          ]
+        }
       />
       <div className="flex h-full w-full flex-row">
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
@@ -87,7 +105,7 @@ export default function Page({
               }}
             >
               <AutoFormSubmit className="float-right">
-                Save Changes
+                {languageData.Save}
               </AutoFormSubmit>
             </AutoForm>
           </CardContent>
