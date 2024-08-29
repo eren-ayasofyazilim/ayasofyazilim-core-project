@@ -8,14 +8,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
 import { getRebateTablesRebateTableHeadersDetailsById } from "../../../../action";
-import Rebate from "../new-rebate-template/page";
+import Rebate from "../rebate";
 
 export default function TemplateDetails({
   templateId,
-  // languageData,
+  languageData,
 }: {
   templateId: string;
-  // languageData: Record<string, string>;
+  languageData: Record<string, string>;
 }): JSX.Element {
   const [details, setDetails] = useState<RebateTableHeaderDto>();
   useEffect(() => {
@@ -36,15 +36,20 @@ export default function TemplateDetails({
     <div>
       <PageHeader
         LinkElement={Link}
-        description="Edit Rebate Template"
+        description={languageData["RebateTables.Templates.Edit.Description"]}
         href={getBaseLink("app/admin/contracts/rebate/templates")}
-        title={`Edit '${details.name}'`}
+        title={languageData["RebateTables.Templates.Edit.Title"].replace(
+          "{0}",
+          details.name || "",
+        )}
       />
       <Card className="h-[calc(100vh-164px)] overflow-auto">
         <Rebate
           details={details}
           initialFeesData={details.processingFeeDetails || []}
           initialSetupData={details.rebateTableDetails || []}
+          languageData={languageData}
+          onSubmit={() => toast.success("Success")}
         />
       </Card>
     </div>

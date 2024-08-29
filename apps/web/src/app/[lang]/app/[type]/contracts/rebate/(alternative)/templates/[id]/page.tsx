@@ -1,9 +1,12 @@
+"use server";
+import { getResourceData } from "src/language-data/ContractService";
 import TemplateDetails from "./template-details";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { lang: string; type: string; id: string };
 }) {
-  return <TemplateDetails templateId={params.id} />;
+  const { languageData } = await getResourceData(params.lang);
+  return <TemplateDetails languageData={languageData} templateId={params.id} />;
 }

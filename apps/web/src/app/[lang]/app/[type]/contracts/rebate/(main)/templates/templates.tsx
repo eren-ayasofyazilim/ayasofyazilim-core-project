@@ -13,7 +13,10 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { getBaseLink } from "src/utils";
-import { getRebateTablesRebateTableHeadersTemplates } from "../../../action";
+import {
+  deleteRebateTablesRebateTableHeadersById,
+  getRebateTablesRebateTableHeadersTemplates,
+} from "../../../action";
 
 export default function Templates({
   languageData,
@@ -25,8 +28,8 @@ export default function Templates({
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [templates, setTemplates] = useState<PagedResultDto>();
-
-  useEffect(() => {
+  function getAndSetTemplates() {
+    setLoading(true);
     void getRebateTablesRebateTableHeadersTemplates({})
       .then((response) => {
         if (response.type === "success") {
@@ -40,7 +43,31 @@ export default function Templates({
       .finally(() => {
         setLoading(false);
       });
+  }
+
+  useEffect(() => {
+    getAndSetTemplates();
   }, []);
+
+  const handleDelete = (row: RebateTableHeaderDto) => {
+    setLoading(true);
+    void deleteRebateTablesRebateTableHeadersById({ id: row.id || "" })
+      .then((deleteResponse) => {
+        if (deleteResponse.type === "success") {
+          toast.success(
+            deleteResponse.message || "Template deleted successfully",
+          );
+          getAndSetTemplates();
+        } else if (deleteResponse.type === "api-error") {
+          toast.error(deleteResponse.message || "Template delete failed");
+        } else {
+          toast.error("Fatal error");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const tableSetup: ColumnsType = {
     type: "Auto",
@@ -57,6 +84,11 @@ export default function Templates({
               getBaseLink(`app/admin/contracts/rebate/templates/${row.id}`),
             );
           },
+        },
+        {
+          type: "Action",
+          cta: languageData["RebateTables.Templates.Delete"],
+          callback: handleDelete,
         },
       ],
     },

@@ -1,24 +1,4 @@
 {
-  "HomePage": "Ana Sayfa",
-  "EditTemplate": "Şablon Bilgilerini Düzenle",
-  "RebateSet": "İade kurulumu",
-  "ProcessingFees": "İşlem ücretleri",
-  "CancelButton": "İptal",
-  "SaveButton": "Kaydet",
-  "RefundMethod": "İade Yöntemi",
-  "FixedFee": "Sabit ücret",
-  "VariableFee": "Değişken ücret",
-  "Percent": "Yüzde",
-  "Name": "Ad",
-  "Amount": "Tutar",
-  "All": "Hepsi",
-  "Cash": "Nakit",
-  "CreditOrDebitCard": "Kredi veya Banka Kartı",
-  "Alipay": "Alipay",
-  "WeChat": "WeChat",
-  "CashViaPartner": "Ortak Aracılığıyla Nakit",
-  "RefundLater": "Daha Sonra İade",
-
   "Refund": "İade",
   "RefundTables": "İade Tabloları",
 
@@ -83,6 +63,48 @@
 
   "RefundFees.Page.Edit.Fee.Delete": "Sil",
 
+  "RebateTables.CompanySettings.Title": "Şirket Ayarları",
+  "RebateTables.CompanySettings.Description": "Şirket ayarını yönetin",
+
+  "RebateTables.Templates.Title": "Şablonlar",
+  "RebateTables.Templates.Description": "Şablonları yönetin",
+  "RebateTables.Templates.Delete": "Sil",
+  "RebateTables.Templates.Details": "Detaylar",
+
   "RebateTables.Templates.Create": "Yeni oluştur",
-  "RebateTables.Templates.Details": "Detaylar"
+  "RebateTables.Templates.Create.Title": "Yeni iade Şablonu",
+  "RebateTables.Templates.Create.Description": "Yeni iade Şablonu oluşturun",
+  "RebateTables.Templates.Create.TemplateInformation": "Şablon bilgilerini oluştur",
+  "RebateTables.Templates.Create.ProcessingFees": "İşlem ücretleri",
+  "RebateTables.Templates.Create.RebateSetup": "İade ayarları",
+  "RebateTables.Templates.Create.Save": "Kaydet",
+  "RebateTables.Templates.Create.Cancel": "Vazgeç",
+
+  "RebateTables.Templates.Edit": "Düzenle",
+  "RebateTables.Templates.Edit.Title": "'{0}' iade şablonunu düzenle",
+  "RebateTables.Templates.Edit.Description": "iade şablonunu düzenle",
+  "RebateTables.Templates.Edit.TemplateInformation": "Şablon bilgilerini düzenle",
+  "RebateTables.Templates.Edit.ProcessingFees": "İşlem ücretleri",
+  "RebateTables.Templates.Edit.RebateSetup": "İade ayarları",
+  "RebateTables.Templates.Edit.Save": "Kaydet",
+  "RebateTables.Templates.Edit.Cancel": "Vazgeç",
+
+  "RebateTables.Templates.RefundMethod.Option.All": "Tümü",
+  "RebateTables.Templates.RefundMethod.Option.Cash": "Nakit",
+  "RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard": "Kredi ya da Debit Kartı",
+  "RebateTables.Templates.RefundMethod.Option.Alipay": "Alipay",
+  "RebateTables.Templates.RefundMethod.Option.WeChat": "We Chat",
+  "RebateTables.Templates.RefundMethod.Option.CashViaPartner": "Ortak vasıtasıyla nakit",
+  "RebateTables.Templates.RefundMethod.Option.RefundLater": "Daha sonra iade",
+
+  "RebateTables.Templates.Column.RefundMethod": "İade metodu",
+  "RebateTables.Templates.Column.FixedFee": "Sabit ücret",
+  "RebateTables.Templates.Column.VariableFee": "Değişken ücret",
+  "RebateTables.Templates.Column.Percent": "Yüzde",
+  "RebateTables.Templates.Column.Name": "Adı",
+  "RebateTables.Templates.Column.Amount": "Tutar",
+  "RebateTables.Templates.Column.Actions": "İşlemler",
+
+  "RebateTables.Templates.Preview": "Şablonu Önizle",
+  "RebateTables.Templates.Preview.Calculate": "Hesapla"
 }

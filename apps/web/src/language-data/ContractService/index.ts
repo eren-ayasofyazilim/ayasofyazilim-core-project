@@ -10,50 +10,7 @@ const data: LanguageDataType = {
 
 function getLanguageData(resources: ResourceResult, lang: string) {
   const resource = resources.ContractService?.texts;
-  const navigationResource = resources.Navigation?.texts;
   return {
-    HomePage:
-      navigationResource?.HomePage || data[lang]?.HomePage || data.en.HomePage,
-    EditTemplate:
-      resource?.EditTemplate ||
-      data[lang]?.EditTemplate ||
-      data.en.EditTemplate,
-    RebateSet:
-      resource?.RebateSet || data[lang]?.RebateSet || data.en.RebateSet,
-    ProcessingFees:
-      resource?.ProcessingFees ||
-      data[lang]?.ProcessingFees ||
-      data.en.ProcessingFees,
-    CancelButton:
-      resource?.CancelButton ||
-      data[lang]?.CancelButton ||
-      data.en.CancelButton,
-    SaveButton:
-      resource?.SaveButton || data[lang]?.SaveButton || data.en.SaveButton,
-    RefundMethod:
-      resource?.RefundMethod ||
-      data[lang]?.RefundMethod ||
-      data.en.RefundMethod,
-    FixedFee: resource?.FixedFee || data[lang]?.FixedFee || data.en.FixedFee,
-    VariableFee:
-      resource?.VariableFee || data[lang]?.VariableFee || data.en.VariableFee,
-    Percent: resource?.Percent || data[lang]?.Percent || data.en.Percent,
-    Name: resource?.Name || data[lang]?.Name || data.en.Name,
-    Amount: resource?.Amount || data[lang]?.Amount || data.en.Amount,
-    All: resource?.All || data[lang]?.All || data.en.All,
-    Cash: resource?.Cash || data[lang]?.Cash || data.en.Cash,
-    CreditOrDebitCard:
-      resource?.CreditOrDebitCard ||
-      data[lang]?.CreditOrDebitCard ||
-      data.en.CreditOrDebitCard,
-    Alipay: resource?.Alipay || data[lang]?.Alipay || data.en.Alipay,
-    WeChat: resource?.WeChat || data[lang]?.WeChat || data.en.WeChat,
-    CashViaPartner:
-      resource?.CashViaPartner ||
-      data[lang]?.CashViaPartner ||
-      data.en.CashViaPartner,
-    RefundLater:
-      resource?.RefundLater || data[lang]?.RefundLater || data.en.RefundLater,
     Refund: resource?.Refund || data[lang]?.Refund || data.en.Refund,
     RefundTables:
       resource?.RefundTables ||
@@ -265,14 +222,170 @@ function getLanguageData(resources: ResourceResult, lang: string) {
       resource?.["RefundFees.Page.Edit.Fee.Delete"] ||
       data[lang]?.["RefundFees.Page.Edit.Fee.Delete"] ||
       data.en["RefundFees.Page.Edit.Fee.Delete"],
-    "RebateTables.Templates.Create":
-      resource?.["RebateTables.Templates.Create"] ||
-      data[lang]?.["RebateTables.Templates.Create"] ||
-      data.en["RebateTables.Templates.Create"],
+
+    "RebateTables.CompanySettings.Title":
+      resource?.["RebateTables.CompanySettings.Title"] ||
+      data[lang]?.["RebateTables.CompanySettings.Title"] ||
+      data.en["RebateTables.CompanySettings.Title"],
+    "RebateTables.CompanySettings.Description":
+      resource?.["RebateTables.CompanySettings.Description"] ||
+      data[lang]?.["RebateTables.CompanySettings.Description"] ||
+      data.en["RebateTables.CompanySettings.Description"],
+
+    "RebateTables.Templates.Title":
+      resource?.["RebateTables.Templates.Title"] ||
+      data[lang]?.["RebateTables.Templates.Title"] ||
+      data.en["RebateTables.Templates.Title"],
+    "RebateTables.Templates.Description":
+      resource?.["RebateTables.Templates.Description"] ||
+      data[lang]?.["RebateTables.Templates.Description"] ||
+      data.en["RebateTables.Templates.Description"],
+    "RebateTables.Templates.Delete":
+      resource?.["RebateTables.Templates.Delete"] ||
+      data[lang]?.["RebateTables.Templates.Delete"] ||
+      data.en["RebateTables.Templates.Delete"],
     "RebateTables.Templates.Details":
       resource?.["RebateTables.Templates.Details"] ||
       data[lang]?.["RebateTables.Templates.Details"] ||
       data.en["RebateTables.Templates.Details"],
+
+    "RebateTables.Templates.Create":
+      resource?.["RebateTables.Templates.Create"] ||
+      data[lang]?.["RebateTables.Templates.Create"] ||
+      data.en["RebateTables.Templates.Create"],
+    "RebateTables.Templates.Create.Title":
+      resource?.["RebateTables.Templates.Create.Title"] ||
+      data[lang]?.["RebateTables.Templates.Create.Title"] ||
+      data.en["RebateTables.Templates.Create.Title"],
+    "RebateTables.Templates.Create.Description":
+      resource?.["RebateTables.Templates.Create.Description"] ||
+      data[lang]?.["RebateTables.Templates.Create.Description"] ||
+      data.en["RebateTables.Templates.Create.Description"],
+    "RebateTables.Templates.Create.TemplateInformation":
+      resource?.["RebateTables.Templates.Create.TemplateInformation"] ||
+      data[lang]?.["RebateTables.Templates.Create.TemplateInformation"] ||
+      data.en["RebateTables.Templates.Create.TemplateInformation"],
+    "RebateTables.Templates.Create.ProcessingFees":
+      resource?.["RebateTables.Templates.Create.ProcessingFees"] ||
+      data[lang]?.["RebateTables.Templates.Create.ProcessingFees"] ||
+      data.en["RebateTables.Templates.Create.ProcessingFees"],
+    "RebateTables.Templates.Create.RebateSetup":
+      resource?.["RebateTables.Templates.Create.RebateSetup"] ||
+      data[lang]?.["RebateTables.Templates.Create.RebateSetup"] ||
+      data.en["RebateTables.Templates.Create.RebateSetup"],
+    "RebateTables.Templates.Create.Save":
+      resource?.["RebateTables.Templates.Create.Save"] ||
+      data[lang]?.["RebateTables.Templates.Create.Save"] ||
+      data.en["RebateTables.Templates.Create.Save"],
+    "RebateTables.Templates.Create.Cancel":
+      resource?.["RebateTables.Templates.Create.Cancel"] ||
+      data[lang]?.["RebateTables.Templates.Create.Cancel"] ||
+      data.en["RebateTables.Templates.Create.Cancel"],
+
+    "RebateTables.Templates.Edit":
+      resource?.["RebateTables.Templates.Edit"] ||
+      data[lang]?.["RebateTables.Templates.Edit"] ||
+      data.en["RebateTables.Templates.Edit"],
+    "RebateTables.Templates.Edit.Title":
+      resource?.["RebateTables.Templates.Edit.Title"] ||
+      data[lang]?.["RebateTables.Templates.Edit.Title"] ||
+      data.en["RebateTables.Templates.Edit.Title"],
+    "RebateTables.Templates.Edit.Description":
+      resource?.["RebateTables.Templates.Edit.Description"] ||
+      data[lang]?.["RebateTables.Templates.Edit.Description"] ||
+      data.en["RebateTables.Templates.Edit.Description"],
+    "RebateTables.Templates.Edit.TemplateInformation":
+      resource?.["RebateTables.Templates.Edit.TemplateInformation"] ||
+      data[lang]?.["RebateTables.Templates.Edit.TemplateInformation"] ||
+      data.en["RebateTables.Templates.Edit.TemplateInformation"],
+    "RebateTables.Templates.Edit.ProcessingFees":
+      resource?.["RebateTables.Templates.Edit.ProcessingFees"] ||
+      data[lang]?.["RebateTables.Templates.Edit.ProcessingFees"] ||
+      data.en["RebateTables.Templates.Edit.ProcessingFees"],
+    "RebateTables.Templates.Edit.RebateSetup":
+      resource?.["RebateTables.Templates.Edit.RebateSetup"] ||
+      data[lang]?.["RebateTables.Templates.Edit.RebateSetup"] ||
+      data.en["RebateTables.Templates.Edit.RebateSetup"],
+    "RebateTables.Templates.Edit.Save":
+      resource?.["RebateTables.Templates.Edit.Save"] ||
+      data[lang]?.["RebateTables.Templates.Edit.Save"] ||
+      data.en["RebateTables.Templates.Edit.Save"],
+    "RebateTables.Templates.Edit.Cancel":
+      resource?.["RebateTables.Templates.Edit.Cancel"] ||
+      data[lang]?.["RebateTables.Templates.Edit.Cancel"] ||
+      data.en["RebateTables.Templates.Edit.Cancel"],
+    "RebateTables.Templates.RefundMethod.Option.All":
+      resource?.["RebateTables.Templates.RefundMethod.Option.All"] ||
+      data[lang]?.["RebateTables.Templates.RefundMethod.Option.All"] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.All"],
+    "RebateTables.Templates.RefundMethod.Option.Cash":
+      resource?.["RebateTables.Templates.RefundMethod.Option.Cash"] ||
+      data[lang]?.["RebateTables.Templates.RefundMethod.Option.Cash"] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.Cash"],
+    "RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard":
+      resource?.[
+        "RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard"
+      ] ||
+      data[lang]?.[
+        "RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard"
+      ] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard"],
+    "RebateTables.Templates.RefundMethod.Option.Alipay":
+      resource?.["RebateTables.Templates.RefundMethod.Option.Alipay"] ||
+      data[lang]?.["RebateTables.Templates.RefundMethod.Option.Alipay"] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.Alipay"],
+    "RebateTables.Templates.RefundMethod.Option.WeChat":
+      resource?.["RebateTables.Templates.RefundMethod.Option.WeChat"] ||
+      data[lang]?.["RebateTables.Templates.RefundMethod.Option.WeChat"] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.WeChat"],
+    "RebateTables.Templates.RefundMethod.Option.CashViaPartner":
+      resource?.["RebateTables.Templates.RefundMethod.Option.CashViaPartner"] ||
+      data[lang]?.[
+        "RebateTables.Templates.RefundMethod.Option.CashViaPartner"
+      ] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.CashViaPartner"],
+    "RebateTables.Templates.RefundMethod.Option.RefundLater":
+      resource?.["RebateTables.Templates.RefundMethod.Option.RefundLater"] ||
+      data[lang]?.["RebateTables.Templates.RefundMethod.Option.RefundLater"] ||
+      data.en["RebateTables.Templates.RefundMethod.Option.RefundLater"],
+
+    "RebateTables.Templates.Column.RefundMethod":
+      resource?.["RebateTables.Templates.Column.RefundMethod"] ||
+      data[lang]?.["RebateTables.Templates.Column.RefundMethod"] ||
+      data.en["RebateTables.Templates.Column.RefundMethod"],
+    "RebateTables.Templates.Column.FixedFee":
+      resource?.["RebateTables.Templates.Column.FixedFee"] ||
+      data[lang]?.["RebateTables.Templates.Column.FixedFee"] ||
+      data.en["RebateTables.Templates.Column.FixedFee"],
+    "RebateTables.Templates.Column.VariableFee":
+      resource?.["RebateTables.Templates.Column.VariableFee"] ||
+      data[lang]?.["RebateTables.Templates.Column.VariableFee"] ||
+      data.en["RebateTables.Templates.Column.VariableFee"],
+    "RebateTables.Templates.Column.Percent":
+      resource?.["RebateTables.Templates.Column.Percent"] ||
+      data[lang]?.["RebateTables.Templates.Column.Percent"] ||
+      data.en["RebateTables.Templates.Column.Percent"],
+    "RebateTables.Templates.Column.Name":
+      resource?.["RebateTables.Templates.Column.Name"] ||
+      data[lang]?.["RebateTables.Templates.Column.Name"] ||
+      data.en["RebateTables.Templates.Column.Name"],
+    "RebateTables.Templates.Column.Amount":
+      resource?.["RebateTables.Templates.Column.Amount"] ||
+      data[lang]?.["RebateTables.Templates.Column.Amount"] ||
+      data.en["RebateTables.Templates.Column.Amount"],
+    "RebateTables.Templates.Column.Actions":
+      resource?.["RebateTables.Templates.Column.Actions"] ||
+      data[lang]?.["RebateTables.Templates.Column.Actions"] ||
+      data.en["RebateTables.Templates.Column.Actions"],
+
+    "RebateTables.Templates.Preview":
+      resource?.["RebateTables.Templates.Preview"] ||
+      data[lang]?.["RebateTables.Templates.Preview"] ||
+      data.en["RebateTables.Templates.Preview"],
+    "RebateTables.Templates.Preview.Calculate":
+      resource?.["RebateTables.Templates.Preview.Calculate"] ||
+      data[lang]?.["RebateTables.Templates.Preview.Calculate"] ||
+      data.en["RebateTables.Templates.Preview.Calculate"],
   };
 }
 export async function getResourceData(lang: string) {
