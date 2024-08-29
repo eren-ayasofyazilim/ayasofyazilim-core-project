@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { Input } from "@/components/ui/input";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
+import { getResourceData } from "src/language-data/ContractService";
 
 const columns = [
   {
@@ -307,12 +308,19 @@ const data = [
   },
 ];
 
-function MyDataTable() {
+async function MyDataTable({
+  params,
+}: {
+  params: { lang: string; type: string };
+}) {
+  const { languageData } = await getResourceData(params.lang);
   return (
     <div>
       <div className="justify-end-between mt-4 flex">
         <Input placeholder="SIS" type="number" />
-        <Button className="ml-9">Calculate</Button>
+        <Button className="ml-4">
+          {languageData["RebateTables.Templates.Preview.Calculate"]}
+        </Button>
       </div>
       <DataTable
         columnsData={{

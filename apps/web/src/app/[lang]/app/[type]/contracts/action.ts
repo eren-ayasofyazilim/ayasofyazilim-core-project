@@ -1,6 +1,7 @@
 "use server";
 import type {
   ApiError,
+  DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
   DeleteApiContractServiceRefundTablesRefundFeeDetailsByIdData,
   DeleteApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   DeleteApiContractServiceRefundTablesRefundTableDetailsByIdData,
@@ -470,7 +471,26 @@ export async function getRebateTablesRebateTableHeadersDetailsById(
     return structuredError(error);
   }
 } //get rebate tables details
-
+export async function deleteRebateTablesRebateTableHeadersById(
+  body: DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.rebateTables.deleteApiContractServiceRebateTablesRebateTableHeadersById(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
+  } catch (error) {
+    return structuredError(error);
+  }
+} //delete fee details
 /** RebateTable **/
 // export async function useAction({
 //   // client,
