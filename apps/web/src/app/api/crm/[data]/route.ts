@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import type { PostApiCrmServiceMerchantsWithComponentsData } from "@ayasofyazilim/saas/CRMService";
-import { CreateMerchants } from "src/app/[lang]/app/[type]/crm/[domain]/[data]/(alternative)/new/page";
+import type { CreateMerchants } from "src/app/[lang]/app/[type]/crm/[domain]/[data]/(alternative)/new/page";
 import { getCRMServiceClient } from "src/lib";
 import type { Clients } from "../../util";
 import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../util";
