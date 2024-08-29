@@ -9,5 +9,15 @@
   "TaxFree": "Tax Free",
   "TaxFree.New": "Yeni Tax Free",
   "TaxOffices": "Vergi Ofisi",
-  "TaxOffices.New": "Yeni Vergi Ofisi"
+  "TaxOffices.New": "Yeni Vergi Ofisi",
+  "Merchants.Edit": "Düzenle Mağaza",
+  "RefundPoints.Edit": "Düzenle İade Noktası",
+  "Customs.Edit": "Düzenle Gümrük",
+  "TaxFree.Edit": "Düzenle Tax Free",
+  "TaxOffices.Edit": "Düzenle Vergi Ofisi",
+  "Organization": "Organizasyon",
+  "Email": "Email",
+  "Telephone": "Telefon",
+  "Address": "Adres",
+  "Save": "kaydet "
 }

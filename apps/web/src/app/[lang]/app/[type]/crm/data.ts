@@ -61,7 +61,12 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         },
 
         tableSchema: {
-          excludeList: ["id"],
+          excludeList: [
+            "id",
+            "organizationId",
+            "individualId",
+            "parentCompanyId",
+          ],
           schema: $UniRefund_CRMService_Merchants_MerchantProfileDto,
         },
       },
@@ -73,7 +78,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         },
 
         tableSchema: {
-          excludeList: ["id"],
+          excludeList: ["id", "organizationId", "individualId"],
           schema: $UniRefund_CRMService_Merchants_RefundPointProfileDto,
         },
       },
@@ -86,7 +91,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         },
 
         tableSchema: {
-          excludeList: ["id"],
+          excludeList: ["id", "organizationId"],
           schema: $UniRefund_CRMService_Customss_CustomsProfileDto,
         },
       },
@@ -99,7 +104,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         },
 
         tableSchema: {
-          excludeList: ["id"],
+          excludeList: ["id", "organizationId"],
           schema: $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
         },
       },
@@ -112,7 +117,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         },
 
         tableSchema: {
-          excludeList: ["id"],
+          excludeList: ["id", "organizationId"],
           schema: $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
         },
       },

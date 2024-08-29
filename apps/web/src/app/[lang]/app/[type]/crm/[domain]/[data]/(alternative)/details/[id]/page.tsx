@@ -29,6 +29,7 @@ export default async function Page({
     id: string;
     data: string;
     domain: string;
+    lang: string;
   };
 }) {
   const crmDetailData = await getCrmDetailData(params.data, params.id);

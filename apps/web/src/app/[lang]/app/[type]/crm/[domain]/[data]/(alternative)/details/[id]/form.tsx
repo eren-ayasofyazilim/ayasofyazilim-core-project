@@ -23,7 +23,12 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
+import { useState } from "react";
+import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
+import { useLocale } from "src/providers/locale";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { dataConfigOfCrm } from "../../../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 
 const organization = $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
@@ -40,8 +45,14 @@ export default function Form({
     id: string;
     data: string;
     domain: string;
+    lang: string;
   };
 }) {
+  const [formData] = useState<TableData>(
+    dataConfigOfCrm[params.domain].pages[params.data],
+  );
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const organizationInfo =
     crmDetailData.entityInformations?.[0]?.organizations?.[0];
   const organizationId = organizationInfo?.id || "";
@@ -110,7 +121,6 @@ export default function Form({
       } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
       response = "success";
     }
-
     if (response) {
       toast.success("Updated successfully!");
     }
@@ -120,17 +130,24 @@ export default function Form({
     <div className="h-full overflow-hidden">
       <PageHeader
         LinkElement={Link}
-        description="Edit"
+        description={
+          languageData[
+            `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
+          ]
+        }
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
-        title="Edit"
+        title={
+          languageData[
+            `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
+          ]
+        }
       />
-
       <SectionLayout
         sections={[
-          { name: "Organization", id: "organization" },
-          { name: "Email", id: "email" },
-          { name: "Telephone", id: "telephone" },
-          { name: "Address", id: "address" },
+          { name: languageData.Organization, id: "organization" },
+          { name: languageData.Telephone, id: "telephone" },
+          { name: languageData.Address, id: "address" },
+          { name: languageData.Email, id: "email" },
         ]}
         vertical
       >
@@ -146,25 +163,7 @@ export default function Form({
             }}
           >
             <AutoFormSubmit className="float-right">
-              Save Changes
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="email">
-          <AutoForm
-            formClassName="pb-40 "
-            formSchema={emailSchema}
-            onSubmit={(values) => {
-              void handleSubmit(values, "email");
-            }}
-            values={{
-              emailAddress: emailInfo?.emailAddress,
-              typeCode: emailInfo?.typeCode?.toString(),
-              primaryFlag: emailInfo?.primaryFlag,
-            }}
-          >
-            <AutoFormSubmit className="float-right">
-              Save Changes
+              {languageData.Save}
             </AutoFormSubmit>
           </AutoForm>
         </SectionLayoutContent>
@@ -184,7 +183,7 @@ export default function Form({
             }}
           >
             <AutoFormSubmit className="float-right">
-              Save Changes
+              {languageData.Save}
             </AutoFormSubmit>
           </AutoForm>
         </SectionLayoutContent>
@@ -207,7 +206,25 @@ export default function Form({
             }}
           >
             <AutoFormSubmit className="float-right">
-              Save Changes
+              {languageData.Save}
+            </AutoFormSubmit>
+          </AutoForm>
+        </SectionLayoutContent>
+        <SectionLayoutContent sectionId="email">
+          <AutoForm
+            formClassName="pb-40 "
+            formSchema={emailSchema}
+            onSubmit={(values) => {
+              void handleSubmit(values, "email");
+            }}
+            values={{
+              emailAddress: emailInfo?.emailAddress,
+              typeCode: emailInfo?.typeCode?.toString(),
+              primaryFlag: emailInfo?.primaryFlag,
+            }}
+          >
+            <AutoFormSubmit className="float-right">
+              {languageData.Save}
             </AutoFormSubmit>
           </AutoForm>
         </SectionLayoutContent>
