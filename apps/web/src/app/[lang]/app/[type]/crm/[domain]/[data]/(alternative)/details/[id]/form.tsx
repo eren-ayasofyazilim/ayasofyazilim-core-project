@@ -110,7 +110,6 @@ export default function Form({
       } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
       response = "success";
     }
-
     if (response) {
       toast.success("Updated successfully!");
     }
@@ -120,17 +119,16 @@ export default function Form({
     <div className="h-full overflow-hidden">
       <PageHeader
         LinkElement={Link}
-        description="Edit"
+        description={`Edit ${params.data}`}
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
-        title="Edit"
+        title={`Edit ${params.data}`}
       />
-
       <SectionLayout
         sections={[
           { name: "Organization", id: "organization" },
-          { name: "Email", id: "email" },
           { name: "Telephone", id: "telephone" },
           { name: "Address", id: "address" },
+          { name: "Email", id: "email" },
         ]}
         vertical
       >
@@ -143,24 +141,6 @@ export default function Form({
             }}
             values={{
               name: organizationInfo?.name,
-            }}
-          >
-            <AutoFormSubmit className="float-right">
-              Save Changes
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="email">
-          <AutoForm
-            formClassName="pb-40 "
-            formSchema={emailSchema}
-            onSubmit={(values) => {
-              void handleSubmit(values, "email");
-            }}
-            values={{
-              emailAddress: emailInfo?.emailAddress,
-              typeCode: emailInfo?.typeCode?.toString(),
-              primaryFlag: emailInfo?.primaryFlag,
             }}
           >
             <AutoFormSubmit className="float-right">
@@ -204,6 +184,24 @@ export default function Form({
               terriority: addressInfo?.terriority,
               typeCode: addressInfo?.typeCode?.toString(),
               primaryFlag: addressInfo?.primaryFlag,
+            }}
+          >
+            <AutoFormSubmit className="float-right">
+              Save Changes
+            </AutoFormSubmit>
+          </AutoForm>
+        </SectionLayoutContent>
+        <SectionLayoutContent sectionId="email">
+          <AutoForm
+            formClassName="pb-40 "
+            formSchema={emailSchema}
+            onSubmit={(values) => {
+              void handleSubmit(values, "email");
+            }}
+            values={{
+              emailAddress: emailInfo?.emailAddress,
+              typeCode: emailInfo?.typeCode?.toString(),
+              primaryFlag: emailInfo?.primaryFlag,
             }}
           >
             <AutoFormSubmit className="float-right">

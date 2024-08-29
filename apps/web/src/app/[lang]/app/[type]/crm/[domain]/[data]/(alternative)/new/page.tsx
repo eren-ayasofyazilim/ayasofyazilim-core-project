@@ -7,6 +7,7 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "../../../../data";
 
@@ -41,6 +42,7 @@ export default function Page({
     domain: string;
   };
 }) {
+  const router = useRouter();
   const handleSave = async (formData: CreateMerchants) => {
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
@@ -52,6 +54,9 @@ export default function Page({
       });
       if (response.ok) {
         toast.success(`${params.data} added successfully`);
+        router.push(
+          getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`),
+        );
       } else {
         const errorData = (await response.json()) as {
           message: string;
@@ -67,9 +72,9 @@ export default function Page({
     <>
       <PageHeader
         LinkElement={Link}
-        description="Add New"
+        description={`Add New ${params.data}`}
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
-        title="Add New"
+        title={`Add New ${params.data}`}
       />
       <div className="flex h-full w-full flex-row">
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
