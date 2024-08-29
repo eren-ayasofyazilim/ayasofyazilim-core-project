@@ -112,7 +112,7 @@ export default function Form({
     }
 
     if (response) {
-      toast.success("Başarılı!");
+      toast.success("Updated successfully!");
     }
   }
 
@@ -120,9 +120,9 @@ export default function Form({
     <div className="h-full overflow-hidden">
       <PageHeader
         LinkElement={Link}
-        description="Details"
+        description="Edit"
         href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
-        title="Details"
+        title="Edit"
       />
 
       <SectionLayout

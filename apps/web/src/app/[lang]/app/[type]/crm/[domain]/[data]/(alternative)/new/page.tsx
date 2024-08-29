@@ -72,7 +72,7 @@ export default function Page({
         title="Add New"
       />
       <div className="flex h-full w-full flex-row">
-        <Card className="m-0 w-full overflow-auto border-0 bg-transparent shadow-none">
+        <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
           <CardContent>
             <AutoForm
               formClassName="pb-40 "
