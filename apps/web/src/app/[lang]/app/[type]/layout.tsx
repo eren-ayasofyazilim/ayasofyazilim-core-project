@@ -60,7 +60,7 @@ export default async function Layout({
     "auditLogs",
     "textTemplates",
   ];
-  const arrayOfManagement = ["settings"];
+  const arrayOfManagement = ["setting"];
   const arrayOfCrm = ["companies"];
 
   const userNavigation = {
