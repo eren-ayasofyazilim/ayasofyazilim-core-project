@@ -213,7 +213,9 @@ function getLanguageData(resources: ResourceResult, lang: string) {
       data[lang]?.["RefundFees.Page.Edit.Fee.Create.Title"] ||
       data.en["RefundFees.Page.Edit.Fee.Create.Title"],
     "RefundFees.Page.Edit.Fee.Create.Description":
-      "Yeni ücret düzeni oluşturun",
+      resource?.["RefundFees.Page.Edit.Fee.Create.Description"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Create.Description"] ||
+      data.en["RefundFees.Page.Edit.Fee.Create.Description"],
     "RefundFees.Page.Edit.Fee.Create.Save":
       resource?.["RefundFees.Page.Edit.Fee.Create.Save"] ||
       data[lang]?.["RefundFees.Page.Edit.Fee.Create.Save"] ||
