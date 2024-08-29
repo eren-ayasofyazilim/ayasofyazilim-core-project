@@ -2,11 +2,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import { useRouter } from "next/navigation";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm } from "../../../../data";
+import Link from "next/link";
 
 export interface CreateMerchants {
   name: string;
@@ -39,6 +42,7 @@ export default function Page({
     domain: string;
   };
 }) {
+  const router = useRouter();
   const handleSave = async (formData: CreateMerchants) => {
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
@@ -62,22 +66,31 @@ export default function Page({
   };
 
   return (
-    <div className="flex h-full w-full flex-row">
-      <Card className="m-0 w-full overflow-auto border-0 bg-transparent pb-16 shadow-none">
-        <CardContent>
-          <AutoForm
-            formSchema={formSchemaByData(params.data)}
-            onSubmit={(val) => {
-              void handleSave(val as CreateMerchants);
-            }}
-          >
-            <AutoFormSubmit className="float-right">
-              Save Changes
-            </AutoFormSubmit>
-          </AutoForm>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <PageHeader
+        title="Add New"
+        description="Add New"
+        LinkElement={Link}
+        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+      />
+      <div className="flex h-full w-full flex-row">
+        <Card className="m-0 w-full overflow-auto border-0 bg-transparent shadow-none">
+          <CardContent>
+            <AutoForm
+              formSchema={formSchemaByData(params.data)}
+              onSubmit={(val) => {
+                void handleSave(val as CreateMerchants);
+              }}
+              formClassName="pb-40 "
+            >
+              <AutoFormSubmit className="float-right">
+                Save Changes
+              </AutoFormSubmit>
+            </AutoForm>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }
 

@@ -13,7 +13,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../data";
+import { dataConfigOfCrm } from "../../../data";
 
 async function controlledFetch(
   url: string,
@@ -287,7 +287,7 @@ export default function Page({
   });
   const router = useRouter();
   columnsData.data.actionList?.push({
-    cta: " details",
+    cta: "Details",
     type: "Action",
     callback: (row) => {
       router.push(
@@ -295,7 +295,6 @@ export default function Page({
       );
     },
   });
-
   return (
     <Dashboard
       action={action}

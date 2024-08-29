@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { getResourceDataClient } from "src/language-data/AbpUiNavigation";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../data";
+import { dataConfigOfCrm } from "../../../data";
 
 interface LayoutProps {
   children: JSX.Element;
