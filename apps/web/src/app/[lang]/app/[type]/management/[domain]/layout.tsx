@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getResourceDataClient } from "src/language-data/AbpUiNavigation";
+import { getResourceDataClient } from "src/language-data/SettingService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { dataConfigOfManagement } from "../data";
@@ -31,13 +31,22 @@ export default function Layout({ children, params }: LayoutProps) {
       dataConfigOfManagement[params.domain],
     )
       .filter(([e]) => e !== "displayName" && e !== "default")
-      .map(([key, value]: [string, any]) => {
+      .map(([key, value]: [string, unknown]) => {
+        let name = "";
+        if (
+          value &&
+          typeof value === "object" &&
+          "title" in value &&
+          typeof value.title === "string"
+        ) {
+          name =
+            languageData[
+              value.title.replaceAll(" ", "") as keyof typeof languageData
+            ];
+        }
         return {
           id: `${params.domain}/${key}`,
-          name:
-            languageData[`setting:${key}` as keyof typeof languageData] ||
-            value.title ||
-            key,
+          name: name || key,
           link: getBaseLink(
             `management/${params.domain}/${key}`,
             true,

@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getResourceDataClient } from "src/language-data/AbpUiNavigation";
+import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "../../../data";
@@ -31,19 +31,22 @@ export default function Layout({ children, params }: LayoutProps) {
   const pathname = usePathname();
   const path = pathname.split("crm/")[1];
 
+  //TODO make this page serverside
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfigOfCrm[params.domain].pages)
       .filter(([e]) => e !== "displayName" && e !== "default")
       .map(([key, value]: [string, unknown]) => {
-        let name = languageData[`merchant:${key}` as keyof typeof languageData];
+        let name = "";
         if (
           value &&
           typeof value === "object" &&
           "title" in value &&
-          value.title &&
           typeof value.title === "string"
         ) {
-          name = value.title;
+          name =
+            languageData[
+              value.title.replaceAll(" ", "") as keyof typeof languageData
+            ];
         }
         return {
           id: `${params.domain}/${key}`,

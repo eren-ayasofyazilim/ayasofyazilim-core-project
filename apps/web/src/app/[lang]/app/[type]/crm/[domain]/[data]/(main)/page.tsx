@@ -9,6 +9,8 @@ import type {
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "../../../data";
@@ -52,14 +54,17 @@ function convertEnumField(
 export default function Page({
   params,
 }: {
-  params: { data: string; domain: string };
+  params: { data: string; domain: string; lang: string };
 }): JSX.Element {
   const fetchLink = getBaseLink(`/api/crm/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
   const [formData, setFormData] = useState<TableData>(
     dataConfigOfCrm[params.domain].pages[params.data],
   );
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const detailedFilters =
     dataConfigOfCrm[params.domain].pages[params.data].detailedFilters || [];
   async function processConvertors() {
@@ -139,7 +144,9 @@ export default function Page({
   if (createFormSchema) {
     action = [
       {
-        cta: `New ${formData.title}`,
+        cta: languageData[
+          `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+        ],
         type: "NewPage",
         href: `/app/admin/crm/companies/${params.data}/new`,
       },
@@ -182,16 +189,15 @@ export default function Page({
     },
   };
   columnsData.data.actionList?.push({
-    cta: `Delete  `,
+    cta: languageData.Delete,
     type: "Action",
     callback: (data) => {
       onDelete(data);
     },
   });
 
-  const router = useRouter();
   columnsData.data.actionList?.push({
-    cta: "Edit",
+    cta: languageData.Edit,
     type: "Action",
     callback: (row) => {
       router.push(

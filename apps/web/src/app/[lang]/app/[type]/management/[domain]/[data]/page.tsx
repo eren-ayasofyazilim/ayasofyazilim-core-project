@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
+import { getResourceDataClient } from "src/language-data/SettingService";
+import { useLocale } from "src/providers/locale";
 import { dataConfigOfManagement } from "../../data";
 
 async function controlledFetch(
@@ -74,7 +76,7 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
 export default function Page({
   params,
 }: {
-  params: { data: string; domain: string };
+  params: { data: string; domain: string; lang: string };
 }): JSX.Element {
   const fetchLink = getBaseLink(`/api/management/${params.data}`);
   const [roles, setRoles] = useState<any>();
@@ -82,6 +84,8 @@ export default function Page({
   const [formData, setFormData] = useState<TableData>(
     dataConfigOfManagement[params.domain][params.data],
   );
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const detailedFilters =
     dataConfigOfManagement[params.domain][params.data]?.detailedFilters || [];
   async function processConvertors() {
@@ -161,7 +165,9 @@ export default function Page({
   if (createFormSchema) {
     action = [
       {
-        cta: `New ${formData.title}`,
+        cta: languageData[
+          `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+        ],
         description: `Create a new ${formData.title}`,
         componentType: "Autoform",
         autoFormArgs: {
@@ -293,15 +299,15 @@ export default function Page({
     },
   };
   columnsData.data.actionList?.push({
-    cta: `Delete  `,
+    cta: languageData.Delete,
     type: "Action",
     callback: (data) => {
       onDelete(data);
     },
   });
   columnsData.data.actionList?.push({
-    cta: `Edit  `,
-    description: `Edit `,
+    cta: languageData.Edit,
+    description: languageData.Edit,
     type: "Dialog",
     componentType: "Autoform",
     autoFormArgs: autoformEditArgs,
