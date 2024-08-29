@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 "use client";
-
+import type {
+  AyasofYazilim_Enum_Enums_EnumDto as EnumDto,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
+} from "@ayasofyazilim/saas/ContractService";
+import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderUpdateDto as RebateTableHeaderUpdateSchema } from "@ayasofyazilim/saas/ContractService";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -16,15 +20,8 @@ import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { z } from "zod";
-
-const formSchema = z.object({
-  Name: z.string(),
-  CalculateNetCommissionInsteadOfRebate: z.boolean().optional(),
-});
-
-const initialFeesData: any[] = [];
-const initialSetupData: any[] = [];
+import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import { toast } from "@/components/ui/sonner";
 
 function NameCell({ getValue, row: { index }, column: { id }, table }: any) {
   const name = getValue();
@@ -126,8 +123,8 @@ const feescolumns = {
 };
 
 function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
-  const setupValue = getValue() as string | undefined;
-  const [value, setValue] = useState<string | undefined>(setupValue);
+  const setupValue = getValue() as EnumDto;
+  const [value, setValue] = useState<string | undefined>(setupValue.key || "");
 
   const onChange = (newValue: string): void => {
     setValue(newValue);
@@ -135,7 +132,7 @@ function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
   };
 
   useEffect(() => {
-    setValue(setupValue);
+    setValue(setupValue.key || "");
   }, [setupValue]);
 
   return (
@@ -144,15 +141,13 @@ function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="All">All</SelectItem>
-        <SelectItem value="Cash">Cash</SelectItem>
-        <SelectItem value="Credit or Debit Card">
-          Credit or Debit Card
-        </SelectItem>
-        <SelectItem value="Alipay">Alipay</SelectItem>
-        <SelectItem value="WeChat">WeChat</SelectItem>
-        <SelectItem value="Cash via partner">Cash via partner</SelectItem>
-        <SelectItem value="Refund later">Refund later</SelectItem>
+        <SelectItem value="ALL">All</SelectItem>
+        <SelectItem value="CASH">Cash</SelectItem>
+        <SelectItem value="CREDITORDEBITCARD">Credit or Debit Card</SelectItem>
+        <SelectItem value="ALIPAY">Alipay</SelectItem>
+        <SelectItem value="WECHAT">WeChat</SelectItem>
+        <SelectItem value="CASHVIAPARTNER">Cash via partner</SelectItem>
+        <SelectItem value="REFUNDLATER">Refund later</SelectItem>
       </SelectContent>
     </Select>
   );
@@ -161,7 +156,6 @@ function SetupCell({ getValue, row: { index }, column: { id }, table }: any) {
 function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
   const fixedFeeValue = getValue();
   const [value, setValue] = useState(fixedFeeValue);
-
   const onBlur = (): void => {
     table.options.meta?.updateData(index, id, value);
   };
@@ -184,28 +178,30 @@ function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
 }
 
 function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
-  const variableFeeValue = getValue() as string | undefined;
-  const [value, setValue] = useState<string | undefined>(variableFeeValue);
-
+  const variableFeeValue = getValue() as EnumDto;
+  const [value, setValue] = useState<string | undefined>(
+    variableFeeValue.key || "",
+  );
   const onChange = (newValue: string): void => {
     setValue(newValue);
     table.options.meta?.updateData(index, id, newValue);
   };
 
   useEffect(() => {
-    setValue(variableFeeValue);
+    setValue(variableFeeValue.key || "");
   }, [variableFeeValue]);
-
   return (
     <Select onValueChange={onChange} value={value}>
       <SelectTrigger className="w-full text-center">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="% of GC">% of GC</SelectItem>
-        <SelectItem value="% of GC without VAT">% of GC without VAT</SelectItem>
-        <SelectItem value="% of VAT">% of VAT</SelectItem>
-        <SelectItem value="% of SIS">% of SIS</SelectItem>
+        <SelectItem value="PERCENTOFGC">% of GC</SelectItem>
+        <SelectItem value="PERCENTOFGCWITHOUTVAT">
+          % of GC without VAT
+        </SelectItem>
+        <SelectItem value="PERCENTOVAT">% of VAT</SelectItem>
+        <SelectItem value="PERCENTOSIS">% of SIS</SelectItem>
       </SelectContent>
     </Select>
   );
@@ -258,22 +254,22 @@ const setupcolumns = {
       ),
     },
     {
-      accessorKey: "refundmethod",
+      accessorKey: "refundMethod",
       header: () => <div className="text-center">Refund method</div>,
       cell: (props: any) => <SetupCell {...props} />,
     },
     {
-      accessorKey: "fixedfee",
+      accessorKey: "fixedFeeValue",
       header: () => <div className="text-center">Fixed fee</div>,
       cell: (props: any) => <Fixedfee {...props} />,
     },
     {
-      accessorKey: "variablefee",
+      accessorKey: "variableFee",
       header: () => <div className="text-center">Variable fee</div>,
       cell: (props: any) => <Variablefee {...props} />,
     },
     {
-      accessorKey: "percent",
+      accessorKey: "percentFeeValue",
       header: () => <div className="text-center">% Percent</div>,
       cell: (props: any) => <PercentCell {...props} />,
     },
@@ -294,11 +290,22 @@ const setupcolumns = {
   ],
 };
 
-function Rebate() {
+export default function Rebate({
+  initialFeesData = [],
+  initialSetupData = [],
+  details,
+}: {
+  initialFeesData: any[];
+  initialSetupData: any[];
+  details: RebateTableHeaderDto;
+}) {
+  const formSchema = createZodObject(RebateTableHeaderUpdateSchema, [
+    "name",
+    "calculateNetCommissionInsteadOfRefund",
+  ]);
   const [autoFormData, setAutoFormData] = useState<Record<string, any>>({});
-  const [feesData, setFeesData] = useState(initialFeesData);
-  const [setupData, setSetupData] = useState(initialSetupData);
-
+  const [feesData, setFeesData] = useState<any[]>(initialFeesData);
+  const [setupData, setSetupData] = useState<any[]>(initialSetupData);
   const handleFormChange = (newFormData: any): void => {
     setAutoFormData(newFormData);
   };
@@ -312,6 +319,7 @@ function Rebate() {
       feesData: filteredFeesData,
       setupData: filteredSetupData,
     };
+    toast.warning("Not implemented yet");
     return payload;
   };
 
@@ -340,12 +348,13 @@ function Rebate() {
             <AutoForm
               fieldConfig={{
                 withoutBorder: { fieldType: "switch" },
-                CalculateNetCommissionInsteadOfRebate: {
+                calculateNetCommissionInsteadOfRefund: {
                   fieldType: "switch",
                 },
               }}
               formSchema={formSchema}
               onParsedValuesChange={handleFormChange}
+              values={details}
             />
           </div>
 
@@ -363,8 +372,8 @@ function Rebate() {
                 }}
                 data={feesData}
                 editable
-                onDataUpdate={() => {
-                  setFeesData(initialFeesData);
+                onDataUpdate={(data) => {
+                  setFeesData(data);
                 }}
                 showView={false}
               />
@@ -385,15 +394,15 @@ function Rebate() {
                 }}
                 data={setupData}
                 editable
-                onDataUpdate={() => {
-                  setSetupData(initialSetupData);
+                onDataUpdate={(data) => {
+                  setSetupData(data);
                 }}
                 showView={false}
               />
             </div>
           </div>
           <div className="mt-4 flex justify-end gap-5 px-9">
-            <Button className=" w-40 ">Cancel</Button>
+            {/* <Button className=" w-40 ">Cancel</Button> */}
             <Button className=" w-40 " onClick={handleSubmit}>
               Save
             </Button>
@@ -403,5 +412,3 @@ function Rebate() {
     </div>
   );
 }
-
-export default Rebate;
