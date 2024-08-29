@@ -81,5 +81,8 @@
   "RefundFees.Page.Edit.Fee.Create.Description": "Create new refund fee setup",
   "RefundFees.Page.Edit.Fee.Create.Save": "Save",
 
-  "RefundFees.Page.Edit.Fee.Delete": "Delete"
+  "RefundFees.Page.Edit.Fee.Delete": "Delete",
+
+  "RebateTables.Templates.Create": "Create new",
+  "RebateTables.Templates.Details": "Details"
 }

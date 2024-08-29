@@ -265,6 +265,14 @@ function getLanguageData(resources: ResourceResult, lang: string) {
       resource?.["RefundFees.Page.Edit.Fee.Delete"] ||
       data[lang]?.["RefundFees.Page.Edit.Fee.Delete"] ||
       data.en["RefundFees.Page.Edit.Fee.Delete"],
+    "RebateTables.Templates.Create":
+      resource?.["RebateTables.Templates.Create"] ||
+      data[lang]?.["RebateTables.Templates.Create"] ||
+      data.en["RebateTables.Templates.Create"],
+    "RebateTables.Templates.Details":
+      resource?.["RebateTables.Templates.Details"] ||
+      data[lang]?.["RebateTables.Templates.Details"] ||
+      data.en["RebateTables.Templates.Details"],
   };
 }
 export async function getResourceData(lang: string) {

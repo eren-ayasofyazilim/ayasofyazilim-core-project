@@ -27,7 +27,7 @@ import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableFeeHeaderDetailsById,
   deleteRefundTableFeeHeadersById,
-  postRefundTableFeeHeaderDetails,
+  postRefundTableFeeHeaderDetailsByRefundTableHeaderId,
   // putRefundTableFeeHeaderDetailsById,
   putRefundTableFeeHeadersById,
 } from "../../../action";
@@ -132,11 +132,9 @@ export default function Edit({
   };
   const handleSetupCreate = (row: RefundFeeDetailCreateDto) => {
     setLoading(true);
-    void postRefundTableFeeHeaderDetails({
-      requestBody: {
-        ...row,
-        refundFeeHeaderId: details.id || "",
-      },
+    void postRefundTableFeeHeaderDetailsByRefundTableHeaderId({
+      refundFeeHeaderId: details.id || "",
+      requestBody: row,
     })
       .then((response) => {
         if (response.type === "success") {
@@ -200,6 +198,11 @@ export default function Edit({
     description: languageData["RefundFees.Page.Edit.Fee.Create.Description"],
     autoFormArgs: {
       formSchema: createZodObject(detailCreateSchema),
+      fieldConfig: {
+        refundFeeHeaderId: {
+          containerClassName: "hidden",
+        },
+      },
       submit: {
         cta: languageData["RefundFees.Page.Edit.Fee.Create.Save"],
       },

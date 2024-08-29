@@ -81,5 +81,8 @@
   "RefundFees.Page.Edit.Fee.Create.Description": "Yeni ücret düzeni oluşturun",
   "RefundFees.Page.Edit.Fee.Create.Save": "Kaydet",
 
-  "RefundFees.Page.Edit.Fee.Delete": "Sil"
+  "RefundFees.Page.Edit.Fee.Delete": "Sil",
+
+  "RebateTables.Templates.Create": "Yeni oluştur",
+  "RebateTables.Templates.Details": "Detaylar"
 }
