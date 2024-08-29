@@ -2,11 +2,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import Link from "next/link";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm } from "../../../../data";
 
 export interface CreateMerchants {
   name: string;
@@ -62,22 +64,31 @@ export default function Page({
   };
 
   return (
-    <div className="flex h-full w-full flex-row">
-      <Card className="m-0 w-full overflow-auto border-0 bg-transparent pb-16 shadow-none">
-        <CardContent>
-          <AutoForm
-            formSchema={formSchemaByData(params.data)}
-            onSubmit={(val) => {
-              void handleSave(val as CreateMerchants);
-            }}
-          >
-            <AutoFormSubmit className="float-right">
-              Save Changes
-            </AutoFormSubmit>
-          </AutoForm>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <PageHeader
+        LinkElement={Link}
+        description="Add New"
+        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        title="Add New"
+      />
+      <div className="flex h-full w-full flex-row">
+        <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
+          <CardContent>
+            <AutoForm
+              formClassName="pb-40 "
+              formSchema={formSchemaByData(params.data)}
+              onSubmit={(val) => {
+                void handleSave(val as CreateMerchants);
+              }}
+            >
+              <AutoFormSubmit className="float-right">
+                Save Changes
+              </AutoFormSubmit>
+            </AutoForm>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }
 

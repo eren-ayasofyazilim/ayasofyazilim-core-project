@@ -10,6 +10,8 @@ const data: LanguageDataType = {
 
 export interface CRMServiceServiceResource {
   new: string;
+  Edit: string;
+  Delete: string;
   Merchants: string;
   "Merchants.New": string;
   RefundPoints: string;
@@ -26,8 +28,11 @@ function getLanguageData(
   lang: string,
 ): CRMServiceServiceResource {
   const resource = resources.CrmService?.texts;
+  const uiResource = resources.AbpUi?.texts;
   return {
     new: resource?.new || data[lang]?.new || data.en.new,
+    Edit: uiResource?.Edit || data[lang]?.Edit || data.en.Edit,
+    Delete: uiResource?.Delete || data[lang]?.Delete || data.en.Delete,
     Merchants:
       resource?.Merchants || data[lang]?.Merchants || data.en.Merchants,
     "Merchants.New":

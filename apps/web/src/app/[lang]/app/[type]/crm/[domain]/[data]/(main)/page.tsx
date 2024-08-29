@@ -6,16 +6,14 @@ import type {
   ColumnsType,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
-import { useEffect, useState } from "react";
-import { z } from "zod";
 import { useRouter } from "next/navigation";
-import type { FormModifier, TableData } from "src/utils";
-import { createZodObject, getBaseLink } from "src/utils";
+import { useEffect, useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import { dataConfigOfCrm } from "../../data";
+import type { TableData } from "src/utils";
+import { getBaseLink } from "src/utils";
+import { dataConfigOfCrm } from "../../../data";
 
 async function controlledFetch(
   url: string,
@@ -53,27 +51,6 @@ function convertEnumField(
   return data.indexOf(value);
 }
 
-interface ConvertorValue {
-  covertTo?: string;
-  data: any;
-  get: string;
-  post: string;
-  type: "enum" | "async";
-}
-
-function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
-  if (typeof ConvertorValue.data === "function") {
-    return;
-  }
-  const returnValue = ConvertorValue.data.find((item: any) => {
-    return item[ConvertorValue.get] === value;
-  });
-
-  if (returnValue) {
-    return returnValue[ConvertorValue.post];
-  }
-}
-
 export default function Page({
   params,
 }: {
@@ -82,12 +59,12 @@ export default function Page({
   const fetchLink = getBaseLink(`/api/crm/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
   const [formData, setFormData] = useState<TableData>(
     dataConfigOfCrm[params.domain].pages[params.data],
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
-
   const detailedFilters =
     dataConfigOfCrm[params.domain].pages[params.data].detailedFilters || [];
   async function processConvertors() {
@@ -187,45 +164,6 @@ export default function Page({
     void processConvertors();
   }, []);
 
-  function parseFormValues(schema: FormModifier, data: any) {
-    const newSchema = createZodObject(
-      schema.schema,
-      schema.formPositions || [],
-      schema.convertors || {},
-    );
-    if (!schema.convertors) return newSchema.parse(data);
-    const transformedSchema = newSchema.transform((val) => {
-      const returnObject = { ...val };
-      if (!schema.convertors) return returnObject;
-      Object.entries(schema.convertors).forEach(([key, value]) => {
-        if (value.type === "enum") {
-          returnObject[key] = convertEnumField(returnObject[key], value);
-        } else if (value.type === "async") {
-          returnObject[key] = convertAsyncField(returnObject[key], value);
-        }
-      });
-      return returnObject;
-    });
-    const parsed = transformedSchema.parse(data);
-    return parsed;
-  }
-
-  const onEdit = (data: any, row: any, editFormSchema: any) => {
-    const parsedData = parseFormValues(editFormSchema, data);
-    void controlledFetch(
-      fetchLink,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          id: row.id,
-          requestBody: JSON.stringify(parsedData),
-        }),
-      },
-      getRoles,
-      "Updated Successfully",
-    );
-  };
-
   const onDelete = (row: any) => {
     void controlledFetch(
       fetchLink,
@@ -238,31 +176,6 @@ export default function Page({
     );
   };
 
-  function convertZod(schema: FormModifier) {
-    const newSchema = createZodObject(
-      schema.schema,
-      schema.formPositions || [],
-      schema.convertors || {},
-    );
-    return newSchema;
-  }
-  const editFormSchema = formData.editFormSchema;
-  let editFormSchemaZod,
-    autoformEditArgs: AutoFormProps = {
-      formSchema: z.object({}),
-    };
-  if (editFormSchema) {
-    editFormSchemaZod = convertZod(editFormSchema);
-    autoformEditArgs = {
-      formSchema: editFormSchemaZod,
-      // convertor: formData.tableSchema.convertors,
-      fieldConfig: {
-        all: {
-          withoutBorder: true,
-        },
-      },
-    };
-  }
   let actionList: TableAction[] = [];
   if (formData.tableSchema.actionList) {
     actionList = formData.tableSchema.actionList(controlledFetch, getRoles);
@@ -276,25 +189,15 @@ export default function Page({
     },
   };
   columnsData.data.actionList?.push({
-    cta: `Delete  `,
+    cta: languageData.Delete,
     type: "Action",
     callback: (data) => {
       onDelete(data);
     },
   });
+
   columnsData.data.actionList?.push({
-    cta: `Edit  `,
-    description: `Edit `,
-    type: "Dialog",
-    componentType: "Autoform",
-    autoFormArgs: autoformEditArgs,
-    callback: (data, row) => {
-      onEdit(data, row, editFormSchema);
-    },
-  });
-  const router = useRouter();
-  columnsData.data.actionList?.push({
-    cta: " details",
+    cta: languageData.Edit,
     type: "Action",
     callback: (row) => {
       router.push(
@@ -302,7 +205,6 @@ export default function Page({
       );
     },
   });
-
   return (
     <Dashboard
       action={action}

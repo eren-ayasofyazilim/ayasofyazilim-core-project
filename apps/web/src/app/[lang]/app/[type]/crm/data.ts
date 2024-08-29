@@ -59,22 +59,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions,
           schema: $createMerchants,
         },
-        // editFormSchema: {
-        //   formPositions: ["percent", "minimumTotalAmount", "countryId", "active"],
-        //   schema: $UniRefund_SettingService_Vats_UpdateVatDto,
-        //   convertors: {
-        //     countryId: {
-        //       data: () => {
-        //         return fetch(getBaseLink("api/management/country")).then((data) =>
-        //           data.json(),
-        //         );
-        //       },
-        //       get: "name",
-        //       post: "id",
-        //       type: "async",
-        //     },
-        //   },
-        // },
+
         tableSchema: {
           excludeList: ["id"],
           schema: $UniRefund_CRMService_Merchants_MerchantProfileDto,
@@ -86,18 +71,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions,
           schema: $createrefundPoints,
         },
-        // editFormSchema: {
-        //   formPositions: [
-        //     "name",
-        //     "articleCode",
-        //     "unitCode",
-        //     "companyType",
-        //     "nonFood",
-        //     "active",
-        //     "food",
-        //   ],
-        //   schema: $UniRefund_SettingService_ProductGroups_UpdateProductGroupDto,
-        // },
+
         tableSchema: {
           excludeList: ["id"],
           schema: $UniRefund_CRMService_Merchants_RefundPointProfileDto,
@@ -110,11 +84,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions,
           schema: $createCustoms,
         },
-        // editFormSchema: {
-        //   formPositions: ["productGroupId", "countryId", "vatId", "active"],
-        //   schema:
-        //     $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
-        // },
+
         tableSchema: {
           excludeList: ["id"],
           schema: $UniRefund_CRMService_Customss_CustomsProfileDto,
@@ -127,11 +97,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions,
           schema: $createtaxFree,
         },
-        // editFormSchema: {
-        //   formPositions: ["productGroupId", "countryId", "vatId", "active"],
-        //   schema:
-        //     $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
-        // },
+
         tableSchema: {
           excludeList: ["id"],
           schema: $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
@@ -144,11 +110,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions,
           schema: $createtaxOffices,
         },
-        // editFormSchema: {
-        //   formPositions: ["productGroupId", "countryId", "vatId", "active"],
-        //   schema:
-        //     $UniRefund_SettingService_ProductGroupVats_UpdateProductGroupVatDto,
-        // },
+
         tableSchema: {
           excludeList: ["id"],
           schema: $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
