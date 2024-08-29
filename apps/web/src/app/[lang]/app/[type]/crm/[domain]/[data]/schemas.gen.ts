@@ -33,6 +33,7 @@ export const $createMerchants = {
     },
     telephoneTypeCode: {
       type: "integer",
+      enum: [0, 1, 2, 3],
     },
     localNumber: {
       maxLength: 64,
@@ -47,7 +48,6 @@ export const $createMerchants = {
       minLength: 0,
       type: "string",
     },
-
     terriority: {
       maxLength: 64,
       minLength: 0,
@@ -75,6 +75,7 @@ export const $createMerchants = {
     },
     addressTypeCode: {
       type: "integer",
+      enum: [0, 1],
     },
     addressPrimaryFlag: {
       type: "boolean",
@@ -86,6 +87,7 @@ export const $createMerchants = {
     },
     emailTypeCode: {
       type: "integer",
+      enum: [0, 1],
     },
     emailPrimaryFlag: {
       type: "boolean",
