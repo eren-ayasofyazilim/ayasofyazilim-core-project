@@ -1,5 +1,4 @@
 "use client";
-import { CaretSortIcon } from "@radix-ui/react-icons";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
@@ -18,7 +17,7 @@ const data = [
     countryId: 0,
     nationalityCountryName: "Turkey",
     residenceCountryName: "Turkey",
-    passportId: "string",
+    travelDocumentNumber: "000291166",
   },
 ];
 export interface Payment {
@@ -32,7 +31,7 @@ export interface Payment {
   countryId: number;
   nationalityCountryName: string;
   residenceCountryName: string;
-  passportId: string;
+  travelDocumentNumber: string;
 }
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -42,33 +41,18 @@ export const columns: ColumnDef<Payment>[] = [
   },
 
   {
-    accessorKey: "passportId",
-    header: () => (
-      <div>
-        PassportId
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </div>
-    ),
-    cell: ({ row }) => <div>{row.getValue("passportId")}</div>,
+    accessorKey: "travelDocumentNumber",
+    header: () => <div>Travel Document Number</div>,
+    cell: ({ row }) => <div>{row.getValue("travelDocumentNumber")}</div>,
   },
   {
     accessorKey: "nationalityCountryName",
-    header: () => (
-      <div>
-        NationalityCountryName
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </div>
-    ),
+    header: () => <div>Nationality Country Name</div>,
     cell: ({ row }) => <div>{row.getValue("nationalityCountryName")}</div>,
   },
   {
     accessorKey: "residenceCountryName",
-    header: () => (
-      <div>
-        ResidenceCountryName
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </div>
-    ),
+    header: () => <div>Residence Country Name</div>,
     cell: ({ row }) => <div>{row.getValue("residenceCountryName")}</div>,
   },
 ];
@@ -80,6 +64,13 @@ export default function Table({
   const router = useRouter();
   return (
     <Dashboard
+      action={[
+        {
+          cta: languageData.NewTraveller,
+          type: "NewPage",
+          href: getBaseLink("app/admin/traveller/new"),
+        },
+      ]}
       cards={[]}
       columnsData={{
         type: "Custom",
@@ -98,13 +89,13 @@ export default function Table({
           ],
         },
       }}
+      rowCount={1}
+      withCards={false}
+      withTable
       data={data}
       //  fetchRequest={getRoles}
 
       isLoading={false}
-      rowCount={1}
-      withCards={false}
-      withTable
     />
   );
 }
