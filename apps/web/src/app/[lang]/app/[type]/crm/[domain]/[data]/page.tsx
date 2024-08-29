@@ -13,6 +13,8 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../data";
 
 async function controlledFetch(
@@ -75,7 +77,7 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
 export default function Page({
   params,
 }: {
-  params: { data: string; domain: string };
+  params: { data: string; domain: string; lang: string };
 }): JSX.Element {
   const fetchLink = getBaseLink(`/api/crm/${params.data}`);
   const [roles, setRoles] = useState<any>();
@@ -83,6 +85,9 @@ export default function Page({
   const [formData, setFormData] = useState<TableData>(
     dataConfigOfCrm[params.domain].pages[params.data],
   );
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
+
   const detailedFilters =
     dataConfigOfCrm[params.domain].pages[params.data].detailedFilters || [];
   async function processConvertors() {
@@ -162,7 +167,9 @@ export default function Page({
   if (createFormSchema) {
     action = [
       {
-        cta: `New ${formData.title}`,
+        cta: languageData[
+          `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+        ],
         type: "NewPage",
         href: `/app/admin/crm/companies/${params.data}/new`,
       },
