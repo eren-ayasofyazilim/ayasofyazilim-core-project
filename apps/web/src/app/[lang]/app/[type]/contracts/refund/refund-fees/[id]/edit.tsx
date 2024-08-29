@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto as RefundFeeHeaderDto,
-  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as RefundFeeHeaderUpdateDtorDto,
+  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as RefundFeeHeaderUpdateDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto as RefundFeeDetailDto,
-  // UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailUpdateDto as RefundFeeDetailUpdateDto,
+  UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailUpdateDto as RefundFeeDetailUpdateDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailCreateDto as RefundFeeDetailCreateDto,
 } from "@ayasofyazilim/saas/ContractService";
 import {
@@ -28,7 +28,7 @@ import {
   deleteRefundTableFeeHeaderDetailsById,
   deleteRefundTableFeeHeadersById,
   postRefundTableFeeHeaderDetailsByRefundTableHeaderId,
-  // putRefundTableFeeHeaderDetailsById,
+  putRefundTableFeeHeaderDetailsById,
   putRefundTableFeeHeadersById,
 } from "../../../action";
 
@@ -42,7 +42,7 @@ export default function Edit({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (data: RefundFeeHeaderUpdateDtorDto) => {
+  const handleSubmit = (data: RefundFeeHeaderUpdateDto) => {
     setLoading(true);
     void putRefundTableFeeHeadersById({
       id: details.id || "",
@@ -104,31 +104,32 @@ export default function Edit({
         setLoading(false);
       });
   };
-  const handleSetupUpdate = () => {
-    // row: RefundFeeDetailDto;
-    toast.warning("Not implemented yet");
-    // setLoading(true);
-    // void putRefundTableFeeHeaderDetailsById({
-    //  id: row.id || "",
-    //  requestBody: row as RefundFeeDetailUpdateDto,
-    //})
-    //   .then((response) => {
-    //     if (response.type === "success") {
-    //       toast.success(
-    //         response.message || "Refund fee setup updated successfully",
-    //       );
-    //       router.refresh();
-    //     } else if (response.type === "api-error") {
-    //       toast.error(
-    //         response.message || "Refund fee setup header update failed",
-    //       );
-    //     } else {
-    //       toast.error("Fatal error");
-    //     }
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+  const handleSetupUpdate = (
+    row: RefundFeeDetailUpdateDto,
+    originalRow: RefundFeeDetailDto,
+  ) => {
+    setLoading(true);
+    void putRefundTableFeeHeaderDetailsById({
+      id: originalRow.id || "",
+      requestBody: row,
+    })
+      .then((response) => {
+        if (response.type === "success") {
+          toast.success(
+            response.message || "Refund fee setup updated successfully",
+          );
+          router.refresh();
+        } else if (response.type === "api-error") {
+          toast.error(
+            response.message || "Refund fee setup header update failed",
+          );
+        } else {
+          toast.error("Fatal error");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const handleSetupCreate = (row: RefundFeeDetailCreateDto) => {
     setLoading(true);
@@ -154,14 +155,12 @@ export default function Edit({
         setLoading(false);
       });
   };
-
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
       tableType: detailSchema,
       excludeList: [],
       positions: [
-        "id",
         "amountFrom",
         "amountTo",
         "fixedFeeValue",
@@ -176,12 +175,17 @@ export default function Edit({
           description:
             languageData["RefundFees.Page.Edit.Fee.Edit.Description"],
           autoFormArgs: {
-            formSchema: createZodObject(detailUpdateSchema),
+            formSchema: createZodObject(detailUpdateSchema, undefined),
             submit: {
               cta: languageData["RefundFees.Page.Edit.Fee.Edit.Save"],
             },
           },
-          callback: handleSetupUpdate,
+          callback: (row: unknown, originalRow: unknown) => {
+            handleSetupUpdate(
+              row as RefundFeeDetailUpdateDto,
+              originalRow as RefundFeeDetailDto,
+            );
+          },
           componentType: "Autoform",
         },
         {
@@ -231,7 +235,7 @@ export default function Edit({
           "isActive",
         ])}
         onSubmit={(values: unknown) => {
-          handleSubmit(values as RefundFeeHeaderUpdateDtorDto);
+          handleSubmit(values as RefundFeeHeaderUpdateDto);
         }}
         values={details}
       >
