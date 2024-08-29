@@ -1,13 +1,11 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { getResourceData } from "src/language-data/ContractService";
+import Templates from "./templates";
 
-export default function Rebates() {
-  return (
-    <div>
-      <h1>Template List</h1>
-      <Button asChild>
-        <Link href="templates/new-rebate-template">Create Template</Link>
-      </Button>
-    </div>
-  );
+export default async function Page({
+  params,
+}: {
+  params: { lang: string; type: string };
+}) {
+  const { languageData } = await getResourceData(params.lang);
+  return <Templates languageData={languageData} />;
 }

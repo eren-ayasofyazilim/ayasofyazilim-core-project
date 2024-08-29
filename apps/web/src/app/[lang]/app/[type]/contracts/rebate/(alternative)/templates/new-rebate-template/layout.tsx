@@ -1,5 +1,6 @@
 "use client";
 
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import {
   SectionLayout,
   SectionLayoutContent,
@@ -22,7 +23,7 @@ export default function Layout({ children, params }: LayoutProps) {
       name: "New Rebate",
       id: "new-rebate-template",
       link: getBaseLink(
-        "contracts/rebates/templates/new-rebate-template",
+        "contracts/rebate/templates/new-rebate-template",
         true,
         params.lang,
         true,
@@ -33,7 +34,7 @@ export default function Layout({ children, params }: LayoutProps) {
       name: "Preview Template",
       id: "new-rebate-template/preview",
       link: getBaseLink(
-        "contracts/rebates/templates/new-rebate-template/preview",
+        "contracts/rebate/templates/new-rebate-template/preview",
         true,
         params.lang,
         true,
@@ -42,13 +43,21 @@ export default function Layout({ children, params }: LayoutProps) {
     },
   ];
   return (
-    <SectionLayout
-      defaultActiveSectionId={path}
-      linkElement={Link}
-      sections={navbarItems}
-      vertical={false}
-    >
-      <SectionLayoutContent sectionId={path}>{children}</SectionLayoutContent>
-    </SectionLayout>
+    <>
+      <PageHeader
+        LinkElement={Link}
+        description="Create new rebate template."
+        href={getBaseLink("app/admin/contracts/rebate/templates")}
+        title="New Rebate"
+      />
+      <SectionLayout
+        defaultActiveSectionId={path}
+        linkElement={Link}
+        sections={navbarItems}
+        vertical={false}
+      >
+        <SectionLayoutContent sectionId={path}>{children}</SectionLayoutContent>
+      </SectionLayout>
+    </>
   );
 }
