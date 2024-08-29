@@ -180,6 +180,99 @@ function getLanguageData(resources: ResourceResult, lang: string) {
       resource?.["RefundTables.Save"] ||
       data[lang]?.["RefundTables.Save"] ||
       data.en.Save,
+    "RefundFees.Page.List.Title":
+      resource?.["RefundFees.Page.List.Title"] ||
+      data[lang]?.["RefundFees.Page.List.Title"] ||
+      data.en["RefundFees.Page.List.Title"],
+    "RefundFees.Page.List.Description":
+      resource?.["RefundFees.Page.List.Description"] ||
+      data[lang]?.["RefundFees.Page.List.Description"] ||
+      data.en["RefundFees.Page.List.Description"],
+    "RefundFees.Page.List.Create":
+      resource?.["RefundFees.Page.List.Create"] ||
+      data[lang]?.["RefundFees.Page.List.Create"] ||
+      data.en["RefundFees.Page.List.Create"],
+    "RefundFees.Page.List.Details":
+      resource?.["RefundFees.Page.List.Details"] ||
+      data[lang]?.["RefundFees.Page.List.Details"] ||
+      data.en["RefundFees.Page.List.Details"],
+    "RefundFees.Page.List.Deactivate":
+      resource?.["RefundFees.Page.List.Deactivate"] ||
+      data[lang]?.["RefundFees.Page.List.Deactivate"] ||
+      data.en["RefundFees.Page.List.Deactivate"],
+    "RefundFees.Page.List.Create.Save":
+      resource?.["RefundFees.Page.List.Create.Save"] ||
+      data[lang]?.["RefundFees.Page.List.Create.Save"] ||
+      data.en["RefundFees.Page.List.Create.Save"],
+
+    "RefundFees.Page.Edit.Edit":
+      resource?.["RefundFees.Page.Edit.Edit"] ||
+      data[lang]?.["RefundFees.Page.Edit.Edit"] ||
+      data.en["RefundFees.Page.Edit.Edit"],
+    "RefundFees.Page.Edit.Preview":
+      resource?.["RefundFees.Page.Edit.Preview"] ||
+      data[lang]?.["RefundFees.Page.Edit.Preview"] ||
+      data.en["RefundFees.Page.Edit.Preview"],
+    "RefundFees.Page.Edit.Title":
+      resource?.["RefundFees.Page.Edit.Title"] ||
+      data[lang]?.["RefundFees.Page.Edit.Title"] ||
+      data.en["RefundFees.Page.Edit.Title"],
+    "RefundFees.Page.Edit.Description":
+      resource?.["RefundFees.Page.Edit.Description"] ||
+      data[lang]?.["RefundFees.Page.Edit.Description"] ||
+      data.en["RefundFees.Page.Edit.Description"],
+    "RefundFees.Page.Edit.Delete":
+      resource?.["RefundFees.Page.Edit.Delete"] ||
+      data[lang]?.["RefundFees.Page.Edit.Delete"] ||
+      data.en["RefundFees.Page.Edit.Delete"],
+    "RefundFees.Page.Edit.Save":
+      resource?.["RefundFees.Page.Edit.Save"] ||
+      data[lang]?.["RefundFees.Page.Edit.Save"] ||
+      data.en["RefundFees.Page.Edit.Save"],
+
+    "RefundFees.Page.Edit.Fee.Edit":
+      resource?.["RefundFees.Page.Edit.Fee.Edit"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Edit"] ||
+      data.en["RefundFees.Page.Edit.Fee.Edit"],
+    "RefundFees.Page.Edit.Fee.Edit.Title":
+      resource?.["RefundFees.Page.Edit.Fee.Edit.Title"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Edit.Title"] ||
+      data.en["RefundFees.Page.Edit.Fee.Edit.Title"],
+    "RefundFees.Page.Edit.Fee.Edit.Description":
+      resource?.["RefundFees.Page.Edit.Fee.Edit.Description"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Edit.Description"] ||
+      data.en["RefundFees.Page.Edit.Fee.Edit.Description"],
+    "RefundFees.Page.Edit.Fee.Edit.Save":
+      resource?.["RefundFees.Page.Edit.Fee.Edit.Save"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Edit.Save"] ||
+      data.en["RefundFees.Page.Edit.Fee.Edit.Save"],
+
+    "RefundFees.Page.Edit.Fee.Create":
+      resource?.["RefundFees.Page.Edit.Fee.Create"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Create"] ||
+      data.en["RefundFees.Page.Edit.Fee.Create"],
+    "RefundFees.Page.Edit.Fee.Create.Title":
+      resource?.["RefundFees.Page.Edit.Fee.Create.Title"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Create.Title"] ||
+      data.en["RefundFees.Page.Edit.Fee.Create.Title"],
+    "RefundFees.Page.Edit.Fee.Create.Description":
+      "Yeni ücret düzeni oluşturun",
+    "RefundFees.Page.Edit.Fee.Create.Save":
+      resource?.["RefundFees.Page.Edit.Fee.Create.Save"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Create.Save"] ||
+      data.en["RefundFees.Page.Edit.Fee.Create.Save"],
+    "RefundFees.Page.Edit.Fee.Delete":
+      resource?.["RefundFees.Page.Edit.Fee.Delete"] ||
+      data[lang]?.["RefundFees.Page.Edit.Fee.Delete"] ||
+      data.en["RefundFees.Page.Edit.Fee.Delete"],
+    "RebateTables.Templates.Create":
+      resource?.["RebateTables.Templates.Create"] ||
+      data[lang]?.["RebateTables.Templates.Create"] ||
+      data.en["RebateTables.Templates.Create"],
+    "RebateTables.Templates.Details":
+      resource?.["RebateTables.Templates.Details"] ||
+      data[lang]?.["RebateTables.Templates.Details"] ||
+      data.en["RebateTables.Templates.Details"],
   };
 }
 export async function getResourceData(lang: string) {

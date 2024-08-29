@@ -1,8 +1,8 @@
 import { toast } from "@/components/ui/sonner";
 import type {
-  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailCreateDto,
-  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
-  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailUpdateDto,
+  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailCreateDto as RefundTableDetailCreateDto,
+  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto as RefundTableDetailDto,
+  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailUpdateDto as RefundTableDetailUpdateDto,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailCreateDto as postRulesSchema,
@@ -18,8 +18,8 @@ import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
-  deleteRefundTableHeadersDetail,
-  postRefundTableHeadersDetail,
+  deleteRefundTableHeadersDetailById,
+  postRefundTableHeadersDetailById,
 } from "../../../action";
 
 export function RefundRules({
@@ -28,7 +28,7 @@ export function RefundRules({
   params,
 }: {
   languageData: Record<string, string>;
-  data: UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto[];
+  data: RefundTableDetailDto[];
   params: {
     id: string;
     lang: string;
@@ -41,10 +41,7 @@ export function RefundRules({
     "refundAmount",
     "refundPercent",
   ];
-  const [tableData, setTableData] = useState<
-    | UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto[]
-    | []
-  >(data);
+  const [tableData, setTableData] = useState<RefundTableDetailDto[] | []>(data);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -63,10 +60,9 @@ export function RefundRules({
       submit: { cta: languageData["RefundTables.Details.Create.Submit"] },
     },
     cta: languageData["RefundTables.Details.Create.Title"],
-    callback: (
-      formData: UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailCreateDto,
-    ) => {
-      void postRefundTableHeadersDetail({
+    callback: (formData: RefundTableDetailCreateDto) => {
+      void postRefundTableHeadersDetailById({
+        refundTableHeaderId: params.id,
         requestBody: formData,
       }).then((response) => {
         if (response.type === "success") {
@@ -82,12 +78,10 @@ export function RefundRules({
     description: languageData["RefundTables.Details.Create.Description"],
   };
 
-  function handleRefundTableHeadersDelete(
-    row: UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
-  ) {
+  function handleRefundTableHeadersDelete(row: RefundTableDetailDto) {
     setLoading(true);
-    void deleteRefundTableHeadersDetail({
-      id: row.id,
+    void deleteRefundTableHeadersDetailById({
+      id: params.id,
     }).then((response) => {
       if (response.type === "success") {
         toast.success("Rule deleted successfully");
@@ -95,6 +89,7 @@ export function RefundRules({
         toast.error("Rule deletion failed");
       } else {
         toast.error("Fatal error");
+        toast.warning(`row ${row.id}`);
       }
     });
     router.refresh();
@@ -124,10 +119,10 @@ export function RefundRules({
               cta: "Update rule",
             },
           },
-          callback: (
-            formData: UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailUpdateDto,
-          ) => {
-            toast.warning(`Not implemented yet ${formData.id}`);
+          callback: (formData: RefundTableDetailUpdateDto) => {
+            toast.warning(
+              `Not implemented yet ${params.id} ${formData.maxValue}`,
+            );
 
             // void putRefundTableRefundTableDetails({
             //   id: formData.id,
@@ -193,11 +188,11 @@ export function RefundRules({
           Object.keys(parsedFilter).forEach((filterKey: string) => {
             const filteredTable = data.filter(
               (
-                tableItem: UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
-              ): null | UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto => {
+                tableItem: RefundTableDetailDto,
+              ): null | RefundTableDetailDto => {
                 if (
                   tableItem[
-                    filterKey as keyof UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto
+                    filterKey as keyof RefundTableDetailDto
                   ]?.toString() === parsedFilter[filterKey]
                 ) {
                   return tableItem;
