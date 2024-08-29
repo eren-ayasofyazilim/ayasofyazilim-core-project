@@ -1,17 +1,18 @@
 "use server";
-
 import type {
   ApiError,
   DeleteApiContractServiceRefundTablesRefundFeeDetailsByIdData,
   DeleteApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   DeleteApiContractServiceRefundTablesRefundTableDetailsByIdData,
   DeleteApiContractServiceRefundTablesRefundTableHeadersByIdData,
+  GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
+  GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
   GetApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   GetApiContractServiceRefundTablesRefundFeeHeadersData,
   GetApiContractServiceRefundTablesRefundFeeHeadersDetailByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersData,
-  PostApiContractServiceRefundTablesRefundFeeDetailsData,
+  PostApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderIdData,
   PostApiContractServiceRefundTablesRefundFeeHeadersData,
   PostApiContractServiceRefundTablesRefundTableDetailsByRefundTableHeaderIdData,
   PostApiContractServiceRefundTablesRefundTableHeadersData,
@@ -19,11 +20,13 @@ import type {
   PutApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   PutApiContractServiceRefundTablesRefundTableDetailsByIdData,
   PutApiContractServiceRefundTablesRefundTableHeadersByIdData,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto,
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto,
   UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
   Volo_Abp_Application_Dtos_PagedResultDto_111,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
   Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
@@ -76,7 +79,7 @@ function structuredError(error: unknown): ErrorTypes {
   };
 }
 
-/** RefundTable ***/
+/*** RefundTable ***/
 export async function getRefundTableHeaders(
   body: GetApiContractServiceRefundTablesRefundTableHeadersData,
 ) {
@@ -239,7 +242,7 @@ export async function deleteRefundTableHeadersDetailById(
     return structuredError(error);
   }
 }
-/** RefundFees ***/
+/* RefundFees */
 export async function getRefundTableFeeHeaders(
   body: GetApiContractServiceRefundTablesRefundFeeHeadersData,
 ) {
@@ -361,14 +364,14 @@ export async function getRefundTableFeeHeadersDetailById(
     return structuredError(error);
   }
 } //get header details by id
-export async function postRefundTableFeeHeaderDetails(
-  body: PostApiContractServiceRefundTablesRefundFeeDetailsData,
+export async function postRefundTableFeeHeaderDetailsByRefundTableHeaderId(
+  body: PostApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderIdData,
 ) {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.refundTables.postApiContractServiceRefundTablesRefundFeeDetails(
+      await client.refundTables.postApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderId(
         body,
       );
     revalidatePath("/");
@@ -422,9 +425,53 @@ export async function deleteRefundTableFeeHeaderDetailsById(
   }
 } //delete fee details
 
-/** RefundFees ***/
-/** RefundTable ***/
+/* RefundFees */
+/*** RefundTable ***/
 
+/*** RebateTable ***/
+export async function getRebateTablesRebateTableHeadersTemplates(
+  body: GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersTemplates(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_18>;
+  } catch (error) {
+    return structuredError(error);
+  }
+} //get rebate tables templates
+export async function getRebateTablesRebateTableHeadersDetailsById(
+  body: GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersDetailById(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
+  } catch (error) {
+    // console.log(error);
+    return structuredError(error);
+  }
+} //get rebate tables details
+
+/** RebateTable **/
 // export async function useAction({
 //   // client,
 //   service,

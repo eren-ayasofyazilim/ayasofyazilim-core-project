@@ -21,6 +21,7 @@ export interface AbpUiNavigationResource {
   RebateTables: string;
   LogIn: string;
   RefundTables: string;
+  RefundFees: string;
   Add: string;
   CountrySettings: string;
   Settings: string;
@@ -95,6 +96,10 @@ function getLanguageData(
       navigationResource?.RefundTables ||
       data[lang]?.RefundTables ||
       data.en.RefundTables,
+    RefundFees:
+      navigationResource?.RefundFees ||
+      data[lang]?.RefundFees ||
+      data.en.RefundFees,
     Settings:
       navigationResource?.Settings || data[lang]?.Settings || data.en.Settings,
     LanguageManagement:
