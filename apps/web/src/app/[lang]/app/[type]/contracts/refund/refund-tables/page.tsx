@@ -17,14 +17,16 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getResourceData } from "src/language-data/ContractService";
+import { getResourceDataClient } from "src/language-data/ContractService";
+import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
 import { getRefundTableHeaders, postRefundTableHeaders } from "../../action";
 
 export default function Page({ params }: { params: { lang: string } }) {
   const [list, setList] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_111>();
-  const [resources, setResources] = useState<Record<string, string>>();
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const includeList = [
     "name",
     "validFrom",
@@ -37,33 +39,28 @@ export default function Page({ params }: { params: { lang: string } }) {
 
   useEffect(() => {
     setLoading(true);
-    void getRefundTableHeaders({})
-      .then((response) => {
-        if (response.type === "success") {
-          setList(response.data);
-        } else {
-          toast.error(response.message);
-        }
-      })
-      .then(async () => {
-        const { languageData } = await getResourceData(params.lang);
-        setResources(languageData);
-        setLoading(false);
-      });
+    void getRefundTableHeaders({}).then((response) => {
+      if (response.type === "success") {
+        setList(response.data);
+      } else {
+        toast.error(response.message);
+      }
+      setLoading(false);
+    });
   }, []);
-  if (loading || !resources) return <Loading />;
+  if (loading) return <Loading />;
 
   const action: TableAction = {
-    cta: resources["RefundTables.Create.Title"],
+    cta: languageData["RefundTables.Create.Title"],
     type: "Dialog",
     autoFormArgs: {
       formSchema: createZodObject(postSchema, includeList),
       submit: {
-        cta: resources["RefundTables.Create.Title"],
+        cta: languageData["RefundTables.Create.Title"],
       },
     },
     componentType: "Autoform",
-    description: resources["RefundTables.Create.Description"],
+    description: languageData["RefundTables.Create.Description"],
     callback: (
       data: UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
     ) => {
@@ -94,7 +91,7 @@ export default function Page({ params }: { params: { lang: string } }) {
   const tableActions: TableAction[] = [
     {
       type: "Action",
-      cta: resources["RefundTables.Details"],
+      cta: languageData["RefundTables.Details"],
       callback: (
         row: UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
       ) => {

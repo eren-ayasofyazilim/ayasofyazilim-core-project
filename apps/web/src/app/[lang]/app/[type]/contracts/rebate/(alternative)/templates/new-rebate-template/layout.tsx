@@ -7,8 +7,8 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getResourceData } from "src/language-data/ContractService";
+import { getResourceDataClient } from "src/language-data/ContractService";
+import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 
 interface LayoutProps {
@@ -18,15 +18,10 @@ interface LayoutProps {
 
 export default function Layout({ children, params }: LayoutProps) {
   const pathname = usePathname();
-  const [loading, setLoading] = useState(true);
-  const [languageData, setLanguageData] = useState<Record<string, string>>();
-  useEffect(() => {
-    void getResourceData(params.lang).then((response) => {
-      setLanguageData(response.languageData);
-      setLoading(false);
-    });
-  }, []);
-  if (!languageData || loading) return <>Loading...</>;
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
+
+  // if (!languageData) return <>Loading...</>;
 
   const path = pathname.split("templates/")[1];
 

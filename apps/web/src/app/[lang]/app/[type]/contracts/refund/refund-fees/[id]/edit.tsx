@@ -2,17 +2,17 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
 import type {
-  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto as RefundFeeHeaderDto,
-  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as RefundFeeHeaderUpdateDto,
+  UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailCreateDto as RefundFeeDetailCreateDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto as RefundFeeDetailDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailUpdateDto as RefundFeeDetailUpdateDto,
-  UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailCreateDto as RefundFeeDetailCreateDto,
+  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto as RefundFeeHeaderDto,
+  UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as RefundFeeHeaderUpdateDto,
 } from "@ayasofyazilim/saas/ContractService";
 import {
-  $UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as headerUpdateSchema,
-  $UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto as detailSchema,
   $UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailCreateDto as detailCreateSchema,
+  $UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto as detailSchema,
   $UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailUpdateDto as detailUpdateSchema,
+  $UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderUpdateDto as headerUpdateSchema,
 } from "@ayasofyazilim/saas/ContractService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/dialog";
@@ -23,6 +23,7 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableFeeHeaderDetailsById,
@@ -37,7 +38,7 @@ export default function Edit({
   languageData,
 }: {
   details: RefundFeeHeaderDto;
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
