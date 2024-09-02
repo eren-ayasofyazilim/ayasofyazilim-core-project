@@ -112,35 +112,3 @@ export async function updateCRMDetailServer(
     return error;
   }
 }
-export async function updateTelephoneCRMDetailServer(
-  requestBody: UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-) {
-  "use server";
-  try {
-    const client = await getCRMServiceClient();
-    await client.telephoneType.putApiCrmServiceTelephonesById({
-      id: requestBody.id,
-      requestBody,
-    });
-    revalidatePath("/");
-    return true;
-  } catch (error) {
-    return error;
-  }
-}
-export async function updateAddressCRMDetailServer(
-  requestBody: UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-) {
-  "use server";
-  try {
-    const client = await getCRMServiceClient();
-    await client.addressType.putApiCrmServiceAddressesById({
-      id: requestBody.id,
-      requestBody,
-    });
-    revalidatePath("/");
-    return true;
-  } catch (error) {
-    return error;
-  }
-}
