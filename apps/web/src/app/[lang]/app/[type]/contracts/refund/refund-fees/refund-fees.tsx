@@ -117,14 +117,19 @@ export default function RefundFees({
     description: languageData["RefundFees.Page.List.Create"],
   };
   const actionList: TableAction[] = [
-    {
-      type: "Action",
-      cta: languageData["RefundFees.Page.List.Deactivate"],
-      callback: () => {
-        // row: ListItemType;
-        toast.warning("Not implemented");
-      },
-    },
+    // {
+    //   type: "Action",
+    //   cta: (row: ListItemType) => {
+    //     if (row.isActive) {
+    //       return languageData["RefundFees.Page.List.Deactivate"];
+    //     }
+    //     return languageData["RefundFees.Page.List.Activate"];
+    //   },
+    //   callback: () => {
+    //     // row: ListItemType;
+    //     toast.warning("Not implemented");
+    //   },
+    // },
     {
       type: "Action",
       cta: languageData["RefundFees.Page.List.Details"],
