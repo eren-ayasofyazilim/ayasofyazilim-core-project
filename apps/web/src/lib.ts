@@ -6,8 +6,10 @@ import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
+import type { ApiError } from "@ayasofyazilim/saas/ContractService";
 import { ContractServiceClient } from "@ayasofyazilim/saas/ContractService";
 import { auth } from "auth";
+import { isApiError } from "./app/api/util";
 
 const HEADERS = {
   "X-Requested-With": "XMLHttpRequest",
@@ -101,4 +103,50 @@ export async function getCRMServiceClient() {
     BASE: process.env.BASE_URL,
     HEADERS,
   });
+}
+
+export type ServerResponse<T = undefined> = BaseServerResponse &
+  (undefined extends T ? ErrorTypes : SuccessServerResponse<T>);
+
+export type ErrorTypes = ErrorServerResponse | ApiErrorServerResponse;
+
+export interface BaseServerResponse {
+  status: number;
+  message: string;
+}
+
+export interface SuccessServerResponse<T> {
+  type: "success";
+  status: number;
+  data: T;
+  message: string;
+}
+export interface ApiErrorServerResponse {
+  type: "api-error";
+  status: number;
+  data: ApiError;
+  message: string;
+}
+export interface ErrorServerResponse {
+  type: "error";
+  status: number;
+  data: unknown;
+  message: string;
+}
+
+export function structuredError(error: unknown): ErrorTypes {
+  if (isApiError(error)) {
+    return {
+      type: "api-error",
+      data: error,
+      status: error.status,
+      message: error.message,
+    };
+  }
+  return {
+    type: "error",
+    data: error,
+    status: 500,
+    message: "An error occurred",
+  };
 }

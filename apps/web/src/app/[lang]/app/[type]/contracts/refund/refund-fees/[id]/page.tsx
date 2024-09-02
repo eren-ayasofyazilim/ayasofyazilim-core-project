@@ -6,7 +6,7 @@ import {
 import Link from "next/link";
 import { getResourceData } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
-import { getRefundTableFeeHeadersDetailById } from "../../../action";
+import { getRefundTableFeeHeadersDetailById } from "../../../actions/refund-tables";
 import Edit from "./edit";
 import Preview from "./preview";
 

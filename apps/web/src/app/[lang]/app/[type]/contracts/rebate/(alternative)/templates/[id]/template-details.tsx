@@ -8,8 +8,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
-import { getRebateTablesRebateTableHeadersDetailsById } from "../../../../action";
 import Rebate from "../rebate";
+import { getRebateTablesRebateTableHeadersDetailsById } from "../../../../actions/rebate-tables";
 
 export default function TemplateDetails({
   templateId,

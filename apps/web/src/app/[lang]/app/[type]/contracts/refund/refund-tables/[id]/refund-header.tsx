@@ -30,7 +30,7 @@ import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableHeadersById,
   getRefundTableHeadersById,
-} from "../../../action";
+} from "../../../actions/refund-tables";
 import { RefundRules } from "./refund-rule";
 
 export default function RefundHeader({

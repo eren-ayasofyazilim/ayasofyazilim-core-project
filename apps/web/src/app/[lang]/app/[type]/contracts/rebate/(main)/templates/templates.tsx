@@ -17,7 +17,7 @@ import { getBaseLink } from "src/utils";
 import {
   deleteRebateTablesRebateTableHeadersById,
   getRebateTablesRebateTableHeadersTemplates,
-} from "../../../action";
+} from "../../../actions/rebate-tables";
 
 export default function Templates({
   languageData,
