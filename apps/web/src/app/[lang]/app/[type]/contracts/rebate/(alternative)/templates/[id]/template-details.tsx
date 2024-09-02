@@ -6,6 +6,7 @@ import type { UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHe
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import { getRebateTablesRebateTableHeadersDetailsById } from "../../../../action";
 import Rebate from "../rebate";
@@ -15,7 +16,7 @@ export default function TemplateDetails({
   languageData,
 }: {
   templateId: string;
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }): JSX.Element {
   const [details, setDetails] = useState<RebateTableHeaderDto>();
   useEffect(() => {

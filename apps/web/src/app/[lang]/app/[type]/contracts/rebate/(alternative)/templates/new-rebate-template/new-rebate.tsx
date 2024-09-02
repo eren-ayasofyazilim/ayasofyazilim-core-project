@@ -1,11 +1,12 @@
 "use client";
 import { toast } from "@/components/ui/sonner";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import Rebate from "../rebate";
 
 export default function NewRebate({
   languageData,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) {
   return (
     <Rebate

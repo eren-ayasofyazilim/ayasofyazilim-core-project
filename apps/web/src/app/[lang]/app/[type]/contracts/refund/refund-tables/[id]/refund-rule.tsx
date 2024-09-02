@@ -17,6 +17,7 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import {
   deleteRefundTableHeadersDetailById,
   postRefundTableHeadersDetailById,
@@ -27,7 +28,7 @@ export function RefundRules({
   data,
   params,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
   data: RefundTableDetailDto[];
   params: {
     id: string;

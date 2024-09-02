@@ -1,8 +1,9 @@
 "use client";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getResourceData } from "src/language-data/ContractService";
+import type { ContractServiceResource } from "src/language-data/ContractService";
+import { getResourceDataClient } from "src/language-data/ContractService";
+import { useLocale } from "src/providers/locale";
 
 export default function Layout({
   children,
@@ -11,24 +12,10 @@ export default function Layout({
   children: JSX.Element;
   params: { lang: string };
 }) {
-  const [loading, setLoading] = useState(true);
-  const [languageData, setLanguageData] = useState<Record<
-    string,
-    string
-  > | null>(null);
-  useEffect(() => {
-    void getResourceData(params.lang)
-      .then((data) => {
-        setLanguageData(data.languageData);
-      })
-      .then(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
-  if (loading || !languageData) {
-    return <div>Loading...</div>;
-  }
+
   const activePath = pathname.split("/").at(-1) || "";
 
   return (
@@ -43,7 +30,7 @@ function HeaderByPath({
   languageData,
 }: {
   activePath: string;
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) {
   switch (activePath) {
     case "refund-fees":
@@ -53,13 +40,7 @@ function HeaderByPath({
           title={languageData["RefundFees.Page.List.Description"]}
         />
       );
-    case "new":
-      return (
-        <PageHeader
-          description={languageData["RefundFees.Page.Create.Title"]}
-          title={languageData["RefundFees.Page.Create.Description"]}
-        />
-      );
+
     default:
       return null;
   }

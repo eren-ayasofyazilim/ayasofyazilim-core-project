@@ -1,17 +1,18 @@
 "use client";
+import { toast } from "@/components/ui/sonner";
 import type {
   Volo_Abp_Application_Dtos_PagedResultDto_18 as PagedResultDto,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as listSchema } from "@ayasofyazilim/saas/ContractService";
-import { useEffect, useState } from "react";
-import { toast } from "@/components/ui/sonner";
 import type {
   ColumnsType,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
   deleteRebateTablesRebateTableHeadersById,
@@ -22,7 +23,7 @@ export default function Templates({
   languageData,
   // params,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
   // params: { lang: string; type: string };
 }) {
   const router = useRouter();
