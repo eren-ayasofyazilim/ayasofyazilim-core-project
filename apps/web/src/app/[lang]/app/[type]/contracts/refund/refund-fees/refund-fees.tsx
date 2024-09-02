@@ -1,9 +1,11 @@
 "use client";
 
+import { Card } from "@/components/ui/card";
+import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderCreateDto as CreateType,
-  Volo_Abp_Application_Dtos_PagedResultDto_19 as PagedResultType,
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto as ListItemType,
+  Volo_Abp_Application_Dtos_PagedResultDto_19 as PagedResultType,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderCreateDto as createSchema,
@@ -17,8 +19,7 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "@/components/ui/sonner";
-import { Card } from "@/components/ui/card";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
   getRefundTableFeeHeaders,
@@ -28,7 +29,7 @@ import {
 export default function RefundFees({
   languageData,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) {
   const router = useRouter();
   const [initData, setInitData] = useState<PagedResultType>();
@@ -113,7 +114,7 @@ export default function RefundFees({
         }
       });
     },
-    description: languageData["RefundFees.Page.List.Create.Description"],
+    description: languageData["RefundFees.Page.List.Create"],
   };
   const actionList: TableAction[] = [
     {

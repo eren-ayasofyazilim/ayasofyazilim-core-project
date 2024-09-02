@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 "use client";
-import type {
-  AyasofYazilim_Enum_Enums_EnumDto as EnumDto,
-  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
-} from "@ayasofyazilim/saas/ContractService";
-import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderUpdateDto as RebateTableHeaderUpdateSchema } from "@ayasofyazilim/saas/ContractService";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -15,12 +10,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type {
+  AyasofYazilim_Enum_Enums_EnumDto as EnumDto,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
+} from "@ayasofyazilim/saas/ContractService";
+import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderUpdateDto as RebateTableHeaderUpdateSchema } from "@ayasofyazilim/saas/ContractService";
+import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 
 function NameCell({ getValue, row: { index }, column: { id }, table }: any) {
   const name = getValue();
@@ -74,7 +75,7 @@ function AmountCell({ getValue, row: { index }, column: { id }, table }: any) {
 const feescolumns = ({
   languageData,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) => {
   return [
     {
@@ -282,7 +283,7 @@ function PercentCell({ getValue, row: { index }, column: { id }, table }: any) {
 const setupcolumns = ({
   languageData,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
 }) => {
   return [
     {
@@ -372,7 +373,7 @@ export default function Rebate({
   onSubmit,
 }: {
   type?: "Create" | "Edit";
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
   initialFeesData: any[];
   initialSetupData: any[];
   details?: RebateTableHeaderDto;

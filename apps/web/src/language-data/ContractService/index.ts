@@ -8,7 +8,103 @@ const data: LanguageDataType = {
   en,
 };
 
-function getLanguageData(resources: ResourceResult, lang: string) {
+export interface ContractServiceResource {
+  Refund: string;
+  RefundTables: string;
+  "RefundTables.Create.Title": string;
+  "RefundTables.Create.Description": string;
+  "RefundTables.Create.Submit": string;
+  "RefundTables.Edit.Title": string;
+  "RefundTables.Edit.Description": string;
+  "RefundTables.Edit.Submit": string;
+  "RefundTables.Delete.Title": string;
+  "RefundTables.Delete.Description": string;
+  "RefundTables.Details": string;
+  "RefundTables.Details.FilterBy {0}": string;
+  "RefundTables.Details.Save": string;
+  "RefundTables.Details.Delete": string;
+  "RefundTables.Details.Create.Title": string;
+  "RefundTables.Details.Create.Description": string;
+  "RefundTables.Details.Create.Submit": string;
+  "RefundTables.Details.Edit.Title": string;
+  "RefundTables.Details.Edit.Description": string;
+  "RefundTables.Details.Delete.Confirm": string;
+  "RefundTables.Details.Delete.Confirm.Title": string;
+  "RefundTables.Name": string;
+  "RefundTables.ValidFrom": string;
+  "RefundTables.ValidTo": string;
+  "RefundTables.IsDefault": string;
+  "RefundTables.IsBundling": string;
+  "RefundTables.LastModificationTime": string;
+  "RefundTables.Actions": string;
+  "RefundTables.Edit": string;
+  "RefundTables.Delete": string;
+  "RefundTables.Cancel": string;
+  "RefundTables.Save": string;
+  "RefundFees.Page.List.Title": string;
+  "RefundFees.Page.List.Description": string;
+  "RefundFees.Page.List.Create": string;
+  "RefundFees.Page.List.Details": string;
+  "RefundFees.Page.List.Deactivate": string;
+  "RefundFees.Page.List.Create.Save": string;
+  "RefundFees.Page.Edit.Edit": string;
+  "RefundFees.Page.Edit.Preview": string;
+  "RefundFees.Page.Edit.Title": string;
+  "RefundFees.Page.Edit.Description": string;
+  "RefundFees.Page.Edit.Delete": string;
+  "RefundFees.Page.Edit.Save": string;
+  "RefundFees.Page.Edit.Fee.Edit": string;
+  "RefundFees.Page.Edit.Fee.Edit.Title": string;
+  "RefundFees.Page.Edit.Fee.Edit.Description": string;
+  "RefundFees.Page.Edit.Fee.Edit.Save": string;
+  "RefundFees.Page.Edit.Fee.Create": string;
+  "RefundFees.Page.Edit.Fee.Create.Title": string;
+  "RefundFees.Page.Edit.Fee.Create.Description": string;
+  "RefundFees.Page.Edit.Fee.Create.Save": string;
+  "RefundFees.Page.Edit.Fee.Delete": string;
+  "RebateTables.CompanySettings.Title": string;
+  "RebateTables.CompanySettings.Description": string;
+  "RebateTables.Templates.Title": string;
+  "RebateTables.Templates.Description": string;
+  "RebateTables.Templates.Delete": string;
+  "RebateTables.Templates.Details": string;
+  "RebateTables.Templates.Create": string;
+  "RebateTables.Templates.Create.Title": string;
+  "RebateTables.Templates.Create.Description": string;
+  "RebateTables.Templates.Create.TemplateInformation": string;
+  "RebateTables.Templates.Create.ProcessingFees": string;
+  "RebateTables.Templates.Create.RebateSetup": string;
+  "RebateTables.Templates.Create.Save": string;
+  "RebateTables.Templates.Create.Cancel": string;
+  "RebateTables.Templates.Edit": string;
+  "RebateTables.Templates.Edit.Title": string;
+  "RebateTables.Templates.Edit.Description": string;
+  "RebateTables.Templates.Edit.TemplateInformation": string;
+  "RebateTables.Templates.Edit.ProcessingFees": string;
+  "RebateTables.Templates.Edit.RebateSetup": string;
+  "RebateTables.Templates.Edit.Save": string;
+  "RebateTables.Templates.Edit.Cancel": string;
+  "RebateTables.Templates.RefundMethod.Option.All": string;
+  "RebateTables.Templates.RefundMethod.Option.Cash": string;
+  "RebateTables.Templates.RefundMethod.Option.CreditOrDebitCard": string;
+  "RebateTables.Templates.RefundMethod.Option.Alipay": string;
+  "RebateTables.Templates.RefundMethod.Option.WeChat": string;
+  "RebateTables.Templates.RefundMethod.Option.CashViaPartner": string;
+  "RebateTables.Templates.RefundMethod.Option.RefundLater": string;
+  "RebateTables.Templates.Column.RefundMethod": string;
+  "RebateTables.Templates.Column.FixedFee": string;
+  "RebateTables.Templates.Column.VariableFee": string;
+  "RebateTables.Templates.Column.Percent": string;
+  "RebateTables.Templates.Column.Name": string;
+  "RebateTables.Templates.Column.Amount": string;
+  "RebateTables.Templates.Column.Actions": string;
+  "RebateTables.Templates.Preview": string;
+  "RebateTables.Templates.Preview.Calculate": string;
+}
+function getLanguageData(
+  resources: ResourceResult,
+  lang: string,
+): ContractServiceResource {
   const resource = resources.ContractService?.texts;
   return {
     Refund: resource?.Refund || data[lang]?.Refund || data.en.Refund,

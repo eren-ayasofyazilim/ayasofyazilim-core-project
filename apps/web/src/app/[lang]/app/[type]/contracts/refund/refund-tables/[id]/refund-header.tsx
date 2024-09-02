@@ -25,6 +25,7 @@ import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableHeadersById,
@@ -36,7 +37,7 @@ export default function RefundHeader({
   languageData,
   params,
 }: {
-  languageData: Record<string, string>;
+  languageData: ContractServiceResource;
   params: { lang: string; id: string; type: string };
 }): JSX.Element {
   const [loading, setLoading] = useState(true);
