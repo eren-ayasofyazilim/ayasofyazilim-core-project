@@ -15,9 +15,7 @@ export default function Layout({
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
-  // if (!languageData) {
-  //   return <div>Loading...</div>;
-  // }
+
   const activePath = pathname.split("/").at(-1) || "";
 
   return (

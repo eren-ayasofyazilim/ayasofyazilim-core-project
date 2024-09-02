@@ -21,8 +21,6 @@ export default function Layout({ children, params }: LayoutProps) {
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
-  // if (!languageData) return <>Loading...</>;
-
   const path = pathname.split("templates/")[1];
 
   const navbarItems = [
