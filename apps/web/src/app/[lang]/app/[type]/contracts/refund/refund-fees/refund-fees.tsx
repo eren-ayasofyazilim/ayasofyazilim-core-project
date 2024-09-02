@@ -24,7 +24,7 @@ import { getBaseLink } from "src/utils";
 import {
   getRefundTableFeeHeaders,
   postRefundTableFeeHeaders,
-} from "../../action";
+} from "../../actions/refund-tables";
 
 export default function RefundFees({
   languageData,

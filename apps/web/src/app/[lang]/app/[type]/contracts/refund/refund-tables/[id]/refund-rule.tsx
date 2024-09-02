@@ -21,7 +21,7 @@ import type { ContractServiceResource } from "src/language-data/ContractService"
 import {
   deleteRefundTableHeadersDetailById,
   postRefundTableHeadersDetailById,
-} from "../../../action";
+} from "../../../actions/refund-tables";
 
 export function RefundRules({
   languageData,

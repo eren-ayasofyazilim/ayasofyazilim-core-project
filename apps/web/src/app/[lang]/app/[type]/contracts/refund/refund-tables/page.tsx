@@ -20,7 +20,10 @@ import { useEffect, useState } from "react";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
-import { getRefundTableHeaders, postRefundTableHeaders } from "../../action";
+import {
+  getRefundTableHeaders,
+  postRefundTableHeaders,
+} from "../../actions/refund-tables";
 
 export default function Page({ params }: { params: { lang: string } }) {
   const [list, setList] =

@@ -1,13 +1,8 @@
-"use server";
 import type {
-  ApiError,
-  DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
   DeleteApiContractServiceRefundTablesRefundFeeDetailsByIdData,
   DeleteApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   DeleteApiContractServiceRefundTablesRefundTableDetailsByIdData,
   DeleteApiContractServiceRefundTablesRefundTableHeadersByIdData,
-  GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
-  GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
   GetApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   GetApiContractServiceRefundTablesRefundFeeHeadersData,
   GetApiContractServiceRefundTablesRefundFeeHeadersDetailByIdData,
@@ -21,64 +16,16 @@ import type {
   PutApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   PutApiContractServiceRefundTablesRefundTableDetailsByIdData,
   PutApiContractServiceRefundTablesRefundTableHeadersByIdData,
-  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto,
   UniRefund_ContractService_Refunds_RefundFeeDetails_RefundFeeDetailDto,
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto,
   UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
   Volo_Abp_Application_Dtos_PagedResultDto_111,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
   Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
-import { isApiError } from "src/app/api/util";
-import { getContractServiceClient } from "src/lib";
-
-type ServerResponse<T = undefined> = BaseServerResponse &
-  (undefined extends T ? ErrorTypes : SuccessServerResponse<T>);
-
-type ErrorTypes = ErrorServerResponse | ApiErrorServerResponse;
-
-interface BaseServerResponse {
-  status: number;
-  message: string;
-}
-
-interface SuccessServerResponse<T> {
-  type: "success";
-  status: number;
-  data: T;
-  message: string;
-}
-interface ApiErrorServerResponse {
-  type: "api-error";
-  status: number;
-  data: ApiError;
-  message: string;
-}
-interface ErrorServerResponse {
-  type: "error";
-  status: number;
-  data: unknown;
-  message: string;
-}
-
-function structuredError(error: unknown): ErrorTypes {
-  if (isApiError(error)) {
-    return {
-      type: "api-error",
-      data: error,
-      status: error.status,
-      message: error.message,
-    };
-  }
-  return {
-    type: "error",
-    data: error,
-    status: 500,
-    message: "An error occurred",
-  };
-}
+import type { ServerResponse } from "src/lib";
+import { getContractServiceClient, structuredError } from "src/lib";
 
 /*** RefundTable ***/
 export async function getRefundTableHeaders(
@@ -428,104 +375,3 @@ export async function deleteRefundTableFeeHeaderDetailsById(
 
 /* RefundFees */
 /*** RefundTable ***/
-
-/*** RebateTable ***/
-export async function getRebateTablesRebateTableHeadersTemplates(
-  body: GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
-) {
-  "use server";
-  try {
-    const client = await getContractServiceClient();
-    const response =
-      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersTemplates(
-        body,
-      );
-    revalidatePath("/");
-    return {
-      type: "success",
-      data: response,
-      status: 200,
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_18>;
-  } catch (error) {
-    return structuredError(error);
-  }
-} //get rebate tables templates
-export async function getRebateTablesRebateTableHeadersDetailsById(
-  body: GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
-) {
-  "use server";
-  try {
-    const client = await getContractServiceClient();
-    const response =
-      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersDetailById(
-        body,
-      );
-    revalidatePath("/");
-    return {
-      type: "success",
-      data: response,
-      status: 200,
-    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
-  } catch (error) {
-    // console.log(error);
-    return structuredError(error);
-  }
-} //get rebate tables details
-export async function deleteRebateTablesRebateTableHeadersById(
-  body: DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
-) {
-  "use server";
-  try {
-    const client = await getContractServiceClient();
-    const response =
-      await client.rebateTables.deleteApiContractServiceRebateTablesRebateTableHeadersById(
-        body,
-      );
-    revalidatePath("/");
-    return {
-      type: "success",
-      data: response,
-      status: 200,
-    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
-  } catch (error) {
-    return structuredError(error);
-  }
-} //delete fee details
-/** RebateTable **/
-// export async function useAction({
-//   // client,
-//   service,
-//   path,
-//   body,
-// }: {
-//   // client: () => Promise<Record<string,any>>;
-//   service: "refundTables";
-//   path: string;
-//   body?: unknown;
-// }) {
-//   try {
-//     const cl = await getContractServiceClient();
-//     const sv = cl[service];
-//     const fnc = sv[path as keyof typeof sv];
-//     if (typeof fnc === "function") {
-//       const res = (fnc as (body: unknown) => void)(body);
-//       return "res";
-//     }
-//     return "null";
-//   } catch (error) {
-//     return "error";
-//     if (isApiError(error)) {
-//       return {
-//         type: "api-error",
-//         data: error,
-//         status: error.status,
-//         message: error.message,
-//       };
-//     }
-//     return {
-//       type: "error",
-//       data: error,
-//       status: 500,
-//     };
-//   }
-// }

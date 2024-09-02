@@ -31,7 +31,7 @@ import {
   postRefundTableFeeHeaderDetailsByRefundTableHeaderId,
   putRefundTableFeeHeaderDetailsById,
   putRefundTableFeeHeadersById,
-} from "../../../action";
+} from "../../../actions/refund-tables";
 
 export default function Edit({
   details,
