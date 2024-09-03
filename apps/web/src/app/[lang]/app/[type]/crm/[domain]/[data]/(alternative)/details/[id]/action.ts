@@ -82,6 +82,7 @@ export async function updateMerchantCRMDetailServer(
   }
 }
 export async function updateCRMDetailServer(
+  id: string,
   requestBody:
     | UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto
     | UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto
@@ -92,17 +93,17 @@ export async function updateCRMDetailServer(
     const client = await getCRMServiceClient();
     if ("emailAddress" in requestBody) {
       await client.emailCommonData.putApiCrmServiceEmailsById({
-        id: requestBody.id,
+        id,
         requestBody,
       });
     } else if ("addressLine" in requestBody) {
       await client.addressType.putApiCrmServiceAddressesById({
-        id: requestBody.id,
+        id,
         requestBody,
       });
     } else if ("localNumber" in requestBody) {
       await client.telephoneType.putApiCrmServiceTelephonesById({
-        id: requestBody.id,
+        id,
         requestBody,
       });
     }
