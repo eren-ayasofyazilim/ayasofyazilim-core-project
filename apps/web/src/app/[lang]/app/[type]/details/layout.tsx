@@ -1,11 +1,9 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-// import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getBaseLink } from "src/utils";
-// import { getBaseLink } from "src/utils";
 
 interface LayoutProps {
   children: JSX.Element;
