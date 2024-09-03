@@ -18,7 +18,6 @@ import {
   WrenchIcon,
   FileText,
   Languages,
-  Briefcase,
   Layers,
   ClipboardList,
 } from "lucide-react";
