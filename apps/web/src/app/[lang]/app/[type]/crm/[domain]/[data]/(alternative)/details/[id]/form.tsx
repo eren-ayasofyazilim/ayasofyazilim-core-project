@@ -97,15 +97,17 @@ export default function Form({
       response = "success";
     }
     if (sectionName === "email") {
-      await updateCRMDetailServer(
-        emailInfo?.id || "",
-        values as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-      );
+      await updateCRMDetailServer(emailInfo?.id || "", {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto);
       response = "success";
     }
     if (sectionName === "telephone") {
-      const parsedValues =
-        values as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
+      const parsedValues = {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
       const isValid = isPhoneValid(parsedValues.localNumber);
       if (!isValid) {
         return;
@@ -113,15 +115,16 @@ export default function Form({
       const phoneData = splitPhone(parsedValues.localNumber);
       await updateCRMDetailServer(telephoneInfo?.id || "", {
         ...values,
+        primaryFlag: true,
         ...phoneData,
       } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
       response = "success";
     }
     if (sectionName === "address") {
-      await updateCRMDetailServer(
-        addressInfo?.id || "",
-        values as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-      );
+      await updateCRMDetailServer(addressInfo?.id || "", {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
       response = "success";
     }
     if (response) {
