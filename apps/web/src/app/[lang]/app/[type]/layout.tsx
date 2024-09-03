@@ -3,6 +3,8 @@ import { GearIcon } from "@radix-ui/react-icons";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
+  BriefcaseBusiness,
+  Building2,
   DollarSign,
   Home,
   LayoutDashboard,
@@ -148,7 +150,7 @@ export default async function Layout({
     type,
     "crm",
     params.lang,
-    <SlidersHorizontal className="w-4 text-slate-500" />,
+    <Building2 className="w-4 text-slate-500" />,
   );
   const navigationItemsFull: NavigationItmes[] = [
     {
@@ -172,7 +174,7 @@ export default async function Layout({
       key: "management",
       title: languageData.Management,
       href: getBaseLink(`app/${type}/management`, true, params.lang),
-      icon: <Briefcase className="w-4 text-slate-500" />,
+      icon: <BriefcaseBusiness className="w-4 text-slate-500" />,
       submenu: managements,
       type: "admin",
       appType: "unirefund",
