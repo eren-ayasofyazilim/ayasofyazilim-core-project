@@ -29,7 +29,6 @@ export async function postContractsContractHeaders(
       status: 200,
     } as ServerResponse<UniRefund_ContractService_Contracts_ContractHeaders_ContractHeaderDto>;
   } catch (error) {
-    console.log(error);
     return structuredError(error);
   }
 }

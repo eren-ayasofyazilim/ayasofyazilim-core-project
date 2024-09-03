@@ -33,6 +33,7 @@ import {
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
   $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema,
+  UniRefund_CRMService_Merchants_MerchantProfileDto as MerchantProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -49,10 +50,10 @@ import { useRouter } from "next/navigation";
 import { getBaseLink } from "src/utils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-function createReadonlyFieldConfig(elements: string[]) {
+function createReadonlyFieldConfig(elements: string[]):Record<string,Record<string,Record<string,boolean>>> {
   return Object.assign(
     {},
-    ...elements.map((key) => {
+    ...elements.map((key:string) => {
       return {
         [key]: {
           inputProps: { disabled: true },
@@ -96,7 +97,7 @@ export default function Page() {
 
   const handleCreateContract = () => {
     setIsSubmitStarted(true);
-    if (!settingStepFormData || !merchantStepFormData) return;
+    if (!settingStepFormData) return;
     const data: ContractHeaderCreateDto = {
       ...merchantStepFormData,
       rebateSetting: {
@@ -184,9 +185,9 @@ export default function Page() {
                 maxFileCount={4}
                 maxSize={4 * 1024 * 1024}
                 progresses={{}}
-                onUpload={(files) => {
+                onUpload={(_files) => {
                   return new Promise((resolve) => {
-                    setFiles(files);
+                    setFiles(_files);
                     resolve();
                   });
                 }}
@@ -221,7 +222,7 @@ function SelectMerchantStep({
   const [selectedAddress, setSelectedAddress] = useState<string>("");
   const [addressDetails, setAddressDetails] = useState<AddressTypeDto>();
   useEffect(() => {
-    if (step == 0) {
+    if (step === 0) {
       setMerchantDetails(undefined);
       setSelectedAddress("");
       setSelectedMerchant("");
@@ -268,7 +269,7 @@ function SelectMerchantStep({
         ?.at(0)
         ?.organizations?.at(0)
         ?.contactInformations?.at(0)
-        ?.addresses?.find((address) => address.id == value),
+        ?.addresses?.find((address) => address.id === value),
     );
   };
 
@@ -300,9 +301,9 @@ function SelectMerchantStep({
             <SelectValue placeholder="Select merchant" />
           </SelectTrigger>
           <SelectContent>
-            {merchantList?.items?.map((merchant) => {
+          {merchantList?.items?.map((merchant: MerchantProfileDto) => {
               return (
-                <SelectItem key={merchant.id} value={merchant.id as string}>
+                <SelectItem key={merchant.id} value={merchant.id || ""}>
                   {merchant.name}
                 </SelectItem>
               );
