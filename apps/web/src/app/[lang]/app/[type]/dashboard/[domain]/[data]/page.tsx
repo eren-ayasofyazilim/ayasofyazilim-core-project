@@ -324,31 +324,25 @@ export default function Page({
   if (params.data === "scopes") {
     columnsData.data.actionList?.push({
       type: "Dialog",
-      cta: "Değişiklik Geçmişi",
+      cta: "Change History",
       loadingContent: <>Loading...</>,
-      description: "Değişiklik Geçmişi",
+      description: "Change History",
       componentType: "CustomComponent",
-      content: <>Bir değişiklik yok.</>,
+      content: <>No changes.</>,
     });
   }
   return (
-    <>
-      {/* <PageHeader 
-    title={title}
-    description={description}
-    /> */}
-      <Dashboard
-        action={action}
-        cards={[]}
-        columnsData={columnsData}
-        data={roles?.items}
-        detailedFilter={detailedFilters}
-        fetchRequest={getRoles}
-        isLoading={isLoading}
-        rowCount={roles?.totalCount || 0}
-        withCards={false}
-        withTable
-      />
-    </>
+    <Dashboard
+      action={action}
+      cards={[]}
+      columnsData={columnsData}
+      data={roles?.items}
+      detailedFilter={detailedFilters}
+      fetchRequest={getRoles}
+      isLoading={isLoading}
+      rowCount={roles?.totalCount || 0}
+      withCards={false}
+      withTable
+    />
   );
 }
