@@ -14,9 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/dropdown-menu";
+import { CountrySelector } from "@repo/ayasofyazilim-ui/organisms/country-selector";
 import { ChevronDown, LogOut } from "lucide-react";
 import Link from "next/link";
-import LanguageSelector from "../../language-selector";
+import countries from "../../language-selector/data";
 import { cn, ResourceResult } from "../../utils";
 
 export type MenuLinkItem = {
@@ -123,12 +124,22 @@ export function ProfileMenu({
         {cultureName && (
           <>
             <DropdownMenuSeparator />
-            <div className="mx-auto w-6 cursor-pointer px-0 py-1">
-              <LanguageSelector
-                baseLink={baseLink}
-                cultureName={cultureName}
-                menuAlign="end"
-                resources={resources}
+            <div className="mx-auto flex cursor-pointer justify-center px-0 py-1">
+              <CountrySelector
+                searchText={resources?.AbpUi?.texts?.Search || "Search"}
+                searchEmptyValue={
+                  resources?.AbpExceptionHandling?.texts?.DefaultErrorMessage404
+                }
+                defaultValue={cultureName}
+                countries={countries}
+                onValueChange={(value: string) => {
+                  const newUrl =
+                    value +
+                    "/" +
+                    location.pathname.split("/").slice(2).join("/");
+                  location.href = `${baseLink}${newUrl}`;
+                }}
+                showLabel={true}
               />
             </div>
           </>

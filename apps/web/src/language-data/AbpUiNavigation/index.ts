@@ -14,6 +14,7 @@ export interface AbpUiNavigationResource {
   Crm: string;
   Management: string;
   Profile: string;
+  UserSettings: string;
   Companies: string;
   Template: string;
   Details: string;
@@ -52,6 +53,8 @@ export interface AbpUiNavigationResource {
   ChangeProfile: string;
   Register: string;
   MyAccount: string;
+  TextTemplates: string;
+  AdminManagement: string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -72,6 +75,10 @@ function getLanguageData(
     Crm: navigationResource?.Crm || data[lang]?.Crm || data.en.Crm,
     Profile:
       navigationResource?.Profile || data[lang]?.Profile || data.en.Profile,
+    UserSettings:
+      navigationResource?.UserSettings ||
+      data[lang]?.UserSettings ||
+      data.en.UserSettings,
     Details:
       navigationResource?.Details || data[lang]?.Details || data.en.Details,
     Companies:
@@ -200,6 +207,14 @@ function getLanguageData(
       navigationResource?.Traveller ||
       data[lang]?.Traveller ||
       data.en.Traveller,
+    TextTemplates:
+      navigationResource?.TextTemplates ||
+      data[lang]?.TextTemplates ||
+      data.en.TextTemplates,
+    AdminManagement:
+      navigationResource?.AdminManagement ||
+      data[lang]?.AdminManagement ||
+      data.en.AdminManagement,
   };
 }
 export async function getResourceData(lang: string) {
