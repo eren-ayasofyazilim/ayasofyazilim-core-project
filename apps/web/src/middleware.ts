@@ -6,7 +6,7 @@ import type { NextAuthRequest } from "node_modules/next-auth/lib";
 import { auth } from "auth";
 
 export const i18n = {
-  defaultLocale: "tr",
+  defaultLocale: "en",
   locales: [
     "de-de",
     "en",
