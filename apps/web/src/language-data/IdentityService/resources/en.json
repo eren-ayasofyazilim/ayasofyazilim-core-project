@@ -1,0 +1,31 @@
+{
+  "Role": "Role",
+  "Roles": "Roles",
+  "Role.New": "New Role",
+  "Role.Edit": "Edit Role",
+  "Role.Description": "You can view the roles from here.",
+
+  "User": "User",
+  "Users": "Users",
+  "User.New": "New User",
+  "User.Edit": "Edit User",
+  "User.Description": "You can view the users from here.",
+
+  "ClaimType": "Claim Type",
+  "ClaimTypes": "Claim Types",
+  "ClaimType.New": "New Claim Type",
+  "ClaimType.Edit": "Edit Claim Type",
+  "ClaimType.Description": "You can view the claim types from here.",
+
+  "SecurityLog": "Security Log",
+  "SecurityLogs": "Security Logs",
+  "SecurityLog.New": "New Security Log",
+  "SecurityLog.Edit": "Edit Security Log",
+  "SecurityLog.Description": "You can view the security logs from here.",
+
+  "Organization": "Organization",
+  "Organizations": "Organizations",
+  "Organization.New": "New Organization",
+  "Organization.Edit": "Edit Organization",
+  "Organization.Description": "You can view the organizations from here."
+}
