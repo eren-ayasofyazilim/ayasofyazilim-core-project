@@ -21,16 +21,16 @@ export const $createMerchants = {
       minLength: 0,
       type: "string",
     },
-    ituCountryCode: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
-    areaCode: {
-      maxLength: 64,
-      minLength: 0,
-      type: "string",
-    },
+    // ituCountryCode: {
+    //   maxLength: 64,
+    //   minLength: 0,
+    //   type: "string",
+    // },
+    // areaCode: {
+    //   maxLength: 64,
+    //   minLength: 0,
+    //   type: "string",
+    // },
     telephoneTypeCode: {
       type: "integer",
       enum: [0, 1, 2, 3],
