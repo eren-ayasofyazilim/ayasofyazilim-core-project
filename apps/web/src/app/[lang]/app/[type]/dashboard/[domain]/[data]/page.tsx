@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
+import { useLocale } from "src/providers/locale";
+import { getResourceDataClient } from "src/language-data/IdentityService";
 import { dataConfig } from "../../data";
 
 async function controlledFetch(
@@ -74,8 +76,10 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
 export default function Page({
   params,
 }: {
-  params: { data: string; domain: string };
+  params: { data: string; domain: string; lang: string };
 }): JSX.Element {
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
   const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -155,15 +159,19 @@ export default function Page({
       false,
     );
   }
-
   const createFormSchema = formData.createFormSchema;
   let action: TableAction[] | undefined;
   if (createFormSchema) {
     action = [
       {
-        cta: `New ${formData.title}`,
+        cta: languageData[
+          `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+        ],
         componentType: "Autoform",
-        description: `Create a new ${formData.title}`,
+        description:
+          languageData[
+            `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+          ],
         autoFormArgs: {
           formSchema: createZodObject(
             createFormSchema.schema,
