@@ -2,8 +2,9 @@
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 // import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { getBaseLink } from "src/utils";
 // import { getBaseLink } from "src/utils";
 
 interface LayoutProps {
@@ -11,12 +12,17 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
-  // const pathname = usePathname();
-  // const path = pathname.split("en/app/admin/")[1];
+  const pathname = usePathname();
+  const path = pathname.split("en/app/admin/details")[1];
 
   return (
     <>
-      <PageHeader description="Details Page" title="Details" />
+      <PageHeader
+        LinkElement={path ? Link : undefined}
+        description="Details Page"
+        href={path ? getBaseLink("en/app/admin/details") : ""}
+        title="Details"
+      />
       <Card className="h-full w-full flex-1 overflow-auto p-5">{children}</Card>
     </>
   );
