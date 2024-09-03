@@ -11,6 +11,8 @@ const data: LanguageDataType = {
 export interface ContractServiceResource {
   Refund: string;
   RefundTables: string;
+  "RefundTables.Title": string;
+  "RefundTables.Description": string;
   "RefundTables.Create.Title": string;
   "RefundTables.Create.Description": string;
   "RefundTables.Create.Submit": string;
@@ -114,32 +116,39 @@ function getLanguageData(
       resource?.RefundTables ||
       data[lang]?.RefundTables ||
       data.en.RefundTables,
-
+    "RefundTables.Title":
+      resource?.["RefundTables.Title"] ||
+      data[lang]?.["RefundTables.Title"] ||
+      data.en["RefundTables.Title"],
+    "RefundTables.Description":
+      resource?.["RefundTables.Description"] ||
+      data[lang]?.["RefundTables.Description"] ||
+      data.en["RefundTables.Description"],
     "RefundTables.Create.Title":
       resource?.["RefundTables.Create.Title"] ||
       data[lang]?.["RefundTables.Create.Title"] ||
-      data.en["New refund table"],
+      data.en["RefundTables.Create.Title"],
     "RefundTables.Create.Description":
       resource?.["RefundTables.Create.Description"] ||
       data[lang]?.["RefundTables.Create.Description"] ||
-      data.en["Create a new refund table"],
+      data.en["RefundTables.Create.Description"],
     "RefundTables.Create.Submit":
       resource?.["RefundTables.Create.Submit"] ||
       data[lang]?.["RefundTables.Create.Submit"] ||
-      data.en.Submit,
+      data.en["RefundTables.Create.Submit"],
 
     "RefundTables.Edit.Title":
       resource?.["RefundTables.Edit.Title"] ||
       data[lang]?.["RefundTables.Edit.Title"] ||
-      data.en["Edit refund table"],
+      data.en["RefundTables.Edit.Title"],
     "RefundTables.Edit.Description":
       resource?.["RefundTables.Edit.Description"] ||
       data[lang]?.["RefundTables.Edit.Description"] ||
-      data.en["Edit selected refund table"],
+      data.en["RefundTables.Edit.Description"],
     "RefundTables.Edit.Submit":
       resource?.["RefundTables.Edit.Submit"] ||
       data[lang]?.["RefundTables.Edit.Submit"] ||
-      data.en.Submit,
+      data.en["RefundTables.Edit.Submit"],
 
     "RefundTables.Delete.Title":
       resource?.["RefundTables.Delete.Title"] ||
@@ -168,41 +177,45 @@ function getLanguageData(
     "RefundTables.Details.FilterBy {0}":
       resource?.["RefundTables.Details.FilterBy {0}"] ||
       data[lang]?.["RefundTables.Details.FilterBy {0}"] ||
-      data.en["Filter by {}"],
+      data.en["RefundTables.Details.FilterBy {0}"],
     "RefundTables.Details.Save":
       resource?.["RefundTables.Details.Save"] ||
       data[lang]?.["RefundTables.Details.Save"] ||
-      data.en.Save,
+      data.en["RefundTables.Details.Save"],
     "RefundTables.Details.Delete":
       resource?.["RefundTables.Details.Delete"] ||
       data[lang]?.["RefundTables.Details.Delete"] ||
-      data.en.Delete,
+      data.en["RefundTables.Details.Delete"],
     "RefundTables.Details.Create.Title":
       resource?.["RefundTables.Details.Create.Title"] ||
       data[lang]?.["RefundTables.Details.Create.Title"] ||
-      data.en["Create Rule"],
+      data.en["RefundTables.Details.Create.Title"],
     "RefundTables.Details.Create.Description":
       resource?.["RefundTables.Details.Create.Description"] ||
       data[lang]?.["RefundTables.Details.Create.Description"] ||
-      data.en["Create a new rule"],
+      data.en["RefundTables.Details.Create.Description"],
     "RefundTables.Details.Create.Submit":
       resource?.["RefundTables.Details.Create.Submit"] ||
       data[lang]?.["RefundTables.Details.Create.Submit"] ||
-      data.en.Submit,
+      data.en["RefundTables.Details.Create.Submit"],
     "RefundTables.Details.Edit.Title":
       resource?.["RefundTables.Details.Edit.Title"] ||
       data[lang]?.["RefundTables.Details.Edit.Title"] ||
-      data.en["Edit rule"],
+      data.en["RefundTables.Details.Edit.Title"],
     "RefundTables.Details.Edit.Description":
       resource?.["RefundTables.Details.Edit.Description"] ||
       data[lang]?.["RefundTables.Details.Edit.Description"] ||
-      data.en["Edit selected rule"],
+      data.en["RefundTables.Details.Edit.Description"],
+
     "RefundTables.Details.Delete.Confirm":
-      "Are you sure you want to delete this rule?",
+      resource?.["RefundTables.Details.Delete.Confirm"] ||
+      data[lang]?.["RefundTables.Details.Delete.Confirm"] ||
+      data.en["RefundTables.Details.Delete.Confirm"],
+
     "RefundTables.Details.Delete.Confirm.Title":
       resource?.["RefundTables.Details.Delete.Confirm.Title"] ||
       data[lang]?.["RefundTables.Details.Delete.Confirm.Title"] ||
-      data.en["Delete rule"],
+      data.en["RefundTables.Details.Delete.Confirm.Title"],
 
     "RefundTables.Name":
       resource?.["RefundTables.Name"] ||
@@ -211,43 +224,43 @@ function getLanguageData(
     "RefundTables.ValidFrom":
       resource?.["RefundTables.ValidFrom"] ||
       data[lang]?.["RefundTables.ValidFrom"] ||
-      data.en["Valid from"],
+      data.en["RefundTables.ValidFrom"],
     "RefundTables.ValidTo":
       resource?.["RefundTables.ValidTo"] ||
       data[lang]?.["RefundTables.ValidTo"] ||
-      data.en["Valid to"],
+      data.en["RefundTables.ValidTo"],
     "RefundTables.IsDefault":
       resource?.["RefundTables.IsDefault"] ||
       data[lang]?.["RefundTables.IsDefault"] ||
-      data.en["Is default"],
+      data.en["RefundTables.IsDefault"],
     "RefundTables.IsBundling":
       resource?.["RefundTables.IsBundling"] ||
       data[lang]?.["RefundTables.IsBundling"] ||
-      data.en["Is bundling"],
+      data.en["RefundTables.IsBundling"],
     "RefundTables.LastModificationTime":
       resource?.["RefundTables.LastModificationTime"] ||
       data[lang]?.["RefundTables.LastModificationTime"] ||
-      data.en["Last modification time"],
+      data.en["RefundTables.LastModificationTime"],
     "RefundTables.Actions":
       resource?.["RefundTables.Actions"] ||
       data[lang]?.["RefundTables.Actions"] ||
-      data.en.Actions,
+      data.en["RefundTables.Actions"],
     "RefundTables.Edit":
       resource?.["RefundTables.Edit"] ||
       data[lang]?.["RefundTables.Edit"] ||
-      data.en.Edit,
+      data.en["RefundTables.Edit"],
     "RefundTables.Delete":
       resource?.["RefundTables.Delete"] ||
       data[lang]?.["RefundTables.Delete"] ||
-      data.en.Delete,
+      data.en["RefundTables.Delete"],
     "RefundTables.Cancel":
       resource?.["RefundTables.Cancel"] ||
       data[lang]?.["RefundTables.Cancel"] ||
-      data.en.Cancel,
+      data.en["RefundTables.Cancel"],
     "RefundTables.Save":
       resource?.["RefundTables.Save"] ||
       data[lang]?.["RefundTables.Save"] ||
-      data.en.Save,
+      data.en["RefundTables.Save"],
     "RefundFees.Page.List.Title":
       resource?.["RefundFees.Page.List.Title"] ||
       data[lang]?.["RefundFees.Page.List.Title"] ||

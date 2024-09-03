@@ -17,6 +17,7 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -118,6 +119,10 @@ export default function Page({ params }: { params: { lang: string } }) {
   };
   return (
     <div className="h-full">
+      <PageHeader
+        description={languageData["RefundTables.Description"]}
+        title={languageData["RefundTables.Title"]}
+      />
       <Card className="h-full px-4">
         <DataTable
           action={action}
