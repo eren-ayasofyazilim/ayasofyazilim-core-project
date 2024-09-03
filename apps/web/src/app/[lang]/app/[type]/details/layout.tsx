@@ -1,5 +1,6 @@
 "use client";
-import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import { Card } from "@/components/ui/card";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getBaseLink } from "src/utils";
@@ -10,32 +11,17 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
   const pathname = usePathname();
-  const path = pathname.split("en/app/admin/")[1];
+  const path = pathname.split("en/app/admin/details")[1];
 
   return (
-    <SectionLayout
-      defaultActiveSectionId={path}
-      linkElement={Link}
-      sections={[
-        {
-          id: "details",
-          name: "Details",
-          link: getBaseLink("app/admin/details", true),
-        },
-        {
-          id: "add",
-          name: "add",
-          link: getBaseLink("app/admin/details/add", true),
-        },
-        {
-          id: "id",
-          name: "id",
-          link: getBaseLink("app/admin/details/id", true),
-        },
-      ]}
-      vertical
-    >
-      <div className="h-full w-full flex-1 overflow-auto p-5">{children}</div>
-    </SectionLayout>
+    <>
+      <PageHeader
+        LinkElement={path ? Link : undefined}
+        description="Details Page"
+        href={path ? getBaseLink("en/app/admin/details") : ""}
+        title="Details"
+      />
+      <Card className="h-full w-full flex-1 overflow-auto p-5">{children}</Card>
+    </>
   );
 }
