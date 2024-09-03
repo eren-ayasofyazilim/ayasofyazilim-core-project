@@ -16,26 +16,34 @@ import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../../../data";
 
 export interface CreateMerchants {
-  name: string;
-  taxpayerId: string;
-  legalStatusCode: string;
-  customerNumber: string;
-  ituCountryCode: string;
-  areaCode: string;
-  telephoneTypeCode: 0 | 1 | 2 | 3;
-  localNumber: string;
-  primaryFlag: boolean;
-  addressLine: string;
-  terriority: string;
-  postalCode: string;
-  country: string;
-  city: string;
-  fullAddress: string;
-  addressTypeCode: 0 | 1;
-  addressPrimaryFlag: boolean;
-  emailAddress: string;
-  emailTypeCode: 0 | 1;
-  emailPrimaryFlag: boolean;
+  organization: {
+    name: string;
+    taxpayerId: string;
+    legalStatusCode: string;
+    customerNumber: string;
+  };
+  telephone: {
+    areaCode: string;
+    localNumber: string;
+    ituCountryCode: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1 | 2 | 3;
+  };
+  address: {
+    addressLine: string;
+    city: string;
+    terriority: string;
+    postalCode: string;
+    country: string;
+    fullAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
+  };
+  email: {
+    emailAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
+  };
 }
 
 export default function Page({
@@ -119,6 +127,7 @@ function formSchemaByData(data: string) {
   const config = dataConfigOfCrm.companies.pages[data];
   return createZodObject(
     config.createFormSchema?.schema,
-    // config.createFormSchema.formPositions,
+    config.createFormSchema?.formPositions,
+    config.createFormSchema?.formSubPositions,
   );
 }
