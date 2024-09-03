@@ -27,5 +27,48 @@
   "Organizations": "Organizations",
   "Organization.New": "New Organization",
   "Organization.Edit": "Edit Organization",
-  "Organization.Description": "You can view the organizations from here."
+  "Organization.Description": "You can view the organizations from here.",
+
+  "Application": "Application",
+  "Applications": "Applications",
+  "Application.New": "New Application",
+  "Application.Edit": "Edit Application",
+  "Application.Description": "You can view the applications from here.",
+
+  "Scope": "Scope",
+  "Scopes": "Scopes",
+  "Scope.New": "New Scope",
+  "Scope.Edit": "Edit Scope",
+  "Scope.Description": "You can view the scopes from here.",
+
+  "Language": "Language",
+  "Languages": "Languages",
+  "Language.New": "New Language",
+  "Language.Edit": "Edit Language",
+  "Language.Description": "You can view the languages from here.",
+
+  "LanguageText": "Language Text",
+  "LanguageTexts": "Language Texts",
+  "LanguageText.New": "New Language Text",
+  "LanguageText.Edit": "Edit Language Text",
+  "LanguageText.Description": "You can view the language texts from here.",
+
+  "Edition": "Edition",
+  "Editions": "Editions",
+  "Edition.New": "New Edition",
+  "Edition.Edit": "Edit Edition",
+  "Edition.Description": "You can view the editions from here.",
+
+  "Tenant": "Tenant",
+  "Tenants": "Tenants",
+  "Tenant.New": "New Tenant",
+  "Tenant.Edit": "Edit Tenant",
+  "Tenant.Description": "You can view the tenants from here.",
+
+  "AuditLog": "Audit Log",
+  "AuditLogs": "Audit Logs",
+  "AuditLog.Description": "You can view the audit logs from here.",
+  "TextTemplate": "Text Template",
+  "TextTemplates": "Text Templates",
+  "TextTemplate.Description": "You can view the text templates from here."
 }
