@@ -72,8 +72,6 @@ export default function Form({
   const telephoneSchema = createZodObject(telephone, [
     "primaryFlag",
     "typeCode",
-    // "ituCountryCode",
-    // "areaCode",
     "localNumber",
   ]);
   const phoneNumber =
