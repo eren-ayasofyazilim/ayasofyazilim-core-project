@@ -64,29 +64,23 @@ export default function Form({
     organizationInfo?.contactInformations?.[0]?.addresses?.[0];
 
   const organizationSchema = createZodObject(organization, ["name"]);
-  const emailSchema = createZodObject(email, [
-    "primaryFlag",
-    "typeCode",
-    "emailAddress",
-  ]);
+  const emailSchema = createZodObject(email, ["emailAddress", "typeCode"]);
   const telephoneSchema = createZodObject(telephone, [
-    "primaryFlag",
-    "typeCode",
     "localNumber",
+    "typeCode",
   ]);
   const phoneNumber =
     (telephoneInfo?.ituCountryCode || "+90") +
     (telephoneInfo?.areaCode || "") +
     (telephoneInfo?.localNumber || "");
   const addressSchema = createZodObject(address, [
-    "primaryFlag",
-    "typeCode",
     "country",
     "terriority",
     "city",
     "postalCode",
     "addressLine",
     "fullAddress",
+    "typeCode",
   ]);
 
   async function handleSubmit(values: unknown, sectionName: string) {

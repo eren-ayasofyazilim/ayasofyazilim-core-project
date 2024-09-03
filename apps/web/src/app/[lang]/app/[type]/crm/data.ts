@@ -55,24 +55,18 @@ const organizationScheme = {
 } as const;
 
 const formSubPositions = {
-  telephone: [
-    "primaryFlag",
-    "typeCode",
-    "ituCountryCode",
-    "areaCode",
-    "localNumber",
-  ],
+  organization: ["name", "taxpayerId", "legalStatusCode", "customerNumber"],
+  telephone: ["ituCountryCode", "areaCode", "localNumber", "typeCode"],
   address: [
-    "primaryFlag",
-    "typeCode",
     "country",
     "terriority",
     "city",
     "postalCode",
     "addressLine",
     "fullAddress",
+    "typeCode",
   ],
-  email: ["primaryFlag", "typeCode", "emailAddress"],
+  email: ["emailAddress", "typeCode"],
 };
 
 const organization = organizationScheme;
@@ -102,7 +96,6 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
-
         tableSchema: {
           excludeList: [
             "id",
