@@ -202,15 +202,6 @@ export default async function Layout({
       appType: "unirefund",
     },
     {
-      key: "Details",
-      title: languageData.Details,
-      href: getBaseLink(`app/${type}/details`, true, params.lang),
-      icon: <FileBadge className="w-4 text-slate-500" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-
-    {
       key: "projects",
       title: languageData.Campaigns,
       icon: <Presentation className="w-4 text-slate-500" />,
