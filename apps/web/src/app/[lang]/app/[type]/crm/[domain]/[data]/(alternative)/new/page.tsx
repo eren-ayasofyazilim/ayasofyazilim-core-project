@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
@@ -10,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { TableData } from "src/utils";
-import { getBaseLink } from "src/utils";
+import { getBaseLink, isPhoneValid, splitPhone } from "src/utils";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../../../data";
@@ -62,6 +63,12 @@ export default function Page({
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const handleSave = async (formData: CreateMerchants) => {
+    const isValid = isPhoneValid(formData.telephone.localNumber);
+    if (!isValid) {
+      return;
+    }
+    const phoneData = splitPhone(formData.telephone.localNumber);
+    formData.telephone = { ...formData.telephone, ...phoneData };
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
         method: "POST",
@@ -106,6 +113,17 @@ export default function Page({
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
           <CardContent>
             <AutoForm
+              fieldConfig={{
+                telephone: {
+                  localNumber: {
+                    fieldType: "phone",
+                    displayName: "Telephone Number",
+                    inputProps: {
+                      showLabel: true,
+                    },
+                  },
+                },
+              }}
               formClassName="pb-40 "
               formSchema={formSchemaByData(params.data)}
               onSubmit={(val) => {
@@ -125,6 +143,16 @@ export default function Page({
 
 function formSchemaByData(data: string) {
   const config = dataConfigOfCrm.companies.pages[data];
+  if (config.createFormSchema) {
+    config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
+      ["Home", "Office", "Mobile", "Fax"];
+    config.createFormSchema.schema.properties.address.properties.typeCode.enum =
+      ["Home", "Office"];
+    config.createFormSchema.schema.properties.email.properties.typeCode.enum = [
+      "Work",
+      "Personal",
+    ];
+  }
   return createZodObject(
     config.createFormSchema?.schema,
     config.createFormSchema?.formPositions,

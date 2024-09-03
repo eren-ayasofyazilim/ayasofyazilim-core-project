@@ -3,11 +3,10 @@ import { GearIcon } from "@radix-ui/react-icons";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
+  BriefcaseBusiness,
+  Building2,
   DollarSign,
-  FileBadge,
-  Folder,
   Home,
-  LanguagesIcon,
   LayoutDashboard,
   Plane,
   Presentation,
@@ -17,6 +16,10 @@ import {
   UserCircle,
   Worm,
   WrenchIcon,
+  FileText,
+  Languages,
+  Layers,
+  ClipboardList,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth } from "auth";
@@ -146,7 +149,7 @@ export default async function Layout({
     type,
     "crm",
     params.lang,
-    <SlidersHorizontal className="w-4 text-slate-500" />,
+    <Building2 className="w-4 text-slate-500" />,
   );
   const navigationItemsFull: NavigationItmes[] = [
     {
@@ -170,7 +173,7 @@ export default async function Layout({
       key: "management",
       title: languageData.Management,
       href: getBaseLink(`app/${type}/management`, true, params.lang),
-      icon: <Folder className="w-4 text-slate-500" />,
+      icon: <BriefcaseBusiness className="w-4 text-slate-500" />,
       submenu: managements,
       type: "admin",
       appType: "unirefund",
@@ -179,7 +182,7 @@ export default async function Layout({
       key: "crm",
       title: languageData.Crm,
       href: getBaseLink(`app/${type}/crm`, true, params.lang),
-      icon: <Folder className="w-4 text-slate-500" />,
+      icon: <Layers className="w-4 text-slate-500" />,
       submenu: crms,
       type: "admin",
       appType: "unirefund",
@@ -212,14 +215,14 @@ export default async function Layout({
     {
       key: "languageManagement",
       title: languageData.LanguageManagement || "Language Management",
-      icon: <LanguagesIcon className="w-4 text-slate-500" />,
+      icon: <Languages className="w-4 text-slate-500" />,
       href: getBaseLink(`app/${type}/language-management`, true, params.lang),
       type: "admin",
       appType: "upwithcrowd",
     },
     {
       key: "investments",
-      title: "investments",
+      title: "Investments",
       icon: <DollarSign className="w-4 text-slate-500" />,
       href: getBaseLink(`app/${type}/investments`, true, params.lang),
       type: "investor",
@@ -231,7 +234,7 @@ export default async function Layout({
       type: "admin",
       title: languageData.Contracts,
       href: getBaseLink(`app/${type}/contracts`, true, params.lang),
-      icon: <FileBadge className="w-4 text-slate-500" />,
+      icon: <ClipboardList className="w-4 text-slate-500" />,
       submenu: [
         {
           key: "contracts",

@@ -58,21 +58,20 @@ const formSubPositions = {
   telephone: [
     "primaryFlag",
     "typeCode",
-    "ituCountryCode",
-    "areaCode",
+    //"ituCountryCode",
+    //"areaCode",
     "localNumber",
   ],
   address: [
-    "primaryFlag",
-    "typeCode",
     "country",
     "terriority",
     "city",
     "postalCode",
     "addressLine",
     "fullAddress",
+    "typeCode",
   ],
-  email: ["primaryFlag", "typeCode", "emailAddress"],
+  email: ["emailAddress", "typeCode"],
 };
 
 const organization = organizationScheme;
@@ -102,7 +101,6 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
-
         tableSchema: {
           excludeList: [
             "id",
