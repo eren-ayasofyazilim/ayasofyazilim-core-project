@@ -3,7 +3,7 @@ import {
   obtainAccessTokenByRefreshToken,
   signInWithCredentials,
 } from "auth-action";
-import NextAuth from "next-auth";
+import NextAuth, { AuthError } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 
@@ -19,15 +19,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       authorize: async (credentials) => {
         try {
-          const response = await signInWithCredentials(credentials);
+          const response = await signInWithCredentials(credentials as {
+            username: string;
+            password: string;
+          });
           if (response?.access_token) {
             return { ...response };
           }
-          throw new Error(response.error_description);
-        } catch (error: any) {
-          throw error.message;
+          const error = response?.error + ": " + response?.error_description;
+          return Promise.reject(new AuthError(error));
+        } catch (error) { 
+          return Promise.reject(new Error("Unknown Error " + error));
         }
-        return null;
       },
     }),
   ],
