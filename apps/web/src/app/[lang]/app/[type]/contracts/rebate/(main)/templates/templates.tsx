@@ -29,7 +29,7 @@ export default function Templates({
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [templates, setTemplates] = useState<PagedResultDto>();
-  function getAndSetTemplates() {
+  const getAndSetTemplates = () => {
     setLoading(true);
     void getRebateTablesRebateTableHeadersTemplates({})
       .then((response) => {
@@ -44,7 +44,7 @@ export default function Templates({
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     getAndSetTemplates();

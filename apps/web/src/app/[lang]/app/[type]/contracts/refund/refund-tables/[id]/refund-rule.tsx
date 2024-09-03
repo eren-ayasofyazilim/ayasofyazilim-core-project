@@ -18,6 +18,7 @@ import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
+import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableHeadersDetailById,
   postRefundTableHeadersDetailById,
@@ -65,21 +66,32 @@ export function RefundRules({
       void postRefundTableHeadersDetailById({
         refundTableHeaderId: params.id,
         requestBody: formData,
-      }).then((response) => {
-        if (response.type === "success") {
-          toast.success("Refund table rule created successfully");
-        } else if (response.type === "api-error") {
-          toast.error(response.message || "Refund table rule creation failed");
-        } else {
-          toast.error("Fatal error");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.type === "success") {
+            toast.success("Refund table rule created successfully");
+          } else if (response.type === "api-error") {
+            toast.error(
+              response.message || "Refund table rule creation failed",
+            );
+          } else {
+            toast.error("Fatal error");
+          }
+        })
+        .finally(() => {
+          router.refresh();
+          router.push(
+            getBaseLink(
+              `app/admin/contracts/refund/refund-tables/${params.id}`,
+            ),
+          );
+        });
     },
     componentType: "Autoform",
     description: languageData["RefundTables.Details.Create.Description"],
   };
 
-  function handleRefundTableHeadersDelete(row: RefundTableDetailDto) {
+  const handleRefundTableHeadersDelete = (row: RefundTableDetailDto) => {
     setLoading(true);
     void deleteRefundTableHeadersDetailById({
       id: params.id,
@@ -95,7 +107,7 @@ export function RefundRules({
     });
     router.refresh();
     setLoading(false);
-  }
+  };
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
@@ -117,7 +129,7 @@ export function RefundRules({
             },
             values: { refundTableHeaderId: params.id },
             submit: {
-              cta: "Update rule",
+              cta: languageData["RefundTables.Details.Edit.Title"],
             },
           },
           callback: (formData: RefundTableDetailUpdateDto) => {
@@ -141,11 +153,11 @@ export function RefundRules({
             // });
           },
           componentType: "Autoform",
-          description: "Edit rule",
+          description: languageData["RefundTables.Details.Edit.Description"],
         },
         {
           type: "Action",
-          cta: "Delete",
+          cta: languageData["RefundTables.Details.Delete"],
           callback: handleRefundTableHeadersDelete,
         },
       ],

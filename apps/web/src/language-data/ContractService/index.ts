@@ -19,6 +19,8 @@ export interface ContractServiceResource {
   "RefundTables.Edit.Submit": string;
   "RefundTables.Delete.Title": string;
   "RefundTables.Delete.Description": string;
+  "RefundTables.Delete.Continue": string;
+  "RefundTables.Delete.Cancel": string;
   "RefundTables.Details": string;
   "RefundTables.Details.FilterBy {0}": string;
   "RefundTables.Details.Save": string;
@@ -142,9 +144,22 @@ function getLanguageData(
     "RefundTables.Delete.Title":
       resource?.["RefundTables.Delete.Title"] ||
       data[lang]?.["RefundTables.Delete.Title"] ||
-      data.en["Delete refund table"],
+      data.en["RefundTables.Delete.Title"],
+
     "RefundTables.Delete.Description":
-      "Are you sure you want to delete this refund table?",
+      resource?.["RefundTables.Delete.Description"] ||
+      data[lang]?.["RefundTables.Delete.Description"] ||
+      data.en["RefundTables.Delete.Description"],
+
+    "RefundTables.Delete.Cancel":
+      resource?.["RefundTables.Delete.Cancel"] ||
+      data[lang]?.["RefundTables.Delete.Cancel"] ||
+      data.en["RefundTables.Delete.Cancel"],
+
+    "RefundTables.Delete.Continue":
+      resource?.["RefundTables.Delete.Continue"] ||
+      data[lang]?.["RefundTables.Delete.Continue"] ||
+      data.en["RefundTables.Delete.Continue"],
 
     "RefundTables.Details":
       resource?.["RefundTables.Details"] ||
