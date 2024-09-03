@@ -22,18 +22,20 @@ import {
 } from "@repo/ayasofyazilim-ui/molecules/file-uploader";
 import { toast } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
-import {
+import type {
   UniRefund_ContractService_Contracts_ContractHeaders_ContractHeaderCreateDto as ContractHeaderCreateDto,
-  $UniRefund_ContractService_Contracts_ContractSettings_ContractSettingCreateDto as ContractSettingCreateSchema,
   UniRefund_ContractService_Contracts_ContractSettings_ContractSettingCreateDto as ContractSettingCreateDto,
 } from "@ayasofyazilim/saas/ContractService";
-import {
+import { $UniRefund_ContractService_Contracts_ContractSettings_ContractSettingCreateDto as ContractSettingCreateSchema } from "@ayasofyazilim/saas/ContractService";
+import type {
   UniRefund_CRMService_AddressTypes_AddressTypeDto as AddressTypeDto,
-  $UniRefund_CRMService_AddressTypes_AddressTypeDto as AddressTypeSchema,
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
-  $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema,
   UniRefund_CRMService_Merchants_MerchantProfileDto as MerchantProfileDto,
+} from "@ayasofyazilim/saas/CRMService";
+import {
+  $UniRefund_CRMService_AddressTypes_AddressTypeDto as AddressTypeSchema,
+  $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -41,17 +43,20 @@ import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
+import { getBaseLink } from "src/utils";
+import { postContractsContractHeaders } from "../../actions/contracts";
 import {
   getCrmServiceMerchants,
   getCrmServiceMerchantsDetailById,
 } from "../../../crm/actions/merchant";
-import { postContractsContractHeaders } from "../../actions/contracts";
-import { useRouter } from "next/navigation";
-import { getBaseLink } from "src/utils";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-function createReadonlyFieldConfig(elements: string[]):Record<string,Record<string,Record<string,boolean>>> {
-  const tempElement = elements.map((key:string):Record<string,Record<string,Record<string,boolean>>> => {
+
+function createReadonlyFieldConfig(
+  elements: string[],
+): Record<string, { inputProps: { disabled: boolean } }> {
+  const tempElement = elements.map((key: string) => {
     return {
       [key]: {
         inputProps: { disabled: true },
@@ -59,7 +64,10 @@ function createReadonlyFieldConfig(elements: string[]):Record<string,Record<stri
     };
   });
 
-  return Object.assign({}, ...tempElement);
+  return Object.assign({}, ...tempElement) as Record<
+    string,
+    { inputProps: { disabled: boolean } }
+  >;
 } //TODO: IF THIS IS USEFUL MOVE TO LIBS
 
 type MerchantStepFormDataDto = Pick<
@@ -136,68 +144,68 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader title="Create Contract" description="Create a new contract" />
+      <PageHeader description="Create a new contract" title="Create Contract" />
       <Card className="h-full py-4">
         <Stepper
           activeTabIndex={step}
-          onIndexChange={setStep}
           className="flex h-full flex-col gap-4 px-4"
           headerProps={{
             containerClassName: "mb-0",
           }}
+          onIndexChange={setStep}
         >
           <StepperContent
-            title="Merchant"
             canGoBack={false}
-            canGoNext={merchantStepFormData.addressId ? true : false}
+            canGoNext={Boolean(merchantStepFormData.addressId)}
             className="relative flex size-full"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
+            title="Merchant"
           >
             <SelectMerchantStep
-              step={step}
               onParsedValuesChanged={setMerchantStepFormData}
+              step={step}
             />
           </StepperContent>
 
           <StepperContent
             canGoNext={false}
-            title="Contract Settings"
             className="relative flex size-full  overflow-hidden pb-16"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
+            title="Contract Settings"
           >
             <ContractSettingsStep
-              step={step}
-              setStep={setStep}
               onSubmit={setSettingStepFormData}
+              setStep={setStep}
+              step={step}
             />
           </StepperContent>
 
           <StepperContent
             canGoBack={!isSubmitStarted}
             canGoNext={false}
-            title="Documents"
             className="relative flex size-full  overflow-hidden rounded-lg border p-4 pb-16"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
+            title="Documents"
           >
             <div className="text-muted-foreground flex size-full flex-col gap-4 overflow-auto">
               <FileUploader
+                disabled={false}
                 maxFileCount={4}
                 maxSize={4 * 1024 * 1024}
-                progresses={{}}
                 onUpload={(_files) => {
                   return new Promise((resolve) => {
                     setFiles(_files);
                     resolve();
                   });
                 }}
-                disabled={false}
+                progresses={{}}
               />
               <UploadedFilesCard uploadedFiles={files} />
             </div>
             <Button
               className="absolute bottom-4 right-4 z-10"
-              type="button"
               onClick={handleCreateContract}
+              type="button"
             >
               Submit
             </Button>
@@ -300,7 +308,7 @@ function SelectMerchantStep({
             <SelectValue placeholder="Select merchant" />
           </SelectTrigger>
           <SelectContent>
-          {merchantList?.items?.map((merchant: MerchantProfileDto) => {
+            {merchantList?.items?.map((merchant: MerchantProfileDto) => {
               return (
                 <SelectItem key={merchant.id} value={merchant.id || ""}>
                   {merchant.name}
@@ -321,11 +329,6 @@ function SelectMerchantStep({
       >
         <AutoForm
           className="grid grid-cols-2 items-end gap-4 space-y-0"
-          formSchema={createZodObject(OrganizationSchema, organizationIncludes)}
-          values={
-            merchantDetails?.merchant?.entityInformations?.[0]
-              .organizations?.[0]
-          }
           fieldConfig={{
             ...createReadonlyFieldConfig(organizationIncludes),
             customerNumber: {
@@ -335,6 +338,11 @@ function SelectMerchantStep({
               },
             },
           }}
+          formSchema={createZodObject(OrganizationSchema, organizationIncludes)}
+          values={
+            merchantDetails?.merchant?.entityInformations?.[0]
+              .organizations?.[0]
+          }
         />
         <div>
           <Label>Select Merchant Address</Label>
@@ -349,10 +357,7 @@ function SelectMerchantStep({
                     return individual.contactInformations?.map((contact) => {
                       return contact.addresses?.map((address) => {
                         return (
-                          <SelectItem
-                            key={address.id}
-                            value={address.id || ""}
-                          >
+                          <SelectItem key={address.id} value={address.id || ""}>
                             {address.fullAddress}
                           </SelectItem>
                         );
@@ -366,7 +371,6 @@ function SelectMerchantStep({
         </div>
         <AutoForm
           className="grid grid-cols-2 items-end gap-4 space-y-0"
-          formSchema={createZodObject(AddressTypeSchema, addressIncludes)}
           fieldConfig={{
             ...createReadonlyFieldConfig(addressIncludes),
             addressLine: {
@@ -378,6 +382,7 @@ function SelectMerchantStep({
               inputProps: { disabled: true },
             },
           }}
+          formSchema={createZodObject(AddressTypeSchema, addressIncludes)}
           values={addressDetails}
         />
       </div>
@@ -410,15 +415,6 @@ function ContractSettingsStep({
   return (
     <div className="mx-auto size-full max-w-3xl overflow-y-auto">
       <AutoForm
-        onSubmit={(data) => {
-          onSubmit(data as ContractSettingsStepDto);
-          setStep(step + 1);
-        }}
-        formSchema={createZodObject(
-          ContractSettingCreateSchema,
-          contractSettingIncludes,
-        )}
-        formClassName="overflow-visible"
         className="grid grid-cols-2 items-end gap-4 space-y-0 p-px"
         fieldConfig={{
           name: {
@@ -430,6 +426,15 @@ function ContractSettingsStep({
           excludeFromCashLimit: { fieldType: "switch" },
           deskoScanner: { fieldType: "switch" },
           invoicingAddressId: { containerClassName: "hidden" },
+        }}
+        formClassName="overflow-visible"
+        formSchema={createZodObject(
+          ContractSettingCreateSchema,
+          contractSettingIncludes,
+        )}
+        onSubmit={(data) => {
+          onSubmit(data as ContractSettingsStepDto);
+          setStep(step + 1);
         }}
         values={{ invoicingAddressId: "3fa85f64-5717-4562-b3fc-2c963f66afa6" }}
       >
@@ -456,14 +461,14 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
               {uploadedFiles.map((file) => {
                 const url = window.URL.createObjectURL(file);
                 return (
-                  <div key={file.name} className="relative aspect-video w-64">
+                  <div className="relative aspect-video w-64" key={file.name}>
                     <Image
-                      src={url}
                       alt={file.name}
-                      fill
-                      sizes="(min-width: 640px) 640px, 100vw"
-                      loading="lazy"
                       className="rounded-md object-cover"
+                      fill
+                      loading="lazy"
+                      sizes="(min-width: 640px) 640px, 100vw"
+                      src={url}
                     />
                   </div>
                 );
@@ -473,9 +478,9 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
           </ScrollArea>
         ) : (
           <EmptyCard
-            title="No files uploaded"
-            description="Upload some files to see them here"
             className="w-full"
+            description="Upload some files to see them here"
+            title="No files uploaded"
           />
         )}
       </CardContent>
