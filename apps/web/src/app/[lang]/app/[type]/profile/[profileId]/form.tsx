@@ -9,7 +9,7 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { isPhoneValid, splitPhone } from "src/utilsPhone";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
 import {
   deleteBacker,
   postBacker,
