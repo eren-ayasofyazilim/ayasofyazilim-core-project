@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/IdentityService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
@@ -25,6 +26,7 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
   const path = pathname.split("dashboard/")[1];
+  const activePage = path.split("/")[1];
 
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
@@ -47,9 +49,29 @@ export default function Layout({ children, params }: LayoutProps) {
       });
     setNavbarItems(tempNavbarItems);
   }, []);
-
   return (
     <>
+      <PageHeader
+        description={
+          languageData[
+            `${
+              activePage[0].toUpperCase() +
+              activePage.slice(1).substring(0, activePage.slice(1).length - 1)
+            }.Description` as keyof typeof languageData
+          ] ||
+          languageData[
+            `${
+              activePage[0].toUpperCase() + activePage.slice(1)
+            }.Description` as keyof typeof languageData
+          ]
+        }
+        title={
+          languageData[
+            (activePage[0].toUpperCase() +
+              activePage.slice(1)) as keyof typeof languageData
+          ]
+        }
+      />
       {navbarItems.length > 0 && (
         <SectionLayout
           defaultActiveSectionId={path}

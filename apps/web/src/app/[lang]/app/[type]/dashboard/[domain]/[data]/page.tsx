@@ -10,10 +10,10 @@ import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { getResourceDataClient } from "src/language-data/IdentityService";
+import { useLocale } from "src/providers/locale";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
-import { getResourceDataClient } from "src/language-data/IdentityService";
 import { dataConfig } from "../../data";
 
 async function controlledFetch(
@@ -332,17 +332,23 @@ export default function Page({
     });
   }
   return (
-    <Dashboard
-      action={action}
-      cards={[]}
-      columnsData={columnsData}
-      data={roles?.items}
-      detailedFilter={detailedFilters}
-      fetchRequest={getRoles}
-      isLoading={isLoading}
-      rowCount={roles?.totalCount || 0}
-      withCards={false}
-      withTable
-    />
+    <>
+      {/* <PageHeader 
+    title={title}
+    description={description}
+    /> */}
+      <Dashboard
+        action={action}
+        cards={[]}
+        columnsData={columnsData}
+        data={roles?.items}
+        detailedFilter={detailedFilters}
+        fetchRequest={getRoles}
+        isLoading={isLoading}
+        rowCount={roles?.totalCount || 0}
+        withCards={false}
+        withTable
+      />
+    </>
   );
 }
