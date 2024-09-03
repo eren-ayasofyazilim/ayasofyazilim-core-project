@@ -1,4 +1,5 @@
 "use server";
+import { GearIcon } from "@radix-ui/react-icons";
 import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
@@ -71,7 +72,17 @@ export default async function Layout({
     imageURL: "https://github.com/shadcn.png",
     menuLinks:
       appName === "UNIREFUND"
-        ? []
+        ? [
+            {
+              href: getBaseLink(
+                `app/${type}/settings/profile`,
+                true,
+                params.lang,
+              ),
+              title: languageData.UserSettings,
+              icon: <GearIcon className="mr-2 h-4 w-4" />,
+            },
+          ]
         : [
             {
               href: getBaseLink(`public`, true, params.lang),
@@ -118,6 +129,18 @@ export default async function Layout({
     params.lang,
     <SlidersHorizontal className="w-4 text-slate-500" />,
   );
+  managements.push({
+    key: "tenantSettings",
+    title: languageData.TenantSettings,
+    href: getBaseLink(
+      `app/${type}/management/tenant-settings/home`,
+      true,
+      params.lang,
+    ),
+    icon: <WrenchIcon className="w-4 text-slate-500" />,
+    type: "admin",
+    appType: "unirefund",
+  });
 
   const crms = generateNavigationItems(
     dataConfigOfCrm,
@@ -146,7 +169,6 @@ export default async function Layout({
       type: "admin",
       appType: "unirefund",
     },
-    ...dashboards,
     {
       key: "management",
       title: languageData.Management,
@@ -156,7 +178,6 @@ export default async function Layout({
       type: "admin",
       appType: "unirefund",
     },
-    ...managements,
     {
       key: "crm",
       title: languageData.Crm,
@@ -191,22 +212,7 @@ export default async function Layout({
       type: "admin",
       appType: "unirefund",
     },
-    {
-      key: "countrySettings",
-      title: languageData.CountrySettings,
-      href: getBaseLink(`app/${type}/country-settings/home`, true, params.lang),
-      icon: <WrenchIcon className="w-4 text-slate-500" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-    {
-      key: "settings",
-      title: languageData.Settings,
-      href: getBaseLink(`app/${type}/settings/profile`, true, params.lang),
-      icon: <SlidersHorizontal className="w-4 text-slate-500" />,
-      type: ["admin", "user", "entrepreneur", "investor"],
-      appType: "unirefund",
-    },
+
     {
       key: "projects",
       title: languageData.Campaigns,

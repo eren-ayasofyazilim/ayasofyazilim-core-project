@@ -4,7 +4,7 @@ import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from 
 import { SettingsView } from "@repo/ui/settings-view";
 import type { ResourceResult } from "src/utils";
 
-export default function CountrySettingsPage({
+export default function TenantSettingsPage({
   list,
   resources,
   path,

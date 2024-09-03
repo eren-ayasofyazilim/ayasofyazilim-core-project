@@ -24,10 +24,11 @@
   "Crm": "CRM",
   "Dashboard": "Kontrol Paneli",
   "Profile": "Profil",
+  "UserSettings": "Kullanıcı Ayarları",
   "Details": "Detaylar",
   "ProductGroups": "Ürün Grupları",
   "Companies": "Şirketler",
-  "CountrySettings": "Ülke Ayarları",
+  "TenantSettings": "Tenant Ayarları",
   "Template": "Tasarım",
   "Contracts": "Sözleşmeler",
   "RebateTables": "İndirim Tabloları",
@@ -44,5 +45,7 @@
   "SaasManagement": "SaaS Yönetimi",
   "Investmensts": "Yatırımlar",
   "Management": "Yönetim",
+  "TextTemplates": "Yazı Şablonları",
+  "AdminManagement": "Admin Yönetimi",
   "Traveller": "Yolcu"
 }

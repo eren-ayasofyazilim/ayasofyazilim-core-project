@@ -24,10 +24,11 @@
   "Crm": "CRM",
   "Dashboard": "Dashboard",
   "Profile": "Profile",
+  "UserSettings": "User Settings",
   "Details": "Details",
   "ProductGroups": "Product Groups",
   "Companies": "Companies",
-  "CountrySettings": "Country Settings",
+  "TenantSettings": "Tenant Settings",
   "RebateTables": "Rebate Tables",
   "RefundTables": "Refund Tables",
   "RefundFees": "Refund Fees",
@@ -44,5 +45,7 @@
   "SaasManagement": "SaaS Management",
   "Investmensts": "Investmensts",
   "Management": "Management",
+  "TextTemplates": "Text Templates",
+  "AdminManagement": "Admin Management",
   "Traveller": "Traveller"
 }
