@@ -55,8 +55,13 @@ const organizationScheme = {
 } as const;
 
 const formSubPositions = {
-  organization: ["name", "taxpayerId", "legalStatusCode", "customerNumber"],
-  telephone: ["ituCountryCode", "areaCode", "localNumber", "typeCode"],
+  telephone: [
+    "primaryFlag",
+    "typeCode",
+    //"ituCountryCode",
+    //"areaCode",
+    "localNumber",
+  ],
   address: [
     "country",
     "terriority",
