@@ -133,6 +133,7 @@ export interface SchemaType {
 export interface FormModifier {
   actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
   formPositions?: string[];
+  formSubPositions?: Record<string, string[]>;
   excludeList?: string[];
   schema: any;
   convertors?: Record<string, any>;
