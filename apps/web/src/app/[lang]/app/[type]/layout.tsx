@@ -16,7 +16,6 @@ import {
   UserCircle,
   Worm,
   WrenchIcon,
-  FileText,
   Languages,
   Layers,
   ClipboardList,
