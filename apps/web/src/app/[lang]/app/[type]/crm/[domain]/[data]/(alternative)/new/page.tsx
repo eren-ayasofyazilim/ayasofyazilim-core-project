@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
@@ -125,6 +126,16 @@ export default function Page({
 
 function formSchemaByData(data: string) {
   const config = dataConfigOfCrm.companies.pages[data];
+  if (config.createFormSchema) {
+    config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
+      ["Home", "Office", "Mobile", "Fax"];
+    config.createFormSchema.schema.properties.address.properties.typeCode.enum =
+      ["Home", "Office"];
+    config.createFormSchema.schema.properties.email.properties.typeCode.enum = [
+      "Work",
+      "Personal",
+    ];
+  }
   return createZodObject(
     config.createFormSchema?.schema,
     config.createFormSchema?.formPositions,
