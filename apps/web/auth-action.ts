@@ -2,6 +2,7 @@
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { signIn, signOut } from "auth";
 import { redirect } from "next/navigation";
+import { isApiError } from "src/app/api/util";
 import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
@@ -24,16 +25,16 @@ export async function signInServer({
   password: string;
 }) {
   try {
-    const result = await canItBeAuthorized({
-      username: userIdentifier,
-      password,
-    });
-    if (result?.description !== "Success") {
-      return {
-        status: 500,
-        description: result.error.message,
-      };
-    }
+    // const result = await canItBeAuthorized({
+    //   username: userIdentifier,
+    //   password,
+    // });
+    // if (result?.description !== "Success") {
+    //   return {
+    //     status: 500,
+    //     description: result.description,
+    //   };
+    // }
 
     await signIn("credentials", {
       username: userIdentifier,
@@ -43,10 +44,16 @@ export async function signInServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error) {
+    if (error !== null && typeof error === "object" && "message" in error) {
+      return {
+        status: 400,
+        description: error.message,
+      };
+    }
     return {
       status: 400,
-      description: error.message,
+      description: "Unknown error",
     };
   }
 }
@@ -72,10 +79,16 @@ export async function signUpServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      return {
+        status: error.status,
+        description: error.statusText,
+      };
+    }
     return {
-      status: error.status,
-      description: error?.body?.error?.code,
+      status: 500,
+      description: "Unknown error while signing up",
     };
   }
 }
@@ -95,14 +108,20 @@ export async function sendPasswordResetCodeServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      return {
+        status: error.status,
+        description: error.statusText,
+      };
+    }
     return {
-      status: error.status,
-      message: error?.body?.error?.message,
+      status: 500,
+      description: "Unknown error while sending password reset code",
     };
   }
 }
-export async function getMyProfile(token: any) {
+export async function getMyProfile(token: string) {
   const client = new AccountServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
@@ -114,15 +133,18 @@ export async function getMyProfile(token: any) {
   });
   return await client.profile.getApiAccountMyProfile();
 }
-export async function canItBeAuthorized(credentials: any) {
+export async function canItBeAuthorized(credentials: {
+  username: string;
+  password: string;
+}) {
   "use server";
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
   const body = {
-    userNameOrEmailAddress: credentials.username as string,
-    password: credentials.password as string,
+    userNameOrEmailAddress: credentials.username,
+    password: credentials.password,
   };
 
   const requestOptions = {
@@ -133,7 +155,10 @@ export async function canItBeAuthorized(credentials: any) {
   const response = await fetch(AUTH_URL, requestOptions);
   return await response.json();
 }
-export async function signInWithCredentials(credentials: any) {
+export async function signInWithCredentials(credentials: {
+  username: string;
+  password: string;
+}) {
   "use server";
   const scopes = await fetch(OPENID_URL)
     .then((response) => response.json())
@@ -145,8 +170,8 @@ export async function signInWithCredentials(credentials: any) {
   const urlEncodedContent: Record<string, string> = {
     grant_type: "password",
     client_id: "Angular",
-    username: credentials.username as string,
-    password: credentials.password as string,
+    username: credentials.username,
+    password: credentials.password,
     scope: scopes,
   };
   Object.keys(urlEncodedContent).forEach((key) =>
