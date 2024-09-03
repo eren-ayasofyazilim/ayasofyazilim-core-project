@@ -65,26 +65,26 @@ export default function Form({
 
   const organizationSchema = createZodObject(organization, ["name"]);
   const emailSchema = createZodObject(email, [
-    "emailAddress",
-    "typeCode",
     "primaryFlag",
+    "typeCode",
+    "emailAddress",
   ]);
   const telephoneSchema = createZodObject(telephone, [
+    "primaryFlag",
+    "typeCode",
+    "ituCountryCode",
     "areaCode",
     "localNumber",
-    "ituCountryCode",
-    "typeCode",
-    "primaryFlag",
   ]);
   const addressSchema = createZodObject(address, [
-    "addressLine",
-    "city",
-    "country",
-    "fullAddress",
-    "postalCode",
-    "terriority",
-    "typeCode",
     "primaryFlag",
+    "typeCode",
+    "country",
+    "terriority",
+    "city",
+    "postalCode",
+    "addressLine",
+    "fullAddress",
   ]);
 
   async function handleSubmit(values: unknown, sectionName: string) {
