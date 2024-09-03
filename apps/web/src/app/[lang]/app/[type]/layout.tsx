@@ -1,6 +1,5 @@
 "use server";
 import { GearIcon } from "@radix-ui/react-icons";
-import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
@@ -27,11 +26,9 @@ import { generateNavigationItems, getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "./crm/data";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
+import type { NavigationItmes } from "./menu-data";
+import { navigationItemsTemp } from "./menu-data";
 
-type NavigationItmes = NavigationItem & {
-  type: string | string[];
-  appType?: string;
-};
 interface LayoutProps {
   params: { lang: string; type: string };
   children: JSX.Element;
@@ -151,7 +148,7 @@ export default async function Layout({
     params.lang,
     <SlidersHorizontal className="w-4 text-slate-500" />,
   );
-  const navigationItems: NavigationItmes[] = [
+  const navigationItemsFull: NavigationItmes[] = [
     {
       key: "reports",
       title: navbarResources["Menu:Reports"],
@@ -285,7 +282,8 @@ export default async function Layout({
     },
   ];
 
-  const filteredNavigationItems = navigationItems.filter((item) => {
+  const presentation = [...navigationItemsFull, ...navigationItemsTemp];
+  const filteredNavigationItems = presentation.filter((item) => {
     return (
       item.appType === appName.toLowerCase() &&
       (item.type === type || item.type.includes(type))
