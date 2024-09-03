@@ -20,7 +20,7 @@ export default function Page(): JSX.Element {
           callback: (originalRow: TaxFreeTag) => {
             router.push(
               getBaseLink(
-                `app/admin/details/${originalRow.taxFreeTagFacturaNumber}`,
+                `app/admin/operations/details/${originalRow.taxFreeTagFacturaNumber}`,
               ),
             );
           },
@@ -34,7 +34,7 @@ export default function Page(): JSX.Element {
       action={{
         type: "NewPage",
         cta: "Add Tag",
-        href: getBaseLink("app/admin/details/add"),
+        href: getBaseLink("app/admin/operations/details/add"),
       }}
       columnsData={columnsData}
       data={$schema_list}
