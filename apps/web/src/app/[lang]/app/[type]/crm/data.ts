@@ -9,15 +9,12 @@ import {
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
   $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
+  $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+  $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  // $UniRefund_CRMService_Organizations_CreateOrganizationDto,
+  $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import type { TableData } from "src/utils";
-import {
-  $createCustoms,
-  $createMerchants,
-  $createrefundPoints,
-  $createtaxFree,
-  $createtaxOffices,
-} from "./[domain]/[data]/schemas.gen";
 
 interface DataConfig {
   displayName: string;
@@ -25,28 +22,73 @@ interface DataConfig {
   pages: Record<string, TableData>;
 }
 
-const formPositions = [
-  "name",
-  "taxpayerId",
-  "legalStatusCode",
-  "customerNumber",
-  "ituCountryCode",
-  "areaCode",
-  "telephoneTypeCode",
-  "localNumber",
-  "primaryFlag",
-  "addressLine",
-  "territory",
-  "postalCode",
-  "country",
-  "city",
-  "fullAddress",
-  "addressTypeCode",
-  "addressPrimaryFlag",
-  "emailAddress",
-  "emailTypeCode",
-  "emailPrimaryFlag",
-];
+const organizationScheme = {
+  required: ["legalStatusCode", "name", "taxpayerId"],
+  type: "object",
+  properties: {
+    extraProperties: {
+      type: "object",
+      additionalProperties: {},
+      nullable: true,
+      readOnly: true,
+    },
+    name: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    taxpayerId: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    legalStatusCode: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    customerNumber: {
+      type: "string",
+      nullable: true,
+    },
+  },
+} as const;
+
+const formSubPositions = {
+  telephone: [
+    "primaryFlag",
+    "typeCode",
+    "ituCountryCode",
+    "areaCode",
+    "localNumber",
+  ],
+  address: [
+    "primaryFlag",
+    "typeCode",
+    "country",
+    "terriority",
+    "city",
+    "postalCode",
+    "addressLine",
+    "fullAddress",
+  ],
+  email: ["primaryFlag", "typeCode", "emailAddress"],
+};
+
+const organization = organizationScheme;
+const telephone = $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
+const address = $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto;
+const email = $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto;
+
+const createScheme = {
+  type: "object",
+  properties: {
+    organization,
+    telephone,
+    address,
+    email,
+  },
+};
 
 export const dataConfigOfCrm: Record<string, DataConfig> = {
   companies: {
@@ -56,8 +98,9 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
       merchants: {
         title: "Merchants",
         createFormSchema: {
-          formPositions,
-          schema: $createMerchants,
+          schema: createScheme,
+          formPositions: ["organization", "telephone", "address", "email"],
+          formSubPositions,
         },
 
         tableSchema: {
@@ -73,8 +116,9 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
       refundPoints: {
         title: "Refund Points",
         createFormSchema: {
-          formPositions,
-          schema: $createrefundPoints,
+          schema: createScheme,
+          formPositions: ["organization", "telephone", "address", "email"],
+          formSubPositions,
         },
 
         tableSchema: {
@@ -86,8 +130,9 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Customs",
         filterBy: "",
         createFormSchema: {
-          formPositions,
-          schema: $createCustoms,
+          schema: createScheme,
+          formPositions: ["organization", "telephone", "address", "email"],
+          formSubPositions,
         },
 
         tableSchema: {
@@ -99,8 +144,9 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Tax Free",
         filterBy: "",
         createFormSchema: {
-          formPositions,
-          schema: $createtaxFree,
+          schema: createScheme,
+          formPositions: ["organization", "telephone", "address", "email"],
+          formSubPositions,
         },
 
         tableSchema: {
@@ -112,8 +158,9 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Tax Offices",
         filterBy: "",
         createFormSchema: {
-          formPositions,
-          schema: $createtaxOffices,
+          schema: createScheme,
+          formPositions: ["organization", "telephone", "address", "email"],
+          formSubPositions,
         },
 
         tableSchema: {
