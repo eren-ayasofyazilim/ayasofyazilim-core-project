@@ -101,24 +101,24 @@ export default function Form({
       response = "success";
     }
     if (sectionName === "email") {
-      await updateCRMDetailServer({
-        ...values,
-        id: emailInfo?.id,
-      } as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto);
+      await updateCRMDetailServer(
+        emailInfo?.id || "",
+        values as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+      );
       response = "success";
     }
     if (sectionName === "telephone") {
-      await updateCRMDetailServer({
-        ...values,
-        id: telephoneInfo?.id,
-      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
+      await updateCRMDetailServer(
+        telephoneInfo?.id || "",
+        values as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+      );
       response = "success";
     }
     if (sectionName === "address") {
-      await updateCRMDetailServer({
-        ...values,
-        id: addressInfo?.id,
-      } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
+      await updateCRMDetailServer(
+        addressInfo?.id || "",
+        values as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+      );
       response = "success";
     }
     if (response) {
