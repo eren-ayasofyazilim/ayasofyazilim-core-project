@@ -12,6 +12,8 @@
 
   "RefundTables.Delete.Title": "Bu iade tablosunu silmek istediğinizden emin misiniz?",
   "RefundTables.Delete.Description": "İade tablosunu sil",
+  "RefundTables.Delete.Cancel": "İptal",
+  "RefundTables.Delete.Continue": "Devam et",
 
   "RefundTables.Details": "Detaylar",
   "RefundTables.Details.FilterBy {0}": "{} göre filtrele",

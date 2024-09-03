@@ -1,12 +1,13 @@
 "use server";
-import {
+import type {
   GetApiCrmServiceMerchantsData,
   GetApiCrmServiceMerchantsDetailByIdData,
   UniRefund_CRMService_Merchants_MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16,
 } from "@ayasofyazilim/saas/CRMService";
 import { revalidatePath } from "next/cache";
-import { getCRMServiceClient, ServerResponse, structuredError } from "src/lib";
+import type { ServerResponse } from "src/lib";
+import { getCRMServiceClient, structuredError } from "src/lib";
 
 export async function getCrmServiceMerchants(
   body: GetApiCrmServiceMerchantsData,

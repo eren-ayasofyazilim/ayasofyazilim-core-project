@@ -65,7 +65,7 @@ export default function RefundHeader({
   }
   if (!details) return <div>Not Found</div>;
 
-  function handleRefundTableHeadersDelete() {
+  const handleRefundTableHeadersDelete = () => {
     setLoading(true);
     void deleteRefundTableHeadersById({
       id: params.id,
@@ -78,8 +78,9 @@ export default function RefundHeader({
     });
     setDialogOpen(false);
     router.push(getBaseLink("app/admin/contracts/refund/refund-tables"));
-  }
-  function handleRefundTableHeadersEdit() {
+  };
+  const handleRefundTableHeadersEdit = () => {
+    toast.warning("Not implemented yet");
     //   // setLoading(true);
     //   return;
     //   void putRefundTableHeaders({
@@ -95,7 +96,7 @@ export default function RefundHeader({
     //     setLoading(false);
     //   });
     // i will implement this with saas update
-  }
+  };
   return (
     <>
       <PageHeader
@@ -141,7 +142,7 @@ export default function RefundHeader({
               type="submit"
               variant={isSaveable ? "default" : "secondary"}
             >
-              Kaydet
+              {languageData["RefundTables.Save"]}
             </Button>
             <AlertDialog open={dialogOpen}>
               <AlertDialogTrigger asChild>
@@ -151,15 +152,16 @@ export default function RefundHeader({
                   }}
                   variant="outline"
                 >
-                  Sil
+                  {languageData["RefundTables.Delete"]}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {languageData["RefundTables.Delete.Title"]}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    <strong> {details.name} </strong>from our servers.
+                    {languageData["RefundTables.Delete.Description"]}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -168,10 +170,10 @@ export default function RefundHeader({
                       setDialogOpen(false);
                     }}
                   >
-                    Cancel
+                    {languageData["RefundTables.Delete.Cancel"]}
                   </AlertDialogCancel>
                   <AlertDialogAction onClick={handleRefundTableHeadersDelete}>
-                    Continue
+                    {languageData["RefundTables.Delete.Continue"]}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

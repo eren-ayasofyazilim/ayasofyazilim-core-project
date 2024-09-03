@@ -1,15 +1,12 @@
 "use server";
 
-import {
+import type {
   PostApiContractServiceContractsContractHeadersData,
   UniRefund_ContractService_Contracts_ContractHeaders_ContractHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
-import {
-  getContractServiceClient,
-  ServerResponse,
-  structuredError,
-} from "src/lib";
+import type { ServerResponse } from "src/lib";
+import { getContractServiceClient, structuredError } from "src/lib";
 
 export async function postContractsContractHeaders(
   body: PostApiContractServiceContractsContractHeadersData,

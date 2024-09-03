@@ -26,6 +26,7 @@ import {
 } from "../../actions/refund-tables";
 
 export default function Page({ params }: { params: { lang: string } }) {
+  const router = useRouter();
   const [list, setList] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_111>();
   const { resources } = useLocale();
@@ -37,7 +38,6 @@ export default function Page({ params }: { params: { lang: string } }) {
     "isDefault",
     "isBundling",
   ];
-  const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -79,6 +79,9 @@ export default function Page({ params }: { params: { lang: string } }) {
             if (getResponse.type === "success") {
               toast.success(
                 getResponse.message || "Refund table created successfully",
+              );
+              router.push(
+                getBaseLink("app/admin/contracts/refund/refund-tables"),
               );
             } else {
               toast.error(getResponse.message);
