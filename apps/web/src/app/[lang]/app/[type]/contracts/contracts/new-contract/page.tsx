@@ -51,16 +51,15 @@ import { getBaseLink } from "src/utils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 function createReadonlyFieldConfig(elements: string[]):Record<string,Record<string,Record<string,boolean>>> {
-  return Object.assign(
-    {},
-    ...elements.map((key:string):Record<string,Record<string,boolean>> => {
-      return {
-        [key]: {
-          inputProps: { disabled: true },
-        },
-      };
-    }),
-  );
+  const tempElement = elements.map((key:string):Record<string,Record<string,Record<string,boolean>>> => {
+    return {
+      [key]: {
+        inputProps: { disabled: true },
+      },
+    };
+  });
+
+  return Object.assign({}, ...tempElement);
 } //TODO: IF THIS IS USEFUL MOVE TO LIBS
 
 type MerchantStepFormDataDto = Pick<
