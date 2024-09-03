@@ -160,10 +160,10 @@ export const navigationItemsTemp: NavigationItmes[] = [
     icon: <Network className="w-4 text-slate-500" />,
   },
   {
-    key: "planet_web",
+    key: "operations",
     wip: true,
-    title: "Planet Web",
-    href: "/planet-web",
+    title: "Operations",
+    href: "/operations",
     type: "admin",
     appType: "unirefund",
     icon: <Globe className="w-4 text-slate-500" />,

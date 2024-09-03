@@ -1,8 +1,9 @@
 "use server";
 
 import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
+import { getResourceData } from "src/language-data/SettingService";
 import { getSettingServiceClient } from "src/lib";
-import { getLocalizationResources } from "src/utils";
 import TenantSettingsPage from "./group";
 import { mockSettingsResponse } from "./mock-settings-response";
 
@@ -12,7 +13,6 @@ export default async function Page({
   params: { group: string; lang: string };
 }) {
   const group = params.group;
-  const lang = params.lang;
 
   let tenantSettings: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   try {
@@ -22,12 +22,19 @@ export default async function Page({
   } catch (e) {
     tenantSettings = mockSettingsResponse;
   }
-  const resources = await getLocalizationResources(lang);
+
+  const { languageData, resources } = await getResourceData(params.lang);
   return (
-    <TenantSettingsPage
-      list={tenantSettings}
-      path={group}
-      resources={resources}
-    />
+    <>
+      <PageHeader
+        description={languageData["TenantSettings.Description"]}
+        title={languageData.TenantSettings}
+      />
+      <TenantSettingsPage
+        list={tenantSettings}
+        path={group}
+        resources={resources}
+      />
+    </>
   );
 }

@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/SettingService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
@@ -25,7 +26,28 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
   const path = pathname.split("management/")[1];
+  const activePage = path.split("/")[1];
 
+  function pageHeaderData() {
+    if (activePage === "vats") {
+      return {
+        title: languageData.Vat,
+        description: languageData["Vat.Description"],
+      };
+    }
+    if (activePage === "productGroups") {
+      return {
+        title: languageData.ProductGroup,
+        description: languageData["ProductGroup.Description"],
+      };
+    }
+    return {
+      title: languageData.ProductGroupVAT,
+      description: languageData["ProductGroupVAT.Description"],
+    };
+  }
+
+  const { title, description } = pageHeaderData();
   useEffect(() => {
     const tempNavbarItems = Object.entries(
       dataConfigOfManagement[params.domain],
@@ -61,6 +83,7 @@ export default function Layout({ children, params }: LayoutProps) {
 
   return (
     <>
+      <PageHeader description={description} title={title} />
       {navbarItems.length > 0 && (
         <SectionLayout
           defaultActiveSectionId={path}

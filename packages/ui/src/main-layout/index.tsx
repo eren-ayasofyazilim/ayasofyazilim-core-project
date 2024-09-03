@@ -168,12 +168,19 @@ export function MenuItemTrigger({
   minNavbar,
 }: IMenuItemTriggerProps) {
   const pathname = usePathname();
+  const itemParentLink = item.href.substring(0, item.href.lastIndexOf("/"));
+  const lastPartOfParentLink = itemParentLink.substring(
+    itemParentLink.lastIndexOf("/") + 1,
+  );
+
   const isActive =
     pathname === item.href ||
     (isFromSubMenu &&
-      (item.href.substring(0, item.href.lastIndexOf("/")) === pathname ||
-        item.href.substring(0, item.href.lastIndexOf("/")) ===
-        pathname.substring(0, pathname.lastIndexOf("/"))));
+      (itemParentLink === pathname ||
+        (lastPartOfParentLink !== "refund" &&
+          itemParentLink ===
+            pathname.substring(0, pathname.lastIndexOf("/")))));
+
   if (item.submenu) {
     return (
       <Tooltip>

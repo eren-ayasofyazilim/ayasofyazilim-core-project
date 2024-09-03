@@ -38,7 +38,7 @@ import { getBaseLink } from "src/utils";
 
 export const dataConfig: Record<string, any> = {
   openiddict: {
-    displayName: "open id",
+    displayName: "Open Id",
     default: "applications",
     applications: {
       title: "Application",
