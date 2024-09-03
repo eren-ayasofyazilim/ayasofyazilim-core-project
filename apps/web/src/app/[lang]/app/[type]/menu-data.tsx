@@ -32,7 +32,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
       {
         key: "tax_free_tags",
         title: "Tax Free Tags",
-        href: getBaseLink("app/admin/operation/details", true),
+        href: getBaseLink("app/admin/operations/details", true),
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
