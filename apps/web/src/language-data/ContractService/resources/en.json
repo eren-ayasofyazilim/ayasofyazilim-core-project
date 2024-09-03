@@ -12,6 +12,8 @@
 
   "RefundTables.Delete.Title": "Delete refund table",
   "RefundTables.Delete.Description": "Are you sure you want to delete this refund table?",
+  "RefundTables.Delete.Cancel": "Cancel",
+  "RefundTables.Delete.Continue": "Continue",
 
   "RefundTables.Details": "Details",
   "RefundTables.Details.FilterBy {0}": "Filter by {}",

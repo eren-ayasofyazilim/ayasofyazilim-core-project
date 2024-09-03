@@ -6,5 +6,5 @@ export default function CompanySettings() {
   //   languageData: Record<string, string>;
   //   params: { lang: string; type: string };
   // },
-  return <div>Company Settings</div>;
+  return <div>Company Settings will be here</div>;
 }

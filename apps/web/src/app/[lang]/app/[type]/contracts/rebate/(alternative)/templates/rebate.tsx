@@ -145,8 +145,8 @@ function SetupCell({
   table,
   languageData,
 }: any) {
-  const setupValue = getValue() as EnumDto;
-  const [value, setValue] = useState<string | undefined>(setupValue.key || "");
+  const setupValue = getValue() as EnumDto | undefined;
+  const [value, setValue] = useState<string | undefined>(setupValue?.key || "");
 
   const onChange = (newValue: string): void => {
     setValue(newValue);
@@ -154,7 +154,7 @@ function SetupCell({
   };
 
   useEffect(() => {
-    setValue(setupValue.key || "");
+    setValue(setupValue?.key || "");
   }, [setupValue]);
 
   return (
@@ -226,9 +226,9 @@ function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
 }
 
 function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
-  const variableFeeValue = getValue() as EnumDto;
+  const variableFeeValue = getValue() as EnumDto | undefined;
   const [value, setValue] = useState<string | undefined>(
-    variableFeeValue.key || "",
+    variableFeeValue?.key || "",
   );
   const onChange = (newValue: string): void => {
     setValue(newValue);
@@ -236,7 +236,7 @@ function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
   };
 
   useEffect(() => {
-    setValue(variableFeeValue.key || "");
+    setValue(variableFeeValue?.key || "");
   }, [variableFeeValue]);
   return (
     <Select onValueChange={onChange} value={value}>
