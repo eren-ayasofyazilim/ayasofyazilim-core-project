@@ -23,12 +23,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             username: string;
             password: string;
           });
+          if ("error" in response) {
+            const error = response?.error + ": " + response?.error_description;
+            return Promise.reject(new AuthError(error));
+          }
           if (response?.access_token) {
             return { ...response };
           }
-          const error = response?.error + ": " + response?.error_description;
-          return Promise.reject(new AuthError(error));
-        } catch (error) { 
+        } catch (error) {
           return Promise.reject(new Error("Unknown Error " + error));
         }
       },
@@ -69,6 +71,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         throw new Error("No refresh token");
       }
       const tokens = await obtainAccessTokenByRefreshToken(token.refresh_token);
+      if ("error" in tokens) {
+        return {
+          ...token,
+          error: "RefreshAccessTokenError",
+        }
+      }
       return {
         ...token,
         access_token: tokens.access_token,

@@ -6,8 +6,22 @@ import { isApiError } from "src/app/api/util";
 import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
-const AUTH_URL = process.env.BASE_URL + "/api/account/login";
 const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
+
+interface Token {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  id_token: string;
+  refresh_token: string;
+}
+
+interface TokenError {
+  error: string;
+  error_description: string;
+  error_uri: string;
+}
+
 
 export async function signOutServer() {
   try {
@@ -25,17 +39,6 @@ export async function signInServer({
   password: string;
 }) {
   try {
-    // const result = await canItBeAuthorized({
-    //   username: userIdentifier,
-    //   password,
-    // });
-    // if (result?.description !== "Success") {
-    //   return {
-    //     status: 500,
-    //     description: result.description,
-    //   };
-    // }
-
     await signIn("credentials", {
       username: userIdentifier,
       password,
@@ -131,38 +134,18 @@ export async function getMyProfile(token: string) {
       Authorization: "Bearer " + token,
     },
   });
-  return await client.profile.getApiAccountMyProfile();
+  const profile = await client.profile.getApiAccountMyProfile();
+  return profile;
 }
-export async function canItBeAuthorized(credentials: {
-  username: string;
-  password: string;
-}) {
-  "use server";
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
-  const body = {
-    userNameOrEmailAddress: credentials.username,
-    password: credentials.password,
-  };
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(AUTH_URL, requestOptions);
-  return await response.json();
-}
 export async function signInWithCredentials(credentials: {
   username: string;
   password: string;
 }) {
   "use server";
-  const scopes = await fetch(OPENID_URL)
+  const scopes: string = await fetch(OPENID_URL)
     .then((response) => response.json())
-    .then((json) => json?.scopes_supported?.join(" "));
+    .then((json: {scopes_supported?: string[]}) => json?.scopes_supported?.join(" ") || "");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -183,7 +166,8 @@ export async function signInWithCredentials(credentials: {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  return await response.json();
+  const json: Token | TokenError = await response.json();
+  return json;
 }
 export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
   "use server";
@@ -205,5 +189,6 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  return await response.json();
+  const json: Token | TokenError =  await response.json();
+  return json;
 }
