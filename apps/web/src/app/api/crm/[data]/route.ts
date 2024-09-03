@@ -14,38 +14,38 @@ function createRequestBody(
         {
           organizations: [
             {
-              name: formData.name,
-              taxpayerId: formData.taxpayerId,
-              legalStatusCode: formData.legalStatusCode,
-              customerNumber: formData.customerNumber,
+              name: formData.organization.name,
+              taxpayerId: formData.organization.taxpayerId,
+              legalStatusCode: formData.organization.legalStatusCode,
+              customerNumber: formData.organization.customerNumber,
               contactInformations: [
                 {
                   telephones: [
                     {
-                      areaCode: formData.areaCode,
-                      localNumber: formData.localNumber,
-                      ituCountryCode: formData.ituCountryCode,
-                      primaryFlag: formData.primaryFlag,
-                      typeCode: formData.telephoneTypeCode,
+                      areaCode: formData.telephone.areaCode,
+                      localNumber: formData.telephone.localNumber,
+                      ituCountryCode: formData.telephone.ituCountryCode,
+                      primaryFlag: formData.telephone.primaryFlag,
+                      typeCode: formData.telephone.typeCode,
                     },
                   ],
                   addresses: [
                     {
-                      addressLine: formData.addressLine,
-                      city: formData.city,
-                      terriority: formData.terriority,
-                      postalCode: formData.postalCode,
-                      country: formData.country,
-                      fullAddress: formData.fullAddress,
-                      primaryFlag: formData.addressPrimaryFlag,
-                      typeCode: formData.addressTypeCode,
+                      addressLine: formData.address.addressLine,
+                      city: formData.address.city,
+                      terriority: formData.address.terriority,
+                      postalCode: formData.address.postalCode,
+                      country: formData.address.country,
+                      fullAddress: formData.address.fullAddress,
+                      primaryFlag: formData.address.primaryFlag,
+                      typeCode: formData.address.typeCode,
                     },
                   ],
                   emails: [
                     {
-                      emailAddress: formData.emailAddress,
-                      primaryFlag: formData.emailPrimaryFlag,
-                      typeCode: formData.emailTypeCode,
+                      emailAddress: formData.email.emailAddress,
+                      primaryFlag: formData.email.primaryFlag,
+                      typeCode: formData.email.typeCode,
                     },
                   ],
                 },
