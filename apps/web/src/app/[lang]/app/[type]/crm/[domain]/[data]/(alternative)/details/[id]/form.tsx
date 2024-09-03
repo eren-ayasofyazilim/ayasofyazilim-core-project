@@ -24,10 +24,10 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { useState } from "react";
-import type { TableData } from "src/utils";
-import { getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
+import type { TableData } from "src/utils";
+import { getBaseLink, isPhoneValid, splitPhone } from "src/utils";
 import { dataConfigOfCrm } from "../../../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 
@@ -72,10 +72,14 @@ export default function Form({
   const telephoneSchema = createZodObject(telephone, [
     "primaryFlag",
     "typeCode",
-    "ituCountryCode",
-    "areaCode",
+    // "ituCountryCode",
+    // "areaCode",
     "localNumber",
   ]);
+  const phoneNumber =
+    (telephoneInfo?.ituCountryCode || "+90") +
+    (telephoneInfo?.areaCode || "") +
+    (telephoneInfo?.localNumber || "");
   const addressSchema = createZodObject(address, [
     "primaryFlag",
     "typeCode",
@@ -108,10 +112,17 @@ export default function Form({
       response = "success";
     }
     if (sectionName === "telephone") {
-      await updateCRMDetailServer(
-        telephoneInfo?.id || "",
-        values as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-      );
+      const parsedValues =
+        values as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
+      const isValid = isPhoneValid(parsedValues.localNumber);
+      if (!isValid) {
+        return;
+      }
+      const phoneData = splitPhone(parsedValues.localNumber);
+      await updateCRMDetailServer(telephoneInfo?.id || "", {
+        ...values,
+        ...phoneData,
+      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
       response = "success";
     }
     if (sectionName === "address") {
@@ -169,15 +180,22 @@ export default function Form({
         </SectionLayoutContent>
         <SectionLayoutContent sectionId="telephone">
           <AutoForm
+            fieldConfig={{
+              localNumber: {
+                fieldType: "phone",
+                displayName: "Telephone Number",
+                inputProps: {
+                  showLabel: true,
+                },
+              },
+            }}
             formClassName="pb-40 "
             formSchema={telephoneSchema}
             onSubmit={(values) => {
               void handleSubmit(values, "telephone");
             }}
             values={{
-              areaCode: telephoneInfo?.areaCode,
-              localNumber: telephoneInfo?.localNumber,
-              ituCountryCode: telephoneInfo?.ituCountryCode,
+              localNumber: phoneNumber,
               primaryFlag: telephoneInfo?.primaryFlag,
               typeCode: telephoneInfo?.typeCode?.toString(),
             }}
