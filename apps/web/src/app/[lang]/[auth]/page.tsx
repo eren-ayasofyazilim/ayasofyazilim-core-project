@@ -165,7 +165,7 @@ export default function Page(): JSX.Element {
     <Auth
       authProps={props}
       authType={authTypeParam}
-      cultureName={cultureName || "tr"}
+      cultureName={cultureName || "en"}
       onLangChange={changeLocale}
       resources={resources}
     >
