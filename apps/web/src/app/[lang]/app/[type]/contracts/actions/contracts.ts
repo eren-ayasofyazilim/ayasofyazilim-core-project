@@ -1,13 +1,14 @@
 "use server";
 
-import {
+import type {
   PostApiContractServiceContractsContractHeadersData,
   UniRefund_ContractService_Contracts_ContractHeaders_ContractHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
+import type {
+  ServerResponse} from "src/lib";
 import {
   getContractServiceClient,
-  ServerResponse,
   structuredError,
 } from "src/lib";
 

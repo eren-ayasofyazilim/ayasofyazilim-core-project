@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
 import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getBaseLink } from "src/utils";
 import { contractsSchema, contractsData } from "./data";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 
 export default function Contracts() {
   const action: TableAction = {
@@ -13,7 +13,7 @@ export default function Contracts() {
   };
   return (
     <>
-      <PageHeader title="Contracts" description="Manage contracts" />
+      <PageHeader description="Manage contracts" title="Contracts" />
       <Card className="px-4">
         <DataTable
           action={action}
