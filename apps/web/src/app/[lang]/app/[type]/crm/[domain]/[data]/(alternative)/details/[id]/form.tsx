@@ -27,7 +27,8 @@ import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
-import { getBaseLink, isPhoneValid, splitPhone } from "src/utils";
+import { getBaseLink } from "src/utils";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataConfigOfCrm } from "../../../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 

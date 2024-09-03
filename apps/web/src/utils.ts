@@ -5,7 +5,6 @@ import type {
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { PhoneNumberUtil } from "google-libphonenumber";
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
@@ -307,38 +306,3 @@ function createZodType(schema: JsonSchema, isRequired: boolean): ZodSchema {
   if (schema.nullable) zodType = zodType.nullable();
   return zodType;
 }
-
-export const isPhoneValid = (phone: string) => {
-  try {
-    const phoneUtil = PhoneNumberUtil.getInstance();
-    const phoneNumber = phoneUtil.parseAndKeepRawInput(phone);
-
-    return phoneUtil.isValidNumber(phoneNumber);
-  } catch (error) {
-    return false;
-  }
-};
-export const splitPhone = (phone: string) => {
-  const phoneUtil = PhoneNumberUtil.getInstance();
-  const phoneNumber = phoneUtil.parseAndKeepRawInput(phone);
-  const format = phoneUtil
-    .formatOutOfCountryCallingNumber(phoneNumber)
-    .split("+")[1];
-  const ituCountryCode = format.split(" ")[0];
-  const phoneNumberWithoutCountryCode = format.substring(
-    ituCountryCode.length + 1,
-  );
-  const areaCode = phoneNumberWithoutCountryCode.includes("-")
-    ? phoneNumberWithoutCountryCode.split("-")[0]
-    : phoneNumberWithoutCountryCode.split(" ")[0];
-
-  const phoneData = {
-    ituCountryCode,
-    areaCode,
-    localNumber: phoneNumberWithoutCountryCode
-      .substring(areaCode.length + 1)
-      .replaceAll(" ", "")
-      .replaceAll("-", ""),
-  };
-  return phoneData;
-};
