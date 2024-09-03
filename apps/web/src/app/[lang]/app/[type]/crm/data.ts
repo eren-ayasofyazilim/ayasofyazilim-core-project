@@ -55,13 +55,7 @@ const organizationScheme = {
 } as const;
 
 const formSubPositions = {
-  telephone: [
-    "primaryFlag",
-    "typeCode",
-    //"ituCountryCode",
-    //"areaCode",
-    "localNumber",
-  ],
+  telephone: ["localNumber", "typeCode"],
   address: [
     "country",
     "terriority",
