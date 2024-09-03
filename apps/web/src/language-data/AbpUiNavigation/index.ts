@@ -24,7 +24,7 @@ export interface AbpUiNavigationResource {
   RefundTables: string;
   RefundFees: string;
   Add: string;
-  CountrySettings: string;
+  TenantSettings: string;
   Settings: string;
   IdentityManagement: string;
   LanguageManagement: string;
@@ -87,10 +87,10 @@ function getLanguageData(
       data.en.Companies,
     Template:
       navigationResource?.Template || data[lang]?.Template || data.en.Template,
-    CountrySettings:
-      navigationResource?.CountrySettings ||
-      data[lang]?.CountrySettings ||
-      data.en.CountrySettings,
+    TenantSettings:
+      navigationResource?.TenantSettings ||
+      data[lang]?.TenantSettings ||
+      data.en.TenantSettings,
     Contracts:
       navigationResource?.Contracts ||
       data[lang]?.Contracts ||

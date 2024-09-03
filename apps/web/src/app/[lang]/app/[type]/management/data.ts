@@ -37,7 +37,7 @@ const settingsCovnertor = {
 
 export const dataConfigOfManagement: Record<string, any> = {
   setting: {
-    displayName: "Setting",
+    displayName: "Settings",
     default: "vats",
     vats: {
       title: "Vat",

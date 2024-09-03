@@ -131,8 +131,12 @@ export default async function Layout({
   );
   managements.push({
     key: "tenantSettings",
-    title: "languageData.TenantSettings",
-    href: getBaseLink(`app/${type}/country-settings/home`, true, params.lang),
+    title: languageData.TenantSettings,
+    href: getBaseLink(
+      `app/${type}/management/tenant-settings/home`,
+      true,
+      params.lang,
+    ),
     icon: <WrenchIcon className="w-4 text-slate-500" />,
     type: "admin",
     appType: "unirefund",

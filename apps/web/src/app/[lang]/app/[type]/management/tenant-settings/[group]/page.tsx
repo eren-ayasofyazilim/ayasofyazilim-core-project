@@ -3,7 +3,7 @@
 import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 import { getSettingServiceClient } from "src/lib";
 import { getLocalizationResources } from "src/utils";
-import CountrySettingsPage from "./group";
+import TenantSettingsPage from "./group";
 import { mockSettingsResponse } from "./mock-settings-response";
 
 export default async function Page({
@@ -14,18 +14,18 @@ export default async function Page({
   const group = params.group;
   const lang = params.lang;
 
-  let countrySettings: UniRefund_SettingService_CountrySettings_CountrySettingDto;
+  let tenantSettings: UniRefund_SettingService_CountrySettings_CountrySettingDto;
   try {
     const client = await getSettingServiceClient();
-    countrySettings =
+    tenantSettings =
       await client.countrySetting.getApiSettingServiceCountrySettings();
   } catch (e) {
-    countrySettings = mockSettingsResponse;
+    tenantSettings = mockSettingsResponse;
   }
   const resources = await getLocalizationResources(lang);
   return (
-    <CountrySettingsPage
-      list={countrySettings}
+    <TenantSettingsPage
+      list={tenantSettings}
       path={group}
       resources={resources}
     />
