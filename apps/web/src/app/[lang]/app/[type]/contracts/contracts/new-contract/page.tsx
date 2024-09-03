@@ -53,7 +53,7 @@ import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 function createReadonlyFieldConfig(elements: string[]):Record<string,Record<string,Record<string,boolean>>> {
   return Object.assign(
     {},
-    ...elements.map((key:string) => {
+    ...elements.map((key:string):Record<string,Record<string,boolean>> => {
       return {
         [key]: {
           inputProps: { disabled: true },
@@ -352,7 +352,7 @@ function SelectMerchantStep({
                         return (
                           <SelectItem
                             key={address.id}
-                            value={address.id as string}
+                            value={address.id || ""}
                           >
                             {address.fullAddress}
                           </SelectItem>
