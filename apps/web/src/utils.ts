@@ -54,11 +54,11 @@ function getLocale(locale?: string): string {
   // FIXME: This is a temporary solution for eslint
   if (isServerSide()) {
     //   return localeServerSide();
-    return "tr";
+    return "en";
   }
   const pathname = window.location.pathname;
   const pathnameParts = pathname.split("/");
-  return pathnameParts[1] ?? "tr";
+  return pathnameParts[1] ?? "en";
 }
 function getAppType(appType?: string) {
   if (appType === "public") return `${appType}/`;
