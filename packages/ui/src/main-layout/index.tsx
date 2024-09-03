@@ -165,8 +165,13 @@ export function MenuItemTrigger({
   isFromSubMenu,
   minNavbar,
 }: IMenuItemTriggerProps) {
-  const pathname = usePathname().split("/")[2];
-  const isActive = pathname ? "/" + pathname === item.href : item.href === "/";
+  const pathname = usePathname();
+  const isActive =
+    pathname === item.href ||
+    (isFromSubMenu &&
+      (item.href.substring(0, item.href.lastIndexOf("/")) === pathname ||
+        item.href.substring(0, item.href.lastIndexOf("/")) ===
+          pathname.substring(0, pathname.lastIndexOf("/"))));
   if (item.submenu) {
     return (
       <Tooltip>
