@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@repo/ayasofyazilim-ui/atoms/accordion";
+import { Badge } from "@repo/ayasofyazilim-ui/atoms/badge";
 import { Button } from "@repo/ayasofyazilim-ui/atoms/button";
 import { ScrollArea } from "@repo/ayasofyazilim-ui/atoms/scroll-area";
 import {
@@ -38,6 +39,7 @@ export type NavigationItem = {
   icon?: JSX.Element;
   badge?: NavigationBadgeProps;
   submenu?: NavigationItem[];
+  wip?: boolean;
 };
 
 export function MainLayout({
@@ -134,7 +136,7 @@ export function MenuItem({ item, isFromSubMenu, minNavbar }: IMenuItemProps) {
     <AccordionItem
       value={item.key}
       key={item.key}
-      className={`border-0 p-0 ${minNavbar ? "w-16" : "w-full"}`}
+      className={`border-0 p-0 ${minNavbar ? "w-16" : "w-full"} ${item.wip ? "opacity-50" : ""}`}
       data-has-child={item.submenu ? true : false}
     >
       <MenuItemTrigger
@@ -171,7 +173,7 @@ export function MenuItemTrigger({
     (isFromSubMenu &&
       (item.href.substring(0, item.href.lastIndexOf("/")) === pathname ||
         item.href.substring(0, item.href.lastIndexOf("/")) ===
-          pathname.substring(0, pathname.lastIndexOf("/"))));
+        pathname.substring(0, pathname.lastIndexOf("/"))));
   if (item.submenu) {
     return (
       <Tooltip>
@@ -197,6 +199,7 @@ export function MenuItemTrigger({
             </div>
           )}
           {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
+          {item.wip && <Badge variant={"outline"} className="bg-orange-400">WIP</Badge>}
         </AccordionTrigger>
       </Tooltip>
     );
@@ -210,7 +213,9 @@ export function MenuItemTrigger({
       >
         <Link
           href={item.href}
-          className={`flex h-10 w-full items-center justify-start gap-2 ${minNavbar ? "pl-0" : "pl-4"}`}
+          className={`flex h-10 w-full items-center justify-start gap-2 ${minNavbar ? "pl-0" : "pl-4"} ${item.wip ? 'pointer-events-none' : ''}`}
+          aria-disabled={item.wip} 
+          tabIndex={item.wip ? -1 : undefined}
         >
           <div
             className={`flex w-full min-w-4 max-w-4 items-center ${minNavbar ? "max-w-full  justify-center" : ""}`}
@@ -229,6 +234,7 @@ export function MenuItemTrigger({
             </div>
           )}
           {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
+          {item.wip && <Badge variant={"outline"} className="bg-orange-400 mr-6">WIP</Badge>}
         </Link>
       </div>
     </Tooltip>

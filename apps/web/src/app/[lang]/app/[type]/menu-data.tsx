@@ -22,6 +22,7 @@ export type NavigationItmes = NavigationItem & {
 export const navigationItemsTemp: NavigationItmes[] = [
   {
     key: "devices",
+    wip: true,
     title: "Devices",
     href: "/devices",
     type: "admin",
@@ -30,6 +31,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "registered_errors",
+    wip: true,
     title: "Registered Errors",
     href: "/registered-errors",
     type: "admin",
@@ -38,6 +40,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "config",
+    wip: true,
     title: "Config",
     href: "/config",
     type: "admin",
@@ -46,6 +49,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "groups",
+    wip: true,
     title: "Groups",
     href: "/groups",
     type: "admin",
@@ -54,6 +58,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "finance",
+    wip: true,
     title: "Finance",
     href: "/finance",
     type: "admin",
@@ -62,48 +67,56 @@ export const navigationItemsTemp: NavigationItmes[] = [
     submenu: [
       {
         key: "reports",
+        wip: true,
         title: "Reports",
         href: "/finance/reports",
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
         key: "invoices",
+        wip: true,
         title: "Invoices",
         href: "/finance/invoices",
         icon: <File className="w-4 text-slate-500" />,
       },
       {
         key: "import_payments",
+        wip: true,
         title: "Import Payments",
         href: "/finance/import-payments",
         icon: <ClipboardList className="w-4 text-slate-500" />,
       },
       {
         key: "rebates",
+        wip: true,
         title: "Rebates",
         href: "/finance/rebates",
         icon: <Book className="w-4 text-slate-500" />,
       },
       {
         key: "bookkeeping",
+        wip: true,
         title: "Bookkeeping",
         href: "/finance/bookkeeping",
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
         key: "age",
+        wip: true,
         title: "Age",
         href: "/finance/age",
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
         key: "balance",
+        wip: true,
         title: "Balance",
         href: "/finance/balance",
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
         key: "invoicing_management",
+        wip: true,
         title: "Invoicing Management",
         href: "/finance/invoicing-management",
         icon: <FileText className="w-4 text-slate-500" />,
@@ -112,6 +125,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "settings",
+    wip: true,
     title: "Settings",
     href: "/settings",
     type: "admin",
@@ -120,6 +134,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "logs",
+    wip: true,
     title: "Logs",
     href: "/logs",
     type: "admin",
@@ -128,6 +143,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "api_logs",
+    wip: true,
     title: "API Logs",
     href: "/api-logs",
     type: "admin",
@@ -136,6 +152,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "systems",
+    wip: true,
     title: "Systems",
     href: "/systems",
     type: "admin",
@@ -144,6 +161,7 @@ export const navigationItemsTemp: NavigationItmes[] = [
   },
   {
     key: "planet_web",
+    wip: true,
     title: "Planet Web",
     href: "/planet-web",
     type: "admin",
@@ -152,54 +170,63 @@ export const navigationItemsTemp: NavigationItmes[] = [
     submenu: [
       {
         key: "issue",
+        wip: true,
         title: "Issue",
         href: "/planet-web/issue",
         icon: <AlertCircle className="w-4 text-slate-500" />,
       },
       {
         key: "tax_free_tags",
+        wip: true,
         title: "Tax Free Tags",
         href: "/planet-web/tax-free-tags",
         icon: <FileText className="w-4 text-slate-500" />,
       },
       {
         key: "refund",
+        wip: true,
         title: "Refund",
         href: "/planet-web/refund",
         icon: <FileText className="w-4 text-slate-500" />,
         submenu: [
           {
             key: "refunds",
+            wip: true,
             title: "Refunds",
             href: "/planet-web/refund/refunds",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "travellers",
+            wip: true,
             title: "Travellers",
             href: "/planet-web/refund/travellers",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "sticker_status",
+            wip: true,
             title: "Sticker Status",
             href: "/planet-web/refund/sticker-status",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "reconciliation",
+            wip: true,
             title: "Reconciliation",
             href: "/planet-web/refund/reconciliation",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "card_payments",
+            wip: true,
             title: "Card Payments",
             href: "/planet-web/refund/card-payments",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "payment_requests",
+            wip: true,
             title: "Payment Requests",
             href: "/planet-web/refund/payment-requests",
             icon: <FileText className="w-4 text-slate-500" />,
@@ -208,72 +235,84 @@ export const navigationItemsTemp: NavigationItmes[] = [
       },
       {
         key: "settings",
+        wip: true,
         title: "Settings",
         href: "/planet-web/settings",
         icon: <Settings className="w-4 text-slate-500" />,
       },
       {
         key: "reports",
+        wip: true,
         title: "Reports",
         href: "/planet-web/reports",
         icon: <FileText className="w-4 text-slate-500" />,
         submenu: [
           {
             key: "daily_report",
+            wip: true,
             title: "Daily Report",
             href: "/planet-web/reports/daily-report",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "dashboard",
+            wip: true,
             title: "Dashboard",
             href: "/planet-web/reports/dashboard",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "issued",
+            wip: true,
             title: "Issued",
             href: "/planet-web/reports/issued",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "by_store",
+            wip: true,
             title: "By Store",
             href: "/planet-web/reports/by-store",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "validation",
+            wip: true,
             title: "Validation",
             href: "/planet-web/reports/validation",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "invoice",
+            wip: true,
             title: "Invoice",
             href: "/planet-web/reports/invoice",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "travellers",
+            wip: true,
             title: "Travellers",
             href: "/planet-web/reports/travellers",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "validation_rules_hits",
+            wip: true,
             title: "Validation Rules Hits",
             href: "/planet-web/reports/validation-rules-hits",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "others",
+            wip: true,
             title: "Others",
             href: "/planet-web/reports/others",
             icon: <FileText className="w-4 text-slate-500" />,
           },
           {
             key: "change_report",
+            wip: true,
             title: "Change Report",
             href: "/planet-web/reports/change-report",
             icon: <FileText className="w-4 text-slate-500" />,
