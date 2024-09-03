@@ -447,7 +447,7 @@ interface UploadedFilesCardProps {
   uploadedFiles: File[];
 }
 
-export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
+function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
   return (
     <Card>
       <CardHeader>
