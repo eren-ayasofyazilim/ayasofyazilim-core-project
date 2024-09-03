@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getResourceDataClient } from "src/language-data/AbpUiNavigation";
+import { getResourceDataClient } from "src/language-data/IdentityService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { dataConfig } from "../data";
@@ -29,13 +29,13 @@ export default function Layout({ children, params }: LayoutProps) {
   useEffect(() => {
     const tempNavbarItems = Object.entries(dataConfig[params.domain])
       .filter(([e]) => e !== "displayName" && e !== "default")
-      .map(([key, value]: [string, any]) => {
+      .map(([key]: [string, unknown]) => {
         return {
           id: `${params.domain}/${key}`,
           name:
-            languageData[`Identity:${key}` as keyof typeof languageData] ||
-            value.title ||
-            key,
+            languageData[
+              (key[0].toUpperCase() + key.slice(1)) as keyof typeof languageData
+            ] || key,
           link: getBaseLink(
             `dashboard/${params.domain}/${key}`,
             true,
