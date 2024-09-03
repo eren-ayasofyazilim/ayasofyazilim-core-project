@@ -6,7 +6,7 @@ import type {
   Volo_Abp_Application_Dtos_PagedResultDto_16,
 } from "@ayasofyazilim/saas/CRMService";
 import { revalidatePath } from "next/cache";
-import type { ServerResponse} from "src/lib";
+import type { ServerResponse } from "src/lib";
 import { getCRMServiceClient, structuredError } from "src/lib";
 
 export async function getCrmServiceMerchants(
