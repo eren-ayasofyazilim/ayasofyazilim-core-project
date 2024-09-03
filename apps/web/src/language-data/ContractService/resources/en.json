@@ -2,6 +2,9 @@
   "Refund": "Refund",
   "RefundTables": "Refund tables",
 
+  "RefundTables.Title": "Refund tables",
+  "RefundTables.Description": "Manage refund tables",
+
   "RefundTables.Create.Title": "New refund table",
   "RefundTables.Create.Description": "Create a new refund table",
   "RefundTables.Create.Submit": "Submit",
