@@ -55,14 +55,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (token.error){
-        session.error = token.error as string || "RefreshAccessTokenError";
-        return session;
+        return {
+          ...session,
+          error: token.error || "RefreshAccessTokenError",
+        };
       }
       const typedToken = token as unknown as Token;
       const userData = await getMyProfile(typedToken.access_token);
-      session.user = userData;
-      session.access_token = typedToken.access_token;
-      return session;
+      return {
+        ...session,
+        user: userData,
+        access_token: typedToken.access_token,
+      };
     },
     async jwt({ token, user }) {
       const typedToken = token as unknown as Token;
@@ -116,7 +120,7 @@ declare module "next-auth" {
   interface Session {
     error?: "RefreshAccessTokenError" | string;
     access_token?: string;
-    user?: GetApiAccountMyProfileResponse | any; 
+    user?: GetApiAccountMyProfileResponse; 
   }
 }
 declare module "next-auth/jwt" {
