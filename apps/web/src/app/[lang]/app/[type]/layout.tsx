@@ -68,7 +68,7 @@ export default async function Layout({
     initials: user?.name?.substring(0, 2).toUpperCase(),
     user,
     email: user?.email ?? undefined,
-    imageURL: "https://github.com/shadcn.png",
+    imageURL: `https://placehold.co/100x100/DB0000/white?text=${user?.name?.substring(0, 2).toUpperCase()}`,
     menuLinks:
       appName === "UNIREFUND"
         ? [
@@ -288,14 +288,15 @@ export default async function Layout({
       appName={appName}
       navigationItems={filteredNavigationItems}
       topBarComponent={
-        <div className="mr-5 flex w-min gap-4">
-          <ProfileMenu
-            {...userNavigation}
-            baseLink={getBaseLink("", false)}
-            cultureName={params.lang}
-            resources={resources}
-          />
-        </div>
+        // <div className="mr-5 flex w-min gap-4">
+        <ProfileMenu
+          {...userNavigation}
+          baseLink={getBaseLink("", false)}
+          className="ml-auto h-full w-min rounded-none border-b-0 shadow-none "
+          cultureName={params.lang}
+          resources={resources}
+        />
+        // </div>
       }
     >
       <div className="mx-10 mt-5 h-[calc(100vh-164px)]">{children}</div>

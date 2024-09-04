@@ -92,7 +92,7 @@ export function MainLayout({
       </div>
       <div className="flex flex-1 flex-col overflow-auto">
         <div
-          className={`flex max-h-16 min-h-16 w-full items-center justify-end border-b bg-white px-4 ${minNavbar ? "pl-14" : ""}`}
+          className={`flex max-h-16 min-h-16 w-full items-center justify-end border-b bg-white pl-4 ${minNavbar ? "pl-14" : ""}`}
         >
           {topBarComponent}
         </div>
@@ -206,7 +206,14 @@ export function MenuItemTrigger({
             </div>
           )}
           {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
-          {item.wip && <Badge variant={"outline"} className="bg-orange-400">WIP</Badge>}
+          {item.wip && (
+            <Badge
+              variant={"outline"}
+              className=" border-0 bg-orange-200 text-orange-600"
+            >
+              WIP
+            </Badge>
+          )}
         </AccordionTrigger>
       </Tooltip>
     );
@@ -220,8 +227,8 @@ export function MenuItemTrigger({
       >
         <Link
           href={item.href}
-          className={`flex h-10 w-full items-center justify-start gap-2 ${minNavbar ? "pl-0" : "pl-4"} ${item.wip ? 'pointer-events-none' : ''}`}
-          aria-disabled={item.wip} 
+          className={`flex h-10 w-full items-center justify-start gap-2 ${minNavbar ? "pl-0" : "pl-4"} ${item.wip ? "pointer-events-none" : ""}`}
+          aria-disabled={item.wip}
           tabIndex={item.wip ? -1 : undefined}
         >
           <div
@@ -241,7 +248,14 @@ export function MenuItemTrigger({
             </div>
           )}
           {item.badge && !minNavbar && <NavigationBadge {...item.badge} />}
-          {item.wip && <Badge variant={"outline"} className="bg-orange-400 mr-6">WIP</Badge>}
+          {item.wip && (
+            <Badge
+              variant={"outline"}
+              className="mr-6 border-0 bg-orange-200 text-orange-600"
+            >
+              WIP
+            </Badge>
+          )}
         </Link>
       </div>
     </Tooltip>
