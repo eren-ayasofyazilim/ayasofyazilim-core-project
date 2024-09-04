@@ -1,5 +1,8 @@
 "use server";
-import { AccountServiceClient, GetApiAccountMyProfileResponse } from "@ayasofyazilim/saas/AccountService";
+import {
+  AccountServiceClient,
+  GetApiAccountMyProfileResponse,
+} from "@ayasofyazilim/saas/AccountService";
 import { signIn, signOut } from "auth";
 import { User } from "next-auth";
 import { redirect } from "next/navigation";
@@ -9,14 +12,11 @@ import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
 const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
 
-
-
 interface TokenError {
   error: string;
   error_description: string;
   error_uri: string;
 }
-
 
 export async function signOutServer() {
   try {
@@ -119,7 +119,9 @@ export async function sendPasswordResetCodeServer({
     };
   }
 }
-export async function getMyProfile(token: string): Promise<GetApiAccountMyProfileResponse> {
+export async function getMyProfile(
+  token: string,
+): Promise<GetApiAccountMyProfileResponse> {
   const client = new AccountServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
@@ -140,7 +142,10 @@ export async function signInWithCredentials(credentials: {
   "use server";
   const scopes: string = await fetch(OPENID_URL)
     .then((response) => response.json())
-    .then((json: {scopes_supported?: string[]}) => json?.scopes_supported?.join(" ") || "");
+    .then(
+      (json: { scopes_supported?: string[] }) =>
+        json?.scopes_supported?.join(" ") || "",
+    );
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -187,6 +192,6 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  const json: User | TokenError =  await response.json();
+  const json: User | TokenError = await response.json();
   return json;
 }
