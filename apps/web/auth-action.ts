@@ -1,6 +1,7 @@
 "use server";
-import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
+import { AccountServiceClient, GetApiAccountMyProfileResponse } from "@ayasofyazilim/saas/AccountService";
 import { signIn, signOut } from "auth";
+import { User } from "next-auth";
 import { redirect } from "next/navigation";
 import { isApiError } from "src/app/api/util";
 import { getAccountServiceClient } from "src/lib";
@@ -8,13 +9,7 @@ import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
 const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
 
-interface Token {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  id_token: string;
-  refresh_token: string;
-}
+
 
 interface TokenError {
   error: string;
@@ -124,7 +119,7 @@ export async function sendPasswordResetCodeServer({
     };
   }
 }
-export async function getMyProfile(token: string) {
+export async function getMyProfile(token: string): Promise<GetApiAccountMyProfileResponse> {
   const client = new AccountServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
@@ -141,7 +136,7 @@ export async function getMyProfile(token: string) {
 export async function signInWithCredentials(credentials: {
   username: string;
   password: string;
-}) {
+}): Promise<User | TokenError> {
   "use server";
   const scopes: string = await fetch(OPENID_URL)
     .then((response) => response.json())
@@ -166,8 +161,11 @@ export async function signInWithCredentials(credentials: {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  const json: Token | TokenError = await response.json();
-  return json;
+  const json: User | TokenError = await response.json();
+  return {
+    ...json,
+    userName: credentials.username,
+  };
 }
 export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
   "use server";
@@ -189,6 +187,6 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  const json: Token | TokenError =  await response.json();
+  const json: User | TokenError =  await response.json();
   return json;
 }

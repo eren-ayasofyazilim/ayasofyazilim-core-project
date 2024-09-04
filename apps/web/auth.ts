@@ -1,11 +1,14 @@
+import { GetApiAccountMyProfileResponse } from "@ayasofyazilim/saas/AccountService";
 import {
   getMyProfile,
   obtainAccessTokenByRefreshToken,
   signInWithCredentials,
 } from "auth-action";
 import NextAuth, { AuthError } from "next-auth";
-import { getToken } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
+
+export type Awaitable<T> = T | PromiseLike<T> ;
+
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -30,6 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (response?.access_token) {
             return { ...response };
           }
+          return Promise.reject(new AuthError("Unknown Error: No token provided"));
         } catch (error) {
           return Promise.reject(new Error("Unknown Error " + error));
         }
@@ -50,13 +54,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return false;
     },
     async session({ session, token }) {
-      session.error = token.error;
-      const userData = (await getMyProfile(token.access_token)) as any;
+      if (token.error){
+        session.error = token.error as string || "RefreshAccessTokenError";
+        return session;
+      }
+      const typedToken = token as unknown as Token;
+      const userData = await getMyProfile(typedToken.access_token);
       session.user = userData;
-      session.access_token = token.access_token;
+      session.access_token = typedToken.access_token;
       return session;
     },
     async jwt({ token, user }) {
+      const typedToken = token as unknown as Token;
       if (user) {
         return {
           ...token,
@@ -64,13 +73,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           expires_at: Math.floor(Date.now() / 1000) + (user.expires_in || 0),
           refresh_token: user.refresh_token,
         };
-      } else if (Date.now() < token.expires_at * 1000) {
+      } else if (Date.now() < (typedToken.expires_at || 0) * 1000) {
         return token;
       }
       if (!token.refresh_token) {
         throw new Error("No refresh token");
       }
-      const tokens = await obtainAccessTokenByRefreshToken(token.refresh_token);
+      const tokens = await obtainAccessTokenByRefreshToken(typedToken.refresh_token);
       if ("error" in tokens) {
         return {
           ...token,
@@ -87,20 +96,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 });
 
+export interface Token {
+  id?: string;
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  token_type?: string;
+  id_token?: string;
+  expires_at?: number;
+}
+
 declare module "next-auth" {
-  interface User {
-    id?: string;
-    access_token?: string;
-    expires_in?: number;
-    refresh_token?: string;
+  interface User extends Token {
     userName: string;
   }
 }
 
 declare module "next-auth" {
   interface Session {
-    error?: "RefreshAccessTokenError";
+    error?: "RefreshAccessTokenError" | string;
     access_token?: string;
+    user?: GetApiAccountMyProfileResponse | any; 
   }
 }
 declare module "next-auth/jwt" {
