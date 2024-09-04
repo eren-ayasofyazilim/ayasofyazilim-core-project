@@ -7,8 +7,41 @@ import {
   signInWithCredentials,
 } from "auth-action";
 import "@auth/core/jwt";
+import type { AdapterUser } from "@auth/core/adapters";
 
 export type Awaitable<T> = T | PromiseLike<T>;
+
+export interface Token {
+  id?: string;
+  access_token?: string;
+  expires_in?: number;
+  refresh_token?: string;
+  token_type?: string;
+  id_token?: string;
+  expires_at?: number;
+}
+
+declare module "next-auth" {
+  interface User extends Token {
+    userName: string;
+  }
+}
+
+declare module "next-auth" {
+  interface Session {
+    error?: "RefreshAccessTokenError" | string;
+    access_token?: string;
+    user?: GetApiAccountMyProfileResponse;
+  }
+}
+declare module "@auth/core/jwt" {
+  interface JWT extends Token {
+    access_token: string;
+    expires_at: number;
+    refresh_token: string;
+    error?: "RefreshAccessTokenError";
+  }
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -79,8 +112,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       };
     },
     async jwt({ token, user }) {
+      const _user = user as AdapterUser | undefined;
       const typedToken = token as unknown as Token;
-      if (user.access_token) {
+      if (_user) {
         return {
           ...token,
           access_token: user.access_token,
@@ -117,35 +151,3 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 });
-
-export interface Token {
-  id?: string;
-  access_token?: string;
-  expires_in?: number;
-  refresh_token?: string;
-  token_type?: string;
-  id_token?: string;
-  expires_at?: number;
-}
-
-declare module "next-auth" {
-  interface User extends Token {
-    userName: string;
-  }
-}
-
-declare module "next-auth" {
-  interface Session {
-    error?: "RefreshAccessTokenError" | string;
-    access_token?: string;
-    user?: GetApiAccountMyProfileResponse;
-  }
-}
-declare module "@auth/core/jwt" {
-  interface JWT extends Token {
-    access_token: string;
-    expires_at: number;
-    refresh_token: string;
-    error?: "RefreshAccessTokenError";
-  }
-}
