@@ -2,6 +2,9 @@
   "Refund": "İade",
   "RefundTables": "İade Tabloları",
 
+  "RefundTables.Title": "İade Tabloları",
+  "RefundTables.Description": "İade tablolarını yönetin",
+
   "RefundTables.Create.Title": "Yeni iade tablosu",
   "RefundTables.Create.Description": "Yeni bir iade tablosu oluşturun",
   "RefundTables.Create.Submit": "Oluştur",
@@ -12,6 +15,8 @@
 
   "RefundTables.Delete.Title": "Bu iade tablosunu silmek istediğinizden emin misiniz?",
   "RefundTables.Delete.Description": "İade tablosunu sil",
+  "RefundTables.Delete.Cancel": "İptal",
+  "RefundTables.Delete.Continue": "Devam et",
 
   "RefundTables.Details": "Detaylar",
   "RefundTables.Details.FilterBy {0}": "{} göre filtrele",

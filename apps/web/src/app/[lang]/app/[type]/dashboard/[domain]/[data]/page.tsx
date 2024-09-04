@@ -10,10 +10,10 @@ import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { getResourceDataClient } from "src/language-data/IdentityService";
+import { useLocale } from "src/providers/locale";
 import type { FormModifier, TableData } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
-import { getResourceDataClient } from "src/language-data/IdentityService";
 import { dataConfig } from "../../data";
 
 async function controlledFetch(
@@ -324,11 +324,11 @@ export default function Page({
   if (params.data === "scopes") {
     columnsData.data.actionList?.push({
       type: "Dialog",
-      cta: "Değişiklik Geçmişi",
+      cta: "Change History",
       loadingContent: <>Loading...</>,
-      description: "Değişiklik Geçmişi",
+      description: "Change History",
       componentType: "CustomComponent",
-      content: <>Bir değişiklik yok.</>,
+      content: <>No changes.</>,
     });
   }
   return (

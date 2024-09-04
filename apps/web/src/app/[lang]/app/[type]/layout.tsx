@@ -1,14 +1,12 @@
 "use server";
 import { GearIcon } from "@radix-ui/react-icons";
-import type { NavigationItem } from "@repo/ui/main-layout";
 import { MainLayout } from "@repo/ui/main-layout";
 import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
+  BriefcaseBusiness,
+  Building2,
   DollarSign,
-  FileBadge,
-  Folder,
   Home,
-  LanguagesIcon,
   LayoutDashboard,
   Plane,
   Presentation,
@@ -18,6 +16,9 @@ import {
   UserCircle,
   Worm,
   WrenchIcon,
+  Languages,
+  Layers,
+  ClipboardList,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth } from "auth";
@@ -27,11 +28,9 @@ import { generateNavigationItems, getBaseLink } from "src/utils";
 import { dataConfigOfCrm } from "./crm/data";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
+import type { NavigationItmes } from "./menu-data";
+import { navigationItemsTemp } from "./menu-data";
 
-type NavigationItmes = NavigationItem & {
-  type: string | string[];
-  appType?: string;
-};
 interface LayoutProps {
   params: { lang: string; type: string };
   children: JSX.Element;
@@ -69,7 +68,7 @@ export default async function Layout({
     initials: user?.name?.substring(0, 2).toUpperCase(),
     user,
     email: user?.email ?? undefined,
-    imageURL: "https://github.com/shadcn.png",
+    imageURL: `https://placehold.co/100x100/DB0000/white?text=${user?.name?.substring(0, 2).toUpperCase()}`,
     menuLinks:
       appName === "UNIREFUND"
         ? [
@@ -149,9 +148,9 @@ export default async function Layout({
     type,
     "crm",
     params.lang,
-    <SlidersHorizontal className="w-4 text-slate-500" />,
+    <Building2 className="w-4 text-slate-500" />,
   );
-  const navigationItems: NavigationItmes[] = [
+  const navigationItemsFull: NavigationItmes[] = [
     {
       key: "reports",
       title: navbarResources["Menu:Reports"],
@@ -173,7 +172,7 @@ export default async function Layout({
       key: "management",
       title: languageData.Management,
       href: getBaseLink(`app/${type}/management`, true, params.lang),
-      icon: <Folder className="w-4 text-slate-500" />,
+      icon: <BriefcaseBusiness className="w-4 text-slate-500" />,
       submenu: managements,
       type: "admin",
       appType: "unirefund",
@@ -182,7 +181,7 @@ export default async function Layout({
       key: "crm",
       title: languageData.Crm,
       href: getBaseLink(`app/${type}/crm`, true, params.lang),
-      icon: <Folder className="w-4 text-slate-500" />,
+      icon: <Layers className="w-4 text-slate-500" />,
       submenu: crms,
       type: "admin",
       appType: "unirefund",
@@ -205,15 +204,6 @@ export default async function Layout({
       appType: "unirefund",
     },
     {
-      key: "Details",
-      title: languageData.Details,
-      href: getBaseLink(`app/${type}/details`, true, params.lang),
-      icon: <FileBadge className="w-4 text-slate-500" />,
-      type: "admin",
-      appType: "unirefund",
-    },
-
-    {
       key: "projects",
       title: languageData.Campaigns,
       icon: <Presentation className="w-4 text-slate-500" />,
@@ -224,14 +214,14 @@ export default async function Layout({
     {
       key: "languageManagement",
       title: languageData.LanguageManagement || "Language Management",
-      icon: <LanguagesIcon className="w-4 text-slate-500" />,
+      icon: <Languages className="w-4 text-slate-500" />,
       href: getBaseLink(`app/${type}/language-management`, true, params.lang),
       type: "admin",
       appType: "upwithcrowd",
     },
     {
       key: "investments",
-      title: "investments",
+      title: "Investments",
       icon: <DollarSign className="w-4 text-slate-500" />,
       href: getBaseLink(`app/${type}/investments`, true, params.lang),
       type: "investor",
@@ -243,7 +233,7 @@ export default async function Layout({
       type: "admin",
       title: languageData.Contracts,
       href: getBaseLink(`app/${type}/contracts`, true, params.lang),
-      icon: <FileBadge className="w-4 text-slate-500" />,
+      icon: <ClipboardList className="w-4 text-slate-500" />,
       submenu: [
         {
           key: "contracts",
@@ -285,7 +275,8 @@ export default async function Layout({
     },
   ];
 
-  const filteredNavigationItems = navigationItems.filter((item) => {
+  const presentation = [...navigationItemsFull, ...navigationItemsTemp];
+  const filteredNavigationItems = presentation.filter((item) => {
     return (
       item.appType === appName.toLowerCase() &&
       (item.type === type || item.type.includes(type))
@@ -297,14 +288,15 @@ export default async function Layout({
       appName={appName}
       navigationItems={filteredNavigationItems}
       topBarComponent={
-        <div className="mr-5 flex w-min gap-4">
-          <ProfileMenu
-            {...userNavigation}
-            baseLink={getBaseLink("", false)}
-            cultureName={params.lang}
-            resources={resources}
-          />
-        </div>
+        // <div className="mr-5 flex w-min gap-4">
+        <ProfileMenu
+          {...userNavigation}
+          baseLink={getBaseLink("", false)}
+          className="ml-auto h-full w-min rounded-none border-b-0 shadow-none "
+          cultureName={params.lang}
+          resources={resources}
+        />
+        // </div>
       }
     >
       <div className="mx-10 mt-5 h-[calc(100vh-164px)]">{children}</div>

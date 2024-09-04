@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
@@ -30,6 +31,7 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
   const path = pathname.split("crm/")[1];
+  const activePage = path.split("/")[1];
 
   //TODO make this page serverside
   useEffect(() => {
@@ -63,8 +65,41 @@ export default function Layout({ children, params }: LayoutProps) {
     setNavbarItems(tempNavbarItems);
   }, []);
 
+  function pageHeaderData() {
+    if (activePage === "merchants") {
+      return {
+        title: languageData.Merchants,
+        description: languageData["Merchants.Description"],
+      };
+    }
+    if (activePage === "refundPoints") {
+      return {
+        title: languageData.RefundPoints,
+        description: languageData["RefundPoints.Description"],
+      };
+    }
+    if (activePage === "taxFree") {
+      return {
+        title: languageData.TaxFree,
+        description: languageData["TaxFree.Description"],
+      };
+    }
+    if (activePage === "taxOffices") {
+      return {
+        title: languageData.TaxOffices,
+        description: languageData["TaxOffices.Description"],
+      };
+    }
+    return {
+      title: languageData.Customs,
+      description: languageData["Customs.Description"],
+    };
+  }
+  const { title, description } = pageHeaderData();
+
   return (
     <>
+      <PageHeader description={description} title={title} />
       {navbarItems.length > 0 && (
         <SectionLayout
           defaultActiveSectionId={path}

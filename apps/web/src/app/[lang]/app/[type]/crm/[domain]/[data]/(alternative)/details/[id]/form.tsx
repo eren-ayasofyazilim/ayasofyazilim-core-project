@@ -8,10 +8,10 @@ import type {
   UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import {
-  $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  // $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+  // $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  // $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
@@ -24,18 +24,136 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { useState } from "react";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
-import { getResourceDataClient } from "src/language-data/CRMService";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataConfigOfCrm } from "../../../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 
 const organization = $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
-const email = $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto;
-const telephone = $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
-const address = $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto;
-
+const telephone = {
+  required: ["areaCode", "ituCountryCode", "localNumber", "typeCode"],
+  type: "object",
+  properties: {
+    extraProperties: {
+      type: "object",
+      additionalProperties: {},
+      nullable: true,
+      readOnly: true,
+    },
+    areaCode: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    localNumber: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    ituCountryCode: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    typeCode: {
+      enum: ["Home", "Office", "Mobile", "Fax"],
+      type: "integer",
+      format: "int32",
+    },
+  },
+  additionalProperties: false,
+};
+const address = {
+  required: [
+    "addressLine",
+    "city",
+    "country",
+    "fullAddress",
+    "postalCode",
+    "terriority",
+    "typeCode",
+  ],
+  type: "object",
+  properties: {
+    extraProperties: {
+      type: "object",
+      additionalProperties: {},
+      nullable: true,
+      readOnly: true,
+    },
+    addressLine: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    city: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    terriority: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    postalCode: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    country: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    fullAddress: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    typeCode: {
+      enum: ["Home", "Office"],
+      type: "integer",
+      format: "int32",
+    },
+  },
+  additionalProperties: false,
+};
+const email = {
+  required: ["emailAddress", "typeCode"],
+  type: "object",
+  properties: {
+    extraProperties: {
+      type: "object",
+      additionalProperties: {},
+      nullable: true,
+      readOnly: true,
+    },
+    emailAddress: {
+      maxLength: 255,
+      minLength: 0,
+      type: "string",
+    },
+    primaryFlag: {
+      type: "boolean",
+    },
+    typeCode: {
+      enum: ["Work", "Personal"],
+      type: "integer",
+      format: "int32",
+    },
+  },
+  additionalProperties: false,
+};
 export default function Form({
   crmDetailData,
   params,
@@ -64,29 +182,25 @@ export default function Form({
     organizationInfo?.contactInformations?.[0]?.addresses?.[0];
 
   const organizationSchema = createZodObject(organization, ["name"]);
-  const emailSchema = createZodObject(email, [
-    "primaryFlag",
-    "typeCode",
-    "emailAddress",
-  ]);
+  const emailSchema = createZodObject(email, ["emailAddress", "typeCode"]);
   const telephoneSchema = createZodObject(telephone, [
-    "primaryFlag",
-    "typeCode",
-    "ituCountryCode",
-    "areaCode",
     "localNumber",
-  ]);
-  const addressSchema = createZodObject(address, [
-    "primaryFlag",
     "typeCode",
+  ]);
+
+  const phoneNumber =
+    (telephoneInfo?.ituCountryCode || "+90") +
+    (telephoneInfo?.areaCode || "") +
+    (telephoneInfo?.localNumber || "");
+  const addressSchema = createZodObject(address, [
     "country",
     "terriority",
     "city",
     "postalCode",
     "addressLine",
     "fullAddress",
+    "typeCode",
   ]);
-
   async function handleSubmit(values: unknown, sectionName: string) {
     if (typeof values !== "object") return;
 
@@ -101,24 +215,34 @@ export default function Form({
       response = "success";
     }
     if (sectionName === "email") {
-      await updateCRMDetailServer(
-        emailInfo?.id || "",
-        values as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-      );
+      await updateCRMDetailServer(emailInfo?.id || "", {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto);
       response = "success";
     }
     if (sectionName === "telephone") {
-      await updateCRMDetailServer(
-        telephoneInfo?.id || "",
-        values as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-      );
+      const parsedValues = {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
+      const isValid = isPhoneValid(parsedValues.localNumber);
+      if (!isValid) {
+        return;
+      }
+      const phoneData = splitPhone(parsedValues.localNumber);
+      await updateCRMDetailServer(telephoneInfo?.id || "", {
+        ...values,
+        primaryFlag: true,
+        ...phoneData,
+      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
       response = "success";
     }
     if (sectionName === "address") {
-      await updateCRMDetailServer(
-        addressInfo?.id || "",
-        values as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-      );
+      await updateCRMDetailServer(addressInfo?.id || "", {
+        ...values,
+        primaryFlag: true,
+      } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
       response = "success";
     }
     if (response) {
@@ -169,17 +293,27 @@ export default function Form({
         </SectionLayoutContent>
         <SectionLayoutContent sectionId="telephone">
           <AutoForm
+            fieldConfig={{
+              localNumber: {
+                fieldType: "phone",
+                displayName: "Telephone Number",
+                inputProps: {
+                  showLabel: true,
+                },
+              },
+            }}
             formClassName="pb-40 "
             formSchema={telephoneSchema}
             onSubmit={(values) => {
               void handleSubmit(values, "telephone");
             }}
             values={{
-              areaCode: telephoneInfo?.areaCode,
-              localNumber: telephoneInfo?.localNumber,
-              ituCountryCode: telephoneInfo?.ituCountryCode,
+              localNumber: phoneNumber,
               primaryFlag: telephoneInfo?.primaryFlag,
-              typeCode: telephoneInfo?.typeCode?.toString(),
+              typeCode:
+                telephone.properties.typeCode.enum[
+                  telephoneInfo?.typeCode || 0
+                ],
             }}
           >
             <AutoFormSubmit className="float-right">
@@ -201,7 +335,9 @@ export default function Form({
               fullAddress: addressInfo?.fullAddress,
               postalCode: addressInfo?.postalCode,
               terriority: addressInfo?.terriority,
-              typeCode: addressInfo?.typeCode?.toString(),
+              typeCode:
+                address.properties.typeCode.enum[addressInfo?.typeCode || 0],
+
               primaryFlag: addressInfo?.primaryFlag,
             }}
           >
@@ -219,7 +355,8 @@ export default function Form({
             }}
             values={{
               emailAddress: emailInfo?.emailAddress,
-              typeCode: emailInfo?.typeCode?.toString(),
+              typeCode:
+                email.properties.typeCode.enum[emailInfo?.typeCode || 0],
               primaryFlag: emailInfo?.primaryFlag,
             }}
           >

@@ -25,6 +25,7 @@ export interface AbpUiNavigationResource {
   RefundFees: string;
   Add: string;
   TenantSettings: string;
+  VATSettings: string;
   Settings: string;
   IdentityManagement: string;
   LanguageManagement: string;
@@ -107,6 +108,10 @@ function getLanguageData(
       navigationResource?.RefundFees ||
       data[lang]?.RefundFees ||
       data.en.RefundFees,
+    VATSettings:
+      navigationResource?.VATSettings ||
+      data[lang]?.VATSettings ||
+      data.en.VATSettings,
     Settings:
       navigationResource?.Settings || data[lang]?.Settings || data.en.Settings,
     LanguageManagement:

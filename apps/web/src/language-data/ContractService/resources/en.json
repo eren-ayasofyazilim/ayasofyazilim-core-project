@@ -2,6 +2,9 @@
   "Refund": "Refund",
   "RefundTables": "Refund tables",
 
+  "RefundTables.Title": "Refund tables",
+  "RefundTables.Description": "Manage refund tables",
+
   "RefundTables.Create.Title": "New refund table",
   "RefundTables.Create.Description": "Create a new refund table",
   "RefundTables.Create.Submit": "Submit",
@@ -12,6 +15,8 @@
 
   "RefundTables.Delete.Title": "Delete refund table",
   "RefundTables.Delete.Description": "Are you sure you want to delete this refund table?",
+  "RefundTables.Delete.Cancel": "Cancel",
+  "RefundTables.Delete.Continue": "Continue",
 
   "RefundTables.Details": "Details",
   "RefundTables.Details.FilterBy {0}": "Filter by {}",
