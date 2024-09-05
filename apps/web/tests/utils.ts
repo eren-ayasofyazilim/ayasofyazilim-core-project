@@ -1,27 +1,17 @@
-import { expect, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 export async function loginAsAdmin(page: Page) {
+  const userName = process.env.TEST_USERNAME || ".env not provided";
+  const password = process.env.TEST_PASSWORD || ".env not provided";
   await page.goto("/tr/login");
-  await page.url();
   await page.getByPlaceholder("name@example.com").click();
-  await page
-    .getByPlaceholder("name@example.com")
-    .fill(process.env.TEST_USERNAME as string);
+  await page.getByPlaceholder("name@example.com").fill(userName);
   await page.getByPlaceholder("name@example.com").press("Tab");
-  await page.keyboard.insertText(process.env.TEST_PASSWORD as string);
-  await page.getByRole("button", { name: "Giriş" }).click();
-  await page.waitForURL("**/public");
-  await page
-    .locator("div")
-    .filter({ hasText: /^Bursaİlerleyin$/ })
-    .getByRole("link")
-    .click();
-  await page.url();
-  await page.waitForURL("**/public");
-
-  await expect(page.getByRole("button").first()).toBeVisible();
-
-  await page.waitForURL("**/");
+  await page.keyboard.insertText(password);
+  const clickLogin = page.getByRole("button", { name: "Giriş" });
+  await clickLogin.click();
+  await page.waitForResponse("**/login");
 }
 
 export async function expectStatusMessage(
