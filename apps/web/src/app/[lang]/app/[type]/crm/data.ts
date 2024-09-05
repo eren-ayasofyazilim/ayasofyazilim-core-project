@@ -1,18 +1,14 @@
 import {
-  // $UniRefund_CRMService_Customss_CreateCustomsDto,
-  // $UniRefund_CRMService_Merchants_CreateMerchantDto,
-  // $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
-  // $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
-  // $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  $UniRefund_CRMService_Merchants_CreateMerchantDto,
+  $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
+  $UniRefund_CRMService_Customss_CreateCustomsDto,
+  $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Customss_CustomsProfileDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
   $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
-  $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  // $UniRefund_CRMService_Organizations_CreateOrganizationDto,
-  $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import type { TableData } from "src/utils";
 
@@ -22,39 +18,8 @@ interface DataConfig {
   pages: Record<string, TableData>;
 }
 
-const organizationScheme = {
-  required: ["legalStatusCode", "name", "taxpayerId"],
-  type: "object",
-  properties: {
-    extraProperties: {
-      type: "object",
-      additionalProperties: {},
-      nullable: true,
-      readOnly: true,
-    },
-    name: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    taxpayerId: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    legalStatusCode: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    customerNumber: {
-      type: "string",
-      nullable: true,
-    },
-  },
-} as const;
-
 const formSubPositions = {
+  organization: ["name", "taxpayerId", "customerNumber", "legalStatusCode"],
   telephone: ["localNumber", "typeCode"],
   address: [
     "country",
@@ -68,18 +33,108 @@ const formSubPositions = {
   email: ["emailAddress", "typeCode"],
 };
 
-const organization = organizationScheme;
-const telephone = $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
-const address = $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto;
-const email = $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto;
-
-const createScheme = {
+const createMerchantsScheme = {
   type: "object",
   properties: {
-    organization,
-    telephone,
-    address,
-    email,
+    organization:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+        .entityInformationTypes.items.properties.organizations.items,
+    telephone:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.telephones.items,
+    address:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.addresses.items,
+    email:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
+  },
+};
+
+const createrefundPointsScheme = {
+  type: "object",
+  properties: {
+    organization:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+        .entityInformationTypes.items.properties.organizations.items,
+    telephone:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.telephones.items,
+    address:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.addresses.items,
+    email:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
+  },
+};
+
+const createCustomsScheme = {
+  type: "object",
+  properties: {
+    organization:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
+        .entityInformationTypes.items.properties.organizations.items,
+    telephone:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.telephones.items,
+    address:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.addresses.items,
+    email:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
+  },
+};
+
+const createTaxFreeScheme = {
+  type: "object",
+  properties: {
+    organization:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+        .entityInformationTypes.items.properties.organizations.items,
+    telephone:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.telephones.items,
+    address:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.addresses.items,
+    email:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
+  },
+};
+
+const createTaxOfficesScheme = {
+  type: "object",
+  properties: {
+    organization:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+        .entityInformationTypes.items.properties.organizations.items,
+    telephone:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.telephones.items,
+    address:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.addresses.items,
+    email:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
   },
 };
 
@@ -91,7 +146,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
       merchants: {
         title: "Merchants",
         createFormSchema: {
-          schema: createScheme,
+          schema: createMerchantsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
@@ -108,7 +163,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
       refundPoints: {
         title: "Refund Points",
         createFormSchema: {
-          schema: createScheme,
+          schema: createrefundPointsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
@@ -122,7 +177,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Customs",
         filterBy: "",
         createFormSchema: {
-          schema: createScheme,
+          schema: createCustomsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
@@ -136,7 +191,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Tax Free",
         filterBy: "",
         createFormSchema: {
-          schema: createScheme,
+          schema: createTaxFreeScheme,
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
@@ -150,7 +205,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         title: "Tax Offices",
         filterBy: "",
         createFormSchema: {
-          schema: createScheme,
+          schema: createTaxOfficesScheme,
           formPositions: ["organization", "telephone", "address", "email"],
           formSubPositions,
         },
