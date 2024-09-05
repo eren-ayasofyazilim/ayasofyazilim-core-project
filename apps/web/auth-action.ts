@@ -1,12 +1,22 @@
 "use server";
-import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
+import {
+  AccountServiceClient,
+  GetApiAccountMyProfileResponse,
+} from "@ayasofyazilim/saas/AccountService";
 import { signIn, signOut } from "auth";
+import { User } from "next-auth";
 import { redirect } from "next/navigation";
+import { isApiError } from "src/app/api/util";
 import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
 const TOKEN_URL = process.env.BASE_URL + "/connect/token";
-const AUTH_URL = process.env.BASE_URL + "/api/account/login";
 const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
+
+interface TokenError {
+  error: string;
+  error_description: string;
+  error_uri: string;
+}
 
 export async function signOutServer() {
   try {
@@ -24,17 +34,6 @@ export async function signInServer({
   password: string;
 }) {
   try {
-    const result = await canItBeAuthorized({
-      username: userIdentifier,
-      password,
-    });
-    if (result?.description !== "Success") {
-      return {
-        status: 500,
-        description: result.error.message,
-      };
-    }
-
     await signIn("credentials", {
       username: userIdentifier,
       password,
@@ -43,10 +42,16 @@ export async function signInServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error) {
+    if (error !== null && typeof error === "object" && "message" in error) {
+      return {
+        status: 400,
+        description: error.message,
+      };
+    }
     return {
       status: 400,
-      description: error.message,
+      description: "Unknown error",
     };
   }
 }
@@ -72,10 +77,16 @@ export async function signUpServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      return {
+        status: error.status,
+        description: error.statusText,
+      };
+    }
     return {
-      status: error.status,
-      description: error?.body?.error?.code,
+      status: 500,
+      description: "Unknown error while signing up",
     };
   }
 }
@@ -95,14 +106,22 @@ export async function sendPasswordResetCodeServer({
     return {
       status: 200,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      return {
+        status: error.status,
+        description: error.statusText,
+      };
+    }
     return {
-      status: error.status,
-      message: error?.body?.error?.message,
+      status: 500,
+      description: "Unknown error while sending password reset code",
     };
   }
 }
-export async function getMyProfile(token: any) {
+export async function getMyProfile(
+  token: string,
+): Promise<GetApiAccountMyProfileResponse> {
   const client = new AccountServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
@@ -112,32 +131,21 @@ export async function getMyProfile(token: any) {
       Authorization: "Bearer " + token,
     },
   });
-  return await client.profile.getApiAccountMyProfile();
+  const profile = await client.profile.getApiAccountMyProfile();
+  return profile;
 }
-export async function canItBeAuthorized(credentials: any) {
-  "use server";
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("X-Requested-With", "XMLHttpRequest");
 
-  const body = {
-    userNameOrEmailAddress: credentials.username as string,
-    password: credentials.password as string,
-  };
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(AUTH_URL, requestOptions);
-  return await response.json();
-}
-export async function signInWithCredentials(credentials: any) {
+export async function signInWithCredentials(credentials: {
+  username: string;
+  password: string;
+}): Promise<User | TokenError> {
   "use server";
-  const scopes = await fetch(OPENID_URL)
+  const scopes: string = await fetch(OPENID_URL)
     .then((response) => response.json())
-    .then((json) => json?.scopes_supported?.join(" "));
+    .then(
+      (json: { scopes_supported?: string[] }) =>
+        json?.scopes_supported?.join(" ") || "",
+    );
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
@@ -145,8 +153,8 @@ export async function signInWithCredentials(credentials: any) {
   const urlEncodedContent: Record<string, string> = {
     grant_type: "password",
     client_id: "Angular",
-    username: credentials.username as string,
-    password: credentials.password as string,
+    username: credentials.username,
+    password: credentials.password,
     scope: scopes,
   };
   Object.keys(urlEncodedContent).forEach((key) =>
@@ -158,7 +166,11 @@ export async function signInWithCredentials(credentials: any) {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  return await response.json();
+  const json: User | TokenError = await response.json();
+  return {
+    ...json,
+    userName: credentials.username,
+  };
 }
 export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
   "use server";
@@ -180,5 +192,6 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  return await response.json();
+  const json: User | TokenError = await response.json();
+  return json;
 }
