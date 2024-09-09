@@ -19,7 +19,7 @@ interface DataConfig {
 }
 
 const formSubPositions = {
-  organization: ["name", "taxpayerId", "customerNumber", "legalStatusCode"],
+  organization: ["name", "taxpayerId", "legalStatusCode", "customerNumber"],
   telephone: ["localNumber", "typeCode"],
   address: [
     "country",
