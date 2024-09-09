@@ -11,6 +11,22 @@ const data: LanguageDataType = {
 export interface ContractServiceResource {
   Refund: string;
   RefundTables: string;
+  "Contracts.Create.Title": string;
+  "Contracts.Create.Description": string;
+  "Contracts.Create.Step.Next": string;
+  "Contracts.Create.Step.Previous": string;
+  "Contracts.Create.Step.Submit": string;
+  "Contracts.Create.Step.Merchant": string;
+  "Contracts.Create.Step.SelectMerchant": string;
+  "Contracts.Create.Step.SelectMerchantAddress": string;
+  "Contracts.Create.Step.ContractSettings": string;
+  "Contracts.Create.Step.Documents": string;
+  "Contracts.Create.Step.Documents.Dropzone.Title": string;
+  "Contracts.Create.Step.Documents.Dropzone.Description": string;
+  "Contracts.Create.Step.Documents.Files.Title": string;
+  "Contracts.Create.Step.Documents.Files.Description": string;
+  "Contracts.Create.Step.Documents.NoFile.Title": string;
+  "Contracts.Create.Step.Documents.NoFile.Description": string;
   "RefundTables.Title": string;
   "RefundTables.Description": string;
   "RefundTables.Create.Title": string;
@@ -56,6 +72,10 @@ export interface ContractServiceResource {
   "RefundFees.Page.Edit.Title": string;
   "RefundFees.Page.Edit.Description": string;
   "RefundFees.Page.Edit.Delete": string;
+  "RefundFees.Page.Edit.Delete.Title": string;
+  "RefundFees.Page.Edit.Delete.Description": string;
+  "RefundFees.Page.Edit.Delete.Cancel": string;
+  "RefundFees.Page.Edit.Delete.Confirm": string;
   "RefundFees.Page.Edit.Save": string;
   "RefundFees.Page.Edit.Fee.Edit": string;
   "RefundFees.Page.Edit.Fee.Edit.Title": string;
@@ -116,6 +136,70 @@ function getLanguageData(
       resource?.RefundTables ||
       data[lang]?.RefundTables ||
       data.en.RefundTables,
+    "Contracts.Create.Title":
+      resource?.["Contracts.Create.Title"] ||
+      data[lang]?.["Contracts.Create.Title"] ||
+      data.en["Contracts.Create.Title"],
+    "Contracts.Create.Description":
+      resource?.["Contracts.Create.Description"] ||
+      data[lang]?.["Contracts.Create.Description"] ||
+      data.en["Contracts.Create.Description"],
+    "Contracts.Create.Step.Next":
+      resource?.["Contracts.Create.Step.Next"] ||
+      data[lang]?.["Contracts.Create.Step.Next"] ||
+      data.en["Contracts.Create.Step.Next"],
+    "Contracts.Create.Step.Previous":
+      resource?.["Contracts.Create.Step.Previous"] ||
+      data[lang]?.["Contracts.Create.Step.Previous"] ||
+      data.en["Contracts.Create.Step.Previous"],
+    "Contracts.Create.Step.Submit":
+      resource?.["Contracts.Create.Step.Submit"] ||
+      data[lang]?.["Contracts.Create.Step.Submit"] ||
+      data.en["Contracts.Create.Step.Submit"],
+    "Contracts.Create.Step.Merchant":
+      resource?.["Contracts.Create.Step.Merchant"] ||
+      data[lang]?.["Contracts.Create.Step.Merchant"] ||
+      data.en["Contracts.Create.Step.Merchant"],
+    "Contracts.Create.Step.SelectMerchant":
+      resource?.["Contracts.Create.Step.SelectMerchant"] ||
+      data[lang]?.["Contracts.Create.Step.SelectMerchant"] ||
+      data.en["Contracts.Create.Step.SelectMerchant"],
+    "Contracts.Create.Step.SelectMerchantAddress":
+      resource?.["Contracts.Create.Step.SelectMerchantAddress"] ||
+      data[lang]?.["Contracts.Create.Step.SelectMerchantAddress"] ||
+      data.en["Contracts.Create.Step.SelectMerchantAddress"],
+    "Contracts.Create.Step.ContractSettings":
+      resource?.["Contracts.Create.Step.ContractSettings"] ||
+      data[lang]?.["Contracts.Create.Step.ContractSettings"] ||
+      data.en["Contracts.Create.Step.ContractSettings"],
+    "Contracts.Create.Step.Documents":
+      resource?.["Contracts.Create.Step.Documents"] ||
+      data[lang]?.["Contracts.Create.Step.Documents"] ||
+      data.en["Contracts.Create.Step.Documents"],
+    "Contracts.Create.Step.Documents.Dropzone.Title":
+      resource?.["Contracts.Create.Step.Documents.Dropzone.Title"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.Dropzone.Title"] ||
+      data.en["Contracts.Create.Step.Documents.Dropzone.Title"],
+    "Contracts.Create.Step.Documents.Dropzone.Description":
+      resource?.["Contracts.Create.Step.Documents.Dropzone.Description"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.Dropzone.Description"] ||
+      data.en["Contracts.Create.Step.Documents.Dropzone.Description"],
+    "Contracts.Create.Step.Documents.Files.Title":
+      resource?.["Contracts.Create.Step.Documents.Files.Title"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.Files.Title"] ||
+      data.en["Contracts.Create.Step.Documents.Files.Title"],
+    "Contracts.Create.Step.Documents.Files.Description":
+      resource?.["Contracts.Create.Step.Documents.Files.Description"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.Files.Description"] ||
+      data.en["Contracts.Create.Step.Documents.Files.Description"],
+    "Contracts.Create.Step.Documents.NoFile.Title":
+      resource?.["Contracts.Create.Step.Documents.NoFile.Title"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.NoFile.Title"] ||
+      data.en["Contracts.Create.Step.Documents.NoFile.Title"],
+    "Contracts.Create.Step.Documents.NoFile.Description":
+      resource?.["Contracts.Create.Step.Documents.NoFile.Description"] ||
+      data[lang]?.["Contracts.Create.Step.Documents.NoFile.Description"] ||
+      data.en["Contracts.Create.Step.Documents.NoFile.Description"],
     "RefundTables.Title":
       resource?.["RefundTables.Title"] ||
       data[lang]?.["RefundTables.Title"] ||
@@ -306,6 +390,22 @@ function getLanguageData(
       resource?.["RefundFees.Page.Edit.Delete"] ||
       data[lang]?.["RefundFees.Page.Edit.Delete"] ||
       data.en["RefundFees.Page.Edit.Delete"],
+    "RefundFees.Page.Edit.Delete.Title":
+      resource?.["RefundFees.Page.Edit.Delete.Title"] ||
+      data[lang]?.["RefundFees.Page.Edit.Delete.Title"] ||
+      data.en["RefundFees.Page.Edit.Delete.Title"],
+    "RefundFees.Page.Edit.Delete.Description":
+      resource?.["RefundFees.Page.Edit.Delete.Description"] ||
+      data[lang]?.["RefundFees.Page.Edit.Delete.Description"] ||
+      data.en["RefundFees.Page.Edit.Delete.Description"],
+    "RefundFees.Page.Edit.Delete.Cancel":
+      resource?.["RefundFees.Page.Edit.Delete.Cancel"] ||
+      data[lang]?.["RefundFees.Page.Edit.Delete.Cancel"] ||
+      data.en["RefundFees.Page.Edit.Delete.Cancel"],
+    "RefundFees.Page.Edit.Delete.Confirm":
+      resource?.["RefundFees.Page.Edit.Delete.Confirm"] ||
+      data[lang]?.["RefundFees.Page.Edit.Delete.Confirm"] ||
+      data.en["RefundFees.Page.Edit.Delete.Confirm"],
     "RefundFees.Page.Edit.Save":
       resource?.["RefundFees.Page.Edit.Save"] ||
       data[lang]?.["RefundFees.Page.Edit.Save"] ||

@@ -2,6 +2,17 @@
   "Refund": "İade",
   "RefundTables": "İade Tabloları",
 
+  "Contracts.Create.Title": "Sözleşmeyi Oluştur",
+  "Contracts.Create.Description": "Yeni bir sözleşme oluşturun",
+  "Contracts.Create.Step.Next": "Sonraki",
+  "Contracts.Create.Step.Previous": "Önceki",
+  "Contracts.Create.Step.Submit": "Kaydet",
+  "Contracts.Create.Step.Merchant": "Mağaza Seçin",
+  "Contracts.Create.Step.SelectMerchant": "Mağaza Seçin",
+  "Contracts.Create.Step.SelectMerchantAddress": "Mağaza Adresini Seçin",
+  "Contracts.Create.Step.ContractSettings": "Sözleşme Ayarları",
+  "Contracts.Create.Step.Documents": "Dokümanlar",
+
   "RefundTables.Title": "İade Tabloları",
   "RefundTables.Description": "İade tablolarını yönetin",
 
@@ -54,6 +65,10 @@
   "RefundFees.Page.Edit.Title": "İade ücretini düzenle {0}",
   "RefundFees.Page.Edit.Description": "İade ücretini düzenle",
   "RefundFees.Page.Edit.Delete": "Sil",
+  "RefundFees.Page.Edit.Delete.Title": "İade ücterini sil",
+  "RefundFees.Page.Edit.Delete.Description": "İade ücretini silmek istediğinizden emin misiniz?",
+  "RefundFees.Page.Edit.Delete.Cancel": "İptal",
+  "RefundFees.Page.Edit.Delete.Confirm": "Devam et",
   "RefundFees.Page.Edit.Save": "Kaydet",
 
   "RefundFees.Page.Edit.Fee.Edit": "Düzenle",
