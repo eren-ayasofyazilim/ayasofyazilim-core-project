@@ -258,15 +258,13 @@ export default function Form({
       const response = await fetch(
         getBaseLink(`/api/crm/subcompanies?maxResultCount=${totalCount}`),
       );
-
-      if (response.ok) {
-        const _data =
-          (await response.json()) as Volo_Abp_Application_Dtos_PagedResultDto_18;
-        if (_data.items) {
-          setData(_data.items);
-        }
-      } else {
-        toast.error("Failed to fetch Sub Companies.");
+      if (!response.ok) {
+        toast.error(response.statusText);
+      }
+      const _data =
+        (await response.json()) as Volo_Abp_Application_Dtos_PagedResultDto_18;
+      if (_data.items) {
+        setData(_data.items);
       }
     } catch (error) {
       toast.error("An error occurred while fetching Sub Companies.");
