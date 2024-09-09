@@ -15,22 +15,25 @@ import type {
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
-import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableHeadersDetailById,
   postRefundTableHeadersDetailById,
+  putRefundTableRefundTableDetailsById,
 } from "../../../actions/refund-tables";
 
 export function RefundRules({
   languageData,
   data,
+  isLoading,
   params,
+  refreshData,
 }: {
+  isLoading: boolean;
   languageData: ContractServiceResource;
   data: RefundTableDetailDto[];
+  refreshData: () => void;
   params: {
     id: string;
     lang: string;
@@ -44,8 +47,14 @@ export function RefundRules({
     "refundPercent",
   ];
   const [tableData, setTableData] = useState<RefundTableDetailDto[] | []>(data);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(isLoading);
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
 
   const createRule: TableAction = {
     type: "Sheet",
@@ -79,12 +88,8 @@ export function RefundRules({
           }
         })
         .finally(() => {
-          router.refresh();
-          router.push(
-            getBaseLink(
-              `app/admin/contracts/refund/refund-tables/${params.id}`,
-            ),
-          );
+          setLoading(false);
+          refreshData();
         });
     },
     componentType: "Autoform",
@@ -94,19 +99,42 @@ export function RefundRules({
   const handleRefundTableHeadersDelete = (row: RefundTableDetailDto) => {
     setLoading(true);
     void deleteRefundTableHeadersDetailById({
-      id: params.id,
-    }).then((response) => {
-      if (response.type === "success") {
-        toast.success("Rule deleted successfully");
-      } else if (response.type === "api-error") {
-        toast.error("Rule deletion failed");
-      } else {
-        toast.error("Fatal error");
-        toast.warning(`row ${row.id}`);
-      }
-    });
-    router.refresh();
-    setLoading(false);
+      id: row.id || "",
+    })
+      .then((response) => {
+        if (response.type === "success") {
+          toast.success("Rule deleted successfully");
+        } else if (response.type === "api-error") {
+          toast.error("Rule deletion failed");
+        } else {
+          toast.error("Fatal error");
+          toast.warning(`row ${row.id}`);
+        }
+      })
+      .finally(() => {
+        refreshData();
+      });
+  };
+  const handleRefundTableHeadersEdit = (
+    formData: RefundTableDetailUpdateDto,
+    originalRow: unknown,
+  ) => {
+    void putRefundTableRefundTableDetailsById({
+      id: (originalRow as RefundTableDetailDto).id || "",
+      requestBody: formData,
+    })
+      .then((response) => {
+        if (response.type === "success") {
+          toast.success("Refund table rule updated successfully");
+        } else if (response.type === "api-error") {
+          toast.error(response.message || "Refund table rule update failed");
+        } else {
+          toast.error("Fatal error");
+        }
+      })
+      .finally(() => {
+        refreshData();
+      });
   };
   const columnsData: ColumnsType = {
     type: "Auto",
@@ -132,26 +160,7 @@ export function RefundRules({
               cta: languageData["RefundTables.Details.Edit.Title"],
             },
           },
-          callback: (formData: RefundTableDetailUpdateDto) => {
-            toast.warning(
-              `Not implemented yet ${params.id} ${formData.maxValue}`,
-            );
-
-            // void putRefundTableRefundTableDetails({
-            //   id: formData.id,
-            //   requestBody: formData,
-            // }).then((response) => {
-            //   if (response.type === "success") {
-            //     toast.success("Refund table rule updated successfully");
-            //   } else if (response.type === "api-error") {
-            //     toast.error(
-            //       response.message || "Refund table rule update failed",
-            //     );
-            //   } else {
-            //     toast.error("Fatal error");
-            //   }
-            // });
-          },
+          callback: handleRefundTableHeadersEdit,
           componentType: "Autoform",
           description: languageData["RefundTables.Details.Edit.Description"],
         },
@@ -218,6 +227,7 @@ export function RefundRules({
         }
       }}
       isLoading={loading}
+      tableClassName="h-auto"
     />
   );
 }

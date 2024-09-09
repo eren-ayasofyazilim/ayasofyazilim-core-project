@@ -23,6 +23,17 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
@@ -42,6 +53,7 @@ export default function Edit({
 }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleSubmit = (data: RefundFeeHeaderUpdateDto) => {
     setLoading(true);
@@ -66,8 +78,9 @@ export default function Edit({
   };
   const handleDelete = () => {
     setLoading(true);
-    void deleteRefundTableFeeHeadersById({ id: details.id || "" })
-      .then((response) => {
+    setDialogOpen(false);
+    void deleteRefundTableFeeHeadersById({ id: details.id || "" }).then(
+      (response) => {
         if (response.type === "success") {
           toast.success(
             response.message || "Refund fee header deleted successfully",
@@ -78,10 +91,8 @@ export default function Edit({
         } else {
           toast.error("Fatal error");
         }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      },
+    );
   };
 
   const handleSetupDelete = (row: RefundFeeDetailDto) => {
@@ -241,9 +252,40 @@ export default function Edit({
         values={details}
       >
         <div className="space-x-2">
-          <Button onClick={handleDelete} type="button" variant="outline">
-            {languageData["RefundFees.Page.Edit.Delete"]}
-          </Button>
+          <AlertDialog open={dialogOpen}>
+            <AlertDialogTrigger asChild>
+              <Button
+                onClick={() => {
+                  setDialogOpen(true);
+                }}
+                variant="outline"
+              >
+                {languageData["RefundFees.Page.Edit.Delete"]}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  {languageData["RefundFees.Page.Edit.Delete.Title"]}
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  {languageData["RefundFees.Page.Edit.Delete.Description"]}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  onClick={() => {
+                    setDialogOpen(false);
+                  }}
+                >
+                  {languageData["RefundFees.Page.Edit.Delete.Cancel"]}
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete}>
+                  {languageData["RefundFees.Page.Edit.Delete.Confirm"]}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <AutoFormSubmit className="mt-0">
             {languageData["RefundFees.Page.Edit.Save"]}
           </AutoFormSubmit>

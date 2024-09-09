@@ -52,8 +52,6 @@ export default function Page({ params }: { params: { lang: string } }) {
       setLoading(false);
     });
   }, []);
-  if (loading) return <Loading />;
-
   const action: TableAction = {
     cta: languageData["RefundTables.Create.Title"],
     type: "Dialog",
@@ -65,34 +63,31 @@ export default function Page({ params }: { params: { lang: string } }) {
     },
     componentType: "Autoform",
     description: languageData["RefundTables.Create.Description"],
+
     callback: (
       data: UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
     ) => {
       void postRefundTableHeaders({
         requestBody: data,
-      }).then((response) => {
-        setLoading(true);
-        if (response.type === "success") {
-          toast.success(
-            response.message || "Refund table created successfully",
-          );
-          void getRefundTableHeaders({}).then((getResponse) => {
-            if (getResponse.type === "success") {
-              toast.success(
-                getResponse.message || "Refund table created successfully",
-              );
-              router.push(
-                getBaseLink("app/admin/contracts/refund/refund-tables"),
-              );
-            } else {
-              toast.error(getResponse.message);
-            }
-            setLoading(false);
-          });
-        } else {
-          toast.error(response.message || "Refund table creation failed");
-        }
-      });
+      })
+        .then((response) => {
+          setLoading(true);
+          if (response.type === "success") {
+            toast.success(
+              response.message || "Refund table created successfully",
+            );
+            router.push(
+              getBaseLink(
+                `app/admin/contracts/refund/refund-tables/${response.data.id}`,
+              ),
+            );
+          } else {
+            toast.error(response.message || "Refund table creation failed");
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   };
   const tableActions: TableAction[] = [
@@ -118,39 +113,19 @@ export default function Page({ params }: { params: { lang: string } }) {
     },
   };
   return (
-    <div className="h-full">
+    <div className="">
       <PageHeader
         description={languageData["RefundTables.Description"]}
+        isLoading={loading}
         title={languageData["RefundTables.Title"]}
       />
       <Card className="h-full px-4">
         <DataTable
           action={action}
           columnsData={columnsData}
-          data={list?.items || []}
+          data={loading ? [] : list?.items || []}
           isLoading={loading}
-        />
-      </Card>
-    </div>
-  );
-}
-
-function Loading() {
-  return (
-    <div className="h-full">
-      <Card className="h-full px-4">
-        <DataTable
-          columnsData={{
-            type: "Auto",
-            data: {
-              tableType: listSchema,
-              excludeList: [],
-              positions: [],
-              actionList: [],
-            },
-          }}
-          data={[]}
-          isLoading
+          tableClassName="h-auto"
         />
       </Card>
     </div>
