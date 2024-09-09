@@ -280,7 +280,9 @@ export default function Form({
 
   const action: TableAction[] = [
     {
-      cta: "New Sub Company",
+      cta: languageData[
+        `${"SubCompany".replaceAll(" ", "")}.New` as keyof typeof languageData
+      ],
       type: "NewPage",
       href: `/app/admin/crm/companies/${params.data}/${params.id}/subcompany/new/`,
     },
@@ -315,7 +317,7 @@ export default function Form({
           { name: languageData.Telephone, id: "telephone" },
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
-          { name: "Sub Companies", id: "SubCompany" },
+          { name: languageData["Sub.Company"], id: "SubCompany" },
         ]}
         vertical
       >

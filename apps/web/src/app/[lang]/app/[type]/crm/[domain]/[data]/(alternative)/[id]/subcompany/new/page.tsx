@@ -110,11 +110,11 @@ export default function Page({
     <>
       <PageHeader
         LinkElement={Link}
-        description="Add new Sub Company"
+        description={languageData["SubCompany.Description"]}
         href={getBaseLink(
           `/app/admin/crm/${params.domain}/${params.data}/${params.id}`,
         )}
-        title="Add new Sub Company"
+        title={languageData["SubCompany.Description"]}
       />
       <div className="flex h-full w-full flex-row">
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">

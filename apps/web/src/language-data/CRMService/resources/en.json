@@ -24,5 +24,9 @@
   "Email": "Email",
   "Telephone": "Telephone",
   "Address": "Address",
-  "Save": "Save"
+  "Save": "Save",
+  "Sub.Company": "Sub Companies",
+  "SubCompany": " Sub Companies",
+  "SubCompany.New": " New Sub Company",
+  "SubCompany.Description": "Add new Sub Company"
 }
