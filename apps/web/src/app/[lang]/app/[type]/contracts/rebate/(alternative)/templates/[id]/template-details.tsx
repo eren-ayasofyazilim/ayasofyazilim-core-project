@@ -6,10 +6,14 @@ import type { UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHe
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import Rebate from "../rebate";
-import { getRebateTablesRebateTableHeadersDetailsById } from "../../../../actions/rebate-tables";
+import {
+  getRebateTablesRebateTableHeadersDetailsById,
+  putRebateTablesRebateTableHeadersById,
+} from "../../../../actions/rebate-tables";
 
 export default function TemplateDetails({
   templateId,
@@ -18,6 +22,7 @@ export default function TemplateDetails({
   templateId: string;
   languageData: ContractServiceResource;
 }): JSX.Element {
+  const router = useRouter();
   const [details, setDetails] = useState<RebateTableHeaderDto>();
   useEffect(() => {
     void getRebateTablesRebateTableHeadersDetailsById({
@@ -50,7 +55,29 @@ export default function TemplateDetails({
           initialFeesData={details.processingFeeDetails || []}
           initialSetupData={details.rebateTableDetails || []}
           languageData={languageData}
-          onSubmit={() => toast.success("Success")}
+          onSubmit={(data) => {
+            void putRebateTablesRebateTableHeadersById({
+              id: templateId,
+              requestBody: {
+                isTemplate: true, //this is necessary to save as template
+                ...data,
+              },
+            })
+              .then((response) => {
+                if (response.type === "success") {
+                  toast.success("Rebate table saved successfully!");
+                } else if (response.type === "api-error") {
+                  toast.error(response.data);
+                } else {
+                  toast.error("Fatal error");
+                }
+              })
+              .finally(() => {
+                router.push(
+                  getBaseLink("/app/admin/contracts/rebate/templates"),
+                );
+              });
+          }}
         />
       </Card>
     </div>
