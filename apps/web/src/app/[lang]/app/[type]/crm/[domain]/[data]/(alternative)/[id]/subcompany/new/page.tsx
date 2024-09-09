@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { TableData } from "src/utils";
@@ -18,6 +14,33 @@ import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../../../../../data";
 import type { CreateOrganizationDto } from "../../../new/page";
 
+interface FormSchema {
+  schema: {
+    properties: {
+      telephone: {
+        properties: {
+          typeCode: {
+            enum: string[];
+          };
+        };
+      };
+      address: {
+        properties: {
+          typeCode: {
+            enum: string[];
+          };
+        };
+      };
+      email: {
+        properties: {
+          typeCode: {
+            enum: string[];
+          };
+        };
+      };
+    };
+  };
+}
 const formSubPositions = {
   organization: [
     "name",
@@ -107,55 +130,46 @@ export default function Page({
   };
 
   return (
-    <>
-      <PageHeader
-        LinkElement={Link}
-        description={languageData["SubCompany.Description"]}
-        href={getBaseLink(
-          `/app/admin/crm/${params.domain}/${params.data}/${params.id}`,
-        )}
-        title={languageData["SubCompany.Description"]}
-      />
-      <div className="flex h-full w-full flex-row">
-        <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
-          <CardContent>
-            <AutoForm
-              fieldConfig={{
-                telephone: {
-                  localNumber: {
-                    fieldType: "phone",
-                    displayName: "Telephone Number",
-                    inputProps: {
-                      showLabel: true,
-                    },
-                  },
-                },
-              }}
-              formClassName="pb-40 "
-              formSchema={formSchemaByData()}
-              onSubmit={(val) => {
-                void handleSave(val as CreateOrganizationDto);
-              }}
-            >
-              <AutoFormSubmit className="float-right">
-                {languageData.Save}
-              </AutoFormSubmit>
-            </AutoForm>
-          </CardContent>
-        </Card>
-      </div>
-    </>
+    <AutoForm
+      fieldConfig={{
+        telephone: {
+          localNumber: {
+            fieldType: "phone",
+            displayName: "Telephone Number",
+            inputProps: {
+              showLabel: true,
+            },
+          },
+        },
+      }}
+      formClassName="pb-40 "
+      formSchema={formSchemaByData()}
+      onSubmit={(val) => {
+        void handleSave(val as CreateOrganizationDto);
+      }}
+    >
+      <AutoFormSubmit className="float-right">
+        {languageData.Save}
+      </AutoFormSubmit>
+    </AutoForm>
   );
 }
 
 function formSchemaByData() {
   const config = dataConfigOfCrm.companies.pages.merchants;
   if (config.createFormSchema) {
-    config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
-      ["Home", "Office", "Mobile", "Fax"];
-    config.createFormSchema.schema.properties.address.properties.typeCode.enum =
-      ["Home", "Office"];
-    config.createFormSchema.schema.properties.email.properties.typeCode.enum = [
+    const schema = config.createFormSchema as FormSchema;
+    schema.schema.properties.telephone.properties.typeCode.enum = [
+      "Home",
+      "Office",
+      "Mobile",
+      "Fax",
+    ];
+    schema.schema.properties.address.properties.typeCode.enum = [
+      "Home",
+      "Office",
+    ];
+    schema.schema.properties.email.properties.typeCode.enum = [
       "Work",
       "Personal",
     ];
