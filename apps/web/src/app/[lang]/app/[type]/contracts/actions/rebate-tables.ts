@@ -3,6 +3,8 @@ import type {
   DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
   GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
   GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
+  PostApiContractServiceRebateTablesRebateTableHeadersData,
+  PutApiContractServiceRebateTablesRebateTableHeadersByIdData,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto,
   Volo_Abp_Application_Dtos_PagedResultDto_18,
 } from "@ayasofyazilim/saas/ContractService";
@@ -48,7 +50,6 @@ export async function getRebateTablesRebateTableHeadersDetailsById(
       status: 200,
     } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
   } catch (error) {
-    // console.log(error);
     return structuredError(error);
   }
 } //get rebate tables details
@@ -73,3 +74,45 @@ export async function deleteRebateTablesRebateTableHeadersById(
   }
 } //delete fee details
 /** RebateTable **/
+
+export async function postRebateTablesRebateTableHeaders(
+  body: PostApiContractServiceRebateTablesRebateTableHeadersData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.rebateTables.postApiContractServiceRebateTablesRebateTableHeaders(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
+  } catch (error) {
+    return structuredError(error);
+  }
+} //post rebate tables headers
+
+export async function putRebateTablesRebateTableHeadersById(
+  body: PutApiContractServiceRebateTablesRebateTableHeadersByIdData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.rebateTables.putApiContractServiceRebateTablesRebateTableHeadersById(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto>;
+  } catch (error) {
+    return structuredError(error);
+  }
+} //put rebate tables headers

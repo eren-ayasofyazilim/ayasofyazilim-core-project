@@ -13,6 +13,7 @@ import {
 import type {
   AyasofYazilim_Enum_Enums_EnumDto as EnumDto,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderCreateDto as RebateTableHeaderCreateDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderUpdateDto as RebateTableHeaderUpdateSchema } from "@ayasofyazilim/saas/ContractService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
@@ -20,11 +21,17 @@ import Button from "@repo/ayasofyazilim-ui/molecules/button";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { EditIcon, Trash2Icon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 
-function NameCell({ getValue, row: { index }, column: { id }, table }: any) {
-  const name = getValue();
+function NameCell({
+  getValue,
+  row: { index },
+  column: { id },
+  table,
+  placeholder,
+}: any) {
+  const name = getValue() || "";
   const [value, setValue] = useState(name);
 
   const onBlur = (): void => {
@@ -41,13 +48,20 @@ function NameCell({ getValue, row: { index }, column: { id }, table }: any) {
       onChange={(e) => {
         setValue(e.target.value);
       }}
+      placeholder={placeholder}
       type="text"
       value={value as string}
     />
   );
 }
 
-function AmountCell({ getValue, row: { index }, column: { id }, table }: any) {
+function AmountCell({
+  getValue,
+  row: { index },
+  column: { id },
+  table,
+  placeholder,
+}: any) {
   const amount = getValue();
   const [value, setValue] = useState(amount);
 
@@ -66,6 +80,7 @@ function AmountCell({ getValue, row: { index }, column: { id }, table }: any) {
       onChange={(e) => {
         setValue(e.target.value);
       }}
+      placeholder={placeholder}
       type="number"
       value={value as number}
     />
@@ -106,7 +121,12 @@ const feescolumns = ({
           {languageData["RebateTables.Templates.Column.Name"]}
         </div>
       ),
-      cell: (props: any) => <NameCell {...props} />,
+      cell: (props: any) => (
+        <NameCell
+          {...props}
+          placeholder={languageData["RebateTables.Templates.Column.Name"]}
+        />
+      ),
     },
     {
       accessorKey: "amount",
@@ -115,7 +135,12 @@ const feescolumns = ({
           {languageData["RebateTables.Templates.Column.Amount"]}
         </div>
       ),
-      cell: (props: any) => <AmountCell {...props} />,
+      cell: (props: any) => (
+        <AmountCell
+          {...props}
+          placeholder={languageData["RebateTables.Templates.Column.Amount"]}
+        />
+      ),
     },
     {
       accessorKey: "actions",
@@ -377,27 +402,36 @@ export default function Rebate({
   initialFeesData: any[];
   initialSetupData: any[];
   details?: RebateTableHeaderDto;
-  onSubmit: (data: unknown) => void;
+  onSubmit: (data: RebateTableHeaderCreateDto) => void;
 }) {
   const formSchema = createZodObject(RebateTableHeaderUpdateSchema, [
     "name",
+    "validFrom",
+    "validTo",
     "calculateNetCommissionInsteadOfRefund",
   ]);
-  const [autoFormData, setAutoFormData] = useState<Record<string, any>>({});
-  const [feesData, setFeesData] = useState<any[]>(initialFeesData);
-  const [setupData, setSetupData] = useState<any[]>(initialSetupData);
-  const handleFormChange = (newFormData: any): void => {
-    setAutoFormData(newFormData);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const triggerSubmit = () => {
+    buttonRef.current && buttonRef.current.click();
   };
 
-  const handleSubmit = () => {
+  const [feesData, setFeesData] = useState<any[]>(initialFeesData);
+  const [setupData, setSetupData] = useState<any[]>(initialSetupData);
+  const handleSubmit = (newFormData: unknown): void => {
     const filteredFeesData = feesData.filter((row) => !isRowEmpty(row));
     const filteredSetupData = setupData.filter((row) => !isRowEmpty(row));
 
-    const payload: Record<string, any | any[]> = {
-      autoFormData,
-      feesData: filteredFeesData,
-      setupData: filteredSetupData,
+    const payload: RebateTableHeaderCreateDto = {
+      ...(newFormData as Pick<
+        RebateTableHeaderCreateDto,
+        | "name"
+        | "validFrom"
+        | "validTo"
+        | "calculateNetCommissionInsteadOfRefund"
+      >),
+      processingFeeDetails: filteredFeesData,
+      rebateTableDetails: filteredSetupData,
     };
     onSubmit(payload);
   };
@@ -405,7 +439,6 @@ export default function Rebate({
   const isRowEmpty = (row: any): boolean => {
     return Object.values(row).every((value) => value === "" || value === null);
   };
-
   const feesHeaders = { name: "", amount: "" };
 
   const setupHeaders = {
@@ -425,21 +458,25 @@ export default function Rebate({
             : languageData["RebateTables.Templates.Create.TemplateInformation"]}
         </CardHeader>
         <CardContent>
-          <div className="px-9 [&>div>form>div]:space-y-4">
-            <AutoForm
-              fieldConfig={{
-                withoutBorder: { fieldType: "switch" },
-                calculateNetCommissionInsteadOfRefund: {
-                  fieldType: "switch",
-                },
-              }}
-              formSchema={formSchema}
-              onParsedValuesChange={handleFormChange}
-              values={details}
-            />
-          </div>
+          <AutoForm
+            className="grid grid-cols-2 gap-4 space-y-0"
+            fieldConfig={{
+              withoutBorder: { fieldType: "switch" },
+              name: {
+                containerClassName: "col-span-2",
+              },
+              calculateNetCommissionInsteadOfRefund: {
+                fieldType: "switch",
+              },
+            }}
+            formSchema={formSchema}
+            onSubmit={handleSubmit}
+            values={details}
+          >
+            <button className="hidden" ref={buttonRef} />
+          </AutoForm>
 
-          <div className="mt-4 p-4">
+          <div className="mt-4">
             <div className="relative flex items-center">
               <span className="text-lg font-medium">
                 {type === "Edit"
@@ -463,11 +500,12 @@ export default function Rebate({
                   setFeesData(data);
                 }}
                 showView={false}
+                tableClassName="h-auto"
               />
             </div>
           </div>
 
-          <div className="mt-4 p-4">
+          <div className="mt-4">
             <div className="relative flex items-center">
               <span className="text-lg font-medium">
                 {type === "Edit"
@@ -491,14 +529,16 @@ export default function Rebate({
                   setSetupData(data);
                 }}
                 showView={false}
+                tableClassName="h-auto"
               />
             </div>
           </div>
-          <div className="mt-4 flex justify-end gap-5 px-9">
+
+          <div className="sticky bottom-0 z-10 mt-4 flex justify-end gap-5">
             {/* <Button className=" w-40 ">              {type === "Edit"
                 ? languageData["RebateTables.Templates.Edit.Cancel"]
                 : languageData["RebateTables.Templates.Create.Cancel"]}</Button> */}
-            <Button className=" w-40 " onClick={handleSubmit}>
+            <Button className="w-40" onClick={triggerSubmit}>
               {type === "Edit"
                 ? languageData["RebateTables.Templates.Edit.Save"]
                 : languageData["RebateTables.Templates.Create.Save"]}
