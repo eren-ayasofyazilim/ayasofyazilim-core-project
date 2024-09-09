@@ -1,0 +1,14 @@
+{
+  "FileUploader.CannotUploadMoreThanOne": "Birden fazla dosya yükleyemezsiniz",
+  "FileUploader.CannotUploadMoreThan{0}": "En fazla {0} dosya yükleyebilirsiniz",
+  "FileUploader.RejectedFile {0}": "Dosya {0} reddedildi",
+  "FileUploader.Files": "dosyalar",
+  "FileUploader.File": "dosya",
+  "FileUploader.Uploading{0}": "{0} yükleniyor...",
+  "FileUploader.{0}Uploaded": "{0} yüklendi",
+  "FileUploader.FailedToUpload{0}": "{0} yüklenirken hata oluştu",
+  "FileUploader.DropTheFilesHere": "Dosyaları buraya bırakın",
+  "FileUploader.DragAndDropFilesHere": "Dosyaları buraya sürükleyin ya da seçmek için tıklatın",
+  "FileUploader.YouCanUpload{0}files{1}each": "En fazla {0} dosya yükleyebilirsiniz (her biri en fazla {1})",
+  "FileUploader.RemoveFile": "Dosyayı kaldır"
+}
