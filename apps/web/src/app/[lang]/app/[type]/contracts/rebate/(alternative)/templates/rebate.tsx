@@ -11,9 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type {
-  AyasofYazilim_Enum_Enums_EnumDto as EnumDto,
-  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderCreateDto as RebateTableHeaderCreateDto,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderUpdateDto as RebateTableHeaderUpdateSchema } from "@ayasofyazilim/saas/ContractService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
@@ -170,8 +169,8 @@ function SetupCell({
   table,
   languageData,
 }: any) {
-  const setupValue = getValue() as EnumDto | undefined;
-  const [value, setValue] = useState<string | undefined>(setupValue?.key || "");
+  const setupValue = getValue() as string | undefined;
+  const [value, setValue] = useState<string | undefined>(setupValue || "");
 
   const onChange = (newValue: string): void => {
     setValue(newValue);
@@ -179,7 +178,7 @@ function SetupCell({
   };
 
   useEffect(() => {
-    setValue(setupValue?.key || "");
+    setValue(setupValue || "");
   }, [setupValue]);
 
   return (
@@ -245,15 +244,15 @@ function Fixedfee({ getValue, row: { index }, column: { id }, table }: any) {
         setValue(e.target.value);
       }}
       type="number"
-      value={value as string}
+      value={value}
     />
   );
 }
 
 function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
-  const variableFeeValue = getValue() as EnumDto | undefined;
+  const variableFeeValue = getValue() as string | undefined;
   const [value, setValue] = useState<string | undefined>(
-    variableFeeValue?.key || "",
+    variableFeeValue || "",
   );
   const onChange = (newValue: string): void => {
     setValue(newValue);
@@ -261,7 +260,7 @@ function Variablefee({ getValue, row: { index }, column: { id }, table }: any) {
   };
 
   useEffect(() => {
-    setValue(variableFeeValue?.key || "");
+    setValue(variableFeeValue || "");
   }, [variableFeeValue]);
   return (
     <Select onValueChange={onChange} value={value}>
@@ -388,7 +387,12 @@ const setupcolumns = ({
     },
   ];
 };
-
+interface Test {
+  refundMethod: string;
+  fixedFeeValue: number;
+  variableFee: string;
+  percentFeeValue: number;
+}
 export default function Rebate({
   type = "Create",
   languageData,
@@ -442,10 +446,10 @@ export default function Rebate({
   const feesHeaders = { name: "", amount: "" };
 
   const setupHeaders = {
-    refundmethod: "",
-    fixedfee: "",
-    variablefee: "",
-    percent: "",
+    refundMethod: "",
+    fixedFeeValue: 0,
+    variableFee: "",
+    percentFeeValue: 0,
   };
 
   return (
@@ -525,7 +529,14 @@ export default function Rebate({
                 }}
                 data={setupData}
                 editable
-                onDataUpdate={(data) => {
+                onDataUpdate={(data: Test[]) => {
+                  data.map((row) => {
+                    return {
+                      ...row,
+                      fixedFeeValue: Number(row.fixedFeeValue),
+                      percentFeeValue: Number(row.percentFeeValue),
+                    };
+                  });
                   setSetupData(data);
                 }}
                 showView={false}

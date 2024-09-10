@@ -14,7 +14,6 @@ export default function NewRebate({
   const router = useRouter();
   return (
     <Rebate
-      details={{}}
       initialFeesData={[]}
       initialSetupData={[]}
       languageData={languageData}
@@ -27,7 +26,9 @@ export default function NewRebate({
         })
           .then((response) => {
             if (response.type === "success") {
-              toast.success(response.message);
+              toast.success(
+                response.message || "New rebate template created successfully",
+              );
             } else if (response.type === "api-error") {
               response.data
                 .split("\n")
