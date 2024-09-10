@@ -73,7 +73,7 @@ export function RefundRules({
     cta: languageData["RefundTables.Details.Create.Title"],
     callback: (formData: RefundTableDetailCreateDto) => {
       void postRefundTableHeadersDetailById({
-        refundTableHeaderId: params.id,
+        id: params.id,
         requestBody: formData,
       })
         .then((response) => {
