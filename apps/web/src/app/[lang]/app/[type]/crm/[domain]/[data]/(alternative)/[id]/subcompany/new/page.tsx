@@ -131,7 +131,14 @@ export default function Page({
 
   return (
     <AutoForm
+      className="grid-col-1 grid grid-rows-1 gap-2 space-y-0 lg:grid-cols-3 lg:grid-rows-2"
       fieldConfig={{
+        address: {
+          className: "row-span-2",
+        },
+        organization: {
+          className: "row-span-2",
+        },
         telephone: {
           localNumber: {
             fieldType: "phone",
@@ -177,6 +184,7 @@ function formSchemaByData() {
   return createZodObject(
     config.createFormSchema?.schema,
     config.createFormSchema?.formPositions,
+    undefined,
     formSubPositions,
   );
 }
