@@ -136,6 +136,13 @@ export default function Page({
                 organization: {
                   className: "row-span-2",
                 },
+                email: {
+                  emailAddress: {
+                    inputProps: {
+                      type: "email",
+                    },
+                  },
+                },
                 telephone: {
                   localNumber: {
                     fieldType: "phone",
