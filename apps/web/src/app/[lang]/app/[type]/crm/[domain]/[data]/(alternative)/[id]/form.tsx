@@ -260,6 +260,7 @@ export default function Form({
       );
       if (!response.ok) {
         toast.error(response.statusText);
+        return;
       }
       const _data =
         (await response.json()) as Volo_Abp_Application_Dtos_PagedResultDto_18;
