@@ -128,7 +128,14 @@ export default function Page({
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
           <CardContent>
             <AutoForm
+              className="grid-col-1 grid grid-rows-1 gap-2 space-y-0 lg:grid-cols-3 lg:grid-rows-2"
               fieldConfig={{
+                address: {
+                  className: "row-span-2",
+                },
+                organization: {
+                  className: "row-span-2",
+                },
                 telephone: {
                   localNumber: {
                     fieldType: "phone",
@@ -171,6 +178,7 @@ function formSchemaByData(data: string) {
   return createZodObject(
     config.createFormSchema?.schema,
     config.createFormSchema?.formPositions,
+    undefined,
     config.createFormSchema?.formSubPositions,
   );
 }
