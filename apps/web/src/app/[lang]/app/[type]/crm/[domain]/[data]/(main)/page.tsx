@@ -201,7 +201,7 @@ export default function Page({
     type: "Action",
     callback: (row) => {
       router.push(
-        getBaseLink(`app/admin/crm/companies/${params.data}/details/${row.id}`),
+        getBaseLink(`app/admin/crm/companies/${params.data}/${row.id}`),
       );
     },
   });

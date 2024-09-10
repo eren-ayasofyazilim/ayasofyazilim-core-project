@@ -1,5 +1,7 @@
 {
   "new": "New",
+  "Delete": "Delete",
+  "Edit": "Edit",
   "Merchants": "Merchants",
   "Merchants.New": "New Merchant",
   "Merchants.Description": "You can view the merchants from here.",
@@ -24,5 +26,9 @@
   "Email": "Email",
   "Telephone": "Telephone",
   "Address": "Address",
-  "Save": "Save"
+  "Save": "Save",
+  "Sub.Company": "Sub Companies",
+  "SubCompany": " Sub Companies",
+  "SubCompany.New": " New Sub Company",
+  "SubCompany.Description": "Add new Sub Company"
 }

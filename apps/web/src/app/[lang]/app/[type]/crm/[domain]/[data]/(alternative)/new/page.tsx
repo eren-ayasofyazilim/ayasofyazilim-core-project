@@ -17,13 +17,8 @@ import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../../../data";
 
-export interface CreateMerchants {
-  organization: {
-    name: string;
-    taxpayerId: string;
-    legalStatusCode: string;
-    customerNumber: string;
-  };
+export interface CreateOrganizationDto {
+  organization: Record<string, string>;
   telephone: {
     areaCode: string;
     localNumber: string;
@@ -55,6 +50,7 @@ export default function Page({
     data: string;
     domain: string;
     lang: string;
+    id: string;
   };
 }) {
   const router = useRouter();
@@ -63,20 +59,38 @@ export default function Page({
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
-  const handleSave = async (formData: CreateMerchants) => {
+  const handleSave = async (formData: CreateOrganizationDto) => {
     const isValid = isPhoneValid(formData.telephone.localNumber);
     if (!isValid) {
       return;
     }
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
+    const createformData = {
+      entityInformationTypes: [
+        {
+          organizations: [
+            {
+              ...formData.organization,
+              contactInformations: [
+                {
+                  telephones: [formData.telephone],
+                  emails: [formData.email],
+                  addresses: [formData.address],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
     try {
       const response = await fetch(getBaseLink(`api/crm/${params.data}`), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(createformData),
       });
       if (response.ok) {
         toast.success(`${params.data} added successfully`);
@@ -128,7 +142,7 @@ export default function Page({
               formClassName="pb-40 "
               formSchema={formSchemaByData(params.data)}
               onSubmit={(val) => {
-                void handleSave(val as CreateMerchants);
+                void handleSave(val as CreateOrganizationDto);
               }}
             >
               <AutoFormSubmit className="float-right">

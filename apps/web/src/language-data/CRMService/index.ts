@@ -37,6 +37,9 @@ export interface CRMServiceServiceResource {
   Telephone: string;
   Address: string;
   Save: string;
+  "Sub.Company": string;
+  "SubCompany.New": string;
+  "SubCompany.Description": string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -57,6 +60,18 @@ function getLanguageData(
       resource?.Telephone || data[lang]?.Telephone || data.en.Telephone,
     Address: resource?.Address || data[lang]?.Address || data.en.Address,
     Save: resource?.Save || data[lang]?.Save || data.en.Save,
+    "Sub.Company":
+      resource?.["Sub.Company"] ||
+      data[lang]?.["Sub.Company"] ||
+      data.en["Sub.Company"],
+    "SubCompany.New":
+      resource?.["SubCompany.New"] ||
+      data[lang]?.["SubCompany.New"] ||
+      data.en["SubCompany.New"],
+    "SubCompany.Description":
+      resource?.["SubCompany.Description"] ||
+      data[lang]?.["SubCompany.Description"] ||
+      data.en["SubCompany.Description"],
 
     Merchants:
       resource?.Merchants || data[lang]?.Merchants || data.en.Merchants,
@@ -68,7 +83,6 @@ function getLanguageData(
       resource?.["Merchants.Edit"] ||
       data[lang]?.["Merchants.Edit"] ||
       data.en["Merchants.Edit"],
-
     "Merchants.Description":
       resource?.["Merchants.Description"] ||
       data[lang]?.["Merchants.Description"] ||
@@ -82,14 +96,14 @@ function getLanguageData(
       resource?.["RefundPoints.New"] ||
       data[lang]?.["RefundPoints.New"] ||
       data.en["RefundPoints.New"],
-    "RefundPoints.Description":
-      resource?.["RefundPoints.Description"] ||
-      data[lang]?.["RefundPoints.Description"] ||
-      data.en["RefundPoints.Description"],
     "RefundPoints.Edit":
       resource?.["RefundPoints.Edit"] ||
       data[lang]?.["RefundPoints.Edit"] ||
       data.en["RefundPoints.Edit"],
+    "RefundPoints.Description":
+      resource?.["RefundPoints.Description"] ||
+      data[lang]?.["RefundPoints.Description"] ||
+      data.en["RefundPoints.Description"],
 
     Customs: resource?.Customs || data[lang]?.Customs || data.en.Customs,
     "Customs.New":
@@ -104,12 +118,12 @@ function getLanguageData(
       resource?.["Customs.Description"] ||
       data[lang]?.["Customs.Description"] ||
       data.en["Customs.Description"],
+
     TaxFree: resource?.TaxFree || data[lang]?.TaxFree || data.en.TaxFree,
     "TaxFree.New":
       resource?.["TaxFree.New"] ||
       data[lang]?.["TaxFree.New"] ||
       data.en["TaxFree.New"],
-
     "TaxFree.Edit":
       resource?.["TaxFree.Edit"] ||
       data[lang]?.["TaxFree.Edit"] ||
@@ -118,6 +132,7 @@ function getLanguageData(
       resource?.["TaxFree.Description"] ||
       data[lang]?.["TaxFree.Description"] ||
       data.en["TaxFree.Description"],
+
     TaxOffices:
       resource?.TaxOffices || data[lang]?.TaxOffices || data.en.TaxOffices,
     "TaxOffices.New":
