@@ -146,7 +146,7 @@ export default function Edit({
   const handleSetupCreate = (row: RefundFeeDetailCreateDto) => {
     setLoading(true);
     void postRefundTableFeeHeaderDetailsByRefundTableHeaderId({
-      refundFeeHeaderId: details.id || "",
+      id: details.id || "",
       requestBody: row,
     })
       .then((response) => {

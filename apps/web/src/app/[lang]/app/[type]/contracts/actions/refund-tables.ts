@@ -10,9 +10,9 @@ import type {
   GetApiContractServiceRefundTablesRefundTableDetailsByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersData,
-  PostApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderIdData,
+  PostApiContractServiceRefundTablesRefundFeeHeadersByIdRefundFeeDetailsData,
   PostApiContractServiceRefundTablesRefundFeeHeadersData,
-  PostApiContractServiceRefundTablesRefundTableDetailsByRefundTableHeaderIdData,
+  PostApiContractServiceRefundTablesRefundTableHeadersByIdRefundTableDetailsData,
   PostApiContractServiceRefundTablesRefundTableHeadersData,
   PutApiContractServiceRefundTablesRefundFeeDetailsByIdData,
   PutApiContractServiceRefundTablesRefundFeeHeadersByIdData,
@@ -133,13 +133,13 @@ export async function getRefundTableHeadersById(
 }
 
 export async function postRefundTableHeadersDetailById(
-  body: PostApiContractServiceRefundTablesRefundTableDetailsByRefundTableHeaderIdData,
+  body: PostApiContractServiceRefundTablesRefundTableHeadersByIdRefundTableDetailsData,
 ) {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.refundTables.postApiContractServiceRefundTablesRefundTableDetailsByRefundTableHeaderId(
+      await client.refundTables.postApiContractServiceRefundTablesRefundTableHeadersByIdRefundTableDetails(
         body,
       );
     revalidatePath("/");
@@ -147,7 +147,7 @@ export async function postRefundTableHeadersDetailById(
       type: "success",
       data: response,
       status: 200,
-    } as ServerResponse<UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto>;
+    } as ServerResponse<UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto>;
   } catch (error) {
     return structuredError(error);
   }
@@ -336,13 +336,13 @@ export async function getRefundTableFeeHeadersDetailById(
   }
 } //get header details by id
 export async function postRefundTableFeeHeaderDetailsByRefundTableHeaderId(
-  body: PostApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderIdData,
+  body: PostApiContractServiceRefundTablesRefundFeeHeadersByIdRefundFeeDetailsData,
 ) {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.refundTables.postApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderId(
+      await client.refundTables.postApiContractServiceRefundTablesRefundFeeHeadersByIdRefundFeeDetails(
         body,
       );
     revalidatePath("/");
