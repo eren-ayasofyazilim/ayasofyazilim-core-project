@@ -7,6 +7,7 @@ import type {
   GetApiContractServiceRefundTablesRefundFeeHeadersByIdData,
   GetApiContractServiceRefundTablesRefundFeeHeadersData,
   GetApiContractServiceRefundTablesRefundFeeHeadersDetailByIdData,
+  GetApiContractServiceRefundTablesRefundTableDetailsByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersData,
   PostApiContractServiceRefundTablesRefundFeeDetailsByRefundFeeHeaderIdData,
@@ -151,6 +152,26 @@ export async function postRefundTableHeadersDetailById(
     return structuredError(error);
   }
 }
+export async function getRefundTableRefundTableDetailsById(
+  body: GetApiContractServiceRefundTablesRefundTableDetailsByIdData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.refundTables.getApiContractServiceRefundTablesRefundTableDetailsById(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+    } as ServerResponse<UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto>;
+  } catch (error) {
+    return structuredError(error);
+  }
+}
 export async function putRefundTableRefundTableDetailsById(
   body: PutApiContractServiceRefundTablesRefundTableDetailsByIdData,
 ) {
@@ -191,6 +212,7 @@ export async function deleteRefundTableHeadersDetailById(
     return structuredError(error);
   }
 }
+
 /* RefundFees */
 export async function getRefundTableFeeHeaders(
   body: GetApiContractServiceRefundTablesRefundFeeHeadersData,

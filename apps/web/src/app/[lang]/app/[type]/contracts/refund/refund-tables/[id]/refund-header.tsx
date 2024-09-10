@@ -4,8 +4,9 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
 import type {
-  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
-  UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
+  UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto as RefundTableDetailDto,
+  UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as RefundTableHeaderDto,
+  UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderUpdateDto as RefundTableHeaderUpdateDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderUpdateDto as editSchema } from "@ayasofyazilim/saas/ContractService";
 import {
@@ -25,11 +26,13 @@ import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
   deleteRefundTableHeadersById,
   getRefundTableHeadersById,
+  putRefundTableHeadersById,
 } from "../../../actions/refund-tables";
 import { RefundRules } from "./refund-rule";
 
@@ -43,15 +46,12 @@ export default function RefundHeader({
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isSaveable, setIsSaveable] = useState(false);
-  const [details, setDetails] =
-    useState<UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto>();
-  const [tableData, setTableData] = useState<
-    | UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto[]
-    | []
-  >([]);
+  const [details, setDetails] = useState<RefundTableHeaderDto>();
+  const [tableData, setTableData] = useState<RefundTableDetailDto[] | []>([]);
   const router = useRouter();
 
-  useEffect(() => {
+  const getAndSetDetails = () => {
+    setLoading(true);
     void getRefundTableHeadersById({ id: params.id }).then((response) => {
       if (response.type === "success") {
         setDetails(response.data);
@@ -59,11 +59,11 @@ export default function RefundHeader({
         setLoading(false);
       }
     });
+  };
+
+  useEffect(() => {
+    getAndSetDetails();
   }, []);
-  if (loading) {
-    return <Skeleton />;
-  }
-  if (!details) return <div>Not Found</div>;
 
   const handleRefundTableHeadersDelete = () => {
     setLoading(true);
@@ -79,40 +79,48 @@ export default function RefundHeader({
     setDialogOpen(false);
     router.push(getBaseLink("app/admin/contracts/refund/refund-tables"));
   };
-  const handleRefundTableHeadersEdit = () => {
-    toast.warning("Not implemented yet");
-    //   // setLoading(true);
-    //   return;
-    //   void putRefundTableHeaders({
-    //     // id: row.id,
-    //     //TODO: saas güncellenince row.id silenecek
-    //     requestBody: { ...data, id: row.id },
-    //   }).then((response) => {
-    //     if (response.status === 200 && response.data) {
-    //       toast.success(response.message || "Refund table updated successfully");
-    //     } else {
-    //       toast.error(response.message || "Refund table update failed");
-    //     }
-    //     setLoading(false);
-    //   });
-    // i will implement this with saas update
+  const handleRefundTableHeadersEdit = (data: unknown) => {
+    //unknown is necessary because get types nullable
+    setLoading(true);
+    void putRefundTableHeadersById({
+      id: params.id,
+      requestBody: data as RefundTableHeaderUpdateDto,
+    })
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          toast.success(
+            response.message || "Refund table updated successfully",
+          );
+        } else {
+          toast.error(response.message || "Refund table update failed");
+        }
+      })
+      .finally(() => {
+        getAndSetDetails();
+      });
   };
   return (
     <>
       <PageHeader
         LinkElement={Link}
-        description={`${details.validFrom} - ${details.validTo}`}
+        description={`${details?.validFrom} - ${details?.validTo}`}
         href={getBaseLink(
           `${params.lang}/app/${params.type}/contracts/refund/refund-tables`,
         )}
-        title={details.name || ""}
+        isLoading={loading}
+        title={details?.name || ""}
       />
-      <Card className="h-[500px] overflow-auto p-4">
+      <Card
+        className={cn(
+          "h-full overflow-auto p-4",
+          loading ? "overflow-hidden" : "",
+        )}
+      >
         <AutoForm
           className="grid grid-cols-2 items-start gap-4 space-y-0"
           fieldConfig={{
             name: {
-              containerClassName: "block",
+              containerClassName: "block col-span-2",
             },
             validFrom: {
               containerClassName: "h-full bg-red-200",
@@ -121,15 +129,26 @@ export default function RefundHeader({
                 required: false,
               },
             },
+            validTo: {
+              containerClassName: "h-full bg-red-200",
+              inputProps: {
+                disabled: true,
+                required: false,
+              },
+            },
+            isDefault: { fieldType: "switch" },
+            isBundling: { fieldType: "switch" },
           }}
           formClassName=""
           formSchema={createZodObject(editSchema, [
             "name",
             "validFrom",
-            // "isDefault",
-            // "isBundling",
+            "validTo",
+            "isDefault",
+            "isBundling",
             //those line above will be implemented with saas
           ])}
+          isLoading={loading}
           onParsedValuesChange={() => {
             setIsSaveable(true);
           }}
@@ -137,53 +156,66 @@ export default function RefundHeader({
           values={details}
         >
           <div className="flex w-full items-center justify-end gap-4">
-            <Button
-              disabled={!isSaveable}
-              type="submit"
-              variant={isSaveable ? "default" : "secondary"}
-            >
-              {languageData["RefundTables.Save"]}
-            </Button>
-            <AlertDialog open={dialogOpen}>
-              <AlertDialogTrigger asChild>
+            {loading ? (
+              <>
+                <Skeleton className="inline-flex h-9 w-28" />
+                <Skeleton className="inline-flex h-9 w-28" />
+              </>
+            ) : (
+              <>
+                <AlertDialog open={dialogOpen}>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      onClick={() => {
+                        setDialogOpen(true);
+                      }}
+                      variant="outline"
+                    >
+                      {languageData["RefundTables.Delete"]}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        {languageData["RefundTables.Delete.Title"]}
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        {languageData["RefundTables.Delete.Description"]}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel
+                        onClick={() => {
+                          setDialogOpen(false);
+                        }}
+                      >
+                        {languageData["RefundTables.Delete.Cancel"]}
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleRefundTableHeadersDelete}
+                      >
+                        {languageData["RefundTables.Delete.Continue"]}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
                 <Button
-                  onClick={() => {
-                    setDialogOpen(true);
-                  }}
-                  variant="outline"
+                  disabled={!isSaveable}
+                  type="submit"
+                  variant={isSaveable ? "default" : "secondary"}
                 >
-                  {languageData["RefundTables.Delete"]}
+                  {languageData["RefundTables.Save"]}
                 </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    {languageData["RefundTables.Delete.Title"]}
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    {languageData["RefundTables.Delete.Description"]}
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel
-                    onClick={() => {
-                      setDialogOpen(false);
-                    }}
-                  >
-                    {languageData["RefundTables.Delete.Cancel"]}
-                  </AlertDialogCancel>
-                  <AlertDialogAction onClick={handleRefundTableHeadersDelete}>
-                    {languageData["RefundTables.Delete.Continue"]}
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+              </>
+            )}
           </div>
         </AutoForm>
         <RefundRules
           data={tableData}
+          isLoading={loading}
           languageData={languageData}
           params={params}
+          refreshData={getAndSetDetails}
         />
       </Card>
     </>
