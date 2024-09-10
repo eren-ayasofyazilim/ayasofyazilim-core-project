@@ -47,6 +47,9 @@ import { useRouter } from "next/navigation";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getBaseLink } from "src/utils";
+import { useLocale } from "src/providers/locale";
+import type { ContractServiceResource } from "src/language-data/ContractService";
+import { getResourceDataClient } from "src/language-data/ContractService";
 import { postContractsContractHeaders } from "../../actions/contracts";
 import {
   getCrmServiceMerchants,
@@ -89,8 +92,11 @@ type ContractSettingsStepDto = Pick<
   | "eTaxFree"
 >;
 
-export default function Page() {
+export default function Page({ params }: { params: { lang: string } }) {
   const router = useRouter();
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
+
   const [isSubmitStarted, setIsSubmitStarted] = useState(false);
   const [step, setStep] = useState(0);
   const [merchantStepFormData, setMerchantStepFormData] =
@@ -144,7 +150,10 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader description="Create a new contract" title="Create Contract" />
+      <PageHeader
+        description={languageData["Contracts.Create.Description"]}
+        title={languageData["Contracts.Create.Title"]}
+      />
       <Card className="h-full py-4">
         <Stepper
           activeTabIndex={step}
@@ -152,16 +161,19 @@ export default function Page() {
           headerProps={{
             containerClassName: "mb-0",
           }}
+          nextButtonText={languageData["Contracts.Create.Step.Next"]}
           onIndexChange={setStep}
+          previousButtonText={languageData["Contracts.Create.Step.Previous"]}
         >
           <StepperContent
             canGoBack={false}
             canGoNext={Boolean(merchantStepFormData.addressId)}
             className="relative flex size-full"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
-            title="Merchant"
+            title={languageData["Contracts.Create.Step.Merchant"]}
           >
             <SelectMerchantStep
+              languageData={languageData}
               onParsedValuesChanged={setMerchantStepFormData}
               step={step}
             />
@@ -171,9 +183,10 @@ export default function Page() {
             canGoNext={false}
             className="relative flex size-full  overflow-hidden pb-16"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
-            title="Contract Settings"
+            title={languageData["Contracts.Create.Step.ContractSettings"]}
           >
             <ContractSettingsStep
+              languageData={languageData}
               onSubmit={setSettingStepFormData}
               setStep={setStep}
               step={step}
@@ -185,7 +198,7 @@ export default function Page() {
             canGoNext={false}
             className="relative flex size-full  overflow-hidden rounded-lg border p-4 pb-16"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
-            title="Documents"
+            title={languageData["Contracts.Create.Step.Documents"]}
           >
             <div className="text-muted-foreground flex size-full flex-col gap-4 overflow-auto">
               <FileUploader
@@ -207,7 +220,7 @@ export default function Page() {
               onClick={handleCreateContract}
               type="button"
             >
-              Submit
+              {languageData["Contracts.Create.Step.Submit"]}
             </Button>
           </StepperContent>
         </Stepper>
@@ -219,9 +232,11 @@ export default function Page() {
 function SelectMerchantStep({
   step,
   onParsedValuesChanged,
+  languageData,
 }: {
   step: number;
   onParsedValuesChanged: (value: MerchantStepFormDataDto) => void;
+  languageData: ContractServiceResource;
 }) {
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
@@ -302,10 +317,12 @@ function SelectMerchantStep({
             : "pointer-events-none cursor-not-allowed opacity-50"
         }
       >
-        <Label>Select Merchant</Label>
+        <Label>{languageData["Contracts.Create.Step.Merchant"]}</Label>
         <Select onValueChange={handleMerchantChange}>
           <SelectTrigger>
-            <SelectValue placeholder="Select merchant" />
+            <SelectValue
+              placeholder={languageData["Contracts.Create.Step.SelectMerchant"]}
+            />
           </SelectTrigger>
           <SelectContent>
             {merchantList?.items?.map((merchant: MerchantProfileDto) => {
@@ -345,10 +362,16 @@ function SelectMerchantStep({
           }
         />
         <div>
-          <Label>Select Merchant Address</Label>
+          <Label>
+            {languageData["Contracts.Create.Step.SelectMerchantAddress"]}
+          </Label>
           <Select onValueChange={handleAddressChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Select address" />
+              <SelectValue
+                placeholder={
+                  languageData["Contracts.Create.Step.SelectMerchantAddress"]
+                }
+              />
             </SelectTrigger>
             <SelectContent>
               {merchantDetails?.merchant?.entityInformations?.map(
@@ -394,10 +417,12 @@ function ContractSettingsStep({
   step,
   setStep,
   onSubmit,
+  languageData,
 }: {
   step: number;
   setStep: (step: number) => void;
   onSubmit: (data: ContractSettingsStepDto) => void;
+  languageData: ContractServiceResource;
 }) {
   const contractSettingIncludes = [
     "name",
@@ -432,13 +457,16 @@ function ContractSettingsStep({
           ContractSettingCreateSchema,
           contractSettingIncludes,
         )}
+        isLoading
         onSubmit={(data) => {
           onSubmit(data as ContractSettingsStepDto);
           setStep(step + 1);
         }}
         values={{ invoicingAddressId: "3fa85f64-5717-4562-b3fc-2c963f66afa6" }}
       >
-        <Button className="absolute bottom-4 right-4 z-10">Next</Button>
+        <Button className="absolute bottom-4 right-4 z-10">
+          {languageData["Contracts.Create.Step.Previous"]}
+        </Button>
       </AutoForm>
     </div>
   );

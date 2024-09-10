@@ -1,0 +1,14 @@
+{
+  "FileUploader.CannotUploadMoreThanOne": "Cannot upload more than 1 file at a time",
+  "FileUploader.CannotUploadMoreThan{0}": "Cannot upload more than {0} files",
+  "FileUploader.RejectedFile {0}": "File {0} was rejected",
+  "FileUploader.Files": "files",
+  "FileUploader.File": "file",
+  "FileUploader.Uploading{0}": "Uploading {0}...",
+  "FileUploader.{0}Uploaded": "{0} uploaded",
+  "FileUploader.FailedToUpload{0}": "Failed to upload {0}",
+  "FileUploader.DropTheFilesHere": "Drop the files here",
+  "FileUploader.DragAndDropFilesHere": "Drag'n drop files here, or click to select files",
+  "FileUploader.YouCanUpload{0}files{1}each": "You can upload {0} files (up to {1} each)",
+  "FileUploader.RemoveFile": "Remove file"
+}
