@@ -1,5 +1,7 @@
 {
   "new": "Yeni",
+  "Edit": "Edit",
+  "Delete": "Delete",
   "Vat": "VAT",
   "Vat.New": "New VAT",
   "Vat.Description": "You can view the VAT descriptions from here.",

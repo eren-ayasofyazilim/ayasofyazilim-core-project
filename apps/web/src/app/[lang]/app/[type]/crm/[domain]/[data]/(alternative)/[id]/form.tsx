@@ -6,13 +6,9 @@ import type {
   UniRefund_CRMService_Merchants_MerchantDto,
   UniRefund_CRMService_Organizations_UpdateOrganizationDto,
   UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
 } from "@ayasofyazilim/saas/CRMService";
-import {
-  $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  // $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  // $UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  // $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-} from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_CRMService_Organizations_UpdateOrganizationDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
@@ -23,13 +19,17 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
+import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
+import { Card } from "@/components/ui/card";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { dataConfigOfCrm } from "../../../../../data";
+import { dataConfigOfCrm } from "../../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 
 const organization = $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
@@ -169,6 +169,9 @@ export default function Form({
   const [formData] = useState<TableData>(
     dataConfigOfCrm[params.domain].pages[params.data],
   );
+  const [data, setData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
+  const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const organizationInfo =
@@ -250,6 +253,48 @@ export default function Form({
     }
   }
 
+  async function getSubCompaniesInformation(totalCount = 1000) {
+    try {
+      const response = await fetch(
+        getBaseLink(`/api/crm/subcompanies?maxResultCount=${totalCount}`),
+      );
+      if (!response.ok) {
+        toast.error(response.statusText);
+        return;
+      }
+      const _data =
+        (await response.json()) as Volo_Abp_Application_Dtos_PagedResultDto_18;
+      if (_data.items) {
+        setData(_data.items);
+      }
+    } catch (error) {
+      toast.error("An error occurred while fetching Sub Companies.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    void getSubCompaniesInformation();
+  }, []);
+
+  const action: TableAction[] = [
+    {
+      cta: languageData[
+        `${"SubCompany".replaceAll(" ", "")}.New` as keyof typeof languageData
+      ],
+      type: "NewPage",
+      href: `/app/admin/crm/companies/${params.data}/${params.id}/subcompany/new/`,
+    },
+    {
+      cta: `Export CSV`,
+      callback: () => {
+        jsonToCSV(data, params.data);
+      },
+      type: "Action",
+    },
+  ];
+
   return (
     <div className="h-full overflow-hidden">
       <PageHeader
@@ -272,6 +317,7 @@ export default function Form({
           { name: languageData.Telephone, id: "telephone" },
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
+          { name: languageData["Sub.Company"], id: "SubCompany" },
         ]}
         vertical
       >
@@ -364,6 +410,29 @@ export default function Form({
               {languageData.Save}
             </AutoFormSubmit>
           </AutoForm>
+        </SectionLayoutContent>
+        <SectionLayoutContent sectionId="SubCompany">
+          <Card className="px-4">
+            <DataTable
+              action={action}
+              columnsData={{
+                type: "Auto",
+                data: {
+                  tableType:
+                    dataConfigOfCrm[params.domain].pages.merchants.tableSchema
+                      .schema,
+                  excludeList: [
+                    "organizationId",
+                    "individualId",
+                    "parentCompanyId",
+                    "id",
+                  ],
+                },
+              }}
+              data={data || []}
+              isLoading={loading}
+            />
+          </Card>
         </SectionLayoutContent>
       </SectionLayout>
     </div>

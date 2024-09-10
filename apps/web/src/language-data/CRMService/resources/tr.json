@@ -1,5 +1,7 @@
 {
   "new": "Yeni",
+  "Delete": "Sil",
+  "Edit": "Düzenle",
   "Merchants": "Mağazalar",
   "Merchants.New": "Yeni Mağaza",
   "Merchants.Description": "Mağazaları buradan görüntüleyebilirsiniz.",
@@ -24,5 +26,9 @@
   "Email": "Email",
   "Telephone": "Telefon",
   "Address": "Adres",
-  "Save": "kaydet "
+  "Save": "kaydet ",
+  "Sub.Company": "Alt Şirketler",
+  "SubCompany": "Alt Şirketler",
+  "SubCompany.New": "Yeni Alt Şirket",
+  "SubCompany.Description": "Yeni Alt Şirket Ekle"
 }

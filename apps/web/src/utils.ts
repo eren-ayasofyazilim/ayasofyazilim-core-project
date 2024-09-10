@@ -135,7 +135,7 @@ export interface FormModifier {
   formPositions?: string[];
   formSubPositions?: Record<string, string[]>;
   excludeList?: string[];
-  schema: any;
+  schema: Record<string, any>;
   convertors?: Record<string, any>;
   dependencies?: AutoFormProps["dependencies"];
 }

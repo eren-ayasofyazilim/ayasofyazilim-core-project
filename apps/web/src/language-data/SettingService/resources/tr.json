@@ -1,5 +1,7 @@
 {
   "new": "Yeni",
+  "Edit": "Düzenle",
+  "Delete": "Sil",
   "Vat": "VAT",
   "Vat.New": "Yeni VAT",
   "Vat.Description": "VAT tanımlarını buradan inceleyebilirsiniz.",
@@ -9,7 +11,6 @@
   "ProductGroupVAT": "Ürün Grubu VAT",
   "ProductGroupVAT.New": "Yeni Ürün Grubu VAT",
   "ProductGroupVAT.Description": "Ürün grup VAT tanımlarını buradan inceleyebilirsiniz.",
-
   "TenantSettings": "Tenant Ayarları",
   "TenantSettings.Description": "Tenant ayarlarını buradan inceleyebilirsiniz."
 }

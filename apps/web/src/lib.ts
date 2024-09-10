@@ -6,7 +6,6 @@ import { IdentityServiceClient } from "@ayasofyazilim/saas/IdentityService";
 import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
-import type { ApiError } from "@ayasofyazilim/saas/ContractService";
 import { ContractServiceClient } from "@ayasofyazilim/saas/ContractService";
 import { auth } from "auth";
 import { isApiError } from "./app/api/util";
@@ -124,7 +123,7 @@ export interface SuccessServerResponse<T> {
 export interface ApiErrorServerResponse {
   type: "api-error";
   status: number;
-  data: ApiError;
+  data: string;
   message: string;
 }
 export interface ErrorServerResponse {
@@ -136,9 +135,10 @@ export interface ErrorServerResponse {
 
 export function structuredError(error: unknown): ErrorTypes {
   if (isApiError(error)) {
+    const body = error.body as Record<string, unknown>;
     return {
       type: "api-error",
-      data: error,
+      data: (body.error as Record<string, string>).details || error.message,
       status: error.status,
       message: error.message,
     };
