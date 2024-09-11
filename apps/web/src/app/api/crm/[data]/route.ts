@@ -29,7 +29,7 @@ const clients: Clients = {
         });
       },
       delete: async (id: string) =>
-        merchant.deleteApiCrmServiceMerchantsWithComponentsById({ id }),
+        merchant.deleteApiCrmServiceMerchantsByIdWithComponents({ id }),
     };
   },
   refundPoints: async () => {
@@ -50,7 +50,7 @@ const clients: Clients = {
         });
       },
       delete: async (id: string) =>
-        refundPoint.deleteApiCrmServiceRefundPointsWithComponentsById({ id }),
+        refundPoint.deleteApiCrmServiceRefundPointsByIdWithComponents({ id }),
     };
   },
   customs: async () => {
@@ -71,7 +71,7 @@ const clients: Clients = {
         });
       },
       delete: async (id: string) =>
-        customs.deleteApiCrmServiceCustomsWithComponentsById({ id }),
+        customs.deleteApiCrmServiceCustomsByIdWithComponents({ id }),
     };
   },
   taxFree: async () => {
@@ -92,7 +92,7 @@ const clients: Clients = {
         });
       },
       delete: async (id: string) =>
-        taxFree.deleteApiCrmServiceTaxFreesWithComponentsById({ id }),
+        taxFree.deleteApiCrmServiceTaxFreesByIdWithComponents({ id }),
     };
   },
   taxOffices: async () => {
@@ -113,7 +113,7 @@ const clients: Clients = {
         });
       },
       delete: async (id: string) =>
-        taxOffices.deleteApiCrmServiceTaxOfficesWithComponentsById({ id }),
+        taxOffices.deleteApiCrmServiceTaxOfficesByIdWithComponents({ id }),
     };
   },
   subcompanies: async () => {

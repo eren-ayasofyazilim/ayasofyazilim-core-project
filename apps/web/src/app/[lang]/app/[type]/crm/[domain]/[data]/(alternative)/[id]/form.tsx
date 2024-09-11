@@ -383,7 +383,6 @@ export default function Form({
               terriority: addressInfo?.terriority,
               typeCode:
                 address.properties.typeCode.enum[addressInfo?.typeCode || 0],
-
               primaryFlag: addressInfo?.primaryFlag,
             }}
           >
@@ -394,6 +393,13 @@ export default function Form({
         </SectionLayoutContent>
         <SectionLayoutContent sectionId="email">
           <AutoForm
+            fieldConfig={{
+              emailAddress: {
+                inputProps: {
+                  type: "email",
+                },
+              },
+            }}
             formClassName="pb-40 "
             formSchema={emailSchema}
             onSubmit={(values) => {

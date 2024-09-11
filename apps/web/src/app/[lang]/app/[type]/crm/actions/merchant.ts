@@ -1,9 +1,10 @@
 "use server";
+
+import type { Volo_Abp_Application_Dtos_PagedResultDto_16 } from "@ayasofyazilim/saas/AdministrationService";
 import type {
+  GetApiCrmServiceMerchantsByIdDetailData,
   GetApiCrmServiceMerchantsData,
-  GetApiCrmServiceMerchantsDetailByIdData,
   UniRefund_CRMService_Merchants_MerchantDetailDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_16,
 } from "@ayasofyazilim/saas/CRMService";
 import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
@@ -28,13 +29,13 @@ export async function getCrmServiceMerchants(
 }
 
 export async function getCrmServiceMerchantsDetailById(
-  body: GetApiCrmServiceMerchantsDetailByIdData,
+  body: GetApiCrmServiceMerchantsByIdDetailData,
 ) {
   "use server";
   try {
     const client = await getCRMServiceClient();
     const response =
-      await client.merchant.getApiCrmServiceMerchantsDetailById(body);
+      await client.merchant.getApiCrmServiceMerchantsByIdDetail(body);
     revalidatePath("/");
     return {
       type: "success",

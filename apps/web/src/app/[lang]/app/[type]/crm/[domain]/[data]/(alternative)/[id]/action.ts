@@ -13,7 +13,7 @@ export async function getCRMMerchantDetailServer(body: { id: string }) {
   "use server";
   const response = await getCRMServiceClient().then((client) =>
     client.merchant
-      .getApiCrmServiceMerchantsDetailById({
+      .getApiCrmServiceMerchantsByIdDetail({
         id: body.id,
       })
       .then((apiResponse) => {
@@ -37,19 +37,19 @@ export async function getCRMDetailServer(data: string, body: { id: string }) {
   const client = await getCRMServiceClient();
   let response;
   if (data === "refundPoints") {
-    response = await client.refundPoint.getApiCrmServiceRefundPointsDetailById({
+    response = await client.refundPoint.getApiCrmServiceRefundPointsByIdDetail({
       id: body.id,
     });
   } else if (data === "customs") {
-    response = await client.customs.getApiCrmServiceCustomsDetailById({
+    response = await client.customs.getApiCrmServiceCustomsByIdDetail({
       id: body.id,
     });
   } else if (data === "taxFree") {
-    response = await client.taxFree.getApiCrmServiceTaxFreesDetailById({
+    response = await client.taxFree.getApiCrmServiceTaxFreesByIdDetail({
       id: body.id,
     });
   } else if (data === "taxOffices") {
-    response = await client.taxOffice.getApiCrmServiceTaxOfficesDetailById({
+    response = await client.taxOffice.getApiCrmServiceTaxOfficesByIdDetail({
       id: body.id,
     });
   }
@@ -68,7 +68,7 @@ export async function updateMerchantCRMDetailServer(
   "use server";
   try {
     const client = await getCRMServiceClient();
-    await client.merchant.putApiCrmServiceMerchantsByIdOrganizationByOrganizationId(
+    await client.merchant.putApiCrmServiceMerchantsByIdOrganizationsByOrganizationId(
       {
         id,
         organizationId,
