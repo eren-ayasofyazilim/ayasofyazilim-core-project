@@ -1,14 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -16,10 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  EmptyCard,
-  FileUploader,
-} from "@repo/ayasofyazilim-ui/molecules/file-uploader";
 import { toast } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import type {
@@ -38,23 +28,27 @@ import {
   $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import {
+  EmptyCard,
+  FileUploader,
+} from "@repo/ayasofyazilim-ui/molecules/file-uploader";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
-import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-import { getBaseLink } from "src/utils";
-import { useLocale } from "src/providers/locale";
+import { useEffect, useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import { postContractsContractHeaders } from "../../actions/contracts";
+import { useLocale } from "src/providers/locale";
+import { getBaseLink } from "src/utils";
 import {
   getCrmServiceMerchants,
   getCrmServiceMerchantsDetailById,
 } from "../../../crm/actions/merchant";
+import { postContractsContractHeaders } from "../../actions/contracts";
 
 function createReadonlyFieldConfig(
   elements: string[],
@@ -154,7 +148,7 @@ export default function Page({ params }: { params: { lang: string } }) {
         description={languageData["Contracts.Create.Description"]}
         title={languageData["Contracts.Create.Title"]}
       />
-      <Card className="h-full py-4">
+      <Card className="h-full overflow-auto py-4">
         <Stepper
           activeTabIndex={step}
           className="flex h-full flex-col gap-4 px-4"
@@ -168,7 +162,7 @@ export default function Page({ params }: { params: { lang: string } }) {
           <StepperContent
             canGoBack={false}
             canGoNext={Boolean(merchantStepFormData.addressId)}
-            className="relative flex size-full"
+            className="relative flex size-full overflow-auto"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
             title={languageData["Contracts.Create.Step.Merchant"]}
           >
@@ -196,7 +190,7 @@ export default function Page({ params }: { params: { lang: string } }) {
           <StepperContent
             canGoBack={!isSubmitStarted}
             canGoNext={false}
-            className="relative flex size-full  overflow-hidden rounded-lg border p-4 pb-16"
+            className="relative flex size-full  overflow-auto rounded-lg border p-4 pb-16"
             controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
             title={languageData["Contracts.Create.Step.Documents"]}
           >
@@ -217,6 +211,7 @@ export default function Page({ params }: { params: { lang: string } }) {
             </div>
             <Button
               className="absolute bottom-4 right-4 z-10"
+              disabled={isSubmitStarted}
               onClick={handleCreateContract}
               type="button"
             >
@@ -309,43 +304,41 @@ function SelectMerchantStep({
     "customerNumber",
   ];
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 overflow-auto">
+    <div className="mx-auto grid w-full grid-cols-2  gap-4 overflow-auto">
       <div
         className={
           merchantList
-            ? "pointer-events-auto opacity-100"
+            ? "pointer-events-auto space-y-4 opacity-100"
             : "pointer-events-none cursor-not-allowed opacity-50"
         }
       >
-        <Label>{languageData["Contracts.Create.Step.Merchant"]}</Label>
-        <Select onValueChange={handleMerchantChange}>
-          <SelectTrigger>
-            <SelectValue
-              placeholder={languageData["Contracts.Create.Step.SelectMerchant"]}
-            />
-          </SelectTrigger>
-          <SelectContent>
-            {merchantList?.items?.map((merchant: MerchantProfileDto) => {
-              return (
-                <SelectItem key={merchant.id} value={merchant.id || ""}>
-                  {merchant.name}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div
-        className={cn(
-          "space-y-4",
-          merchantDetails
-            ? "w-fullopacity-100 pointer-events-auto"
-            : "pointer-events-none cursor-not-allowed opacity-50",
-        )}
-      >
+        <div>
+          <Label>{languageData["Contracts.Create.Step.Merchant"]}</Label>
+          <Select onValueChange={handleMerchantChange}>
+            <SelectTrigger>
+              <SelectValue
+                placeholder={
+                  languageData["Contracts.Create.Step.SelectMerchant"]
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {merchantList?.items?.map((merchant: MerchantProfileDto) => {
+                return (
+                  <SelectItem key={merchant.id} value={merchant.id || ""}>
+                    {merchant.name}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </div>
         <AutoForm
-          className="grid grid-cols-2 items-end gap-4 space-y-0"
+          className={cn(
+            merchantDetails
+              ? "pointer-events-auto space-y-4 opacity-100"
+              : "pointer-events-none cursor-not-allowed opacity-50",
+          )}
           fieldConfig={{
             ...createReadonlyFieldConfig(organizationIncludes),
             customerNumber: {
@@ -361,6 +354,16 @@ function SelectMerchantStep({
               .organizations?.[0]
           }
         />
+      </div>
+
+      <div
+        className={cn(
+          "space-y-4",
+          merchantDetails
+            ? "pointer-events-auto w-full space-y-4 opacity-100"
+            : "pointer-events-none cursor-not-allowed opacity-50",
+        )}
+      >
         <div>
           <Label>
             {languageData["Contracts.Create.Step.SelectMerchantAddress"]}
@@ -457,7 +460,6 @@ function ContractSettingsStep({
           ContractSettingCreateSchema,
           contractSettingIncludes,
         )}
-        isLoading
         onSubmit={(data) => {
           onSubmit(data as ContractSettingsStepDto);
           setStep(step + 1);
@@ -477,41 +479,41 @@ interface UploadedFilesCardProps {
 
 function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
   return (
-    <Card>
-      <CardHeader>
+    <div>
+      {/* <CardHeader>
         <CardTitle>Uploaded files</CardTitle>
         <CardDescription>View the uploaded files here</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {uploadedFiles.length > 0 ? (
-          <ScrollArea className="pb-4">
-            <div className="flex w-max space-x-2.5">
-              {uploadedFiles.map((file) => {
-                const url = window.URL.createObjectURL(file);
-                return (
-                  <div className="relative aspect-video w-64" key={file.name}>
-                    <Image
-                      alt={file.name}
-                      className="rounded-md object-cover"
-                      fill
-                      loading="lazy"
-                      sizes="(min-width: 640px) 640px, 100vw"
-                      src={url}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        ) : (
-          <EmptyCard
-            className="w-full"
-            description="Upload some files to see them here"
-            title="No files uploaded"
-          />
-        )}
-      </CardContent>
-    </Card>
+      </CardHeader> */}
+      {/* <CardContent> */}
+      {/* </CardContent> */}
+      {uploadedFiles.length > 0 ? (
+        <ScrollArea className="pb-4">
+          <div className="flex w-max space-x-2.5">
+            {uploadedFiles.map((file) => {
+              const url = window.URL.createObjectURL(file);
+              return (
+                <div className="relative aspect-video w-64" key={file.name}>
+                  <Image
+                    alt={file.name}
+                    className="rounded-md object-cover"
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 640px) 640px, 100vw"
+                    src={url}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      ) : (
+        <EmptyCard
+          className="w-full"
+          description="Upload some files to see them here"
+          title="No files uploaded"
+        />
+      )}
+    </div>
   );
 }

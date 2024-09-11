@@ -14,7 +14,7 @@ export default function Contracts() {
   return (
     <>
       <PageHeader description="Manage contracts" title="Contracts" />
-      <Card className="px-4">
+      <Card className="overflow-x-auto px-4">
         <DataTable
           action={action}
           columnsData={{
@@ -25,6 +25,7 @@ export default function Contracts() {
             type: "Auto",
           }}
           data={contractsData}
+          tableClassName="h-auto"
         />
       </Card>
     </>
