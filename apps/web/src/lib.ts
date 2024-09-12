@@ -1,4 +1,5 @@
-import { AccountServiceClient, ApiError } from "@ayasofyazilim/saas/AccountService";
+import type { ApiError } from "@ayasofyazilim/saas/AccountService";
+import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
 import { CRMServiceClient } from "@ayasofyazilim/saas/CRMService";
@@ -144,7 +145,7 @@ export function structuredError(error: unknown): ErrorTypes {
     const body = error.body as Record<string, unknown>;
     return {
       type: "api-error",
-      data: error.message || error.cause,
+      data: body.message || body.cause,
       status: error.status,
       message: error.statusText,
     };
