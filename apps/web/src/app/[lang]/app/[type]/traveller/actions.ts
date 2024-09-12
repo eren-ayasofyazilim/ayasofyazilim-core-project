@@ -1,6 +1,7 @@
 "use server";
 
 import type {
+  GetApiTravellerServiceTravellersGetProfileDetailResponse,
   PostApiTravellerServiceTravellersCreateResponse,
   UniRefund_TravellerService_Travellers_CreateTravellerDto,
   Volo_Abp_Application_Dtos_PagedResultDto_15,
@@ -42,6 +43,26 @@ export async function createTraveller(
       data: response,
       status: 200,
       message: "Traveller created successfully",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+
+export async function getTravellerById(): Promise<
+  ServerResponse<GetApiTravellerServiceTravellersGetProfileDetailResponse>
+> {
+  try {
+    const client = await getTravellersServiceClient();
+    const response =
+      await client.traveller.getApiTravellerServiceTravellersGetProfileDetail({
+        id: "id",
+      });
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "Traveller fetched successfully",
     };
   } catch (error) {
     return structuredError(error);
