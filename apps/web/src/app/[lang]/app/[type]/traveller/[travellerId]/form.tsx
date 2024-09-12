@@ -1,89 +1,26 @@
 "use client";
 
-import {
-  $UniRefund_TravellerService_AddressTypes_UpdateAddressTypeDto,
-  $UniRefund_TravellerService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  $UniRefund_TravellerService_NameCommonDatas_CreateNameCommonDataDto,
-  $UniRefund_TravellerService_TelephoneTypes_UpdateTelephoneTypeDto,
-} from "@ayasofyazilim/saas/TravellerService";
+import { Card } from "@/components/ui/card";
+import { toast } from "@/components/ui/sonner";
+import type { UniRefund_TravellerService_Travellers_CreateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
+import { $UniRefund_TravellerService_Travellers_UpdateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import {
-  SectionLayout,
-  SectionLayoutContent,
-} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
+import { isApiError } from "src/app/api/util";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { createZodObject, getBaseLink } from "src/utils";
+import { createTraveller } from "../actions";
 
 const generalInformationSchema = createZodObject(
-  $UniRefund_TravellerService_NameCommonDatas_CreateNameCommonDataDto,
-  ["mailingName", "name", "officialName", "salutation", "suffix"],
-);
-const emailSchema = createZodObject(
-  $UniRefund_TravellerService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  ["emailAddress", "id", "primaryFlag", "typeCode"],
-);
-const telephoneSchema = createZodObject(
-  $UniRefund_TravellerService_TelephoneTypes_UpdateTelephoneTypeDto,
-  [
-    "areaCode",
-    "id",
-    "ituCountryCode",
-    "localNumber",
-    "primaryFlag",
-    "typeCode",
-  ],
-);
-const addressSchema = createZodObject(
-  $UniRefund_TravellerService_AddressTypes_UpdateAddressTypeDto,
-  [
-    "addressLine",
-    "city",
-    "country",
-    "fullAddress",
-    "id",
-    "postalCode",
-    "primaryFlag",
-    "terriority",
-    "typeCode",
-  ],
+  $UniRefund_TravellerService_Travellers_UpdateTravellerDto,
+  Object.keys(
+    $UniRefund_TravellerService_Travellers_UpdateTravellerDto.properties,
+  ),
 );
 
-const generalInformationData = {
-  mailingName: "test",
-  name: "test",
-  officialName: "test",
-  salutation: "test",
-  suffix: "test",
-};
-const emailData = {
-  emailAddress: "test@asd.com",
-  id: "test",
-  primaryFlag: true,
-  typeCode: "0",
-};
-const telephoneData = {
-  areaCode: "test",
-  id: "test",
-  ituCountryCode: "TR",
-  localNumber: "5555555555",
-  primaryFlag: true,
-  typeCode: "0",
-};
-const addressData = {
-  addressLine: "test",
-  city: "test",
-  country: "test",
-  fullAddress: "test",
-  id: "test",
-  postalCode: "test",
-  primaryFlag: true,
-  terriority: "test",
-  typeCode: "0",
-};
 export default function Form({
   travellerId,
   languageData,
@@ -99,74 +36,37 @@ export default function Form({
         href={getBaseLink("app/admin/traveller")}
         title={`${languageData.TravellerDetail} - ${travellerId}`}
       />
-
-      <SectionLayout
-        defaultActiveSectionId="general"
-        sections={[
-          { name: languageData.PersonalInformation, id: "general" },
-          { name: languageData.EmailInformation, id: "email" },
-          { name: languageData.TelephoneInformation, id: "telephone" },
-          { name: languageData.AddressInformation, id: "address" },
-        ]}
-        vertical
-      >
-        <SectionLayoutContent sectionId="general">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={generalInformationSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={generalInformationData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="email">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={emailSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={emailData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="telephone">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={telephoneSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={telephoneData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="address">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={addressSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={addressData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-      </SectionLayout>
+      <Card className="h-full w-full flex-1 overflow-auto p-5">
+        <AutoForm
+          formClassName="border-0"
+          formSchema={generalInformationSchema}
+          onSubmit={(formdata) => {
+            async function create() {
+              try {
+                const resposnse = await createTraveller(
+                  formdata as UniRefund_TravellerService_Travellers_CreateTravellerDto,
+                );
+                if (resposnse.type === "success") {
+                  toast.success("Traveller created successfully");
+                } else {
+                  toast.error(`${resposnse.status}: ${resposnse.message}`);
+                }
+              } catch (error) {
+                if (isApiError(error)) {
+                  toast.error(error.message);
+                }
+                toast.error("Traveller creation failed for unknown reason");
+              }
+            }
+            void create();
+          }}
+          //values={generalInformationData}
+        >
+          <AutoFormSubmit className="float-right">
+            <>{languageData.Save}</>
+          </AutoFormSubmit>
+        </AutoForm>
+      </Card>
     </>
   );
 }
