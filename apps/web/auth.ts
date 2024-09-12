@@ -51,6 +51,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "text", placeholder: "test@test.com" },
         password: { label: "Password", type: "password" },
+        tenant: { label: "Tenant", type: "text" },
       },
 
       authorize: async (credentials) => {
@@ -59,10 +60,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             credentials as {
               username: string;
               password: string;
+              tenantId?: string;
             },
           );
-          if ("error" in response) {
+          if ("error" in response && typeof response.error !== "object") {
             const error = `${response.error}: ${response.error_description}`;
+            return Promise.reject(new AuthError(error));
+          }
+          if ("error" in response) {
+            const responseError = response.error as unknown as {
+              code: string;
+              message: string;
+              details: string;
+            };
+            const error = `${responseError.code}: ${responseError.details}`;
             return Promise.reject(new AuthError(error));
           }
           if (response.access_token) {

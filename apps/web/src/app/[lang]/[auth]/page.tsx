@@ -84,9 +84,10 @@ export default function Page(): JSX.Element {
   let props: any;
   switch (authTypeParam) {
     case "login":
+      // const login:LoginFormPropsType TODO: Fix this add type and check related code
       props = {
         router,
-        allowTenantChange: false,
+        allowTenantChange: true,
         formSchema: loginFormSchema,
         onSubmitFunction: signInServer,
         loginFunction: signInServer,
