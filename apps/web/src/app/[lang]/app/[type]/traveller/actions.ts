@@ -51,14 +51,18 @@ export async function createTraveller(
   }
 }
 
-export async function getTravellerById(): Promise<
+export async function getTravellerById({
+  id,
+}: {
+  id: string;
+}): Promise<
   ServerResponse<GetApiTravellerServiceTravellersGetProfileDetailResponse>
 > {
   try {
     const client = await getTravellersServiceClient();
     const response =
       await client.traveller.getApiTravellerServiceTravellersGetProfileDetail({
-        id: "id",
+        id,
       });
     return {
       type: "success",

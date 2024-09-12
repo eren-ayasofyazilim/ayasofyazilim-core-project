@@ -2,17 +2,21 @@
 
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
-import type { UniRefund_TravellerService_Travellers_CreateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
+import type {
+  GetApiTravellerServiceTravellersGetProfileDetailResponse,
+  UniRefund_TravellerService_Travellers_CreateTravellerDto,
+} from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_UpdateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { isApiError } from "src/app/api/util";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { createZodObject, getBaseLink } from "src/utils";
-import { createTraveller } from "../actions";
+import { createTraveller, getTravellerById } from "../actions";
 
 const generalInformationSchema = createZodObject(
   $UniRefund_TravellerService_Travellers_UpdateTravellerDto,
@@ -28,6 +32,26 @@ export default function Form({
   travellerId: string;
   languageData: TravellerServiceResource;
 }) {
+  const [generalInformationData, setGeneralInformationData] =
+    useState<GetApiTravellerServiceTravellersGetProfileDetailResponse>();
+  useEffect(() => {
+    async function getTraveller() {
+      try {
+        const response = await getTravellerById({ id: travellerId });
+        if (response.type === "success") {
+          setGeneralInformationData(response.data);
+        } else {
+          toast.error(`${response.status}: ${response.message}`);
+        }
+      } catch (error) {
+        if (isApiError(error)) {
+          toast.error(error.message);
+        }
+        toast.error("Traveller fetch failed for unknown reason");
+      }
+    }
+    void getTraveller();
+  }, [travellerId]);
   return (
     <>
       <PageHeader
@@ -60,7 +84,7 @@ export default function Form({
             }
             void create();
           }}
-          //values={generalInformationData}
+          values={generalInformationData}
         >
           <AutoFormSubmit className="float-right">
             <>{languageData.Save}</>
