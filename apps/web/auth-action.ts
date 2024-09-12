@@ -1,16 +1,15 @@
 "use server";
-import {
-  AccountServiceClient,
-  GetApiAccountMyProfileResponse,
-} from "@ayasofyazilim/saas/AccountService";
-import { signIn, signOut } from "auth";
-import { User } from "next-auth";
+import type { GetApiAccountMyProfileResponse } from "@ayasofyazilim/saas/AccountService";
+import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
+import type { User } from "next-auth";
 import { redirect } from "next/navigation";
+import { signIn, signOut } from "auth";
 import { isApiError } from "src/app/api/util";
 import { getAccountServiceClient } from "src/lib";
 import { getBaseLink } from "src/utils";
-const TOKEN_URL = process.env.BASE_URL + "/connect/token";
-const OPENID_URL = process.env.BASE_URL + "/.well-known/openid-configuration";
+
+const TOKEN_URL = `${process.env.BASE_URL}/connect/token`;
+const OPENID_URL = `${process.env.BASE_URL}/.well-known/openid-configuration`;
 
 interface TokenError {
   error: string;
@@ -29,14 +28,17 @@ export async function signOutServer() {
 export async function signInServer({
   userIdentifier,
   password,
+  tenantId,
 }: {
   userIdentifier: string;
   password: string;
+  tenantId?: string;
 }) {
   try {
     await signIn("credentials", {
       username: userIdentifier,
       password,
+      tenantId,
       redirect: false,
     });
     return {
@@ -68,9 +70,9 @@ export async function signUpServer({
     const client = await getAccountServiceClient();
     await client.account.postApiAccountRegister({
       requestBody: {
-        userName: userName,
+        userName,
         emailAddress: email,
-        password: password,
+        password,
         appName: process.env.APP_NAME || "",
       },
     });
@@ -99,7 +101,7 @@ export async function sendPasswordResetCodeServer({
     const client = await getAccountServiceClient();
     await client.account.postApiAccountSendPasswordResetCode({
       requestBody: {
-        email: email,
+        email,
         appName: process.env.APP_NAME || "",
       },
     });
@@ -128,7 +130,7 @@ export async function getMyProfile(
     HEADERS: {
       "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: `Bearer ${token}`,
     },
   });
   const profile = await client.profile.getApiAccountMyProfile();
@@ -138,17 +140,19 @@ export async function getMyProfile(
 export async function signInWithCredentials(credentials: {
   username: string;
   password: string;
+  tenantId?: string;
 }): Promise<User | TokenError> {
   "use server";
   const scopes: string = await fetch(OPENID_URL)
     .then((response) => response.json())
     .then(
       (json: { scopes_supported?: string[] }) =>
-        json?.scopes_supported?.join(" ") || "",
+        json.scopes_supported?.join(" ") || "",
     );
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   myHeaders.append("X-Requested-With", "XMLHttpRequest");
+  myHeaders.append("__tenant", credentials.tenantId || "");
   const urlencoded = new URLSearchParams();
   const urlEncodedContent: Record<string, string> = {
     grant_type: "password",
@@ -157,16 +161,16 @@ export async function signInWithCredentials(credentials: {
     password: credentials.password,
     scope: scopes,
   };
-  Object.keys(urlEncodedContent).forEach((key) =>
-    urlencoded.append(key, urlEncodedContent[key]),
-  );
+  Object.keys(urlEncodedContent).forEach((key) => {
+    urlencoded.append(key, urlEncodedContent[key]);
+  });
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  const json: User | TokenError = await response.json();
+  const json: User | TokenError = (await response.json()) as User | TokenError;
   return {
     ...json,
     userName: credentials.username,
@@ -183,15 +187,15 @@ export async function obtainAccessTokenByRefreshToken(refreshToken: string) {
     grant_type: "refresh_token",
     refresh_token: refreshToken,
   };
-  Object.keys(urlEncodedContent).forEach((key) =>
-    urlencoded.append(key, urlEncodedContent[key]),
-  );
+  Object.keys(urlEncodedContent).forEach((key) => {
+    urlencoded.append(key, urlEncodedContent[key]);
+  });
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
     body: urlencoded,
   };
   const response = await fetch(TOKEN_URL, requestOptions);
-  const json: User | TokenError = await response.json();
+  const json: User | TokenError = (await response.json()) as User | TokenError;
   return json;
 }
