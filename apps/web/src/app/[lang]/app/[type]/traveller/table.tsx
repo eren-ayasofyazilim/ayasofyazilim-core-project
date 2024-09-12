@@ -4,22 +4,9 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
+import { getTravellers } from "./actions";
+import { useEffect, useState } from "react";
 
-const data = [
-  {
-    id: "bf9793cf-b402-5113-9858-3a148c836c34",
-    name: "string",
-    parentCompanyId: null,
-    entityInformationTypeCode: 0,
-    entityInformationTypeCodeName: "Individual",
-    organizationId: null,
-    individualId: "018258ed-6cf6-88f4-483d-3a148c836c34",
-    countryId: 0,
-    nationalityCountryName: "Turkey",
-    residenceCountryName: "Turkey",
-    travelDocumentNumber: "000291166",
-  },
-];
 export interface Payment {
   id: string;
   name: string;
@@ -56,12 +43,30 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div>{row.getValue("residenceCountryName")}</div>,
   },
 ];
+
+
 export default function Table({
   languageData,
 }: {
   languageData: TravellerServiceResource;
 }) {
   const router = useRouter();
+  const [travellers, setTravellers] = useState<object[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  async function fetchData() {
+    const response = await getTravellers();
+    if (response.type === "success") {
+      const { items, totalCount } = response;
+      if (typeof items === "undefined") return;
+      console.log("items ", items);
+      setTravellers(items);
+      setTotalCount(totalCount || 0);
+    } 
+}
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Dashboard
       action={[
@@ -89,11 +94,11 @@ export default function Table({
           ],
         },
       }}
-      rowCount={1}
+      rowCount={totalCount}
       withCards={false}
       withTable
-      data={data}
-      //  fetchRequest={getRoles}
+      data={travellers}
+      // fetchRequest={fetchData}
 
       isLoading={false}
     />
