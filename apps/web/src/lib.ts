@@ -7,6 +7,7 @@ import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 import { ContractServiceClient } from "@ayasofyazilim/saas/ContractService";
+import { TravellerServiceClient } from "@ayasofyazilim/saas/TravellerService";
 import { auth } from "auth";
 import { isApiError } from "./app/api/util";
 
@@ -94,10 +95,20 @@ export async function getBackerServiceClient(): Promise<BackerServiceClient> {
   });
 }
 
-export async function getCRMServiceClient() {
+export async function getCRMServiceClient(): Promise<CRMServiceClient> {
   const session = await auth();
   const token = session?.access_token;
   return new CRMServiceClient({
+    TOKEN: token,
+    BASE: process.env.BASE_URL,
+    HEADERS,
+  });
+}
+
+export async function getTravellersServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
+  return new TravellerServiceClient({
     TOKEN: token,
     BASE: process.env.BASE_URL,
     HEADERS,
