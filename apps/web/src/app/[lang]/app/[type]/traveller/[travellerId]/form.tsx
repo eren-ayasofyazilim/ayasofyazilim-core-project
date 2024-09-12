@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import type {
   GetApiTravellerServiceTravellersGetProfileDetailResponse,
-  UniRefund_TravellerService_Travellers_CreateTravellerDto,
+  UniRefund_TravellerService_Travellers_UpdateTravellerDto,
 } from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_UpdateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { isApiError } from "src/app/api/util";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { createZodObject, getBaseLink } from "src/utils";
-import { createTraveller, getTravellerById } from "../actions";
+import { getTravellerById, updateTraveller } from "../actions";
 
 const generalInformationSchema = createZodObject(
   $UniRefund_TravellerService_Travellers_UpdateTravellerDto,
@@ -66,10 +66,15 @@ export default function Form({
           formSchema={generalInformationSchema}
           onSubmit={(formdata) => {
             async function create() {
+              const requestBody: UniRefund_TravellerService_Travellers_UpdateTravellerDto =
+                {
+                  ...(formdata as UniRefund_TravellerService_Travellers_UpdateTravellerDto),
+                  id: travellerId,
+                };
               try {
-                const resposnse = await createTraveller(
-                  formdata as UniRefund_TravellerService_Travellers_CreateTravellerDto,
-                );
+                const resposnse = await updateTraveller({
+                  requestBody,
+                });
                 if (resposnse.type === "success") {
                   toast.success("Traveller created successfully");
                 } else {
