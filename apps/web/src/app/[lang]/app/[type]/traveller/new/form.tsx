@@ -11,6 +11,7 @@ import Link from "next/link";
 import { toast } from "@/components/ui/sonner";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { createZodObject, getBaseLink } from "src/utils";
+import { isApiError } from "src/app/api/util";
 import { createTraveller } from "../actions";
 
 const generalInformationSchema = createZodObject(
@@ -46,10 +47,13 @@ export default function Form({
                 if (resposnse.type === "success") {
                   toast.success("Traveller created successfully");
                 } else {
-                  toast.error("Traveller creation failed");
+                  toast.error(`${resposnse.status}: ${resposnse.message}`);
                 }
               } catch (error) {
-                toast.error("Traveller creation failed");
+                if (isApiError(error)) {
+                  toast.error(error.message);
+                }
+                toast.error("Traveller creation failed for unknown reason");
               }
             }
             void create();
