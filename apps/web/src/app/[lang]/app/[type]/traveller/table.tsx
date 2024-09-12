@@ -2,10 +2,10 @@
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
-import { useEffect, useState } from "react";
 
 export interface Payment {
   id: string;
@@ -44,7 +44,6 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-
 export default function Table({
   languageData,
 }: {
@@ -56,15 +55,14 @@ export default function Table({
   async function fetchData() {
     const response = await getTravellers();
     if (response.type === "success") {
-      const { items, totalCount } = response;
+      const { items, totalCount: _totalCount } = response;
       if (typeof items === "undefined") return;
-      console.log("items ", items);
       setTravellers(items);
-      setTotalCount(totalCount || 0);
-    } 
-}
+      setTotalCount(_totalCount || 0);
+    }
+  }
   useEffect(() => {
-    fetchData();
+    void fetchData();
   }, []);
 
   return (
