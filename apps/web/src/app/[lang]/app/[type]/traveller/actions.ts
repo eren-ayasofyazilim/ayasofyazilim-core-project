@@ -3,6 +3,8 @@
 import type {
   GetApiTravellerServiceTravellersGetProfileDetailResponse,
   PostApiTravellerServiceTravellersCreateResponse,
+  PutApiTravellerServiceTravellersUpdateData,
+  PutApiTravellerServiceTravellersUpdateResponse,
   UniRefund_TravellerService_Travellers_CreateTravellerDto,
   Volo_Abp_Application_Dtos_PagedResultDto_15,
 } from "@ayasofyazilim/saas/TravellerService";
@@ -63,6 +65,24 @@ export async function getTravellerById(): Promise<
       data: response,
       status: 200,
       message: "Traveller fetched successfully",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+
+export async function updateTraveller(
+  formdata: PutApiTravellerServiceTravellersUpdateData,
+): Promise<ServerResponse<PutApiTravellerServiceTravellersUpdateResponse>> {
+  try {
+    const client = await getTravellersServiceClient();
+    const response =
+      await client.traveller.putApiTravellerServiceTravellersUpdate(formdata);
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "Traveller updated successfully",
     };
   } catch (error) {
     return structuredError(error);
