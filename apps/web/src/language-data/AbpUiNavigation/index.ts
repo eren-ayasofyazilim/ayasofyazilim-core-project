@@ -56,6 +56,36 @@ export interface AbpUiNavigationResource {
   MyAccount: string;
   TextTemplates: string;
   AdminManagement: string;
+
+  //new
+  OpenIdDict: string;
+  Applications: string;
+  Scopes: string;
+  Languages: string;
+  LanguageTexts: string;
+  Edition: string;
+  Tenant: string;
+  Role: string;
+  User: string;
+  ClaimType: string;
+  SecurityLogs: string;
+  AuditLogs: string;
+  VAT: string;
+  Refund: string;
+  Organization: string;
+  ProductGroup: string;
+  ProductGroupVAT: string;
+  Merchants: string;
+  Customs: string;
+  RefundPoints: string;
+  TaxFree: string;
+  TaxFreeTags: string;
+  CompanySettings: string;
+  TaxOffices: string;
+  Templates: string;
+  Operations: string;
+  Rebate: string;
+  CRM: string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -220,6 +250,89 @@ function getLanguageData(
       navigationResource?.AdminManagement ||
       data[lang]?.AdminManagement ||
       data.en.AdminManagement,
+
+    OpenIdDict:
+      navigationResource?.OpenIdDict ||
+      data[lang]?.OpenIdDict ||
+      data.en.OpenIdDict,
+    Applications:
+      navigationResource?.Applications ||
+      data[lang]?.Applications ||
+      data.en.Applications,
+    Scopes: navigationResource?.Scopes || data[lang]?.Scopes || data.en.Scopes,
+    Languages:
+      navigationResource?.Languages ||
+      data[lang]?.Languages ||
+      data.en.Languages,
+    LanguageTexts:
+      navigationResource?.LanguageTexts ||
+      data[lang]?.LanguageTexts ||
+      data.en.LanguageTexts,
+    Edition:
+      navigationResource?.Edition || data[lang]?.Edition || data.en.Edition,
+    Tenant: navigationResource?.Tenant || data[lang]?.Tenant || data.en.Tenant,
+    Role: navigationResource?.Role || data[lang]?.Role || data.en.Role,
+    User: navigationResource?.User || data[lang]?.User || data.en.User,
+    ClaimType:
+      navigationResource?.ClaimType ||
+      data[lang]?.ClaimType ||
+      data.en.ClaimType,
+    SecurityLogs:
+      navigationResource?.SecurityLogs ||
+      data[lang]?.SecurityLogs ||
+      data.en.SecurityLogs,
+    Organization:
+      navigationResource?.Organization ||
+      data[lang]?.Organization ||
+      data.en.Organization,
+    AuditLogs:
+      navigationResource?.AuditLogs ||
+      data[lang]?.AuditLogs ||
+      data.en.AuditLogs,
+    VAT: navigationResource?.VAT || data[lang]?.VAT || data.en.VAT,
+    ProductGroup:
+      navigationResource?.ProductGroup ||
+      data[lang]?.ProductGroup ||
+      data.en.ProductGroup,
+    ProductGroupVAT:
+      navigationResource?.ProductGroupVAT ||
+      data[lang]?.ProductGroupVAT ||
+      data.en.ProductGroupVAT,
+    Merchants:
+      navigationResource?.Merchants ||
+      data[lang]?.Merchants ||
+      data.en.Merchants,
+    RefundPoints:
+      navigationResource?.RefundPoints ||
+      data[lang]?.RefundPoints ||
+      data.en.RefundPoints,
+    Customs:
+      navigationResource?.Customs || data[lang]?.Customs || data.en.Customs,
+    TaxFree:
+      navigationResource?.TaxFree || data[lang]?.TaxFree || data.en.TaxFree,
+    TaxOffices:
+      navigationResource?.TaxOffices ||
+      data[lang]?.TaxOffices ||
+      data.en.TaxOffices,
+    CompanySettings:
+      navigationResource?.CompanySettings ||
+      data[lang]?.CompanySettings ||
+      data.en.CompanySettings,
+    Templates:
+      navigationResource?.Templates ||
+      data[lang]?.Templates ||
+      data.en.Templates,
+    Refund: navigationResource?.Refund || data[lang]?.Refund || data.en.Refund,
+    Operations:
+      navigationResource?.Operations ||
+      data[lang]?.Operations ||
+      data.en.Operations,
+    TaxFreeTags:
+      navigationResource?.TaxFreeTags ||
+      data[lang]?.TaxFreeTags ||
+      data.en.TaxFreeTags,
+    Rebate: navigationResource?.Rebate || data[lang]?.Rebate || data.en.Rebate,
+    CRM: navigationResource?.CRM || data[lang]?.CRM || data.en.CRM,
   };
 }
 export async function getResourceData(lang: string) {
