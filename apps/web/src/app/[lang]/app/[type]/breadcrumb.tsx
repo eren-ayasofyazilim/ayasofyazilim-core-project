@@ -5,23 +5,19 @@ import { BreadcrumbNavigation } from "@repo/ui/theme/breadcrumb-navigation";
 import type { NavbarItemType } from "@repo/ui/theme/types";
 import { useMemo } from "react";
 
-export function getActualPath(path: string, lang: string) {
-  return path.split(`/${lang}/`)[1].split("?")[0];
-}
-
 export function getActiveSubNavbarItem(
   navbarItem: NavbarItemType | undefined,
-  actualPath: string,
+  pathName: string,
 ) {
   if (!navbarItem?.subNavbarItems) return null;
 
   if (navbarItem.key === "/") {
     return navbarItem.subNavbarItems.find((item) =>
-      actualPath.startsWith(item.key),
+      pathName.startsWith(item.key),
     );
   }
 
-  const tempPath = actualPath.split(`${navbarItem.key}/`)[1]?.split("/")[0];
+  const tempPath = pathName.split(`${navbarItem.key}/`)[1]?.split("/")[0];
   if (!tempPath) return null;
 
   const subPath = `${navbarItem.key}/${tempPath}`;
@@ -30,13 +26,10 @@ export function getActiveSubNavbarItem(
 //Yeni tasarıma göre yapıldı, eski tasarıma uyarlandı, değişecek.
 export function BreadcrumbCallback({
   navbarItems,
-  lang,
 }: {
   navbarItems: NavbarItemType[];
-  lang: string;
 }) {
   const pathName = usePathname();
-  const actualPath = getActualPath(pathName, lang);
   const {
     navigation,
     // mainNavbarItem,
@@ -45,10 +38,10 @@ export function BreadcrumbCallback({
     // activeNavbarItem,
   } = useMemo(() => {
     const nav: NavbarItemType[] = [navbarItems[0]];
-    let navItem = getActiveSubNavbarItem(nav[0], actualPath);
+    let navItem = getActiveSubNavbarItem(nav[0], pathName);
     while (navItem) {
       nav.push(navItem);
-      navItem = getActiveSubNavbarItem(navItem, actualPath);
+      navItem = getActiveSubNavbarItem(navItem, pathName);
     }
     return {
       navigation: nav,

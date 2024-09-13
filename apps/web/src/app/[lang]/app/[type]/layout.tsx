@@ -51,7 +51,10 @@ export default async function Layout({
   const navbarResources = { "Menu:Reports": "Reports" };
   const { languageData, resources } = await getResourceData(params.lang);
 
-  const navbarbread = getNavbarFromDB(`app/${params.type}`, languageData);
+  const navbarbread = getNavbarFromDB(
+    `/${params.lang}/app/${params.type}`,
+    languageData,
+  );
   const session = await auth();
   const user = session?.user;
 
@@ -302,8 +305,9 @@ export default async function Layout({
         // </div>
       }
     >
-      <div className="mx-10 mt-5 h-[calc(100vh-164px)]">
-        <BreadcrumbCallback lang={params.lang} navbarItems={navbarbread} />
+      <div className="mx-10  mt-5 h-[calc(100vh-204px)]">
+        <BreadcrumbCallback navbarItems={navbarbread} />
+
         {children}
       </div>
     </MainLayout>

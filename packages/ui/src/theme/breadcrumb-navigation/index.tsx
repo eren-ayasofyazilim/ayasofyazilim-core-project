@@ -78,7 +78,7 @@ export function BreadcrumbDropdown({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         {dropdownItems?.map((subItem) => (
-          <Link key={subItem.key} href={"/" + subItem.href || "#"}>
+          <Link key={subItem.key} href={subItem.href || "#"}>
             {subItem.subNavbarItems ? (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
@@ -92,7 +92,7 @@ export function BreadcrumbDropdown({
                       .map((subSubItem) => (
                         <Link
                           key={subSubItem.key}
-                          href={"/" + subSubItem.href || "#"}
+                          href={subSubItem.href || "#"}
                         >
                           <DropdownMenuItem>
                             <BreadcrumbIcon item={subSubItem} />
@@ -129,7 +129,7 @@ function BreadcrumbSingleItem({
       asChild
     >
       <BreadcrumbLink
-        href={"/" + item.href || "#"}
+        href={item.href || "#"}
         className="flex flex-row items-center gap-1 px-2 text-gray-600"
       >
         <>
