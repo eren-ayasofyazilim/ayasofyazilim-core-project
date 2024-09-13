@@ -5,8 +5,11 @@ import { ProfileMenu } from "@repo/ui/upwithcrowd/profile-menu";
 import {
   BriefcaseBusiness,
   Building2,
+  ClipboardList,
   DollarSign,
   Home,
+  Languages,
+  Layers,
   LayoutDashboard,
   Plane,
   Presentation,
@@ -16,20 +19,19 @@ import {
   UserCircle,
   Worm,
   WrenchIcon,
-  Languages,
-  Layers,
-  ClipboardList,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth } from "auth";
 import { signOutServer } from "auth-action";
 import { getResourceData } from "src/language-data/AbpUiNavigation";
 import { generateNavigationItems, getBaseLink } from "src/utils";
+import { BreadcrumbCallback } from "./breadcrumb";
 import { dataConfigOfCrm } from "./crm/data";
 import { dataConfig } from "./dashboard/data";
 import { dataConfigOfManagement } from "./management/data";
 import type { NavigationItmes } from "./menu-data";
 import { navigationItemsTemp } from "./menu-data";
+import { getNavbarFromDB } from "./navbar-data";
 
 interface LayoutProps {
   params: { lang: string; type: string };
@@ -49,6 +51,7 @@ export default async function Layout({
   const navbarResources = { "Menu:Reports": "Reports" };
   const { languageData, resources } = await getResourceData(params.lang);
 
+  const navbarbread = getNavbarFromDB(`app/${params.type}`, languageData);
   const session = await auth();
   const user = session?.user;
 
@@ -299,7 +302,10 @@ export default async function Layout({
         // </div>
       }
     >
-      <div className="mx-10 mt-5 h-[calc(100vh-164px)]">{children}</div>
+      <div className="mx-10 mt-5 h-[calc(100vh-164px)]">
+        <BreadcrumbCallback lang={params.lang} navbarItems={navbarbread} />
+        {children}
+      </div>
     </MainLayout>
   );
 }
