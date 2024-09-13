@@ -168,7 +168,10 @@ export default function Page({
         cta: languageData[
           `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
         ],
-        description: `Create a new ${formData.title}`,
+        description:
+          languageData[
+            `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
+          ],
         componentType: "Autoform",
         autoFormArgs: {
           formSchema: createZodObject(
