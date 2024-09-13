@@ -9,6 +9,7 @@ const data: LanguageDataType = {
 };
 
 export interface AbpUiNavigationResource {
+  Home: string;
   HomePage: string;
   Dashboard: string;
   Crm: string;
@@ -93,6 +94,7 @@ function getLanguageData(
 ): AbpUiNavigationResource {
   const navigationResource = resources.AbpUiNavigation?.texts;
   return {
+    Home: navigationResource?.Home || data[lang]?.Home || data.en.Home,
     HomePage:
       navigationResource?.HomePage || data[lang]?.HomePage || data.en.Homepage,
     Dashboard:
