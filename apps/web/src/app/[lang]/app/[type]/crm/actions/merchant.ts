@@ -120,9 +120,11 @@ export async function deleteSubMerchantByMerchantId(
   }
 }
 
-export async function deleteIndividualByMerchantId(
-  id: string,
-): Promise<ServerResponse<Individual[]>> {
+export async function deleteIndividualByMerchantId({
+  id,
+}: {
+  id: string;
+}): Promise<ServerResponse<Individual[]>> {
   // body: DeleteApiCrmServiceMerchantsByIdWithComponentsData,
   "use server";
   return Promise.resolve({
