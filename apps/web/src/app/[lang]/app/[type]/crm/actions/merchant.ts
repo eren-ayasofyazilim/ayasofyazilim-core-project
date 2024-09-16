@@ -10,8 +10,8 @@ import type {
 import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
 import { getCRMServiceClient, structuredError } from "src/lib";
-import type { Individual } from "../[domain]/[data]/(alternative)/[id]/data";
-import { individualData } from "../[domain]/[data]/(alternative)/[id]/data";
+import type { Individual } from "../[data]/(alternative)/[id]/data";
+import { individualData } from "../[data]/(alternative)/[id]/data";
 
 export async function getCrmServiceMerchants(
   body: GetApiCrmServiceMerchantsData,
