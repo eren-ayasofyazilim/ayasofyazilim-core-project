@@ -94,9 +94,7 @@ export default function Page({
       });
       if (response.ok) {
         toast.success(`${params.data} added successfully`);
-        router.push(
-          getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`),
-        );
+        router.push(getBaseLink(`/app/admin/crm/${params.data}`));
       } else {
         const errorData = (await response.json()) as {
           message: string;
@@ -117,7 +115,7 @@ export default function Page({
             `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
           ]
         }
-        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        href={getBaseLink(`/app/admin/crm/${params.data}`)}
         title={
           languageData[
             `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData

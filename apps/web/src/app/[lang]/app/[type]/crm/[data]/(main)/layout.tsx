@@ -51,15 +51,9 @@ export default function Layout({ children, params }: LayoutProps) {
             ];
         }
         return {
-          id: `${params.domain}/${key}`,
+          id: key,
           name: name || key,
-          link: getBaseLink(
-            `crm/${params.domain}/${key}`,
-            true,
-            params.lang,
-            true,
-            params.type,
-          ),
+          link: getBaseLink(`crm/${key}`, true, params.lang, true, params.type),
         };
       });
     setNavbarItems(tempNavbarItems);
