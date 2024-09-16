@@ -201,10 +201,10 @@ export default function Form({
     }
   }
 
-  async function deleteIndividualMerchant() {
+  async function deleteIndividualMerchant(id: string) {
     setLoading(true);
     try {
-      const response = await deleteIndividualByMerchantId();
+      const response = await deleteIndividualByMerchantId(id);
       if (response.type === "error") {
         toast.error(response.status);
         return;
@@ -438,8 +438,8 @@ export default function Form({
                     {
                       cta: languageData.Delete,
                       type: "Action",
-                      callback: () => {
-                        void deleteIndividualMerchant();
+                      callback: (row: { id: string }) => {
+                        void deleteIndividualMerchant(row.id);
                       },
                     },
                     {

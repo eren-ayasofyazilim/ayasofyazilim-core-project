@@ -120,16 +120,16 @@ export async function deleteSubMerchantByMerchantId(
   }
 }
 
-export async function deleteIndividualByMerchantId(): Promise<
-  ServerResponse<Individual[]>
-> {
+export async function deleteIndividualByMerchantId(
+  id: string,
+): Promise<ServerResponse<Individual[]>> {
   // body: DeleteApiCrmServiceMerchantsByIdWithComponentsData,
   "use server";
   return Promise.resolve({
     type: "success",
     data: individualData,
     status: 200,
-    message: "Individual deleted successfully.",
+    message: `Individual with id: ${id} deleted successfully.`,
   });
   // try {
   //   const response = individualData;
