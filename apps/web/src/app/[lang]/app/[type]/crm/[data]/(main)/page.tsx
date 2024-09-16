@@ -13,7 +13,7 @@ import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm } from "../../data";
 
 async function controlledFetch(
   url: string,
@@ -61,12 +61,12 @@ export default function Page({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
   const [formData, setFormData] = useState<TableData>(
-    dataConfigOfCrm[params.domain].pages[params.data],
+    dataConfigOfCrm.companies.pages[params.data],
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const detailedFilters =
-    dataConfigOfCrm[params.domain].pages[params.data].detailedFilters || [];
+    dataConfigOfCrm.companies.pages[params.data].detailedFilters || [];
   async function processConvertors() {
     const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
@@ -148,7 +148,7 @@ export default function Page({
           `${formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
         ],
         type: "NewPage",
-        href: `/app/admin/crm/companies/${params.data}/new`,
+        href: `/app/admin/crm/${params.data}/new`,
       },
       {
         cta: `Export CSV`,
@@ -200,9 +200,7 @@ export default function Page({
     cta: languageData.Edit,
     type: "Action",
     callback: (row) => {
-      router.push(
-        getBaseLink(`app/admin/crm/companies/${params.data}/${row.id}`),
-      );
+      router.push(getBaseLink(`app/admin/crm/${params.data}/${row.id}`));
     },
   });
   return (

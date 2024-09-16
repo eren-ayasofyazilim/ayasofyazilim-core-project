@@ -29,7 +29,7 @@ import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { dataConfigOfCrm } from "../../../../data";
+import { dataConfigOfCrm } from "../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 
 const organization = $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
@@ -167,7 +167,7 @@ export default function Form({
   };
 }) {
   const [formData] = useState<TableData>(
-    dataConfigOfCrm[params.domain].pages[params.data],
+    dataConfigOfCrm.companies.pages[params.data],
   );
   const [data, setData] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
@@ -284,7 +284,7 @@ export default function Form({
         `${"SubCompany".replaceAll(" ", "")}.New` as keyof typeof languageData
       ],
       type: "NewPage",
-      href: `/app/admin/crm/companies/${params.data}/${params.id}/subcompany/new/`,
+      href: `/app/admin/crm/${params.data}/${params.id}/subcompany/new/`,
     },
     {
       cta: `Export CSV`,
@@ -425,7 +425,7 @@ export default function Form({
                 type: "Auto",
                 data: {
                   tableType:
-                    dataConfigOfCrm[params.domain].pages.merchants.tableSchema
+                    dataConfigOfCrm.companies.pages.merchants.tableSchema
                       .schema,
                   excludeList: [
                     "organizationId",
