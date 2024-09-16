@@ -1,3 +1,4 @@
+import type { ApiError } from "@ayasofyazilim/saas/AccountService";
 import { AccountServiceClient } from "@ayasofyazilim/saas/AccountService";
 import { AdministrationServiceClient } from "@ayasofyazilim/saas/AdministrationService";
 import { BackerServiceClient } from "@ayasofyazilim/saas/BackerService";
@@ -7,6 +8,7 @@ import { ProjectServiceClient } from "@ayasofyazilim/saas/ProjectService";
 import { SaasServiceClient } from "@ayasofyazilim/saas/SaasService";
 import { SettingServiceClient } from "@ayasofyazilim/saas/SettingService";
 import { ContractServiceClient } from "@ayasofyazilim/saas/ContractService";
+import { TravellerServiceClient } from "@ayasofyazilim/saas/TravellerService";
 import { auth } from "auth";
 import { isApiError } from "./app/api/util";
 
@@ -94,7 +96,7 @@ export async function getBackerServiceClient(): Promise<BackerServiceClient> {
   });
 }
 
-export async function getCRMServiceClient() {
+export async function getCRMServiceClient(): Promise<CRMServiceClient> {
   const session = await auth();
   const token = session?.access_token;
   return new CRMServiceClient({
@@ -104,10 +106,21 @@ export async function getCRMServiceClient() {
   });
 }
 
-export type ServerResponse<T = undefined> = BaseServerResponse &
-  (undefined extends T ? ErrorTypes : SuccessServerResponse<T>);
+export async function getTravellersServiceClient() {
+  const session = await auth();
+  const token = session?.access_token;
+  return new TravellerServiceClient({
+    TOKEN: token,
+    BASE: process.env.BASE_URL,
+    HEADERS,
+  });
+}
 
-export type ErrorTypes = ErrorServerResponse | ApiErrorServerResponse;
+export type ServerResponse<T = undefined> = BaseServerResponse &
+  (ErrorTypes | SuccessServerResponse<T>);
+
+export type ErrorTypes = BaseServerResponse &
+  (ErrorServerResponse | ApiErrorServerResponse);
 
 export interface BaseServerResponse {
   status: number;
@@ -116,21 +129,15 @@ export interface BaseServerResponse {
 
 export interface SuccessServerResponse<T> {
   type: "success";
-  status: number;
   data: T;
-  message: string;
 }
 export interface ApiErrorServerResponse {
   type: "api-error";
-  status: number;
-  data: string;
-  message: string;
+  data: ApiError["message"] | ApiError["cause"];
 }
 export interface ErrorServerResponse {
   type: "error";
-  status: number;
   data: unknown;
-  message: string;
 }
 
 export function structuredError(error: unknown): ErrorTypes {
@@ -138,9 +145,9 @@ export function structuredError(error: unknown): ErrorTypes {
     const body = error.body as Record<string, unknown>;
     return {
       type: "api-error",
-      data: (body.error as Record<string, string>).details || error.message,
+      data: body.message || body.cause,
       status: error.status,
-      message: error.message,
+      message: error.statusText,
     };
   }
   return {

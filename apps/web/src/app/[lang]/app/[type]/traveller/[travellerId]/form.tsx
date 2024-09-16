@@ -1,172 +1,102 @@
-"use client";
+// TODO: ask for this case: if traveller has assigned tags and recipets, should we update it?
+// "use client";
 
-import {
-  $UniRefund_TravellerService_AddressTypes_UpdateAddressTypeDto,
-  $UniRefund_TravellerService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  $UniRefund_TravellerService_NameCommonDatas_CreateNameCommonDataDto,
-  $UniRefund_TravellerService_TelephoneTypes_UpdateTelephoneTypeDto,
-} from "@ayasofyazilim/saas/TravellerService";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-import AutoForm, {
-  AutoFormSubmit,
-} from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import {
-  SectionLayout,
-  SectionLayoutContent,
-} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import Link from "next/link";
-import type { TravellerServiceResource } from "src/language-data/TravellerService";
-import { createZodObject, getBaseLink } from "src/utils";
+// import { Card } from "@/components/ui/card";
+// import { toast } from "@/components/ui/sonner";
+// import type {
+//   GetApiTravellerServiceTravellersGetProfileDetailByIdResponse,
+//   UniRefund_TravellerService_Travellers_UpdateTravellerDto,
+// } from "@ayasofyazilim/saas/TravellerService";
+// import { $UniRefund_TravellerService_Travellers_UpdateTravellerDto } from "@ayasofyazilim/saas/TravellerService";
+// import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
+// import AutoForm, {
+//   AutoFormSubmit,
+// } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+// import Link from "next/link";
+// import { useEffect, useState } from "react";
+// import { isApiError } from "src/app/api/util";
+// import type { TravellerServiceResource } from "src/language-data/TravellerService";
+// import { createZodObject, getBaseLink } from "src/utils";
+// import { getTravellerById, updateTraveller } from "../actions";
 
-const generalInformationSchema = createZodObject(
-  $UniRefund_TravellerService_NameCommonDatas_CreateNameCommonDataDto,
-  ["mailingName", "name", "officialName", "salutation", "suffix"],
-);
-const emailSchema = createZodObject(
-  $UniRefund_TravellerService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  ["emailAddress", "id", "primaryFlag", "typeCode"],
-);
-const telephoneSchema = createZodObject(
-  $UniRefund_TravellerService_TelephoneTypes_UpdateTelephoneTypeDto,
-  [
-    "areaCode",
-    "id",
-    "ituCountryCode",
-    "localNumber",
-    "primaryFlag",
-    "typeCode",
-  ],
-);
-const addressSchema = createZodObject(
-  $UniRefund_TravellerService_AddressTypes_UpdateAddressTypeDto,
-  [
-    "addressLine",
-    "city",
-    "country",
-    "fullAddress",
-    "id",
-    "postalCode",
-    "primaryFlag",
-    "terriority",
-    "typeCode",
-  ],
-);
+// const generalInformationSchema = createZodObject(
+//   $UniRefund_TravellerService_Travellers_UpdateTravellerDto,
+//   Object.keys(
+//     $UniRefund_TravellerService_Travellers_UpdateTravellerDto.properties,
+//   ),
+// );
 
-const generalInformationData = {
-  mailingName: "test",
-  name: "test",
-  officialName: "test",
-  salutation: "test",
-  suffix: "test",
-};
-const emailData = {
-  emailAddress: "test@asd.com",
-  id: "test",
-  primaryFlag: true,
-  typeCode: "0",
-};
-const telephoneData = {
-  areaCode: "test",
-  id: "test",
-  ituCountryCode: "TR",
-  localNumber: "5555555555",
-  primaryFlag: true,
-  typeCode: "0",
-};
-const addressData = {
-  addressLine: "test",
-  city: "test",
-  country: "test",
-  fullAddress: "test",
-  id: "test",
-  postalCode: "test",
-  primaryFlag: true,
-  terriority: "test",
-  typeCode: "0",
-};
-export default function Form({
-  travellerId,
-  languageData,
-}: {
-  travellerId: string;
-  languageData: TravellerServiceResource;
-}) {
-  return (
-    <>
-      <PageHeader
-        LinkElement={Link}
-        description={languageData.TravellerDescription}
-        href={getBaseLink("app/admin/traveller")}
-        title={`${languageData.TravellerDetail} - ${travellerId}`}
-      />
-
-      <SectionLayout
-        defaultActiveSectionId="general"
-        sections={[
-          { name: languageData.PersonalInformation, id: "general" },
-          { name: languageData.EmailInformation, id: "email" },
-          { name: languageData.TelephoneInformation, id: "telephone" },
-          { name: languageData.AddressInformation, id: "address" },
-        ]}
-        vertical
-      >
-        <SectionLayoutContent sectionId="general">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={generalInformationSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={generalInformationData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="email">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={emailSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={emailData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="telephone">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={telephoneSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={telephoneData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-        <SectionLayoutContent sectionId="address">
-          <AutoForm
-            formClassName="border-0"
-            formSchema={addressSchema}
-            onSubmit={() => {
-              //void submitFormData(formData);
-            }}
-            values={addressData}
-          >
-            <AutoFormSubmit>
-              <>{languageData.Save}</>
-            </AutoFormSubmit>
-          </AutoForm>
-        </SectionLayoutContent>
-      </SectionLayout>
-    </>
-  );
-}
+// export default function Form({
+//   travellerId,
+//   languageData,
+// }: {
+//   travellerId: string;
+//   languageData: TravellerServiceResource;
+// }) {
+//   const [generalInformationData, setGeneralInformationData] =
+//     useState<GetApiTravellerServiceTravellersGetProfileDetailByIdResponse>();
+//   useEffect(() => {
+//     async function getTraveller() {
+//       try {
+//         const response = await getTravellerById({ id: travellerId });
+//         if (response.type === "success") {
+//           setGeneralInformationData(response.data);
+//         } else {
+//           toast.error(`${response.status}: ${response.message}`);
+//         }
+//       } catch (error) {
+//         if (isApiError(error)) {
+//           toast.error(error.message);
+//         }
+//         toast.error("Traveller fetch failed for unknown reason");
+//       }
+//     }
+//     void getTraveller();
+//   }, [travellerId]);
+//   return (
+//     <>
+//       <PageHeader
+//         LinkElement={Link}
+//         description={languageData.TravellerDescription}
+//         href={getBaseLink("app/admin/traveller")}
+//         title={`${languageData.TravellerDetail} - ${travellerId}`}
+//       />
+//       <Card className="h-full w-full flex-1 overflow-auto p-5">
+//         <AutoForm
+//           formClassName="border-0"
+//           formSchema={generalInformationSchema}
+//           onSubmit={(formdata) => {
+//             async function create() {
+//               const requestBody: UniRefund_TravellerService_Travellers_UpdateTravellerDto =
+//                 {
+//                   ...(formdata as UniRefund_TravellerService_Travellers_UpdateTravellerDto),
+//                   id: travellerId,
+//                 };
+//               try {
+//                 const resposnse = await updateTraveller({
+//                   requestBody,
+//                 });
+//                 if (resposnse.type === "success") {
+//                   toast.success("Traveller created successfully");
+//                 } else {
+//                   toast.error(`${resposnse.status}: ${resposnse.message}`);
+//                 }
+//               } catch (error) {
+//                 if (isApiError(error)) {
+//                   toast.error(error.message);
+//                 }
+//                 toast.error("Traveller creation failed for unknown reason");
+//               }
+//             }
+//             void create();
+//           }}
+//           values={generalInformationData}
+//         >
+//           <AutoFormSubmit className="float-right">
+//             <>{languageData.Save}</>
+//           </AutoFormSubmit>
+//         </AutoForm>
+//       </Card>
+//     </>
+//   );
+// }

@@ -67,7 +67,7 @@ export default function TemplateDetails({
                 if (response.type === "success") {
                   toast.success("Rebate table saved successfully!");
                 } else if (response.type === "api-error") {
-                  toast.error(response.data);
+                  toast.error(response.data as string);
                 } else {
                   toast.error("Fatal error");
                 }
