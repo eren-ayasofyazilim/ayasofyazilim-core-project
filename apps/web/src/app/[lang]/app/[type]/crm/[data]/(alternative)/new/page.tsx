@@ -15,7 +15,7 @@ import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import { dataConfigOfCrm } from "../../../../data";
+import { dataConfigOfCrm } from "../../../data";
 
 export interface CreateOrganizationDto {
   organization: Record<string, string>;
@@ -55,7 +55,7 @@ export default function Page({
 }) {
   const router = useRouter();
   const [_formData] = useState<TableData>(
-    dataConfigOfCrm[params.domain].pages[params.data],
+    dataConfigOfCrm.companies.pages[params.data],
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -94,9 +94,7 @@ export default function Page({
       });
       if (response.ok) {
         toast.success(`${params.data} added successfully`);
-        router.push(
-          getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`),
-        );
+        router.push(getBaseLink(`/app/admin/crm/${params.data}`));
       } else {
         const errorData = (await response.json()) as {
           message: string;
@@ -117,7 +115,7 @@ export default function Page({
             `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
           ]
         }
-        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        href={getBaseLink(`/app/admin/crm/${params.data}`)}
         title={
           languageData[
             `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData

@@ -25,9 +25,7 @@ export default function Layout({ children, params }: LayoutProps) {
       <PageHeader
         LinkElement={Link}
         description={languageData["SubCompany.Description"]}
-        href={getBaseLink(
-          `/app/admin/crm/${params.domain}/${params.data}/${params.id}`,
-        )}
+        href={getBaseLink(`/app/admin/crm/${params.data}/${params.id}`)}
         title={languageData["SubCompany.Description"]}
       />
       <div className="flex h-full w-full flex-row">

@@ -1,4 +1,5 @@
-import { test, expect, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { expectStatusMessage } from "./utils";
 
 async function clickOrganizationImage(
@@ -21,7 +22,7 @@ async function expectOrganizationVisible(page: Page, organizationName: string) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/en/app/admin");
+  await page.goto("/en/app/admin/home");
   await page.getByRole("link", { name: "Identity Management" }).click();
   await page.getByRole("link", { name: "organization" }).click();
 });

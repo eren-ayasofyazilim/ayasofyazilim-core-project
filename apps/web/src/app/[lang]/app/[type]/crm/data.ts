@@ -160,7 +160,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           schema: $UniRefund_CRMService_Merchants_MerchantProfileDto,
         },
       },
-      refundPoints: {
+      "refund-points": {
         title: "Refund Points",
         createFormSchema: {
           schema: createrefundPointsScheme,
@@ -187,7 +187,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           schema: $UniRefund_CRMService_Customss_CustomsProfileDto,
         },
       },
-      taxFree: {
+      "tax-free": {
         title: "Tax Free",
         filterBy: "",
         createFormSchema: {
@@ -201,7 +201,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
           schema: $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
         },
       },
-      taxOffices: {
+      "tax-offices": {
         title: "Tax Offices",
         filterBy: "",
         createFormSchema: {

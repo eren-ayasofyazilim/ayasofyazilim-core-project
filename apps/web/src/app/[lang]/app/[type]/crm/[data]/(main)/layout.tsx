@@ -12,7 +12,7 @@ import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm } from "../../data";
 
 interface LayoutProps {
   children: JSX.Element;
@@ -35,7 +35,7 @@ export default function Layout({ children, params }: LayoutProps) {
 
   //TODO make this page serverside
   useEffect(() => {
-    const tempNavbarItems = Object.entries(dataConfigOfCrm[params.domain].pages)
+    const tempNavbarItems = Object.entries(dataConfigOfCrm.companies.pages)
       .filter(([e]) => e !== "displayName" && e !== "default")
       .map(([key, value]: [string, unknown]) => {
         let name = "";
@@ -51,15 +51,9 @@ export default function Layout({ children, params }: LayoutProps) {
             ];
         }
         return {
-          id: `${params.domain}/${key}`,
+          id: key,
           name: name || key,
-          link: getBaseLink(
-            `crm/${params.domain}/${key}`,
-            true,
-            params.lang,
-            true,
-            params.type,
-          ),
+          link: getBaseLink(`crm/${key}`, true, params.lang, true, params.type),
         };
       });
     setNavbarItems(tempNavbarItems);
