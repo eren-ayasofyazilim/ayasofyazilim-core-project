@@ -1,4 +1,4 @@
-import { GeistSans } from "geist/font/sans"; // eslint-disable-line -- TODO: we need to fix this
+import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Providers from "../../providers/providers";
 import "../globals.css";
