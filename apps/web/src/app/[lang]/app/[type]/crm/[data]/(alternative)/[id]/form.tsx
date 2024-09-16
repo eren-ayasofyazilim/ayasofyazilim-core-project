@@ -31,12 +31,13 @@ import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataConfigOfCrm } from "../../../data";
 import {
-  deleteIndivitualByMerchantId,
+  deleteIndividualByMerchantId,
   deleteSubMerchantByMerchantId,
-  getIndivitualByMerchantId,
+  getIndividualByMerchantId,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
+import type { Individual } from "./data";
 import {
   address,
   email,
@@ -53,7 +54,6 @@ export default function Form({
   params: {
     id: string;
     data: string;
-    domain: string;
     lang: string;
   };
 }) {
@@ -63,7 +63,7 @@ export default function Form({
   const router = useRouter();
   const [data, setData] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
-  const [IdIndivitualsData, setIdIndivitualsData] = useState<unknown>();
+  const [IndividualsData, setIdIndividualsData] = useState<Individual[]>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -168,18 +168,18 @@ export default function Form({
     }
   }
 
-  async function getIndivitualsOfMerchant() {
+  async function getIndividualsOfMerchant() {
     setLoading(true);
     try {
-      const response = await getIndivitualByMerchantId();
+      const response = await getIndividualByMerchantId();
       if (response.type === "error") {
         toast.error(response.status);
         return;
       }
-      const IdIndivitualsdata = response.data;
-      setIdIndivitualsData(IdIndivitualsdata);
+      const Individualsdata = response.data as Individual[];
+      setIdIndividualsData(Individualsdata);
     } catch (error) {
-      toast.error("An error occurred while fetching Indivitual.");
+      toast.error("An error occurred while fetching Individual.");
     } finally {
       setLoading(false);
     }
@@ -201,17 +201,17 @@ export default function Form({
     }
   }
 
-  async function deleteIndivitualMerchant() {
+  async function deleteIndividualMerchant(id: string) {
     setLoading(true);
     try {
-      const response = await deleteIndivitualByMerchantId();
+      const response = await deleteIndividualByMerchantId({ id });
       if (response.type === "error") {
         toast.error(response.status);
         return;
       }
-      toast.success("Indivitual deleted successfully.");
+      toast.success("Individual deleted successfully.");
     } catch (error) {
-      toast.error("An error occurred while deleting Indivitual.");
+      toast.error("An error occurred while deleting Individual.");
     } finally {
       setLoading(false);
     }
@@ -222,7 +222,7 @@ export default function Form({
   }, []);
 
   useEffect(() => {
-    void getIndivitualsOfMerchant();
+    void getIndividualsOfMerchant();
   }, []);
 
   const actionSubCompany: TableAction[] = [
@@ -248,7 +248,7 @@ export default function Form({
         `${"Individuals".replaceAll(" ", "")}.New` as keyof typeof languageData
       ],
       type: "NewPage",
-      href: `/app/admin/crm/companies/${params.data}/${params.id}/indivitual/new/`,
+      href: `/app/admin/crm/companies/${params.data}/${params.id}/Individual/new/`,
     },
     {
       cta: `Export CSV`,
@@ -268,7 +268,7 @@ export default function Form({
             `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
           ]
         }
-        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        href={getBaseLink(`/app/admin/crm/${params.data}`)}
         title={
           languageData[
             `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
@@ -438,8 +438,8 @@ export default function Form({
                     {
                       cta: languageData.Delete,
                       type: "Action",
-                      callback: () => {
-                        void deleteIndivitualMerchant();
+                      callback: (row: { id: string }) => {
+                        void deleteIndividualMerchant(row.id);
                       },
                     },
                     {
@@ -452,7 +452,7 @@ export default function Form({
                   ],
                 },
               }}
-              data={IdIndivitualsData as unknown[]}
+              data={IndividualsData || []}
               isLoading={loading}
             />
           </Card>
