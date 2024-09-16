@@ -248,7 +248,7 @@ export default function Form({
         `${"Individuals".replaceAll(" ", "")}.New` as keyof typeof languageData
       ],
       type: "NewPage",
-      href: `/app/admin/crm/companies/${params.data}/${params.id}/Individual/new/`,
+      href: `/app/admin/crm/${params.data}/${params.id}/Individual/new/`,
     },
     {
       cta: `Export CSV`,
@@ -411,9 +411,7 @@ export default function Form({
                       type: "Action",
                       callback: (row: { id: string }) => {
                         router.push(
-                          getBaseLink(
-                            `app/admin/crm/companies/${params.data}/${row.id}`,
-                          ),
+                          getBaseLink(`app/admin/crm/${params.data}/${row.id}`),
                         );
                       },
                     },
