@@ -15,6 +15,16 @@ export function getNavbarFromDB(
       parentNavbarItemKey: null,
       subNavbarItems: [
         {
+          key: "home",
+          displayName: "Home",
+          description: "Description",
+          href: "/home",
+          icon: "home",
+          parentNavbarItemKey: "home",
+          subNavbarItems: null,
+          displayOrder: 1,
+        },
+        {
           key: "dashboard",
           displayName: "Dashboard",
           description: "Description",
