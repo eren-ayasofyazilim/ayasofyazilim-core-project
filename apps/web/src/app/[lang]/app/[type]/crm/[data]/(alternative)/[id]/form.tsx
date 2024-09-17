@@ -248,7 +248,7 @@ export default function Form({
         `${"Individuals".replaceAll(" ", "")}.New` as keyof typeof languageData
       ],
       type: "NewPage",
-      href: `/app/admin/crm/${params.data}/${params.id}/Individual/new/`,
+      href: `/app/admin/crm/${params.data}/${params.id}/individual/new/`,
     },
     {
       cta: `Export CSV`,

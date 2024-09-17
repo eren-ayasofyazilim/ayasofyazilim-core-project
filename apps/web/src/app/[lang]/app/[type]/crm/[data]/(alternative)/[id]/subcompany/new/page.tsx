@@ -5,8 +5,6 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CRMService";
@@ -71,9 +69,6 @@ export default function Page({
   };
 }) {
   const router = useRouter();
-  const [_formData] = useState<TableData>(
-    dataConfigOfCrm.companies.pages[params.data],
-  );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const handleSave = async (formData: CreateOrganizationDto) => {
@@ -92,9 +87,9 @@ export default function Page({
               parentCompanyId: params.id,
               contactInformations: [
                 {
-                  telephones: [formData.telephone],
-                  emails: [formData.email],
-                  addresses: [formData.address],
+                  telephones: [{ ...formData.telephone, primaryFlag: true }],
+                  emails: [{ ...formData.email, primaryFlag: true }],
+                  addresses: [{ ...formData.address, primaryFlag: true }],
                 },
               ],
             },
