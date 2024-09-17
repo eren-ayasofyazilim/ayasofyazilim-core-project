@@ -4,6 +4,8 @@ import type {
   GetApiCrmServiceMerchantsByIdDetailData,
   GetApiCrmServiceMerchantsByIdSubMerchantsData,
   GetApiCrmServiceMerchantsData,
+  PostApiCrmServiceIndividualsWithComponentsData,
+  PostApiCrmServiceIndividualsWithComponentsResponse,
   UniRefund_CRMService_Merchants_MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16,
 } from "@ayasofyazilim/saas/CRMService";
@@ -150,4 +152,23 @@ export async function deleteIndividualByMerchantId({
   // } catch (error) {
   //   return structuredError(error);
   // }
+}
+export async function postIndividual(
+  body: PostApiCrmServiceIndividualsWithComponentsData,
+): Promise<ServerResponse<PostApiCrmServiceIndividualsWithComponentsResponse>> {
+  "use server";
+  try {
+    const client = await getCRMServiceClient();
+    const response =
+      await client.individual.postApiCrmServiceIndividualsWithComponents(body);
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "Individual created successfully.",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
 }
