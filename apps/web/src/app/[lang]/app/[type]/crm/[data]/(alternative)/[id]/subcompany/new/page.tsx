@@ -87,9 +87,9 @@ export default function Page({
               parentCompanyId: params.id,
               contactInformations: [
                 {
-                  telephones: [formData.telephone],
-                  emails: [formData.email],
-                  addresses: [formData.address],
+                  telephones: [{ ...formData.telephone, primaryFlag: true }],
+                  emails: [{ ...formData.email, primaryFlag: true }],
+                  addresses: [{ ...formData.address, primaryFlag: true }],
                 },
               ],
             },
