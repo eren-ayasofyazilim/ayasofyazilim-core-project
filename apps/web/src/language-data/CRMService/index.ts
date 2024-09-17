@@ -42,6 +42,7 @@ export interface CRMServiceServiceResource {
   "SubCompany.Description": string;
   Individuals: string;
   "Individuals.New": string;
+  "Individuals.Description": string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -69,6 +70,10 @@ function getLanguageData(
       resource?.["Individuals.New"] ||
       data[lang]?.["Individuals.New"] ||
       data.en["Individuals.New"],
+    "Individuals.Description":
+      resource?.["Individuals.Description"] ||
+      data[lang]?.["Individuals.Description"] ||
+      data.en["Individuals.Description"],
 
     "Sub.Company":
       resource?.["Sub.Company"] ||
