@@ -1,15 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
-import {
-  $UniRefund_CRMService_Individuals_IndividualProfileDto,
-  type Volo_Abp_Application_Dtos_PagedResultDto_15 as PagedResultType,
-  type UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  type UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  type UniRefund_CRMService_Merchants_MerchantDto,
-  type UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  type UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-} from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
@@ -25,6 +16,16 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type {
+  UniRefund_CRMService_Merchants_MerchantDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
+  Volo_Abp_Application_Dtos_PagedResultDto_15,
+  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+} from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_CRMService_Individuals_IndividualProfileDto } from "@ayasofyazilim/saas/CRMService";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
@@ -54,8 +55,10 @@ export default function Form({
     dataConfigOfCrm.companies.pages[params.data],
   );
   const router = useRouter();
-  const [SubCompaniesData, setSubCompaniesData] = useState<PagedResultType>();
-  const [IndividualsData, setIndividualsData] = useState<PagedResultType>();
+  const [SubCompaniesData, setSubCompaniesData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_18>();
+  const [IndividualsData, setIndividualsData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_15>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
