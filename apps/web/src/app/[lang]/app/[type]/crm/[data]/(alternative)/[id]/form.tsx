@@ -1,14 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
-import type {
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  UniRefund_CRMService_Merchants_MerchantDto,
-  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
-} from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
@@ -23,28 +15,30 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type {
+  UniRefund_CRMService_Merchants_MerchantDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
+  Volo_Abp_Application_Dtos_PagedResultDto_15,
+  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+} from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_CRMService_Individuals_IndividualProfileDto } from "@ayasofyazilim/saas/CRMService";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { dataConfigOfCrm } from "../../../data";
 import {
-  deleteIndividualByMerchantId,
   deleteSubMerchantByMerchantId,
-  getIndividualByMerchantId,
+  getAllIndividuals,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
+import { dataConfigOfCrm } from "../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
-import type { Individual } from "./data";
-import {
-  address,
-  email,
-  individualSchema,
-  organization,
-  telephone,
-} from "./data";
+import { address, email, organization, telephone } from "./data";
 
 export default function Form({
   crmDetailData,
@@ -61,9 +55,10 @@ export default function Form({
     dataConfigOfCrm.companies.pages[params.data],
   );
   const router = useRouter();
-  const [data, setData] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
-  const [IndividualsData, setIdIndividualsData] = useState<Individual[]>();
+  const [SubCompaniesData, setSubCompaniesData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_18>();
+  const [IndividualsData, setIndividualsData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_15>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -152,15 +147,12 @@ export default function Form({
       const response = await getSubCompanyByMerchantId({
         id: params.id,
       });
-      if (response.type === "error") {
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
-      const _data =
-        response.data as Volo_Abp_Application_Dtos_PagedResultDto_18;
-      if (_data.items) {
-        setData(_data.items);
-      }
+      const SubCompaniesdata = response.data;
+      setSubCompaniesData(SubCompaniesdata);
     } catch (error) {
       toast.error("An error occurred while fetching Sub Companies.");
     } finally {
@@ -168,16 +160,19 @@ export default function Form({
     }
   }
 
-  async function getIndividualsOfMerchant() {
+  async function getIndividuals(page: number) {
     setLoading(true);
     try {
-      const response = await getIndividualByMerchantId();
-      if (response.type === "error") {
+      const response = await getAllIndividuals({
+        maxResultCount: 10,
+        skipCount: page * 10,
+      });
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
-      const Individualsdata = response.data as Individual[];
-      setIdIndividualsData(Individualsdata);
+      const Individualsdata = response.data;
+      setIndividualsData(Individualsdata);
     } catch (error) {
       toast.error("An error occurred while fetching Individual.");
     } finally {
@@ -189,7 +184,7 @@ export default function Form({
     setLoading(true);
     try {
       const response = await deleteSubMerchantByMerchantId({ id });
-      if (response.type === "error") {
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
@@ -200,30 +195,6 @@ export default function Form({
       setLoading(false);
     }
   }
-
-  async function deleteIndividualMerchant(id: string) {
-    setLoading(true);
-    try {
-      const response = await deleteIndividualByMerchantId({ id });
-      if (response.type === "error") {
-        toast.error(response.status);
-        return;
-      }
-      toast.success("Individual deleted successfully.");
-    } catch (error) {
-      toast.error("An error occurred while deleting Individual.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    void getSubCompaniesOfMerchant();
-  }, []);
-
-  useEffect(() => {
-    void getIndividualsOfMerchant();
-  }, []);
 
   const actionSubCompany: TableAction[] = [
     {
@@ -236,7 +207,7 @@ export default function Form({
     {
       cta: `Export CSV`,
       callback: () => {
-        jsonToCSV(data, params.data);
+        jsonToCSV(SubCompaniesData, params.data);
       },
       type: "Action",
     },
@@ -253,7 +224,7 @@ export default function Form({
     {
       cta: `Export CSV`,
       callback: () => {
-        jsonToCSV(data, params.data);
+        jsonToCSV(IndividualsData, params.data);
       },
       type: "Action",
     },
@@ -418,8 +389,10 @@ export default function Form({
                   ],
                 },
               }}
-              data={data || []}
+              data={SubCompaniesData?.items || []}
+              fetchRequest={getSubCompaniesOfMerchant}
               isLoading={loading}
+              rowCount={SubCompaniesData?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
@@ -430,16 +403,15 @@ export default function Form({
               columnsData={{
                 type: "Auto",
                 data: {
-                  tableType: individualSchema,
-                  excludeList: ["id"],
+                  tableType:
+                    $UniRefund_CRMService_Individuals_IndividualProfileDto,
+                  excludeList: [
+                    "id",
+                    "affiliationId",
+                    "affiliationTypeCodeValue",
+                    "affiliationParentTypeCodeValue",
+                  ],
                   actionList: [
-                    {
-                      cta: languageData.Delete,
-                      type: "Action",
-                      callback: (row: { id: string }) => {
-                        void deleteIndividualMerchant(row.id);
-                      },
-                    },
                     {
                       cta: languageData.Edit,
                       type: "Action",
@@ -450,8 +422,10 @@ export default function Form({
                   ],
                 },
               }}
-              data={IndividualsData || []}
+              data={IndividualsData?.items || []}
+              fetchRequest={getIndividuals}
               isLoading={loading}
+              rowCount={IndividualsData?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
