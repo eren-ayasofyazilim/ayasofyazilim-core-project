@@ -65,14 +65,14 @@ export async function getSubCompanyByMerchantId(
       type: "success",
       data: response,
       status: 200,
-      message: "An error occurred while fetching Sub Companies.",
+      message: "Submerchants fetched successfully",
     };
   } catch (error) {
     return structuredError(error);
   }
 }
 
-export async function getIndividualByMerchantId(
+export async function getAllIndividuals(
   body: GetApiCrmServiceIndividualsData,
 ): Promise<ServerResponse<GetApiCrmServiceIndividualsResponse>> {
   "use server";
@@ -84,7 +84,7 @@ export async function getIndividualByMerchantId(
       type: "success",
       data: response,
       status: 200,
-      message: "An error occurred while fetching Sub Companies.",
+      message: "Individuals fetched successfully",
     };
   } catch (error) {
     return structuredError(error);

@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import {
   $UniRefund_CRMService_Individuals_IndividualProfileDto,
-  type Volo_Abp_Application_Dtos_PagedResultDto_18 as PagedResultType,
+  type Volo_Abp_Application_Dtos_PagedResultDto_15 as PagedResultType,
   type UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
   type UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
   type UniRefund_CRMService_Merchants_MerchantDto,
@@ -32,7 +32,7 @@ import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import {
   deleteSubMerchantByMerchantId,
-  getIndividualByMerchantId,
+  getAllIndividuals,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
 import { dataConfigOfCrm } from "../../../data";
@@ -54,8 +54,8 @@ export default function Form({
     dataConfigOfCrm.companies.pages[params.data],
   );
   const router = useRouter();
-  const [data, setData] = useState<PagedResultType>();
-  const [IndividualsData, setIdIndividualsData] = useState<PagedResultType>();
+  const [SubCompaniesData, setSubCompaniesData] = useState<PagedResultType>();
+  const [IndividualsData, setIndividualsData] = useState<PagedResultType>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -144,14 +144,12 @@ export default function Form({
       const response = await getSubCompanyByMerchantId({
         id: params.id,
       });
-      if (response.type === "error") {
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
-      const _data = response.data as PagedResultType;
-      if (_data.items) {
-        setData(_data);
-      }
+      const SubCompaniesdata = response.data;
+      setSubCompaniesData(SubCompaniesdata);
     } catch (error) {
       toast.error("An error occurred while fetching Sub Companies.");
     } finally {
@@ -159,19 +157,19 @@ export default function Form({
     }
   }
 
-  async function getIndividualsOfMerchant(page: number) {
+  async function getIndividuals(page: number) {
     setLoading(true);
     try {
-      const response = await getIndividualByMerchantId({
+      const response = await getAllIndividuals({
         maxResultCount: 10,
         skipCount: page * 10,
       });
-      if (response.type === "error") {
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
-      const Individualsdata = response.data as PagedResultType;
-      setIdIndividualsData(Individualsdata);
+      const Individualsdata = response.data;
+      setIndividualsData(Individualsdata);
     } catch (error) {
       toast.error("An error occurred while fetching Individual.");
     } finally {
@@ -183,7 +181,7 @@ export default function Form({
     setLoading(true);
     try {
       const response = await deleteSubMerchantByMerchantId({ id });
-      if (response.type === "error") {
+      if (response.type === "error" || response.type === "api-error") {
         toast.error(response.status);
         return;
       }
@@ -206,7 +204,7 @@ export default function Form({
     {
       cta: `Export CSV`,
       callback: () => {
-        jsonToCSV(data, params.data);
+        jsonToCSV(SubCompaniesData, params.data);
       },
       type: "Action",
     },
@@ -223,7 +221,7 @@ export default function Form({
     {
       cta: `Export CSV`,
       callback: () => {
-        jsonToCSV(data, params.data);
+        jsonToCSV(IndividualsData, params.data);
       },
       type: "Action",
     },
@@ -388,10 +386,10 @@ export default function Form({
                   ],
                 },
               }}
-              data={data?.items || []}
+              data={SubCompaniesData?.items || []}
               fetchRequest={getSubCompaniesOfMerchant}
               isLoading={loading}
-              rowCount={data?.totalCount}
+              rowCount={SubCompaniesData?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
@@ -422,7 +420,7 @@ export default function Form({
                 },
               }}
               data={IndividualsData?.items || []}
-              fetchRequest={getIndividualsOfMerchant}
+              fetchRequest={getIndividuals}
               isLoading={loading}
               rowCount={IndividualsData?.totalCount}
             />
