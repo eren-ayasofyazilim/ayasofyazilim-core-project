@@ -1,10 +1,10 @@
 "use server";
 
 import type {
-  GetApiTravellerServiceTravellersGetProfileDetailByIdResponse,
-  PostApiTravellerServiceTravellersCreateResponse,
-  PutApiTravellerServiceTravellersUpdateByIdData,
-  PutApiTravellerServiceTravellersUpdateByIdResponse,
+  GetApiTravellerServiceTravellersByIdResponse,
+  PostApiTravellerServiceTravellersResponse,
+  PutApiTravellerServiceTravellersByIdData,
+  PutApiTravellerServiceTravellersByIdResponse,
   UniRefund_TravellerService_Travellers_CreateTravellerDto,
   Volo_Abp_Application_Dtos_PagedResultDto_15,
 } from "@ayasofyazilim/saas/TravellerService";
@@ -17,7 +17,7 @@ export async function getTravellers(): Promise<
   try {
     const client = await getTravellersServiceClient();
     const response =
-      (await client.traveller.getApiTravellerServiceTravellersGetProfileList()) as Volo_Abp_Application_Dtos_PagedResultDto_15;
+      (await client.traveller.getApiTravellerServiceTravellers()) as Volo_Abp_Application_Dtos_PagedResultDto_15;
     return {
       data: response,
       message: "Travellers fetched succesfully",
@@ -32,14 +32,13 @@ export async function getTravellers(): Promise<
 export async function createTraveller(
   formdata: UniRefund_TravellerService_Travellers_CreateTravellerDto,
 ): Promise<
-  ServerResponse<PostApiTravellerServiceTravellersCreateResponse> | ErrorTypes
+  ServerResponse<PostApiTravellerServiceTravellersResponse> | ErrorTypes
 > {
   try {
     const client = await getTravellersServiceClient();
-    const response =
-      await client.traveller.postApiTravellerServiceTravellersCreate({
-        requestBody: formdata,
-      });
+    const response = await client.traveller.postApiTravellerServiceTravellers({
+      requestBody: formdata,
+    });
     return {
       type: "success",
       data: response,
@@ -55,17 +54,13 @@ export async function getTravellerById({
   id,
 }: {
   id: string;
-}): Promise<
-  ServerResponse<GetApiTravellerServiceTravellersGetProfileDetailByIdResponse>
-> {
+}): Promise<ServerResponse<GetApiTravellerServiceTravellersByIdResponse>> {
   try {
     const client = await getTravellersServiceClient();
     const response =
-      await client.traveller.getApiTravellerServiceTravellersGetProfileDetailById(
-        {
-          id,
-        },
-      );
+      await client.traveller.getApiTravellerServiceTravellersById({
+        id,
+      });
     return {
       type: "success",
       data: response,
@@ -78,14 +73,12 @@ export async function getTravellerById({
 }
 
 export async function updateTraveller(
-  formdata: PutApiTravellerServiceTravellersUpdateByIdData,
-): Promise<ServerResponse<PutApiTravellerServiceTravellersUpdateByIdResponse>> {
+  formdata: PutApiTravellerServiceTravellersByIdData,
+): Promise<ServerResponse<PutApiTravellerServiceTravellersByIdResponse>> {
   try {
     const client = await getTravellersServiceClient();
     const response =
-      await client.traveller.putApiTravellerServiceTravellersUpdateById(
-        formdata,
-      );
+      await client.traveller.putApiTravellerServiceTravellersById(formdata);
     return {
       type: "success",
       data: response,
