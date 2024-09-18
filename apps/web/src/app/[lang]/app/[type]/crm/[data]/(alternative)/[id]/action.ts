@@ -36,7 +36,7 @@ export async function getCRMDetailServer(data: string, body: { id: string }) {
   "use server";
   const client = await getCRMServiceClient();
   let response;
-  if (data === "refundPoints") {
+  if (data === "refund-points") {
     response = await client.refundPoint.getApiCrmServiceRefundPointsByIdDetail({
       id: body.id,
     });
@@ -44,11 +44,11 @@ export async function getCRMDetailServer(data: string, body: { id: string }) {
     response = await client.customs.getApiCrmServiceCustomsByIdDetail({
       id: body.id,
     });
-  } else if (data === "taxFree") {
+  } else if (data === "tax-free") {
     response = await client.taxFree.getApiCrmServiceTaxFreesByIdDetail({
       id: body.id,
     });
-  } else if (data === "taxOffices") {
+  } else if (data === "tax-offices") {
     response = await client.taxOffice.getApiCrmServiceTaxOfficesByIdDetail({
       id: body.id,
     });
