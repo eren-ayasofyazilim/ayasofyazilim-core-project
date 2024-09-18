@@ -111,7 +111,7 @@ export default function Page({ params }: { params: { lang: string } }) {
         extraProperties: undefined,
         referenceNumber: 0,
         isTrustedMerchant: false,
-        rebateStatementPeriod: 0,
+        rebateStatementPeriod: "None",
         rebateTableHeaders: undefined,
         rebateTableHeaderIds: undefined,
         contactInformationTypeId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",

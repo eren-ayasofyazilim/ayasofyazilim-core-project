@@ -22,7 +22,6 @@ import type {
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto,
   UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_111,
   Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
@@ -32,24 +31,26 @@ import { getContractServiceClient, structuredError } from "src/lib";
 /*** RefundTable ***/
 export async function getRefundTableHeaders(
   body: GetApiContractServiceRefundTablesRefundTableHeadersData,
-) {
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_19>> {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.refundTables.getApiContractServiceRefundTablesRefundTableHeaders(
+      (await client.refundTables.getApiContractServiceRefundTablesRefundTableHeaders(
         body,
-      );
+      )) as Volo_Abp_Application_Dtos_PagedResultDto_19;
     revalidatePath("/");
     return {
       type: "success",
       data: response,
       status: 200,
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_111>;
+      message: "Refund Table Headers fetched successfully",
+    };
   } catch (error) {
     return structuredError(error);
   }
 }
+
 export async function postRefundTableHeaders(
   body: PostApiContractServiceRefundTablesRefundTableHeadersData,
 ) {

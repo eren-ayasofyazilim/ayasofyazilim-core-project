@@ -157,3 +157,8 @@ export function structuredError(error: unknown): ErrorTypes {
     message: "An error occurred",
   };
 }
+
+export interface PagedResult<T> {
+  items: T[] | null;
+  totalCount: number;
+}

@@ -4,12 +4,13 @@ import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_111,
+  Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as listSchema,
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto as postSchema,
 } from "@ayasofyazilim/saas/ContractService";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import type {
   ColumnsType,
   TableAction,
@@ -17,7 +18,6 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -29,7 +29,7 @@ import {
 export default function Page({ params }: { params: { lang: string } }) {
   const router = useRouter();
   const [list, setList] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_111>();
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_19>();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const includeList = [
@@ -46,9 +46,11 @@ export default function Page({ params }: { params: { lang: string } }) {
     void getRefundTableHeaders({}).then((response) => {
       if (response.type === "success") {
         setList(response.data);
-      } else {
-        toast.error(response.message);
+        toast.success(response.message);
+        return;
       }
+      toast.error(response.message);
+
       setLoading(false);
     });
   }, []);
