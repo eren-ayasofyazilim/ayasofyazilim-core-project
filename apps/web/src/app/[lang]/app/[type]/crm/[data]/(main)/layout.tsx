@@ -19,6 +19,7 @@ interface LayoutProps {
   params: {
     lang: string;
     type: string;
+    data: string;
   };
 }
 
@@ -30,7 +31,6 @@ export default function Layout({ children, params }: LayoutProps) {
   const languageData = getResourceDataClient(resources, params.lang);
   const pathname = usePathname();
   const path = pathname.split("crm/")[1];
-  const activePage = path.split("/")[1];
 
   //TODO make this page serverside
   useEffect(() => {
@@ -59,25 +59,25 @@ export default function Layout({ children, params }: LayoutProps) {
   }, []);
 
   function pageHeaderData() {
-    if (activePage === "merchants") {
+    if (params.data === "merchants") {
       return {
         title: languageData.Merchants,
         description: languageData["Merchants.Description"],
       };
     }
-    if (activePage === "refundPoints") {
+    if (params.data === "refund-points") {
       return {
         title: languageData.RefundPoints,
         description: languageData["RefundPoints.Description"],
       };
     }
-    if (activePage === "taxFree") {
+    if (params.data === "tax-free") {
       return {
         title: languageData.TaxFree,
         description: languageData["TaxFree.Description"],
       };
     }
-    if (activePage === "taxOffices") {
+    if (params.data === "tax-offices") {
       return {
         title: languageData.TaxOffices,
         description: languageData["TaxOffices.Description"],
