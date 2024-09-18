@@ -158,7 +158,7 @@ export function structuredError(error: unknown): ErrorTypes {
   };
 }
 
-export type PagedResult<T> = {
+export interface PagedResult<T> {
   items: T[] | null;
   totalCount: number;
-} 
+}

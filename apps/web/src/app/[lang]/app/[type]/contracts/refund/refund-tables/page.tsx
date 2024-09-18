@@ -10,6 +10,7 @@ import {
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as listSchema,
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto as postSchema,
 } from "@ayasofyazilim/saas/ContractService";
+import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import type {
   ColumnsType,
   TableAction,
@@ -17,11 +18,9 @@ import type {
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
-import type { PagedResult } from "src/lib";
 import {
   getRefundTableHeaders,
   postRefundTableHeaders,
@@ -49,9 +48,9 @@ export default function Page({ params }: { params: { lang: string } }) {
         setList(response.data);
         toast.success(response.message);
         return;
-      } else {
-        toast.error(response.message);
       }
+      toast.error(response.message);
+
       setLoading(false);
     });
   }, []);
