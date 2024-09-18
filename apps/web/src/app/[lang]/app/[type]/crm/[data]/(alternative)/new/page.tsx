@@ -48,7 +48,6 @@ export default function Page({
 }: {
   params: {
     data: string;
-    domain: string;
     lang: string;
     id: string;
   };
@@ -74,9 +73,9 @@ export default function Page({
               ...formData.organization,
               contactInformations: [
                 {
-                  telephones: [formData.telephone],
-                  emails: [formData.email],
-                  addresses: [formData.address],
+                  telephones: [{ ...formData.telephone, primaryFlag: true }],
+                  emails: [{ ...formData.email, primaryFlag: true }],
+                  addresses: [{ ...formData.address, primaryFlag: true }],
                 },
               ],
             },

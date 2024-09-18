@@ -5,8 +5,6 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CRMService";
@@ -66,15 +64,11 @@ export default function Page({
 }: {
   params: {
     data: string;
-    domain: string;
     lang: string;
     id: string;
   };
 }) {
   const router = useRouter();
-  const [_formData] = useState<TableData>(
-    dataConfigOfCrm.companies.pages[params.data],
-  );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const handleSave = async (formData: CreateOrganizationDto) => {
@@ -93,9 +87,9 @@ export default function Page({
               parentCompanyId: params.id,
               contactInformations: [
                 {
-                  telephones: [formData.telephone],
-                  emails: [formData.email],
-                  addresses: [formData.address],
+                  telephones: [{ ...formData.telephone, primaryFlag: true }],
+                  emails: [{ ...formData.email, primaryFlag: true }],
+                  addresses: [{ ...formData.address, primaryFlag: true }],
                 },
               ],
             },
@@ -113,11 +107,7 @@ export default function Page({
       });
       if (response.ok) {
         toast.success(`Sub Company added successfully`);
-        router.push(
-          getBaseLink(
-            `/app/admin/crm/${params.domain}/${params.data}/${params.id}`,
-          ),
-        );
+        router.push(getBaseLink(`/app/admin/crm/${params.data}/${params.id}`));
       } else {
         const errorData = (await response.json()) as {
           message: string;

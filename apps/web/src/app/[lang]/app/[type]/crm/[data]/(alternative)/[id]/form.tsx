@@ -1,16 +1,11 @@
 "use client";
+import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
-import type {
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  UniRefund_CRMService_Merchants_MerchantDto,
-  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
-} from "@ayasofyazilim/saas/CRMService";
-import { $UniRefund_CRMService_Organizations_UpdateOrganizationDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
+import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -19,141 +14,32 @@ import {
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
-import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
-import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type {
+  UniRefund_CRMService_Merchants_MerchantDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
+  Volo_Abp_Application_Dtos_PagedResultDto_15,
+  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+} from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_CRMService_Individuals_IndividualProfileDto } from "@ayasofyazilim/saas/CRMService";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
+import {
+  deleteSubMerchantByMerchantId,
+  getAllIndividuals,
+  getSubCompanyByMerchantId,
+} from "../../../actions/merchant";
 import { dataConfigOfCrm } from "../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
+import { address, email, organization, telephone } from "./data";
 
-const organization = $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
-const telephone = {
-  required: ["areaCode", "ituCountryCode", "localNumber", "typeCode"],
-  type: "object",
-  properties: {
-    extraProperties: {
-      type: "object",
-      additionalProperties: {},
-      nullable: true,
-      readOnly: true,
-    },
-    areaCode: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    localNumber: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    ituCountryCode: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    primaryFlag: {
-      type: "boolean",
-    },
-    typeCode: {
-      enum: ["Home", "Office", "Mobile", "Fax"],
-      type: "integer",
-      format: "int32",
-    },
-  },
-  additionalProperties: false,
-};
-const address = {
-  required: [
-    "addressLine",
-    "city",
-    "country",
-    "fullAddress",
-    "postalCode",
-    "terriority",
-    "typeCode",
-  ],
-  type: "object",
-  properties: {
-    extraProperties: {
-      type: "object",
-      additionalProperties: {},
-      nullable: true,
-      readOnly: true,
-    },
-    addressLine: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    city: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    terriority: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    postalCode: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    country: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    fullAddress: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    primaryFlag: {
-      type: "boolean",
-    },
-    typeCode: {
-      enum: ["Home", "Office"],
-      type: "integer",
-      format: "int32",
-    },
-  },
-  additionalProperties: false,
-};
-const email = {
-  required: ["emailAddress", "typeCode"],
-  type: "object",
-  properties: {
-    extraProperties: {
-      type: "object",
-      additionalProperties: {},
-      nullable: true,
-      readOnly: true,
-    },
-    emailAddress: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
-    primaryFlag: {
-      type: "boolean",
-    },
-    typeCode: {
-      enum: ["Work", "Personal"],
-      type: "integer",
-      format: "int32",
-    },
-  },
-  additionalProperties: false,
-};
 export default function Form({
   crmDetailData,
   params,
@@ -162,15 +48,17 @@ export default function Form({
   params: {
     id: string;
     data: string;
-    domain: string;
     lang: string;
   };
 }) {
   const [formData] = useState<TableData>(
     dataConfigOfCrm.companies.pages[params.data],
   );
-  const [data, setData] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
+  const router = useRouter();
+  const [SubCompaniesData, setSubCompaniesData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_18>();
+  const [IndividualsData, setIndividualsData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_15>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -190,7 +78,6 @@ export default function Form({
     "localNumber",
     "typeCode",
   ]);
-
   const phoneNumber =
     (telephoneInfo?.ituCountryCode || "+90") +
     (telephoneInfo?.areaCode || "") +
@@ -204,6 +91,7 @@ export default function Form({
     "fullAddress",
     "typeCode",
   ]);
+
   async function handleSubmit(values: unknown, sectionName: string) {
     if (typeof values !== "object") return;
 
@@ -253,20 +141,18 @@ export default function Form({
     }
   }
 
-  async function getSubCompaniesInformation(totalCount = 1000) {
+  async function getSubCompaniesOfMerchant() {
+    setLoading(true);
     try {
-      const response = await fetch(
-        getBaseLink(`/api/crm/subcompanies?maxResultCount=${totalCount}`),
-      );
-      if (!response.ok) {
-        toast.error(response.statusText);
+      const response = await getSubCompanyByMerchantId({
+        id: params.id,
+      });
+      if (response.type === "error" || response.type === "api-error") {
+        toast.error(response.status);
         return;
       }
-      const _data =
-        (await response.json()) as Volo_Abp_Application_Dtos_PagedResultDto_18;
-      if (_data.items) {
-        setData(_data.items);
-      }
+      const SubCompaniesdata = response.data;
+      setSubCompaniesData(SubCompaniesdata);
     } catch (error) {
       toast.error("An error occurred while fetching Sub Companies.");
     } finally {
@@ -274,11 +160,43 @@ export default function Form({
     }
   }
 
-  useEffect(() => {
-    void getSubCompaniesInformation();
-  }, []);
+  async function getIndividuals(page: number) {
+    setLoading(true);
+    try {
+      const response = await getAllIndividuals({
+        maxResultCount: 10,
+        skipCount: page * 10,
+      });
+      if (response.type === "error" || response.type === "api-error") {
+        toast.error(response.status);
+        return;
+      }
+      const Individualsdata = response.data;
+      setIndividualsData(Individualsdata);
+    } catch (error) {
+      toast.error("An error occurred while fetching Individual.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  const action: TableAction[] = [
+  async function deleteSubMerchant(id: string) {
+    setLoading(true);
+    try {
+      const response = await deleteSubMerchantByMerchantId({ id });
+      if (response.type === "error" || response.type === "api-error") {
+        toast.error(response.status);
+        return;
+      }
+      toast.success("Sub Company deleted successfully.");
+    } catch (error) {
+      toast.error("An error occurred while deleting Sub Company.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const actionSubCompany: TableAction[] = [
     {
       cta: languageData[
         `${"SubCompany".replaceAll(" ", "")}.New` as keyof typeof languageData
@@ -289,7 +207,24 @@ export default function Form({
     {
       cta: `Export CSV`,
       callback: () => {
-        jsonToCSV(data, params.data);
+        jsonToCSV(SubCompaniesData, params.data);
+      },
+      type: "Action",
+    },
+  ];
+
+  const actionIndividuals: TableAction[] = [
+    {
+      cta: languageData[
+        `${"Individuals".replaceAll(" ", "")}.New` as keyof typeof languageData
+      ],
+      type: "NewPage",
+      href: `/app/admin/crm/${params.data}/${params.id}/individual/new/`,
+    },
+    {
+      cta: `Export CSV`,
+      callback: () => {
+        jsonToCSV(IndividualsData, params.data);
       },
       type: "Action",
     },
@@ -304,7 +239,7 @@ export default function Form({
             `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
           ]
         }
-        href={getBaseLink(`/app/admin/crm/${params.domain}/${params.data}`)}
+        href={getBaseLink(`/app/admin/crm/${params.data}`)}
         title={
           languageData[
             `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
@@ -318,6 +253,7 @@ export default function Form({
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
           { name: languageData["Sub.Company"], id: "SubCompany" },
+          { name: languageData.Individuals, id: "individuals" },
         ]}
         vertical
       >
@@ -420,7 +356,7 @@ export default function Form({
         <SectionLayoutContent sectionId="SubCompany">
           <Card className="px-4">
             <DataTable
-              action={action}
+              action={actionSubCompany}
               columnsData={{
                 type: "Auto",
                 data: {
@@ -433,10 +369,63 @@ export default function Form({
                     "parentCompanyId",
                     "id",
                   ],
+                  actionList: [
+                    {
+                      cta: languageData.Delete,
+                      type: "Action",
+                      callback: (row: { id: string }) => {
+                        void deleteSubMerchant(row.id);
+                      },
+                    },
+                    {
+                      cta: languageData.Edit,
+                      type: "Action",
+                      callback: (row: { id: string }) => {
+                        router.push(
+                          getBaseLink(`app/admin/crm/${params.data}/${row.id}`),
+                        );
+                      },
+                    },
+                  ],
                 },
               }}
-              data={data || []}
+              data={SubCompaniesData?.items || []}
+              fetchRequest={getSubCompaniesOfMerchant}
               isLoading={loading}
+              rowCount={SubCompaniesData?.totalCount}
+            />
+          </Card>
+        </SectionLayoutContent>
+        <SectionLayoutContent sectionId="individuals">
+          <Card className="px-4">
+            <DataTable
+              action={actionIndividuals}
+              columnsData={{
+                type: "Auto",
+                data: {
+                  tableType:
+                    $UniRefund_CRMService_Individuals_IndividualProfileDto,
+                  excludeList: [
+                    "id",
+                    "affiliationId",
+                    "affiliationTypeCodeValue",
+                    "affiliationParentTypeCodeValue",
+                  ],
+                  actionList: [
+                    {
+                      cta: languageData.Edit,
+                      type: "Action",
+                      callback: () => {
+                        ("");
+                      },
+                    },
+                  ],
+                },
+              }}
+              data={IndividualsData?.items || []}
+              fetchRequest={getIndividuals}
+              isLoading={loading}
+              rowCount={IndividualsData?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
