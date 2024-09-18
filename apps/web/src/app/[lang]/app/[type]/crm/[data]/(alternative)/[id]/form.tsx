@@ -3,12 +3,12 @@ import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import {
   $UniRefund_CRMService_Individuals_IndividualProfileDto,
+  type Volo_Abp_Application_Dtos_PagedResultDto_18 as PagedResultType,
   type UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
   type UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
   type UniRefund_CRMService_Merchants_MerchantDto,
   type UniRefund_CRMService_Organizations_UpdateOrganizationDto,
   type UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-  type Volo_Abp_Application_Dtos_PagedResultDto_18,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
@@ -24,7 +24,7 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
@@ -54,10 +54,8 @@ export default function Form({
     dataConfigOfCrm.companies.pages[params.data],
   );
   const router = useRouter();
-  const [data, setData] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
-  const [IndividualsData, setIdIndividualsData] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
+  const [data, setData] = useState<PagedResultType>();
+  const [IndividualsData, setIdIndividualsData] = useState<PagedResultType>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -150,10 +148,9 @@ export default function Form({
         toast.error(response.status);
         return;
       }
-      const _data =
-        response.data as Volo_Abp_Application_Dtos_PagedResultDto_18;
+      const _data = response.data as PagedResultType;
       if (_data.items) {
-        setData(_data.items);
+        setData(_data);
       }
     } catch (error) {
       toast.error("An error occurred while fetching Sub Companies.");
@@ -162,17 +159,19 @@ export default function Form({
     }
   }
 
-  async function getIndividualsOfMerchant() {
+  async function getIndividualsOfMerchant(page: number) {
     setLoading(true);
     try {
-      const response = await getIndividualByMerchantId({ maxResultCount: 100 });
+      const response = await getIndividualByMerchantId({
+        maxResultCount: 10,
+        skipCount: page * 10,
+      });
       if (response.type === "error") {
         toast.error(response.status);
         return;
       }
-      const Individualsdata =
-        response.data as Volo_Abp_Application_Dtos_PagedResultDto_18;
-      setIdIndividualsData(Individualsdata.items);
+      const Individualsdata = response.data as PagedResultType;
+      setIdIndividualsData(Individualsdata);
     } catch (error) {
       toast.error("An error occurred while fetching Individual.");
     } finally {
@@ -195,14 +194,6 @@ export default function Form({
       setLoading(false);
     }
   }
-
-  useEffect(() => {
-    void getSubCompaniesOfMerchant();
-  }, []);
-
-  useEffect(() => {
-    void getIndividualsOfMerchant();
-  }, []);
 
   const actionSubCompany: TableAction[] = [
     {
@@ -397,8 +388,10 @@ export default function Form({
                   ],
                 },
               }}
-              data={data || []}
+              data={data?.items || []}
+              fetchRequest={getSubCompaniesOfMerchant}
               isLoading={loading}
+              rowCount={data?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
@@ -428,8 +421,10 @@ export default function Form({
                   ],
                 },
               }}
-              data={IndividualsData || []}
+              data={IndividualsData?.items || []}
+              fetchRequest={getIndividualsOfMerchant}
               isLoading={loading}
+              rowCount={IndividualsData?.totalCount}
             />
           </Card>
         </SectionLayoutContent>
