@@ -1,6 +1,8 @@
 "use server";
 import type {
   DeleteApiCrmServiceMerchantsByIdWithComponentsData,
+  GetApiCrmServiceIndividualsData,
+  GetApiCrmServiceIndividualsResponse,
   GetApiCrmServiceMerchantsByIdDetailData,
   GetApiCrmServiceMerchantsByIdSubMerchantsData,
   GetApiCrmServiceMerchantsData,
@@ -12,8 +14,6 @@ import type {
 import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
 import { getCRMServiceClient, structuredError } from "src/lib";
-import type { Individual } from "../[data]/(alternative)/[id]/data";
-import { individualData } from "../[data]/(alternative)/[id]/data";
 
 export async function getCrmServiceMerchants(
   body: GetApiCrmServiceMerchantsData,
@@ -72,32 +72,23 @@ export async function getSubCompanyByMerchantId(
   }
 }
 
-export async function getIndividualByMerchantId(): Promise<
-  ServerResponse<Individual[]>
-> {
-  // body: GetApiCrmServiceMerchantsByIdSubMerchantsData,
+export async function getIndividualByMerchantId(
+  body: GetApiCrmServiceIndividualsData,
+): Promise<ServerResponse<GetApiCrmServiceIndividualsResponse>> {
   "use server";
-  return Promise.resolve({
-    type: "success",
-    data: individualData,
-    status: 200,
-    message: "An error occurred while fetching Individuals.",
-  });
-  // try {
-  //   const response = individualData;
-  //   // const client = await getCRMServiceClient();
-  //   //   const response =
-  //   //   await client.merchant.getApiCrmServiceMerchantsByIdSubMerchants(body);
-  //   revalidatePath("/");
-  //   return {
-  //     type: "success",
-  //     data: response,
-  //     status: 200,
-  //   };
-  //   // as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_16>;
-  // } catch (error) {
-  //   return structuredError(error);
-  // }
+  try {
+    const client = await getCRMServiceClient();
+    const response = await client.individual.getApiCrmServiceIndividuals(body);
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "An error occurred while fetching Sub Companies.",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
 }
 
 export async function deleteSubMerchantByMerchantId(
@@ -122,37 +113,6 @@ export async function deleteSubMerchantByMerchantId(
   }
 }
 
-export async function deleteIndividualByMerchantId({
-  id,
-}: {
-  id: string;
-}): Promise<ServerResponse<Individual[]>> {
-  // body: DeleteApiCrmServiceMerchantsByIdWithComponentsData,
-  "use server";
-  return Promise.resolve({
-    type: "success",
-    data: individualData,
-    status: 200,
-    message: `Individual with id: ${id} deleted successfully.`,
-  });
-  // try {
-  //   const response = individualData;
-  //   // const client = await getCRMServiceClient();
-  //   // const response =
-  //   //   await client.merchant.deleteApiCrmServiceMerchantsByIdWithComponents(
-  //   //     body,
-  //   //   );
-  //   revalidatePath("/");
-  //   return {
-  //     type: "success",
-  //     data: response,
-  //     status: 200,
-  //     message: "Individual deleted successfully.",
-  //   };
-  // } catch (error) {
-  //   return structuredError(error);
-  // }
-}
 export async function postIndividual(
   body: PostApiCrmServiceIndividualsWithComponentsData,
 ): Promise<ServerResponse<PostApiCrmServiceIndividualsWithComponentsResponse>> {

@@ -1,13 +1,14 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
-import type {
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  UniRefund_CRMService_Merchants_MerchantDto,
-  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
+import {
+  $UniRefund_CRMService_Individuals_IndividualProfileDto,
+  type UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+  type UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  type UniRefund_CRMService_Merchants_MerchantDto,
+  type UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+  type UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  type Volo_Abp_Application_Dtos_PagedResultDto_18,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
@@ -29,22 +30,14 @@ import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { dataConfigOfCrm } from "../../../data";
 import {
-  deleteIndividualByMerchantId,
   deleteSubMerchantByMerchantId,
   getIndividualByMerchantId,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
+import { dataConfigOfCrm } from "../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
-import type { Individual } from "./data";
-import {
-  address,
-  email,
-  individualSchema,
-  organization,
-  telephone,
-} from "./data";
+import { address, email, organization, telephone } from "./data";
 
 export default function Form({
   crmDetailData,
@@ -63,7 +56,8 @@ export default function Form({
   const router = useRouter();
   const [data, setData] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
-  const [IndividualsData, setIdIndividualsData] = useState<Individual[]>();
+  const [IndividualsData, setIdIndividualsData] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_18["items"]>();
   const [loading, setLoading] = useState(true);
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
@@ -171,13 +165,14 @@ export default function Form({
   async function getIndividualsOfMerchant() {
     setLoading(true);
     try {
-      const response = await getIndividualByMerchantId();
+      const response = await getIndividualByMerchantId({ maxResultCount: 100 });
       if (response.type === "error") {
         toast.error(response.status);
         return;
       }
-      const Individualsdata = response.data as Individual[];
-      setIdIndividualsData(Individualsdata);
+      const Individualsdata =
+        response.data as Volo_Abp_Application_Dtos_PagedResultDto_18;
+      setIdIndividualsData(Individualsdata.items);
     } catch (error) {
       toast.error("An error occurred while fetching Individual.");
     } finally {
@@ -196,22 +191,6 @@ export default function Form({
       toast.success("Sub Company deleted successfully.");
     } catch (error) {
       toast.error("An error occurred while deleting Sub Company.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function deleteIndividualMerchant(id: string) {
-    setLoading(true);
-    try {
-      const response = await deleteIndividualByMerchantId({ id });
-      if (response.type === "error") {
-        toast.error(response.status);
-        return;
-      }
-      toast.success("Individual deleted successfully.");
-    } catch (error) {
-      toast.error("An error occurred while deleting Individual.");
     } finally {
       setLoading(false);
     }
@@ -430,16 +409,15 @@ export default function Form({
               columnsData={{
                 type: "Auto",
                 data: {
-                  tableType: individualSchema,
-                  excludeList: ["id"],
+                  tableType:
+                    $UniRefund_CRMService_Individuals_IndividualProfileDto,
+                  excludeList: [
+                    "id",
+                    "affiliationId",
+                    "affiliationTypeCodeValue",
+                    "affiliationParentTypeCodeValue",
+                  ],
                   actionList: [
-                    {
-                      cta: languageData.Delete,
-                      type: "Action",
-                      callback: (row: { id: string }) => {
-                        void deleteIndividualMerchant(row.id);
-                      },
-                    },
                     {
                       cta: languageData.Edit,
                       type: "Action",
