@@ -18,25 +18,53 @@ interface DataConfig {
   pages: Record<string, TableData>;
 }
 
-const formSubPositions = {
-  organization: [
-    "name",
-    "taxpayerId",
-    "legalStatusCode",
-    "customerNumber",
-    "branchId",
-  ],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+const CommonOrganizationFields = ["name", "taxpayerId", "branchId"];
+const OrganizationFields = ["customerNumber", "legalStatusCode"];
+const TelephoneSubPosition = ["localNumber", "typeCode"];
+const AddressSubPosition = [
+  "country",
+  "terriority",
+  "city",
+  "postalCode",
+  "addressLine",
+  "fullAddress",
+  "typeCode",
+];
+const EmailSubPosition = ["emailAddress", "typeCode"];
+
+const MerchantsFormSubPositions = {
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
+};
+
+const RefundPointsFormSubPositions = {
+  organization: [...CommonOrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
+};
+
+const CustomsFormSubPositions = {
+  organization: [...CommonOrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
+};
+
+const TaxFreeFormSubPositions = {
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
+};
+
+const TaxOfficesFormSubPositions = {
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
 
 const createMerchantsScheme = {
@@ -154,7 +182,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         createFormSchema: {
           schema: createMerchantsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
-          formSubPositions,
+          formSubPositions: MerchantsFormSubPositions,
         },
         tableSchema: {
           excludeList: [
@@ -171,7 +199,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         createFormSchema: {
           schema: createrefundPointsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
-          formSubPositions,
+          formSubPositions: RefundPointsFormSubPositions,
         },
 
         tableSchema: {
@@ -185,7 +213,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         createFormSchema: {
           schema: createCustomsScheme,
           formPositions: ["organization", "telephone", "address", "email"],
-          formSubPositions,
+          formSubPositions: CustomsFormSubPositions,
         },
 
         tableSchema: {
@@ -199,7 +227,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         createFormSchema: {
           schema: createTaxFreeScheme,
           formPositions: ["organization", "telephone", "address", "email"],
-          formSubPositions,
+          formSubPositions: TaxFreeFormSubPositions,
         },
 
         tableSchema: {
@@ -213,7 +241,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
         createFormSchema: {
           schema: createTaxOfficesScheme,
           formPositions: ["organization", "telephone", "address", "email"],
-          formSubPositions,
+          formSubPositions: TaxOfficesFormSubPositions,
         },
 
         tableSchema: {
