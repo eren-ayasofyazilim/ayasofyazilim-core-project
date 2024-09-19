@@ -18,93 +18,58 @@ interface DataConfig {
   pages: Record<string, TableData>;
 }
 
+const CommonOrganizationFields = [
+  "name",
+  "taxpayerId",
+  "legalStatusCode",
+  "customerNumber",
+  "branchId",
+];
+const TelephoneSubPosition = ["localNumber", "typeCode"];
+const AddressSubPosition = [
+  "country",
+  "terriority",
+  "city",
+  "postalCode",
+  "addressLine",
+  "fullAddress",
+  "typeCode",
+];
+const EmailSubPosition = ["emailAddress", "typeCode"];
+
 const MerchantsFormSubPositions = {
-  organization: [
-    "name",
-    "taxpayerId",
-    "legalStatusCode",
-    "customerNumber",
-    "branchId",
-  ],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+  organization: [...CommonOrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
+
 const RefundPointsFormSubPositions = {
   organization: ["name", "taxpayerId", "branchId"],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
+
 const CustomsFormSubPositions = {
   organization: ["name", "taxpayerId", "branchId"],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
+
 const TaxFreeFormSubPositions = {
-  organization: [
-    "name",
-    "taxpayerId",
-    "legalStatusCode",
-    "customerNumber",
-    "branchId",
-  ],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+  organization: [...CommonOrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
+
 const TaxOfficesFormSubPositions = {
-  organization: [
-    "name",
-    "taxpayerId",
-    "legalStatusCode",
-    "customerNumber",
-    "branchId",
-  ],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
+  organization: [...CommonOrganizationFields],
+  telephone: TelephoneSubPosition,
+  address: AddressSubPosition,
+  email: EmailSubPosition,
 };
 
 const createMerchantsScheme = {
