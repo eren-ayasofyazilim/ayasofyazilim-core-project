@@ -18,13 +18,8 @@ interface DataConfig {
   pages: Record<string, TableData>;
 }
 
-const CommonOrganizationFields = [
-  "name",
-  "taxpayerId",
-  "legalStatusCode",
-  "customerNumber",
-  "branchId",
-];
+const CommonOrganizationFields = ["name", "taxpayerId", "branchId"];
+const OrganizationFields = ["customerNumber", "legalStatusCode"];
 const TelephoneSubPosition = ["localNumber", "typeCode"];
 const AddressSubPosition = [
   "country",
@@ -38,35 +33,35 @@ const AddressSubPosition = [
 const EmailSubPosition = ["emailAddress", "typeCode"];
 
 const MerchantsFormSubPositions = {
-  organization: [...CommonOrganizationFields],
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
   telephone: TelephoneSubPosition,
   address: AddressSubPosition,
   email: EmailSubPosition,
 };
 
 const RefundPointsFormSubPositions = {
-  organization: ["name", "taxpayerId", "branchId"],
+  organization: [...CommonOrganizationFields],
   telephone: TelephoneSubPosition,
   address: AddressSubPosition,
   email: EmailSubPosition,
 };
 
 const CustomsFormSubPositions = {
-  organization: ["name", "taxpayerId", "branchId"],
+  organization: [...CommonOrganizationFields],
   telephone: TelephoneSubPosition,
   address: AddressSubPosition,
   email: EmailSubPosition,
 };
 
 const TaxFreeFormSubPositions = {
-  organization: [...CommonOrganizationFields],
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
   telephone: TelephoneSubPosition,
   address: AddressSubPosition,
   email: EmailSubPosition,
 };
 
 const TaxOfficesFormSubPositions = {
-  organization: [...CommonOrganizationFields],
+  organization: [...CommonOrganizationFields, ...OrganizationFields],
   telephone: TelephoneSubPosition,
   address: AddressSubPosition,
   email: EmailSubPosition,
