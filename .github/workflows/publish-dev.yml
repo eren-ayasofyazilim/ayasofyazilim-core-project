@@ -2,7 +2,7 @@ name: Publish dev websites
 run-name: ${{ github.actor }} is publishing projects to dev 🚀
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   # pull_request_target:
   #   branches: [ main, master ]
 jobs:
@@ -10,18 +10,18 @@ jobs:
     timeout-minutes: 60
     runs-on: self-hosted
     # environment: upwithcrowd
-    # env: 
+    # env:
     #   TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
     #   TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
     #   AUTH_TRUST_HOST: ${{ secrets.TRUST_HOST }}
-    #   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}  
+    #   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     #   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
     #   APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
     #   BASE_URL: ${{ secrets.BASE_URL }}
     #   PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     steps:
-    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
     # - run: echo "🎉 The secret user is ${{ secrets.TEST_USERNAME }}"
     # - name: Make envfile
     #   uses: SpicyPizza/create-envfile@v2.0.3
@@ -34,8 +34,8 @@ jobs:
     #     envkey_APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
     #     envkey_PRIMARY_COLOR: ${{ vars.PRIMARY_COLOR }}
     # - name: show .env file
-    #   run: | 
-    #     cd .\apps\web 
+    #   run: |
+    #     cd .\apps\web
     #     cat .env
     # - uses: actions/checkout@v4
     #   with:
@@ -45,7 +45,7 @@ jobs:
     #     node-version: 20
     #     cache: 'pnpm'
     # - name: Install dependencies
-    #   run: | 
+    #   run: |
     #     npm install -g pnpm
     #     pnpm install
     # - name: Install Playwright Browsers
@@ -60,7 +60,7 @@ jobs:
     #     envkey_TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
     #     envkey_TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
     #     envkey_AUTH_TRUST_HOST: ${{ secrets.TRUST_HOST }}
-    #     envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}  
+    #     envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     #     envkey_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
     #     envkey_APPLICATION_NAME: ${{ vars.APPLICATION_NAME }}
     #     envkey_BASE_URL: ${{ secrets.BASE_URL }}
@@ -68,10 +68,10 @@ jobs:
     # - name: build web app
     #   run: pnpm run build:web
     # - name: Start web app and wait for it to be ready
-    #   run: pnpm run start:web 
+    #   run: pnpm run start:web
     # - name: Run Playwright tests
     #   run: |
-    #     cd .\apps\web 
+    #     cd .\apps\web
     #     pnpm exec playwright test
     # - uses: actions/upload-artifact@v4
     #   if: ${{ !cancelled() }}
@@ -81,12 +81,18 @@ jobs:
     #     retention-days: 30
   publish_unirefund_dev:
     runs-on: self-hosted
-    steps: 
-    - name: Run unierfund
-      run: ssh ubuntu "cd ~/frontend/unirefund_dev && chmod 777 publish.sh && ./publish.sh 1453 unirefund_web"
+    steps:
+      - name: Run unierfund
+        run: ssh ubuntu "cd ~/frontend/unirefund_dev && chmod 777 publish.sh && ./publish.sh 1453 unirefund_web"
   publish_upwithcrowd_dev:
     runs-on: self-hosted
     needs: publish_unirefund_dev
-    steps: 
-    - name: Run upwithcrowd
-      run: ssh ubuntu "cd ~/frontend/upwithcrowd_dev && chmod 777 publish.sh && ./publish.sh 2020 upwithcrowd_web"
+    steps:
+      - name: Run upwithcrowd
+        run: ssh ubuntu "cd ~/frontend/upwithcrowd_dev && chmod 777 publish.sh && ./publish.sh 2020 upwithcrowd_web"
+  publish_ayshopgo_dev:
+    runs-on: self-hosted
+    needs: publish_upwithcrowd_dev
+    steps:
+      - name: Run ayshopgo
+        run: ssh ubuntu "cd ~/frontend/ayshopgo_dev && chmod 777 publish.sh && ./publish.sh 1071 ayshopgo_web"
