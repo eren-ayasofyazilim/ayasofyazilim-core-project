@@ -36,7 +36,7 @@ import {
   getAllIndividuals,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm, localNumber } from "../../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 import { address, email, organization, telephone } from "./data";
 
@@ -67,8 +67,13 @@ export default function Form({
   const organizationId = organizationInfo?.id || "";
 
   const emailInfo = organizationInfo?.contactInformations?.[0]?.emails?.[0];
-  const telephoneInfo =
-    organizationInfo?.contactInformations?.[0]?.telephones?.[0];
+  const telephoneInfo = {
+    ...organizationInfo?.contactInformations?.[0]?.telephones?.[0],
+    properties: {
+      ...organizationInfo?.contactInformations?.[0]?.telephones?.[0],
+      localNumber,
+    },
+  };
   const addressInfo =
     organizationInfo?.contactInformations?.[0]?.addresses?.[0];
 
@@ -79,9 +84,9 @@ export default function Form({
     "typeCode",
   ]);
   const phoneNumber =
-    (telephoneInfo?.ituCountryCode || "+90") +
-    (telephoneInfo?.areaCode || "") +
-    (telephoneInfo?.localNumber || "");
+    (telephoneInfo.ituCountryCode || "+90") +
+    (telephoneInfo.areaCode || "") +
+    (telephoneInfo.localNumber || "");
   const addressSchema = createZodObject(address, [
     "country",
     "terriority",
@@ -122,7 +127,7 @@ export default function Form({
         return;
       }
       const phoneData = splitPhone(parsedValues.localNumber);
-      await updateCRMDetailServer(telephoneInfo?.id || "", {
+      await updateCRMDetailServer(telephoneInfo.id || "", {
         ...values,
         primaryFlag: true,
         ...phoneData,
@@ -291,11 +296,9 @@ export default function Form({
             }}
             values={{
               localNumber: phoneNumber,
-              primaryFlag: telephoneInfo?.primaryFlag,
+              primaryFlag: telephoneInfo.primaryFlag,
               typeCode:
-                telephone.properties.typeCode.enum[
-                  telephoneInfo?.typeCode || 0
-                ],
+                telephone.properties.typeCode.enum[telephoneInfo.typeCode || 0],
             }}
           >
             <AutoFormSubmit className="float-right">
