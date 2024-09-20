@@ -85,7 +85,11 @@ export const middleware = auth((request: NextAuthRequest) => {
   //   return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   // }
   function redirectToRoot(locale: string) {
-    if (APPLICATION_NAME.toLocaleLowerCase() === "unirefund")
+    if (
+      APPLICATION_NAME.toLocaleLowerCase() === "unirefund" ||
+      APPLICATION_NAME.toLocaleLowerCase() === "tahsilet" ||
+      APPLICATION_NAME.toLocaleLowerCase() === "ayshopgo"
+    )
       return NextResponse.redirect(
         new URL(`/${locale}/app/admin/home`, hostURL),
       );
