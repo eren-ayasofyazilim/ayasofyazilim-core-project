@@ -5,7 +5,7 @@ import { BreadcrumbItemType, NavbarItemsFromDB } from "@repo/ui/theme/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import Navbar from "./components/navbar";
+// import Navbar from "./components/navbar";
 import { useTheme } from "../../providers/theme";
 
 function findActiveNavbarItem(
@@ -79,12 +79,12 @@ export function HeaderSection() {
   return (
     <div className="flex flex-col gap-3 px-1">
       <div className="mb-28">
-        <Navbar
+        {/* <Navbar
           navbarItems={navbarItems}
           navigation={breadcrumbItems}
           prefix={prefix}
           lang={lang}
-        />
+        /> */}
       </div>
       <PageHeader
         title={activeNavItem?.displayName}
