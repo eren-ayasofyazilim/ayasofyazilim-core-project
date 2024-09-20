@@ -162,6 +162,37 @@ export default function Page(): JSX.Element {
     }
   }
 
+  const renderAppContent = (projectName: string) => {
+    switch (projectName) {
+      case "UNIREFUND":
+        return (
+          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
+            UNIREFUND
+          </div>
+        );
+      case "UPWITHCROWD":
+        return (
+          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
+            UPWITHCROWD
+          </div>
+        );
+      case "AYSHOPGO":
+        return (
+          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
+            AYSHOPGO
+          </div>
+        );
+      case "TAHSILET":
+        return (
+          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
+            TAHSILET
+          </div>
+        );
+      default:
+        return <Logo textProps={{ className: "h-16" }} variant="text" />;
+    }
+  };
+
   return (
     <Auth
       authProps={props}
@@ -171,13 +202,7 @@ export default function Page(): JSX.Element {
       resources={resources}
     >
       <div className="flex flex-auto items-center justify-center bg-slate-100">
-        {appName === "UPWITHCROWD" ? (
-          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
-            UPWITHCROWD
-          </div>
-        ) : (
-          <Logo textProps={{ className: "h-16" }} variant="text" />
-        )}
+        {renderAppContent(appName)}
       </div>
     </Auth>
   );
