@@ -1,15 +1,16 @@
 import {
-  $UniRefund_CRMService_Merchants_CreateMerchantDto,
-  $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
   $UniRefund_CRMService_Customss_CreateCustomsDto,
-  $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
-  $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
-  $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Customss_CustomsProfileDto,
-  $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
-  $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+  $UniRefund_CRMService_Merchants_CreateMerchantDto,
+  $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
+  $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
+  $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
+  $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
+  $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
+import { PhoneNumberUtil } from "google-libphonenumber";
 import type { TableData } from "src/utils";
 
 interface DataConfig {
@@ -67,16 +68,41 @@ const TaxOfficesFormSubPositions = {
   email: EmailSubPosition,
 };
 
+export const localNumber = {
+  type: "string",
+  refine: {
+    params: {
+      message: "Please enter a valid phone number.",
+    },
+    callback: (value: string) => {
+      try {
+        const phoneUtil = PhoneNumberUtil.getInstance();
+        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(value));
+      } catch (error) {
+        return false;
+      }
+    },
+  },
+};
+
 const createMerchantsScheme = {
   type: "object",
   properties: {
     organization:
       $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
         .entityInformationTypes.items.properties.organizations.items,
-    telephone:
-      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+    telephone: {
+      ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.telephones.items,
+      properties: {
+        ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+          .entityInformationTypes.items.properties.organizations.items
+          .properties.contactInformations.items.properties.telephones.items
+          .properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
@@ -94,10 +120,18 @@ const createrefundPointsScheme = {
     organization:
       $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
         .entityInformationTypes.items.properties.organizations.items,
-    telephone:
-      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+    telephone: {
+      ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.telephones.items,
+      properties: {
+        ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+          .entityInformationTypes.items.properties.organizations.items
+          .properties.contactInformations.items.properties.telephones.items
+          .properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
@@ -115,10 +149,18 @@ const createCustomsScheme = {
     organization:
       $UniRefund_CRMService_Customss_CreateCustomsDto.properties
         .entityInformationTypes.items.properties.organizations.items,
-    telephone:
-      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
+    telephone: {
+      ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.telephones.items,
+      properties: {
+        ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
+          .entityInformationTypes.items.properties.organizations.items
+          .properties.contactInformations.items.properties.telephones.items
+          .properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_Customss_CreateCustomsDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
@@ -136,10 +178,18 @@ const createTaxFreeScheme = {
     organization:
       $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
         .entityInformationTypes.items.properties.organizations.items,
-    telephone:
-      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+    telephone: {
+      ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.telephones.items,
+      properties: {
+        ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+          .entityInformationTypes.items.properties.organizations.items
+          .properties.contactInformations.items.properties.telephones.items
+          .properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
@@ -157,10 +207,18 @@ const createTaxOfficesScheme = {
     organization:
       $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
         .entityInformationTypes.items.properties.organizations.items,
-    telephone:
-      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+    telephone: {
+      ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.telephones.items,
+      properties: {
+        ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+          .entityInformationTypes.items.properties.organizations.items
+          .properties.contactInformations.items.properties.telephones.items
+          .properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
