@@ -12,6 +12,7 @@ export interface CRMServiceServiceResource {
   new: string;
   Edit: string;
   Delete: string;
+  "Delete.Assurance": string;
   Merchants: string;
   "Merchants.New": string;
   "Merchants.Description": string;
@@ -55,6 +56,10 @@ function getLanguageData(
     new: resource?.new || data[lang]?.new || data.en.new,
     Edit: uiResource?.Edit || data[lang]?.Edit || data.en.Edit,
     Delete: uiResource?.Delete || data[lang]?.Delete || data.en.Delete,
+    "Delete.Assurance":
+      uiResource?.["Delete.Assurance"] ||
+      data[lang]?.["Delete.Assurance"] ||
+      data.en["Delete.Assurance"],
     Cancel: uiResource?.Cancel || data[lang]?.Cancel || data.en.Cancel,
     Organization:
       resource?.Organization ||

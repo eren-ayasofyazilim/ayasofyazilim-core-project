@@ -193,7 +193,7 @@ export default function Page({
     type: "Dialog",
     componentType: "ConfimrationDialog",
     title: `${languageData.Delete} ${params.data}`,
-    description: languageData.Delete,
+    description: languageData["Delete.Assurance"],
     cancelCTA: languageData.Cancel,
     variant: "destructive",
     callback: (data) => {
