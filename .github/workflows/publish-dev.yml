@@ -101,4 +101,4 @@ jobs:
     needs: publish_ayshopgo_dev
     steps:
       - name: Run tahsilet
-        run: ssh ubuntu "cd ~/frontend/tahsilet_dev && chmod 777 publish.sh && ./publish.sh 610 tahsilet_web"
+        run: ssh ubuntu "cd ~/frontend/tahsilet_dev && chmod 777 publish.sh && ./publish.sh 1025 tahsilet_web"
