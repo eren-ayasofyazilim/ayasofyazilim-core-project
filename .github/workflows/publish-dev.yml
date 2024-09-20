@@ -96,3 +96,9 @@ jobs:
     steps:
       - name: Run ayshopgo
         run: ssh ubuntu "cd ~/frontend/ayshopgo_dev && chmod 777 publish.sh && ./publish.sh 1071 ayshopgo_web"
+  publish_tahsilat_dev:
+    runs-on: self-hosted
+    needs: publish_ayshopgo_dev
+    steps:
+      - name: Run tahsilat
+        run: ssh ubuntu "cd ~/frontend/tahsilat_dev && chmod 777 publish.sh && ./publish.sh 610 tahsilat_dev"
