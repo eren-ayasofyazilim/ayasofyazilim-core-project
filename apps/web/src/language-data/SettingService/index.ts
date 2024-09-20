@@ -23,6 +23,7 @@ export interface CRMServiceServiceResource {
   "ProductGroupVAT.Description": string;
   TenantSettings: string;
   "TenantSettings.Description": string;
+  Cancel: string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -34,6 +35,7 @@ function getLanguageData(
     new: resource?.new || data[lang]?.new || data.en.new,
     Edit: uiResource?.Edit || data[lang]?.Edit || data.en.Edit,
     Delete: uiResource?.Delete || data[lang]?.Delete || data.en.Delete,
+    Cancel: uiResource?.Cancel || data[lang]?.Cancel || data.en.Cancel,
     Vat: resource?.Vat || data[lang]?.Vat || data.en.Vat,
     "Vat.New":
       resource?.["Vat.New"] || data[lang]?.["Vat.New"] || data.en["Vat.New"],

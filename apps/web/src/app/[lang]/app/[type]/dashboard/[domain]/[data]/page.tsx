@@ -304,8 +304,13 @@ export default function Page({
   };
 
   columnsData.data.actionList?.push({
-    cta: `Delete  `,
-    type: "Action",
+    cta: `Delete`,
+    type: "Dialog",
+    componentType: "ConfimrationDialog",
+    title: `Delete ${formData.title}`,
+    description: `Are you sure you want to delete this ${formData.title}?`,
+    cancelCTA: `Cancel`,
+    variant: "destructive",
     callback: (data) => {
       onDelete(data);
     },
