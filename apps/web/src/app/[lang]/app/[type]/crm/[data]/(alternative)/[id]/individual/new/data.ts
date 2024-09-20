@@ -5,6 +5,7 @@ import {
   $UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
   $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
+import { localNumber } from "../../../../../data";
 
 export interface CreateIndividualDto {
   name: {
@@ -53,8 +54,13 @@ export const createIndividualScheme = {
     name: $UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
     personalSummary:
       $UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
-    telephone:
-      $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
+    telephone: {
+      ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
+      properties: {
+        ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto.properties,
+        localNumber,
+      },
+    },
     address:
       $UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
     email:

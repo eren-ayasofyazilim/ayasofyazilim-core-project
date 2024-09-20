@@ -1,4 +1,5 @@
 import { $UniRefund_CRMService_Organizations_UpdateOrganizationDto } from "@ayasofyazilim/saas/CRMService";
+import { localNumber } from "../../../data";
 
 export const organization =
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
@@ -17,11 +18,7 @@ export const telephone = {
       minLength: 0,
       type: "string",
     },
-    localNumber: {
-      maxLength: 255,
-      minLength: 0,
-      type: "string",
-    },
+    localNumber,
     ituCountryCode: {
       maxLength: 255,
       minLength: 0,
