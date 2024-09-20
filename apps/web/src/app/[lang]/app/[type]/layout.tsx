@@ -172,7 +172,7 @@ export default async function Layout({
       icon: <Presentation className="w-4 text-slate-500" />,
       submenu: dashboards,
       type: "admin",
-      appType: "alls",
+      appType: "all",
     },
     {
       key: "management",
