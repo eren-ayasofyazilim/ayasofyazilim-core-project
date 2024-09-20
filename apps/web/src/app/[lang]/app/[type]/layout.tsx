@@ -172,7 +172,7 @@ export default async function Layout({
       icon: <Presentation className="w-4 text-slate-500" />,
       submenu: dashboards,
       type: "admin",
-      appType: "unirefund",
+      appType: "alls",
     },
     {
       key: "management",
@@ -284,7 +284,7 @@ export default async function Layout({
   const presentation = [...navigationItemsFull, ...navigationItemsTemp];
   const filteredNavigationItems = presentation.filter((item) => {
     return (
-      item.appType === appName.toLowerCase() &&
+      (item.appType === appName.toLowerCase() || item.appType === "all") &&
       (item.type === type || item.type.includes(type))
     );
   });
