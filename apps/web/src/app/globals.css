@@ -60,3 +60,6 @@
 .no-visible-scrollbar::-webkit-scrollbar {
   display: none;
 }
+body {
+  height: 100%;
+}
