@@ -162,6 +162,21 @@ export default function Page(): JSX.Element {
     }
   }
 
+  const renderAppContent = (projectName: string) => {
+    const baseClassName = "text-2xl font-bold text-[#f15656] md:text-5xl";
+    switch (projectName) {
+      case "UNIREFUND":
+        return <Logo textProps={{ className: "h-16" }} variant="text" />;
+      case "UPWITHCROWD":
+        return <div className={baseClassName}>UPWITHCROWD</div>;
+      case "AYSHOPGO":
+        return <div className={baseClassName}>AYSHOPGO</div>;
+      case "TAHSILET":
+        return <div className={baseClassName}>TAHSILET</div>;
+      default:
+        return <div className={baseClassName}>ABP.io react</div>;
+    }
+  };
   return (
     <Auth
       authProps={props}
@@ -171,13 +186,7 @@ export default function Page(): JSX.Element {
       resources={resources}
     >
       <div className="flex flex-auto items-center justify-center bg-slate-100">
-        {appName === "UPWITHCROWD" ? (
-          <div className="text-2xl font-bold text-[#f15656] md:text-5xl">
-            UPWITHCROWD
-          </div>
-        ) : (
-          <Logo textProps={{ className: "h-16" }} variant="text" />
-        )}
+        {renderAppContent(appName)}
       </div>
     </Auth>
   );
