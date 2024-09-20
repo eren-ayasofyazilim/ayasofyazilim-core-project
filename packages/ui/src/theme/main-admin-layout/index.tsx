@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "../../providers/theme";
+import HeaderSection from "./header-section";
 
 function MainAdminLayout(props: any) {
   return (
@@ -13,7 +14,7 @@ function MainAdminLayout(props: any) {
       prefix={props.prefix}
       lang={props.lang}
     >
-      <div>content</div>
+      <HeaderSection />
     </ThemeProvider>
   );
 }
