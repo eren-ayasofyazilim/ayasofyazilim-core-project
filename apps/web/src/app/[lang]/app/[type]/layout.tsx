@@ -16,6 +16,7 @@ import {
   Projector,
   ShieldAlert,
   SlidersHorizontal,
+  User,
   UserCircle,
   Worm,
   WrenchIcon,
@@ -165,7 +166,7 @@ export default async function Layout({
       href: getBaseLink(`app/${type}/`, true, params.lang),
       icon: <LayoutDashboard className="w-4 text-slate-500" />,
       type: ["admin", "user", "entrepreneur", "investor"],
-      appType: "all",
+      appType: "unirefund",
     },
     {
       key: "dashboard",
@@ -234,6 +235,14 @@ export default async function Layout({
       href: getBaseLink(`app/${type}/investments`, true, params.lang),
       type: "investor",
       appType: "admin",
+    },
+    {
+      key: "customers",
+      title: languageData.Customers,
+      href: getBaseLink(`app/${type}/customers`, true, params.lang),
+      icon: <User className="w-4 text-slate-500" />,
+      type: "admin",
+      appType: "ayshopgo",
     },
     {
       key: "contracts",
