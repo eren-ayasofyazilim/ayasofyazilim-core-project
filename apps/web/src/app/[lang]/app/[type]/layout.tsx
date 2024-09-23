@@ -76,7 +76,9 @@ export default async function Layout({
     email: user?.email ?? undefined,
     imageURL: `https://placehold.co/100x100/DB0000/white?text=${user?.name?.substring(0, 2).toUpperCase()}`,
     menuLinks:
-      appName === "UNIREFUND"
+      appName === "UNIREFUND" ||
+      appName === "TAHSILET" ||
+      appName === "AYSHOPGO"
         ? [
             {
               href: getBaseLink(
