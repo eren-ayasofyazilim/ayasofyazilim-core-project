@@ -70,9 +70,9 @@ export default function Navbar({
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center justify-start">
             <Logo />
-            <SearchBar navbarItems={navbarItems} prefix={prefix} />
           </div>
           <div className="flex items-center lg:order-2">
+            <SearchBar navbarItems={navbarItems} prefix={prefix} />
             <LanguageSelector lang={lang} />
             <NotificationsDropdown />
             <ProfileMenu />
