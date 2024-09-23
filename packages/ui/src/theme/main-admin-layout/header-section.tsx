@@ -97,16 +97,14 @@ export function HeaderSection() {
 
   return (
     <div className="flex flex-col gap-3 px-1">
-      <div className="mb-36">
-        <Navbar
-          navbarItems={navbarItems}
-          navigation={breadcrumbItems}
-          activeSectionLayoutItem={activeSectionLayoutItem}
-          sectionLayoutItems={sectionLayoutItems}
-          prefix={prefix}
-          lang={lang}
-        />
-      </div>
+      <Navbar
+        navbarItems={navbarItems}
+        navigation={breadcrumbItems}
+        activeSectionLayoutItem={activeSectionLayoutItem}
+        sectionLayoutItems={sectionLayoutItems}
+        prefix={prefix}
+        lang={lang}
+      />
       <PageHeader
         title={activeNavItem?.displayName}
         description={activeNavItem?.description}
