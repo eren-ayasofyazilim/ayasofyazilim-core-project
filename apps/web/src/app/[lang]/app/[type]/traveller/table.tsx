@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { UniRefund_TravellerService_Travellers_TravellerProfileDto } from "@ayasofyazilim/saas/TravellerService";
-import { $UniRefund_TravellerService_Travellers_TravellerProfileDto } from "@ayasofyazilim/saas/TravellerService";
+import type { UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
+import { $UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
@@ -28,7 +28,7 @@ export default function Table({
 }) {
   const router = useRouter();
   const [travellers, setTravellers] = useState<
-    UniRefund_TravellerService_Travellers_TravellerProfileDto[]
+    UniRefund_TravellerService_Travellers_TravellerListProfileDto[]
   >([]);
   const [totalCount, setTotalCount] = useState(0);
   async function fetchData() {
@@ -56,7 +56,8 @@ export default function Table({
       columnsData={{
         type: "Auto",
         data: {
-          tableType: $UniRefund_TravellerService_Travellers_TravellerProfileDto,
+          tableType:
+            $UniRefund_TravellerService_Travellers_TravellerListProfileDto,
           excludeList: ["id", "userAccountId"],
           actionList: [
             {
