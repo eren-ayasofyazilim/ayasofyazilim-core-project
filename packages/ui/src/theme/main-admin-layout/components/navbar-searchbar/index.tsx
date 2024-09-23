@@ -48,7 +48,7 @@ function SearchBar({
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setSearchOpen((open) => !open);
       }
@@ -122,16 +122,16 @@ function SearchBar({
           }}
         >
           {isFavouriteSearch(item.key) ? (
-            <StarFilledIcon className="ml-auto h-4 w-4 text-blue-400" />
+            <StarFilledIcon className="h-4 w-4 text-blue-400" />
           ) : (
-            <Star className="ml-auto h-4 w-4 text-blue-400" />
+            <Star className="h-4 w-4 text-blue-400" />
           )}
         </Button>
       </CommandItem>
     );
   }
   return (
-    <div>
+    <div className="px-2">
       {/* Big Screen */}
       <Button
         variant="outline"
@@ -143,7 +143,7 @@ function SearchBar({
           Search...
         </div>
         <kbd className="bg-muted text-muted-foreground pointer-events-none absolute bottom-0 right-2 top-0 m-auto inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
-          <span className="text-xs">⌘</span>J
+          <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
 
@@ -151,9 +151,9 @@ function SearchBar({
       <Button
         variant="ghost"
         onClick={() => setSearchOpen(true)}
-        className="text-muted-foreground p-2 md:hidden"
+        className="text-muted-foreground p-0 md:hidden"
       >
-        <Search className="mr-2 size-6 text-gray-500" />
+        <Search className="size-6 text-gray-500" />
       </Button>
 
       {/* Dialog */}

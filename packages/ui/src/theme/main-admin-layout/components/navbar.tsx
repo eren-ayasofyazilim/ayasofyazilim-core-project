@@ -43,10 +43,17 @@ import Logo from "./logo";
 import SearchBar from "./navbar-searchbar";
 import NotificationsDropdown from "./notifications";
 import ProfileMenu from "./profile-menu";
+import {
+  ISection,
+  SectionLayoutNavbar,
+} from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import Link from "next/link";
 
 export default function Navbar({
   prefix,
   navbarItems,
+  sectionLayoutItems,
+  activeSectionLayoutItem,
   navigation,
   lang,
 }: {
@@ -54,6 +61,8 @@ export default function Navbar({
   lang: string;
   navbarItems: NavbarItemsFromDB[];
   navigation: BreadcrumbItemType[];
+  sectionLayoutItems: ISection[];
+  activeSectionLayoutItem: string;
 }) {
   return (
     <div className="fixed left-0 right-0 top-0 z-50">
@@ -61,9 +70,9 @@ export default function Navbar({
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center justify-start">
             <Logo />
-            <SearchBar navbarItems={navbarItems} prefix={prefix} />
           </div>
           <div className="flex items-center lg:order-2">
+            <SearchBar navbarItems={navbarItems} prefix={prefix} />
             <LanguageSelector lang={lang} />
             <NotificationsDropdown />
             <ProfileMenu />
@@ -76,6 +85,11 @@ export default function Navbar({
           navbarItems={navbarItems}
         />
       </div>
+      <SectionLayoutNavbar
+        sections={sectionLayoutItems}
+        activeSectionId={activeSectionLayoutItem}
+        linkElement={Link}
+      />
       {/* 
       eğer ihtiyaç duyarsak ikincil menü tasarımı 
       <div className="relative flex border-b bg-white py-1">
