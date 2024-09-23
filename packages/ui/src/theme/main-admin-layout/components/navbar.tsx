@@ -65,7 +65,7 @@ export default function Navbar({
   activeSectionLayoutItem: string;
 }) {
   return (
-    <div className="fixed left-0 right-0 top-0 z-50">
+    <div className="sticky left-0 right-0 top-0 z-50">
       <nav className="bg-white px-1 py-2.5 md:px-4">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center justify-start">
