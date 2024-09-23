@@ -49,7 +49,13 @@ function findBreadcrumbItems(
 export function HeaderSection() {
   const { navbarItems, prefix, lang } = useTheme();
   const pathName = usePathname();
-  const { activeNavItem, pageBackEnabled, breadcrumbItems } = useMemo(() => {
+  const {
+    activeNavItem,
+    pageBackEnabled,
+    breadcrumbItems,
+    sectionLayoutItems,
+    activeSectionLayoutItem,
+  } = useMemo(() => {
     const data: NavbarItemsFromDB[] = [];
     const item = findActiveNavbarItem(navbarItems, pathName);
     const pageBackEnabled = "/" + item?.key !== pathName;
@@ -67,10 +73,23 @@ export function HeaderSection() {
     });
     breadcrumbItems.reverse();
 
+    const sectionLayoutItems = breadcrumbItems[
+      breadcrumbItems.length - 1
+    ].subNavbarItems.map((item) => ({
+      id: item.key,
+      name: item.displayName,
+      link: item.href ? "/" + item.href : undefined,
+    }));
+
+    const activeSectionLayoutItem =
+      breadcrumbItems[breadcrumbItems.length - 1].key;
+
     return {
       activeNavItem: item,
       pageBackEnabled,
       breadcrumbItems,
+      sectionLayoutItems,
+      activeSectionLayoutItem,
     };
   }, [pathName, navbarItems]);
 
@@ -78,10 +97,12 @@ export function HeaderSection() {
 
   return (
     <div className="flex flex-col gap-3 px-1">
-      <div className="mb-28">
+      <div className="mb-36">
         <Navbar
           navbarItems={navbarItems}
           navigation={breadcrumbItems}
+          activeSectionLayoutItem={activeSectionLayoutItem}
+          sectionLayoutItems={sectionLayoutItems}
           prefix={prefix}
           lang={lang}
         />
