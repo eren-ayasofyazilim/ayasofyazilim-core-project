@@ -190,7 +190,12 @@ export default function Page({
   };
   columnsData.data.actionList?.push({
     cta: languageData.Delete,
-    type: "Action",
+    type: "Dialog",
+    componentType: "ConfimrationDialog",
+    title: `${languageData.Delete} ${params.data}`,
+    description: languageData["Delete.Assurance"],
+    cancelCTA: languageData.Cancel,
+    variant: "destructive",
     callback: (data) => {
       onDelete(data);
     },
