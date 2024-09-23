@@ -35,7 +35,7 @@ function ProfileMenu() {
               <DropdownMenuSeparator />
               <ul className="py-1 text-gray-700 " aria-labelledby="dropdown">
                 {profileMenu?.menu.account.map((item) => (
-                  <li>
+                  <li key={item.name}>
                     <a
                       href={item.href}
                       className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
@@ -54,7 +54,7 @@ function ProfileMenu() {
               <DropdownMenuSeparator />
               <ul className="py-1 text-gray-700 " aria-labelledby="dropdown">
                 {profileMenu?.menu.primary.map((item) => (
-                  <li>
+                  <li key={item.name}>
                     <a
                       href={item.href}
                       className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
@@ -73,7 +73,7 @@ function ProfileMenu() {
               <DropdownMenuSeparator />
               <ul className="py-1 text-gray-700 " aria-labelledby="dropdown">
                 {profileMenu?.menu.secondary.map((item) => (
-                  <li>
+                  <li key={item.name}>
                     <a
                       href={item.href}
                       className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
