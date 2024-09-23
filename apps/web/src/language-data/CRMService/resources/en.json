@@ -1,7 +1,9 @@
 {
   "new": "New",
   "Delete": "Delete",
+  "Delete.Assurance": "Are you sure you want to delete?",
   "Edit": "Edit",
+  "Cancel": "Cancel",
   "Merchants": "Merchants",
   "Merchants.New": "New Merchant",
   "Merchants.Description": "You can view the merchants from here.",
