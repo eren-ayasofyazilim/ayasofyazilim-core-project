@@ -76,7 +76,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         schema: $UniRefund_SettingService_Vats_VatDetailDto,
       },
     },
-    productGroups: {
+    "product-groups": {
       title: "Product Group",
       createFormSchema: {
         formPositions: [
@@ -124,7 +124,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         },
       },
     },
-    productGroupsVats: {
+    "product-groups-vats": {
       title: "Product Group VAT",
       filterBy: "",
       createFormSchema: {
@@ -135,7 +135,9 @@ export const dataConfigOfManagement: Record<string, any> = {
           productGroupId: {
             data: () => {
               return fetch(
-                getBaseLink("api/management/productGroups?maxResultCount=1000"),
+                getBaseLink(
+                  "api/management/product-groups?maxResultCount=1000",
+                ),
               )
                 .then((data) => data.json())
                 .then(
