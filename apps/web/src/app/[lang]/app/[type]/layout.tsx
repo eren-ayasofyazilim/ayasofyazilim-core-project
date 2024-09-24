@@ -33,9 +33,7 @@ export default async function Layout({
   profileMenuProps.menu.secondary = [
     {
       href: undefined,
-      onClick: () => {
-        void signOutServer();
-      },
+      onClick: signOutServer,
       name: languageData.LogOut,
       icon: <LogOut className="mr-2 h-4 w-4" />,
     },

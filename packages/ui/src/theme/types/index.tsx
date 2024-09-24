@@ -15,7 +15,7 @@ export type NavbarItemType = NavbarItemsFromDB & {
   subNavbarItems: NavbarItemType[] | null;
 };
 type ProfileMenuLink = { name: string; icon: JSX.Element } & (
-  | { onClick: () => void; href: undefined }
+  | { onClick: () => void | Promise<unknown>; href: undefined }
   | { href: string; onClick: undefined }
 );
 
