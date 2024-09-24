@@ -87,6 +87,7 @@ export interface AbpUiNavigationResource {
   Operations: string;
   Rebate: string;
   CRM: string;
+  Customers: string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -94,6 +95,10 @@ function getLanguageData(
 ): AbpUiNavigationResource {
   const navigationResource = resources.AbpUiNavigation?.texts;
   return {
+    Customers:
+      navigationResource?.Customers ||
+      data[lang]?.Customers ||
+      data.en.Customers,
     Home: navigationResource?.Home || data[lang]?.Home || data.en.Home,
     HomePage:
       navigationResource?.HomePage || data[lang]?.HomePage || data.en.Homepage,

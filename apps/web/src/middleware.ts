@@ -85,16 +85,20 @@ export const middleware = auth((request: NextAuthRequest) => {
   //   return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
   // }
   function redirectToRoot(locale: string) {
-    if (
-      APPLICATION_NAME.toLocaleLowerCase() === "unirefund" ||
-      APPLICATION_NAME.toLocaleLowerCase() === "tahsilet" ||
-      APPLICATION_NAME.toLocaleLowerCase() === "ayshopgo"
-    )
+    if (APPLICATION_NAME.toLocaleLowerCase() === "unirefund") {
       return NextResponse.redirect(
         new URL(`/${locale}/app/admin/home`, hostURL),
       );
-
-    return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
+    } else if (
+      APPLICATION_NAME.toLocaleLowerCase() === "tahsilet" ||
+      APPLICATION_NAME.toLocaleLowerCase() === "ayshopgo"
+    ) {
+      return NextResponse.redirect(
+        new URL(`/${locale}/app/admin/customers`, hostURL),
+      );
+    } else if (APPLICATION_NAME.toLocaleLowerCase() === "upwithcrowd") {
+      return NextResponse.redirect(new URL(`/${locale}/public`, hostURL));
+    }
   }
   function allowURL(locale: string, req: NextRequest) {
     const response = NextResponse.next();
