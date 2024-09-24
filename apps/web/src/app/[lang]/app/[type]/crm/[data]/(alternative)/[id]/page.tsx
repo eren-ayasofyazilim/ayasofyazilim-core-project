@@ -1,5 +1,8 @@
 "use server";
-import { getCRMDetailServer, getCRMMerchantDetailServer } from "./action";
+import {
+  getCRMDetailServer,
+  getCRMMerchantDetailServer,
+} from "../../../actions/action";
 import Form from "./form";
 
 async function getCrmDetailData(data: string, id: string) {
