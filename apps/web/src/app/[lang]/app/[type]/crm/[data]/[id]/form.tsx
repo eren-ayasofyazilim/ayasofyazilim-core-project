@@ -35,8 +35,8 @@ import {
   deleteSubMerchantByMerchantId,
   getAllIndividuals,
   getSubCompanyByMerchantId,
-} from "../../../actions/merchant";
-import { dataConfigOfCrm, localNumber } from "../../../data";
+} from "../../actions/merchant";
+import { dataConfigOfCrm, localNumber } from "../../data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 import { address, email, organization, telephone } from "./data";
 

@@ -15,7 +15,7 @@ import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import { dataConfigOfCrm } from "../../../data";
+import { dataConfigOfCrm } from "../../data";
 
 export interface CreateOrganizationDto {
   organization: Record<string, string>;

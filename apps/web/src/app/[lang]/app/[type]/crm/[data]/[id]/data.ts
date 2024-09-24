@@ -1,5 +1,5 @@
 import { $UniRefund_CRMService_Organizations_UpdateOrganizationDto } from "@ayasofyazilim/saas/CRMService";
-import { localNumber } from "../../../data";
+import { localNumber } from "../../data";
 
 export const organization =
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto;

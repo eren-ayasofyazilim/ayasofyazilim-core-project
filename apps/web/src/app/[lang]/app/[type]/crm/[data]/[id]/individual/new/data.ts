@@ -5,7 +5,7 @@ import {
   $UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
   $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
-import { localNumber } from "../../../../../data";
+import { localNumber } from "../../../../data";
 
 export interface CreateIndividualDto {
   name: {

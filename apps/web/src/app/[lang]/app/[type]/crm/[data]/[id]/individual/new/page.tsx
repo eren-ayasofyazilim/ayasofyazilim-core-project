@@ -9,7 +9,7 @@ import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { postIndividual } from "../../../../../actions/merchant";
+import { postIndividual } from "../../../../actions/merchant";
 import type { CreateIndividualDto } from "./data";
 import {
   createIndividualScheme,
