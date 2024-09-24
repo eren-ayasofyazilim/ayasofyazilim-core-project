@@ -14,7 +14,10 @@ export type BreadcrumbItemType = NavbarItemsFromDB & {
 export type NavbarItemType = NavbarItemsFromDB & {
   subNavbarItems: NavbarItemType[] | null;
 };
-type ProfileMenuLink = { name: string; href: string; icon: JSX.Element };
+type ProfileMenuLink = { name: string; icon: JSX.Element } & (
+  | { onClick: () => void; href: undefined }
+  | { href: string; onClick: undefined }
+);
 
 export type ProfileMenuProps = {
   info: {
