@@ -36,9 +36,18 @@ import {
   getAllIndividuals,
   getSubCompanyByMerchantId,
 } from "../../../actions/merchant";
-import { dataConfigOfCrm, localNumber } from "../../../data";
-import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
-import { address, email, organization, telephone } from "./data";
+import {
+  address,
+  dataConfigOfCrm,
+  email,
+  localNumber,
+  organization,
+  telephone,
+} from "../../../data";
+import {
+  updateCRMDetailServer,
+  updateMerchantCRMDetailServer,
+} from "../../../actions/action";
 
 export default function Form({
   crmDetailData,
@@ -375,7 +384,12 @@ export default function Form({
                   actionList: [
                     {
                       cta: languageData.Delete,
-                      type: "Action",
+                      type: "Dialog",
+                      componentType: "ConfimrationDialog",
+                      title: `${languageData.Delete} ${params.data}`,
+                      description: languageData["Delete.Assurance"],
+                      cancelCTA: languageData.Cancel,
+                      variant: "destructive",
                       callback: (row: { id: string }) => {
                         void deleteSubMerchant(row.id);
                       },

@@ -39,26 +39,7 @@ interface FormSchema {
     };
   };
 }
-const formSubPositions = {
-  organization: [
-    "name",
-    "taxpayerId",
-    "legalStatusCode",
-    "customerNumber",
-    "branchId",
-  ],
-  telephone: ["localNumber", "typeCode"],
-  address: [
-    "country",
-    "terriority",
-    "city",
-    "postalCode",
-    "addressLine",
-    "fullAddress",
-    "typeCode",
-  ],
-  email: ["emailAddress", "typeCode"],
-};
+
 export default function Page({
   params,
 }: {
@@ -71,6 +52,34 @@ export default function Page({
   const router = useRouter();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
+
+  function formSchemaByData() {
+    const config = dataConfigOfCrm.companies.pages[params.data];
+    if (config.createFormSchema) {
+      const schema = config.createFormSchema as FormSchema;
+      schema.schema.properties.telephone.properties.typeCode.enum = [
+        "Home",
+        "Office",
+        "Mobile",
+        "Fax",
+      ];
+      schema.schema.properties.address.properties.typeCode.enum = [
+        "Home",
+        "Office",
+      ];
+      schema.schema.properties.email.properties.typeCode.enum = [
+        "Work",
+        "Personal",
+      ];
+    }
+    return createZodObject(
+      config.createFormSchema?.schema,
+      config.createFormSchema?.formPositions,
+      undefined,
+      config.createFormSchema?.formSubPositions,
+    );
+  }
+
   const handleSave = async (formData: CreateOrganizationDto) => {
     const isValid = isPhoneValid(formData.telephone.localNumber);
     if (!isValid) {
@@ -156,32 +165,5 @@ export default function Page({
         {languageData.Save}
       </AutoFormSubmit>
     </AutoForm>
-  );
-}
-
-function formSchemaByData() {
-  const config = dataConfigOfCrm.companies.pages.merchants;
-  if (config.createFormSchema) {
-    const schema = config.createFormSchema as FormSchema;
-    schema.schema.properties.telephone.properties.typeCode.enum = [
-      "Home",
-      "Office",
-      "Mobile",
-      "Fax",
-    ];
-    schema.schema.properties.address.properties.typeCode.enum = [
-      "Home",
-      "Office",
-    ];
-    schema.schema.properties.email.properties.typeCode.enum = [
-      "Work",
-      "Personal",
-    ];
-  }
-  return createZodObject(
-    config.createFormSchema?.schema,
-    config.createFormSchema?.formPositions,
-    undefined,
-    formSubPositions,
   );
 }

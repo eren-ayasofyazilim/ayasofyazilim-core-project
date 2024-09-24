@@ -1,14 +1,18 @@
 import {
+  $UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
   $UniRefund_CRMService_Customss_CreateCustomsDto,
   $UniRefund_CRMService_Customss_CustomsProfileDto,
+  $UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   $UniRefund_CRMService_Merchants_CreateMerchantDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
+  $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
   $UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
   $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
   $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
   $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+  $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import type { TableData } from "src/utils";
@@ -81,6 +85,44 @@ export const localNumber = {
       } catch (error) {
         return false;
       }
+    },
+  },
+};
+
+export const organization =
+  $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
+
+export const telephone = {
+  ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
+  properties: {
+    ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto.properties,
+    localNumber,
+    typeCode: {
+      type: "integer",
+      format: "int32",
+      enum: ["Home", "Office", "Mobile", "Fax"],
+    },
+  },
+};
+export const address = {
+  ...$UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
+  properties: {
+    ...$UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto.properties,
+    typeCode: {
+      type: "integer",
+      format: "int32",
+      enum: ["Home", "Office"],
+    },
+  },
+};
+export const email = {
+  ...$UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
+  properties: {
+    ...$UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto.properties,
+    typeCode: {
+      type: "integer",
+      format: "int32",
+      enum: ["Work", "Personal"],
     },
   },
 };
