@@ -1,5 +1,4 @@
 "use client";
-import { Card } from "@/components/ui/card";
 import type { UniRefund_SettingService_CountrySettings_CountrySettingDto } from "@ayasofyazilim/saas/SettingService";
 import { SettingsView } from "@repo/ui/settings-view";
 import type { ResourceResult } from "src/utils";
@@ -21,13 +20,11 @@ export default function TenantSettingsPage({
     );
   }
   return (
-    <Card className="h-full overflow-hidden">
-      <SettingsView
-        list={list}
-        onSettingPageChange={onSettingPageChange}
-        path={path}
-        resources={resources}
-      />
-    </Card>
+    <SettingsView
+      list={list}
+      onSettingPageChange={onSettingPageChange}
+      path={path}
+      resources={resources}
+    />
   );
 }

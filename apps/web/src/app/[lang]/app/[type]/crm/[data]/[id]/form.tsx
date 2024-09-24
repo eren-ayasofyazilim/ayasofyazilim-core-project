@@ -1,9 +1,18 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
+import type {
+  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
+  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
+  UniRefund_CRMService_Merchants_MerchantDto,
+  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_15,
+  Volo_Abp_Application_Dtos_PagedResultDto_18,
+} from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_CRMService_Individuals_IndividualProfileDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm, {
@@ -13,22 +22,10 @@ import {
   SectionLayout,
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type {
-  UniRefund_CRMService_Merchants_MerchantDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
-  Volo_Abp_Application_Dtos_PagedResultDto_15,
-  UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-} from "@ayasofyazilim/saas/CRMService";
-import { $UniRefund_CRMService_Individuals_IndividualProfileDto } from "@ayasofyazilim/saas/CRMService";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import {
@@ -51,9 +48,6 @@ export default function Form({
     lang: string;
   };
 }) {
-  const [formData] = useState<TableData>(
-    dataConfigOfCrm.companies.pages[params.data],
-  );
   const router = useRouter();
   const [SubCompaniesData, setSubCompaniesData] =
     useState<Volo_Abp_Application_Dtos_PagedResultDto_18>();
@@ -237,20 +231,6 @@ export default function Form({
 
   return (
     <div className="h-full overflow-hidden">
-      <PageHeader
-        LinkElement={Link}
-        description={
-          languageData[
-            `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
-          ]
-        }
-        href={getBaseLink(`/app/admin/crm/${params.data}`)}
-        title={
-          languageData[
-            `${formData.title?.replaceAll(" ", "")}.Edit` as keyof typeof languageData
-          ]
-        }
-      />
       <SectionLayout
         sections={[
           { name: languageData.Organization, id: "organization" },

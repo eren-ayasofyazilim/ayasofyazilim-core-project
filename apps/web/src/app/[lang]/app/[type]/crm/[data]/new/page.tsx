@@ -1,20 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { getResourceDataClient } from "src/language-data/CRMService";
+import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { getResourceDataClient } from "src/language-data/CRMService";
-import { useLocale } from "src/providers/locale";
 import { dataConfigOfCrm } from "../../data";
 
 export interface CreateOrganizationDto {
@@ -106,64 +103,42 @@ export default function Page({
   };
 
   return (
-    <>
-      <PageHeader
-        LinkElement={Link}
-        description={
-          languageData[
-            `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
-          ]
-        }
-        href={getBaseLink(`/app/admin/crm/${params.data}`)}
-        title={
-          languageData[
-            `${_formData.title?.replaceAll(" ", "")}.New` as keyof typeof languageData
-          ]
-        }
-      />
-      <div className="flex h-full w-full flex-row">
-        <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
-          <CardContent>
-            <AutoForm
-              className="grid-col-1 grid grid-rows-1 gap-2 space-y-0 lg:grid-cols-3 lg:grid-rows-2"
-              fieldConfig={{
-                address: {
-                  className: "row-span-2",
-                },
-                organization: {
-                  className: "row-span-2",
-                },
-                email: {
-                  emailAddress: {
-                    inputProps: {
-                      type: "email",
-                    },
-                  },
-                },
-                telephone: {
-                  localNumber: {
-                    fieldType: "phone",
-                    displayName: "Telephone Number",
-                    inputProps: {
-                      showLabel: true,
-                    },
-                  },
-                },
-              }}
-              formClassName="pb-40 "
-              formSchema={formSchemaByData(params.data)}
-              onSubmit={(val) => {
-                void handleSave(val as CreateOrganizationDto);
-              }}
-            >
-              <AutoFormSubmit className="float-right">
-                {languageData.Save}
-              </AutoFormSubmit>
-            </AutoForm>
-          </CardContent>
-        </Card>
-      </div>
-    </>
+    <AutoForm
+      className="grid-col-1 grid grid-rows-1 gap-2 space-y-0 lg:grid-cols-3 lg:grid-rows-2"
+      fieldConfig={{
+        address: {
+          className: "row-span-2",
+        },
+        organization: {
+          className: "row-span-2",
+        },
+        email: {
+          emailAddress: {
+            inputProps: {
+              type: "email",
+            },
+          },
+        },
+        telephone: {
+          localNumber: {
+            fieldType: "phone",
+            displayName: "Telephone Number",
+            inputProps: {
+              showLabel: true,
+            },
+          },
+        },
+      }}
+      formClassName="pb-4"
+      formSchema={formSchemaByData(params.data)}
+      onSubmit={(val) => {
+        void handleSave(val as CreateOrganizationDto);
+      }}
+    >
+      <AutoFormSubmit className="float-right">
+        {languageData.Save}
+      </AutoFormSubmit>
+    </AutoForm>
   );
 }
 
