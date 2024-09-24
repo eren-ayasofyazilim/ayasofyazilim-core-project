@@ -5,17 +5,109 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
+import {
+  $UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
+  $UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
+} from "@ayasofyazilim/saas/CRMService";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { postIndividual } from "../../../../actions/merchant";
-import type { CreateIndividualDto } from "./data";
-import {
-  createIndividualScheme,
-  formPositions,
-  formSubPositions,
-} from "./data";
+import { telephone, address, email } from "../../../../data";
+
+export interface CreateIndividualDto {
+  name: {
+    salutation: string;
+    name: string;
+    suffix: string;
+    mailingName: string;
+    officialName: string;
+  };
+  personalSummary: {
+    date: string;
+    birthDate: string;
+    ethnicity: string;
+    maritalStatusCode: string;
+    religiousAffiliationName: string;
+    genderTypeCode: 0 | 1;
+  };
+
+  telephone: {
+    areaCode: string;
+    localNumber: string;
+    ituCountryCode: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1 | 2 | 3;
+  };
+  address: {
+    addressLine: string;
+    city: string;
+    terriority: string;
+    postalCode: string;
+    country: string;
+    fullAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
+  };
+  email: {
+    emailAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
+  };
+}
+
+const createIndividualScheme = {
+  type: "object",
+  properties: {
+    name: $UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
+    personalSummary: {
+      ...$UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
+      properties: {
+        ...$UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto.properties,
+        genderTypeCode: {
+          enum: ["Male", "Female"],
+          type: "integer",
+          format: "int32",
+        },
+      },
+    },
+    telephone,
+    address,
+    email,
+  },
+};
+
+const formPositions = [
+  "name",
+  "telephone",
+  "personalSummary",
+  "address",
+  "email",
+];
+
+const formSubPositions = {
+  name: ["salutation", "name", "suffix", "mailingName", "officialName"],
+  personalSummary: [
+    "date",
+    "birthDate",
+    "ethnicity",
+    "maritalStatusCode",
+    "religiousAffiliationName",
+    "genderTypeCode",
+  ],
+  telephone: ["localNumber", "typeCode"],
+  address: [
+    "country",
+    "terriority",
+    "city",
+    "postalCode",
+    "addressLine",
+    "fullAddress",
+    "typeCode",
+  ],
+  email: ["emailAddress", "typeCode"],
+};
 
 export default function Page({
   params,
@@ -86,7 +178,7 @@ export default function Page({
           },
         },
       }}
-      formClassName="pb-40 "
+      formClassName="pb-4"
       formSchema={formSchemaByData()}
       onSubmit={(val) => {
         void handleIndividualSave(val as CreateIndividualDto);

@@ -55,6 +55,25 @@ export default function Page({
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
+
+  function formSchemaByData() {
+    const config = dataConfigOfCrm.companies.pages[params.data];
+    if (config.createFormSchema) {
+      config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
+        ["Home", "Office", "Mobile", "Fax"];
+      config.createFormSchema.schema.properties.address.properties.typeCode.enum =
+        ["Home", "Office"];
+      config.createFormSchema.schema.properties.email.properties.typeCode.enum =
+        ["Work", "Personal"];
+    }
+    return createZodObject(
+      config.createFormSchema?.schema,
+      config.createFormSchema?.formPositions,
+      undefined,
+      config.createFormSchema?.formSubPositions,
+    );
+  }
+
   const handleSave = async (formData: CreateOrganizationDto) => {
     const isValid = isPhoneValid(formData.telephone.localNumber);
     if (!isValid) {
@@ -130,7 +149,7 @@ export default function Page({
         },
       }}
       formClassName="pb-4"
-      formSchema={formSchemaByData(params.data)}
+      formSchema={formSchemaByData()}
       onSubmit={(val) => {
         void handleSave(val as CreateOrganizationDto);
       }}
@@ -139,25 +158,5 @@ export default function Page({
         {languageData.Save}
       </AutoFormSubmit>
     </AutoForm>
-  );
-}
-
-function formSchemaByData(data: string) {
-  const config = dataConfigOfCrm.companies.pages[data];
-  if (config.createFormSchema) {
-    config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
-      ["Home", "Office", "Mobile", "Fax"];
-    config.createFormSchema.schema.properties.address.properties.typeCode.enum =
-      ["Home", "Office"];
-    config.createFormSchema.schema.properties.email.properties.typeCode.enum = [
-      "Work",
-      "Personal",
-    ];
-  }
-  return createZodObject(
-    config.createFormSchema?.schema,
-    config.createFormSchema?.formPositions,
-    undefined,
-    config.createFormSchema?.formSubPositions,
   );
 }
