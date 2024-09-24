@@ -71,7 +71,10 @@ export const middleware = auth((request: NextAuthRequest) => {
   const hostURL = `http://${request.headers.get("host")}`;
 
   function isUserAuthorized(req: NextAuthRequest) {
-    return Boolean(req.auth);
+    return Boolean(
+      req.auth?.access_token &&
+        (req.auth.user?.userName || req.auth.user?.email),
+    );
   }
   function isPathHasLocale(path: string) {
     return i18n.locales.includes(path.split("/")[1]);
