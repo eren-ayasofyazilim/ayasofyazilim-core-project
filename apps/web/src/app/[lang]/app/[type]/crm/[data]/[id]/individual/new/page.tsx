@@ -13,8 +13,8 @@ import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { postIndividual } from "../../../../../actions/merchant";
-import { telephone, address, email } from "../../../../../data";
+import { postIndividual } from "../../../../actions/merchant";
+import { telephone, address, email } from "../../../../data";
 
 export interface CreateIndividualDto {
   name: {
@@ -178,7 +178,7 @@ export default function Page({
           },
         },
       }}
-      formClassName="pb-40 "
+      formClassName="pb-4"
       formSchema={formSchemaByData()}
       onSubmit={(val) => {
         void handleIndividualSave(val as CreateIndividualDto);

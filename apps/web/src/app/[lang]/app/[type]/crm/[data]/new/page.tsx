@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: we need to fix this*/
 "use client";
 import { toast } from "@/components/ui/sonner";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
@@ -5,38 +6,37 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
-import { getBaseLink } from "src/utils";
-import { isPhoneValid, splitPhone } from "src/utils-phone";
+import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import { dataConfigOfCrm } from "../../../../../data";
-import type { CreateOrganizationDto } from "../../../new/page";
+import type { TableData } from "src/utils";
+import { getBaseLink } from "src/utils";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
+import { dataConfigOfCrm } from "../../data";
 
-interface FormSchema {
-  schema: {
-    properties: {
-      telephone: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-      address: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-      email: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-    };
+export interface CreateOrganizationDto {
+  organization: Record<string, string>;
+  telephone: {
+    areaCode: string;
+    localNumber: string;
+    ituCountryCode: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1 | 2 | 3;
+  };
+  address: {
+    addressLine: string;
+    city: string;
+    terriority: string;
+    postalCode: string;
+    country: string;
+    fullAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
+  };
+  email: {
+    emailAddress: string;
+    primaryFlag: boolean;
+    typeCode: 0 | 1;
   };
 }
 
@@ -50,27 +50,21 @@ export default function Page({
   };
 }) {
   const router = useRouter();
+  const [_formData] = useState<TableData>(
+    dataConfigOfCrm.companies.pages[params.data],
+  );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
   function formSchemaByData() {
     const config = dataConfigOfCrm.companies.pages[params.data];
     if (config.createFormSchema) {
-      const schema = config.createFormSchema as FormSchema;
-      schema.schema.properties.telephone.properties.typeCode.enum = [
-        "Home",
-        "Office",
-        "Mobile",
-        "Fax",
-      ];
-      schema.schema.properties.address.properties.typeCode.enum = [
-        "Home",
-        "Office",
-      ];
-      schema.schema.properties.email.properties.typeCode.enum = [
-        "Work",
-        "Personal",
-      ];
+      config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
+        ["Home", "Office", "Mobile", "Fax"];
+      config.createFormSchema.schema.properties.address.properties.typeCode.enum =
+        ["Home", "Office"];
+      config.createFormSchema.schema.properties.email.properties.typeCode.enum =
+        ["Work", "Personal"];
     }
     return createZodObject(
       config.createFormSchema?.schema,
@@ -93,7 +87,6 @@ export default function Page({
           organizations: [
             {
               ...formData.organization,
-              parentCompanyId: params.id,
               contactInformations: [
                 {
                   telephones: [{ ...formData.telephone, primaryFlag: true }],
@@ -115,16 +108,16 @@ export default function Page({
         body: JSON.stringify(createformData),
       });
       if (response.ok) {
-        toast.success(`Sub Company added successfully`);
-        router.push(getBaseLink(`/app/admin/crm/${params.data}/${params.id}`));
+        toast.success(`${params.data} added successfully`);
+        router.push(getBaseLink(`/app/admin/crm/${params.data}`));
       } else {
         const errorData = (await response.json()) as {
           message: string;
         };
-        toast.error(errorData.message || `Failed to add Sub Company`);
+        toast.error(errorData.message || `Failed to add ${params.data}`);
       }
     } catch (error) {
-      toast.error(`An error occurred while saving the Sub Company`);
+      toast.error(`An error occurred while saving the ${params.data}`);
     }
   };
 
@@ -155,7 +148,7 @@ export default function Page({
           },
         },
       }}
-      formClassName="pb-40 "
+      formClassName="pb-4"
       formSchema={formSchemaByData()}
       onSubmit={(val) => {
         void handleSave(val as CreateOrganizationDto);

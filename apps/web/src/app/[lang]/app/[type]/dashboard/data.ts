@@ -268,7 +268,7 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_LanguageManagement_Dto_UpdateLanguageDto,
       },
     },
-    languageTexts: {
+    "language-texts": {
       title: "Language Text",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
@@ -453,7 +453,7 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Abp_Identity_IdentityUserDto,
       },
     },
-    claimType: {
+    "claim-type": {
       title: "Claim Type",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
@@ -509,7 +509,7 @@ export const dataConfig: Record<string, any> = {
         },
       },
     },
-    securityLogs: {
+    "security-logs": {
       title: "Security Logs",
       detailedFilters: [
         {
@@ -565,10 +565,10 @@ export const dataConfig: Record<string, any> = {
       title: "Organization",
     },
   },
-  auditLogs: {
+  "audit-logs": {
     displayName: "Audit Logs",
-    default: "auditLogs",
-    auditLogs: {
+    default: "audit-logs",
+    "audit-logs": {
       title: "Audit Logs",
       detailedFilters: [
         {
@@ -642,10 +642,10 @@ export const dataConfig: Record<string, any> = {
       },
     },
   },
-  textTemplates: {
-    displayName: "TextTemplates",
-    default: "textTemplates",
-    textTemplates: {
+  "text-templates": {
+    displayName: "Text Templates",
+    default: "text-templates",
+    "text-templates": {
       title: "Text Templates",
       tableSchema: {
         excludeList: ["name", "additionalProperties"],

@@ -75,14 +75,14 @@ export function HeaderSection() {
 
     const sectionLayoutItems = breadcrumbItems[
       breadcrumbItems.length - 1
-    ].subNavbarItems.map((item) => ({
+    ]?.subNavbarItems?.map((item) => ({
       id: item.key,
       name: item.displayName,
       link: item.href ? "/" + item.href : undefined,
     }));
 
     const activeSectionLayoutItem =
-      breadcrumbItems[breadcrumbItems.length - 1].key;
+      breadcrumbItems[breadcrumbItems.length - 1]?.key;
 
     return {
       activeNavItem: item,

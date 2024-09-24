@@ -85,7 +85,7 @@ const clients: Clients = {
       delete: async (id: string) => tenant.deleteApiSaasTenantsById({ id }),
     };
   },
-  claimType: async () => {
+  "claim-type": async () => {
     const client = await getIdentityServiceClient();
     const claimType = client.claimType;
 
@@ -196,7 +196,7 @@ const clients: Clients = {
       },
     };
   },
-  securityLogs: async () => {
+  "security-logs": async () => {
     const client = await getIdentityServiceClient();
     const securityLogs = client.securityLog;
 
@@ -225,7 +225,7 @@ const clients: Clients = {
     };
   },
 
-  auditLogs: async () => {
+  "audit-logs": async () => {
     const client = await getAdministrationServiceClient();
     const auditLogs = client.auditLogs;
 
@@ -260,7 +260,7 @@ const clients: Clients = {
     };
   },
 
-  textTemplates: async () => {
+  "text-templates": async () => {
     const client = await getAdministrationServiceClient();
     const textTemplates = client.textTemplateDefinitions;
     return {
@@ -273,7 +273,7 @@ const clients: Clients = {
     };
   },
 
-  languageTexts: async () => {
+  "language-texts": async () => {
     const client = await getAdministrationServiceClient();
     const languageTexts = client.languageTexts;
 

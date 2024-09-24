@@ -13,7 +13,7 @@ import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
-import { dataConfigOfCrm } from "../../data";
+import { dataConfigOfCrm } from "../data";
 
 async function controlledFetch(
   url: string,

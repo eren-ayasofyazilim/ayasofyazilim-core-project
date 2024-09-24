@@ -2,7 +2,7 @@
 import {
   getCRMDetailServer,
   getCRMMerchantDetailServer,
-} from "../../../actions/action";
+} from "../../actions/action";
 import Form from "./form";
 
 async function getCrmDetailData(data: string, id: string) {

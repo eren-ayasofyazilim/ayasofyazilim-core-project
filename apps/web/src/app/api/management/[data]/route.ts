@@ -27,7 +27,7 @@ const clients: Clients = {
       delete: async (id: string) => vats.deleteApiSettingServiceVatById({ id }),
     };
   },
-  productGroups: async () => {
+  "product-groups": async () => {
     const client = await getSettingServiceClient();
     const productGroups = client.productGroup;
     return {
@@ -49,7 +49,7 @@ const clients: Clients = {
     };
   },
 
-  productGroupsVats: async () => {
+  "product-groups-vats": async () => {
     const client = await getSettingServiceClient();
     const productGroupVats = client.productGroupVat;
     return {

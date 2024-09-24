@@ -64,7 +64,6 @@ export default function ProjectForm({
   return (
     <SectionLayout
       defaultActiveSectionId={sectionData[0]?.sectionId}
-      noCard
       sections={sections}
       vertical
     >
