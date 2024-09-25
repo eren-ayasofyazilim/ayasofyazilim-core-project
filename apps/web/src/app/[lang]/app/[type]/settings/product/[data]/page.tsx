@@ -78,16 +78,16 @@ export default function Page({
 }: {
   params: { data: string; domain: string; lang: string };
 }): JSX.Element {
-  const fetchLink = getBaseLink(`/api/management/${params.data}`);
+  const fetchLink = getBaseLink(`/api/settings/product/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formData, setFormData] = useState<TableData>(
-    dataConfigOfManagement[params.domain][params.data],
+    dataConfigOfManagement.product[params.data],
   );
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const detailedFilters =
-    dataConfigOfManagement[params.domain][params.data]?.detailedFilters || [];
+    dataConfigOfManagement.product[params.data]?.detailedFilters || [];
   async function processConvertors() {
     const tempData = { ...formData };
     const schemas = ["createFormSchema", "editFormSchema"] as const;
