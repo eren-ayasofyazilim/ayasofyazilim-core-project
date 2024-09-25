@@ -6,9 +6,9 @@ import type { AbpUiNavigationResource } from "src/language-data/AbpUiNavigation"
 export function getProfileMenuFromDB(languageData: AbpUiNavigationResource) {
   const profileMenu: ProfileMenuProps = {
     info: {
-      name: "Neil Sims",
-      email: "name@flowbite.com",
-      image: "https://flowbite.com/docs/images/people/profile-picture-5.jpg",
+      name: "",
+      email: "",
+      image: "",
     },
     menuTitle: languageData.Profile,
     menu: {
