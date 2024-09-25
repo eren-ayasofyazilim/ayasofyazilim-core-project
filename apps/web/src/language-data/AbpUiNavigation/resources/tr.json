@@ -48,6 +48,11 @@
   "Investmensts": "Yatırımlar",
   "Management": "Yönetim",
   "TextTemplates": "Yazı Şablonları",
+
+  "Admin": "Admin",
+  "Saas": "Saas",
+  "Identity": "Kimlik",
+  "Parties": "Taraflar",
   "AdminManagement": "Admin Yönetimi",
   "OpenIdDict": "Open Id Dict",
   "Applications": "Uygulamalar",
