@@ -260,7 +260,7 @@ export const settings: NavbarItemsFromDB[] = [
 export const crm: NavbarItemsFromDB[] = [
   {
     key: "crm",
-    displayName: "CRM",
+    displayName: "Parties",
     description: "Manage customer relationship management settings.",
     href: "crm/merchants",
     icon: "layer",
