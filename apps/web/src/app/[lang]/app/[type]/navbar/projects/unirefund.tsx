@@ -24,15 +24,7 @@ export const unirefundNavbarDataFromDB: NavbarItemsFromDB[] = [
   ...settings,
   ...crm,
   ...contracts,
-  {
-    key: "traveller",
-    displayName: "Traveller",
-    description: "Manage traveller-related settings.",
-    href: "traveller",
-    icon: "plane",
-    parentNavbarItemKey: "/",
-    displayOrder: 1,
-  },
+
   {
     key: "operations",
     displayName: "Operations",

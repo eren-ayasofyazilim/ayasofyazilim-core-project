@@ -276,6 +276,15 @@ export const crm: NavbarItemsFromDB[] = [
     parentNavbarItemKey: "crm",
     displayOrder: 1,
   },
+  {
+    key: "crm/traveller",
+    displayName: "Traveller",
+    description: "Manage traveller-related settings.",
+    href: "crm/traveller",
+    icon: "plane",
+    parentNavbarItemKey: "crm",
+    displayOrder: 1,
+  },
 ];
 
 export const contracts: NavbarItemsFromDB[] = [
