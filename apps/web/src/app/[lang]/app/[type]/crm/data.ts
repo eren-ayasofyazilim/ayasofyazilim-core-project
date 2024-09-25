@@ -225,21 +225,21 @@ const createrefundPointsScheme = {
           enum: ["Home", "Office"],
         },
       },
-      email: {
+    },
+    email: {
+      ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+        .entityInformationTypes.items.properties.organizations.items.properties
+        .contactInformations.items.properties.emails.items,
+
+      properties: {
         ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
           .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items,
-
-        properties: {
-          ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
-            .entityInformationTypes.items.properties.organizations.items
-            .properties.contactInformations.items.properties.emails.items
-            .properties,
-          typeCode: {
-            type: "integer",
-            format: "int32",
-            enum: ["Work", "Personal"],
-          },
+          .properties.contactInformations.items.properties.emails.items
+          .properties,
+        typeCode: {
+          type: "integer",
+          format: "int32",
+          enum: ["Work", "Personal"],
         },
       },
     },
