@@ -230,7 +230,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/templates/refund-fees",
-    displayName: "Refund fees",
+    displayName: "Refund Fees",
     description: "Manage refund fees",
     href: "settings/templates/refund-fees",
     icon: "settings",
@@ -239,7 +239,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/templates/refund-tables",
-    displayName: "Refund tables",
+    displayName: "Refund Tables",
     description: "Manage refund tables",
     href: "settings/templates/refund-tables",
     icon: "settings",
