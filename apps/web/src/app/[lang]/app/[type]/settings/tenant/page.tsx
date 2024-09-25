@@ -7,7 +7,7 @@ export default function Page({
   params: { lang: string; type: string };
 }) {
   permanentRedirect(
-    getBaseLink(`app/${params.type}/management/tenant/home`, true, params.lang),
+    getBaseLink(`app/${params.type}/settings/tenant/home`, true, params.lang),
     RedirectType.push,
   );
 }
