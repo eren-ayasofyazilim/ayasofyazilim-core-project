@@ -211,10 +211,10 @@ export const settings: NavbarItemsFromDB[] = [
     displayOrder: 1,
   },
   {
-    key: "settings/tenant-settings",
+    key: "settings/tenant",
     displayName: "Tenant",
     description: "Manage settings for tenants.",
-    href: "settings/tenant-settings",
+    href: "settings/tenant",
     icon: "settings",
     parentNavbarItemKey: "settings",
     displayOrder: 1,
