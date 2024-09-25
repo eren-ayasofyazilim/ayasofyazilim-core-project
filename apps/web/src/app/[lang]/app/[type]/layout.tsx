@@ -38,13 +38,16 @@ export default async function Layout({
       icon: <LogOut className="mr-2 h-4 w-4" />,
     },
   ];
+
+  const logo = appName === "UNIREFUND" ? unirefund : undefined;
+
   return (
     <div className="flex h-full flex-col bg-white">
       <MainAdminLayout
         appName={appName}
         baseURL={baseURL}
         lang={lang}
-        logo={unirefund}
+        logo={logo}
         navbarItems={navbarFromDB}
         prefix={prefix}
         profileMenu={profileMenuProps}
