@@ -63,6 +63,7 @@ export interface AbpUiNavigationResource {
   Admin: string;
   Saas: string;
   Identity: string;
+  Product: string;
   Parties: string;
   OpenIdDict: string;
   Applications: string;
@@ -307,6 +308,8 @@ function getLanguageData(
       navigationResource?.AuditLogs ||
       data[lang]?.AuditLogs ||
       data.en.AuditLogs,
+    Product:
+      navigationResource?.Product || data[lang]?.Product || data.en.Product,
     VAT: navigationResource?.VAT || data[lang]?.VAT || data.en.VAT,
     ProductGroup:
       navigationResource?.ProductGroup ||
