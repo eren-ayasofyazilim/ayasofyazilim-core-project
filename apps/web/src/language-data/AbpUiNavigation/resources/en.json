@@ -50,6 +50,10 @@
   "TextTemplates": "Text Templates",
   "AdminManagement": "Admin Management",
 
+  "Admin": "Admin",
+  "Saas": "Saas",
+  "Identity": "Identity",
+  "Parties": "Parties",
   "OpenIdDict": "Open Id Dict",
   "Applications": "Applications",
   "Scopes": "Scopes",
