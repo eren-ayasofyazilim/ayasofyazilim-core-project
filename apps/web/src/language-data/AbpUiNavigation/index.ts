@@ -59,6 +59,11 @@ export interface AbpUiNavigationResource {
   AdminManagement: string;
 
   //new
+
+  Admin: string;
+  Saas: string;
+  Identity: string;
+  Parties: string;
   OpenIdDict: string;
   Applications: string;
   Scopes: string;
@@ -258,6 +263,12 @@ function getLanguageData(
       data[lang]?.AdminManagement ||
       data.en.AdminManagement,
 
+    Admin: navigationResource?.Admin || data[lang]?.Admin || data.en.Admin,
+    Saas: navigationResource?.Saas || data[lang]?.Saas || data.en.Saas,
+    Identity:
+      navigationResource?.Identity || data[lang]?.Identity || data.en.Identity,
+    Parties:
+      navigationResource?.Parties || data[lang]?.Parties || data.en.Parties,
     OpenIdDict:
       navigationResource?.OpenIdDict ||
       data[lang]?.OpenIdDict ||
