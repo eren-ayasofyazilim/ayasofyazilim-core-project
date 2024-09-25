@@ -1,5 +1,4 @@
 "use client";
-import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
@@ -10,7 +9,6 @@ import {
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as listSchema,
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto as postSchema,
 } from "@ayasofyazilim/saas/ContractService";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import type {
   ColumnsType,
   TableAction,
@@ -24,7 +22,7 @@ import { createZodObject, getBaseLink } from "src/utils";
 import {
   getRefundTableHeaders,
   postRefundTableHeaders,
-} from "../../actions/refund-tables";
+} from "../refund/action";
 
 export default function Page({ params }: { params: { lang: string } }) {
   const router = useRouter();
@@ -47,11 +45,9 @@ export default function Page({ params }: { params: { lang: string } }) {
       .then((response) => {
         if (response.type === "success") {
           setList(response.data);
-          toast.success(response.message);
           return;
         }
         toast.error(response.message);
-        // setLoading(false);
       })
       .finally(() => {
         setLoading(false);
@@ -118,21 +114,12 @@ export default function Page({ params }: { params: { lang: string } }) {
     },
   };
   return (
-    <div className="">
-      <PageHeader
-        description={languageData["RefundTables.Description"]}
-        isLoading={loading}
-        title={languageData["RefundTables.Title"]}
-      />
-      <Card className="h-full px-4">
-        <DataTable
-          action={action}
-          columnsData={columnsData}
-          data={loading ? [] : list?.items || []}
-          isLoading={loading}
-          tableClassName="h-auto"
-        />
-      </Card>
-    </div>
+    <DataTable
+      action={action}
+      columnsData={columnsData}
+      data={loading ? [] : list?.items || []}
+      isLoading={loading}
+      tableClassName="h-auto"
+    />
   );
 }
