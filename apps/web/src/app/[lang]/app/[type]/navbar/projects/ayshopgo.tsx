@@ -1,5 +1,5 @@
 import type { NavbarItemsFromDB } from "@repo/ui/theme/types";
-import { dashboard } from "../groups";
+import { management } from "../groups";
 
 export const ayshopgoNavbarDataFromDB: NavbarItemsFromDB[] = [
   {
@@ -20,7 +20,7 @@ export const ayshopgoNavbarDataFromDB: NavbarItemsFromDB[] = [
     parentNavbarItemKey: "/",
     displayOrder: 1,
   },
-  ...dashboard,
+  ...management,
   {
     key: "customers",
     displayName: "Customers",
