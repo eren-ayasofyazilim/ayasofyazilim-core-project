@@ -15,8 +15,9 @@ export function getNavbarFromDB(
   languageData: AbpUiNavigationResource,
   appName: string,
 ) {
-  const navbarDataFromDB: NavbarItemsFromDB[] =
-    dbData[appName as keyof typeof dbData];
+  const navbarDataFromDB: NavbarItemsFromDB[] = JSON.parse(
+    JSON.stringify(dbData[appName as keyof typeof dbData]),
+  ) as NavbarItemsFromDB[];
 
   function processItems(items: NavbarItemsFromDB[]) {
     items.forEach((item) => {
