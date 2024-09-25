@@ -4,7 +4,7 @@ import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import { BreadcrumbItemType, NavbarItemsFromDB } from "@repo/ui/theme/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "../../providers/theme";
 import Navbar from "./components/navbar";
 
@@ -95,6 +95,18 @@ export function HeaderSection() {
 
   if (!activeNavItem) return null;
 
+  const [title, setTitle] = useState(activeNavItem.displayName);
+
+  useEffect(() => {
+    const newTitle = document.getElementById("page-title")?.textContent;
+
+    setTitle(
+      newTitle
+        ? activeNavItem.displayName + " - " + newTitle
+        : activeNavItem.displayName,
+    );
+  }, [pathName]);
+
   return (
     <div className="flex flex-col gap-3 px-1">
       <Navbar
@@ -106,7 +118,7 @@ export function HeaderSection() {
         lang={lang}
       />
       <PageHeader
-        title={activeNavItem?.displayName}
+        title={title}
         description={activeNavItem?.description}
         LinkElement={pageBackEnabled ? Link : undefined}
         href={activeNavItem?.href ? "/" + activeNavItem?.href : "#"}
