@@ -1,5 +1,5 @@
 import type { NavbarItemsFromDB } from "@repo/ui/theme/types";
-import { contracts, crm, dashboard, management } from "../groups";
+import { contracts, crm, dashboard, settings } from "../groups";
 
 export const unirefundNavbarDataFromDB: NavbarItemsFromDB[] = [
   {
@@ -21,7 +21,7 @@ export const unirefundNavbarDataFromDB: NavbarItemsFromDB[] = [
     displayOrder: 1,
   },
   ...dashboard,
-  ...management,
+  ...settings,
   ...crm,
   ...contracts,
   {

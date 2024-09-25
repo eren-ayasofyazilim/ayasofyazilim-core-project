@@ -36,7 +36,7 @@ const settingsCovnertor = {
 };
 
 export const dataConfigOfManagement: Record<string, any> = {
-  setting: {
+  product: {
     displayName: "VATSettings",
     default: "vats",
     vats: {
