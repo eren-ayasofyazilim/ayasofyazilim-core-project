@@ -219,6 +219,42 @@ export const settings: NavbarItemsFromDB[] = [
     parentNavbarItemKey: "settings",
     displayOrder: 1,
   },
+  {
+    key: "settings/templates",
+    displayName: "Templates",
+    description: "Manage templates.",
+    href: "settings/templates",
+    icon: "layer",
+    parentNavbarItemKey: "settings",
+    displayOrder: 1,
+  },
+  {
+    key: "settings/templates/refund-fees",
+    displayName: "Refund fees",
+    description: "Manage refund fees",
+    href: "settings/templates/refund-fees",
+    icon: "settings",
+    parentNavbarItemKey: "settings/templates",
+    displayOrder: 1,
+  },
+  {
+    key: "settings/templates/refund-tables",
+    displayName: "Refund tables",
+    description: "Manage refund tables",
+    href: "settings/templates/refund-tables",
+    icon: "settings",
+    parentNavbarItemKey: "settings/templates",
+    displayOrder: 1,
+  },
+  {
+    key: "settings/templates/rebate",
+    displayName: "rebate",
+    description: "Manage rebate",
+    href: "settings/templates/rebate",
+    icon: "settings",
+    parentNavbarItemKey: "settings/templates",
+    displayOrder: 1,
+  },
 ];
 
 export const crm: NavbarItemsFromDB[] = [
