@@ -39,5 +39,12 @@ export default async function Page({
     return <>Not found</>;
   }
 
-  return <Form crmDetailData={crmDetailData} params={params} />;
+  return (
+    <>
+      <Form crmDetailData={crmDetailData} params={params} />
+      <div className="hidden" id="page-title">
+        {crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}
+      </div>
+    </>
+  );
 }
