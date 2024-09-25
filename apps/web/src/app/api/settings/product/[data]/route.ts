@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 import type { NextRequest } from "next/server";
 import { getSettingServiceClient } from "src/lib";
-import type { Clients } from "../../util";
-import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../util";
+import type { Clients } from "../../../util";
+import { commonDELETE, commonGET, commonPOST, commonPUT } from "../../../util";
 
 const clients: Clients = {
   vats: async () => {

@@ -47,7 +47,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         convertors: {
           countryId: {
             data: () => {
-              return fetch(getBaseLink("api/management/country")).then(
+              return fetch(getBaseLink("api/settings/product/country")).then(
                 (_data) => _data.json(),
               );
             },
@@ -136,7 +136,7 @@ export const dataConfigOfManagement: Record<string, any> = {
             data: () => {
               return fetch(
                 getBaseLink(
-                  "api/management/product-groups?maxResultCount=1000",
+                  "api/settings/product/product-groups?maxResultCount=1000",
                 ),
               )
                 .then((data) => data.json())
@@ -152,7 +152,7 @@ export const dataConfigOfManagement: Record<string, any> = {
           vatId: {
             data: () => {
               return fetch(
-                getBaseLink("api/management/vats?maxResultCount=1000"),
+                getBaseLink("api/settings/product/vats?maxResultCount=1000"),
               )
                 .then((data) => data.json())
                 .then(
@@ -166,8 +166,8 @@ export const dataConfigOfManagement: Record<string, any> = {
           },
           countryId: {
             data: () => {
-              return fetch(getBaseLink("api/management/country")).then((data) =>
-                data.json(),
+              return fetch(getBaseLink("api/settings/product/country")).then(
+                (data) => data.json(),
               );
             },
             get: "name",
