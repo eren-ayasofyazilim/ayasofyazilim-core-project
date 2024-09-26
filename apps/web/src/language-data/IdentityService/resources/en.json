@@ -1,4 +1,8 @@
 {
+  "Delete": "Delete",
+  "Edit": "Edit",
+  "Cancel": "Cancel",
+
   "Role": "Role",
   "Roles": "Roles",
   "Role.New": "New Role",
