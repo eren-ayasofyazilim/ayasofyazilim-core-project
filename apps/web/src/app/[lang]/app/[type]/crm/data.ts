@@ -91,41 +91,12 @@ export const localNumber = {
 
 export const organization =
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
-
-export const telephone = {
-  ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
-  properties: {
-    ...$UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto.properties,
-    localNumber,
-    typeCode: {
-      type: "integer",
-      format: "int32",
-      enum: ["Home", "Office", "Mobile", "Fax"],
-    },
-  },
-};
-export const address = {
-  ...$UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
-  properties: {
-    ...$UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto.properties,
-    typeCode: {
-      type: "integer",
-      format: "int32",
-      enum: ["Home", "Office"],
-    },
-  },
-};
-export const email = {
-  ...$UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
-  properties: {
-    ...$UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto.properties,
-    typeCode: {
-      type: "integer",
-      format: "int32",
-      enum: ["Work", "Personal"],
-    },
-  },
-};
+export const telephone =
+  $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
+export const address =
+  $UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
+export const email =
+  $UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
 
 const createMerchantsScheme = {
   type: "object",
@@ -143,47 +114,16 @@ const createMerchantsScheme = {
           .properties.contactInformations.items.properties.telephones.items
           .properties,
         localNumber,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office", "Mobile", "Fax"],
-        },
       },
     },
-    address: {
-      ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+    address:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.addresses.items,
-      properties: {
-        ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.addresses.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office"],
-        },
-      },
-    },
-
-    email: {
-      ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
+    email:
+      $UniRefund_CRMService_Merchants_CreateMerchantDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.emails.items,
-
-      properties: {
-        ...$UniRefund_CRMService_Merchants_CreateMerchantDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Work", "Personal"],
-        },
-      },
-    },
   },
 };
 
@@ -203,46 +143,16 @@ const createrefundPointsScheme = {
           .properties.contactInformations.items.properties.telephones.items
           .properties,
         localNumber,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office", "Mobile", "Fax"],
-        },
       },
     },
-    address: {
-      ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+    address:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.addresses.items,
-      properties: {
-        ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.addresses.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office"],
-        },
-      },
-    },
-    email: {
-      ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
+    email:
+      $UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.emails.items,
-
-      properties: {
-        ...$UniRefund_CRMService_RefundPoints_CreateRefundPointDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Work", "Personal"],
-        },
-      },
-    },
   },
 };
 
@@ -262,46 +172,16 @@ const createCustomsScheme = {
           .properties.contactInformations.items.properties.telephones.items
           .properties,
         localNumber,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office", "Mobile", "Fax"],
-        },
       },
     },
-    address: {
-      ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
+    address:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.addresses.items,
-      properties: {
-        ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.addresses.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office"],
-        },
-      },
-    },
-    email: {
-      ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
+    email:
+      $UniRefund_CRMService_Customss_CreateCustomsDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.emails.items,
-
-      properties: {
-        ...$UniRefund_CRMService_Customss_CreateCustomsDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Work", "Personal"],
-        },
-      },
-    },
   },
 };
 
@@ -321,46 +201,16 @@ const createTaxFreeScheme = {
           .properties.contactInformations.items.properties.telephones.items
           .properties,
         localNumber,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office", "Mobile", "Fax"],
-        },
       },
     },
-    address: {
-      ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+    address:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.addresses.items,
-      properties: {
-        ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.addresses.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office"],
-        },
-      },
-    },
-    email: {
-      ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
+    email:
+      $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.emails.items,
-
-      properties: {
-        ...$UniRefund_CRMService_TaxFrees_CreateTaxFreeDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Work", "Personal"],
-        },
-      },
-    },
   },
 };
 
@@ -380,46 +230,16 @@ const createTaxOfficesScheme = {
           .properties.contactInformations.items.properties.telephones.items
           .properties,
         localNumber,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office", "Mobile", "Fax"],
-        },
       },
     },
-    address: {
-      ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+    address:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.addresses.items,
-      properties: {
-        ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.addresses.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Home", "Office"],
-        },
-      },
-    },
-    email: {
-      ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
+    email:
+      $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
         .entityInformationTypes.items.properties.organizations.items.properties
         .contactInformations.items.properties.emails.items,
-
-      properties: {
-        ...$UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto.properties
-          .entityInformationTypes.items.properties.organizations.items
-          .properties.contactInformations.items.properties.emails.items
-          .properties,
-        typeCode: {
-          type: "integer",
-          format: "int32",
-          enum: ["Work", "Personal"],
-        },
-      },
-    },
   },
 };
 
@@ -441,6 +261,7 @@ export const dataConfigOfCrm: Record<string, DataConfig> = {
             "organizationId",
             "individualId",
             "parentCompanyId",
+            "entityInformationTypeCodeName",
           ],
           schema: $UniRefund_CRMService_Merchants_MerchantProfileDto,
         },
