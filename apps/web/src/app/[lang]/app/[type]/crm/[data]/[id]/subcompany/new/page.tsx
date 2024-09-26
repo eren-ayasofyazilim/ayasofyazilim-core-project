@@ -76,7 +76,8 @@ export default function Page({
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
     const createformData = {
-      customsId: "a3bf0c31-47ef-ba8c-9840-3a14ca207817",
+      taxOfficeId: "a3bf0c31-47ef-ba8c-9840-3a14ca207817",
+      typeCode: 1,
       entityInformationTypes: [
         {
           organizations: [

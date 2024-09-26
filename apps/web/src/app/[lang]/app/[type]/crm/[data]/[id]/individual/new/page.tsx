@@ -30,7 +30,7 @@ export interface CreateIndividualDto {
     ethnicity: string;
     maritalStatusCode: string;
     religiousAffiliationName: string;
-    genderTypeCode: 0 | 1;
+    genderTypeCode: "MALE" | "FEMALE";
   };
 
   telephone: {
@@ -38,7 +38,7 @@ export interface CreateIndividualDto {
     localNumber: string;
     ituCountryCode: string;
     primaryFlag: boolean;
-    typeCode: 0 | 1 | 2 | 3;
+    typeCode: "HOME" | "OFFICE" | "MOBILE" | "FAX";
   };
   address: {
     addressLine: string;
@@ -48,12 +48,12 @@ export interface CreateIndividualDto {
     country: string;
     fullAddress: string;
     primaryFlag: boolean;
-    typeCode: 0 | 1;
+    typeCode: "HOME" | "OFFICE";
   };
   email: {
     emailAddress: string;
     primaryFlag: boolean;
-    typeCode: 0 | 1;
+    typeCode: "WORK" | "PERSONAL";
   };
 }
 
@@ -61,17 +61,8 @@ const createIndividualScheme = {
   type: "object",
   properties: {
     name: $UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
-    personalSummary: {
-      ...$UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
-      properties: {
-        ...$UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto.properties,
-        genderTypeCode: {
-          enum: ["Male", "Female"],
-          type: "integer",
-          format: "int32",
-        },
-      },
-    },
+    personalSummary:
+      $UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
     telephone,
     address,
     email,
