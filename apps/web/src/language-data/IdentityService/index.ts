@@ -72,6 +72,7 @@ export interface IdentityServiceResource {
   "TextTemplate.Description": string;
   Delete: string;
   "Delete.Confirm": string;
+  Edit: string;
   Cancel: string;
 }
 function getLanguageData(
@@ -81,6 +82,7 @@ function getLanguageData(
   const resource = resources.IdentityService?.texts;
   return {
     Cancel: resource?.Cancel || data[lang]?.Cancel || data.en.Cancel,
+    Edit: resource?.Edit || data[lang]?.Edit || data.en.Edit,
     Delete: resource?.Delete || data[lang]?.Delete || data.en.Delete,
     "Delete.Confirm":
       resource?.["Delete.Confirm"] ||

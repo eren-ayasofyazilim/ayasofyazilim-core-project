@@ -316,8 +316,8 @@ export default function Page({
     },
   });
   columnsData.data.actionList?.push({
-    cta: `Edit  `,
-    description: `Edit `,
+    cta: languageData.Edit,
+    description: languageData.Edit,
     type: "Dialog",
     componentType: "Autoform",
     autoFormArgs: autoformEditArgs,
