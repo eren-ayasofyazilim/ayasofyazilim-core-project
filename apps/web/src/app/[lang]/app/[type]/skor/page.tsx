@@ -2,10 +2,10 @@
 
 export default function Page() {
   return (
-    <div style={{ width: "100%", height: "100vh" }}>
+    <div className="h-screen w-full">
       <iframe
+        className="h-full w-full border-0"
         src="http://192.168.1.57:8501"
-        style={{ width: "100%", height: "100%", border: "none" }}
         title="Embedded Page"
       />
     </div>
