@@ -15,6 +15,7 @@ import {
   $UniRefund_SettingService_Vats_VatDetailDto,
 } from "@ayasofyazilim/saas/SettingService";
 import { getBaseLink } from "src/utils";
+import { getCountries } from "../action";
 
 const settingsCovnertor = {
   unitCode: {
@@ -35,6 +36,18 @@ const settingsCovnertor = {
   },
 };
 
+const getCountriesData = async () => {
+  const result = await getCountries({
+    maxResultCount: 500,
+    sorting: "name",
+  });
+
+  if (result.type === "success") {
+    return result.data.items;
+  }
+  throw new Error(result.message || "Failed to fetch countries");
+};
+
 export const dataConfigOfManagement: Record<string, any> = {
   product: {
     displayName: "VATSettings",
@@ -46,11 +59,7 @@ export const dataConfigOfManagement: Record<string, any> = {
         schema: $UniRefund_SettingService_Vats_CreateVatDto,
         convertors: {
           countryId: {
-            data: () => {
-              return fetch(getBaseLink("api/settings/product/country")).then(
-                (_data) => _data.json(),
-              );
-            },
+            data: getCountriesData,
             get: "name",
             post: "id",
             type: "async",
@@ -165,11 +174,7 @@ export const dataConfigOfManagement: Record<string, any> = {
             type: "async",
           },
           countryId: {
-            data: () => {
-              return fetch(getBaseLink("api/settings/product/country")).then(
-                (data) => data.json(),
-              );
-            },
+            data: getCountriesData,
             get: "name",
             post: "id",
             type: "async",

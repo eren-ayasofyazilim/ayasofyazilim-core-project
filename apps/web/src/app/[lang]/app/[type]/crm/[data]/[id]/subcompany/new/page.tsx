@@ -5,40 +5,12 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
-import { getBaseLink } from "src/utils";
-import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
+import { getBaseLink } from "src/utils";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataConfigOfCrm } from "../../../../data";
 import type { CreateOrganizationDto } from "../../../new/page";
-
-interface FormSchema {
-  schema: {
-    properties: {
-      telephone: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-      address: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-      email: {
-        properties: {
-          typeCode: {
-            enum: string[];
-          };
-        };
-      };
-    };
-  };
-}
 
 export default function Page({
   params,
@@ -52,26 +24,42 @@ export default function Page({
   const router = useRouter();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
+  // const [countries, setCountries] =
+  //   useState<UniRefund_LocationService_Countries_CountryDto[]>();
+  // const [cities, setCities] =
+  //   useState<UniRefund_LocationService_Cities_CityDto[]>();
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getCountries({ maxResultCount: 500, sorting: "name" })
+  //     .then((response) => {
+  //       if (response.type === "success") {
+  //         setCountries(response.data.items || []);
+  //       } else if (response.type === "api-error") {
+  //         toast.error(response.message);
+  //       } else {
+  //         toast.error("Fatal error");
+  //       }
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, []);
+
+  // useEffect(() => {
+  //   void getCities({ maxResultCount: 500, sorting: "name" }).then(
+  //     (response) => {
+  //       if (response.type === "success") {
+  //         setCities(response.data.items || []);
+  //       } else if (response.type === "api-error") {
+  //         toast.error(response.message);
+  //       } else {
+  //         toast.error("Fatal error");
+  //       }
+  //     },
+  //   );
+  // }, []);
 
   function formSchemaByData() {
     const config = dataConfigOfCrm.companies.pages[params.data];
-    if (config.createFormSchema) {
-      const schema = config.createFormSchema as FormSchema;
-      schema.schema.properties.telephone.properties.typeCode.enum = [
-        "Home",
-        "Office",
-        "Mobile",
-        "Fax",
-      ];
-      schema.schema.properties.address.properties.typeCode.enum = [
-        "Home",
-        "Office",
-      ];
-      schema.schema.properties.email.properties.typeCode.enum = [
-        "Work",
-        "Personal",
-      ];
-    }
     return createZodObject(
       config.createFormSchema?.schema,
       config.createFormSchema?.formPositions,
@@ -88,6 +76,7 @@ export default function Page({
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
     const createformData = {
+      customsId: "a3bf0c31-47ef-ba8c-9840-3a14ca207817",
       entityInformationTypes: [
         {
           organizations: [
@@ -115,16 +104,16 @@ export default function Page({
         body: JSON.stringify(createformData),
       });
       if (response.ok) {
-        toast.success(`Sub Company added successfully`);
+        toast.success(`Store added successfully`);
         router.push(getBaseLink(`/app/admin/crm/${params.data}/${params.id}`));
       } else {
         const errorData = (await response.json()) as {
           message: string;
         };
-        toast.error(errorData.message || `Failed to add Sub Company`);
+        toast.error(errorData.message || `Failed to add Store`);
       }
     } catch (error) {
-      toast.error(`An error occurred while saving the Sub Company`);
+      toast.error(`An error occurred while saving the Store`);
     }
   };
 
