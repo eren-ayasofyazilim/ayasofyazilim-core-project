@@ -94,12 +94,6 @@ export default function Page({
   function formSchemaByData() {
     const config = dataConfigOfCrm.companies.pages[params.data];
     if (config.createFormSchema) {
-      config.createFormSchema.schema.properties.telephone.properties.typeCode.enum =
-        ["Home", "Office", "Mobile", "Fax"];
-      config.createFormSchema.schema.properties.address.properties.typeCode.enum =
-        ["Home", "Office"];
-      config.createFormSchema.schema.properties.email.properties.typeCode.enum =
-        ["Work", "Personal"];
       config.createFormSchema.schema.properties.address.properties.country = {
         type: "integer",
         format: "int32",
@@ -127,7 +121,8 @@ export default function Page({
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
     const createformData = {
-      customsId: "a3bf0c31-47ef-ba8c-9840-3a14ca207817",
+      taxOfficeId: "a3bf0c31-47ef-ba8c-9840-3a14ca207817",
+      typeCode: 0,
       entityInformationTypes: [
         {
           organizations: [
