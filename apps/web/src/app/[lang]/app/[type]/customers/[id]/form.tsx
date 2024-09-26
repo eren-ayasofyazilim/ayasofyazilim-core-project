@@ -174,8 +174,7 @@ export default function Form({
             values={{
               localNumber: phoneNumber,
               primaryFlag: telephoneInfo.primaryFlag,
-              typeCode:
-                telephone.properties.typeCode.enum[telephoneInfo.typeCode || 0],
+              typeCode: telephoneInfo.typeCode,
             }}
           >
             <AutoFormSubmit className="float-right">
@@ -197,8 +196,7 @@ export default function Form({
               fullAddress: addressInfo?.fullAddress,
               postalCode: addressInfo?.postalCode,
               terriority: addressInfo?.terriority,
-              typeCode:
-                address.properties.typeCode.enum[addressInfo?.typeCode || 0],
+              typeCode: addressInfo?.typeCode,
               primaryFlag: addressInfo?.primaryFlag,
             }}
           >
@@ -223,8 +221,7 @@ export default function Form({
             }}
             values={{
               emailAddress: emailInfo?.emailAddress,
-              typeCode:
-                email.properties.typeCode.enum[emailInfo?.typeCode || 0],
+              typeCode: emailInfo?.typeCode,
               primaryFlag: emailInfo?.primaryFlag,
             }}
           >
