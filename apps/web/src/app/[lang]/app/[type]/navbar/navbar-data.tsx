@@ -2,11 +2,12 @@ import type { NavbarItemsFromDB } from "@repo/ui/theme/types";
 import type { AbpUiNavigationResource } from "src/language-data/AbpUiNavigation";
 import { unirefundNavbarDataFromDB } from "./projects/unirefund";
 import { ayshopgoNavbarDataFromDB } from "./projects/ayshopgo";
+import { tahsiletNavbarDataFromDB } from "./projects/tahsilet";
 
 const dbData = {
   UNIREFUND: unirefundNavbarDataFromDB,
   UPWITHCROWD: unirefundNavbarDataFromDB,
-  TAHSILET: unirefundNavbarDataFromDB,
+  TAHSILET: tahsiletNavbarDataFromDB,
   AYSHOPGO: ayshopgoNavbarDataFromDB,
 };
 

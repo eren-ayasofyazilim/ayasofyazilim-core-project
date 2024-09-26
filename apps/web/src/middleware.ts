@@ -92,10 +92,11 @@ export const middleware = auth((request: NextAuthRequest) => {
       return NextResponse.redirect(
         new URL(`/${locale}/app/admin/home`, hostURL),
       );
-    } else if (
-      APPLICATION_NAME.toLocaleLowerCase() === "tahsilet" ||
-      APPLICATION_NAME.toLocaleLowerCase() === "ayshopgo"
-    ) {
+    } else if (APPLICATION_NAME.toLocaleLowerCase() === "tahsilet") {
+      return NextResponse.redirect(
+        new URL(`/${locale}/app/admin/debtors`, hostURL),
+      );
+    } else if (APPLICATION_NAME.toLocaleLowerCase() === "ayshopgo") {
       return NextResponse.redirect(
         new URL(`/${locale}/app/admin/customers`, hostURL),
       );
