@@ -59,7 +59,6 @@ export default function Form({
   const organizationSchema = createZodObject(organization, [
     "name",
     "taxpayerId",
-    "branchId",
     "customerNumber",
     "legalStatusCode",
   ]);
@@ -158,7 +157,6 @@ export default function Form({
             values={{
               name: organizationInfo?.name,
               taxpayerId: organizationInfo?.taxpayerId,
-              branchId: organizationInfo?.branchId || "",
               customerNumber: organizationInfo?.customerNumber,
               legalStatusCode: organizationInfo?.legalStatusCode,
             }}
