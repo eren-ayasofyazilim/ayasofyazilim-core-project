@@ -1,0 +1,16 @@
+{
+  "new": "Yeni",
+  "Edit": "Düzenle",
+  "Delete": "Sil",
+  "Save": "Kaydet",
+  "Debtors": "Borçlular",
+  "Debtor": "Borç",
+  "Debtor.New": "Yeni Borçlu",
+  "Debtor.Edit": "Borçlu düzenle",
+  "Debtor.Description": "Borçları buradan görüntüleyebilirsiniz",
+  "Debtors.New": "Yeni Borçlu Ekle",
+  "Organization": "Organizasyon",
+  "Email": "Email",
+  "Telephone": "Telefon",
+  "Address": "Adres"
+}

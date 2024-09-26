@@ -1,0 +1,16 @@
+{
+  "new": "New",
+  "Save": "Save",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Debtors": "Debtors",
+  "Debtor": "Debtor",
+  "Debtor.New": "New Debtor",
+  "Debtor.Edit": "Edit Debtor",
+  "Debtor.Description": "You can view the Debtors from here.",
+  "Debtors.New": "Add New Debtor",
+  "Organization": "Organization",
+  "Email": "Email",
+  "Telephone": "Telephone",
+  "Address": "Address"
+}
