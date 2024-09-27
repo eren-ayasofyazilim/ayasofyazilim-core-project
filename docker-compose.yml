@@ -17,7 +17,5 @@ services:
     build:
       context: .
       dockerfile: ./apps/public_web/Dockerfile
-    ports:
-      - 3001:3001
     environment:
       - NODE_ENV=production
