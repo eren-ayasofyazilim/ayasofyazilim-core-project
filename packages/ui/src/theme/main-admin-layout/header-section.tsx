@@ -95,16 +95,28 @@ export function HeaderSection() {
 
   if (!activeNavItem) return null;
 
-  const [title, setTitle] = useState(activeNavItem.displayName);
+  const [pageHeaderProps, setPageHeaderProps] = useState({
+    title: activeNavItem.displayName,
+    description: activeNavItem.description,
+    href: "/" + activeNavItem.href,
+  });
 
   useEffect(() => {
-    const newTitle = document.getElementById("page-title")?.textContent;
+    const newTitle =
+      document.getElementById("page-title")?.textContent ||
+      activeNavItem.displayName;
+    const newDescription =
+      document.getElementById("page-description")?.textContent ||
+      activeNavItem.description;
+    const newHref =
+      document.getElementById("page-back-link")?.textContent ||
+      "/" + activeNavItem.href;
 
-    setTitle(
-      newTitle
-        ? activeNavItem.displayName + " - " + newTitle
-        : activeNavItem.displayName,
-    );
+    setPageHeaderProps({
+      title: newTitle,
+      description: newDescription,
+      href: newHref,
+    });
   }, [pathName]);
 
   return (
@@ -118,10 +130,10 @@ export function HeaderSection() {
         lang={lang}
       />
       <PageHeader
-        title={title}
-        description={activeNavItem?.description}
+        title={pageHeaderProps.title}
+        description={pageHeaderProps.description}
         LinkElement={pageBackEnabled ? Link : undefined}
-        href={activeNavItem?.href ? "/" + activeNavItem?.href : "#"}
+        href={pageHeaderProps.href}
       />
     </div>
   );
