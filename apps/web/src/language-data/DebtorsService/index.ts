@@ -15,7 +15,7 @@ export interface TravellerServiceResource {
   Save: string;
   Debtors: string;
   Debtor: string;
-  "Debtor.Description": string;
+  "Debtors.Description": string;
   "Debtor.New": string;
   "Debtor.Edit": string;
   "Debtors.New": string;
@@ -53,10 +53,10 @@ function getLanguageData(
       resource?.["Debtor.Edit"] ||
       data[lang]?.["Debtor.Edit"] ||
       data.en["Debtor.Edit"],
-    "Debtor.Description":
-      resource?.["Debtor.Description"] ||
-      data[lang]?.["Debtor.Description"] ||
-      data.en["Debtor.Description"],
+    "Debtors.Description":
+      resource?.["Debtors.Description"] ||
+      data[lang]?.["Debtors.Description"] ||
+      data.en["Debtors.Description"],
     "Debtors.New":
       resource?.["Debtors.New"] ||
       data[lang]?.["Debtors.New"] ||
