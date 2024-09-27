@@ -1,8 +1,8 @@
-"use client";
+"use server";
 import { Card, CardContent } from "@/components/ui/card";
-import { getResourceDataClient } from "src/language-data/CRMService";
-import { useLocale } from "src/providers/locale";
+import { getResourceData } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
+import { getCrmDetailData } from "../../page";
 
 interface LayoutProps {
   children: JSX.Element;
@@ -13,17 +13,20 @@ interface LayoutProps {
   };
 }
 
-export default function Layout({ children, params }: LayoutProps) {
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+export default async function Layout({ children, params }: LayoutProps) {
+  const { languageData } = await getResourceData(params.lang);
 
-  const backPage = getBaseLink(
+  const pageBack = getBaseLink(
     `/crm/${params.data}/${params.id}`,
     true,
     params.lang,
     true,
     "admin",
   );
+  const crmDetailData = await getCrmDetailData(params.data, params.id);
+  if (!crmDetailData) {
+    return <>Not found</>;
+  }
   return (
     <>
       <div className="flex h-full w-full flex-row">
@@ -32,13 +35,13 @@ export default function Layout({ children, params }: LayoutProps) {
         </Card>
       </div>
       <div className="hidden" id="page-title">
-        {languageData["Individuals.New"]}
+        {`${languageData["Individuals.New"]} - ${crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}`}
       </div>
       <div className="hidden" id="page-description">
         {languageData["Individuals.New"]}
       </div>
       <div className="hidden" id="page-back-link">
-        {backPage}
+        {pageBack}
       </div>
     </>
   );

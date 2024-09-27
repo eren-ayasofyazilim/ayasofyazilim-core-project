@@ -1,11 +1,12 @@
 "use server";
+import { getResourceData } from "src/language-data/CRMService";
 import {
   getCRMDetailServer,
   getCRMMerchantDetailServer,
 } from "../../actions/action";
 import Form from "./form";
 
-async function getCrmDetailData(data: string, id: string) {
+export async function getCrmDetailData(data: string, id: string) {
   if (data === "merchants") {
     try {
       const response = (await getCRMMerchantDetailServer({ id })).data;
@@ -34,6 +35,7 @@ export default async function Page({
     lang: string;
   };
 }) {
+  const { languageData } = await getResourceData(params.lang);
   const crmDetailData = await getCrmDetailData(params.data, params.id);
   if (!crmDetailData) {
     return <>Not found</>;
@@ -43,7 +45,12 @@ export default async function Page({
     <>
       <Form crmDetailData={crmDetailData} params={params} />
       <div className="hidden" id="page-title">
-        {crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}
+        {`${
+          languageData[
+            (params.data[0].toLocaleUpperCase() +
+              params.data.slice(1)) as keyof typeof languageData
+          ]
+        } - ${crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}`}
       </div>
     </>
   );
