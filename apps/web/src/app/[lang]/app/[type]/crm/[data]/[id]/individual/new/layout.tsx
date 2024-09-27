@@ -1,7 +1,5 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
-import Link from "next/link";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
@@ -19,18 +17,28 @@ export default function Layout({ children, params }: LayoutProps) {
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
+  const backPage = getBaseLink(
+    `/crm/${params.data}/${params.id}`,
+    true,
+    params.lang,
+    true,
+    "admin",
+  );
   return (
     <>
-      <PageHeader
-        LinkElement={Link}
-        description={languageData["Individuals.Description"]}
-        href={getBaseLink(`/app/admin/crm/${params.data}/${params.id}`)}
-        title={languageData["Individuals.Description"]}
-      />
       <div className="flex h-full w-full flex-row">
         <Card className="m-0 w-full overflow-auto border-0 bg-transparent bg-white pt-5 shadow-none">
           <CardContent>{children}</CardContent>
         </Card>
+      </div>
+      <div className="hidden" id="page-title">
+        {languageData["Individuals.New"]}
+      </div>
+      <div className="hidden" id="page-description">
+        {languageData["Individuals.New"]}
+      </div>
+      <div className="hidden" id="page-back-link">
+        {backPage}
       </div>
     </>
   );

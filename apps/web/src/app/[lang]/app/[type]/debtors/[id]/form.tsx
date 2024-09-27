@@ -8,7 +8,6 @@ import type {
   UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import { PageHeader } from "@repo/ayasofyazilim-ui/molecules/page-header";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -16,11 +15,9 @@ import {
   SectionLayout,
   SectionLayoutContent,
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import Link from "next/link";
-import { useLocale } from "src/providers/locale";
-import { getBaseLink } from "src/utils";
-import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/DebtorsService";
+import { useLocale } from "src/providers/locale";
+import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { localNumber } from "../../crm/data";
 import {
   updateDebtorDetailServer,
@@ -132,12 +129,6 @@ export default function Form({
 
   return (
     <div className="h-full overflow-hidden">
-      <PageHeader
-        LinkElement={Link}
-        description={languageData["Debtor.Edit"]}
-        href={getBaseLink(`/app/admin/debtors`)}
-        title={languageData["Debtor.Edit"]}
-      />
       <SectionLayout
         sections={[
           { name: languageData.Organization, id: "organization" },
