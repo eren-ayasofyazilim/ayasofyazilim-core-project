@@ -96,6 +96,32 @@ export interface AbpUiNavigationResource {
   Customers: string;
   Debtors: string;
   Skor: string;
+
+  //desc
+  "Merchants.Description": string;
+  "RefundPoints.Description": string;
+  "Customs.Description": string;
+  "TaxFree.Description": string;
+  "TaxOffices.Description": string;
+  "SubCompany.Description": string;
+  "Individuals.Description": string;
+  "Debtors.Description": string;
+  "Customer.Description": string;
+  "Role.Description": string;
+  "User.Description": string;
+  "ClaimType.Description": string;
+  "SecurityLogs.Description": string;
+  "Organization.Description": string;
+  "Applications.Description": string;
+  "Scopes.Description": string;
+  "Languages.Description": string;
+  "LanguageTexts.Description": string;
+  "Edition.Description": string;
+  "Tenant.Description": string;
+  "AuditLogs.Description": string;
+  "TextTemplates.Description": string;
+  "Traveller.Description": string;
+  "Skor.Description": string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -104,6 +130,10 @@ function getLanguageData(
   const navigationResource = resources.AbpUiNavigation?.texts;
   return {
     Skor: navigationResource?.Skor || data[lang]?.Skor || data.en.Skor,
+    "Skor.Description":
+      navigationResource?.["Skor.Description"] ||
+      data[lang]?.["Skor.Description"] ||
+      data.en["Skor.Description"],
     Debtors:
       navigationResource?.Debtors || data[lang]?.Debtors || data.en.Debtors,
     Customers:
@@ -359,6 +389,121 @@ function getLanguageData(
       data.en.TaxFreeTags,
     Rebate: navigationResource?.Rebate || data[lang]?.Rebate || data.en.Rebate,
     CRM: navigationResource?.CRM || data[lang]?.CRM || data.en.CRM,
+
+    "Merchants.Description":
+      navigationResource?.["Merchants.Description"] ||
+      data[lang]?.["Merchants.Description"] ||
+      data.en["Merchants.Description"],
+
+    "RefundPoints.Description":
+      navigationResource?.["RefundPoints.Description"] ||
+      data[lang]?.["RefundPoints.Description"] ||
+      data.en["RefundPoints.Description"],
+
+    "Customs.Description":
+      navigationResource?.["Customs.Description"] ||
+      data[lang]?.["Customs.Description"] ||
+      data.en["Customs.Description"],
+
+    "TaxFree.Description":
+      navigationResource?.["TaxFree.Description"] ||
+      data[lang]?.["TaxFree.Description"] ||
+      data.en["TaxFree.Description"],
+
+    "TaxOffices.Description":
+      navigationResource?.["TaxOffices.Description"] ||
+      data[lang]?.["TaxOffices.Description"] ||
+      data.en["TaxOffices.Description"],
+
+    "SubCompany.Description":
+      navigationResource?.["SubCompany.Description"] ||
+      data[lang]?.["SubCompany.Description"] ||
+      data.en["SubCompany.Description"],
+
+    "Individuals.Description":
+      navigationResource?.["Individuals.Description"] ||
+      data[lang]?.["Individuals.Description"] ||
+      data.en["Individuals.Description"],
+
+    "Debtors.Description":
+      navigationResource?.["Debtors.Description"] ||
+      data[lang]?.["Debtors.Description"] ||
+      data.en["Debtors.Description"],
+
+    "Customer.Description":
+      navigationResource?.["Customer.Description"] ||
+      data[lang]?.["Customer.Description"] ||
+      data.en["Customer.Description"],
+
+    "Role.Description":
+      navigationResource?.["Role.Description"] ||
+      data[lang]?.["Role.Description"] ||
+      data.en["Role.Description"],
+
+    "User.Description":
+      navigationResource?.["User.Description"] ||
+      data[lang]?.["User.Description"] ||
+      data.en["User.Description"],
+
+    "ClaimType.Description":
+      navigationResource?.["ClaimType.Description"] ||
+      data[lang]?.["ClaimType.Description"] ||
+      data.en["ClaimType.Description"],
+
+    "SecurityLogs.Description":
+      navigationResource?.["SecurityLogs.Description"] ||
+      data[lang]?.["SecurityLogs.Description"] ||
+      data.en["SecurityLogs.Description"],
+
+    "Organization.Description":
+      navigationResource?.["Organization.Description"] ||
+      data[lang]?.["Organization.Description"] ||
+      data.en["Organization.Description"],
+
+    "Applications.Description":
+      navigationResource?.["Applications.Description"] ||
+      data[lang]?.["Applications.Description"] ||
+      data.en["Applications.Description"],
+
+    "Scopes.Description":
+      navigationResource?.["Scopes.Description"] ||
+      data[lang]?.["Scopes.Description"] ||
+      data.en["Scopes.Description"],
+
+    "Languages.Description":
+      navigationResource?.["Languages.Description"] ||
+      data[lang]?.["Languages.Description"] ||
+      data.en["Languages.Description"],
+
+    "LanguageTexts.Description":
+      navigationResource?.["LanguageTexts.Description"] ||
+      data[lang]?.["LanguageTexts.Description"] ||
+      data.en["LanguageTexts.Description"],
+
+    "Edition.Description":
+      navigationResource?.["Edition.Description"] ||
+      data[lang]?.["Edition.Description"] ||
+      data.en["Edition.Description"],
+
+    "Tenant.Description":
+      navigationResource?.["Tenant.Description"] ||
+      data[lang]?.["Tenant.Description"] ||
+      data.en["Tenant.Description"],
+
+    "AuditLogs.Description":
+      navigationResource?.["AuditLogs.Description"] ||
+      data[lang]?.["AuditLogs.Description"] ||
+      data.en["AuditLogs.Description"],
+
+    "TextTemplates.Description":
+      navigationResource?.["TextTemplates.Description"] ||
+      data[lang]?.["TextTemplates.Description"] ||
+      data.en["TextTemplates.Description"],
+
+    "Traveller.Description":
+      navigationResource?.["Traveller.Description"] ||
+      data[lang]?.["Traveller.Description"] ||
+      data.en["Traveller.Description"],
   };
 }
 export async function getResourceData(lang: string) {

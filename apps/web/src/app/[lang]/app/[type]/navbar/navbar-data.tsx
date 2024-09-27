@@ -38,6 +38,10 @@ export function getNavbarFromDB(
         item.key = prefix;
       }
 
+      const desc = `${
+        item.displayName[0].toUpperCase() + item.displayName.slice(1)
+      }.Description`.replaceAll(" ", "");
+
       //İleride displayname'in veritabanından çevrili gelmiş olmasını bekliyoruz.
       item.displayName =
         languageData[
@@ -45,6 +49,10 @@ export function getNavbarFromDB(
             item.displayName[0].toUpperCase() + item.displayName.slice(1)
           ).replaceAll(" ", "") as keyof typeof languageData
         ] || `**${item.displayName}`;
+
+      item.description = languageData[desc as keyof typeof languageData]
+        ? languageData[desc as keyof typeof languageData]
+        : `**${item.description}`;
     });
   }
 

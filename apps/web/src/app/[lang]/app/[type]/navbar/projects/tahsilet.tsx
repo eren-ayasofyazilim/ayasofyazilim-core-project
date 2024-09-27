@@ -33,7 +33,7 @@ export const tahsiletNavbarDataFromDB: NavbarItemsFromDB[] = [
   {
     key: "skor",
     displayName: "Skor",
-    description: "",
+    description: "Skor",
     href: "skor",
     icon: "log",
     parentNavbarItemKey: "/",
