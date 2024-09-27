@@ -40,7 +40,7 @@ export default async function Page({
         {`${languageData.Debtors} - ${crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}`}
       </div>
       <div className="hidden" id="page-description">
-        {languageData["Debtor.Description"]}
+        {languageData["Debtors.Description"]}
       </div>
     </>
   );
