@@ -1,5 +1,6 @@
 "use server";
 
+import { getResourceData } from "src/language-data/DebtorsService";
 import { getDebtorDetailServer } from "../actions/action";
 import Form from "./form";
 
@@ -26,6 +27,8 @@ export default async function Page({
   };
 }) {
   const crmDetailData = await getDebtorDetailData("debtors", params.id);
+  const { languageData } = await getResourceData(params.lang);
+
   if (!crmDetailData) {
     return <>Not found</>;
   }
@@ -34,7 +37,10 @@ export default async function Page({
     <>
       <Form crmDetailData={crmDetailData} params={params} />
       <div className="hidden" id="page-title">
-        {crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}
+        {`${languageData.Debtors} - ${crmDetailData.entityInformations?.[0]?.organizations?.[0]?.name}`}
+      </div>
+      <div className="hidden" id="page-description">
+        {languageData["Debtor.Description"]}
       </div>
     </>
   );
