@@ -163,7 +163,7 @@ function SearchBar({
           <CommandInput placeholder="Type a commond or search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
-            {favourites.length && (
+            {favourites.length > 0 && (
               <CommandGroup heading="Favourites">
                 {favourites.map((item) => (
                   <CustomCommandItem
