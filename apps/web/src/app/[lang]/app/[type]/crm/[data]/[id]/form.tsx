@@ -423,7 +423,7 @@ export default function Form({
                     {
                       cta: languageData.Delete,
                       type: "Dialog",
-                      componentType: "ConfimrationDialog",
+                      componentType: "ConfirmationDialog",
                       title: `${languageData.Delete} ${params.data}`,
                       description: languageData["Delete.Assurance"],
                       cancelCTA: languageData.Cancel,

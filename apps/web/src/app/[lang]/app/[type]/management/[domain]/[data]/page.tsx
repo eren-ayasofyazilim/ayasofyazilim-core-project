@@ -306,7 +306,7 @@ export default function Page({
   columnsData.data.actionList?.push({
     cta: languageData.Delete,
     type: "Dialog",
-    componentType: "ConfimrationDialog",
+    componentType: "ConfirmationDialog",
     title: `${languageData.Delete} ${formData.title}`,
     description: `${languageData["Delete.Confirm"]} ${formData.title}?`,
     cancelCTA: languageData.Cancel,
