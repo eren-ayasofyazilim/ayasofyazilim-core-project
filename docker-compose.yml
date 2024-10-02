@@ -20,5 +20,5 @@ services:
     environment:
       - NODE_ENV=production
     labels: 
-      - traefik.http.services.dummyService.loadbalancer.server.port=3001
+      - traefik.http.services.public_web.loadbalancer.server.port=3001
 
