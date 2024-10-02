@@ -21,4 +21,6 @@ services:
       - NODE_ENV=production
     labels: 
       - traefik.http.services.public_web.loadbalancer.server.port=3001
+    expose:
+      - "3001"
 
