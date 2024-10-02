@@ -22,7 +22,7 @@ services:
     labels: 
       - traefik.http.services.public_web.loadbalancer.server.port=3001
       - traefik.http.routers.public_web.rule=Host(`0.0.0.0`)
-      - traefik.http.routers.public_web.service=whoami
+      - traefik.http.routers.public_web.service=public_web
       - traefik.http.routers.public_web.entrypoints=http
     expose:
       - "3001"
