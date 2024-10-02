@@ -16,17 +16,10 @@ services:
     container_name: public_web
     build:
       context: .
-      dockerfile: ./apps/public_web/Dockerfile
+      dockerfile: ./apps/web/Dockerfile
     environment:
       - NODE_ENV=production
     ports:
       - "3001"
     labels: 
-      - traefik.enable=true
-      - traefik.http.middlewares.gzip.compress=true
-      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
-      - traefik.http.routers.http-0-eos8okgc8ccgskocg8os4gss-public_web.entryPoints=http
-      - traefik.http.routers.https-0-eos8okgc8ccgskocg8os4gss-public_web.entryPoints=https
-      - traefik.http.routers.http-0-eos8okgc8ccgskocg8os4gss-public_web.middlewares=gzip,redirect-to-https
-      - traefik.http.routers.https-0-eos8okgc8ccgskocg8os4gss-public_web.middlewares=gzip
       - 'traefik.http.services.public_web.loadbalancer.server.port=3001'
