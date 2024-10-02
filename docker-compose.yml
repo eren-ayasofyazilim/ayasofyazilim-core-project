@@ -19,6 +19,6 @@ services:
       dockerfile: ./apps/public_web/Dockerfile
     environment:
       - NODE_ENV=production
-    label: 
+    labels: 
       - traefik.http.services.dummyService.loadbalancer.server.port=3001
 
