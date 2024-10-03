@@ -10,6 +10,8 @@ import type {
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
 } from "@ayasofyazilim/saas/CRMService";
+import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import { z } from "zod";
 import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import {
@@ -25,6 +27,8 @@ export default function Page() {
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
   const [selectedMerchant, setSelectedMerchant] = useState<string>("");
+  const [traveller, setTraveller] = useState<object>({});
+  const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
     void getCrmServiceMerchants({}).then((response) => {
@@ -135,7 +139,7 @@ export default function Page() {
                 canGoBack={false}
                 canGoNext={Boolean(selectedMerchant)}
                 className="relative size-full"
-                controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
+                controlsClassName=""
                 title={languageData["Contracts.Create.Step.Merchant"]}
               >
                 <SelectMerchant
@@ -147,22 +151,46 @@ export default function Page() {
               </StepperContent>
 
               <StepperContent
-                canGoNext={false}
-                className="relative flex size-full  overflow-hidden pb-16"
-                controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
-                title={languageData["Contracts.Create.Step.ContractSettings"]}
-              />
-
+                canGoNext={travellerNext}
+                className="size-full  overflow-hidden pb-16"
+                controlsClassName=""
+                title="Traveller Information"
+              >
+                <AutoForm
+                  formSchema={z.object({
+                    nationality: z.string().min(2),
+                    documentNumber: z.string().min(2),
+                    name: z.string().min(2),
+                    lastName: z.string().min(2),
+                    residency: z.string().min(2),
+                    expirationDate: z.string().min(2),
+                    BirthDate: z.string().min(2),
+                  })}
+                  onParsedValuesChange={(values) => {
+                    setTraveller(values);
+                    setTravellerNext(true);
+                  }}
+                  onValuesChange={() => {
+                    // console.log("values changed");
+                    setTravellerNext(false);
+                  }}
+                  values={traveller}
+                />
+              </StepperContent>
               <StepperContent
                 canGoBack
                 canGoNext
                 className="relative flex size-full  overflow-auto rounded-lg border p-4 pb-16"
                 controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
-                title={languageData["Contracts.Create.Step.Documents"]}
+                title="Final Step"
               >
                 <Button
                   className="absolute bottom-4 right-4 z-10"
                   disabled={false}
+                  onClick={() => {
+                    // console.log("submit");
+                    // console.log(selectedMerchant, traveller, merchantDetails);
+                  }}
                   type="button"
                 >
                   {languageData["Contracts.Create.Step.Submit"]}
