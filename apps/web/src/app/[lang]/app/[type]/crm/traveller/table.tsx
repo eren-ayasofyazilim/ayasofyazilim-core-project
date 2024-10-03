@@ -55,13 +55,13 @@ export default function Table({
 
   return (
     <DataTable
-      // action={[
-      //   {
-      //     cta: languageData.NewTraveller,
-      //     type: "NewPage",
-      //     href: getBaseLink("app/admin/crm/traveller/new"),
-      //   },
-      // ]}
+      action={[
+        {
+          cta: languageData.NewTraveller,
+          type: "NewPage",
+          href: getBaseLink("app/admin/crm/traveller/new"),
+        },
+      ]}
       columnsData={{
         type: "Auto",
         data: {
@@ -74,7 +74,7 @@ export default function Table({
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(
-                  getBaseLink(`app/admin/traveller/${originalRow.id}`),
+                  getBaseLink(`app/admin/crm/traveller/${originalRow.id}`),
                 );
               },
             },
