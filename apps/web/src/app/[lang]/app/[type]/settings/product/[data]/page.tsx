@@ -305,7 +305,6 @@ export default function Page({
     cta: languageData.Delete,
     type: "Dialog",
     componentType: "ConfirmationDialog",
-    title: `${languageData.Delete} ${params.data}`,
     description: languageData["Delete.Assurance"],
     cancelCTA: languageData.Cancel,
     variant: "destructive",
