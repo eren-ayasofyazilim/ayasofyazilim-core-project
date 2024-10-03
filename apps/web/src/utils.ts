@@ -144,7 +144,8 @@ export interface TableData {
   createFormSchema?: FormModifier;
   editFormSchema?: FormModifier;
   tableSchema: FormModifier;
-  title?: string;
+  title?: string; //should be removed in future
+  translationKey?: string; // for translation purposes
   filterBy?: string;
   detailedFilters?: ColumnFilter[];
 }
