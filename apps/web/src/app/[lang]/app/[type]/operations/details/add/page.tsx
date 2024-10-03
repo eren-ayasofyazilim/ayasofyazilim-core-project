@@ -23,6 +23,7 @@ import {
   getCrmServiceMerchantsDetailById,
 } from "../../../crm/actions/merchant";
 import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
+// import { createTag } from "../actions";
 
 interface Payment {
   name: string;
@@ -100,6 +101,7 @@ export default function Page() {
   const customColumns = [...columns, salesColumn];
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, "en");
+  const [paymentData, setPaymentData] = useState<Payment[]>(payments);
 
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
@@ -261,22 +263,43 @@ export default function Page() {
                 title="Final Step"
               >
                 <DataTable
-                  data={payments}
                   columnsData={{
                     type: "Custom",
                     data: { columns: customColumns },
                   }}
-                  // onDataUpdate={(data) => {
-                  //   // console.log("Data OnDataUpdate ",data);
-                  // }}
+                  data={payments}
+                  onDataUpdate={(data) => {
+                    // console.log("Data OnDataUpdate ",data);
+                    setPaymentData(data);
+                  }}
                   showView={false}
                 />
+                {paymentData.map((payment) => (
+                  <div key={payment.name}>
+                    <p>
+                      {payment.name} - {payment.tax}%
+                    </p>
+                  </div>
+                ))}
                 <Button
                   className="float-right"
                   disabled={false}
                   onClick={() => {
+                    // get data from:
+                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].taxpayerId;
+                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].branchId;
+                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].countryCode;
+                    // traveller
+                    // - traveller (state)
+                    // tax:
                     // console.log("submit");
-                    // console.log(payments);
+                    // createTag({
+                    //   merchant: {
+                    //     merchantDetails.merchant
+                    //   },
+                    //   traveller:
+                    //   invoices:
+                    // });
                     // console.log(selectedMerchant, traveller, merchantDetails);
                   }}
                   type="button"
