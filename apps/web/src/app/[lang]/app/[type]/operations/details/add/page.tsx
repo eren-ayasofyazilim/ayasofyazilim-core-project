@@ -1,26 +1,60 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
+import type {
+  UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
+  Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
+} from "@ayasofyazilim/saas/CRMService";
 import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import type { MerchantStepFormDataDto } from "../../../contracts/contracts/new-contract/utils";
-import { SelectMerchantStep } from "../../../contracts/contracts/new-contract/components";
+import {
+  getCrmServiceMerchants,
+  getCrmServiceMerchantsDetailById,
+} from "../../../crm/actions/merchant";
+import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
 
 export default function Page() {
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, "en");
 
+  const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
+  const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
+  const [selectedMerchant, setSelectedMerchant] = useState<string>("");
+
+  useEffect(() => {
+    void getCrmServiceMerchants({}).then((response) => {
+      if (response.type === "success") {
+        setMerchantList(response.data);
+      } else if (response.type === "api-error") {
+        toast.error(response.message || "Merchant loading failed");
+      } else {
+        toast.error("Fatal error");
+      }
+    });
+  }, []);
+  const handleMerchantChange = (value: string) => {
+    setSelectedMerchant(value);
+    setMerchantDetails(undefined);
+    void getCrmServiceMerchantsDetailById({
+      id: value,
+    }).then((response) => {
+      if (response.type === "success") {
+        setMerchantDetails(response.data);
+      } else if (response.type === "api-error") {
+        toast.error(response.message || "Merchant loading failed");
+      } else {
+        toast.error("Fatal error");
+      }
+    });
+  };
+
   // const [isSubmitStarted, setIsSubmitStarted] = useState(false);
   const [step, setStep] = useState(0);
-  const [merchantStepFormData, setMerchantStepFormData] =
-    useState<MerchantStepFormDataDto>({
-      merchantId: "",
-      addressId: "",
-    });
 
   // const steps: Step[] = [
   //   {
@@ -99,17 +133,16 @@ export default function Page() {
             >
               <StepperContent
                 canGoBack={false}
-                canGoNext={Boolean(merchantStepFormData.addressId)}
-                className="relative flex size-full overflow-auto"
+                canGoNext={Boolean(selectedMerchant)}
+                className="relative size-full"
                 controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
                 title={languageData["Contracts.Create.Step.Merchant"]}
               >
-                <SelectMerchantStep
+                <SelectMerchant
+                  handleMerchantChange={handleMerchantChange}
                   languageData={languageData}
-                  onParsedValuesChanged={(values) => {
-                    setMerchantStepFormData(values as MerchantStepFormDataDto);
-                  }}
-                  step={step}
+                  merchantDetails={merchantDetails}
+                  merchantList={merchantList}
                 />
               </StepperContent>
 
@@ -118,33 +151,18 @@ export default function Page() {
                 className="relative flex size-full  overflow-hidden pb-16"
                 controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
                 title={languageData["Contracts.Create.Step.ContractSettings"]}
-              >
-                <SelectMerchantStep
-                  languageData={languageData}
-                  onParsedValuesChanged={(values) => {
-                    setMerchantStepFormData(values as MerchantStepFormDataDto);
-                  }}
-                  step={step}
-                />
-              </StepperContent>
+              />
 
               <StepperContent
-                // canGoBack={!isSubmitStarted}
-                canGoNext={false}
+                canGoBack
+                canGoNext
                 className="relative flex size-full  overflow-auto rounded-lg border p-4 pb-16"
                 controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
                 title={languageData["Contracts.Create.Step.Documents"]}
               >
-                <SelectMerchantStep
-                  languageData={languageData}
-                  onParsedValuesChanged={(values) => {
-                    setMerchantStepFormData(values as MerchantStepFormDataDto);
-                  }}
-                  step={step}
-                />
                 <Button
                   className="absolute bottom-4 right-4 z-10"
-                  // disabled={isSubmitStarted}
+                  disabled={false}
                   type="button"
                 >
                   {languageData["Contracts.Create.Step.Submit"]}
