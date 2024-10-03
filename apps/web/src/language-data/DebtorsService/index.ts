@@ -8,7 +8,7 @@ const data: LanguageDataType = {
   en,
 };
 
-export interface TravellerServiceResource {
+export interface DebtorsServiceResource {
   new: string;
   Edit: string;
   Delete: string;
@@ -27,7 +27,7 @@ export interface TravellerServiceResource {
 function getLanguageData(
   resources: ResourceResult,
   lang: string,
-): TravellerServiceResource {
+): DebtorsServiceResource {
   const resource = resources.DebtorsService?.texts;
   const uiResource = resources.AbpUi?.texts;
   return {
