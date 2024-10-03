@@ -23,7 +23,7 @@ import {
   getCrmServiceMerchantsDetailById,
 } from "../../../crm/actions/merchant";
 import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
-// import { createTag } from "../actions";
+import { createTag } from "../actions";
 
 interface Payment {
   name: string;
@@ -107,7 +107,7 @@ export default function Page() {
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
   const [selectedMerchant, setSelectedMerchant] = useState<string>("");
-  const [traveller, setTraveller] = useState<object>({});
+  const [traveller, setTraveller] = useState<Record<string,string>>();
   const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
@@ -286,32 +286,37 @@ export default function Page() {
                   className="float-right"
                   disabled={false}
                   onClick={() => {
-                    // get data from:
-                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].taxpayerId;
-                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].branchId;
-                    // merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0].countryCode;
-                    // traveller
-                    // - traveller (state)
-                    // tax:
-                    // console.log("submit");
-                    // createTag({
-                    //   merchant: {
-                    //     merchantDetails.merchant
-                    //   },
-                    //   traveller:
-                    //   invoices:
-                    // });
-                    // console.log(selectedMerchant, traveller, merchantDetails);
+                    const merchantInfo = merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0];
+                    if (!merchantInfo) return;
+                    const { branchId, taxpayerId, countryCode } = merchantInfo;
+                    if (!branchId || !taxpayerId || !countryCode) return;
+
+                    createTag({
+                      merchant: { branchId, vatNumber:taxpayerId, countryCode },
+                      traveller: {
+                        documentCountryCode: traveller?.nationality || "",
+                        firstName:traveller?.name || "",
+                        lastName: traveller?.lastName || "",
+                        countryOfResidenceCode:traveller?.residency || "",
+                        birthDate:traveller?.BirthDate || "",
+                        documentNumber: traveller?.documentNumber || "",
+                        expirationDate: traveller?.expirationDate || "",
+                      },
+                      // invoices: paymentData.map((payment) => ({
+                      //   taxName: payment.name,
+                      //   taxAmount: (payment.Sales || 0) * (payment.tax / 100),
+                      // })),
+                    });
                   }}
-                  type="button"
+                type="button"
                 >
-                  {languageData["Contracts.Create.Step.Submit"]}
-                </Button>
-              </StepperContent>
-            </Stepper>
-          </Card>
-        </div>
+                {languageData["Contracts.Create.Step.Submit"]}
+              </Button>
+            </StepperContent>
+          </Stepper>
+        </Card>
       </div>
     </div>
+    </div >
   );
 }
