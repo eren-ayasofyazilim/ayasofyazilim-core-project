@@ -8,7 +8,7 @@ const data: LanguageDataType = {
   en,
 };
 
-export interface CRMServiceServiceResource {
+export interface SettingServiceResource {
   new: string;
   Edit: string;
   Delete: string;
@@ -29,7 +29,7 @@ export interface CRMServiceServiceResource {
 function getLanguageData(
   resources: ResourceResult,
   lang: string,
-): CRMServiceServiceResource {
+): SettingServiceResource {
   const resource = resources.CrmService?.texts;
   const uiResource = resources.AbpUi?.texts;
   return {
