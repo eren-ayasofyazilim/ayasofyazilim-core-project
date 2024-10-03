@@ -12,3 +12,17 @@ export async function getTableData<T>(
   });
   return data;
 }
+export async function deleteTableRow<T>(
+  fetchLink: string,
+  row: { id: string },
+) {
+  const data = await GlobalFetch<T>({
+    url: fetchLink,
+    options: {
+      method: "DELETE",
+      body: JSON.stringify(row.id),
+    },
+    showSuccessToast: true,
+  });
+  return data;
+}
