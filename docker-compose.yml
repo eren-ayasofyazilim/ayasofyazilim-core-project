@@ -16,7 +16,7 @@ services:
     container_name: public_web
     build:
       context: .
-      dockerfile: ./apps/web/Dockerfile
+      dockerfile: ./apps/public_web/Dockerfile
     environment:
       - NODE_ENV=production
     ports:
