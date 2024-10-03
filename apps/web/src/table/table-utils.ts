@@ -1,4 +1,4 @@
-import { GlobalFetch } from "./fetch";
+import { GlobalFetch } from "src/fetch";
 
 export async function getTableData<T>(
   fetchLink: string,
