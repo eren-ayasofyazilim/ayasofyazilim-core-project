@@ -107,7 +107,7 @@ export default function Page() {
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
   const [selectedMerchant, setSelectedMerchant] = useState<string>("");
-  const [traveller, setTraveller] = useState<Record<string,string>>();
+  const [traveller, setTraveller] = useState<Record<string, string>>();
   const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
@@ -286,19 +286,25 @@ export default function Page() {
                   className="float-right"
                   disabled={false}
                   onClick={() => {
-                    const merchantInfo = merchantDetails?.merchant?.entityInformations?.[0].organizations?.[0];
+                    const merchantInfo =
+                      merchantDetails?.merchant?.entityInformations?.[0]
+                        .organizations?.[0];
                     if (!merchantInfo) return;
                     const { branchId, taxpayerId, countryCode } = merchantInfo;
                     if (!branchId || !taxpayerId || !countryCode) return;
 
-                    createTag({
-                      merchant: { branchId, vatNumber:taxpayerId, countryCode },
+                    void createTag({
+                      merchant: {
+                        branchId,
+                        vatNumber: taxpayerId,
+                        countryCode,
+                      },
                       traveller: {
                         documentCountryCode: traveller?.nationality || "",
-                        firstName:traveller?.name || "",
+                        firstName: traveller?.name || "",
                         lastName: traveller?.lastName || "",
-                        countryOfResidenceCode:traveller?.residency || "",
-                        birthDate:traveller?.BirthDate || "",
+                        countryOfResidenceCode: traveller?.residency || "",
+                        birthDate: traveller?.BirthDate || "",
                         documentNumber: traveller?.documentNumber || "",
                         expirationDate: traveller?.expirationDate || "",
                       },
@@ -308,15 +314,15 @@ export default function Page() {
                       // })),
                     });
                   }}
-                type="button"
+                  type="button"
                 >
-                {languageData["Contracts.Create.Step.Submit"]}
-              </Button>
-            </StepperContent>
-          </Stepper>
-        </Card>
+                  {languageData["Contracts.Create.Step.Submit"]}
+                </Button>
+              </StepperContent>
+            </Stepper>
+          </Card>
+        </div>
       </div>
     </div>
-    </div >
   );
 }
