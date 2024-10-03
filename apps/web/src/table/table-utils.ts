@@ -1,6 +1,10 @@
-import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type {
+  ColumnsType,
+  TableAction,
+} from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { GlobalFetch } from "src/fetch";
+import type { TableData } from "src/utils";
 
 export async function getTableData<T>(
   fetchLink: string,
@@ -27,6 +31,17 @@ export async function deleteTableRow<T>(
     showSuccessToast: true,
   });
   return data;
+}
+
+export function AUTO_COLUMNS_DATA(formData: TableData): ColumnsType {
+  return {
+    type: "Auto",
+    data: {
+      tableType: formData.tableSchema.schema,
+      excludeList: formData.tableSchema.excludeList || [],
+      actionList: [],
+    },
+  };
 }
 
 export function DELETE_ROW_ACTION(
