@@ -12,6 +12,10 @@ import type {
 } from "@ayasofyazilim/saas/CRMService";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { z } from "zod";
+import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
+import { Input } from "@/components/ui/input";
+import type { CellContext, ColumnDef } from "@tanstack/react-table";
+import { columnsGenerator } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/columnsGenerator";
 import { useLocale } from "src/providers/locale";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import {
@@ -20,7 +24,80 @@ import {
 } from "../../../crm/actions/merchant";
 import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
 
+interface Payment {
+  name: string;
+  tax: number;
+  minimum?: number;
+}
+const payments: Payment[] = [
+  { name: "Income Tax", tax: 15 },
+  { name: "Sales Tax", tax: 8.5, minimum: 100 },
+  { name: "Luxury Tax", tax: 25 },
+];
+
+const tableType = {
+  $schema: "http://json-schema.org/draft-07/schema#",
+  title: "Payment",
+  type: "object",
+  properties: {
+    name: {
+      type: "string",
+      description: "The name of the payment",
+    },
+    tax: {
+      type: "number",
+      description: "The tax rate for the payment",
+    },
+    minimum: {
+      type: "number",
+      description: "The optional minimum amount for the payment",
+    },
+  },
+  required: ["name", "tax"],
+  additionalProperties: false,
+};
+
+function Cell({
+  getValue,
+  row: { index },
+  column: { id },
+  table,
+}: CellContext<Payment, unknown>) {
+  const initialValue = getValue();
+  const [value, setValue] = useState(initialValue);
+
+  const onBlur = () => {
+    table.options.meta?.updateData(index, id, value);
+  };
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  return (
+    <Input
+      onBlur={onBlur}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      type="number"
+      value={value as number}
+    />
+  );
+}
+
+const salesColumn: ColumnDef<Payment> = {
+  accessorKey: "Sales",
+  header: () => <div className="text-center">Sales</div>,
+  cell: (data) => Cell(data),
+};
+
 export default function Page() {
+  const columns = columnsGenerator({
+    tableType,
+    excludeList: [],
+  });
+  const customColumns = [...columns, salesColumn];
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, "en");
 
@@ -179,16 +256,27 @@ export default function Page() {
               </StepperContent>
               <StepperContent
                 canGoBack
-                canGoNext
-                className="relative flex size-full  overflow-auto rounded-lg border p-4 pb-16"
-                controlsClassName="absolute bottom-4 right-4 w-[calc(100% - 2rem)] left-4"
+                canGoNext={false}
+                className="ize-full overflow-auto"
                 title="Final Step"
               >
+                <DataTable
+                  data={payments}
+                  columnsData={{
+                    type: "Custom",
+                    data: { columns: customColumns },
+                  }}
+                  // onDataUpdate={(data) => {
+                  //   // console.log("Data OnDataUpdate ",data);
+                  // }}
+                  showView={false}
+                />
                 <Button
-                  className="absolute bottom-4 right-4 z-10"
+                  className="float-right"
                   disabled={false}
                   onClick={() => {
                     // console.log("submit");
+                    // console.log(payments);
                     // console.log(selectedMerchant, traveller, merchantDetails);
                   }}
                   type="button"
