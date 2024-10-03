@@ -106,7 +106,9 @@ export default function Page() {
               >
                 <SelectMerchantStep
                   languageData={languageData}
-                  onParsedValuesChanged={setMerchantStepFormData}
+                  onParsedValuesChanged={(values) => {
+                    setMerchantStepFormData(values as MerchantStepFormDataDto);
+                  }}
                   step={step}
                 />
               </StepperContent>
@@ -119,7 +121,9 @@ export default function Page() {
               >
                 <SelectMerchantStep
                   languageData={languageData}
-                  onParsedValuesChanged={setMerchantStepFormData}
+                  onParsedValuesChanged={(values) => {
+                    setMerchantStepFormData(values as MerchantStepFormDataDto);
+                  }}
                   step={step}
                 />
               </StepperContent>
@@ -133,7 +137,9 @@ export default function Page() {
               >
                 <SelectMerchantStep
                   languageData={languageData}
-                  onParsedValuesChanged={setMerchantStepFormData}
+                  onParsedValuesChanged={(values) => {
+                    setMerchantStepFormData(values as MerchantStepFormDataDto);
+                  }}
                   step={step}
                 />
                 <Button

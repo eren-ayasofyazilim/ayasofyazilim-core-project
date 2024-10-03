@@ -126,7 +126,9 @@ export default function Page({ params }: { params: { lang: string } }) {
           >
             <SelectMerchantStep
               languageData={languageData}
-              onParsedValuesChanged={setMerchantStepFormData}
+              onParsedValuesChanged={(value) => {
+                setMerchantStepFormData(value as MerchantStepFormDataDto);
+              }}
               step={step}
             />
           </StepperContent>
