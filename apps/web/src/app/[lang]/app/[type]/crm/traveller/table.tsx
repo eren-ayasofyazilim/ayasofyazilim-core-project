@@ -40,11 +40,12 @@ export default function Table({
         skipCount: page * 10,
       });
       if (response.type === "error" || response.type === "api-error") {
-        toast.error(response.status);
+        toast.error(
+          `${response.status}: ${response.message || "Something went wrong."}`,
+        );
         return;
       }
-      const Travellersdata = response.data;
-      setTravellers(Travellersdata);
+      setTravellers(response.data);
     } catch (error) {
       toast.error("An error occurred while fetching travellers.");
     } finally {
