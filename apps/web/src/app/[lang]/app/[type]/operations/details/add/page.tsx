@@ -29,6 +29,7 @@ interface Payment {
   name: string;
   tax: number;
   minimum?: number;
+  Sales?: number;
 }
 const payments: Payment[] = [
   { name: "Income Tax", tax: 15 },
@@ -269,7 +270,6 @@ export default function Page() {
                   }}
                   data={payments}
                   onDataUpdate={(data) => {
-                    // console.log("Data OnDataUpdate ",data);
                     setPaymentData(data);
                   }}
                   showView={false}
@@ -277,7 +277,8 @@ export default function Page() {
                 {paymentData.map((payment) => (
                   <div key={payment.name}>
                     <p>
-                      {payment.name} - {payment.tax}%
+                      {payment.name}/{payment.tax}% ={" "}
+                      {(payment.Sales || 0) * (payment.tax / 100)}
                     </p>
                   </div>
                 ))}
