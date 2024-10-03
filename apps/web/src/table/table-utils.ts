@@ -1,9 +1,11 @@
+import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
   ColumnsType,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { GlobalFetch } from "src/fetch";
+import type { LanguageDataResourceType } from "src/language-data/language-data";
 import type { TableData } from "src/utils";
 
 export async function getTableData<T>(
@@ -77,5 +79,31 @@ export function EDIT_ROW_ON_NEW_PAGE(
     callback: (row: { id: string }) => {
       router.push(`${targetLink}/${row.id}`);
     },
+  };
+}
+
+export function TableAction_CREATE_ROW_ON_NEW_PAGE(
+  languageData: LanguageDataResourceType,
+  formData: TableData,
+  targetLink: string,
+): TableAction {
+  return {
+    cta: languageData[
+      `${formData.translationKey}.New` as keyof typeof languageData
+    ],
+    type: "NewPage",
+    href: targetLink,
+  };
+}
+export function TableAction_EXPORT_CSV<T>(
+  tableData: T,
+  fileName: string,
+): TableAction {
+  return {
+    cta: `Export CSV`,
+    callback: () => {
+      jsonToCsv(tableData, fileName);
+    },
+    type: "Action",
   };
 }
