@@ -19,7 +19,5 @@ services:
       dockerfile: ./apps/public_web/Dockerfile
     environment:
       - NODE_ENV=production
-    ports:
-      - "3001"
     labels: 
       - 'traefik.http.services.public_web.loadbalancer.server.port=3001'
