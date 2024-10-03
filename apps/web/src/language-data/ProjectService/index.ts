@@ -8,7 +8,7 @@ const data: LanguageDataType = {
   en,
 };
 
-export interface ProjectServiceResult {
+export interface ProjectServiceResource {
   Next: string;
   Previous: string;
   Summary: string;
@@ -82,7 +82,7 @@ export interface ProjectServiceResult {
 function getLanguageData(
   resources: ResourceResult,
   lang: string,
-): ProjectServiceResult {
+): ProjectServiceResource {
   const projectResource = resources.ProjectService?.texts;
   const accountResource = resources.AbpAccount?.texts;
   const uiResource = resources.AbpUi?.texts;
