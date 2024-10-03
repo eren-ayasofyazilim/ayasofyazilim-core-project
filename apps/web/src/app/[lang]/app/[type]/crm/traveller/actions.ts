@@ -14,17 +14,18 @@ import { getTravellersServiceClient, structuredError } from "src/lib";
 
 export async function getTravellers(
   body: GetApiTravellerServiceTravellersData,
-) {
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>> {
   try {
     const client = await getTravellersServiceClient();
-    const response =
-      await client.traveller.getApiTravellerServiceTravellers(body);
+    const response = (await client.traveller.getApiTravellerServiceTravellers(
+      body,
+    )) as Volo_Abp_Application_Dtos_PagedResultDto_15;
     return {
       data: response,
       message: "Travellers fetched succesfully",
       status: 200,
       type: "success",
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>;
+    };
   } catch (error) {
     return structuredError(error);
   }
