@@ -21,6 +21,12 @@ import { PhoneNumberUtil } from "google-libphonenumber";
 import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { ContactFormSubPositions } from "@repo/ui/utils/table/form-schemas";
 
+export type PartyNameType =
+  | "merchants"
+  | "refund-points"
+  | "customs"
+  | "tax-free"
+  | "tax-offices";
 export type PartiesResultType =
   | CustomsResponse
   | MerchantResponse
