@@ -6,8 +6,7 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { GlobalFetch } from "utils/globalFetch";
-// import type { LanguageDataResourceType } from "src/language-data/language-data";
+import { GlobalFetch } from "utils/general/globalFetch";
 
 export interface FormModifier {
   actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
@@ -103,12 +102,14 @@ export function EDIT_ROW_ON_NEW_PAGE(
   };
 }
 
-export function TableAction_CREATE_ROW_ON_NEW_PAGE<
-  T extends Record<string, string>,
->(languageData: T, formData: TableData, targetLink: string): TableAction {
+export function TableAction_CREATE_ROW_ON_NEW_PAGE(
+  languageData: unknown,
+  formData: TableData,
+  targetLink: string,
+): TableAction {
   const cta = `${formData.translationKey}.New`;
   return {
-    cta: languageData[cta],
+    cta: (languageData as Record<string, string>)[cta],
     type: "NewPage",
     href: targetLink,
   };
