@@ -10,9 +10,10 @@ import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { getResourceDataClient } from "src/language-data/IdentityService";
 import { useLocale } from "src/providers/locale";
-import type { FormModifier, TableData } from "src/utils";
+import type { FormModifier } from "src/utils";
 import { createZodObject, getBaseLink } from "src/utils";
 import { dataConfig } from "../../data";
 

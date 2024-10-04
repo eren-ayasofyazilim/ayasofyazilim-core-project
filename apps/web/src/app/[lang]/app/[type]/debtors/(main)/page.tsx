@@ -9,8 +9,8 @@ import type {
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { useLocale } from "src/providers/locale";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { getResourceDataClient } from "src/language-data/DebtorsService";
 import { dataDebtors } from "../data";

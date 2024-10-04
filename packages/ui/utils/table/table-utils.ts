@@ -6,7 +6,7 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { GlobalFetch } from "utils/general/globalFetch";
+import { GlobalFetch } from "../general/globalFetch";
 
 export interface FormModifier {
   actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];

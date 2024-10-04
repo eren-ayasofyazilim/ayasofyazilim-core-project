@@ -9,9 +9,9 @@ import AutoForm, {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { UniRefund_LocationService_Cities_CityDto } from "@ayasofyazilim/saas/LocationService";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { getResourceDataClient } from "src/language-data/DebtorsService";
 import { useLocale } from "src/providers/locale";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getCities } from "../../action";
