@@ -2,7 +2,7 @@ import {
   $UniRefund_CRMService_Merchants_CreateMerchantDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
-import type { TableData } from "src/utils";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { localNumber } from "../../crm/data";
 
 interface DataConfig {

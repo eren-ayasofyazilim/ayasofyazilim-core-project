@@ -1,6 +1,6 @@
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 
-interface GlobalFetchType {
+export interface GlobalFetchType {
   url: string;
   options?: RequestInit;
   showSuccessToast?: boolean;
