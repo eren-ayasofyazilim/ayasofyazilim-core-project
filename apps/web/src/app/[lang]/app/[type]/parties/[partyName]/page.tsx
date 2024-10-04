@@ -19,10 +19,10 @@ import { dataConfigOfParties } from "../table-data";
 export default function Page({
   params,
 }: {
-  params: { data: string; lang: string };
+  params: { partyName: string; lang: string };
 }) {
-  const fetchLink = getBaseLink(`/api/parties/${params.data}`);
-  const formData = dataConfigOfParties[params.data];
+  const fetchLink = getBaseLink(`/api/parties/${params.partyName}`);
+  const formData = dataConfigOfParties[params.partyName];
   const [tableData, setTableData] = useState<PartiesResultType>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,10 +58,11 @@ export default function Page({
 
   const columnsData = AUTO_COLUMNS_DATA(formData);
   columnsData.data.actionList?.push(DELETE_ROW_ACTION(languageData, deleteRow));
+
   const action: TableAction[] = [
     TableAction_EXPORT_CSV<PartiesResultType | undefined>(
       tableData,
-      `${params.data}.csv`,
+      `${params.partyName}.csv`,
     ),
   ];
 
