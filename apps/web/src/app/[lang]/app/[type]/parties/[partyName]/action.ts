@@ -27,10 +27,11 @@ export async function getPartyRequests() {
   };
 }
 
-export async function getPartyDetail(partyType: string, id: string) {
+export async function getPartyDetail(partyType: string, partyId: string) {
   const client = await getPartyRequests();
   try {
-    const response = await client[partyType as keyof typeof client].get(id);
+    const response =
+      await client[partyType as keyof typeof client].get(partyId);
     return response;
   } catch (error) {
     return null;
