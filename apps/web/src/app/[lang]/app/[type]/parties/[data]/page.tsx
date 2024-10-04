@@ -6,12 +6,9 @@ import {
   AUTO_COLUMNS_DATA,
   DELETE_ROW_ACTION,
   deleteTableRow,
-  // EDIT_ROW_ON_NEW_PAGE,
   getTableData,
-  // TableAction_CREATE_ROW_ON_NEW_PAGE,
   TableAction_EXPORT_CSV,
 } from "@repo/ui/utils/table/table-utils";
-// import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
@@ -29,7 +26,6 @@ export default function Page({
   const [tableData, setTableData] = useState<PartiesResultType>();
   const [isLoading, setIsLoading] = useState(true);
 
-  // const router = useRouter();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
@@ -62,28 +58,12 @@ export default function Page({
 
   const columnsData = AUTO_COLUMNS_DATA(formData);
   columnsData.data.actionList?.push(DELETE_ROW_ACTION(languageData, deleteRow));
-  // columnsData.data.actionList?.push(
-  //   EDIT_ROW_ON_NEW_PAGE(
-  //     languageData,
-  //     getBaseLink(`app/admin/parties/${params.data}`),
-  //     router,
-  //   ),
-  // );
   const action: TableAction[] = [
     TableAction_EXPORT_CSV<PartiesResultType | undefined>(
       tableData,
       `${params.data}.csv`,
     ),
   ];
-  // if (formData.createFormSchema) {
-  //   action.unshift(
-  //     TableAction_CREATE_ROW_ON_NEW_PAGE(
-  //       languageData,
-  //       formData,
-  //       `/app/admin/parties/${params.data}/new`,
-  //     ),
-  //   );
-  // }
 
   return (
     <Dashboard
