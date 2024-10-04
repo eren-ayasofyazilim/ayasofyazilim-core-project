@@ -4,7 +4,9 @@
   "exports": {
     "./test": "./src/test.tsx",
     "./*": "./src/*/index.tsx",
-    "./upwithcrowd/*": "./src/upwithcrowd/*/index.tsx"
+    "./upwithcrowd/*": "./src/upwithcrowd/*/index.tsx",
+    "./utils/table/*": "./utils/table/*.ts",
+    "./utils/general/*": "./utils/general/*.ts"
   },
   "license": "MIT",
   "scripts": {
