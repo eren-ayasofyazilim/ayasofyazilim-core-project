@@ -1,12 +1,33 @@
 import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
+  ColumnFilter,
   ColumnsType,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { GlobalFetch } from "src/fetch";
-import type { LanguageDataResourceType } from "src/language-data/language-data";
-import type { TableData } from "src/utils";
+import { GlobalFetch } from "utils/globalFetch";
+// import type { LanguageDataResourceType } from "src/language-data/language-data";
+
+export interface FormModifier {
+  actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
+  formPositions?: string[];
+  formSubPositions?: Record<string, string[]>;
+  excludeList?: string[];
+  schema: Record<string, any>;
+  convertors?: Record<string, any>;
+  dependencies?: AutoFormProps["dependencies"];
+}
+
+export interface TableData {
+  createFormSchema?: FormModifier;
+  editFormSchema?: FormModifier;
+  tableSchema: FormModifier;
+  title?: string; //should be removed in future
+  translationKey?: string; // for translation purposes
+  filterBy?: string;
+  detailedFilters?: ColumnFilter[];
+}
 
 export async function getTableData<T>(
   fetchLink: string,
@@ -82,15 +103,12 @@ export function EDIT_ROW_ON_NEW_PAGE(
   };
 }
 
-export function TableAction_CREATE_ROW_ON_NEW_PAGE(
-  languageData: LanguageDataResourceType,
-  formData: TableData,
-  targetLink: string,
-): TableAction {
+export function TableAction_CREATE_ROW_ON_NEW_PAGE<
+  T extends Record<string, string>,
+>(languageData: T, formData: TableData, targetLink: string): TableAction {
+  const cta = `${formData.translationKey}.New`;
   return {
-    cta: languageData[
-      `${formData.translationKey}.New` as keyof typeof languageData
-    ],
+    cta: languageData[cta],
     type: "NewPage",
     href: targetLink,
   };
