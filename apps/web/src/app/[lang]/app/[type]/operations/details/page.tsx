@@ -3,12 +3,14 @@ import type { ColumnsType } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { UniRefund_TagService_Tags_TagDto } from "@ayasofyazilim/saas/TagService";
+import {
+  $UniRefund_TagService_Tags_TagListItemDto,
+  type UniRefund_TagService_Tags_TagDto,
+} from "@ayasofyazilim/saas/TagService";
 import { toast } from "@/components/ui/sonner";
 import { getBaseLink } from "src/utils";
 import type { TaxFreeTag } from "./data";
-import { $schema_details } from "./data";
-import { getTags } from "./action";
+import { getTags } from "./actions";
 
 export default function Page(): JSX.Element {
   const router = useRouter();
@@ -28,8 +30,8 @@ export default function Page(): JSX.Element {
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
-      tableType: $schema_details,
-      excludeList: [],
+      tableType: $UniRefund_TagService_Tags_TagListItemDto,
+      excludeList: ["id"],
       actionList: [
         {
           cta: "Open in new page",
