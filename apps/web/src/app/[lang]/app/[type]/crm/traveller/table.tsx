@@ -1,9 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import type { UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
+import { toast } from "@/components/ui/sonner";
+import type { Volo_Abp_Application_Dtos_PagedResultDto_15 } from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
@@ -27,32 +28,40 @@ export default function Table({
   languageData: TravellerServiceResource;
 }) {
   const router = useRouter();
-  const [travellers, setTravellers] = useState<
-    UniRefund_TravellerService_Travellers_TravellerListProfileDto[]
-  >([]);
-  const [totalCount, setTotalCount] = useState(0);
-  async function fetchData() {
-    const response = await getTravellers();
-    if (response.type === "success") {
-      const { items, totalCount: _totalCount } = response.data;
-      if (typeof items === "undefined") return;
-      setTravellers(items || []);
-      setTotalCount(_totalCount || 0);
+  const [travellers, setTravellers] =
+    useState<Volo_Abp_Application_Dtos_PagedResultDto_15>();
+  const [loading, setLoading] = useState(true);
+
+  async function fetchTravellerData(page: number) {
+    setLoading(true);
+    try {
+      const response = await getTravellers({
+        maxResultCount: 10,
+        skipCount: page * 10,
+      });
+      if (response.type === "error" || response.type === "api-error") {
+        toast.error(
+          `${response.status}: ${response.message || "Something went wrong."}`,
+        );
+        return;
+      }
+      setTravellers(response.data);
+    } catch (error) {
+      toast.error("An error occurred while fetching travellers.");
+    } finally {
+      setLoading(false);
     }
   }
-  useEffect(() => {
-    void fetchData();
-  }, []);
 
   return (
     <DataTable
-      // action={[
-      //   {
-      //     cta: languageData.NewTraveller,
-      //     type: "NewPage",
-      //     href: getBaseLink("app/admin/traveller/new"),
-      //   },
-      // ]}
+      action={[
+        {
+          cta: languageData.NewTraveller,
+          type: "NewPage",
+          href: getBaseLink("app/admin/crm/traveller/new"),
+        },
+      ]}
       columnsData={{
         type: "Auto",
         data: {
@@ -65,18 +74,18 @@ export default function Table({
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(
-                  getBaseLink(`app/admin/traveller/${originalRow.id}`),
+                  getBaseLink(`app/admin/crm/traveller/${originalRow.id}`),
                 );
               },
             },
           ],
         },
       }}
-      rowCount={totalCount}
-      showView={true}
-      data={travellers}
-      // fetchRequest={fetchData}
-      isLoading={false}
+      data={travellers?.items || []}
+      fetchRequest={fetchTravellerData}
+      isLoading={loading}
+      rowCount={travellers?.totalCount}
+      showView
     />
   );
 }

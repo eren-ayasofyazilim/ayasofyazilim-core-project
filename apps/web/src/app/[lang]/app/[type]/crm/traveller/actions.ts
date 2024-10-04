@@ -2,6 +2,7 @@
 
 import type {
   GetApiTravellerServiceTravellersByIdResponse,
+  GetApiTravellerServiceTravellersData,
   PostApiTravellerServiceTravellersResponse,
   PutApiTravellerServiceTravellersByIdData,
   PutApiTravellerServiceTravellersByIdResponse,
@@ -11,13 +12,14 @@ import type {
 import type { ErrorTypes, ServerResponse } from "src/lib";
 import { getTravellersServiceClient, structuredError } from "src/lib";
 
-export async function getTravellers(): Promise<
-  ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>
-> {
+export async function getTravellers(
+  body: GetApiTravellerServiceTravellersData,
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>> {
   try {
     const client = await getTravellersServiceClient();
-    const response =
-      (await client.traveller.getApiTravellerServiceTravellers()) as Volo_Abp_Application_Dtos_PagedResultDto_15;
+    const response = (await client.traveller.getApiTravellerServiceTravellers(
+      body,
+    )) as Volo_Abp_Application_Dtos_PagedResultDto_15;
     return {
       data: response,
       message: "Travellers fetched succesfully",
