@@ -15,7 +15,7 @@ import {
   $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { PhoneNumberUtil } from "google-libphonenumber";
-import type { TableData } from "src/utils";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 
 interface DataConfig {
   displayName: string;

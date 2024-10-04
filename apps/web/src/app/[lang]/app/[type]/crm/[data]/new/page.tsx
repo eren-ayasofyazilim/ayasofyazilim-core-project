@@ -8,9 +8,9 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getCities } from "../../../action";

@@ -10,9 +10,9 @@ import AutoForm, {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type { TableData } from "@repo/ui/utils/table/table-utils";
 import { getResourceDataClient } from "src/language-data/CustomersService";
 import { useLocale } from "src/providers/locale";
-import type { TableData } from "src/utils";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataCustomers } from "../(main)/data";
