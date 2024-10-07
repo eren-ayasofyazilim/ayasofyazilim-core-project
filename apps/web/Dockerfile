@@ -24,6 +24,9 @@ COPY apps/web/postcss.config.js apps/web/postcss.config.js
 # Verify the copied files
 RUN ls -l /app/apps/web
 
+RUN npm install turbo --global
+
+
 # Run Turbo to prune unnecessary packages
 RUN turbo prune --docker
 
