@@ -48,12 +48,18 @@ export default function Form({
         },
       },
     };
-
+    // hide terriority if its not available in tenant (backend is not ready).
+    const formSubPositions = {
+      ...config.createFormSchema.formSubPositions,
+      address: config.createFormSchema.formSubPositions.address.filter(
+        (i) => i !== "country" && i !== "terriority",
+      ),
+    };
     return createZodObject(
       config.createFormSchema.schema,
       config.createFormSchema.formPositions,
       convertors,
-      config.createFormSchema.formSubPositions,
+      formSubPositions,
     );
   }
 
@@ -79,6 +85,8 @@ export default function Form({
                   addresses: [
                     {
                       ...formData.address,
+                      country: formData.address.country || "NULL",
+                      terriority: formData.address.terriority || "NULL",
                       city: getEnumId(citiesEnum, formData.address.city),
                       primaryFlag: true,
                     },
