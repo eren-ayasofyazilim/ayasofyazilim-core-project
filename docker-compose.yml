@@ -9,8 +9,6 @@ services:
   #     dockerfile: ./apps/web/Dockerfile
   #   ports:
   #     - 3000:3000
-  #   environment:
-  #     - NODE_ENV=production
   public_web:
     image: public_web
     container_name: public_web
@@ -19,5 +17,18 @@ services:
       dockerfile: ./apps/public_web/Dockerfile
     environment:
       - NODE_ENV=production
+      - HOSTNAME=localhost
+      - PORT=3000
+      - APPLICATION_NAME=
+      - BASE_URL=
+      - AUTH_URL=
+      - PROJECT_SERVICE_URL=
+      - APP_NAME=MVC
+      - PRIMARY_COLOR=0 100% 43%
+      - AUTH_TRUST_HOST=true
+      - AUTH_SECRET=
+      - NEXTAUTH_SECRET=
+      - TEST_USERNAME=
+      - TEST_PASSWORD=
     labels: 
       - 'traefik.http.services.public_web.loadbalancer.server.port=3001'
