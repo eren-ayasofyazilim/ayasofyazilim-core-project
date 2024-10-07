@@ -14,7 +14,7 @@ services:
     container_name: public_web
     build:
       context: .
-      dockerfile: ./apps/public_web/Dockerfile
+      dockerfile: ./apps/web/Dockerfile
     args: 
       - HOSTNAME=${HOSTNAME:-localhost}
     environment:
