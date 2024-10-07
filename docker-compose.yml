@@ -18,7 +18,7 @@ services:
     environment:
       - NODE_ENV=production
       - HOSTNAME=${HOSTNAME:-localhost}
-      - PORT=${PORT:-3000}
+      - PORT=${PORT:-3001}
       - APPLICATION_NAME=${APPLICATION_NAME:-}
       - BASE_URL=${BASE_URL:-}
       - AUTH_URL=${AUTH_URL:-}
@@ -31,4 +31,4 @@ services:
       - TEST_USERNAME=${TEST_USERNAME:-}
       - TEST_PASSWORD=${TEST_PASSWORD:-}
     labels: 
-      - 'traefik.http.services.public_web.loadbalancer.server.port=3000'
+      - 'traefik.http.services.public_web.loadbalancer.server.port=3001'
