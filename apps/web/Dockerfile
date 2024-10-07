@@ -15,7 +15,10 @@ COPY . .
 # Tailwind
 COPY tailwind.config.js tailwind.config.js
 COPY postcss.config.js postcss.config.js
+RUN ls -l /app
+RUN ls -l 
 COPY apps/web/styles ./apps/web/styles
+
 
 RUN turbo prune web --docker
 
