@@ -1,4 +1,4 @@
-gFROM node:18-bullseye AS base
+FROM node:18-bullseye AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
