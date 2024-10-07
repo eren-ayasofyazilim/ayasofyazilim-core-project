@@ -28,7 +28,7 @@ RUN npm install turbo --global
 
 
 # Run Turbo to prune unnecessary packages
-RUN turbo prune --docker
+RUN turbo prune --docker --verbose
 
 # ----------------------------------------
 # Installer stage: Install dependencies
