@@ -14,8 +14,8 @@ COPY . .
 RUN ls -l /app
 RUN ls -l 
 # Tailwind
-COPY tailwind.config.ts tailwind.config.ts
-COPY postcss.config.js postcss.config.js
+COPY apps/web/tailwind.config.ts tailwind.config.ts
+COPY apps/web/postcss.config.js postcss.config.js
 RUN ls -l /app
 RUN ls -l 
 
@@ -29,9 +29,8 @@ FROM base AS installer
 WORKDIR /app
 
 # tailwind
-COPY tailwind.config.js tailwind.config.js
-COPY postcss.config.js postcss.config.js
-COPY apps/web/styles ./apps/web/styles
+COPY apps/web/tailwind.config.ts tailwind.config.ts
+COPY apps/web/postcss.config.js postcss.config.js
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
