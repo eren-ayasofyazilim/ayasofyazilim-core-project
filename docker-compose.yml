@@ -17,6 +17,19 @@ services:
       dockerfile: ./apps/web/Dockerfile
     args: 
       - HOSTNAME=${HOSTNAME:-localhost}
+      - NODE_ENV=production
+      - PORT=${PORT:-3001}
+      - APPLICATION_NAME=${APPLICATION_NAME:-}
+      - BASE_URL=${BASE_URL:-}
+      - AUTH_URL=${AUTH_URL:-}
+      - PROJECT_SERVICE_URL=${PROJECT_SERVICE_URL:-}
+      - APP_NAME=${APP_NAME:-MVC}
+      - PRIMARY_COLOR=${PRIMARY_COLOR:-0 100% 43%}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST:-true}
+      - AUTH_SECRET=${AUTH_SECRET:-}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-}
+      - TEST_USERNAME=${TEST_USERNAME:-}
+      - TEST_PASSWORD=${TEST_PASSWORD:-}
     environment:
       - NODE_ENV=production
       - HOSTNAME=${HOSTNAME:-localhost}
