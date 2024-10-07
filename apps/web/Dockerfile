@@ -1,4 +1,4 @@
-FROM node:18-bullseye AS base
+gFROM node:18-bullseye AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
@@ -36,6 +36,12 @@ COPY turbo.json turbo.json
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
+
+ARG AUTH_SECRET
+ENV AUTH_SECRET=$AUTH_SECRET
+
+ARG AUTH_TRUST_HOST
+ENV AUTH_TRUST_HOST=$AUTH_TRUST_HOST
 
 RUN pnpm turbo build --filter=web...
 
