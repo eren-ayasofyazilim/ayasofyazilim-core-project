@@ -12,6 +12,8 @@ WORKDIR /app
 RUN npm install turbo --global
 COPY . .
 
+RUN ls -l /app
+RUN ls -l 
 # Tailwind
 COPY tailwind.config.js tailwind.config.js
 COPY postcss.config.js postcss.config.js
