@@ -58,7 +58,7 @@ RUN pnpm turbo build --filter=web...
 FROM base AS runner
 WORKDIR /app
 
-@@ -69,13 +61,14 @@ RUN addgroup --system --gid 1001 nodejs
+RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
