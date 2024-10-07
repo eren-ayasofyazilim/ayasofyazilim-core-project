@@ -5,7 +5,7 @@ import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import type { TableData } from "@repo/ui/utils/table/table-utils";
+import { getEnumId, type TableData } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
@@ -26,8 +26,8 @@ export default function Form({
   languageData,
 }: {
   partyName: PartyNameType;
-  taxOfficesEnum?: { name: string; id: string }[];
-  citiesEnum?: { name: string; id: string }[];
+  taxOfficesEnum: { name: string; id: string }[];
+  citiesEnum: { name: string; id: string }[];
   languageData: CRMServiceServiceResource;
 }) {
   const router = useRouter();
@@ -39,12 +39,12 @@ export default function Form({
       ...config.createFormSchema.convertors,
       taxOfficeId: {
         type: "enum",
-        data: taxOfficesEnum?.map((i) => i.name),
+        data: taxOfficesEnum.map((i) => i.name),
       },
       address: {
         city: {
           type: "enum",
-          data: citiesEnum?.map((i) => i.name),
+          data: citiesEnum.map((i) => i.name),
         },
       },
     };
@@ -65,9 +65,7 @@ export default function Form({
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
     const createformData: PartiesCreateDTOType = {
-      taxOfficeId:
-        taxOfficesEnum?.find((item) => item.name === formData.taxOfficeId)
-          ?.id || "",
+      taxOfficeId: getEnumId(taxOfficesEnum, formData.taxOfficeId),
       typeCode: "HEADQUARTER",
       entityInformationTypes: [
         {
@@ -81,10 +79,7 @@ export default function Form({
                   addresses: [
                     {
                       ...formData.address,
-                      city:
-                        citiesEnum?.find(
-                          (item) => item.name === formData.address.city,
-                        )?.id || "",
+                      city: getEnumId(citiesEnum, formData.address.city),
                       primaryFlag: true,
                     },
                   ],
