@@ -11,6 +11,12 @@ FROM base AS builder
 WORKDIR /app
 RUN npm install turbo --global
 COPY . .
+
+# Tailwind
+COPY tailwind.config.js tailwind.config.js
+COPY postcss.config.js postcss.config.js
+COPY apps/web/styles ./apps/web/styles
+
 RUN turbo prune web --docker
 
 # Add lockfile and package.json's of isolated subworkspace
@@ -18,6 +24,11 @@ FROM base AS installer
 # RUN apk add --no-cache libc6-compat
 # RUN apk update
 WORKDIR /app
+
+# tailwind
+COPY tailwind.config.js tailwind.config.js
+COPY postcss.config.js postcss.config.js
+COPY apps/web/styles ./apps/web/styles
 
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
@@ -42,10 +53,6 @@ ENV AUTH_SECRET=$AUTH_SECRET
 
 ARG AUTH_TRUST_HOST
 ENV AUTH_TRUST_HOST=$AUTH_TRUST_HOST
-
-
-COPY --from=builder --chown=10101 /app/.next ./_next
-COPY --from=builder --chown=10101 /app/public ./public
 
 RUN pnpm turbo build --filter=web...
 
