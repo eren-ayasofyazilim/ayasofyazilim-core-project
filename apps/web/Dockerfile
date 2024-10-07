@@ -43,6 +43,10 @@ ENV AUTH_SECRET=$AUTH_SECRET
 ARG AUTH_TRUST_HOST
 ENV AUTH_TRUST_HOST=$AUTH_TRUST_HOST
 
+
+COPY --from=builder --chown=10101 /app/.next ./_next
+COPY --from=builder --chown=10101 /app/public ./public
+
 RUN pnpm turbo build --filter=web...
 
 FROM base AS runner
