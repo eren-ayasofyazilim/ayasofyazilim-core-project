@@ -30,7 +30,9 @@ export async function getCities(body: GetApiLocationServiceCitiesData) {
   "use server";
   try {
     const client = await getLocationServiceClient();
-    const response = await client.city.getApiLocationServiceCities(body);
+    const response = (await client.city.getApiLocationServiceCities(
+      body,
+    )) as Volo_Abp_Application_Dtos_PagedResultDto_12;
     revalidatePath("/");
     return {
       type: "success",

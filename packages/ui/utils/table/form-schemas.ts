@@ -48,3 +48,9 @@ export const addressSchema = createZodObject(
   UpdateAddressTypeDto,
   ContactFormSubPositions.address,
 );
+
+export type telephoneTypeCodes = "HOME" | "OFFICE" | "MOBILE" | "FAX";
+
+export type addressTypeCodes = "HOME" | "OFFICE";
+
+export type emailTypeCodes = "WORK" | "PERSONAL";
