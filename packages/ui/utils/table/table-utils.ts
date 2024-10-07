@@ -126,3 +126,7 @@ export function TableAction_EXPORT_CSV<T>(
     type: "Action",
   };
 }
+
+export function getEnumId(data: { name: string; id: string }[], value: string) {
+  return data?.find((item) => item.name === value)?.id || "";
+}
