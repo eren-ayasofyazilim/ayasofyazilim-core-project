@@ -18,9 +18,8 @@ COPY . .
 RUN ls -l /app
 
 # Tailwind and CSS configuration
-COPY apps/web/tailwind.config.js apps/web/tailwind.config.js
+COPY apps/web/tailwind.config.ts apps/web/tailwind.config.ts
 COPY apps/web/postcss.config.js apps/web/postcss.config.js
-COPY apps/web/styles apps/web/styles
 
 # Verify the copied files
 RUN ls -l /app/apps/web
