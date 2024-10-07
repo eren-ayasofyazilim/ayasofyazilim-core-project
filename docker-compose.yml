@@ -14,7 +14,7 @@ services:
     container_name: public_web
     build:
       context: .
-      dockerfile: ./apps/web/Dockerfile
+      dockerfile: ./apps/public_web/Dockerfile
     environment:
       - NODE_ENV=production
       - HOSTNAME=${HOSTNAME:-localhost}
@@ -31,4 +31,4 @@ services:
       - TEST_USERNAME=${TEST_USERNAME:-}
       - TEST_PASSWORD=${TEST_PASSWORD:-}
     labels: 
-      - 'traefik.http.services.web.loadbalancer.server.port=3000'
+      - 'traefik.http.services.public_web.loadbalancer.server.port=3000'
