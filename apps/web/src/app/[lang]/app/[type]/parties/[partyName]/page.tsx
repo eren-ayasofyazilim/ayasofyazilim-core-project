@@ -5,6 +5,7 @@ import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import {
   AUTO_COLUMNS_DATA,
   DELETE_ROW_ACTION,
+  TableAction_CREATE_ROW_ON_NEW_PAGE,
   TableAction_EXPORT_CSV,
 } from "@repo/ui/utils/table/table-utils";
 import { useState } from "react";
@@ -62,6 +63,15 @@ export default function Page({
       `${params.partyName}.csv`,
     ),
   ];
+  // if (formData.createFormSchema) {
+  action.unshift(
+    TableAction_CREATE_ROW_ON_NEW_PAGE(
+      languageData,
+      formData,
+      `/app/admin/parties/${params.partyName}/new`,
+    ),
+  );
+  // }
 
   return (
     <Dashboard
