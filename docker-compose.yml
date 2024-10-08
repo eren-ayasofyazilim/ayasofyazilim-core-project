@@ -12,9 +12,12 @@ services:
   public_web:
     image: public_web
     container_name: public_web
+    expose: 
+        - 3001:3001
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
+      
       args: 
         - HOSTNAME=${HOSTNAME:-localhost}
         - NODE_ENV=production
