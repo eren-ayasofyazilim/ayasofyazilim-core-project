@@ -198,8 +198,8 @@ importers:
         specifier: ^0.30.0
         version: 0.30.0
       '@ayasofyazilim/saas':
-        specifier: 0.0.48
-        version: 0.0.48(openapi-types@12.1.3)
+        specifier: 0.0.52
+        version: 0.0.52(openapi-types@12.1.3)
       '@formatjs/intl-localematcher':
         specifier: ^0.5.4
         version: 0.5.4
@@ -835,8 +835,8 @@ importers:
   packages/ui:
     dependencies:
       '@ayasofyazilim/saas':
-        specifier: 0.0.48
-        version: 0.0.48(openapi-types@12.1.3)
+        specifier: 0.0.52
+        version: 0.0.52(openapi-types@12.1.3)
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
@@ -994,8 +994,8 @@ packages:
   '@ayasofyazilim/saas@0.0.11':
     resolution: {integrity: sha512-cVagiPdaQLKt8L7tLX8qt0iYZy74IaiuRqtfGXGk1gS41pEHuVW7AG14dK8ytw/ceqs5r8jcC8gHa4i1kU0FFQ==}
 
-  '@ayasofyazilim/saas@0.0.48':
-    resolution: {integrity: sha512-1QKlVr2vB0+yKq06DG5K8MbaOQGiT2Qsh/ZGN+qbH0JFp8Cj9GtpNjPIDv9kZm2QRG5QLMRHSJBfX+3kjRTD9w==}
+  '@ayasofyazilim/saas@0.0.52':
+    resolution: {integrity: sha512-scPPH6IdPQtb2f5SuFJ9YpHzpn7K1/7S5+Voq9xrK1L9ckk8KNAjVzg3OEbPBZ8ePBZD0GB/57tevrACubjRvg==}
     hasBin: true
 
   '@babel/code-frame@7.24.7':
@@ -9809,7 +9809,7 @@ snapshots:
     dependencies:
       typescript: 5.6.2
 
-  '@ayasofyazilim/saas@0.0.48(openapi-types@12.1.3)':
+  '@ayasofyazilim/saas@0.0.52(openapi-types@12.1.3)':
     dependencies:
       '@apidevtools/swagger-parser': 10.1.0(openapi-types@12.1.3)
       '@hey-api/openapi-ts': 0.45.1(typescript@5.6.2)
