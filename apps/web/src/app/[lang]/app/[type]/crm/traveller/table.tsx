@@ -9,19 +9,6 @@ import type { TravellerServiceResource } from "src/language-data/TravellerServic
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
 
-export interface Payment {
-  id: string;
-  name: string;
-  parentCompanyId: string | null;
-  entityInformationTypeCode: number;
-  entityInformationTypeCodeName: string;
-  organizationId: string | null;
-  individualId: string;
-  countryId: number;
-  nationalityCountryName: string;
-  residenceCountryName: string;
-  travelDocumentNumber: string;
-}
 export default function Table({
   languageData,
 }: {
