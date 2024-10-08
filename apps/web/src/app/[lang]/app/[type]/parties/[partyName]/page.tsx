@@ -5,6 +5,9 @@ import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import {
   AUTO_COLUMNS_DATA,
   DELETE_ROW_ACTION,
+  deleteTableRowServerSide,
+  getTableDataServerSide,
+  TableAction_CREATE_ROW_ON_NEW_PAGE,
   TableAction_EXPORT_CSV,
 } from "@repo/ui/utils/table/table-utils";
 import { useState } from "react";
@@ -19,41 +22,35 @@ export default function Page({
 }: {
   params: { partyName: PartyNameType; lang: string };
 }) {
+  const { resources } = useLocale();
+  const languageData = getResourceDataClient(resources, params.lang);
+
   const formData = dataConfigOfParties[params.partyName];
   const [tableData, setTableData] = useState<PartiesResultType>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
-
   function getData(page: number) {
     setIsLoading(true);
-    getPartyTableData(params.partyName, page, 10)
-      .then((result) => {
-        if (result.data) {
-          setTableData(result.data);
-        }
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
+    void getTableDataServerSide(async () => {
+      return await getPartyTableData(params.partyName, page, 10);
+    }).then((result) => {
+      if (result) {
+        setTableData(result);
+      }
+      setIsLoading(false);
+    });
   }
   function deleteRow(row: { id: string }) {
     setIsLoading(true);
-    deletePartyRow(params.partyName, row.id)
-      .then((result) => {
-        if (result.data) {
-          getData(0);
-        }
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
+    void deleteTableRowServerSide(async () => {
+      return await deletePartyRow(params.partyName, row.id);
+    }).then(() => {
+      getData(0);
+    });
   }
 
   const columnsData = AUTO_COLUMNS_DATA(formData);
+
   columnsData.data.actionList?.push(DELETE_ROW_ACTION(languageData, deleteRow));
 
   const action: TableAction[] = [
@@ -62,6 +59,15 @@ export default function Page({
       `${params.partyName}.csv`,
     ),
   ];
+  // if (formData.createFormSchema) {
+  action.unshift(
+    TableAction_CREATE_ROW_ON_NEW_PAGE(
+      languageData,
+      formData,
+      `/app/admin/parties/${params.partyName}/new`,
+    ),
+  );
+  // }
 
   return (
     <Dashboard
