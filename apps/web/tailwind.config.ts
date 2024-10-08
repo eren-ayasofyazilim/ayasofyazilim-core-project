@@ -35,7 +35,7 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           // DEFAULT: "hsl(var(--primary))",
-          DEFAULT: `hsl(${process.env.PRIMARY_COLOR || "240 100% 50%"})`,
+          DEFAULT: "hsl(var(--primary-color))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -131,6 +131,7 @@ const config: Config = {
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
     addVariablesForColors,
+    setColorFromEnvironment,
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
@@ -168,4 +169,15 @@ function addVariablesForColors({ addBase, theme }: any) {
     ":root": newVars,
   });
 }
+
+function setColorFromEnvironment({ addBase }: { addBase: Function; }) {
+  require("dotenv").config();
+
+  addBase({
+    ":root": {
+      "--primary-color": process.env.PRIMARY_COLOR || "240 100% 50%",
+    },
+  });
+}
+
 export default config;
