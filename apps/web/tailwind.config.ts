@@ -35,7 +35,7 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           // DEFAULT: "hsl(var(--primary))",
-          DEFAULT: "hsl(var(--primary-color))",
+          DEFAULT: "hsl(var(--primary-app-color))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -175,7 +175,7 @@ function setColorFromEnvironment({ addBase }: { addBase: Function; }) {
 
   addBase({
     ":root": {
-      "--primary-color": process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
+      "--primary-app-color": process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
     },
   });
 }
