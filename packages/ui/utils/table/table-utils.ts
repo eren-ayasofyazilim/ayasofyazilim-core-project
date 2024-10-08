@@ -1,3 +1,4 @@
+import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
   ColumnFilter,
@@ -6,8 +7,6 @@ import type {
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { GlobalFetch } from "../general/globalFetch";
-import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 
 export interface FormModifier {
   actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
@@ -144,4 +143,10 @@ export function TableAction_EXPORT_CSV<T>(
 
 export function getEnumId(data: { name: string; id: string }[], value: string) {
   return data?.find((item) => item.name === value)?.id || "";
+}
+export function getEnumName(
+  data: { name: string; id: string }[],
+  value: string,
+) {
+  return data?.find((item) => item.id === value)?.name || "";
 }

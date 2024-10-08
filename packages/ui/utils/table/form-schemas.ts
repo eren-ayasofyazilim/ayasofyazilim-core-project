@@ -49,6 +49,34 @@ export const addressSchema = createZodObject(
   ContactFormSubPositions.address,
 );
 
+export const addressSchemaByData = (
+  countriesEnum: { name: string; id: string }[],
+  citiesEnum: { name: string; id: string }[],
+  hide: string[],
+) => {
+  const convertors = {
+    country: {
+      type: "enum",
+      data: countriesEnum.map((i) => i.name),
+    },
+    city: {
+      type: "enum",
+      data: citiesEnum.map((i) => i.name),
+    },
+  };
+  const subPositions = AddressSubPosition.filter((i) => !hide.includes(i));
+  const schema = createZodObject(
+    UpdateAddressTypeDto,
+    subPositions,
+    convertors,
+  );
+  return {
+    subPositions,
+    convertors,
+    schema,
+  };
+};
+
 export type telephoneTypeCodes = "HOME" | "OFFICE" | "MOBILE" | "FAX";
 
 export type addressTypeCodes = "HOME" | "OFFICE";

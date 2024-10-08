@@ -12,7 +12,7 @@ import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import type {
-  CreateOrganizationDto,
+  CreatePartiesDto,
   PartiesCreateDTOType,
   PartyNameType,
 } from "../../table-data";
@@ -63,7 +63,7 @@ export default function Form({
     );
   }
 
-  const handleSave = async (formData: CreateOrganizationDto) => {
+  const handleSave = async (formData: CreatePartiesDto) => {
     const isValid = isPhoneValid(formData.telephone.localNumber);
     if (!isValid) {
       return;
@@ -142,7 +142,7 @@ export default function Form({
       formClassName="pb-4"
       formSchema={formSchemaByData()}
       onSubmit={(val) => {
-        void handleSave(val as CreateOrganizationDto);
+        void handleSave(val as CreatePartiesDto);
       }}
       values={{
         organization: {
