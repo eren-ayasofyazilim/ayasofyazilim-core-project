@@ -54,7 +54,12 @@ export default function Table({
         data: {
           tableType:
             $UniRefund_TravellerService_Travellers_TravellerListProfileDto,
-          excludeList: ["id", "userAccountId"],
+          excludeList: [
+            "id",
+            "userAccountId",
+            "residenceCountryCode2",
+            "nationalityCountryCode2",
+          ],
           actionList: [
             {
               cta: languageData.Edit,
