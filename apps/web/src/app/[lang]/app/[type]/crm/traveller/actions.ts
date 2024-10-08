@@ -3,10 +3,10 @@
 import type {
   GetApiTravellerServiceTravellersByIdResponse,
   GetApiTravellerServiceTravellersData,
-  PostApiTravellerServiceTravellersResponse,
+  PostApiTravellerServiceTravellersWithComponentsData,
   PutApiTravellerServiceTravellersByIdData,
   PutApiTravellerServiceTravellersByIdResponse,
-  UniRefund_TravellerService_Travellers_CreateTravellerDto,
+  UniRefund_TravellerService_Travellers_CreateTravellerResponseDto,
   Volo_Abp_Application_Dtos_PagedResultDto_15,
 } from "@ayasofyazilim/saas/TravellerService";
 import type { ErrorTypes, ServerResponse } from "src/lib";
@@ -31,16 +31,18 @@ export async function getTravellers(
   }
 }
 
-export async function createTraveller(
-  formdata: UniRefund_TravellerService_Travellers_CreateTravellerDto,
+export async function createTravellerWithComponents(
+  body: PostApiTravellerServiceTravellersWithComponentsData,
 ): Promise<
-  ServerResponse<PostApiTravellerServiceTravellersResponse> | ErrorTypes
+  | ServerResponse<UniRefund_TravellerService_Travellers_CreateTravellerResponseDto>
+  | ErrorTypes
 > {
   try {
     const client = await getTravellersServiceClient();
-    const response = await client.traveller.postApiTravellerServiceTravellers({
-      requestBody: formdata,
-    });
+    const response =
+      await client.traveller.postApiTravellerServiceTravellersWithComponents(
+        body,
+      );
     return {
       type: "success",
       data: response,
