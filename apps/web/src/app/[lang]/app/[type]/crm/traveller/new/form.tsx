@@ -141,7 +141,7 @@ export default function Form({
   return (
     <Card className="h-full w-full flex-1 overflow-auto p-5">
       <AutoForm
-        className="grid grid-flow-row  gap-4 lg:grid-cols-3 lg:grid-rows-1"
+        className="grid grid-flow-row  gap-4 space-y-0 lg:grid-cols-3 lg:grid-rows-1"
         fieldConfig={{
           telephone: {
             localNumber: {
@@ -158,6 +158,12 @@ export default function Form({
                 type: "email",
               },
             },
+          },
+          address: {
+            className: "row-span-2",
+          },
+          personalIdentificationCommonDatas: {
+            className: "row-span-2",
           },
         }}
         formSchema={formSchemaByData()}
