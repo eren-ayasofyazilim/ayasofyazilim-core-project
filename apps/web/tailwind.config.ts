@@ -33,7 +33,7 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           // DEFAULT: "hsl(var(--primary))",
-          DEFAULT: `hsl(${process.env.PRIMARY_COLOR})`,
+          DEFAULT: `hsl(${process.env.PRIMARY_COLOR || "240 100% 50%"})`,
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
