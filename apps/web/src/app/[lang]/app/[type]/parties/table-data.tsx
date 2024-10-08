@@ -112,23 +112,23 @@ export type PartiesCreateType =
 
 const CommonOrganizationFields = ["name", "taxpayerId", "branchId"];
 const OrganizationFields = ["customerNumber", "legalStatusCode"];
-const MerchantsFormSubPositions = {
+export const MerchantsFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
-const RefundPointsFormSubPositions = {
+export const RefundPointsFormSubPositions = {
   organization: [...CommonOrganizationFields],
   ...ContactFormSubPositions,
 };
-const CustomsFormSubPositions = {
+export const CustomsFormSubPositions = {
   organization: [...CommonOrganizationFields],
   ...ContactFormSubPositions,
 };
-const TaxFreeFormSubPositions = {
+export const TaxFreeFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
-const TaxOfficesFormSubPositions = {
+export const TaxOfficesFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
