@@ -7,6 +7,7 @@ import type {
 import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { GlobalFetch } from "../general/globalFetch";
+import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 
 export interface FormModifier {
   actionList?: (controlledFetch: unknown, getRoles: unknown) => TableAction[];
@@ -28,31 +29,45 @@ export interface TableData {
   detailedFilters?: ColumnFilter[];
 }
 
-export async function getTableData<T>(
-  fetchLink: string,
-  page: number,
-  filter?: string,
+export async function getTableDataServerSide<T>(
+  fetchFunction: () => Promise<{
+    type: string;
+    data: T | null;
+    status: number;
+    message: string;
+  }>,
 ) {
-  const url = `${fetchLink}?page=${page}&filter=${filter}`;
-  const data = await GlobalFetch<T>({
-    url,
-    showSuccessToast: false,
-  });
-  return data;
+  try {
+    const result = await fetchFunction();
+    if (result.type !== "success") {
+      toast.error(result.message);
+    }
+    return result.data;
+  } catch {
+    toast.error("Fetch error");
+    return null;
+  }
 }
-export async function deleteTableRow<T>(
-  fetchLink: string,
-  row: { id: string },
+export async function deleteTableRowServerSide<T>(
+  deleteFunction: () => Promise<{
+    type: string;
+    data: T | null;
+    status: number;
+    message: string;
+  }>,
 ) {
-  const data = await GlobalFetch<T>({
-    url: fetchLink,
-    options: {
-      method: "DELETE",
-      body: JSON.stringify(row.id),
-    },
-    showSuccessToast: true,
-  });
-  return data;
+  try {
+    const result = await deleteFunction();
+    if (result.type !== "success") {
+      toast.error(result.message);
+    } else {
+      toast.success("Data deleted successfully");
+    }
+    return result.data;
+  } catch {
+    toast.error("Fetch error");
+    return null;
+  }
 }
 
 export function AUTO_COLUMNS_DATA(formData: TableData): ColumnsType {
