@@ -44,7 +44,7 @@ export default function Table({
     <DataTable
       action={[
         {
-          cta: languageData.NewTraveller,
+          cta: languageData["Traveller.New"],
           type: "NewPage",
           href: getBaseLink("app/admin/crm/traveller/new"),
         },
@@ -62,7 +62,7 @@ export default function Table({
           ],
           actionList: [
             {
-              cta: languageData.Edit,
+              cta: languageData["Traveller.Edit"],
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(

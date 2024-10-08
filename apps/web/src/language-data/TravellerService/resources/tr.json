@@ -1,11 +1,11 @@
 {
   "Traveller": "Yolcu",
-  "TravellerDetail": "Yolcu Detayı",
-  "NewTraveller": "Yeni Yolcu",
-  "NewTravellerDescription": "Yeni yolcu ekleyin.",
-  "TravellerDescription": "Buradan yolcuları görüntüleyebilirsiniz.",
-  "PersonalInformation": "Kisisel Bilgiler",
-  "EmailInformation": "Email Bilgileri",
-  "AddressInformation": "Adres Bilgileri",
-  "TelephoneInformation": "Telefon Bilgileri"
+  "Traveller.Description": "Yolcu Detayı  ",
+  "Traveller.Delete.Succes": "Yolcu başarılıyla silindi",
+  "Traveller.Delete.Error": "Yolcu silinirken bir hata oluştu",
+  "Traveller.New.Succes": "Yolcu basarılıyla eklendi",
+  "Traveller.New.Error": "Yolcu eklenirken bir hata oluştu",
+  "Traveller.New": "Yeni Yolcu Ekle",
+  "Traveller.Edit": "Düzenle",
+  "Traveller.Save": "Kaydet"
 }

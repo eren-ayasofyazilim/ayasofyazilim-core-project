@@ -10,60 +10,55 @@ const data: LanguageDataType = {
 
 export interface TravellerServiceResource {
   Traveller: string;
-  TravellerDetail: string;
-  TravellerDescription: string;
-  Save: string;
-  PersonalInformation: string;
-  EmailInformation: string;
-  AddressInformation: string;
-  TelephoneInformation: string;
-  NewTraveller: string;
-  NewTravellerDescription: string;
-  Edit: string;
+  "Traveller.Description": string;
+  "Traveller.Delete.Succes": string;
+  "Traveller.Delete.Error": string;
+  "Traveller.New": string;
+  "Traveller.Edit": string;
+  "Traveller.Save": string;
+  "Traveller.New.Succes": string;
+  "Traveller.New.Error": string;
 }
 function getLanguageData(
   resources: ResourceResult,
   lang: string,
 ): TravellerServiceResource {
   const resource = resources.TravellerService?.texts;
-  const uiResource = resources.AbpUi?.texts;
   return {
     Traveller:
       resource?.Traveller || data[lang]?.Traveller || data.en.Traveller,
-    TravellerDetail:
-      resource?.TravellerDetail ||
-      data[lang]?.TravellerDetail ||
-      data.en.TravellerDetail,
-    NewTraveller:
-      resource?.NewTraveller ||
-      data[lang]?.NewTraveller ||
-      data.en.NewTraveller,
-    TravellerDescription:
-      resource?.TravellerDescription ||
-      data[lang]?.TravellerDescription ||
-      data.en.TravellerDescription,
-    NewTravellerDescription:
-      resource?.NewTravellerDescription ||
-      data[lang]?.NewTravellerDescription ||
-      data.en.NewTravellerDescription,
-    PersonalInformation:
-      resource?.PersonalInformation ||
-      data[lang]?.PersonalInformation ||
-      data.en.PersonalInformation,
-    EmailInformation:
-      resource?.EmailInformation ||
-      data[lang]?.EmailInformation ||
-      data.en.EmailInformation,
-    AddressInformation:
-      resource?.AddressInformation ||
-      data[lang]?.AddressInformation ||
-      data.en.AddressInformation,
-    TelephoneInformation:
-      resource?.TelephoneInformation ||
-      data[lang]?.TelephoneInformation ||
-      data.en.TelephoneInformation,
-    Save: uiResource?.Save || data[lang]?.Save || data.en.Save,
-    Edit: uiResource?.Edit || data[lang]?.Edit || data.en.Edit,
+    "Traveller.Description":
+      resource?.["Traveller.Description"] ||
+      data[lang]?.["Traveller.Description"] ||
+      data.en["Traveller.Description"],
+    "Traveller.Delete.Succes":
+      resource?.["Traveller.Delete.Succes"] ||
+      data[lang]?.["Traveller.Delete.Succes"] ||
+      data.en["Traveller.Delete.Succes"],
+    "Traveller.Delete.Error":
+      resource?.["Traveller.Delete.Error"] ||
+      data[lang]?.["Traveller.Delete.Error"] ||
+      data.en["Traveller.Delete.Error"],
+    "Traveller.New":
+      resource?.["Traveller.New"] ||
+      data[lang]?.["Traveller.New"] ||
+      data.en["Traveller.New"],
+    "Traveller.Edit":
+      resource?.["Traveller.Edit"] ||
+      data[lang]?.["Traveller.Edit"] ||
+      data.en["Traveller.Edit"],
+    "Traveller.Save":
+      resource?.["Traveller.Save"] ||
+      data[lang]?.["Traveller.Save"] ||
+      data.en["Traveller.Save"],
+    "Traveller.New.Succes":
+      resource?.["Traveller.New.Succes"] ||
+      data[lang]?.["Traveller.New.Succes"] ||
+      data.en["Traveller.New.Succes"],
+    "Traveller.New.Error":
+      resource?.["Traveller.New.Error"] ||
+      data[lang]?.["Traveller.New.Error"] ||
+      data.en["Traveller.New.Error"],
   };
 }
 export async function getResourceData(lang: string) {

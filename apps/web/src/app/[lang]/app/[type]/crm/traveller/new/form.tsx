@@ -121,9 +121,9 @@ export default function Form({
         requestBody: createformData,
       });
       if (response.type === "error" || response.type === "api-error") {
-        toast.error(response.message || `Failed to add Traveller`);
+        toast.error(response.message || languageData["Traveller.New.Error"]);
       } else {
-        toast.success(`Traveller added successfully`);
+        toast.success(languageData["Traveller.New.Succes"]);
         router.push(getBaseLink(`/app/admin/crm/traveller`));
       }
     } catch (error) {
@@ -172,7 +172,7 @@ export default function Form({
         }}
       >
         <AutoFormSubmit className="float-right">
-          {languageData.Save}
+          {languageData["Traveller.Save"]}
         </AutoFormSubmit>
       </AutoForm>
     </Card>

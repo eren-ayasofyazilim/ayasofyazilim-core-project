@@ -1,11 +1,11 @@
 {
   "Traveller": "Traveller",
-  "TravellerDetail": "Traveller Detail",
-  "NewTraveller": "New Traveller",
-  "NewTravellerDescription": "Add new traveller.",
-  "TravellerDescription": "You can view the passengers from here.",
-  "PersonalInformation": "Personal Information",
-  "EmailInformation": "Email Information",
-  "AddressInformation": "Address Information",
-  "TelephoneInformation": "Telephone Information"
+  "Traveller.Description": "Traveller Details",
+  "Traveller.Delete.Succes": "Traveller deleted successfully",
+  "Traveller.Delete.Error": "Traveller could not be deleted",
+  "Traveller.New.Succes": "Traveller created successfully",
+  "Traveller.New.Error": "Failed to add Traveller",
+  "Traveller.New": "New Traveller",
+  "Traveller.Edit": "Edit",
+  "Traveller.Save": "Save"
 }
