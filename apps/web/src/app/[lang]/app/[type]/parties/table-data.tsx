@@ -2,13 +2,13 @@ import type {
   UniRefund_CRMService_Customss_CreateCustomsDto,
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
   UniRefund_CRMService_Merchants_CreateMerchantDto,
+  UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto,
-  UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
   Volo_Abp_Application_Dtos_PagedResultDto_110,
   Volo_Abp_Application_Dtos_PagedResultDto_13,
   Volo_Abp_Application_Dtos_PagedResultDto_16,
@@ -21,11 +21,11 @@ import {
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
   $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
-  $UniRefund_CRMService_Customss_CreateCustomsDto as CreateCustoms,
-  $UniRefund_CRMService_Merchants_CreateMerchantDto as CreateMerchant,
-  $UniRefund_CRMService_RefundPoints_CreateRefundPointDto as CreateRefundPoint,
-  $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto as CreateTaxFree,
-  $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto as CreateTaxOffice,
+  $UniRefund_CRMService_Customss_CreateCustomsDto as CreateCustomsSchema,
+  $UniRefund_CRMService_Merchants_CreateMerchantDto as CreateMerchantSchema,
+  $UniRefund_CRMService_RefundPoints_CreateRefundPointDto as CreateRefundPointSchema,
+  $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto as CreateTaxFreeSchema,
+  $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto as CreateTaxOfficeSchema,
 } from "@ayasofyazilim/saas/CRMService";
 import type {
   addressTypeCodes,
@@ -104,11 +104,11 @@ export interface CreatePartiesDto {
 }
 
 export type PartiesCreateType =
-  | typeof CreateMerchant
-  | typeof CreateRefundPoint
-  | typeof CreateCustoms
-  | typeof CreateTaxFree
-  | typeof CreateTaxOffice;
+  | typeof CreateMerchantSchema
+  | typeof CreateRefundPointSchema
+  | typeof CreateCustomsSchema
+  | typeof CreateTaxFreeSchema
+  | typeof CreateTaxOfficeSchema;
 
 const CommonOrganizationFields = ["name", "taxpayerId", "branchId"];
 const OrganizationFields = ["customerNumber", "legalStatusCode"];
@@ -186,7 +186,7 @@ export const dataConfigOfParties = {
   merchants: {
     translationKey: "Merchants",
     createFormSchema: {
-      schema: createScheme(CreateMerchant),
+      schema: createScheme(CreateMerchantSchema),
       formPositions: [
         "organization",
         "telephone",
@@ -212,7 +212,7 @@ export const dataConfigOfParties = {
   "refund-points": {
     translationKey: "RefundPoints",
     createFormSchema: {
-      schema: createScheme(CreateRefundPoint),
+      schema: createScheme(CreateRefundPointSchema),
       formPositions: ["organization", "telephone", "address", "email"],
       formSubPositions: RefundPointsFormSubPositions,
       convertors: {},
@@ -230,7 +230,7 @@ export const dataConfigOfParties = {
   customs: {
     translationKey: "Customs",
     createFormSchema: {
-      schema: createScheme(CreateCustoms),
+      schema: createScheme(CreateCustomsSchema),
       formPositions: ["organization", "telephone", "address", "email"],
       formSubPositions: CustomsFormSubPositions,
       convertors: {},
@@ -243,7 +243,7 @@ export const dataConfigOfParties = {
   "tax-free": {
     translationKey: "TaxFree",
     createFormSchema: {
-      schema: createScheme(CreateTaxFree),
+      schema: createScheme(CreateTaxFreeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
       formSubPositions: TaxFreeFormSubPositions,
       convertors: {},
@@ -256,7 +256,7 @@ export const dataConfigOfParties = {
   "tax-offices": {
     translationKey: "TaxOffices",
     createFormSchema: {
-      schema: createScheme(CreateTaxOffice),
+      schema: createScheme(CreateTaxOfficeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
       formSubPositions: TaxOfficesFormSubPositions,
       convertors: {},
