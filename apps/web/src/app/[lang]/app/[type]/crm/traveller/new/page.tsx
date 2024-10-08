@@ -11,24 +11,23 @@ export default async function Page({
 }) {
   const { languageData } = await getResourceData(params.lang);
 
-  const countries = (
-    await getCountries({
-      maxResultCount: 500,
-      sorting: "name",
-    })
-  ).data;
+  const countries = await getCountries({
+    maxResultCount: 500,
+    sorting: "name",
+  });
 
+  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
+  if (cities.type !== "success" || countries.type !== "success") {
+    return <>Not found</>;
+  }
   const countriesEnum =
-    countries?.items?.map((item) => ({
+    countries.data.items?.map((item) => ({
       name: item.name || "",
       code2: item.code2 || "",
     })) || [];
 
-  const cities = (await getCities({ maxResultCount: 500, sorting: "name" }))
-    .data;
-
   const citiesEnum =
-    cities?.items?.map((item) => ({
+    cities.data.items?.map((item) => ({
       name: item.name || "",
       id: item.id || "",
     })) || [];
