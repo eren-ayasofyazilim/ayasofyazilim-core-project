@@ -6,6 +6,8 @@ const svgToDataUri = require("mini-svg-data-uri");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
+require('dotenv').config()
+
 const config: Config = {
   content: [
     "./src/app/**/*.tsx",
