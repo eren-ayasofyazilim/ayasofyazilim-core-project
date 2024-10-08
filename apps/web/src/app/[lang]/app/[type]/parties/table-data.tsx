@@ -71,7 +71,7 @@ export type PartiesCreateDTOType =
   | CreateTaxFreeDTO
   | CreateTaxOfficeDTO;
 
-export interface CreateOrganizationDto {
+export interface CreatePartiesDto {
   taxOfficeId: string;
   organization:
     | UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto
