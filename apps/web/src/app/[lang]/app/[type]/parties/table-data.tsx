@@ -3,8 +3,12 @@ import type {
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
   UniRefund_CRMService_Merchants_CreateMerchantDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
+  UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
+  UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto,
+  UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
   Volo_Abp_Application_Dtos_PagedResultDto_110,
   Volo_Abp_Application_Dtos_PagedResultDto_13,
   Volo_Abp_Application_Dtos_PagedResultDto_16,
@@ -69,7 +73,12 @@ export type PartiesCreateDTOType =
 
 export interface CreateOrganizationDto {
   taxOfficeId: string;
-  organization: UniRefund_CRMService_Customss_CreateCustomsOrganizationDto;
+  organization:
+    | UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto
+    | UniRefund_CRMService_Customss_CreateCustomsOrganizationDto
+    | UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto
+    | UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto
+    | UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto;
   telephone: {
     areaCode: string;
     localNumber: string;
