@@ -7,9 +7,12 @@ import type {
   Volo_Abp_Application_Dtos_PagedResultDto_13,
 } from "@ayasofyazilim/saas/LocationService";
 import { revalidatePath } from "next/cache";
-import { getLocationServiceClient } from "src/lib";
+import type { ServerResponse } from "src/lib";
+import { getLocationServiceClient, structuredError } from "src/lib";
 
-export async function getCountries(body: GetApiLocationServiceCountriesData) {
+export async function getCountries(
+  body: GetApiLocationServiceCountriesData,
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_13>> {
   "use server";
   try {
     const client = await getLocationServiceClient();
@@ -24,17 +27,13 @@ export async function getCountries(body: GetApiLocationServiceCountriesData) {
       message: "Countries fetched successfully",
     };
   } catch (error) {
-    return {
-      type: "error",
-      data: null,
-      status: 500,
-      message:
-        (error as { statusText?: string }).statusText || "An error occurred",
-    };
+    return structuredError(error);
   }
 }
 
-export async function getCities(body: GetApiLocationServiceCitiesData) {
+export async function getCities(
+  body: GetApiLocationServiceCitiesData,
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_12>> {
   "use server";
   try {
     const client = await getLocationServiceClient();
@@ -49,12 +48,6 @@ export async function getCities(body: GetApiLocationServiceCitiesData) {
       message: "Cities fetched successfully",
     };
   } catch (error) {
-    return {
-      type: "error",
-      data: null,
-      status: 500,
-      message:
-        (error as { statusText?: string }).statusText || "An error occurred",
-    };
+    return structuredError(error);
   }
 }
