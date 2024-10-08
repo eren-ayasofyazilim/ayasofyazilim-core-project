@@ -175,7 +175,7 @@ function setColorFromEnvironment({ addBase }: { addBase: Function; }) {
 
   addBase({
     ":root": {
-      "--primary-color": process.env.PRIMARY_COLOR || "240 100% 50%",
+      "--primary-color": process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
     },
   });
 }
