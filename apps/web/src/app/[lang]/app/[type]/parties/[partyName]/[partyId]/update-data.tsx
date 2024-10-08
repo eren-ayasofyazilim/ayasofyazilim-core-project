@@ -11,6 +11,13 @@ import type {
   emailTypeCodes,
   telephoneTypeCodes,
 } from "@repo/ui/utils/table/form-schemas";
+import {
+  CustomsFormSubPositions,
+  MerchantsFormSubPositions,
+  RefundPointsFormSubPositions,
+  TaxFreeFormSubPositions,
+  TaxOfficesFormSubPositions,
+} from "../../table-data";
 import type { PutOrganization } from "./types";
 
 export interface UpdatePartiesDto {
@@ -44,6 +51,7 @@ export const editSchemasOfParties = {
   merchants: {
     organizationSchema:
       $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+    organizationSchemaSubPositions: MerchantsFormSubPositions.organization,
     telephoneSchema:
       $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
     addressSchema: $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
@@ -53,6 +61,7 @@ export const editSchemasOfParties = {
   "refund-points": {
     organizationSchema:
       $UniRefund_CRMService_RefundPoints_UpdateRefundPointOrganizationDto,
+    organizationSchemaSubPositions: RefundPointsFormSubPositions.organization,
     telephoneSchema:
       $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
     addressSchema: $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
@@ -62,6 +71,7 @@ export const editSchemasOfParties = {
   customs: {
     organizationSchema:
       $UniRefund_CRMService_Customss_UpdateCustomsOrganizationDto,
+    organizationSchemaSubPositions: CustomsFormSubPositions.organization,
     telephoneSchema:
       $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
     addressSchema: $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
@@ -71,6 +81,7 @@ export const editSchemasOfParties = {
   "tax-free": {
     organizationSchema:
       $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+    organizationSchemaSubPositions: TaxFreeFormSubPositions.organization,
     telephoneSchema:
       $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
     addressSchema: $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
@@ -80,6 +91,7 @@ export const editSchemasOfParties = {
   "tax-offices": {
     organizationSchema:
       $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
+    organizationSchemaSubPositions: TaxOfficesFormSubPositions.organization,
     telephoneSchema:
       $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
     addressSchema: $UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
