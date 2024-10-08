@@ -1,10 +1,5 @@
 "use server";
-import type {
-  GetApiLocationServiceCitiesData,
-  Volo_Abp_Application_Dtos_PagedResultDto_12,
-} from "@ayasofyazilim/saas/LocationService";
-import { revalidatePath } from "next/cache";
-import { getCRMServiceClient, getLocationServiceClient } from "src/lib";
+import { getCRMServiceClient, structuredError } from "src/lib";
 import type {
   CreateCustomsDTO,
   CreateMerchantDTO,
@@ -124,7 +119,7 @@ export async function getPartyTableData(
       message: "",
     };
   } catch (error) {
-    return catchError(error);
+    return structuredError(error);
   }
 }
 export async function getPartyDetail(
@@ -141,7 +136,7 @@ export async function getPartyDetail(
       message: "",
     };
   } catch (error) {
-    return catchError(error);
+    return structuredError(error);
   }
 }
 export async function deletePartyRow(
@@ -158,7 +153,7 @@ export async function deletePartyRow(
       message: "",
     };
   } catch (error) {
-    return catchError(error);
+    return structuredError(error);
   }
 }
 export async function createPartyRow(
@@ -175,34 +170,6 @@ export async function createPartyRow(
       message: "",
     };
   } catch (error) {
-    return catchError(error);
+    return structuredError(error);
   }
-}
-
-export async function getCities(body: GetApiLocationServiceCitiesData) {
-  "use server";
-  try {
-    const client = await getLocationServiceClient();
-    const response = (await client.city.getApiLocationServiceCities(
-      body,
-    )) as Volo_Abp_Application_Dtos_PagedResultDto_12;
-    revalidatePath("/");
-    return {
-      type: "success",
-      data: response,
-      status: 200,
-      message: "",
-    };
-  } catch (error) {
-    return catchError(error);
-  }
-}
-function catchError(error: unknown) {
-  return {
-    type: "error",
-    data: null,
-    status: 500,
-    message:
-      (error as { statusText?: string }).statusText || "An error occurred",
-  };
 }
