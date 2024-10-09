@@ -45,15 +45,14 @@ export default function Form({
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
-  const { organizationSchema } = editSchemasOfParties[params.partyName];
+  const { organizationSchema, organizationSchemaSubPositions } =
+    editSchemasOfParties[params.partyName];
 
   //hide branchId & parent because its headquarter
-  const _organizationSchema = createZodObject(organizationSchema, [
-    "name",
-    "taxpayerId",
-    "customerNumber",
-    "legalStatusCode",
-  ]);
+  const _organizationSchema = createZodObject(
+    organizationSchema,
+    organizationSchemaSubPositions,
+  );
 
   const organizationData =
     partyDetailData.entityInformations?.[0]?.organizations?.[0];
