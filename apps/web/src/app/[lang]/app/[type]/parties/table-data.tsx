@@ -113,6 +113,7 @@ export const dataConfigOfParties = {
   merchants: {
     translationKey: "Merchants",
     subEntityName: "Sub.Merchant" as const,
+    subEntityType: "STORE" as const,
     createFormSchema: {
       schema: createScheme(CreateMerchantSchema),
       formPositions: [
@@ -140,6 +141,7 @@ export const dataConfigOfParties = {
   "refund-points": {
     translationKey: "RefundPoints",
     subEntityName: "Sub.RefundPoint" as const,
+    subEntityType: "REFUNDPOINT" as const,
     createFormSchema: {
       schema: createScheme(CreateRefundPointSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -159,6 +161,7 @@ export const dataConfigOfParties = {
   customs: {
     translationKey: "Customs",
     subEntityName: "Sub.Custom" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateCustomsSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -173,6 +176,7 @@ export const dataConfigOfParties = {
   "tax-free": {
     translationKey: "TaxFree",
     subEntityName: "Sub.TaxFree" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxFreeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -187,6 +191,7 @@ export const dataConfigOfParties = {
   "tax-offices": {
     translationKey: "TaxOffices",
     subEntityName: "Sub.TaxOffice" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxOfficeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
