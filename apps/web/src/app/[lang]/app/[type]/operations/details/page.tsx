@@ -2,17 +2,36 @@
 import type { ColumnsType } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import {
+  $UniRefund_TagService_Tags_TagListItemDto,
+  type UniRefund_TagService_Tags_TagDto,
+} from "@ayasofyazilim/saas/TagService";
+import { toast } from "@/components/ui/sonner";
 import { getBaseLink } from "src/utils";
 import type { TaxFreeTag } from "./data";
-import { $schema_details, $schema_list } from "./data";
+import { getTags } from "./actions";
 
 export default function Page(): JSX.Element {
   const router = useRouter();
+  const [tags, setTags] = useState<UniRefund_TagService_Tags_TagDto[]>([]);
+  useEffect(() => {
+    async function getTagsFromAPI() {
+      const tagsList = await getTags();
+      if (tagsList.type === "success") {
+        setTags(tagsList.data.items || []);
+        toast.success(tagsList.message);
+        return;
+      }
+      toast.error(tagsList.message);
+    }
+    void getTagsFromAPI();
+  }, []);
   const columnsData: ColumnsType = {
     type: "Auto",
     data: {
-      tableType: $schema_details,
-      excludeList: [],
+      tableType: $UniRefund_TagService_Tags_TagListItemDto,
+      excludeList: ["id"],
       actionList: [
         {
           cta: "Open in new page",
@@ -37,7 +56,7 @@ export default function Page(): JSX.Element {
         href: getBaseLink("app/admin/operations/details/add"),
       }}
       columnsData={columnsData}
-      data={$schema_list}
+      data={tags}
     />
   );
 }
