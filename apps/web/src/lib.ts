@@ -181,6 +181,6 @@ export function structuredError(error: unknown): ErrorTypes {
 }
 
 export interface PagedResult<T> {
-  items: T[] | null;
+  items?: T[] | null;
   totalCount: number;
 }
