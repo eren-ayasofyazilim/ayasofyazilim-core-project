@@ -8,6 +8,7 @@ import AutoForm, {
 import { getEnumId, type TableData } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { addressSchemaByData } from "@repo/ui/utils/table/form-schemas";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
@@ -35,6 +36,11 @@ export default function Form({
 
   function formSchemaByData() {
     const config = dataConfigOfParties[partyName];
+    const address = addressSchemaByData([], citiesEnum, [
+      "country",
+      "terriority",
+    ]);
+
     const convertors = {
       ...config.createFormSchema.convertors,
       taxOfficeId: {
@@ -42,18 +48,12 @@ export default function Form({
         data: taxOfficesEnum.map((i) => i.name),
       },
       address: {
-        city: {
-          type: "enum",
-          data: citiesEnum.map((i) => i.name),
-        },
+        ...address.convertors,
       },
     };
-    // hide terriority if its not available in tenant (backend is not ready).
     const formSubPositions = {
       ...config.createFormSchema.formSubPositions,
-      address: config.createFormSchema.formSubPositions.address.filter(
-        (i) => i !== "country" && i !== "terriority",
-      ),
+      address: address.subPositions,
     };
     return createZodObject(
       config.createFormSchema.schema,

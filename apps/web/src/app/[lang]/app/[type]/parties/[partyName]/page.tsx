@@ -6,10 +6,12 @@ import {
   AUTO_COLUMNS_DATA,
   DELETE_ROW_ACTION,
   deleteTableRowServerSide,
+  EDIT_ROW_ON_NEW_PAGE,
   getTableDataServerSide,
   TableAction_CREATE_ROW_ON_NEW_PAGE,
   TableAction_EXPORT_CSV,
 } from "@repo/ui/utils/table/table-utils";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
@@ -22,6 +24,7 @@ export default function Page({
 }: {
   params: { partyName: PartyNameType; lang: string };
 }) {
+  const router = useRouter();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
@@ -51,6 +54,13 @@ export default function Page({
 
   const columnsData = AUTO_COLUMNS_DATA(formData);
 
+  columnsData.data.actionList?.push(
+    EDIT_ROW_ON_NEW_PAGE(
+      languageData,
+      `/app/admin/parties/${params.partyName}`,
+      router,
+    ),
+  );
   columnsData.data.actionList?.push(DELETE_ROW_ACTION(languageData, deleteRow));
 
   const action: TableAction[] = [
