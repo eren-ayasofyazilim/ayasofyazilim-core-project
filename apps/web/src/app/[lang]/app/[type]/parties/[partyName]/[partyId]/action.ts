@@ -1,6 +1,6 @@
 "use server";
 import { getCRMServiceClient, structuredError } from "src/lib";
-import type { PartyNameType } from "../../table-data";
+import type { PartyNameType } from "../../types";
 import type {
   PutAddress,
   PutEmail,

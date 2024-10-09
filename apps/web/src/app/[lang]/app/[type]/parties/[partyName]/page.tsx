@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
-import type { PartiesResultType, PartyNameType } from "../table-data";
+import type { PartiesResultType, PartyNameType } from "../types";
 import { dataConfigOfParties } from "../table-data";
 import { deletePartyRow, getPartyTableData } from "./action";
 
