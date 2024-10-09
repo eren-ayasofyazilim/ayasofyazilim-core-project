@@ -15,10 +15,12 @@ import {
   telephoneSchema,
 } from "@repo/ui/utils/table/form-schemas";
 import { getEnumId, getEnumName } from "@repo/ui/utils/table/table-utils";
+import { useRouter } from "next/navigation";
 import { getResourceDataClient } from "src/language-data/CRMService";
 import { useLocale } from "src/providers/locale";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type { PartyNameType } from "../../table-data";
+import { dataConfigOfParties } from "../../table-data";
+import type { PartyNameType } from "../../types";
 import { putParty } from "./action";
 import type {
   GetPartiesDetailResult,
@@ -42,9 +44,11 @@ export default function Form({
     lang: string;
   };
 }) {
+  const router = useRouter();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
 
+  const partyData = dataConfigOfParties[params.partyName];
   const { organizationSchema, organizationSchemaSubPositions } =
     editSchemasOfParties[params.partyName];
 
@@ -87,6 +91,7 @@ export default function Form({
     const response = await putParty(params.partyName, putData);
     if (response.type === "success") {
       toast.success("Updated successfully");
+      router.refresh();
     } else {
       toast.error(response.message);
     }
@@ -99,7 +104,7 @@ export default function Form({
           { name: languageData.Telephone, id: "telephone" },
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
-          // { name: subEntityName, id: "SubCompany" },
+          { name: languageData[partyData.subEntityName], id: "SubCompany" },
           { name: languageData.Individuals, id: "individuals" },
         ]}
         vertical
