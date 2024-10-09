@@ -1,11 +1,12 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/sonner";
 import type { UniRefund_TravellerService_Travellers_CreateWithComponentsTravellerDto as travellerCreateDTOType } from "@ayasofyazilim/saas/TravellerService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
   AutoFormSubmit,
+  createFieldConfigWithResource,
+  mergeFieldConfigs,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
@@ -37,7 +38,7 @@ export default function Form({
           type: "enum",
           data: countriesEnum.map((i) => i.name),
         },
-        city: {
+        terriority: {
           type: "enum",
           data: citiesEnum.map((i) => i.name),
         },
@@ -121,9 +122,9 @@ export default function Form({
         requestBody: createformData,
       });
       if (response.type === "error" || response.type === "api-error") {
-        toast.error(response.message || languageData["Traveller.New.Error"]);
+        toast.error(response.message || languageData["Travellers.New.Error"]);
       } else {
-        toast.success(languageData["Traveller.New.Succes"]);
+        toast.success(languageData["Travellers.New.Succes"]);
         router.push(getBaseLink(`/app/admin/crm/traveller`));
       }
     } catch (error) {
@@ -138,43 +139,47 @@ export default function Form({
     return data.find((item) => item.name === value)?.code2 || "";
   }
 
+  const config = createFieldConfigWithResource({
+    schema: createTravellerSchema,
+    resources: languageData,
+    constantKey: "Form.Create",
+  });
+
   return (
-    <Card className="h-full w-full flex-1 overflow-auto p-5">
-      <AutoForm
-        className="grid grid-flow-row  gap-4 space-y-0 lg:grid-cols-3 lg:grid-rows-1"
-        fieldConfig={{
-          telephone: {
-            localNumber: {
-              fieldType: "phone",
-              displayName: "Telephone Number",
-              inputProps: {
-                showLabel: true,
-              },
+    <AutoForm
+      className="grid grid-flow-row  gap-4 space-y-0 lg:grid-cols-3 lg:grid-rows-1"
+      fieldConfig={mergeFieldConfigs(config, {
+        telephone: {
+          localNumber: {
+            fieldType: "phone",
+            inputProps: {
+              showLabel: true,
             },
           },
-          email: {
-            emailAddress: {
-              inputProps: {
-                type: "email",
-              },
+        },
+        email: {
+          emailAddress: {
+            inputProps: {
+              type: "email",
             },
           },
-          address: {
-            className: "row-span-2",
-          },
-          personalIdentificationCommonDatas: {
-            className: "row-span-2",
-          },
-        }}
-        formSchema={formSchemaByData()}
-        onSubmit={(val) => {
-          void SaveTraveller(val as CreateTravellerDTO);
-        }}
-      >
-        <AutoFormSubmit className="float-right">
-          {languageData["Traveller.Save"]}
-        </AutoFormSubmit>
-      </AutoForm>
-    </Card>
+        },
+        address: {
+          className: "row-span-2",
+        },
+        personalIdentificationCommonDatas: {
+          className: "row-span-2",
+        },
+      })}
+      formSchema={formSchemaByData()}
+      onSubmit={(val) => {
+        void SaveTraveller(val as CreateTravellerDTO);
+      }}
+      stickyChildren
+    >
+      <AutoFormSubmit className="float-right py-4">
+        {languageData["Travellers.Save"]}
+      </AutoFormSubmit>
+    </AutoForm>
   );
 }
