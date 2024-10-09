@@ -13,7 +13,7 @@ import type {
   GetTaxOfficeDTO,
   PartiesCreateDTOType,
   PartyNameType,
-} from "../table-data";
+} from "../types";
 
 export async function getPartyRequests(partyType: PartyNameType) {
   const client = await getCRMServiceClient();

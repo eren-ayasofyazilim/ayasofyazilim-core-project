@@ -2,7 +2,7 @@
 
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
-import type { PartyNameType } from "../../table-data";
+import type { PartyNameType } from "../../types";
 import { getPartyTableData } from "../action";
 import Form from "./form";
 

@@ -12,13 +12,10 @@ import { addressSchemaByData } from "@repo/ui/utils/table/form-schemas";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type {
-  CreatePartiesDto,
-  PartiesCreateDTOType,
-  PartyNameType,
-} from "../../table-data";
+import type { CreatePartiesDto } from "../../table-data";
 import { dataConfigOfParties } from "../../table-data";
 import { createPartyRow } from "../action";
+import type { PartiesCreateDTOType, PartyNameType } from "../../types";
 
 export default function Form({
   partyName,
