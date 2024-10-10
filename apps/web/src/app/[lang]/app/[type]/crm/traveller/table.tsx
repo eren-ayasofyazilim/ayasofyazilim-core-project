@@ -9,19 +9,6 @@ import type { TravellerServiceResource } from "src/language-data/TravellerServic
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
 
-export interface Payment {
-  id: string;
-  name: string;
-  parentCompanyId: string | null;
-  entityInformationTypeCode: number;
-  entityInformationTypeCodeName: string;
-  organizationId: string | null;
-  individualId: string;
-  countryId: number;
-  nationalityCountryName: string;
-  residenceCountryName: string;
-  travelDocumentNumber: string;
-}
 export default function Table({
   languageData,
 }: {
@@ -57,7 +44,7 @@ export default function Table({
     <DataTable
       action={[
         {
-          cta: languageData.NewTraveller,
+          cta: languageData["Travellers.New"],
           type: "NewPage",
           href: getBaseLink("app/admin/crm/traveller/new"),
         },
@@ -67,10 +54,15 @@ export default function Table({
         data: {
           tableType:
             $UniRefund_TravellerService_Travellers_TravellerListProfileDto,
-          excludeList: ["id", "userAccountId"],
+          excludeList: [
+            "id",
+            "userAccountId",
+            "residenceCountryCode2",
+            "nationalityCountryCode2",
+          ],
           actionList: [
             {
-              cta: languageData.Edit,
+              cta: languageData["Travellers.Edit"],
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(
