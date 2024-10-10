@@ -6,19 +6,16 @@ import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { getEnumId, type TableData } from "@repo/ui/utils/table/table-utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { addressSchemaByData } from "@repo/ui/utils/table/form-schemas";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type {
-  CreatePartiesDto,
-  PartiesCreateDTOType,
-  PartyNameType,
-} from "../../table-data";
+import type { CreatePartiesDto } from "../../table-data";
 import { dataConfigOfParties } from "../../table-data";
 import { createPartyRow } from "../action";
+import type { PartiesCreateDTOType, PartyNameType } from "../../types";
 
 export default function Form({
   partyName,
@@ -31,6 +28,8 @@ export default function Form({
   citiesEnum: { name: string; id: string }[];
   languageData: CRMServiceServiceResource;
 }) {
+  const searchParams = useSearchParams();
+  const parentId = searchParams.get("parentId");
   const router = useRouter();
   const [_formData] = useState<TableData>(dataConfigOfParties[partyName]);
 
@@ -72,7 +71,10 @@ export default function Form({
     formData.telephone = { ...formData.telephone, ...phoneData };
     const createformData: PartiesCreateDTOType = {
       taxOfficeId: getEnumId(taxOfficesEnum, formData.taxOfficeId),
-      typeCode: "HEADQUARTER",
+      typeCode: parentId
+        ? dataConfigOfParties[partyName].subEntityType
+        : "HEADQUARTER",
+      parentId,
       entityInformationTypes: [
         {
           organizations: [

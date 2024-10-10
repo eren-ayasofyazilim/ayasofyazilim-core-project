@@ -1,19 +1,12 @@
 import type {
-  UniRefund_CRMService_Customss_CreateCustomsDto,
+  UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
-  UniRefund_CRMService_Merchants_CreateMerchantDto,
+  UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
-  UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto,
-  UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto,
-  UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_110,
-  Volo_Abp_Application_Dtos_PagedResultDto_13,
-  Volo_Abp_Application_Dtos_PagedResultDto_16,
-  Volo_Abp_Application_Dtos_PagedResultDto_17,
-  Volo_Abp_Application_Dtos_PagedResultDto_19,
+  UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
 import {
   $UniRefund_CRMService_Customss_CustomsProfileDto,
@@ -27,49 +20,9 @@ import {
   $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto as CreateTaxFreeSchema,
   $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto as CreateTaxOfficeSchema,
 } from "@ayasofyazilim/saas/CRMService";
-import type {
-  addressTypeCodes,
-  emailTypeCodes,
-  telephoneTypeCodes,
-} from "@repo/ui/utils/table/form-schemas";
 import { ContactFormSubPositions } from "@repo/ui/utils/table/form-schemas";
 import { PhoneNumberUtil } from "google-libphonenumber";
-
-export type CreateMerchantDTO =
-  UniRefund_CRMService_Merchants_CreateMerchantDto;
-export type CreateCustomsDTO = UniRefund_CRMService_Customss_CreateCustomsDto;
-export type CreateRefundPointDTO =
-  UniRefund_CRMService_RefundPoints_CreateRefundPointDto;
-export type CreateTaxFreeDTO = UniRefund_CRMService_TaxFrees_CreateTaxFreeDto;
-export type CreateTaxOfficeDTO =
-  UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto;
-
-export type GetMerchantDTO = Volo_Abp_Application_Dtos_PagedResultDto_16;
-export type GetRefundPointDTO = Volo_Abp_Application_Dtos_PagedResultDto_17;
-export type GetCustomsDTO = Volo_Abp_Application_Dtos_PagedResultDto_13;
-export type GetTaxFreeDTO = Volo_Abp_Application_Dtos_PagedResultDto_19;
-export type GetTaxOfficeDTO = Volo_Abp_Application_Dtos_PagedResultDto_110;
-
-export type PartyNameType =
-  | "merchants"
-  | "refund-points"
-  | "customs"
-  | "tax-free"
-  | "tax-offices";
-
-export type PartiesResultType =
-  | GetMerchantDTO
-  | GetRefundPointDTO
-  | GetCustomsDTO
-  | GetTaxFreeDTO
-  | GetTaxOfficeDTO;
-
-export type PartiesCreateDTOType =
-  | CreateMerchantDTO
-  | CreateCustomsDTO
-  | CreateRefundPointDTO
-  | CreateTaxFreeDTO
-  | CreateTaxOfficeDTO;
+import type { PartiesCreateType } from "./types";
 
 export interface CreatePartiesDto {
   taxOfficeId: string;
@@ -79,56 +32,30 @@ export interface CreatePartiesDto {
     | UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto
     | UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto
     | UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto;
-  telephone: {
-    areaCode: string;
-    localNumber: string;
-    ituCountryCode: string;
-    primaryFlag: boolean;
-    typeCode: telephoneTypeCodes;
-  };
-  address: {
-    addressLine: string;
-    city: string;
-    terriority: string;
-    postalCode: string;
-    country: string;
-    fullAddress: string;
-    primaryFlag: boolean;
-    typeCode: addressTypeCodes;
-  };
-  email: {
-    emailAddress: string;
-    primaryFlag: boolean;
-    typeCode: emailTypeCodes;
-  };
+  telephone: UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
+  address: UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
+  email: UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
 }
-
-export type PartiesCreateType =
-  | typeof CreateMerchantSchema
-  | typeof CreateRefundPointSchema
-  | typeof CreateCustomsSchema
-  | typeof CreateTaxFreeSchema
-  | typeof CreateTaxOfficeSchema;
 
 const CommonOrganizationFields = ["name", "taxpayerId", "branchId"];
 const OrganizationFields = ["customerNumber", "legalStatusCode"];
-const MerchantsFormSubPositions = {
+export const MerchantsFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
-const RefundPointsFormSubPositions = {
+export const RefundPointsFormSubPositions = {
   organization: [...CommonOrganizationFields],
   ...ContactFormSubPositions,
 };
-const CustomsFormSubPositions = {
+export const CustomsFormSubPositions = {
   organization: [...CommonOrganizationFields],
   ...ContactFormSubPositions,
 };
-const TaxFreeFormSubPositions = {
+export const TaxFreeFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
-const TaxOfficesFormSubPositions = {
+export const TaxOfficesFormSubPositions = {
   organization: [...CommonOrganizationFields, ...OrganizationFields],
   ...ContactFormSubPositions,
 };
@@ -185,6 +112,8 @@ function createScheme(schema: PartiesCreateType) {
 export const dataConfigOfParties = {
   merchants: {
     translationKey: "Merchants",
+    subEntityName: "Sub.Merchant" as const,
+    subEntityType: "STORE" as const,
     createFormSchema: {
       schema: createScheme(CreateMerchantSchema),
       formPositions: [
@@ -211,6 +140,8 @@ export const dataConfigOfParties = {
   },
   "refund-points": {
     translationKey: "RefundPoints",
+    subEntityName: "Sub.RefundPoint" as const,
+    subEntityType: "REFUNDPOINT" as const,
     createFormSchema: {
       schema: createScheme(CreateRefundPointSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -229,6 +160,8 @@ export const dataConfigOfParties = {
   },
   customs: {
     translationKey: "Customs",
+    subEntityName: "Sub.Custom" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateCustomsSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -242,6 +175,8 @@ export const dataConfigOfParties = {
   },
   "tax-free": {
     translationKey: "TaxFree",
+    subEntityName: "Sub.TaxFree" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxFreeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -255,6 +190,8 @@ export const dataConfigOfParties = {
   },
   "tax-offices": {
     translationKey: "TaxOffices",
+    subEntityName: "Sub.TaxOffice" as const,
+    subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxOfficeSchema),
       formPositions: ["organization", "telephone", "address", "email"],

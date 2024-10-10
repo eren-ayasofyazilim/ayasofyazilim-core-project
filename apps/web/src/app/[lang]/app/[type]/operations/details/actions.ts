@@ -1,5 +1,6 @@
 "use server";
 import type {
+  GetApiTagServiceTagByIdDetailResponse,
   GetApiTagServiceTagResponse,
   UniRefund_TagService_Tags_CreateTagRequestDto,
 } from "@ayasofyazilim/saas/TagService";
@@ -34,6 +35,27 @@ export async function createTag(
       data: response,
       status: 200,
       message: "Tag created successfully",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+
+export async function getTagById({
+  id,
+}: {
+  id: string;
+}): Promise<ServerResponse<GetApiTagServiceTagByIdDetailResponse>> {
+  try {
+    const client = await getTagServiceClient();
+    const response = await client.tag.getApiTagServiceTagByIdDetail({
+      id,
+    });
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "Tag details fetched successfully",
     };
   } catch (error) {
     return structuredError(error);
