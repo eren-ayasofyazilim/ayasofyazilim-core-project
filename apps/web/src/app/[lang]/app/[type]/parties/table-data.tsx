@@ -3,6 +3,8 @@ import type {
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
   UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
+  UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
+  UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto,
@@ -32,6 +34,8 @@ export interface CreatePartiesDto {
     | UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto
     | UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto
     | UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto;
+  name: UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto;
+  personalSummaries: UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto;
   telephone: UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
   address: UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
   email: UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
