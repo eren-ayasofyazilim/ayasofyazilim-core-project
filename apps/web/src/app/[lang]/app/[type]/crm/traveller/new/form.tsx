@@ -142,7 +142,6 @@ export default function Form({
   const translatedForm = createFieldConfigWithResource({
     schema: createTravellerSchema,
     resources: languageData,
-    name: "",
   });
 
   return (
