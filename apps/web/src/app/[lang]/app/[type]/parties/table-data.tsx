@@ -111,7 +111,7 @@ function createScheme(schema: PartiesCreateType) {
 
 export const dataConfigOfParties = {
   merchants: {
-    translationKey: "Merchants",
+    translationKey: "Merchants" as const,
     subEntityName: "Sub.Merchant" as const,
     subEntityType: "STORE" as const,
     createFormSchema: {
@@ -139,7 +139,7 @@ export const dataConfigOfParties = {
     },
   },
   "refund-points": {
-    translationKey: "RefundPoints",
+    translationKey: "RefundPoints" as const,
     subEntityName: "Sub.RefundPoint" as const,
     subEntityType: "REFUNDPOINT" as const,
     createFormSchema: {
@@ -159,7 +159,7 @@ export const dataConfigOfParties = {
     },
   },
   customs: {
-    translationKey: "Customs",
+    translationKey: "Customs" as const,
     subEntityName: "Sub.Custom" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
@@ -174,7 +174,7 @@ export const dataConfigOfParties = {
     },
   },
   "tax-free": {
-    translationKey: "TaxFree",
+    translationKey: "TaxFree" as const,
     subEntityName: "Sub.TaxFree" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
@@ -189,7 +189,7 @@ export const dataConfigOfParties = {
     },
   },
   "tax-offices": {
-    translationKey: "TaxOffices",
+    translationKey: "TaxOffices" as const,
     subEntityName: "Sub.TaxOffice" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {

@@ -44,7 +44,7 @@ export default async function Page({
         partyDetailData={partyDetailData}
       />
       <div className="hidden" id="page-title">
-        {`${languageData[formData.translationKey as keyof typeof languageData]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name})`}
+        {`${languageData[formData.translationKey]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name})`}
       </div>
     </>
   );
