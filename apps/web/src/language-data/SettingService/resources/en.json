@@ -14,6 +14,7 @@
   "TenantSettings": "Tenant Settings",
   "TenantSettings.Description": "You can view the tenant settings from here.",
   "Setting.Save": "Save",
+  "Setting.Edit.Save": "Save Changes",
   "Form.Create.percent": "Percent(%)",
   "Form.Create.minimumTotalAmount": "Minimum Total Amount",
   "Form.Create.countryId": "Country",

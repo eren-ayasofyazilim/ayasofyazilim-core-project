@@ -330,7 +330,12 @@ export default function Page({
     description: languageData.Edit,
     type: "Dialog",
     componentType: "Autoform",
-    autoFormArgs: autoformEditArgs,
+    autoFormArgs: {
+      ...autoformEditArgs,
+      submit: {
+        cta: languageData["Setting.Edit.Save"],
+      },
+    },
     callback: (data, row) => {
       onEdit(data, row, editFormSchema);
     },

@@ -14,6 +14,7 @@
   "TenantSettings": "Tenant Ayarları",
   "TenantSettings.Description": "Tenant ayarlarını buradan inceleyebilirsiniz.",
   "Setting.Save": "Kaydet",
+  "Setting.Edit.Save": "Değişiklikleri kaydet",
   "Form.Create.percent": "Yüzde(%)",
   "Form.Create.minimumTotalAmount": "Minimum Toplam Tutar",
   "Form.Create.countryId": "Ülke",

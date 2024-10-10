@@ -26,6 +26,7 @@ export interface SettingServiceResource {
   "TenantSettings.Description": string;
   Cancel: string;
   "Setting.Save": string;
+  "Setting.Edit.Save": string;
   "Form.Create.percent": string;
   "Form.Create.minimumTotalAmount": string;
   "Form.Create.countryId": string;
@@ -94,6 +95,10 @@ function getLanguageData(
       resource?.["Setting.Save"] ||
       data[lang]?.["Setting.Save"] ||
       data.en["Setting.Save"],
+    "Setting.Edit.Save":
+      resource?.["Setting.Edit.Save"] ||
+      data[lang]?.["Setting.Edit.Save"] ||
+      data.en["Setting.Edit.Save"],
     "Form.Create.percent":
       resource?.["Form.Create.percent"] ||
       data[lang]?.["Form.Create.percent"] ||
