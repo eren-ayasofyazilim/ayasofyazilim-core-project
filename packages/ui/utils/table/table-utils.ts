@@ -84,7 +84,7 @@ export function DELETE_ROW_ACTION(
   languageData: {
     Delete: string;
     Cancel: string;
-    "Delete.Assurance": string;
+    //"Delete.Assurance": string;
   },
   callbackFunction: (data: { id: string }) => void,
 ): TableAction {
@@ -92,7 +92,7 @@ export function DELETE_ROW_ACTION(
     cta: languageData.Delete,
     type: "Dialog",
     componentType: "ConfirmationDialog",
-    description: languageData["Delete.Assurance"],
+    description: "languageData",
     cancelCTA: languageData.Cancel,
     variant: "destructive",
     callback: (data: { id: string }) => {

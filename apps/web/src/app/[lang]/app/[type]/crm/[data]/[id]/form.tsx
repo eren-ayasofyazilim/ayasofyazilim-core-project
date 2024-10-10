@@ -128,15 +128,15 @@ export default function Form({
 
   function getSubEntityName() {
     if (params.data === "merchants") {
-      return languageData["Sub.Merchant"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "refund-points") {
-      return languageData["Sub.RefundPoint"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "customs") {
-      return languageData["Sub.Custom"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "tax-free") {
-      return languageData["Sub.TaxFree"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "tax-offices") {
-      return languageData["Sub.TaxOffice"];
+      return languageData["Merchants.SubOrganization"];
     }
     return "";
   }
@@ -298,12 +298,12 @@ export default function Form({
     <div className="h-full overflow-hidden">
       <SectionLayout
         sections={[
-          { name: languageData.Organization, id: "organization" },
+          { name: languageData["Parties.Organization"], id: "organization" },
           { name: languageData.Telephone, id: "telephone" },
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
           { name: subEntityName, id: "SubCompany" },
-          { name: languageData.Individuals, id: "individuals" },
+          { name: languageData["Parties.Individuals"], id: "individuals" },
         ]}
         vertical
       >
@@ -424,7 +424,7 @@ export default function Form({
                       cta: languageData.Delete,
                       type: "Dialog",
                       componentType: "ConfirmationDialog",
-                      description: languageData["Delete.Assurance"],
+                      description: "",
                       cancelCTA: languageData.Cancel,
                       variant: "destructive",
                       callback: (row: { id: string }) => {

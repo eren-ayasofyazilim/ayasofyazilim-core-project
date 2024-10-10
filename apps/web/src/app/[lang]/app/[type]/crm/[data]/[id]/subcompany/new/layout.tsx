@@ -18,15 +18,15 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   function getAddSubName() {
     if (params.data === "merchants") {
-      return languageData["SubMerchant.New"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "refund-points") {
-      return languageData["SubRefundPoint.New"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "customs") {
-      return languageData["SubCustom.New"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "tax-free") {
-      return languageData["SubTaxFree.New"];
+      return languageData["Merchants.SubOrganization"];
     } else if (params.data === "tax-offices") {
-      return languageData["SubTaxOffice.New"];
+      return languageData["Merchants.SubOrganization"];
     }
     return "";
   }
