@@ -104,13 +104,19 @@ export default function Form({
     try {
       const response = await createPartyRow(partyName, createformData);
       if (response.status === 200) {
-        toast.success(`${partyName} added successfully`);
+        const successMsg =
+          `${dataConfigOfParties[partyName].translationKey}.New.Success` as keyof typeof languageData;
+        toast.success(successMsg);
         router.push(getBaseLink(`/app/admin/parties/${partyName}`));
       } else {
-        toast.error(response.message || `Failed to add ${partyName}`);
+        const errorMsg =
+          `${dataConfigOfParties[partyName].translationKey}.New.Fail` as keyof typeof languageData;
+        toast.error(errorMsg);
       }
     } catch (error) {
-      toast.error(`An error occurred while saving the ${partyName}`);
+      const errorMsg =
+        `${dataConfigOfParties[partyName].translationKey}.New.Fail` as keyof typeof languageData;
+      toast.error(errorMsg);
     }
   };
 

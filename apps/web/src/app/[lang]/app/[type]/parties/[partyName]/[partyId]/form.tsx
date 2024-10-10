@@ -90,22 +90,24 @@ export default function Form({
   ) {
     const response = await putParty(params.partyName, putData);
     if (response.type === "success") {
-      toast.success("Updated successfully");
+      const successMsg = "Parties.Edit.Success" as keyof typeof languageData;
+      toast.success(successMsg);
       router.refresh();
     } else {
-      toast.error(response.message);
+      const errorMsg = "Parties.Edit.Fail" as keyof typeof languageData;
+      toast.error(errorMsg);
     }
   }
   return (
     <div className="h-full overflow-hidden">
       <SectionLayout
         sections={[
-          { name: languageData.Organization, id: "organization" },
+          { name: languageData["Parties.Organization"], id: "organization" },
           { name: languageData.Telephone, id: "telephone" },
           { name: languageData.Address, id: "address" },
           { name: languageData.Email, id: "email" },
           { name: languageData[partyData.subEntityName], id: "SubCompany" },
-          { name: languageData.Individuals, id: "individuals" },
+          { name: languageData["Parties.Individuals"], id: "individuals" },
         ]}
         vertical
       >
