@@ -15,13 +15,13 @@
   "TenantSettings.Description": "You can view the tenant settings from here.",
   "Setting.Save": "Save",
   "Setting.Edit.Save": "Save Changes",
-  "Form.Create.percent": "Percent(%)",
-  "Form.Create.minimumTotalAmount": "Minimum Total Amount",
-  "Form.Create.countryId": "Country",
-  "Form.Create.active": "Active",
-  "Form.Create.name": "Name",
-  "Form.Create.articleCode": "Article Code",
-  "Form.Create.unitCode": "Unit",
-  "Form.Create.companyType ": "Company Type",
-  "Form.Create.food": "Food"
+  "Form.percent": "Percent(%)",
+  "Form.minimumTotalAmount": "Minimum Total Amount",
+  "Form.countryId": "Country",
+  "Form.active": "Active",
+  "Form.name": "Name",
+  "Form.articleCode": "Article Code",
+  "Form.unitCode": "Unit",
+  "Form.companyType ": "Company Type",
+  "Form.food": "Food"
 }

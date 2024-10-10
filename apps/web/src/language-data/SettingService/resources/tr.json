@@ -15,13 +15,13 @@
   "TenantSettings.Description": "Tenant ayarlarını buradan inceleyebilirsiniz.",
   "Setting.Save": "Kaydet",
   "Setting.Edit.Save": "Değişiklikleri kaydet",
-  "Form.Create.percent": "Yüzde(%)",
-  "Form.Create.minimumTotalAmount": "Minimum Toplam Tutar",
-  "Form.Create.countryId": "Ülke",
-  "Form.Create.active": "Aktif",
-  "Form.Create.name": "İsim",
-  "Form.Create.articleCode": "Makale Kodu",
-  "Form.Create.unitCode": "Birim",
-  "Form.Create.companyType": "Şirket Türü",
-  "Form.Create.food": "Gıda"
+  "Form.percent": "Yüzde(%)",
+  "Form.minimumTotalAmount": "Minimum Toplam Tutar",
+  "Form.countryId": "Ülke",
+  "Form.active": "Aktif",
+  "Form.name": "İsim",
+  "Form.articleCode": "Makale Kodu",
+  "Form.unitCode": "Birim",
+  "Form.companyType": "Şirket Türü",
+  "Form.food": "Gıda"
 }
