@@ -139,16 +139,15 @@ export default function Form({
     return data.find((item) => item.name === value)?.code2 || "";
   }
 
-  const config = createFieldConfigWithResource({
+  const translationForm = createFieldConfigWithResource({
     schema: createTravellerSchema,
     resources: languageData,
-    constantKey: "Form.Create",
   });
 
   return (
     <AutoForm
       className="grid grid-flow-row  gap-4 space-y-0 lg:grid-cols-3 lg:grid-rows-1"
-      fieldConfig={mergeFieldConfigs(config, {
+      fieldConfig={mergeFieldConfigs(translationForm, {
         telephone: {
           localNumber: {
             fieldType: "phone",
