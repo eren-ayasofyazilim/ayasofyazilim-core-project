@@ -12,5 +12,16 @@
   "ProductGroupVAT.New": "New Product Group VAT",
   "ProductGroupVAT.Description": "You can view the product group VAT descriptions from here.",
   "TenantSettings": "Tenant Settings",
-  "TenantSettings.Description": "You can view the tenant settings from here."
+  "TenantSettings.Description": "You can view the tenant settings from here.",
+  "Setting.Save": "Save",
+  "Setting.Edit.Save": "Save Changes",
+  "Form.Create.percent": "Percent(%)",
+  "Form.Create.minimumTotalAmount": "Minimum Total Amount",
+  "Form.Create.countryId": "Country",
+  "Form.Create.active": "Active",
+  "Form.Create.name": "Name",
+  "Form.Create.articleCode": "Article Code",
+  "Form.Create.unitCode": "Unit",
+  "Form.Create.companyType ": "Company Type",
+  "Form.Create.food": "Food"
 }

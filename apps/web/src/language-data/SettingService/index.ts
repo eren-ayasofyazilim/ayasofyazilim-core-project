@@ -25,6 +25,17 @@ export interface SettingServiceResource {
   TenantSettings: string;
   "TenantSettings.Description": string;
   Cancel: string;
+  "Setting.Save": string;
+  "Setting.Edit.Save": string;
+  "Form.Create.percent": string;
+  "Form.Create.minimumTotalAmount": string;
+  "Form.Create.countryId": string;
+  "Form.Create.active": string;
+  "Form.Create.name": string;
+  "Form.Create.articleCode": string;
+  "Form.Create.unitCode": string;
+  "Form.Create.companyType": string;
+  "Form.Create.food": string;
 }
 function getLanguageData(
   resources: ResourceResult,
@@ -80,6 +91,50 @@ function getLanguageData(
       resource?.["TenantSettings.Description"] ||
       data[lang]?.["TenantSettings.Description"] ||
       data.en["TenantSettings.Description"],
+    "Setting.Save":
+      resource?.["Setting.Save"] ||
+      data[lang]?.["Setting.Save"] ||
+      data.en["Setting.Save"],
+    "Setting.Edit.Save":
+      resource?.["Setting.Edit.Save"] ||
+      data[lang]?.["Setting.Edit.Save"] ||
+      data.en["Setting.Edit.Save"],
+    "Form.Create.percent":
+      resource?.["Form.Create.percent"] ||
+      data[lang]?.["Form.Create.percent"] ||
+      data.en["Form.Create.percent"],
+    "Form.Create.minimumTotalAmount":
+      resource?.["Form.Create.minimumTotalAmount"] ||
+      data[lang]?.["Form.Create.minimumTotalAmount"] ||
+      data.en["Form.Create.minimumTotalAmount "],
+    "Form.Create.countryId":
+      resource?.["Form.Create.countryId"] ||
+      data[lang]?.["Form.Create.countryId"] ||
+      data.en["Form.Create.countryId"],
+    "Form.Create.active":
+      resource?.["Form.Create.active"] ||
+      data[lang]?.["Form.Create.active"] ||
+      data.en["Form.Create.active"],
+    "Form.Create.name":
+      resource?.["Form.Create.name"] ||
+      data[lang]?.["Form.Create.name"] ||
+      data.en["Form.Create.name"],
+    "Form.Create.articleCode":
+      resource?.["Form.Create.articleCode"] ||
+      data[lang]?.["Form.Create.articleCode"] ||
+      data.en["Form.Create.articleCode"],
+    "Form.Create.unitCode":
+      resource?.["Form.Create.unitCode"] ||
+      data[lang]?.["Form.Create.unitCode"] ||
+      data.en["Form.Create.unitCode"],
+    "Form.Create.companyType":
+      resource?.["Form.Create.companyType"] ||
+      data[lang]?.["Form.Create.companyType"] ||
+      data.en["Form.Create.companyType"],
+    "Form.Create.food":
+      resource?.["Form.Create.food"] ||
+      data[lang]?.["Form.Create.food"] ||
+      data.en["Form.Create.food"],
   };
 }
 export async function getResourceData(lang: string) {

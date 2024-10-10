@@ -6,11 +6,16 @@ import type {
   ColumnsType,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
-import type { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import {
+  createFieldConfigWithResource,
+  mergeFieldConfigs,
+  type AutoFormProps,
+} from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import type { TableData, FormModifier } from "@repo/ui/utils/table/table-utils";
+import type { SchemaType } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { createZodObject, getBaseLink } from "src/utils";
 import { getResourceDataClient } from "src/language-data/SettingService";
 import { useLocale } from "src/providers/locale";
@@ -160,6 +165,11 @@ export default function Page({
     );
   }
 
+  const translationForm = createFieldConfigWithResource({
+    schema: formData.createFormSchema?.schema as SchemaType,
+    resources: languageData,
+  });
+
   const createFormSchema = formData.createFormSchema;
   let action: TableAction[] | undefined;
   if (createFormSchema) {
@@ -179,10 +189,13 @@ export default function Page({
             createFormSchema.formPositions || [],
             createFormSchema.convertors || {},
           ),
-          fieldConfig: {
+          fieldConfig: mergeFieldConfigs(translationForm, {
             all: {
               withoutBorder: true,
             },
+          }),
+          submit: {
+            cta: languageData["Setting.Save"],
           },
         },
         callback: (e) => {
@@ -282,11 +295,11 @@ export default function Page({
     autoformEditArgs = {
       formSchema: editFormSchemaZod,
       // convertor: formData.tableSchema.convertors,
-      fieldConfig: {
+      fieldConfig: mergeFieldConfigs(translationForm, {
         all: {
           withoutBorder: true,
         },
-      },
+      }),
     };
   }
   let actionList: TableAction[] = [];
@@ -317,7 +330,12 @@ export default function Page({
     description: languageData.Edit,
     type: "Dialog",
     componentType: "Autoform",
-    autoFormArgs: autoformEditArgs,
+    autoFormArgs: {
+      ...autoformEditArgs,
+      submit: {
+        cta: languageData["Setting.Edit.Save"],
+      },
+    },
     callback: (data, row) => {
       onEdit(data, row, editFormSchema);
     },
