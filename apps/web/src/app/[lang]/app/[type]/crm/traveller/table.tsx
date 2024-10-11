@@ -1,10 +1,15 @@
 "use client";
 import { toast } from "@/components/ui/sonner";
-import type { Volo_Abp_Application_Dtos_PagedResultDto_15 } from "@ayasofyazilim/saas/TravellerService";
+import type {
+  GetApiTravellerServiceTravellersData,
+  Volo_Abp_Application_Dtos_PagedResultDto_15,
+} from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
+import type { ColumnFilter } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
@@ -19,12 +24,63 @@ export default function Table({
     useState<Volo_Abp_Application_Dtos_PagedResultDto_15>();
   const [loading, setLoading] = useState(true);
 
-  async function fetchTravellerData(page: number) {
+  type DetailedFilter = ColumnFilter & {
+    name: keyof GetApiTravellerServiceTravellersData;
+  };
+
+  const filters: DetailedFilter[] = [
+    {
+      name: "showExpired",
+      displayName: languageData["Travellers.ShowExpired"],
+      type: "boolean",
+      value: "",
+    },
+    {
+      name: "fullName",
+      displayName: languageData["Travellers.FullName"],
+      type: "string",
+      value: "",
+    },
+    {
+      name: "fullName",
+      displayName: languageData["Travellers.FirstName"],
+      type: "string",
+      value: "",
+    },
+    {
+      name: "fullName",
+      displayName: languageData["Travellers.LastName"],
+      type: "string",
+      value: "",
+    },
+    {
+      name: "travelDocumentNumber",
+      displayName: languageData["Travellers.TravelDocumentNumber"],
+      type: "string",
+      value: "",
+    },
+    {
+      name: "username",
+      displayName: languageData["Travellers.UserName"],
+      type: "string",
+      value: "",
+    },
+    {
+      name: "phoneNumber",
+      displayName: languageData["Travellers.PhoneNumber"],
+      type: "string",
+      value: "",
+    },
+  ];
+
+  async function fetchTravellerData(page: number, filter: string) {
+    const filters_ = JSON.parse(filter) as DetailedFilter[];
     setLoading(true);
     try {
       const response = await getTravellers({
         maxResultCount: 10,
         skipCount: page * 10,
+        ...filters_,
       });
       if (response.type === "error" || response.type === "api-error") {
         toast.error(
@@ -47,6 +103,13 @@ export default function Table({
           cta: languageData["Travellers.New"],
           type: "NewPage",
           href: getBaseLink("app/admin/crm/traveller/new"),
+        },
+        {
+          cta: `Export CSV`,
+          callback: () => {
+            jsonToCsv(travellers?.items || [], "travellers");
+          },
+          type: "Action",
         },
       ]}
       columnsData={{
@@ -74,6 +137,7 @@ export default function Table({
         },
       }}
       data={travellers?.items || []}
+      detailedFilter={filters}
       fetchRequest={fetchTravellerData}
       isLoading={loading}
       rowCount={travellers?.totalCount}
