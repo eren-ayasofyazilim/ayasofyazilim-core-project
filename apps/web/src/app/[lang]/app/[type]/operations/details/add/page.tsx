@@ -1,28 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-import Stepper, {
-  StepperContent,
-} from "@repo/ayasofyazilim-ui/organisms/stepper";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
 } from "@ayasofyazilim/saas/CRMService";
-import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { z } from "zod";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
-import { Input } from "@/components/ui/input";
+import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import Stepper, {
+  StepperContent,
+} from "@repo/ayasofyazilim-ui/organisms/stepper";
 import type { CellContext, ColumnDef } from "@tanstack/react-table";
 import { columnsGenerator } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/columnsGenerator";
-import { useLocale } from "src/providers/locale";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import {
-  getCrmServiceMerchants,
-  getCrmServiceMerchantsDetailById,
-} from "../../../crm/actions/merchant";
+import { useLocale } from "src/providers/locale";
 import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
+import {
+  getPartyDetail,
+  getPartyTableData,
+} from "../../../parties/[partyName]/action";
 import { createTag } from "../actions";
 
 interface Payment {
@@ -111,7 +111,7 @@ export default function Page() {
   const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
-    void getCrmServiceMerchants({}).then((response) => {
+    void getPartyTableData("merchants", 0, 100).then((response) => {
       if (response.type === "success") {
         setMerchantList(response.data);
       } else if (response.type === "api-error") {
@@ -124,11 +124,9 @@ export default function Page() {
   const handleMerchantChange = (value: string) => {
     setSelectedMerchant(value);
     setMerchantDetails(undefined);
-    void getCrmServiceMerchantsDetailById({
-      id: value,
-    }).then((response) => {
+    void getPartyDetail("merchants", value).then((response) => {
       if (response.type === "success") {
-        setMerchantDetails(response.data);
+        setMerchantDetails(response.data as MerchantDetailDto);
       } else if (response.type === "api-error") {
         toast.error(response.message || "Merchant loading failed");
       } else {

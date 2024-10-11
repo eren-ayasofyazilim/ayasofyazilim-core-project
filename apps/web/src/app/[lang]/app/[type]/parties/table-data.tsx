@@ -117,7 +117,7 @@ function createScheme(schema: PartiesCreateType) {
 export const dataConfigOfParties = {
   merchants: {
     translationKey: "Merchants" as const,
-    subEntityName: "Sub.Merchant" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "STORE" as const,
     createFormSchema: {
       schema: createScheme(CreateMerchantSchema),
@@ -145,7 +145,7 @@ export const dataConfigOfParties = {
   },
   "refund-points": {
     translationKey: "RefundPoints" as const,
-    subEntityName: "Sub.RefundPoint" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "REFUNDPOINT" as const,
     createFormSchema: {
       schema: createScheme(CreateRefundPointSchema),
@@ -165,7 +165,7 @@ export const dataConfigOfParties = {
   },
   customs: {
     translationKey: "Customs" as const,
-    subEntityName: "Sub.Custom" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateCustomsSchema),
@@ -180,7 +180,7 @@ export const dataConfigOfParties = {
   },
   "tax-free": {
     translationKey: "TaxFree" as const,
-    subEntityName: "Sub.TaxFree" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxFreeSchema),
@@ -195,7 +195,7 @@ export const dataConfigOfParties = {
   },
   "tax-offices": {
     translationKey: "TaxOffices" as const,
-    subEntityName: "Sub.TaxOffice" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxOfficeSchema),
@@ -210,7 +210,7 @@ export const dataConfigOfParties = {
   },
   individuals: {
     translationKey: "Individuals" as const,
-    subEntityName: "Sub.Merchant" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "STORE" as const,
     createFormSchema: {
       schema: {},
