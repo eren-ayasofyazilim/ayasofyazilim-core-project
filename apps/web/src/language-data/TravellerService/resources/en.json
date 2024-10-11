@@ -8,6 +8,13 @@
   "Travellers.New": "New Traveller",
   "Travellers.Edit": "Edit",
   "Travellers.Save": "Save",
+  "Travellers.ShowExpired": "Show Expired",
+  "Travellers.FullName": "Full Name",
+  "Travellers.FirstName": "First Name",
+  "Travellers.LastName": "Last Name",
+  "Travellers.TravelDocumentNumber": "Travel Document Number",
+  "Travellers.UserName": "User Name",
+  "Travellers.PhoneNumber": "Phone Number",
 
   "Form.name": "Full Name",
   "Form.email": "Email",

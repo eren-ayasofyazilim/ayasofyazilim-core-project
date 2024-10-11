@@ -18,6 +18,13 @@ export interface TravellerServiceResource {
   "Travellers.Save": string;
   "Travellers.New.Succes": string;
   "Travellers.New.Error": string;
+  "Travellers.ShowExpired": string;
+  "Travellers.FullName": string;
+  "Travellers.FirstName": string;
+  "Travellers.LastName": string;
+  "Travellers.TravelDocumentNumber": string;
+  "Travellers.UserName": string;
+  "Travellers.PhoneNumber": string;
 
   "Form.name": string;
   "Form.email": string;
@@ -108,6 +115,34 @@ function getLanguageData(
       resource?.["Travellers.New.Error"] ||
       data[lang]?.["Travellers.New.Error"] ||
       data.en["Travellers.New.Error"],
+    "Travellers.ShowExpired":
+      resource?.["Travellers.ShowExpired"] ||
+      data[lang]?.["Travellers.ShowExpired"] ||
+      data.en["Travellers.ShowExpired"],
+    "Travellers.FullName":
+      resource?.["Travellers.FullName"] ||
+      data[lang]?.["Travellers.FullName"] ||
+      data.en["Travellers.FullName"],
+    "Travellers.FirstName":
+      resource?.["Travellers.FirstName"] ||
+      data[lang]?.["Travellers.FirstName"] ||
+      data.en["Travellers.FirstName"],
+    "Travellers.LastName":
+      resource?.["Travellers.LastName"] ||
+      data[lang]?.["Travellers.LastName"] ||
+      data.en["Travellers.LastName"],
+    "Travellers.TravelDocumentNumber":
+      resource?.["Travellers.TravelDocumentNumber"] ||
+      data[lang]?.["Travellers.TravelDocumentNumber"] ||
+      data.en["Travellers.TravelDocumentNumber"],
+    "Travellers.UserName":
+      resource?.["Travellers.UserName"] ||
+      data[lang]?.["Travellers.UserName"] ||
+      data.en["Travellers.UserName"],
+    "Travellers.PhoneNumber":
+      resource?.["Travellers.PhoneNumber"] ||
+      data[lang]?.["Travellers.PhoneNumber"] ||
+      data.en["Travellers.PhoneNumber"],
 
     "Form.name":
       resource?.["Form.name"] ||

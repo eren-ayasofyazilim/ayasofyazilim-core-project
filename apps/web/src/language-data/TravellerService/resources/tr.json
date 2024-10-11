@@ -8,6 +8,13 @@
   "Travellers.New": "Yeni Yolcu Ekle",
   "Travellers.Edit": "Düzenle",
   "Travellers.Save": "Kaydet",
+  "Travellers.ShowExpired": "Süresi Dolanları Göster",
+  "Travellers.FullName": "Ad Soyad",
+  "Travellers.FirstName": "Ad",
+  "Travellers.LastName": "Soyad",
+  "Travellers.TravelDocumentNumber": "Seyahat Belge Numarası",
+  "Travellers.UserName": "Kullanıcı Adı",
+  "Travellers.PhoneNumber": "Telefon Numarası",
 
   "Form.name": "Tam İsim",
   "Form.email": "E-posta",
