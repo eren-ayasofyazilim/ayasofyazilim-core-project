@@ -9,6 +9,7 @@ import type {
   PutApiCrmServiceCustomsByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceCustomsByIdTelephonesByTelephoneIdData,
   PutApiCrmServiceMerchantsByIdEmailsByEmailIdData,
+  PutApiCrmServiceMerchantsByIdIndividualByIndividualIdNameByNameIdData,
   PutApiCrmServiceMerchantsByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceMerchantsByIdTelephonesByTelephoneIdData,
   PutApiCrmServiceRefundPointsByIdAddressesByAddressIdData,
@@ -113,6 +114,11 @@ export type PutEmail =
       action: "email";
       data: PutApiCrmServiceRefundPointsByIdEmailsByEmailIdData;
     };
+
+export interface PutName {
+  action: "name";
+  data: PutApiCrmServiceMerchantsByIdIndividualByIndividualIdNameByNameIdData;
+}
 
 export type GetPartiesDetailResult =
   | UniRefund_CRMService_RefundPoints_RefundPointDto

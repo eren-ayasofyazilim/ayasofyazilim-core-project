@@ -5,6 +5,7 @@ import type {
   PutAddress,
   PutEmail,
   PutMerchantOrganization,
+  PutName,
   PutOrganization,
   PutRefundPointOrganization,
   PutTaxFreeOrganization,
@@ -55,6 +56,17 @@ export async function putPartyRequests(partyType: PartyNameType) {
           },
         );
       },
+      putName: async (form: PutName["data"]) => {
+        const data = form;
+        return await client.merchant.putApiCrmServiceMerchantsByIdIndividualByIndividualIdNameByNameId(
+          {
+            requestBody: data.requestBody,
+            nameId: data.nameId,
+            individualId: data.individualId,
+            id: data.id,
+          },
+        );
+      },
     },
     "refund-points": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -97,6 +109,9 @@ export async function putPartyRequests(partyType: PartyNameType) {
           },
         );
       },
+      putName: () => {
+        //need for type definition
+      },
     },
     customs: {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -136,6 +151,9 @@ export async function putPartyRequests(partyType: PartyNameType) {
           emailId: data.emailId,
           id: data.id,
         });
+      },
+      putName: () => {
+        //need for type definition
       },
     },
     "tax-free": {
@@ -179,6 +197,9 @@ export async function putPartyRequests(partyType: PartyNameType) {
           },
         );
       },
+      putName: () => {
+        //need for type definition
+      },
     },
     "tax-offices": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -221,6 +242,9 @@ export async function putPartyRequests(partyType: PartyNameType) {
           },
         );
       },
+      putName: () => {
+        //need for type definition
+      },
     },
   };
   return partyRequests[partyType];
@@ -228,13 +252,15 @@ export async function putPartyRequests(partyType: PartyNameType) {
 
 export async function putParty(
   partyType: PartyNameType,
-  params: PutOrganization | PutTelephone | PutAddress | PutEmail,
+  params: PutOrganization | PutTelephone | PutAddress | PutEmail | PutName,
 ) {
   const client = await putPartyRequests(partyType);
   try {
     let response;
     if (params.action === "organization") {
       response = await client.putOrganization(params.data);
+    } else if (params.action === "name") {
+      response = await client.putName(params.data);
     } else if (params.action === "telephone") {
       response = await client.putTelephone(params.data);
     } else if (params.action === "address") {
