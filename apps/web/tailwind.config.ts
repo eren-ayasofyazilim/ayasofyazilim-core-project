@@ -6,7 +6,7 @@ const svgToDataUri = require("mini-svg-data-uri");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
-require('dotenv').config()
+require("dotenv").config();
 
 const config: Config = {
   content: [
@@ -170,12 +170,13 @@ function addVariablesForColors({ addBase, theme }: any) {
   });
 }
 
-function setColorFromEnvironment({ addBase }: { addBase: Function; }) {
+function setColorFromEnvironment({ addBase }: { addBase: Function }) {
   require("dotenv").config();
 
   addBase({
     ":root": {
-      "--primary-app-color": process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
+      "--primary-app-color":
+        process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
     },
   });
 }
