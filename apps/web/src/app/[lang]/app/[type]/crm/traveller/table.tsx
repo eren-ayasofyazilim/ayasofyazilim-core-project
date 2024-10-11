@@ -9,6 +9,7 @@ import type { ColumnFilter } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
@@ -102,6 +103,13 @@ export default function Table({
           cta: languageData["Travellers.New"],
           type: "NewPage",
           href: getBaseLink("app/admin/crm/traveller/new"),
+        },
+        {
+          cta: `Export CSV`,
+          callback: () => {
+            jsonToCsv(travellers?.items || [], "travellers");
+          },
+          type: "Action",
         },
       ]}
       columnsData={{
