@@ -125,7 +125,7 @@ export default function Form({
         toast.error(response.message || languageData["Travellers.New.Error"]);
       } else {
         toast.success(languageData["Travellers.New.Succes"]);
-        router.push(getBaseLink(`/app/admin/crm/traveller`));
+        router.push(getBaseLink(`/app/admin/parties/traveller`));
       }
     } catch (error) {
       toast.error(`An error occurred while saving the Traveller`);
