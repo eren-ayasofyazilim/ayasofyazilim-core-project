@@ -1,60 +1,76 @@
 {
-  "new": "Yeni",
-  "Delete": "Sil",
-  "Edit": "Düzenle",
-  "Cancel": "İptal",
   "Merchants": "Mağazalar",
-  "Merchants.New": "Yeni Mağaza",
   "Merchants.Description": "Mağazaları buradan görüntüleyebilirsiniz.",
+
+  "Merchants.New": "Yeni Mağaza",
+  "Merchants.New.Description": "Buradan yeni mağaza oluşturabilirsiniz.",
+  "Merchants.New.Success": "Mağaza başarıyla oluşturuldu.",
+  "Merchants.New.Fail": "Mağaza oluşturulurken bir hata oluştu.",
+
+  "Merchants.Edit": "Mağazayı Düzenle",
+  "Merchants.Edit.Description": "Mağazanın detaylarını buradan güncelleyebilirsiniz.",
+  "Merchants.Edit.Success": "Mağaza başarıyla güncellendi.",
+  "Merchants.Edit.Fail": "Mağaza güncellenirken bir hata oluştu.",
+
+  "Merchants.SubOrganization": "Alt Mağazalar",
+  "Merchants.SubOrganization.Description": "Buradan mağazaya bağlı alt mağazaları görüntüleyebilirsiniz.",
+  "Merchants.SubOrganization.New": "Yeni Alt Mağaza",
+  "Merchants.SubOrganization.New.Description": "Buradan mağazaya yeni alt mağaza oluşturabilirsiniz.",
+
   "RefundPoints": "İade Noktaları",
-  "RefundPoints.New": "Yeni İade Noktası",
   "RefundPoints.Description": "İade noktalarını buradan görüntüleyebilirsiniz.",
-  "Customs": "Gümrük",
-  "Customs.New": "Yeni Gümrük",
-  "Customs.Description": "Gümrükleri buradan görüntüleyebilirsiniz.",
+
+  "RefundPoints.New": "Yeni İade Noktası",
+  "RefundPoints.New.Description": "Buradan yeni bir iade noktası oluşturabilirsiniz.",
+  "RefundPoints.New.Success": "İade noktası başarıyla oluşturuldu.",
+  "RefundPoints.New.Fail": "İade noktası oluşturulurken bir hata oluştu.",
+
+  "RefundPoints.Edit": "İade Noktasını Düzenle",
+  "RefundPoints.Edit.Description": "İade noktasının detaylarını buradan güncelleyebilirsiniz.",
+  "RefundPoints.Edit.Success": "İade noktası başarıyla güncellendi.",
+  "RefundPoints.Edit.Fail": "İade noktası güncellenirken bir hata oluştu.",
+
   "TaxFree": "Tax Free",
+  "TaxFree.Description": "Tax Free hizmetlerini buradan görüntüleyebilirsiniz.",
+
   "TaxFree.New": "Yeni Tax Free",
-  "TaxFree.Description": "Tax Free lerini buradan başarabilirsiniz.",
-  "TaxOffices": "Vergi Ofisi",
+  "TaxFree.New.Description": "Buradan yeni bir Tax Free hizmeti oluşturabilirsiniz.",
+  "TaxFree.New.Success": "Tax Free hizmeti başarıyla oluşturuldu.",
+  "TaxFree.New.Fail": "Tax Free hizmeti oluşturulurken bir hata oluştu.",
+
+  "TaxFree.Edit": "Tax Free'yi Düzenle",
+  "TaxFree.Edit.Description": "Tax Free hizmetinin detaylarını buradan güncelleyebilirsiniz.",
+  "TaxFree.Edit.Success": "Tax Free hizmeti başarıyla güncellendi.",
+  "TaxFree.Edit.Fail": "Tax Free hizmeti güncellenirken bir hata oluştu.",
+
+  "Customs": "Gümrükler",
+  "Customs.Description": "Gümrük bilgilerini buradan görüntüleyebilirsiniz.",
+
+  "Customs.New": "Yeni Gümrük",
+  "Customs.New.Description": "Buradan yeni bir gümrük kaydı oluşturabilirsiniz.",
+  "Customs.New.Success": "Gümrük kaydı başarıyla oluşturuldu.",
+  "Customs.New.Fail": "Gümrük kaydı oluşturulurken bir hata oluştu.",
+
+  "Customs.Edit": "Gümrüğü Düzenle",
+  "Customs.Edit.Description": "Gümrük detaylarını buradan güncelleyebilirsiniz.",
+  "Customs.Edit.Success": "Gümrük başarıyla güncellendi.",
+  "Customs.Edit.Fail": "Gümrük güncellenirken bir hata oluştu.",
+
+  "TaxOffices": "Vergi Ofisleri",
+  "TaxOffices.Description": "Vergi ofislerini buradan görüntüleyebilirsiniz.",
+
   "TaxOffices.New": "Yeni Vergi Ofisi",
-  "TaxOffices.Description": "Vergi Ofislerini buradan görüntüleyebilirsiniz.",
-  "Merchants.Edit": "Düzenle Mağaza",
-  "RefundPoints.Edit": "Düzenle İade Noktası",
-  "Customs.Edit": "Düzenle Gümrük",
-  "TaxFree.Edit": "Düzenle Tax Free",
-  "TaxOffices.Edit": "Düzenle Vergi Ofisi",
-  "Organization": "Organizasyon",
-  "Email": "Email",
-  "Telephone": "Telefon",
-  "Address": "Adres",
-  "Save": "kaydet ",
+  "TaxOffices.New.Description": "Buradan yeni bir vergi ofisi kaydı oluşturabilirsiniz.",
+  "TaxOffices.New.Success": "Vergi ofisi başarıyla oluşturuldu.",
+  "TaxOffices.New.Fail": "Vergi ofisi oluşturulurken bir hata oluştu.",
 
-  "Sub.Merchant": "Alt Mağazalar",
-  "SubMerchant": "Alt Mağazalar",
-  "SubMerchant.New": "Yeni Alt Mağaza",
-  "SubMerchant.Description": "Yeni Alt Mağaza Ekle",
+  "TaxOffices.Edit": "Vergi Ofisini Düzenle",
+  "TaxOffices.Edit.Description": "Vergi ofisinin detaylarını buradan güncelleyebilirsiniz.",
+  "TaxOffices.Edit.Success": "Vergi ofisi başarıyla güncellendi.",
+  "TaxOffices.Edit.Fail": "Vergi ofisi güncellenirken bir hata oluştu.",
 
-  "Sub.RefundPoint": "Alt İade Noktaları",
-  "SubRefundPoint": "Alt İade Noktaları",
-  "SubRefundPoint.New": "Yeni Alt İade Noktası",
-  "SubRefundPoint.Description": "Yeni Alt İade Noktası Ekle",
-
-  "Sub.Custom": "Alt Gümrük",
-  "SubCustom": "Alt Gümrük",
-  "SubCustom.New": "Yeni Alt Gümrük",
-  "SubCustom.Description": "Yeni Alt Gümrük Ekle",
-
-  "Sub.TaxFree": "Alt Tax Free",
-  "SubTaxFree": "Alt Tax Free",
-  "SubTaxFree.New": "Yeni Alt Tax Free",
-  "SubTaxFree.Description": "Yeni Alt Tax Free Ekle",
-
-  "Sub.TaxOffice": "Alt Vergi Ofisi",
-  "SubTaxOffice": "Alt Vergi Ofisi",
-  "SubTaxOffice.New": "Yeni Alt Vergi Ofisi",
-  "SubTaxOffice.Description": "Yeni Alt Vergi Ofisi Ekle",
-
-  "Individuals": "Bireyler",
-  "Individuals.New": "Yeni Birey",
-  "Individuals.Description": "Yeni Birey Ekle"
+  "Parties.Organization": "Organizasyon",
+  "Parties.Individuals": "Bireyler",
+  "Parties.Individuals.New": "Yeni Birey",
+  "Parties.Individuals.Description": "Yeni Birey Ekle"
 }

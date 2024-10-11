@@ -53,13 +53,16 @@ export default async function Page({
     { name: languageData.Address, id: "address" },
     { name: languageData.Email, id: "email" },
     { name: languageData[formData.subEntityName], id: "SubCompany" },
-    { name: languageData.Individuals, id: "individuals" },
+    { name: languageData["Parties.Individuals"], id: "individuals" },
   ];
 
   if (organizationData) {
-    sections.unshift({ name: languageData.Organization, id: "organization" });
+    sections.unshift({
+      name: languageData["Parties.Organization"],
+      id: "organization",
+    });
   } else {
-    sections.unshift({ name: "Name", id: "name" });
+    sections.unshift({ name: languageData.Name, id: "name" });
   }
 
   const citiesEnum =
