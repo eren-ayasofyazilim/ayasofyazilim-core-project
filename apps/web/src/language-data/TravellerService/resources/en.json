@@ -21,14 +21,25 @@
   "Form.name.lastName": "Last Name",
   "Form.email.emailAddress": "Email Address",
   "Form.email.typeCode": "Email Type",
+  "Form.email.typeCode.work": "Work",
+  "Form.email.typeCode.personal": "Personal",
+
   "Form.telephone.localNumber": "Phone Number",
   "Form.telephone.typeCode": "Phone Type",
+  "Form.telephone.typeCode.home": "Home",
+  "Form.telephone.typeCode.mobile": "Mobile",
+  "Form.telephone.typeCode.work": "Work",
+  "Form.telephone.typeCode.fax": "Fax",
+
   "Form.personalSummaries.date": "Date",
   "Form.personalSummaries.birthDate": "Date of Birth",
   "Form.personalSummaries.ethnicity": "Ethnicity",
   "Form.personalSummaries.maritalStatusCode": "Marital Status",
   "Form.personalSummaries.religiousAffiliationName": "Religion",
   "Form.personalSummaries.genderTypeCode": "Gender",
+  "Form.personalSummaries.genderTypeCode.male": "Male",
+  "Form.personalSummaries.genderTypeCode.female": "Female",
+
   "Form.address.country": "Country",
   "Form.address.terriority": "Province",
   "Form.address.city": "City",
@@ -36,6 +47,9 @@
   "Form.address.addressLine": "Street Address",
   "Form.address.fullAddress": "Full Address",
   "Form.address.typeCode": "Address Type",
+  "Form.address.typeCode.home": "Home",
+  "Form.address.typeCode.office": "Office",
+
   "Form.personalIdentificationCommonDatas.firstName": "First Name",
   "Form.personalIdentificationCommonDatas.lastName": "Last Name",
   "Form.personalIdentificationCommonDatas.travelDocumentNumber": "Travel Document Number",
@@ -45,5 +59,7 @@
   "Form.personalIdentificationCommonDatas.residenceCountryCode2": "Residence Country",
   "Form.personalIdentificationCommonDatas.nationalityCountryCode2": "Nationality",
   "Form.personalIdentificationCommonDatas.identificationType": "ID Type",
+  "Form.personalIdentificationCommonDatas.identificationType.passport": "Passport",
+
   "Form.personalPreferencesTypes.languagePreferenceCode": "Preferred Language"
 }
