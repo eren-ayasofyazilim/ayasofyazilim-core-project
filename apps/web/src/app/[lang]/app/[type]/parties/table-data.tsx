@@ -12,6 +12,7 @@ import type {
 } from "@ayasofyazilim/saas/CRMService";
 import {
   $UniRefund_CRMService_Customss_CustomsProfileDto,
+  $UniRefund_CRMService_Individuals_IndividualProfileDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
@@ -205,6 +206,22 @@ export const dataConfigOfParties = {
     tableSchema: {
       excludeList: ["id", "organizationId"],
       schema: $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+    },
+  },
+  individuals: {
+    translationKey: "Individuals" as const,
+    subEntityName: "Sub.Merchant" as const,
+    subEntityType: "STORE" as const,
+    createFormSchema: {
+      schema: {},
+      formPositions: ["telephone", "address", "email"],
+
+      formSubPositions: {},
+      convertors: {},
+    },
+    tableSchema: {
+      excludeList: ["id"],
+      schema: $UniRefund_CRMService_Individuals_IndividualProfileDto,
     },
   },
 };
