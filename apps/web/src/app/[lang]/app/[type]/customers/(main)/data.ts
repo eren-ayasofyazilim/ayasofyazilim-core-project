@@ -3,7 +3,7 @@ import {
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
 import type { TableData } from "@repo/ui/utils/table/table-utils";
-import { localNumber } from "../../crm/data";
+import { localNumber } from "../../parties/table-data";
 
 interface DataConfig {
   displayName: string;
