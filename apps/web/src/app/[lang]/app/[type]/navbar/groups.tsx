@@ -311,6 +311,15 @@ export const parties: NavbarItemsFromDB[] = [
     parentNavbarItemKey: "parties",
     displayOrder: 1,
   },
+  {
+    key: "parties/individuals",
+    displayName: "Individuals",
+    description: "Manage individuals.",
+    href: "parties/individuals",
+    icon: "user",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
 ];
 export const crm: NavbarItemsFromDB[] = [
   {
