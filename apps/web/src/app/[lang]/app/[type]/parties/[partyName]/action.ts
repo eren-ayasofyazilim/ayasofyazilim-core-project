@@ -30,6 +30,8 @@ export async function getPartyRequests(partyType: PartyNameType) {
         await client.merchant.getApiCrmServiceMerchantsByIdSubMerchants({
           id,
         }),
+      getIndivuals: async (id: string) =>
+        await client.merchant.getApiCrmServiceMerchantsByIdAffiliations({ id }),
       deleteRow: async (id: string) =>
         await client.merchant.deleteApiCrmServiceMerchantsByIdWithComponents({
           id,
@@ -50,6 +52,10 @@ export async function getPartyRequests(partyType: PartyNameType) {
         await client.refundPoint.getApiCrmServiceRefundPointsByIdSubRefundPoints(
           { id },
         ),
+      getIndivuals: async (id: string) =>
+        await client.refundPoint.getApiCrmServiceRefundPointsByIdAffiliations({
+          id,
+        }),
       deleteRow: async (id: string) =>
         await client.refundPoint.deleteApiCrmServiceRefundPointsByIdWithComponents(
           {
@@ -68,6 +74,8 @@ export async function getPartyRequests(partyType: PartyNameType) {
         (await client.customs.getApiCrmServiceCustoms(data)) as GetCustomsDTO,
       getSub: async (id: string) =>
         await client.customs.getApiCrmServiceCustomsByIdSubCustoms({ id }),
+      getIndivuals: async (id: string) =>
+        await client.customs.getApiCrmServiceCustomsByIdAffiliations({ id }),
       deleteRow: async (id: string) =>
         await client.customs.deleteApiCrmServiceCustomsByIdWithComponents({
           id,
@@ -84,6 +92,8 @@ export async function getPartyRequests(partyType: PartyNameType) {
         (await client.taxFree.getApiCrmServiceTaxFrees(data)) as GetTaxFreeDTO,
       getSub: async (id: string) =>
         await client.taxFree.getApiCrmServiceTaxFreesByIdSubTaxFree({ id }),
+      getIndivuals: async (id: string) =>
+        await client.taxFree.getApiCrmServiceTaxFreesByIdAffiliations({ id }),
       deleteRow: async (id: string) =>
         await client.taxFree.deleteApiCrmServiceTaxFreesByIdWithComponents({
           id,
@@ -102,6 +112,10 @@ export async function getPartyRequests(partyType: PartyNameType) {
         )) as GetTaxOfficeDTO,
       getSub: async (id: string) =>
         await client.taxOffice.getApiCrmServiceTaxOfficesByIdSubTaxOffices({
+          id,
+        }),
+      getIndivuals: async (id: string) =>
+        await client.taxOffice.getApiCrmServiceTaxOfficesByIdAffiliations({
           id,
         }),
       deleteRow: async (id: string) =>
@@ -145,6 +159,23 @@ export async function getPartySubTableData(
   const client = await getPartyRequests(partyType);
   try {
     const response = await client.getSub(partyId);
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+export async function getPartyIndividualTableData(
+  partyType: PartyNameType,
+  partyId: string,
+) {
+  const client = await getPartyRequests(partyType);
+  try {
+    const response = await client.getIndivuals(partyId);
     return {
       type: "success",
       data: response,

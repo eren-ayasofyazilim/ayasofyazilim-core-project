@@ -32,6 +32,7 @@ export default async function Page({
       name: item.name || "",
       id: item.id || "",
     })) || [];
+
   return (
     <Form
       citiesEnum={citiesEnum}

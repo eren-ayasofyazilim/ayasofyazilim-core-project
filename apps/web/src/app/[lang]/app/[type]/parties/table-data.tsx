@@ -3,6 +3,8 @@ import type {
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
   UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
+  UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto,
+  UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto,
@@ -10,6 +12,7 @@ import type {
 } from "@ayasofyazilim/saas/CRMService";
 import {
   $UniRefund_CRMService_Customss_CustomsProfileDto,
+  $UniRefund_CRMService_Individuals_IndividualProfileDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Merchants_RefundPointProfileDto,
   $UniRefund_CRMService_TaxFrees_TaxFreeProfileDto,
@@ -32,6 +35,8 @@ export interface CreatePartiesDto {
     | UniRefund_CRMService_RefundPoints_CreateRefundPointOrganizationDto
     | UniRefund_CRMService_TaxFrees_CreateTaxFreeOrganizationDto
     | UniRefund_CRMService_TaxOffices_CreateTaxOfficeOrganizationDto;
+  name: UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto;
+  personalSummaries: UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto;
   telephone: UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
   address: UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
   email: UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
@@ -111,8 +116,8 @@ function createScheme(schema: PartiesCreateType) {
 
 export const dataConfigOfParties = {
   merchants: {
-    translationKey: "Merchants",
-    subEntityName: "Sub.Merchant" as const,
+    translationKey: "Merchants" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "STORE" as const,
     createFormSchema: {
       schema: createScheme(CreateMerchantSchema),
@@ -139,8 +144,8 @@ export const dataConfigOfParties = {
     },
   },
   "refund-points": {
-    translationKey: "RefundPoints",
-    subEntityName: "Sub.RefundPoint" as const,
+    translationKey: "RefundPoints" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "REFUNDPOINT" as const,
     createFormSchema: {
       schema: createScheme(CreateRefundPointSchema),
@@ -159,8 +164,8 @@ export const dataConfigOfParties = {
     },
   },
   customs: {
-    translationKey: "Customs",
-    subEntityName: "Sub.Custom" as const,
+    translationKey: "Customs" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateCustomsSchema),
@@ -174,8 +179,8 @@ export const dataConfigOfParties = {
     },
   },
   "tax-free": {
-    translationKey: "TaxFree",
-    subEntityName: "Sub.TaxFree" as const,
+    translationKey: "TaxFree" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxFreeSchema),
@@ -189,8 +194,8 @@ export const dataConfigOfParties = {
     },
   },
   "tax-offices": {
-    translationKey: "TaxOffices",
-    subEntityName: "Sub.TaxOffice" as const,
+    translationKey: "TaxOffices" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
     createFormSchema: {
       schema: createScheme(CreateTaxOfficeSchema),
@@ -201,6 +206,22 @@ export const dataConfigOfParties = {
     tableSchema: {
       excludeList: ["id", "organizationId"],
       schema: $UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+    },
+  },
+  individuals: {
+    translationKey: "Individuals" as const,
+    subEntityName: "Merchants.SubOrganization" as const,
+    subEntityType: "STORE" as const,
+    createFormSchema: {
+      schema: {},
+      formPositions: ["telephone", "address", "email"],
+
+      formSubPositions: {},
+      convertors: {},
+    },
+    tableSchema: {
+      excludeList: ["id"],
+      schema: $UniRefund_CRMService_Individuals_IndividualProfileDto,
     },
   },
 };

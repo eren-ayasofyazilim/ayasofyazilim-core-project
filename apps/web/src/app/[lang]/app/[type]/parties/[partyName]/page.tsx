@@ -14,9 +14,8 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getResourceDataClient } from "src/language-data/CRMService";
-import { useLocale } from "src/providers/locale";
-import type { PartiesResultType, PartyNameType } from "../types";
 import { dataConfigOfParties } from "../table-data";
+import type { PartiesResultType, PartyNameType } from "../types";
 import { deletePartyRow, getPartyTableData } from "./action";
 
 export default function Page({
@@ -25,8 +24,7 @@ export default function Page({
   params: { partyName: PartyNameType; lang: string };
 }) {
   const router = useRouter();
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+  const languageData = getResourceDataClient(params.lang);
 
   const formData = dataConfigOfParties[params.partyName];
   const [tableData, setTableData] = useState<PartiesResultType>();
