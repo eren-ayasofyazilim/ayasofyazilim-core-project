@@ -1,12 +1,12 @@
 "use server";
 import type {
   DeleteApiContractServiceRebateTablesRebateTableHeadersByIdData,
-  GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
+  GetApiContractServiceRebateTablesRebateTableHeadersByIdData,
   GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
+  PagedResultDto_RebateTableHeaderDto,
   PostApiContractServiceRebateTablesRebateTableHeadersData,
   PutApiContractServiceRebateTablesRebateTableHeadersByIdData,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_18,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
@@ -28,19 +28,19 @@ export async function getRebateTablesRebateTableHeadersTemplates(
       type: "success",
       data: response,
       status: 200,
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_18>;
+    } as ServerResponse<PagedResultDto_RebateTableHeaderDto>;
   } catch (error) {
     return structuredError(error);
   }
 } //get rebate tables templates
 export async function getRebateTablesRebateTableHeadersDetailsById(
-  body: GetApiContractServiceRebateTablesRebateTableHeadersDetailByIdData,
+  body: GetApiContractServiceRebateTablesRebateTableHeadersByIdData,
 ) {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersDetailById(
+      await client.rebateTables.getApiContractServiceRebateTablesRebateTableHeadersById(
         body,
       );
     revalidatePath("/");

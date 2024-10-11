@@ -4,7 +4,7 @@ import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderCreateDto as CreateType,
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto as ListItemType,
-  Volo_Abp_Application_Dtos_PagedResultDto_19 as PagedResultType,
+  PagedResultDto_RefundFeeHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderCreateDto as createSchema,
@@ -31,7 +31,7 @@ export default function RefundFees({
   languageData: ContractServiceResource;
 }) {
   const router = useRouter();
-  const [initData, setInitData] = useState<PagedResultType>();
+  const [initData, setInitData] = useState<PagedResultDto_RefundFeeHeaderDto>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     void getRefundTableFeeHeaders({})
