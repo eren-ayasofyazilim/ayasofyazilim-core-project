@@ -85,12 +85,12 @@ export default async function Page({
             />
           ) : null}
 
-          {individualData ? (
+          {params.partyName === "merchants" && individualData ? (
             <NameForm
               individualData={individualData.name}
               languageData={languageData}
               partyId={params.partyId}
-              partyName="merchants"
+              partyName={params.partyName}
             />
           ) : null}
           <Telephone
