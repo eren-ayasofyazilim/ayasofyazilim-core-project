@@ -8,7 +8,7 @@ import type {
   UniRefund_TravellerService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_CreateWithComponentsTravellerDto } from "@ayasofyazilim/saas/TravellerService";
-import { localNumber } from "../data";
+import { localNumber } from "../table-data";
 
 export interface CreateTravellerDTO {
   name: UniRefund_TravellerService_NameCommonDatas_CreateNameCommonDataDto;

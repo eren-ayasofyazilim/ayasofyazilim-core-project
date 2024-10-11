@@ -21,7 +21,7 @@ import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { getResourceDataClient } from "src/language-data/CustomersService";
-import { localNumber } from "../../crm/data";
+import { localNumber } from "../../parties/table-data";
 import { updateCRMDetailServer, updateMerchantCRMDetailServer } from "./action";
 import { address, email, organization, telephone } from "./data";
 
