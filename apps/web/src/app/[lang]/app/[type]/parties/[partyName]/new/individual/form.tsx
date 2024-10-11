@@ -67,6 +67,7 @@ export default function Individual({
   const router = useRouter();
 
   function formSchemaByData() {
+    const config = dataConfigOfParties[partyName];
     const schema = createScheme(CreateMerchantSchema);
     const address = addressSchemaByData([], citiesEnum, [
       "country",
@@ -83,6 +84,7 @@ export default function Individual({
       },
     };
     const formSubPositions = {
+      ...config.createFormSchema.formSubPositions,
       address: address.subPositions,
     };
     return createZodObject(
