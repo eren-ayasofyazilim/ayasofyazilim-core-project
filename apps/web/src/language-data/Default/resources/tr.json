@@ -2,6 +2,7 @@
   "Back": "Geri",
   "Save": "Kaydet",
   "Delete": "Sil",
+  "Delete.Assurance": "Silmek istediğinize emin misiniz?",
   "Cancel": "İptal",
 
   "New": "Yeni",
@@ -12,6 +13,7 @@
   "Edit.Success": "Veriler başarıyla güncellendi.",
   "Edit.Fail": "Güncellenirken bir hata oluştu.",
 
+  "Name": "İsim",
   "Telephone": "Telefon",
   "Address": "Adres",
   "Email": "Email",

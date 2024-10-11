@@ -2,6 +2,7 @@
   "Back": "Back",
   "Save": "Save",
   "Delete": "Delete",
+  "Delete.Assurance": "Are you sure you want to delete?",
   "Cancel": "Cancel",
 
   "New": "New",
@@ -12,6 +13,7 @@
   "Edit.Success": "Data updated successfully.",
   "Edit.Fail": "An error occurred while updating data.",
 
+  "Name": "Name",
   "Telephone": "Telephone",
   "Address": "Address",
   "Email": "Email",
