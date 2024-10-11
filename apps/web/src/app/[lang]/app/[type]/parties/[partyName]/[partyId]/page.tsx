@@ -12,7 +12,7 @@ import NameForm from "./name/form";
 import OrganizationForm from "./organization/form";
 import Telephone from "./telephone/form";
 import SubCompany from "./subcompanies-table/form";
-import Individual from "./indivudials-table/form";
+import Individual from "./individuals-table/form";
 
 export default async function Page({
   params,
