@@ -36,7 +36,7 @@ export const unirefundNavbarDataFromDB: NavbarItemsFromDB[] = [
   },
   {
     key: "operations/details",
-    displayName: "Tax Free Tags",
+    displayName: "TaxFreeTags",
     description: "Manage tax-free tags and settings.",
     href: "operations/details",
     icon: "dashboard",
