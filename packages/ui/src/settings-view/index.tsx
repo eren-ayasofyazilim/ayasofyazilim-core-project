@@ -18,8 +18,10 @@ import {
 } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
   AutoFormSubmit,
-  AutoFormTypes,
-  AutoFormUtils,
+  Dependency,
+  DependencyType,
+  FieldConfig,
+  ZodObjectOrWrapped,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout";
 import { useEffect, useState } from "react";
@@ -129,7 +131,7 @@ function subField(
 function createFieldConfig(
   object: UniRefund_SettingService_Groups_GroupDto,
   resources: any,
-): AutoFormTypes.FieldConfig<{ [x: string]: any }> {
+): FieldConfig<{ [x: string]: any }> {
   let configs = object?.items?.map(
     (item: UniRefund_SettingService_Items_GroupItemDto) => {
       if (item.subItems && item.subItems.length > 0) {
@@ -151,7 +153,7 @@ type createBondType = {
 type bondType = {
   sourceField: string;
   targetField: string;
-  type?: AutoFormTypes.DependencyType;
+  type?: DependencyType;
   hasParentField: boolean;
   when: (val: any) => boolean;
 };
@@ -174,7 +176,7 @@ function createBonds(sett: createBondType): bondType[] {
     let createdBond: bondType = {
       sourceField: sourceField ?? "", //bond.key is not nullable fix it
       targetField: sett.targetField,
-      type: bond.type as AutoFormTypes.DependencyType,
+      type: bond.type as DependencyType,
       hasParentField: sett.parentField ? true : false,
       when: (val: any) => createSafeRegex(val, bond.pattern),
     };
@@ -183,7 +185,7 @@ function createBonds(sett: createBondType): bondType[] {
 }
 function createDependencies(
   group: UniRefund_SettingService_Groups_GroupDto,
-): AutoFormTypes.Dependency<{ [x: string]: any }>[] {
+): Dependency<{ [x: string]: any }>[] {
   let bonds = group?.items?.map(
     (item: UniRefund_SettingService_Items_GroupItemDto) => {
       if (item.subItems && item.subItems.length > 0) {
@@ -317,9 +319,9 @@ function createJsonSchema(
 }
 
 function Content(
-  fieldConfig: AutoFormTypes.FieldConfig<{ [x: string]: any }>,
+  fieldConfig: FieldConfig<{ [x: string]: any }>,
   formSchema: any,
-  dependencies: AutoFormTypes.Dependency<{ [x: string]: any }>[],
+  dependencies: Dependency<{ [x: string]: any }>[],
 ) {
   return (
     <div className="min-w-3xl mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-8">
@@ -363,7 +365,9 @@ export function SettingsView({
   onSettingPageChange: (oldPath: string, newPath: string) => void;
 }) {
   function initialActiveGroup() {
-    const activeGroupByPath = list.groups?.find((item: {key: string}) => item.key === path);
+    const activeGroupByPath = list.groups?.find(
+      (item: { key: string }) => item.key === path,
+    );
     if (activeGroupByPath) return activeGroupByPath;
     return list?.groups?.[0];
   }
@@ -380,7 +384,7 @@ export function SettingsView({
       group.items?.map(
         (item: UniRefund_SettingService_Items_GroupItemDto) => item.key,
       ) || [],
-    ) as AutoFormUtils.ZodObjectOrWrapped;
+    ) as ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
     return Content(fieldConfig, formSchema, dependencies);
@@ -407,7 +411,7 @@ export function SettingsView({
       group?.items?.map(
         (item: UniRefund_SettingService_Items_GroupItemDto) => item.key,
       ) || [],
-    ) as AutoFormUtils.ZodObjectOrWrapped;
+    ) as ZodObjectOrWrapped;
     const fieldConfig = createFieldConfig(group, resources);
     const dependencies = createDependencies(group);
 

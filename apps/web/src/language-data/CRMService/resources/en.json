@@ -1,39 +1,76 @@
 {
-  "new": "New",
-  "Delete": "Delete",
-  "Delete.Assurance": "Are you sure you want to delete?",
-  "Edit": "Edit",
-  "Cancel": "Cancel",
-  "Merchants": "Merchants",
-  "Merchants.New": "New Merchant",
-  "Merchants.Description": "You can view the merchants from here.",
+  "Merchants": "Stores",
+  "Merchants.Description": "You can view stores from here.",
+
+  "Merchants.New": "New Store",
+  "Merchants.New.Description": "You can create a new store from here.",
+  "Merchants.New.Success": "Store created successfully.",
+  "Merchants.New.Fail": "An error occurred while creating the store.",
+
+  "Merchants.Edit": "Edit Store",
+  "Merchants.Edit.Description": "You can update the store's details from here.",
+  "Merchants.Edit.Success": "Store updated successfully.",
+  "Merchants.Edit.Fail": "An error occurred while updating the store.",
+
+  "Merchants.SubOrganization": "Sub Stores",
+  "Merchants.SubOrganization.Description": "You can view sub stores related to the main store from here.",
+  "Merchants.SubOrganization.New": "New Sub Store",
+  "Merchants.SubOrganization.New.Description": "You can create a new sub store for the main store from here.",
+
   "RefundPoints": "Refund Points",
+  "RefundPoints.Description": "You can view refund points from here.",
+
   "RefundPoints.New": "New Refund Point",
-  "RefundPoints.Description": "You can view the refund points from here.",
-  "Customs": "Customs",
-  "Customs.New": "New Custom",
-  "Customs.Description": "You can view the customs from here.",
-  "TaxFree": "Tax Free",
-  "TaxFree.New": "New Tax Free",
-  "TaxFree.Description": "You can view the tax free from here.",
-  "TaxOffices": "Tax Office",
-  "TaxOffices.New": "New Tax Office",
-  "TaxOffices.Description": "You can view the tax office from here.",
-  "Merchants.Edit": "Edit Merchant",
+  "RefundPoints.New.Description": "You can create a new refund point from here.",
+  "RefundPoints.New.Success": "Refund point created successfully.",
+  "RefundPoints.New.Fail": "An error occurred while creating the refund point.",
+
   "RefundPoints.Edit": "Edit Refund Point",
-  "Customs.Edit": "Edit Custom",
+  "RefundPoints.Edit.Description": "You can update the refund point's details from here.",
+  "RefundPoints.Edit.Success": "Refund point updated successfully.",
+  "RefundPoints.Edit.Fail": "An error occurred while updating the refund point.",
+
+  "TaxFree": "Tax Free",
+  "TaxFree.Description": "You can view Tax Free services from here.",
+
+  "TaxFree.New": "New Tax Free",
+  "TaxFree.New.Description": "You can create a new Tax Free service from here.",
+  "TaxFree.New.Success": "Tax Free service created successfully.",
+  "TaxFree.New.Fail": "An error occurred while creating the Tax Free service.",
+
   "TaxFree.Edit": "Edit Tax Free",
+  "TaxFree.Edit.Description": "You can update the details of the Tax Free service from here.",
+  "TaxFree.Edit.Success": "Tax Free service updated successfully.",
+  "TaxFree.Edit.Fail": "An error occurred while updating the Tax Free service.",
+
+  "Customs": "Customs",
+  "Customs.Description": "You can view customs information from here.",
+
+  "Customs.New": "New Customs",
+  "Customs.New.Description": "You can create a new customs record from here.",
+  "Customs.New.Success": "Customs record created successfully.",
+  "Customs.New.Fail": "An error occurred while creating the customs record.",
+
+  "Customs.Edit": "Edit Customs",
+  "Customs.Edit.Description": "You can update customs details from here.",
+  "Customs.Edit.Success": "Customs updated successfully.",
+  "Customs.Edit.Fail": "An error occurred while updating customs.",
+
+  "TaxOffices": "Tax Offices",
+  "TaxOffices.Description": "You can view tax offices from here.",
+
+  "TaxOffices.New": "New Tax Office",
+  "TaxOffices.New.Description": "You can create a new tax office record from here.",
+  "TaxOffices.New.Success": "Tax office created successfully.",
+  "TaxOffices.New.Fail": "An error occurred while creating the tax office.",
+
   "TaxOffices.Edit": "Edit Tax Office",
-  "Organization": "Organization",
-  "Email": "Email",
-  "Telephone": "Telephone",
-  "Address": "Address",
-  "Save": "Save",
-  "Sub.Company": "Stores",
-  "SubCompany": "Stores",
-  "SubCompany.New": " New Store",
-  "SubCompany.Description": "Add new Store",
-  "Individuals": "Individuals",
-  "Individuals.New": "New Individual",
-  "Individuals.Description": "Add new Individual"
+  "TaxOffices.Edit.Description": "You can update the details of the tax office from here.",
+  "TaxOffices.Edit.Success": "Tax office updated successfully.",
+  "TaxOffices.Edit.Fail": "An error occurred while updating the tax office.",
+
+  "Parties.Organization": "Organization",
+  "Parties.Individuals": "Individuals",
+  "Parties.Individuals.New": "New Individual",
+  "Parties.Individuals.Description": "Add New Individual"
 }

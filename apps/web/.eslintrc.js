@@ -7,5 +7,6 @@ module.exports = {
     /* Should stay disabled */
     camelcase: "off",
     "import/no-cycle": "off",
+    "no-return-await": "off",
   },
 };

@@ -2,22 +2,24 @@
 
 import type {
   GetApiTravellerServiceTravellersByIdResponse,
-  PostApiTravellerServiceTravellersResponse,
+  GetApiTravellerServiceTravellersData,
+  PostApiTravellerServiceTravellersWithComponentsData,
   PutApiTravellerServiceTravellersByIdData,
   PutApiTravellerServiceTravellersByIdResponse,
-  UniRefund_TravellerService_Travellers_CreateTravellerDto,
+  UniRefund_TravellerService_Travellers_CreateTravellerResponseDto,
   Volo_Abp_Application_Dtos_PagedResultDto_15,
 } from "@ayasofyazilim/saas/TravellerService";
 import type { ErrorTypes, ServerResponse } from "src/lib";
 import { getTravellersServiceClient, structuredError } from "src/lib";
 
-export async function getTravellers(): Promise<
-  ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>
-> {
+export async function getTravellers(
+  body: GetApiTravellerServiceTravellersData,
+): Promise<ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_15>> {
   try {
     const client = await getTravellersServiceClient();
-    const response =
-      (await client.traveller.getApiTravellerServiceTravellers()) as Volo_Abp_Application_Dtos_PagedResultDto_15;
+    const response = (await client.traveller.getApiTravellerServiceTravellers(
+      body,
+    )) as Volo_Abp_Application_Dtos_PagedResultDto_15;
     return {
       data: response,
       message: "Travellers fetched succesfully",
@@ -29,16 +31,18 @@ export async function getTravellers(): Promise<
   }
 }
 
-export async function createTraveller(
-  formdata: UniRefund_TravellerService_Travellers_CreateTravellerDto,
+export async function createTravellerWithComponents(
+  body: PostApiTravellerServiceTravellersWithComponentsData,
 ): Promise<
-  ServerResponse<PostApiTravellerServiceTravellersResponse> | ErrorTypes
+  | ServerResponse<UniRefund_TravellerService_Travellers_CreateTravellerResponseDto>
+  | ErrorTypes
 > {
   try {
     const client = await getTravellersServiceClient();
-    const response = await client.traveller.postApiTravellerServiceTravellers({
-      requestBody: formdata,
-    });
+    const response =
+      await client.traveller.postApiTravellerServiceTravellersWithComponents(
+        body,
+      );
     return {
       type: "success",
       data: response,

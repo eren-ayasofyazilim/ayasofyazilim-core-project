@@ -256,7 +256,71 @@ export const settings: NavbarItemsFromDB[] = [
     displayOrder: 1,
   },
 ];
-
+export const parties: NavbarItemsFromDB[] = [
+  {
+    key: "parties",
+    displayName: "Parties",
+    description: "Manage customer relationship management settings.",
+    href: "parties/merchants",
+    icon: "layer",
+    parentNavbarItemKey: "/",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/merchants",
+    displayName: "Merchants",
+    description: "Manage merchant accounts and details.",
+    href: "parties/merchants",
+    icon: "shop",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/refund-points",
+    displayName: "Refund Points",
+    description: "Manage refund points and settings.",
+    href: "parties/refund-points",
+    icon: "refund",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/customs",
+    displayName: "Customs",
+    description: "Manage customs settings and configurations.",
+    href: "parties/customs",
+    icon: "container",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/tax-free",
+    displayName: "Tax Free",
+    description: "Manage tax-free settings and exemptions.",
+    href: "parties/tax-free",
+    icon: "tax",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/tax-offices",
+    displayName: "Tax Offices",
+    description: "Manage tax office details and settings.",
+    href: "parties/tax-offices",
+    icon: "taxOffice",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+  {
+    key: "parties/individuals",
+    displayName: "Individuals",
+    description: "Manage individuals.",
+    href: "parties/individuals",
+    icon: "user",
+    parentNavbarItemKey: "parties",
+    displayOrder: 1,
+  },
+];
 export const crm: NavbarItemsFromDB[] = [
   {
     key: "crm",
