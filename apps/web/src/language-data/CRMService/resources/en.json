@@ -2,12 +2,12 @@
   "Merchants": "Stores",
   "Merchants.Description": "You can view stores from here.",
 
-  "Merchants.New": "New Store",
+  "Merchants.New": "New Merchant",
   "Merchants.New.Description": "You can create a new store from here.",
   "Merchants.New.Success": "Store created successfully.",
   "Merchants.New.Fail": "An error occurred while creating the store.",
 
-  "Merchants.Edit": "Edit Store",
+  "Merchants.Edit": "Edit Merchant",
   "Merchants.Edit.Description": "You can update the store's details from here.",
   "Merchants.Edit.Success": "Store updated successfully.",
   "Merchants.Edit.Fail": "An error occurred while updating the store.",
@@ -46,12 +46,12 @@
   "Customs": "Customs",
   "Customs.Description": "You can view customs information from here.",
 
-  "Customs.New": "New Customs",
+  "Customs.New": "New Custom",
   "Customs.New.Description": "You can create a new customs record from here.",
   "Customs.New.Success": "Customs record created successfully.",
   "Customs.New.Fail": "An error occurred while creating the customs record.",
 
-  "Customs.Edit": "Edit Customs",
+  "Customs.Edit": "Edit Custom",
   "Customs.Edit.Description": "You can update customs details from here.",
   "Customs.Edit.Success": "Customs updated successfully.",
   "Customs.Edit.Fail": "An error occurred while updating customs.",
