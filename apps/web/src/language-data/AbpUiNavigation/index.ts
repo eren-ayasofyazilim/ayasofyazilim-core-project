@@ -57,6 +57,7 @@ export interface AbpUiNavigationResource {
   MyAccount: string;
   TextTemplates: string;
   AdminManagement: string;
+  Individuals: string;
 
   //new
 
@@ -504,6 +505,11 @@ function getLanguageData(
       navigationResource?.["Traveller.Description"] ||
       data[lang]?.["Traveller.Description"] ||
       data.en["Traveller.Description"],
+
+    Individuals:
+      navigationResource?.Individuals ||
+      data[lang]?.Individuals ||
+      data.en.Individuals,
   };
 }
 export async function getResourceData(lang: string) {

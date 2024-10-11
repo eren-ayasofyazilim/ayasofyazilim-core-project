@@ -115,5 +115,8 @@
   "AuditLogs.Description": "Audit Logs listesini görüntüleyebilirsiniz.",
   "TextTemplates.Description": "Yazı şablonlarını buradan inceleyebilirsiniz.",
   "Skor.Description": "Skor hesaplamalarını buradan görüntüleyebilirsiniz.",
+
+  "Individuals": "Bireyler",
+
   "Skor": "Skor Hesaplama"
 }
