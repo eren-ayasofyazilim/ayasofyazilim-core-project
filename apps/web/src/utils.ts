@@ -3,7 +3,6 @@ import type { Volo_Abp_AspNetCore_Mvc_ApplicationConfigurations_ApplicationLocal
 import type { ZodObjectOrWrapped } from "node_modules/@repo/ayasofyazilim-ui/src/organisms/auto-form/utils";
 import type { ZodSchema } from "zod";
 import { z } from "zod";
-import type { AbpUiNavigationResource } from "./language-data/AbpUiNavigation";
 import { defaultResources } from "./resources";
 
 type LocalizationDto =
@@ -131,34 +130,6 @@ function isJsonSchema(object: any): object is JsonSchema {
 }
 function isSchemaType(object: any): object is SchemaType {
   return object && "required" in object;
-}
-
-export function generateNavigationItems(
-  dataConfig: Record<string, any>,
-  arrayOfKeys: string[],
-  languageData: AbpUiNavigationResource,
-  baseType: string,
-  baseRoute: string,
-  paramsLang: string,
-  icon: JSX.Element,
-) {
-  return Object.entries(dataConfig)
-    .filter((i) => arrayOfKeys.includes(i[0]))
-    .map(([key, value]) => ({
-      key,
-      title:
-        languageData[
-          value.displayName.replaceAll(" ", "") as keyof typeof languageData
-        ] || value.displayName,
-      href: getBaseLink(
-        `app/${baseType}/${baseRoute}/${key}/${value.default}`,
-        true,
-        paramsLang,
-      ),
-      type: "admin",
-      appType: "",
-      icon,
-    }));
 }
 
 // schema: SchemaType

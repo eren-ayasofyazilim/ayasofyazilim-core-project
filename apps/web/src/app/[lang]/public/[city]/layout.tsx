@@ -29,62 +29,62 @@ export default async function Layout({ children, params }: LayoutProps) {
   const user = session?.user;
   const links: linksProp = [
     {
-      text: languageData.Investor,
+      text: "Investor",
       submenu: [
         {
-          text: languageData.Invest,
+          text: "Invest",
           href: getBaseLink(`public/${appName}/projects`, true),
         },
         {
-          text: languageData.SupportCenter,
+          text: "SupportCenter",
           href: "#",
         },
       ],
     },
     {
-      text: languageData.Entrepreneur,
+      text: "Entrepreneur",
       submenu: [
         {
-          text: languageData.SubmitYourProject,
+          text: "SubmitYourProject",
           href: "#",
         },
         {
-          text: languageData.SupportCenter,
+          text: "SupportCenter",
           href: "#",
         },
         {
-          text: languageData.HowDoIFindTheNecessaryFunds,
+          text: "HowDoIFindTheNecessaryFunds",
           href: "#",
         },
       ],
     },
     {
-      text: languageData.Institutional,
+      text: "Institutional",
       submenu: [
         {
-          text: languageData.AboutUs,
+          text: "AboutUs",
           href: "#",
         },
         {
-          text: languageData.OurTeam,
+          text: "OurTeam",
           href: "#",
         },
         {
-          text: languageData.Contact,
+          text: "Contact",
           href: "#",
         },
         {
-          text: languageData.BoardOfDirectors,
+          text: "BoardOfDirectors",
           href: "#",
         },
         {
-          text: languageData.InvestingCommittee,
+          text: "InvestingCommittee",
           href: "#",
         },
       ],
     },
     {
-      text: languageData.Campaigns,
+      text: "Campaigns",
       href: getBaseLink(`public/${appName}/projects`, true),
     },
   ];
@@ -101,17 +101,17 @@ export default async function Layout({ children, params }: LayoutProps) {
         ? [
             {
               href: getBaseLink(`app/admin`, true, params.lang),
-              title: languageData.AdminCenter,
+              title: "AdminCenter",
               icon: <ShieldAlert className="mr-2 h-4 w-4" />,
             },
             {
               href: getBaseLink(`app/entrepreneur`, true, params.lang),
-              title: languageData.EntrepreneurCenter,
+              title: "EntrepreneurCenter",
               icon: <Projector className="mr-2 h-4 w-4" />,
             },
             {
               href: getBaseLink(`app/investor`, true, params.lang),
-              title: languageData.InvestorCenter,
+              title: "InvestorCenter",
               icon: <Worm className="mr-2 h-4 w-4" />,
             },
           ]

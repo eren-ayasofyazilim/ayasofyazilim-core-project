@@ -86,7 +86,6 @@ function getLanguageData(
   const projectResource = resources.ProjectService?.texts;
   const accountResource = resources.AbpAccount?.texts;
   const uiResource = resources.AbpUi?.texts;
-  const navigationResource = resources.AbpUiNavigation?.texts;
   return {
     Next: uiResource?.PagerNext || data[lang]?.Next || data.en.Next,
     Previous:
@@ -98,8 +97,7 @@ function getLanguageData(
       resources.AbpUiNavigation?.texts?.LogIn ||
       data[lang]?.LogIn ||
       data.en.LogIn,
-    HomePage:
-      navigationResource?.HomePage || data[lang]?.HomePage || data.en.HomePage,
+    HomePage: "Home",
     DaysLeft:
       projectResource?.DaysLeft || data[lang]?.DaysLeft || data.en.DaysLeft,
     InvestNow:
