@@ -6,6 +6,8 @@ const svgToDataUri = require("mini-svg-data-uri");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
+require("dotenv").config();
+
 const config: Config = {
   content: [
     "./src/app/**/*.tsx",
@@ -33,7 +35,7 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           // DEFAULT: "hsl(var(--primary))",
-          DEFAULT: `hsl(${process.env.PRIMARY_COLOR})`,
+          DEFAULT: "hsl(var(--primary-app-color))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -129,6 +131,7 @@ const config: Config = {
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
     addVariablesForColors,
+    setColorFromEnvironment,
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
@@ -166,4 +169,16 @@ function addVariablesForColors({ addBase, theme }: any) {
     ":root": newVars,
   });
 }
+
+function setColorFromEnvironment({ addBase }: { addBase: Function }) {
+  require("dotenv").config();
+
+  addBase({
+    ":root": {
+      "--primary-app-color":
+        process.env.NEXT_PUBLIC_PRIMARY_COLOR || "240 100% 50%",
+    },
+  });
+}
+
 export default config;

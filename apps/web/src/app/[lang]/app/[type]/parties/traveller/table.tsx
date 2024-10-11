@@ -102,7 +102,7 @@ export default function Table({
         {
           cta: languageData["Travellers.New"],
           type: "NewPage",
-          href: getBaseLink("app/admin/crm/traveller/new"),
+          href: getBaseLink("app/admin/parties/traveller/new"),
         },
         {
           cta: `Export CSV`,
@@ -129,7 +129,7 @@ export default function Table({
               type: "Action",
               callback: (originalRow: { id: string }) => {
                 router.push(
-                  getBaseLink(`app/admin/crm/traveller/${originalRow.id}`),
+                  getBaseLink(`app/admin/parties/traveller/${originalRow.id}`),
                 );
               },
             },

@@ -18,12 +18,12 @@ import {
 import { getResourceDataClient } from "src/language-data/DebtorsService";
 import { useLocale } from "src/providers/locale";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import { localNumber } from "../../crm/data";
 import {
   updateDebtorDetailServer,
   updateDebtorInformationServer,
 } from "../actions/action";
 import { address, email, organization, telephone } from "../data";
+import { localNumber } from "../../parties/table-data";
 
 export default function Form({
   crmDetailData,
