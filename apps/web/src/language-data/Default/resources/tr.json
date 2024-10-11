@@ -1,4 +1,21 @@
 {
+  "Back": "Geri",
+  "Save": "Kaydet",
+  "Delete": "Sil",
+  "Cancel": "İptal",
+
+  "New": "Yeni",
+  "New.Success": "Başarıyla oluşturuldu",
+  "New.Fail": "Kayıt oluşturulurken bir hata oluştu.",
+
+  "Edit": "Düzenle",
+  "Edit.Success": "Veriler başarıyla güncellendi.",
+  "Edit.Fail": "Güncellenirken bir hata oluştu.",
+
+  "Telephone": "Telefon",
+  "Address": "Adres",
+  "Email": "Email",
+
   "FileUploader.CannotUploadMoreThanOne": "Birden fazla dosya yükleyemezsiniz",
   "FileUploader.CannotUploadMoreThan{0}": "En fazla {0} dosya yükleyebilirsiniz",
   "FileUploader.RejectedFile {0}": "Dosya {0} reddedildi",

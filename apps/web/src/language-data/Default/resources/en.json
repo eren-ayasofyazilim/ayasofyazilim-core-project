@@ -1,4 +1,21 @@
 {
+  "Back": "Back",
+  "Save": "Save",
+  "Delete": "Delete",
+  "Cancel": "Cancel",
+
+  "New": "New",
+  "New.Success": "Created successfully.",
+  "New.Fail": "An error occurred while creating the record.",
+
+  "Edit": "Edit",
+  "Edit.Success": "Data updated successfully.",
+  "Edit.Fail": "An error occurred while updating data.",
+
+  "Telephone": "Telephone",
+  "Address": "Address",
+  "Email": "Email",
+
   "FileUploader.CannotUploadMoreThanOne": "Cannot upload more than 1 file at a time",
   "FileUploader.CannotUploadMoreThan{0}": "Cannot upload more than {0} files",
   "FileUploader.RejectedFile {0}": "File {0} was rejected",
