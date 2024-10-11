@@ -30,14 +30,22 @@ export interface TravellerServiceResource {
   "Form.name.lastName": string;
   "Form.email.emailAddress": string;
   "Form.email.typeCode": string;
+  "Form.email.typeCode.work": string;
+  "Form.email.typeCode.personal": string;
   "Form.telephone.localNumber": string;
   "Form.telephone.typeCode": string;
+  "Form.telephone.typeCode.home": string;
+  "Form.telephone.typeCode.mobile": string;
+  "Form.telephone.typeCode.work": string;
+  "Form.telephone.typeCode.fax": string;
   "Form.personalSummaries.date": string;
   "Form.personalSummaries.birthDate": string;
   "Form.personalSummaries.ethnicity": string;
   "Form.personalSummaries.maritalStatusCode": string;
   "Form.personalSummaries.religiousAffiliationName": string;
   "Form.personalSummaries.genderTypeCode": string;
+  "Form.personalSummaries.genderTypeCode.male": string;
+  "Form.personalSummaries.genderTypeCode.female": string;
   "Form.address.country": string;
   "Form.address.terriority": string;
   "Form.address.city": string;
@@ -45,6 +53,8 @@ export interface TravellerServiceResource {
   "Form.address.addressLine": string;
   "Form.address.fullAddress": string;
   "Form.address.typeCode": string;
+  "Form.address.typeCode.home": string;
+  "Form.address.typeCode.office": string;
   "Form.personalIdentificationCommonDatas.firstName": string;
   "Form.personalIdentificationCommonDatas.lastName": string;
   "Form.personalIdentificationCommonDatas.travelDocumentNumber": string;
@@ -55,6 +65,7 @@ export interface TravellerServiceResource {
   "Form.personalIdentificationCommonDatas.residenceCountryCode2": string;
   "Form.personalIdentificationCommonDatas.nationalityCountryCode2": string;
   "Form.personalIdentificationCommonDatas.identificationType": string;
+  "Form.personalIdentificationCommonDatas.identificationType.passport": string;
   "Form.personalPreferencesTypes.languagePreferenceCode": string;
 }
 function getLanguageData(
@@ -142,6 +153,14 @@ function getLanguageData(
       resource?.["Form.email.typeCode"] ||
       data[lang]?.["Form.email.typeCode"] ||
       data.en["Form.email.typeCode"],
+    "Form.email.typeCode.work":
+      resource?.["Form.email.typeCode.work"] ||
+      data[lang]?.["Form.email.typeCode.work"] ||
+      data.en["Form.email.typeCode.work"],
+    "Form.email.typeCode.personal":
+      resource?.["Form.email.typeCode.personal"] ||
+      data[lang]?.["Form.email.typeCode.personal"] ||
+      data.en["Form.email.typeCode.personal"],
     "Form.telephone.localNumber":
       resource?.["Form.telephone.localNumber"] ||
       data[lang]?.["Form.telephone.localNumber"] ||
@@ -150,6 +169,22 @@ function getLanguageData(
       resource?.["Form.telephone.typeCode"] ||
       data[lang]?.["Form.telephone.typeCode"] ||
       data.en["Form.telephone.typeCode"],
+    "Form.telephone.typeCode.work":
+      resource?.["Form.telephone.typeCode.work"] ||
+      data[lang]?.["Form.telephone.typeCode.work"] ||
+      data.en["Form.telephone.typeCode.work"],
+    "Form.telephone.typeCode.mobile":
+      resource?.["Form.telephone.typeCode.mobile"] ||
+      data[lang]?.["Form.telephone.typeCode.mobile"] ||
+      data.en["Form.telephone.typeCode.mobile"],
+    "Form.telephone.typeCode.home":
+      resource?.["Form.telephone.typeCode.home"] ||
+      data[lang]?.["Form.telephone.typeCode.home"] ||
+      data.en["Form.telephone.typeCode.home"],
+    "Form.telephone.typeCode.fax":
+      resource?.["Form.telephone.typeCode.fax"] ||
+      data[lang]?.["Form.telephone.typeCode.fax"] ||
+      data.en["Form.telephone.typeCode.fax"],
     "Form.personalSummaries.date":
       resource?.["Form.personalSummaries.date"] ||
       data[lang]?.["Form.personalSummaries.date"] ||
@@ -170,6 +205,14 @@ function getLanguageData(
       resource?.["Form.personalSummaries.genderTypeCode"] ||
       data[lang]?.["Form.personalSummaries.genderTypeCode"] ||
       data.en["Form.personalSummaries.genderTypeCode"],
+    "Form.personalSummaries.genderTypeCode.male":
+      resource?.["Form.personalSummaries.genderTypeCode.male"] ||
+      data[lang]?.["Form.personalSummaries.genderTypeCode.male"] ||
+      data.en["Form.personalSummaries.genderTypeCode.male"],
+    "Form.personalSummaries.genderTypeCode.female":
+      resource?.["Form.personalSummaries.genderTypeCode.female"] ||
+      data[lang]?.["Form.personalSummaries.genderTypeCode.female"] ||
+      data.en["Form.personalSummaries.genderTypeCode.female"],
     "Form.personalSummaries.maritalStatusCode":
       resource?.["Form.personalSummaries.maritalStatusCode"] ||
       data[lang]?.["Form.personalSummaries.maritalStatusCode"] ||
@@ -202,6 +245,15 @@ function getLanguageData(
       resource?.["Form.address.typeCode"] ||
       data[lang]?.["Form.address.typeCode"] ||
       data.en["Form.address.typeCode"],
+    "Form.address.typeCode.home":
+      resource?.["Form.address.typeCode.home"] ||
+      data[lang]?.["Form.address.typeCode.home"] ||
+      data.en["Form.address.typeCode.home"],
+    "Form.address.typeCode.office":
+      resource?.["Form.address.typeCode.office"] ||
+      data[lang]?.["Form.address.typeCode.office"] ||
+      data.en["Form.address.typeCode.office"],
+
     "Form.personalIdentificationCommonDatas.firstName":
       resource?.["Form.personalIdentificationCommonDatas.firstName"] ||
       data[lang]?.["Form.personalIdentificationCommonDatas.firstName"] ||
@@ -256,6 +308,17 @@ function getLanguageData(
         "Form.personalIdentificationCommonDatas.identificationType"
       ] ||
       data.en["Form.personalIdentificationCommonDatas.identificationType"],
+    "Form.personalIdentificationCommonDatas.identificationType.passport":
+      resource?.[
+        "Form.personalIdentificationCommonDatas.identificationType.passport"
+      ] ||
+      data[lang]?.[
+        "Form.personalIdentificationCommonDatas.identificationType.passport"
+      ] ||
+      data.en[
+        "Form.personalIdentificationCommonDatas.identificationType.passport"
+      ],
+
     "Form.personalPreferencesTypes.languagePreferenceCode":
       resource?.["Form.personalPreferencesTypes.languagePreferenceCode"] ||
       data[lang]?.["Form.personalPreferencesTypes.languagePreferenceCode"] ||
