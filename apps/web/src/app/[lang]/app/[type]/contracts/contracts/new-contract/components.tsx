@@ -7,9 +7,9 @@ import type {
 import { useEffect, useState } from "react";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import {
-  getCrmServiceMerchants,
-  getCrmServiceMerchantsDetailById,
-} from "../../../crm/actions/merchant";
+  getPartyDetail,
+  getPartyTableData,
+} from "../../../parties/[partyName]/action";
 import SelectAddress from "./components/select-address";
 import SelectMerchant from "./components/select-merchant";
 
@@ -49,7 +49,7 @@ export function SelectMerchantStep({
     }
   }, [step]);
   useEffect(() => {
-    void getCrmServiceMerchants({}).then((response) => {
+    void getPartyTableData("merchants", 0, 100).then((response) => {
       if (response.type === "success") {
         setMerchantList(response.data);
       } else if (response.type === "api-error") {
@@ -62,11 +62,9 @@ export function SelectMerchantStep({
   const handleMerchantChange = (value: string) => {
     setSelectedMerchant(value);
     setMerchantDetails(undefined);
-    void getCrmServiceMerchantsDetailById({
-      id: value,
-    }).then((response) => {
+    void getPartyDetail("merchants", value).then((response) => {
       if (response.type === "success") {
-        setMerchantDetails(response.data);
+        setMerchantDetails(response.data as MerchantDetailDto);
       } else if (response.type === "api-error") {
         toast.error(response.message || "Merchant loading failed");
       } else {
