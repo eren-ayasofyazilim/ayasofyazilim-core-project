@@ -1,4 +1,3 @@
-import { HeartFilledIcon } from "@radix-ui/react-icons";
 import type { ProfileMenuProps } from "@repo/ui/theme/types";
 import { Layers, Settings, User } from "lucide-react";
 import type { AbpUiNavigationResource } from "src/language-data/AbpUiNavigation";
@@ -27,12 +26,6 @@ export function getProfileMenuFromDB(languageData: AbpUiNavigationResource) {
         },
       ],
       primary: [
-        {
-          href: "#",
-          onClick: undefined,
-          name: languageData.OurTeam,
-          icon: <HeartFilledIcon className="mr-2 h-5 w-5 text-gray-400" />,
-        },
         {
           href: "#",
           onClick: undefined,
