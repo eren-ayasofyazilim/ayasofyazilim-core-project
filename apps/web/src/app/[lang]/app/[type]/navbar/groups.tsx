@@ -12,7 +12,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/openiddict",
-    displayName: "Open Id Dict",
+    displayName: "OpenIdDict",
     description: "Manage Open ID dict settings.",
     href: "management/openiddict/applications",
     icon: "id",
@@ -57,7 +57,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/admin/language-texts",
-    displayName: "Language Texts",
+    displayName: "LanguageTexts",
     description: "Edit and review language texts.",
     href: "management/admin/language-texts",
     icon: "book",
@@ -120,7 +120,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/identity/claim-type",
-    displayName: "Claim Type",
+    displayName: "ClaimType",
     description: "Manage claim types for user identities.",
     href: "management/identity/claim-type",
     icon: "scan",
@@ -129,7 +129,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/identity/security-logs",
-    displayName: "Security Logs",
+    displayName: "SecurityLogs",
     description: "View security logs and audit trails.",
     href: "management/identity/security-logs",
     icon: "lock",
@@ -147,7 +147,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/audit-logs/audit-logs",
-    displayName: "Audit Logs",
+    displayName: "AuditLogs",
     description: "View and analyze audit logs.",
     href: "management/audit-logs/audit-logs",
     icon: "log",
@@ -156,7 +156,7 @@ export const management: NavbarItemsFromDB[] = [
   },
   {
     key: "management/text-templates/text-templates",
-    displayName: "Text Templates",
+    displayName: "TextTemplates",
     description: "Manage and create text templates.",
     href: "management/text-templates/text-templates",
     icon: "text",
@@ -194,7 +194,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/product/product-groups",
-    displayName: "Product Group",
+    displayName: "ProductGroup",
     description: "Manage product groups and categories.",
     href: "settings/product/product-groups",
     icon: "product",
@@ -203,7 +203,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/product/product-groups-vats",
-    displayName: "Product Group VAT",
+    displayName: "ProductGroupVAT",
     description: "Manage VAT settings for product groups.",
     href: "settings/product/product-groups-vats",
     icon: "productGroup",
@@ -230,7 +230,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/templates/refund-fees",
-    displayName: "Refund Fees",
+    displayName: "RefundFees",
     description: "Manage refund fees",
     href: "settings/templates/refund-fees",
     icon: "settings",
@@ -239,7 +239,7 @@ export const settings: NavbarItemsFromDB[] = [
   },
   {
     key: "settings/templates/refund-tables",
-    displayName: "Refund Tables",
+    displayName: "RefundTables",
     description: "Manage refund tables",
     href: "settings/templates/refund-tables",
     icon: "settings",
@@ -277,7 +277,7 @@ export const parties: NavbarItemsFromDB[] = [
   },
   {
     key: "parties/refund-points",
-    displayName: "Refund Points",
+    displayName: "RefundPoints",
     description: "Manage refund points and settings.",
     href: "parties/refund-points",
     icon: "refund",
@@ -295,7 +295,7 @@ export const parties: NavbarItemsFromDB[] = [
   },
   {
     key: "parties/tax-free",
-    displayName: "Tax Free",
+    displayName: "TaxFree",
     description: "Manage tax-free settings and exemptions.",
     href: "parties/tax-free",
     icon: "tax",
@@ -304,7 +304,7 @@ export const parties: NavbarItemsFromDB[] = [
   },
   {
     key: "parties/tax-offices",
-    displayName: "Tax Offices",
+    displayName: "TaxOffices",
     description: "Manage tax office details and settings.",
     href: "parties/tax-offices",
     icon: "taxOffice",
@@ -330,7 +330,6 @@ export const parties: NavbarItemsFromDB[] = [
     displayOrder: 1,
   },
 ];
-
 export const contracts: NavbarItemsFromDB[] = [
   {
     key: "contracts/contracts",
@@ -352,7 +351,7 @@ export const contracts: NavbarItemsFromDB[] = [
   },
   {
     key: "contracts/rebate/company-settings",
-    displayName: "Company Settings",
+    displayName: "CompanySettings",
     description: "Manage company-specific rebate settings.",
     href: "contracts/rebate/company-settings",
     icon: "settings",
@@ -379,7 +378,7 @@ export const contracts: NavbarItemsFromDB[] = [
   },
   {
     key: "contracts/refund/refund-tables",
-    displayName: "Refund Tables",
+    displayName: "RefundTables",
     description: "Manage refund tables and configurations.",
     href: "contracts/refund/refund-tables",
     icon: "table",
@@ -388,7 +387,7 @@ export const contracts: NavbarItemsFromDB[] = [
   },
   {
     key: "contracts/refund/refund-fees",
-    displayName: "Refund Fees",
+    displayName: "RefundFees",
     description: "Manage refund fees and settings.",
     href: "contracts/refund/refund-fees",
     icon: "refund",
