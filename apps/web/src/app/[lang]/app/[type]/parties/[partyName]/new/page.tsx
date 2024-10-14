@@ -10,7 +10,7 @@ export default async function Page({
   params,
 }: {
   params: {
-    partyName: PartyNameType;
+    partyName: Exclude<PartyNameType, "individuals">;
     lang: string;
   };
 }) {

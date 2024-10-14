@@ -23,7 +23,7 @@ function Telephone({
   organizationData,
 }: {
   languageData: CRMServiceServiceResource;
-  partyName: PartyNameType;
+  partyName: Exclude<PartyNameType, "individuals">;
   partyId: string;
   organizationData:
     | UniRefund_CRMService_Organizations_OrganizationDto

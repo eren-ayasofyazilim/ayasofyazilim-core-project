@@ -12,18 +12,18 @@ import { useState } from "react";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type { CreatePartiesDto } from "../../../table-data";
-import { dataConfigOfParties } from "../../../table-data";
-import type { PartiesCreateDTOType, PartyNameType } from "../../../types";
-import { createPartyRow } from "../../action";
+import type { CreatePartiesDto } from "../../../../table-data";
+import { dataConfigOfParties } from "../../../../table-data";
+import type { PartiesCreateDTOType, PartyNameType } from "../../../../types";
+import { createPartyRow } from "../../../action";
 
-export default function Organization({
+export default function CrmOrganization({
   partyName,
   taxOfficesEnum,
   citiesEnum,
   languageData,
 }: {
-  partyName: PartyNameType;
+  partyName: Exclude<PartyNameType, "individuals">;
   taxOfficesEnum: { name: string; id: string }[];
   citiesEnum: { name: string; id: string }[];
   languageData: CRMServiceServiceResource;

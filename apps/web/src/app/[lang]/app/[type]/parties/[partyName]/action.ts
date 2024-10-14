@@ -1,4 +1,5 @@
 "use server";
+import type { UniRefund_CRMService_Individuals_CreateIndividualDto } from "@ayasofyazilim/saas/CRMService";
 import { getCRMServiceClient, structuredError } from "src/lib";
 import type {
   CreateCustomsDTO,
@@ -127,12 +128,41 @@ export async function getPartyRequests(partyType: PartyNameType) {
           requestBody: data as CreateTaxOfficeDTO,
         }),
     },
+    individuals: {
+      getDetail: async (id: string) =>
+        await client.individual.getApiCrmServiceIndividualsById({ id }),
+      get: async (data: { maxResultCount: number; skipCount: number }) =>
+        (await client.individual.getApiCrmServiceIndividuals(
+          data,
+        )) as GetTaxOfficeDTO,
+      getSub: async (id: string) =>
+        await client.taxOffice.getApiCrmServiceTaxOfficesByIdSubTaxOffices({
+          id,
+        }),
+      getIndivuals: async (id: string) =>
+        await client.taxOffice.getApiCrmServiceTaxOfficesByIdAffiliations({
+          id,
+        }),
+      deleteRow: async (id: string) =>
+        await client.taxOffice.deleteApiCrmServiceTaxOfficesByIdWithComponents({
+          id,
+        }),
+      post: async (
+        form: UniRefund_CRMService_Individuals_CreateIndividualDto,
+      ) => {
+        return await client.individual.postApiCrmServiceIndividualsWithComponents(
+          {
+            requestBody: form,
+          },
+        );
+      },
+    },
   };
   return partyRequests[partyType];
 }
 
 export async function getPartyTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   page: number,
   maxResultCount: number,
 ) {
@@ -153,7 +183,7 @@ export async function getPartyTableData(
   }
 }
 export async function getPartySubTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -170,7 +200,7 @@ export async function getPartySubTableData(
   }
 }
 export async function getPartyIndividualTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -187,7 +217,7 @@ export async function getPartyIndividualTableData(
   }
 }
 export async function getPartyDetail(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -204,7 +234,7 @@ export async function getPartyDetail(
   }
 }
 export async function deletePartyRow(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);

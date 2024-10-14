@@ -12,7 +12,9 @@ import type {
   PutTelephone,
 } from "./types";
 
-export async function putPartyRequests(partyType: PartyNameType) {
+export async function putPartyRequests(
+  partyType: Exclude<PartyNameType, "individuals">,
+) {
   const client = await getCRMServiceClient();
   const partyRequests = {
     merchants: {
@@ -251,7 +253,7 @@ export async function putPartyRequests(partyType: PartyNameType) {
 }
 
 export async function putParty(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   params: PutOrganization | PutTelephone | PutAddress | PutEmail | PutName,
 ) {
   const client = await putPartyRequests(partyType);

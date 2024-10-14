@@ -25,13 +25,19 @@ export default async function Page({
 }) {
   const { languageData } = await getResourceData(params.lang);
   const formData = dataConfigOfParties[params.partyName];
+
+  if (params.partyName === "individuals") {
+    return <></>;
+  }
+
   const partyDetail = await getPartyDetail(params.partyName, params.partyId);
   const cities = await getCities({ maxResultCount: 500, sorting: "name" });
 
   if (
     partyDetail.type !== "success" ||
     !partyDetail.data ||
-    cities.type !== "success"
+    cities.type !== "success" ||
+    !("entityInformations" in partyDetail.data)
   ) {
     return <>Not found</>;
   }
@@ -53,7 +59,7 @@ export default async function Page({
     { name: languageData.Address, id: "address" },
     { name: languageData.Email, id: "email" },
     { name: languageData[formData.subEntityName], id: "SubCompany" },
-    { name: languageData["Parties.Individuals"], id: "individuals" },
+    { name: languageData.Individuals, id: "individuals" },
   ];
 
   if (organizationData) {
