@@ -7,6 +7,7 @@ import { putParty } from "./action";
 import type {
   PutAddress,
   PutEmail,
+  PutMerchantBase,
   PutName,
   PutOrganization,
   PutPersonalSummaries,
@@ -21,7 +22,8 @@ export async function handleUpdateSubmit(
     | PutAddress
     | PutEmail
     | PutName
-    | PutPersonalSummaries,
+    | PutPersonalSummaries
+    | PutMerchantBase,
   router: AppRouterInstance,
 ) {
   const response = await putParty(partyName, putData);

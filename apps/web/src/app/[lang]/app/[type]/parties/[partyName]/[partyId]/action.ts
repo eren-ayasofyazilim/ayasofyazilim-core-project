@@ -4,6 +4,7 @@ import type { PartyNameType } from "../../types";
 import type {
   PutAddress,
   PutEmail,
+  PutMerchantBase,
   PutMerchantOrganization,
   PutName,
   PutOrganization,
@@ -81,6 +82,12 @@ export async function putPartyRequests(
           },
         );
       },
+      putMerchantBase: async (form: PutMerchantBase["data"]) => {
+        return await client.merchant.putApiCrmServiceMerchantsById({
+          requestBody: form.requestBody,
+          id: form.id,
+        });
+      },
     },
     "refund-points": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -129,6 +136,9 @@ export async function putPartyRequests(
       putPersonalSummaries: () => {
         //need for type definition
       },
+      putMerchantBase: () => {
+        //need for type definition
+      },
     },
     customs: {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -173,6 +183,9 @@ export async function putPartyRequests(
         //need for type definition
       },
       putPersonalSummaries: () => {
+        //need for type definition
+      },
+      putMerchantBase: () => {
         //need for type definition
       },
     },
@@ -223,6 +236,9 @@ export async function putPartyRequests(
       putPersonalSummaries: () => {
         //need for type definition
       },
+      putMerchantBase: () => {
+        //need for type definition
+      },
     },
     "tax-offices": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -271,6 +287,9 @@ export async function putPartyRequests(
       putPersonalSummaries: () => {
         //need for type definition
       },
+      putMerchantBase: () => {
+        //need for type definition
+      },
     },
   };
   return partyRequests[partyType];
@@ -284,12 +303,15 @@ export async function putParty(
     | PutAddress
     | PutEmail
     | PutName
-    | PutPersonalSummaries,
+    | PutPersonalSummaries
+    | PutMerchantBase,
 ) {
   const client = await putPartyRequests(partyType);
   try {
     let response;
-    if (params.action === "organization") {
+    if (params.action === "merchant-base") {
+      response = await client.putMerchantBase(params.data);
+    } else if (params.action === "organization") {
       response = await client.putOrganization(params.data);
     } else if (params.action === "name") {
       response = await client.putName(params.data);
