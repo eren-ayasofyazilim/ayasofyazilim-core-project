@@ -12,13 +12,13 @@ import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Stepper, {
   StepperContent,
 } from "@repo/ayasofyazilim-ui/organisms/stepper";
+import SelectMerchant from "@repo/ui/select-merchant";
 import type { CellContext, ColumnDef } from "@tanstack/react-table";
 import { columnsGenerator } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/columnsGenerator";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
-import SelectMerchant from "../../../contracts/contracts/new-contract/components/select-merchant";
 import {
   getPartyDetail,
   getPartyTableData,
@@ -222,7 +222,6 @@ export default function Page() {
               >
                 <SelectMerchant
                   handleMerchantChange={handleMerchantChange}
-                  languageData={languageData}
                   merchantDetails={merchantDetails}
                   merchantList={merchantList}
                 />
