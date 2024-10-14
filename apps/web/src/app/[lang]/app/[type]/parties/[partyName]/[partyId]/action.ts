@@ -7,6 +7,7 @@ import type {
   PutMerchantOrganization,
   PutName,
   PutOrganization,
+  PutPersonalSummaries,
   PutRefundPointOrganization,
   PutTaxFreeOrganization,
   PutTelephone,
@@ -69,6 +70,17 @@ export async function putPartyRequests(
           },
         );
       },
+      putPersonalSummaries: async (form: PutPersonalSummaries["data"]) => {
+        const data = form;
+        return await client.merchant.putApiCrmServiceMerchantsByIdIndividualByIndividualIdPersonalSummaryByPersonalSummaryId(
+          {
+            requestBody: data.requestBody,
+            personalSummaryId: data.personalSummaryId,
+            individualId: data.individualId,
+            id: data.id,
+          },
+        );
+      },
     },
     "refund-points": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -114,6 +126,9 @@ export async function putPartyRequests(
       putName: () => {
         //need for type definition
       },
+      putPersonalSummaries: () => {
+        //need for type definition
+      },
     },
     customs: {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -155,6 +170,9 @@ export async function putPartyRequests(
         });
       },
       putName: () => {
+        //need for type definition
+      },
+      putPersonalSummaries: () => {
         //need for type definition
       },
     },
@@ -202,6 +220,9 @@ export async function putPartyRequests(
       putName: () => {
         //need for type definition
       },
+      putPersonalSummaries: () => {
+        //need for type definition
+      },
     },
     "tax-offices": {
       putOrganization: async (form: PutOrganization["data"]) => {
@@ -247,6 +268,9 @@ export async function putPartyRequests(
       putName: () => {
         //need for type definition
       },
+      putPersonalSummaries: () => {
+        //need for type definition
+      },
     },
   };
   return partyRequests[partyType];
@@ -254,7 +278,13 @@ export async function putPartyRequests(
 
 export async function putParty(
   partyType: Exclude<PartyNameType, "individuals">,
-  params: PutOrganization | PutTelephone | PutAddress | PutEmail | PutName,
+  params:
+    | PutOrganization
+    | PutTelephone
+    | PutAddress
+    | PutEmail
+    | PutName
+    | PutPersonalSummaries,
 ) {
   const client = await putPartyRequests(partyType);
   try {
@@ -263,6 +293,8 @@ export async function putParty(
       response = await client.putOrganization(params.data);
     } else if (params.action === "name") {
       response = await client.putName(params.data);
+    } else if (params.action === "personal-summaries") {
+      response = await client.putPersonalSummaries(params.data);
     } else if (params.action === "telephone") {
       response = await client.putTelephone(params.data);
     } else if (params.action === "address") {
