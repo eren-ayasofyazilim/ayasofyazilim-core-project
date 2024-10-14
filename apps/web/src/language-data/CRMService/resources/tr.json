@@ -69,8 +69,9 @@
   "TaxOffices.Edit.Success": "Vergi ofisi başarıyla güncellendi.",
   "TaxOffices.Edit.Fail": "Vergi ofisi güncellenirken bir hata oluştu.",
 
-  "Parties.Organization": "Organizasyon",
-  "Parties.Individuals": "Bireyler",
-  "Parties.Individuals.New": "Yeni Birey",
-  "Parties.Individuals.Description": "Yeni Birey Ekle"
+  "Individuals": "Bireyler",
+  "Individuals.New": "Yeni Birey",
+  "Individuals.Description": "Yeni Birey Ekle",
+
+  "Parties.Organization": "Organizasyon"
 }

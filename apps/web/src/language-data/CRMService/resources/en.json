@@ -69,8 +69,9 @@
   "TaxOffices.Edit.Success": "Tax office updated successfully.",
   "TaxOffices.Edit.Fail": "An error occurred while updating the tax office.",
 
-  "Parties.Organization": "Organization",
-  "Parties.Individuals": "Individuals",
-  "Parties.Individuals.New": "New Individual",
-  "Parties.Individuals.Description": "Add New Individual"
+  "Individuals": "Individuals",
+  "Individuals.New": "New Individual",
+  "Individuals.Description": "Add New Individual",
+
+  "Parties.Organization": "Organization"
 }
