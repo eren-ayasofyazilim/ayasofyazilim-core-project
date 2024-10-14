@@ -1,6 +1,6 @@
 import type {
   $UniRefund_CRMService_Customss_CreateCustomsDto as CreateCustomsSchema,
-  // $UniRefund_CRMService_Individuals_CreateIndividualDto as CreateIndividualSchema,
+  $UniRefund_CRMService_Individuals_CreateIndividualDto as CreateIndividualSchema,
   $UniRefund_CRMService_Merchants_CreateMerchantDto as CreateMerchantSchema,
   $UniRefund_CRMService_RefundPoints_CreateRefundPointDto as CreateRefundPointSchema,
   $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto as CreateTaxFreeSchema,
@@ -66,5 +66,5 @@ export type PartiesCreateType =
   | typeof CreateRefundPointSchema
   | typeof CreateCustomsSchema
   | typeof CreateTaxFreeSchema
-  | typeof CreateTaxOfficeSchema;
-// | typeof CreateIndividualSchema;
+  | typeof CreateTaxOfficeSchema
+  | typeof CreateIndividualSchema;

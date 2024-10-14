@@ -36,7 +36,8 @@ export default async function Page({
   if (
     partyDetail.type !== "success" ||
     !partyDetail.data ||
-    cities.type !== "success"
+    cities.type !== "success" ||
+    !("entityInformations" in partyDetail.data)
   ) {
     return <>Not found</>;
   }

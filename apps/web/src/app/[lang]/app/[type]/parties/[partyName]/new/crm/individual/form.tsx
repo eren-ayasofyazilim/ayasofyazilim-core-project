@@ -6,24 +6,24 @@ import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import {
-  addressSchemaByData,
-  ContactFormSubPositions,
-} from "@repo/ui/utils/table/form-schemas";
+import { addressSchemaByData } from "@repo/ui/utils/table/form-schemas";
 import { getEnumId } from "@repo/ui/utils/table/table-utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type { CreatePartiesDto } from "../../../table-data";
-import { dataConfigOfParties, localNumber } from "../../../table-data";
-import type { CreateIndividualDTO } from "../../../types";
-import { createPartyRow } from "../../action";
+import type { CreatePartiesDto } from "../../../../table-data";
+import { dataConfigOfParties, localNumber } from "../../../../table-data";
+import type { CreateMerchantDTO } from "../../../../types";
+import { createPartyRow } from "../../../action";
 
 function createScheme(schema: typeof CreateMerchantSchema) {
   return {
     type: "object",
     properties: {
+      taxOfficeId: {
+        type: "string",
+      },
       name: schema.properties.entityInformationTypes.items.properties
         .individuals.items.properties.name,
       personalSummaries:
@@ -51,15 +51,19 @@ function createScheme(schema: typeof CreateMerchantSchema) {
   };
 }
 
-export default function Individual({
+export default function CrmIndividual({
   partyName,
+  taxOfficesEnum,
   citiesEnum,
   languageData,
 }: {
-  partyName: "individuals";
+  partyName: "merchants";
+  taxOfficesEnum: { name: string; id: string }[];
   citiesEnum: { name: string; id: string }[];
   languageData: CRMServiceServiceResource;
 }) {
+  const searchParams = useSearchParams();
+  const parentId = searchParams.get("parentId");
   const router = useRouter();
 
   function formSchemaByData() {
@@ -71,6 +75,10 @@ export default function Individual({
     ]);
 
     const convertors = {
+      taxOfficeId: {
+        type: "enum",
+        data: taxOfficesEnum.map((i) => i.name),
+      },
       address: {
         ...address.convertors,
       },
@@ -78,12 +86,17 @@ export default function Individual({
     const formSubPositions = {
       ...config.createFormSchema.formSubPositions,
       address: address.subPositions,
-      telephone: ContactFormSubPositions.telephone,
-      email: ContactFormSubPositions.email,
     };
     return createZodObject(
       schema,
-      ["name", "personalSummaries", "address", "telephone", "email"],
+      [
+        "name",
+        "personalSummaries",
+        "address",
+        "telephone",
+        "email",
+        "taxOfficeId",
+      ],
       convertors,
       formSubPositions,
     );
@@ -98,20 +111,33 @@ export default function Individual({
     }
     const phoneData = splitPhone(formData.telephone.localNumber);
     formData.telephone = { ...formData.telephone, ...phoneData };
-    const createformData: CreateIndividualDTO = {
-      name: formData.name,
-      personalSummaries: [formData.personalSummaries],
-      contactInformations: [
+    const createformData: CreateMerchantDTO = {
+      taxOfficeId: getEnumId(taxOfficesEnum, formData.taxOfficeId),
+      typeCode: parentId
+        ? dataConfigOfParties[partyName].subEntityType
+        : "HEADQUARTER",
+      parentId,
+      entityInformationTypes: [
         {
-          telephones: [{ ...formData.telephone, primaryFlag: true }],
-          emails: [{ ...formData.email, primaryFlag: true }],
-          addresses: [
+          individuals: [
             {
-              ...formData.address,
-              country: formData.address.country || "NULL",
-              terriority: formData.address.terriority || "NULL",
-              city: getEnumId(citiesEnum, formData.address.city),
-              primaryFlag: true,
+              name: formData.name,
+              personalSummaries: [formData.personalSummaries],
+              contactInformations: [
+                {
+                  telephones: [{ ...formData.telephone, primaryFlag: true }],
+                  emails: [{ ...formData.email, primaryFlag: true }],
+                  addresses: [
+                    {
+                      ...formData.address,
+                      country: formData.address.country || "NULL",
+                      terriority: formData.address.terriority || "NULL",
+                      city: getEnumId(citiesEnum, formData.address.city),
+                      primaryFlag: true,
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

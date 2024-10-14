@@ -1,4 +1,5 @@
 "use server";
+import type { UniRefund_CRMService_Individuals_CreateIndividualDto } from "@ayasofyazilim/saas/CRMService";
 import { getCRMServiceClient, structuredError } from "src/lib";
 import type {
   CreateCustomsDTO,
@@ -15,9 +16,7 @@ import type {
   PartyNameType,
 } from "../types";
 
-export async function getPartyRequests(
-  partyType: Exclude<PartyNameType, "individuals">,
-) {
+export async function getPartyRequests(partyType: PartyNameType) {
   const client = await getCRMServiceClient();
   const partyRequests = {
     merchants: {
@@ -129,6 +128,35 @@ export async function getPartyRequests(
           requestBody: data as CreateTaxOfficeDTO,
         }),
     },
+    individuals: {
+      getDetail: async (id: string) =>
+        await client.individual.getApiCrmServiceIndividualsById({ id }),
+      get: async (data: { maxResultCount: number; skipCount: number }) =>
+        (await client.individual.getApiCrmServiceIndividuals(
+          data,
+        )) as GetTaxOfficeDTO,
+      getSub: async (id: string) =>
+        await client.taxOffice.getApiCrmServiceTaxOfficesByIdSubTaxOffices({
+          id,
+        }),
+      getIndivuals: async (id: string) =>
+        await client.taxOffice.getApiCrmServiceTaxOfficesByIdAffiliations({
+          id,
+        }),
+      deleteRow: async (id: string) =>
+        await client.taxOffice.deleteApiCrmServiceTaxOfficesByIdWithComponents({
+          id,
+        }),
+      post: async (
+        form: UniRefund_CRMService_Individuals_CreateIndividualDto,
+      ) => {
+        return await client.individual.postApiCrmServiceIndividualsWithComponents(
+          {
+            requestBody: form,
+          },
+        );
+      },
+    },
   };
   return partyRequests[partyType];
 }
@@ -223,7 +251,7 @@ export async function deletePartyRow(
   }
 }
 export async function createPartyRow(
-  partyType: Exclude<PartyNameType, "individuals">,
+  partyType: PartyNameType,
   data: PartiesCreateDTOType,
 ) {
   const client = await getPartyRequests(partyType);
