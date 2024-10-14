@@ -83,6 +83,9 @@ export const localNumber = {
 };
 
 function createScheme(schema: PartiesCreateType) {
+  if (!("entityInformationTypes" in schema.properties)) {
+    return {};
+  }
   return {
     type: "object",
     properties: {

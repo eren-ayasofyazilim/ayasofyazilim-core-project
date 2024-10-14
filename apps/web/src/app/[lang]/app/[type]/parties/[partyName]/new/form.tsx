@@ -7,8 +7,9 @@ import { Building2, User } from "lucide-react";
 import { useState } from "react";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import type { PartyNameType } from "../../types";
+import CrmIndividual from "./crm/individual/form";
+import CrmOrganization from "./crm/organization/form";
 import Individual from "./individual/form";
-import Organization from "./organization/form";
 
 type TabSection = "Organization" | "Individual";
 export default function Form({
@@ -24,9 +25,19 @@ export default function Form({
 }) {
   const [activeTab, setActiveTab] = useState<TabSection>("Organization");
 
+  if (partyName === "individuals") {
+    return (
+      <Individual
+        citiesEnum={citiesEnum}
+        languageData={languageData}
+        partyName={partyName}
+      />
+    );
+  }
+
   if (partyName !== "merchants") {
     return (
-      <Organization
+      <CrmOrganization
         citiesEnum={citiesEnum}
         languageData={languageData}
         partyName={partyName}
@@ -58,14 +69,14 @@ export default function Form({
         </SelectTabs>
       </div>
       {activeTab === "Organization" ? (
-        <Organization
+        <CrmOrganization
           citiesEnum={citiesEnum}
           languageData={languageData}
           partyName={partyName}
           taxOfficesEnum={taxOfficesEnum}
         />
       ) : (
-        <Individual
+        <CrmIndividual
           citiesEnum={citiesEnum}
           languageData={languageData}
           partyName={partyName}

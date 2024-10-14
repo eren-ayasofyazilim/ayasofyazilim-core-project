@@ -13,7 +13,7 @@ import type {
 } from "./types";
 
 export async function handleUpdateSubmit(
-  partyName: PartyNameType,
+  partyName: Exclude<PartyNameType, "individuals">,
   putData: PutOrganization | PutTelephone | PutAddress | PutEmail | PutName,
   router: AppRouterInstance,
 ) {
