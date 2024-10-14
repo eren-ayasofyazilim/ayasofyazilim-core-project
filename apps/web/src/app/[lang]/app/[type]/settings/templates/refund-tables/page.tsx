@@ -1,9 +1,9 @@
 "use client";
 import { toast } from "@/components/ui/sonner";
 import type {
+  PagedResultDto_RefundTableHeaderDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderCreateDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import {
   $UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto as listSchema,
@@ -26,8 +26,7 @@ import {
 
 export default function Page({ params }: { params: { lang: string } }) {
   const router = useRouter();
-  const [list, setList] =
-    useState<Volo_Abp_Application_Dtos_PagedResultDto_19>();
+  const [list, setList] = useState<PagedResultDto_RefundTableHeaderDto>();
   const { resources } = useLocale();
   const languageData = getResourceDataClient(resources, params.lang);
   const includeList = [

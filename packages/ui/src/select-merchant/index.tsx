@@ -1,40 +1,42 @@
+"use client";
 import type {
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
   Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
   UniRefund_CRMService_Merchants_MerchantProfileDto as MerchantProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
-import { Label } from "@/components/ui/label";
+
+import AutoForm, {
+  createReadonlyFieldConfig,
+} from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import { $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema } from "@ayasofyazilim/saas/CRMService";
+import { Label } from "@repo/ayasofyazilim-ui/atoms/label";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import { cn } from "@/lib/utils";
-import { $UniRefund_CRMService_Organizations_OrganizationDto as OrganizationSchema } from "@ayasofyazilim/saas/CRMService";
-import type { ContractServiceResource } from "src/language-data/ContractService";
-import { createReadonlyFieldConfig } from "../components";
-
+  SelectContent,
+  SelectItem,
+} from "@repo/ayasofyazilim-ui/atoms/select";
+import { cn } from "../utils";
 export default function SelectMerchant({
-  languageData,
   merchantDetails,
   merchantList,
   handleMerchantChange,
+  placeholder,
+  label = "Merchant",
 }: {
-  languageData: ContractServiceResource;
   merchantDetails: MerchantDetailDto | undefined;
   merchantList: MerchantPagedListDto | undefined;
   handleMerchantChange: (value: string) => void;
+  placeholder?: string;
+  label?: string;
 }) {
   const organizationIncludes = [
     "taxpayerId",
     "legalStatusCode",
     "customerNumber",
   ];
-
   return (
     <div
       className={
@@ -44,12 +46,10 @@ export default function SelectMerchant({
       }
     >
       <div>
-        <Label>{languageData["Contracts.Create.Step.Merchant"]}</Label>
+        <Label>{label}</Label>
         <Select onValueChange={handleMerchantChange}>
           <SelectTrigger>
-            <SelectValue
-              placeholder={languageData["Contracts.Create.Step.SelectMerchant"]}
-            />
+            <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent>
             {merchantList?.items?.map((merchant: MerchantProfileDto) => {

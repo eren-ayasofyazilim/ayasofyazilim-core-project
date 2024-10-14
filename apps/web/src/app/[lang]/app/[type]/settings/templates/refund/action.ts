@@ -10,6 +10,8 @@ import type {
   GetApiContractServiceRefundTablesRefundTableDetailsByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersByIdData,
   GetApiContractServiceRefundTablesRefundTableHeadersData,
+  PagedResultDto_RefundFeeHeaderDto,
+  PagedResultDto_RefundTableHeaderDto,
   PostApiContractServiceRefundTablesRefundFeeHeadersByIdRefundFeeDetailsData,
   PostApiContractServiceRefundTablesRefundFeeHeadersData,
   PostApiContractServiceRefundTablesRefundTableHeadersByIdRefundTableDetailsData,
@@ -22,7 +24,6 @@ import type {
   UniRefund_ContractService_Refunds_RefundFeeHeaders_RefundFeeHeaderDto,
   UniRefund_ContractService_Refunds_RefundTableDetails_RefundTableDetailDto,
   UniRefund_ContractService_Refunds_RefundTableHeaders_RefundTableHeaderDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_19,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
@@ -36,15 +37,15 @@ export async function getRefundTableHeaders(
   try {
     const client = await getContractServiceClient();
     const response =
-      (await client.refundTables.getApiContractServiceRefundTablesRefundTableHeaders(
+      await client.refundTables.getApiContractServiceRefundTablesRefundTableHeaders(
         body,
-      )) as Volo_Abp_Application_Dtos_PagedResultDto_19;
+      );
     revalidatePath("/");
     return {
       type: "success",
       data: response,
       status: 200,
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_19>;
+    } as ServerResponse<PagedResultDto_RefundTableHeaderDto>;
   } catch (error) {
     return structuredError(error);
   }
@@ -229,7 +230,7 @@ export async function getRefundTableFeeHeaders(
       type: "success",
       data: response,
       status: 200,
-    } as ServerResponse<Volo_Abp_Application_Dtos_PagedResultDto_19>;
+    } as ServerResponse<PagedResultDto_RefundFeeHeaderDto>;
   } catch (error) {
     return structuredError(error);
   }
