@@ -1,7 +1,7 @@
 "use client";
 import { toast } from "@/components/ui/sonner";
 import type {
-  Volo_Abp_Application_Dtos_PagedResultDto_18 as PagedResultDto,
+  PagedResultDto_RebateTableHeaderDto,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as RebateTableHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { $UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto as listSchema } from "@ayasofyazilim/saas/ContractService";
@@ -28,7 +28,8 @@ export default function Templates({
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [templates, setTemplates] = useState<PagedResultDto>();
+  const [templates, setTemplates] =
+    useState<PagedResultDto_RebateTableHeaderDto>();
   const getAndSetTemplates = () => {
     setLoading(true);
     void getRebateTablesRebateTableHeadersTemplates({})

@@ -133,14 +133,8 @@ export default function Individual({
 
   return (
     <AutoForm
-      className="grid-col-1 grid grid-rows-1 gap-2 space-y-0 lg:grid-cols-3 lg:grid-rows-2"
+      className="grid gap-2 space-y-0 md:grid-cols-2 lg:grid-cols-3"
       fieldConfig={{
-        address: {
-          className: "row-span-2",
-        },
-        individuals: {
-          className: "row-span-2",
-        },
         email: {
           emailAddress: {
             inputProps: {

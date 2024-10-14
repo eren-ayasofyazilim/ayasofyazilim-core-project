@@ -146,7 +146,7 @@ export default function Form({
 
   return (
     <AutoForm
-      className="grid grid-flow-row  gap-4 space-y-0 lg:grid-cols-3 lg:grid-rows-1"
+      className=" grid gap-2 space-y-0 md:grid-cols-2 lg:grid-cols-3"
       fieldConfig={mergeFieldConfigs(translatedForm, {
         telephone: {
           localNumber: {
