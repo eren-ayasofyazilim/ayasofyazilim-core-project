@@ -33,7 +33,7 @@ export default function Table({
       name: "showExpired",
       displayName: languageData["Travellers.ShowExpired"],
       type: "boolean",
-      value: "",
+      value: "true",
     },
     {
       name: "fullName",
