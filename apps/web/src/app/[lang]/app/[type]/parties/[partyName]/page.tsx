@@ -21,7 +21,7 @@ import { deletePartyRow, getPartyTableData } from "./action";
 export default function Page({
   params,
 }: {
-  params: { partyName: PartyNameType; lang: string };
+  params: { partyName: Exclude<PartyNameType, "individuals">; lang: string };
 }) {
   const router = useRouter();
   const languageData = getResourceDataClient(params.lang);

@@ -23,7 +23,7 @@ export default function Organization({
   citiesEnum,
   languageData,
 }: {
-  partyName: PartyNameType;
+  partyName: Exclude<PartyNameType, "individuals">;
   taxOfficesEnum: { name: string; id: string }[];
   citiesEnum: { name: string; id: string }[];
   languageData: CRMServiceServiceResource;

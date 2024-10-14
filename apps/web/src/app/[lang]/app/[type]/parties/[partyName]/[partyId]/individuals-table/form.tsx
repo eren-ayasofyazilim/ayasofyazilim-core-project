@@ -21,7 +21,7 @@ function Individual({
   partyId,
 }: {
   languageData: CRMServiceServiceResource;
-  partyName: PartyNameType;
+  partyName: Exclude<PartyNameType, "individuals">;
   partyId: string;
 }) {
   const router = useRouter();

@@ -15,7 +15,9 @@ import type {
   PartyNameType,
 } from "../types";
 
-export async function getPartyRequests(partyType: PartyNameType) {
+export async function getPartyRequests(
+  partyType: Exclude<PartyNameType, "individuals">,
+) {
   const client = await getCRMServiceClient();
   const partyRequests = {
     merchants: {
@@ -132,7 +134,7 @@ export async function getPartyRequests(partyType: PartyNameType) {
 }
 
 export async function getPartyTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   page: number,
   maxResultCount: number,
 ) {
@@ -153,7 +155,7 @@ export async function getPartyTableData(
   }
 }
 export async function getPartySubTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -170,7 +172,7 @@ export async function getPartySubTableData(
   }
 }
 export async function getPartyIndividualTableData(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -187,7 +189,7 @@ export async function getPartyIndividualTableData(
   }
 }
 export async function getPartyDetail(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -204,7 +206,7 @@ export async function getPartyDetail(
   }
 }
 export async function deletePartyRow(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   partyId: string,
 ) {
   const client = await getPartyRequests(partyType);
@@ -221,7 +223,7 @@ export async function deletePartyRow(
   }
 }
 export async function createPartyRow(
-  partyType: PartyNameType,
+  partyType: Exclude<PartyNameType, "individuals">,
   data: PartiesCreateDTOType,
 ) {
   const client = await getPartyRequests(partyType);
