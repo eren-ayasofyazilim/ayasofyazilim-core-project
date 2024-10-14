@@ -13,6 +13,7 @@ import OrganizationForm from "./organization/form";
 import Telephone from "./telephone/form";
 import SubCompany from "./subcompanies-table/form";
 import Individual from "./individuals-table/form";
+import PersonalSummariesForm from "./personal-summaries/form";
 
 export default async function Page({
   params,
@@ -68,6 +69,10 @@ export default async function Page({
       id: "organization",
     });
   } else {
+    sections.unshift({
+      name: languageData.PersonalSummaries,
+      id: "personal-summaries",
+    });
     sections.unshift({ name: languageData.Name, id: "name" });
   }
 
@@ -92,13 +97,22 @@ export default async function Page({
           ) : null}
 
           {params.partyName === "merchants" && individualData ? (
-            <NameForm
-              individualData={individualData.name}
-              languageData={languageData}
-              partyId={params.partyId}
-              partyName={params.partyName}
-            />
+            <>
+              <NameForm
+                individualData={individualData.name}
+                languageData={languageData}
+                partyId={params.partyId}
+                partyName={params.partyName}
+              />
+              <PersonalSummariesForm
+                individualData={individualData.personalSummaries?.[0]}
+                languageData={languageData}
+                partyId={params.partyId}
+                partyName={params.partyName}
+              />
+            </>
           ) : null}
+
           <Telephone
             languageData={languageData}
             organizationData={organizationData || individualData}
