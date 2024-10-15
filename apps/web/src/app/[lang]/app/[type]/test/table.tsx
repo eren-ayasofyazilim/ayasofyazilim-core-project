@@ -1,11 +1,11 @@
 "use client";
 
 import { toast } from "@/components/ui/sonner";
-import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import type {
-  TableAction,
   ColumnFilter,
+  TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
+import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { FormModifier } from "@repo/ui/utils/table/table-utils";
 import {
   AUTO_COLUMNS_DATA,
@@ -19,7 +19,6 @@ import { useState } from "react";
 import type { DefaultResource } from "src/language-data/Default";
 import type { GetTableDataResult, TableDataTypes } from "../../actions/table";
 import { deleteTableRow, getTableData } from "../../actions/table";
-import type { PartiesResultType } from "../parties/types";
 
 export default function Table({
   tableKey,
@@ -102,7 +101,7 @@ export default function Table({
   }
 
   const action: TableAction[] = [
-    TableAction_EXPORT_CSV<PartiesResultType | undefined>(
+    TableAction_EXPORT_CSV<GetTableDataResult | undefined>(
       tableData,
       "export.csv",
     ),
@@ -120,14 +119,17 @@ export default function Table({
   }
 
   return (
-    <DataTable
+    <Dashboard
       action={action}
+      cards={[]}
       columnsData={columnsData}
       data={tableData?.items || []}
       detailedFilter={detailedFilter}
       fetchRequest={getData}
       isLoading={isLoading}
       rowCount={tableData?.totalCount || 0}
+      withCards={false}
+      withTable
     />
   );
 }
