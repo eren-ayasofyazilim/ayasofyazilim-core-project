@@ -1,7 +1,6 @@
 {
   "Back": "Geri",
   "Save": "Kaydet",
-  "Delete": "Sil",
   "Delete.Assurance": "Silmek istediğinize emin misiniz?",
   "Cancel": "İptal",
 
@@ -12,6 +11,12 @@
   "Edit": "Düzenle",
   "Edit.Success": "Veriler başarıyla güncellendi.",
   "Edit.Fail": "Güncellenirken bir hata oluştu.",
+
+  "Delete": "Sil",
+  "Delete.Success": "Veri başarıyla silindi.",
+  "Delete.Fail": "Veri silinirken bir hata oluştu.",
+
+  "Fetch.Fail": "Veriler alırken bir problem oluştu.",
 
   "Name": "İsim",
   "PersonalSummaries": "Kişi Özeti",
