@@ -50,7 +50,7 @@ export default function Page({
     });
   }
 
-  const columnsData = AUTO_COLUMNS_DATA(formData);
+  const columnsData = AUTO_COLUMNS_DATA(formData.tableSchema);
 
   columnsData.data.actionList?.push(
     EDIT_ROW_ON_NEW_PAGE(
@@ -70,8 +70,7 @@ export default function Page({
   // if (formData.createFormSchema) {
   action.unshift(
     TableAction_CREATE_ROW_ON_NEW_PAGE(
-      languageData,
-      formData,
+      languageData[formData.translationKey],
       `/app/admin/parties/${params.partyName}/new`,
     ),
   );

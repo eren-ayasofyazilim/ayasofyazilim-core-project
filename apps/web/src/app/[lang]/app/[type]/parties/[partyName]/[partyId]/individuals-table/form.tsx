@@ -28,7 +28,7 @@ function Individual({
   const formData = dataConfigOfParties[partyName];
   const [tableData, setTableData] = useState<PartiesResultType>();
   const [isLoading, setIsLoading] = useState(true);
-  const columnsData = AUTO_COLUMNS_DATA(formData);
+  const columnsData = AUTO_COLUMNS_DATA(formData.tableSchema);
   function getData() {
     setIsLoading(true);
     void getTableDataServerSide(async () => {

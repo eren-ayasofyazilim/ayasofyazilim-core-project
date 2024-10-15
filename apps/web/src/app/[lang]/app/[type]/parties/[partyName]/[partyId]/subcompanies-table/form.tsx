@@ -29,7 +29,7 @@ function SubCompany({
   const formData = dataConfigOfParties[partyName];
   const [tableData, setTableData] = useState<PartiesResultType>();
   const [isLoading, setIsLoading] = useState(true);
-  const columnsData = AUTO_COLUMNS_DATA(formData);
+  const columnsData = AUTO_COLUMNS_DATA(formData.tableSchema);
   function getData() {
     setIsLoading(true);
     void getTableDataServerSide(async () => {
@@ -59,8 +59,7 @@ function SubCompany({
   // if (formData.createFormSchema) {
   action.unshift(
     TableAction_CREATE_ROW_ON_NEW_PAGE(
-      languageData,
-      { ...formData, translationKey: formData.subEntityName },
+      languageData[formData.subEntityName],
       `/app/admin/parties/${partyName}/new?parentId=${partyId}`,
     ),
   );
