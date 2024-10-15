@@ -3,12 +3,12 @@ import type {
   ColumnFilter,
   ColumnsType,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
-import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type {
   GetApiTagServiceTagData,
   GetApiTagServiceTagResponse,
+  GetApiTagServiceTagSummaryResponse,
 } from "@ayasofyazilim/saas/TagService";
 import {
   $UniRefund_TagService_Tags_RefundType,
@@ -16,14 +16,32 @@ import {
   $UniRefund_TagService_Tags_TagStatusType,
 } from "@ayasofyazilim/saas/TagService";
 import { toast } from "@/components/ui/sonner";
+import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import { getBaseLink } from "src/utils";
 import type { TaxFreeTag } from "./data";
-import { getTags } from "./actions";
+import { getSummary, getTags } from "./actions";
 
 type FilterType = keyof GetApiTagServiceTagData;
+// type namedFilter = { name: string }
 type DetailedFilter = ColumnFilter & { name: FilterType };
+// type TypedFilter = Record<FilterType, ColumnFilter>;
 
 export default function Page(): JSX.Element {
+  // const typedFilters: TypedFilter = {
+  //   exportEndDate: {
+  //     name: "exportEndDate",
+  //     displayName: "Export End Date",
+  //     type: "date",
+  //     value: "",
+  //   },
+  //   exportStartDate: {
+  //     name: "exportEndDate",
+  //     displayName: "Export End Date",
+  //     type: "date",
+  //     value: "",
+  //   },
+
+  // }
   const filters: DetailedFilter[] = [
     {
       name: "exportEndDate",
@@ -123,7 +141,7 @@ export default function Page(): JSX.Element {
       value: "",
     },
     {
-      name: "travellerName",
+      name: "travellerFullName",
       displayName: "Traveller Name",
       type: "string",
       value: "",
@@ -132,6 +150,7 @@ export default function Page(): JSX.Element {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState<GetApiTagServiceTagResponse>();
+  const [summary, setSummary] = useState<GetApiTagServiceTagSummaryResponse>();
   const fetchTags = (page: number, filter: string) => {
     const filters_ = JSON.parse(filter) as GetApiTagServiceTagData;
     setLoading(true);
@@ -149,6 +168,22 @@ export default function Page(): JSX.Element {
       })
       .finally(() => {
         setLoading(false);
+        // handleFilter(filter);
+      });
+    void getSummary({ maxResultCount: 10, skipCount: page * 10, ...filters_ })
+      .then((res) => {
+        if (res.type === "success") {
+          setSummary(res.data);
+        }
+        if (res.type === "error") {
+          toast.error(res.message);
+        }
+        if (res.type === "api-error") {
+          toast.error(res.message);
+        }
+      })
+      .finally(() => {
+        // setLoading(false);
         // handleFilter(filter);
       });
   };
@@ -188,18 +223,48 @@ export default function Page(): JSX.Element {
   };
 
   return (
-    <DataTable
-      action={{
-        type: "NewPage",
-        cta: "Add Tag",
-        href: getBaseLink("app/admin/operations/details/add"),
-      }}
-      columnsData={columnsData}
-      data={tags?.items || []}
-      detailedFilter={filters}
-      fetchRequest={fetchTags}
-      isLoading={loading}
-      rowCount={tags?.totalCount || 0}
-    />
+    <div className="overflow-x-auto">
+      <Dashboard
+        action={{
+          type: "NewPage",
+          cta: "Add Tag",
+          href: getBaseLink("app/admin/operations/details/add"),
+        }}
+        cards={[
+          {
+            title: "Total Tags",
+            content: `${tags?.totalCount}`,
+            description: "Total tags in the system",
+            footer: "",
+          },
+          {
+            title: "Total Sales",
+            content: `${summary?.totalSalesAmount || 0}`,
+            description: "Total tags in the system",
+            footer: "",
+          },
+          {
+            title: "Total Refunds",
+            content: `${summary?.totalRefundAmount || 0}`,
+            description: "Total tags in the system",
+            footer: "",
+          },
+          {
+            title: "Currency",
+            content: summary?.currency || "TRY",
+            description: "Total tags in the system",
+            footer: "",
+          },
+        ]}
+        columnsData={columnsData}
+        data={tags?.items || []}
+        detailedFilter={filters}
+        fetchRequest={fetchTags}
+        isLoading={loading}
+        rowCount={tags?.totalCount}
+        withCards
+        withTable
+      />
+    </div>
   );
 }

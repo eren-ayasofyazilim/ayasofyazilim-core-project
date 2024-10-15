@@ -248,7 +248,6 @@ export default function Page() {
                     setTravellerNext(true);
                   }}
                   onValuesChange={() => {
-                    // console.log("values changed");
                     setTravellerNext(false);
                   }}
                   values={traveller}
@@ -297,12 +296,12 @@ export default function Page() {
                         countryCode,
                       },
                       traveller: {
-                        documentCountryCode: traveller?.nationality || "",
+                        nationalityCountryCode2: traveller?.nationality || "",
                         firstName: traveller?.name || "",
                         lastName: traveller?.lastName || "",
-                        countryOfResidenceCode: traveller?.residency || "",
+                        residenceCountryCode2: traveller?.residency || "",
                         birthDate: traveller?.BirthDate || "",
-                        documentNumber: traveller?.documentNumber || "",
+                        travelDocumentNumber: traveller?.documentNumber || "",
                         expirationDate: traveller?.expirationDate || "",
                       },
                       // invoices: paymentData.map((payment) => ({
