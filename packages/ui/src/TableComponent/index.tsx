@@ -95,7 +95,7 @@ export default function TableComponent({
     columnsData.data.actionList?.push(
       EDIT_ROW_ON_NEW_PAGE(
         languageData,
-        editOnNewPageUrl || isWindowExists ? window.location.href : "",
+        editOnNewPageUrl || (isWindowExists ? window.location.href : ""),
         router,
       ),
     );
@@ -117,9 +117,8 @@ export default function TableComponent({
     action.unshift(
       TableAction_CREATE_ROW_ON_NEW_PAGE(
         createOnNewPageTitle || languageData.New,
-        createOnNewPageUrl || isWindowExists
-          ? `${window.location.href}/new`
-          : "",
+        createOnNewPageUrl ||
+          (isWindowExists ? `${window.location.href}/new` : ""),
       ),
     );
   }
