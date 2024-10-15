@@ -25,6 +25,7 @@ import {
   $Volo_Abp_OpenIddict_Scopes_Dtos_ScopeDto,
   $Volo_Abp_OpenIddict_Scopes_Dtos_UpdateScopeInput,
 } from "@ayasofyazilim/saas/IdentityService";
+import type { GetApiSaasEditionsResponse } from "@ayasofyazilim/saas/SaasService";
 import {
   $Volo_Saas_Host_Dtos_EditionCreateDto,
   $Volo_Saas_Host_Dtos_EditionDto,
@@ -43,7 +44,7 @@ export const dataConfig: Record<string, any> = {
     applications: {
       title: "Application",
       detailedFilters: [
-        { name: "filter", displayName: "Search", type: "string", value: "" },
+        { name: "filter", displayName: "Client Id", type: "string", value: "" },
       ],
       createFormSchema: {
         formPositions: [
@@ -284,7 +285,14 @@ export const dataConfig: Record<string, any> = {
     default: "edition",
     edition: {
       title: "Edition",
-      detailedFilters: [],
+      detailedFilters: [
+        {
+          name: "filter",
+          displayName: "Display Name",
+          type: "string",
+          value: "",
+        },
+      ],
       createFormSchema: {
         formPositions: ["displayName"],
         schema: $Volo_Saas_Host_Dtos_EditionCreateDto,
@@ -294,14 +302,55 @@ export const dataConfig: Record<string, any> = {
         schema: $Volo_Saas_Host_Dtos_EditionUpdateDto,
       },
       tableSchema: {
-        excludeList: ["planId", "id", "planId", "concurrencyStamp"],
+        excludeList: ["planId", "id", "planId", "planName", "concurrencyStamp"],
         schema: $Volo_Saas_Host_Dtos_EditionDto,
       },
     },
     tenant: {
       title: "Tenant",
       detailedFilters: [
-        { name: "filter", displayName: "Search", type: "string", value: "" },
+        { name: "filter", displayName: "Name", type: "string", value: "" },
+        {
+          name: "ActivationState",
+          displayName: "Activation State",
+          type: "select",
+          value: "",
+          options: [
+            { label: "Active", value: "0" },
+            { label: "Active with limited time", value: "1" },
+            { label: "Passive", value: "2" },
+          ],
+        },
+        {
+          name: "GetEditionNames",
+          displayName: "Get Edition Name",
+          type: "boolean",
+          value: "true",
+        },
+        {
+          name: "ExpirationDateMin",
+          displayName: "Expiration Date Min",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "ExpirationDateMax",
+          displayName: "Expiration Date Max",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "ActivationEndDateMin",
+          displayName: "Activation End Date Min",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "ActivationEndDateMax",
+          displayName: "Activation End Date Max",
+          type: "string",
+          value: "",
+        },
       ],
       createFormSchema: {
         formPositions: [
@@ -320,9 +369,9 @@ export const dataConfig: Record<string, any> = {
           },
           editionId: {
             data: () => {
-              return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
-              );
+              return fetch(getBaseLink("api/admin/edition?maxResultCount=1000"))
+                .then((data) => data.json())
+                .then((jsonData: GetApiSaasEditionsResponse) => jsonData.items);
             },
             get: "displayName",
             post: "id",
@@ -348,10 +397,10 @@ export const dataConfig: Record<string, any> = {
             type: "enum",
           },
           editionId: {
-            data: async () => {
-              return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
-              );
+            data: () => {
+              return fetch(getBaseLink("api/admin/edition?maxResultCount=1000"))
+                .then((data) => data.json())
+                .then((jsonData: GetApiSaasEditionsResponse) => jsonData.items);
             },
             covertTo: "editionName",
             get: "displayName",
@@ -374,10 +423,10 @@ export const dataConfig: Record<string, any> = {
             type: "enum",
           },
           editionId: {
-            data: async () => {
-              return fetch(getBaseLink("api/admin/edition")).then((data) =>
-                data.json(),
-              );
+            data: () => {
+              return fetch(getBaseLink("api/admin/edition?maxResultCount=1000"))
+                .then((data) => data.json())
+                .then((jsonData: GetApiSaasEditionsResponse) => jsonData.items);
             },
             covertTo: "editionName",
             get: "displayName",
@@ -403,7 +452,14 @@ export const dataConfig: Record<string, any> = {
     default: "role",
     role: {
       title: "Role",
-      detailedFilters: [],
+      detailedFilters: [
+        {
+          name: "filter",
+          displayName: "Name",
+          type: "string",
+          value: "",
+        },
+      ],
       createFormSchema: {
         formPositions: ["name", "isDefault", "isPublic"],
         schema: $Volo_Abp_Identity_IdentityRoleCreateDto,
@@ -422,6 +478,84 @@ export const dataConfig: Record<string, any> = {
       title: "User",
       detailedFilters: [
         { name: "filter", displayName: "Search", type: "string", value: "" },
+        {
+          name: "UserName",
+          displayName: "User Name",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "Name",
+          displayName: "Name",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "Surname",
+          displayName: "Surname",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "EmailAddress",
+          displayName: "Email Address",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "PhoneNumber",
+          displayName: "Phone Number",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "IsLockedOut",
+          displayName: "Is Locked Out",
+          type: "boolean",
+          value: "true",
+        },
+        {
+          name: "NotActive",
+          displayName: "Not Active",
+          type: "boolean",
+          value: "true",
+        },
+        {
+          name: "EmailConfirmed",
+          displayName: "Email Confirmed",
+          type: "boolean",
+          value: "true",
+        },
+        {
+          name: "IsExternal",
+          displayName: "Is External",
+          type: "boolean",
+          value: "true",
+        },
+        {
+          name: "MaxCreationTime",
+          displayName: "Max Creation Time",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "MinCreationTime",
+          displayName: "Min Creation Time",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "MaxModifitionTime",
+          displayName: "Max Modifition Time",
+          type: "string",
+          value: "",
+        },
+        {
+          name: "MinModifitionTime",
+          displayName: "Min Modifition Time",
+          type: "string",
+          value: "",
+        },
       ],
       createFormSchema: {
         formPositions: ["email", "password", "userName"],
@@ -434,19 +568,18 @@ export const dataConfig: Record<string, any> = {
       tableSchema: {
         excludeList: [
           "id",
+          "deleterId",
+          "isDeleted",
+          "deletionTime",
+          "tenantId",
           "extraProperties",
           "concurrencyStamp",
-          "creationTime",
           "creatorId",
+          "shouldChangePasswordOnNextLogin",
+          "isLockedOut",
+          "phoneNumberConfirmed",
           "lastModificationTime",
           "lastModifierId",
-          "lastPasswordChangeTime",
-          "twoFactorEnabled",
-          "supportTwoFactor",
-          "shouldChangePasswordOnNextLogin",
-          "emailConfirmed",
-          "phoneNumberConfirmed",
-          "accessFailedCount",
           "lockoutEnabled",
           "lockoutEnd",
         ],
@@ -647,6 +780,14 @@ export const dataConfig: Record<string, any> = {
     default: "text-templates",
     "text-templates": {
       title: "Text Templates",
+      detailedFilters: [
+        {
+          name: "FilterText",
+          displayName: "Display Name",
+          type: "string",
+          value: "",
+        },
+      ],
       tableSchema: {
         excludeList: ["name", "additionalProperties"],
         schema:
