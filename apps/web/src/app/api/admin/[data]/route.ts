@@ -17,7 +17,15 @@ const clients: Clients = {
     const client = await getIdentityServiceClient();
     const role = client.role;
     return {
-      get: async () => role.getApiIdentityRolesAll(),
+      get: async (page: number, _filter: string) => {
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return role.getApiIdentityRoles({
+          maxResultCount: 10,
+          skipCount: page * 10,
+          filter,
+        });
+      },
       post: async (requestBody: unknown) => {
         return role.postApiIdentityRoles({ requestBody } as {
           requestBody: Volo_Abp_Identity_IdentityRoleCreateDto;
@@ -39,12 +47,39 @@ const clients: Clients = {
       get: async (page: number, _filter: string) => {
         const parsedFilter = JSON.parse(_filter || "{}");
         const filter = parsedFilter?.filter;
+        const userName = parsedFilter?.UserName;
+        const name = parsedFilter?.Name;
+        const surname = parsedFilter?.Surname;
+        const emailAddress = parsedFilter?.EmailAddress;
+        const phoneNumber = parsedFilter?.PhoneNumber;
+        const isLockedOut = parsedFilter?.IsLockedOut;
+        const notActive = parsedFilter?.NotActive;
+        const emailConfirmed = parsedFilter?.EmailConfirmed;
+        const isExternal = parsedFilter?.IsExternal;
+        const maxCreationTime = parsedFilter?.MaxCreationTime;
+        const minCreationTime = parsedFilter?.MinCreationTime;
+        const maxModifitionTime = parsedFilter?.MaxModifitionTime;
+        const minModifitionTime = parsedFilter?.MinModifitionTime;
         return user.getApiIdentityUsers({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
+          userName,
+          name,
+          surname,
+          emailAddress,
+          phoneNumber,
+          isLockedOut,
+          notActive,
+          emailConfirmed,
+          isExternal,
+          maxCreationTime,
+          minCreationTime,
+          maxModifitionTime,
+          minModifitionTime,
         });
       },
+
       post: async (requestBody: any) =>
         user.postApiIdentityUsers({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -56,7 +91,16 @@ const clients: Clients = {
     const client = await getSaasServiceClient();
     const edition = client.edition;
     return {
-      get: async () => edition.getApiSaasEditionsAll(),
+      get: async (page: number, _filter: string, _maxResultCount: unknown) => {
+        const maxResultCount = Number(_maxResultCount) || 10;
+        const parsedFilter = JSON.parse(_filter || "{}");
+        const filter = parsedFilter?.filter;
+        return edition.getApiSaasEditions({
+          maxResultCount: maxResultCount || 10,
+          skipCount: page * 10,
+          filter,
+        });
+      },
       post: async (requestBody: any) =>
         edition.postApiSaasEditions({ requestBody }),
       put: async ({ id, requestBody }: { id: string; requestBody: any }) =>
@@ -72,10 +116,22 @@ const clients: Clients = {
       get: async (page: number, _filter: string) => {
         const parsedFilter = JSON.parse(_filter || "{}");
         const filter = parsedFilter?.filter;
+        const getEditionNames = parsedFilter?.GetEditionNames;
+        const expirationDateMin = parsedFilter?.ExpirationDateMin;
+        const expirationDateMax = parsedFilter?.ExpirationDateMax;
+        const activationState = parsedFilter?.ActivationState;
+        const activationEndDateMin = parsedFilter?.ActivationEndDateMin;
+        const activationEndDateMax = parsedFilter?.ActivationEndDateMax;
         return tenant.getApiSaasTenants({
           maxResultCount: 10,
           skipCount: page * 10,
           filter,
+          getEditionNames,
+          expirationDateMin,
+          expirationDateMax,
+          activationState,
+          activationEndDateMin,
+          activationEndDateMax,
         });
       },
       post: async (requestBody: any) =>
@@ -264,12 +320,15 @@ const clients: Clients = {
     const client = await getAdministrationServiceClient();
     const textTemplates = client.textTemplateDefinitions;
     return {
-      get: async (page: number) =>
-        textTemplates.getApiTextTemplateManagementTemplateDefinitions({
+      get: async (page: number, filter: string) => {
+        const parsedFilter = JSON.parse(filter || "{}");
+        const filterText = parsedFilter?.FilterText;
+        return textTemplates.getApiTextTemplateManagementTemplateDefinitions({
           maxResultCount: 10,
           skipCount: page * 10,
-          //filter: filter,
-        }),
+          filterText,
+        });
+      },
     };
   },
 
