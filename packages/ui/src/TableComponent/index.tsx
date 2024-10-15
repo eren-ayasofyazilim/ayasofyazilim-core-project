@@ -1,6 +1,6 @@
 "use client";
 
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 import type {
   ColumnFilter,
   TableAction,
@@ -16,12 +16,10 @@ import {
 } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type { DefaultResource } from "src/language-data/Default";
-import type { GetTableDataResult, TableDataTypes } from "../../actions/table";
-import { deleteTableRow, getTableData } from "../../actions/table";
 
-export default function Table({
-  tableKey,
+export default function TableComponent({
+  fetchRequest,
+  deleteRequest,
   tableSchema,
   createOnNewPage,
   createOnNewPageUrl,
@@ -32,7 +30,6 @@ export default function Table({
   detailedFilter,
   languageData,
 }: {
-  tableKey: TableDataTypes;
   tableSchema: FormModifier;
   deleteableRow?: boolean;
   editOnNewPage?: boolean;
@@ -41,19 +38,29 @@ export default function Table({
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
   detailedFilter?: ColumnFilter[];
-  languageData: DefaultResource;
+  fetchRequest: (page: number) => Promise<{
+    type: string;
+    data: { items: unknown[]; totalCount: number };
+  }>;
+  deleteRequest: (id: string) => Promise<{
+    type: string;
+  }>;
+  languageData: any;
 }) {
   const router = useRouter();
-  const [tableData, setTableData] = useState<GetTableDataResult>();
+  const [tableData, setTableData] = useState<{
+    items: unknown[];
+    totalCount: number;
+  }>();
   const [isLoading, setIsLoading] = useState(true);
   const isWindowExists = typeof window !== "undefined";
 
   function getData(page: number) {
     setIsLoading(true);
-    getTableData(tableKey, page)
+    fetchRequest(page)
       .then((res) => {
         if (res.type === "success") {
-          setTableData(res.data);
+          setTableData(res?.data);
           setIsLoading(false);
         } else {
           toast.error(languageData["Fetch.Fail"]);
@@ -66,7 +73,7 @@ export default function Table({
   }
   function deleteRow(row: { id: string }) {
     setIsLoading(true);
-    deleteTableRow(tableKey, row.id)
+    deleteRequest(row.id)
       .then((res) => {
         if (res.type === "success") {
           getData(0);
@@ -101,10 +108,9 @@ export default function Table({
   }
 
   const action: TableAction[] = [
-    TableAction_EXPORT_CSV<GetTableDataResult | undefined>(
-      tableData,
-      "export.csv",
-    ),
+    TableAction_EXPORT_CSV<
+      { items: unknown[]; totalCount: number } | undefined
+    >(tableData, "export.csv"),
   ];
 
   if (createOnNewPage) {
