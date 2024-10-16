@@ -174,13 +174,9 @@ export default function Page(): JSX.Element {
       .then((res) => {
         if (res.type === "success") {
           setSummary(res.data);
+          return;
         }
-        if (res.type === "error") {
-          toast.error(res.message);
-        }
-        if (res.type === "api-error") {
-          toast.error(res.message);
-        }
+        toast.error(res.message);
       })
       .finally(() => {
         // setLoading(false);
@@ -221,6 +217,32 @@ export default function Page(): JSX.Element {
       ],
     },
   };
+  const summaryCards = [
+    {
+      title: "Total Tags",
+      content: `${tags?.totalCount}`,
+      description: "Total tags in the system",
+      footer: "",
+    },
+    {
+      title: "Total Sales",
+      content: `${summary?.totalSalesAmount || 0}`,
+      description: "Total tags in the system",
+      footer: "",
+    },
+    {
+      title: "Total Refunds",
+      content: `${summary?.totalRefundAmount || 0}`,
+      description: "Total tags in the system",
+      footer: "",
+    },
+    {
+      title: "Currency",
+      content: summary?.currency || "TRY",
+      description: "Total tags in the system",
+      footer: "",
+    },
+  ];
 
   return (
     <div className="overflow-x-auto">
@@ -230,32 +252,7 @@ export default function Page(): JSX.Element {
           cta: "Add Tag",
           href: getBaseLink("app/admin/operations/details/add"),
         }}
-        cards={[
-          {
-            title: "Total Tags",
-            content: `${tags?.totalCount}`,
-            description: "Total tags in the system",
-            footer: "",
-          },
-          {
-            title: "Total Sales",
-            content: `${summary?.totalSalesAmount || 0}`,
-            description: "Total tags in the system",
-            footer: "",
-          },
-          {
-            title: "Total Refunds",
-            content: `${summary?.totalRefundAmount || 0}`,
-            description: "Total tags in the system",
-            footer: "",
-          },
-          {
-            title: "Currency",
-            content: summary?.currency || "TRY",
-            description: "Total tags in the system",
-            footer: "",
-          },
-        ]}
+        cards={summaryCards}
         columnsData={columnsData}
         data={tags?.items || []}
         detailedFilter={filters}
