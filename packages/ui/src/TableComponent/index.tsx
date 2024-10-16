@@ -38,7 +38,10 @@ export default function TableComponent({
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
   detailedFilter?: ColumnFilter[];
-  fetchRequest: (page: number) => Promise<{
+  fetchRequest: (
+    page: number,
+    filter?: { [key: string]: string | string[] },
+  ) => Promise<{
     type: string;
     data: { items: unknown[]; totalCount: number };
   }>;
@@ -55,9 +58,12 @@ export default function TableComponent({
   const [isLoading, setIsLoading] = useState(true);
   const isWindowExists = typeof window !== "undefined";
 
-  function getData(page: number) {
+  function getData(
+    page: number,
+    filter?: { [key: string]: string | string[] },
+  ) {
     setIsLoading(true);
-    fetchRequest(page)
+    fetchRequest(page, filter)
       .then((res) => {
         if (res.type === "success") {
           setTableData(res?.data);
