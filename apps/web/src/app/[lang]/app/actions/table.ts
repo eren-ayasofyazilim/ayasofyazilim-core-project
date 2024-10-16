@@ -155,12 +155,6 @@ export async function tableDataRequests() {
   return tableRequests;
 }
 
-export type GetTableDataTypes = Awaited<ReturnType<typeof getTableData>>;
-export type GetTableDataResult = Awaited<
-  ReturnType<
-    Awaited<ReturnType<typeof tableDataRequests>>[TableDataTypes]["get"]
-  >
->;
 export async function getTableData(
   type: TableDataTypes,
   page = 0,
