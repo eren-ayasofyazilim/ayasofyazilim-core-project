@@ -17,12 +17,12 @@ import type { CellContext, ColumnDef } from "@tanstack/react-table";
 import { columnsGenerator } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/columnsGenerator";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import {
+  getTableData,
+  getTableDataDetail,
+} from "src/app/[lang]/app/actions/table";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { useLocale } from "src/providers/locale";
-import {
-  getPartyDetail,
-  getPartyTableData,
-} from "../../../parties/[partyName]/action";
 import { createTag } from "../actions";
 
 interface Payment {
@@ -111,7 +111,7 @@ export default function Page() {
   const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
-    void getPartyTableData("merchants", 0, 100).then((response) => {
+    void getTableData("merchants", 0, 100).then((response) => {
       if (response.type === "success") {
         setMerchantList(response.data);
       } else if (response.type === "api-error") {
@@ -124,7 +124,7 @@ export default function Page() {
   const handleMerchantChange = (value: string) => {
     setSelectedMerchant(value);
     setMerchantDetails(undefined);
-    void getPartyDetail("merchants", value).then((response) => {
+    void getTableDataDetail("merchants", value).then((response) => {
       if (response.type === "success") {
         setMerchantDetails(response.data as MerchantDetailDto);
       } else if (response.type === "api-error") {
