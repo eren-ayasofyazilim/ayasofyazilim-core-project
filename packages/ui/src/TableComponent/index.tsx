@@ -45,7 +45,7 @@ export default function TableComponent({
     type: string;
     data: { items: unknown[]; totalCount: number };
   }>;
-  deleteRequest: (id: string) => Promise<{
+  deleteRequest?: (id: string) => Promise<{
     type: string;
   }>;
   languageData: any;
@@ -58,12 +58,9 @@ export default function TableComponent({
   const [isLoading, setIsLoading] = useState(true);
   const isWindowExists = typeof window !== "undefined";
 
-  function getData(
-    page: number,
-    filter?: { [key: string]: string | string[] },
-  ) {
+  function getData(page: number) {
     setIsLoading(true);
-    fetchRequest(page, filter)
+    fetchRequest(page)
       .then((res) => {
         if (res.type === "success") {
           setTableData(res?.data);
@@ -78,6 +75,7 @@ export default function TableComponent({
       });
   }
   function deleteRow(row: { id: string }) {
+    if (!deleteRequest) return;
     setIsLoading(true);
     deleteRequest(row.id)
       .then((res) => {
