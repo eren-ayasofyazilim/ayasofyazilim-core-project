@@ -1,7 +1,6 @@
 {
   "Back": "Back",
   "Save": "Save",
-  "Delete": "Delete",
   "Delete.Assurance": "Are you sure you want to delete?",
   "Cancel": "Cancel",
 
@@ -12,6 +11,12 @@
   "Edit": "Edit",
   "Edit.Success": "Data updated successfully.",
   "Edit.Fail": "An error occurred while updating data.",
+
+  "Delete": "Delete",
+  "Delete.Success": "Data deleted successfully.",
+  "Delete.Fail": "An error occurred while deleting data.",
+
+  "Fetch.Fail": "An error occurred while getting datas.",
 
   "Name": "Name",
   "PersonalSummaries": "Personal Summaries",

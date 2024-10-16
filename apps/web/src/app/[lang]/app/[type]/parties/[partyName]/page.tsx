@@ -1,93 +1,46 @@
-"use client";
+"use server";
 
-import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
-import {
-  AUTO_COLUMNS_DATA,
-  DELETE_ROW_ACTION,
-  deleteTableRowServerSide,
-  EDIT_ROW_ON_NEW_PAGE,
-  getTableDataServerSide,
-  TableAction_CREATE_ROW_ON_NEW_PAGE,
-  TableAction_EXPORT_CSV,
-} from "@repo/ui/utils/table/table-utils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { getResourceDataClient } from "src/language-data/CRMService";
+import TableComponent from "@repo/ui/TableComponent";
+import { getResourceData } from "src/language-data/CRMService";
+import { deleteTableRow, getTableData } from "../../../actions/table";
 import { dataConfigOfParties } from "../table-data";
-import type { PartiesResultType, PartyNameType } from "../types";
-import { deletePartyRow, getPartyTableData } from "./action";
+import type { PartyNameType } from "../types";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
-  params: { partyName: Exclude<PartyNameType, "individuals">; lang: string };
+  params: { partyName: PartyNameType; lang: string };
 }) {
-  const router = useRouter();
-  const languageData = getResourceDataClient(params.lang);
-
+  const { languageData } = await getResourceData(params.lang);
   const formData = dataConfigOfParties[params.partyName];
-  const [tableData, setTableData] = useState<PartiesResultType>();
-  const [isLoading, setIsLoading] = useState(true);
-
-  function getData(page: number) {
-    setIsLoading(true);
-    void getTableDataServerSide(async () => {
-      return await getPartyTableData(params.partyName, page, 10);
-    }).then((result) => {
-      if (result) {
-        setTableData(result);
-      }
-      setIsLoading(false);
-    });
-  }
-  function deleteRow(row: { id: string }) {
-    setIsLoading(true);
-    void deleteTableRowServerSide(async () => {
-      return await deletePartyRow(params.partyName, row.id);
-    }).then(() => {
-      getData(0);
-    });
-  }
-
-  const columnsData = AUTO_COLUMNS_DATA(formData);
-
-  columnsData.data.actionList?.push(
-    EDIT_ROW_ON_NEW_PAGE(
-      languageData,
-      `/app/admin/parties/${params.partyName}`,
-      router,
-    ),
-  );
-  columnsData.data.actionList?.push(DELETE_ROW_ACTION(languageData, deleteRow));
-
-  const action: TableAction[] = [
-    TableAction_EXPORT_CSV<PartiesResultType | undefined>(
-      tableData,
-      `${params.partyName}.csv`,
-    ),
-  ];
-  // if (formData.createFormSchema) {
-  action.unshift(
-    TableAction_CREATE_ROW_ON_NEW_PAGE(
-      languageData,
-      formData,
-      `/app/admin/parties/${params.partyName}/new`,
-    ),
-  );
-  // }
-
   return (
-    <Dashboard
-      action={action}
-      cards={[]}
-      columnsData={columnsData}
-      data={tableData?.items || []}
-      fetchRequest={getData}
-      isLoading={isLoading}
-      rowCount={tableData?.totalCount || 0}
-      withCards={false}
-      withTable
+    <TableComponent
+      createOnNewPage
+      createOnNewPageTitle={languageData[`${formData.translationKey}.New`]}
+      deleteRequest={async (id) => {
+        "use server";
+        const response = await deleteTableRow(params.partyName, id);
+        return response;
+      }}
+      deleteableRow={params.partyName !== "individuals"}
+      editOnNewPage={params.partyName !== "individuals"}
+      fetchRequest={async (page) => {
+        "use server";
+        const response = await getTableData(params.partyName, page);
+        if (response.type === "success") {
+          const data = response.data;
+          return {
+            type: "success",
+            data: { items: data.items || [], totalCount: data.totalCount || 0 },
+          };
+        }
+        return {
+          type: "success",
+          data: { items: [], totalCount: 0 },
+        };
+      }}
+      languageData={languageData}
+      tableSchema={formData.tableSchema}
     />
   );
 }
