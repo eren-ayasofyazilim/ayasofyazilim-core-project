@@ -73,5 +73,8 @@
   "Individuals.New": "New Individual",
   "Individuals.Description": "Add New Individual",
 
-  "Parties.Organization": "Organization"
+  "Parties.Organization": "Organization",
+
+  "Contracts": "Contracts",
+  "Contracts.New": "New Contract"
 }
