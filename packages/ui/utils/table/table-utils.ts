@@ -69,12 +69,12 @@ export async function deleteTableRowServerSide<T>(
   }
 }
 
-export function AUTO_COLUMNS_DATA(formData: TableData): ColumnsType {
+export function AUTO_COLUMNS_DATA(formData: FormModifier): ColumnsType {
   return {
     type: "Auto",
     data: {
-      tableType: formData.tableSchema.schema,
-      excludeList: formData.tableSchema.excludeList || [],
+      tableType: formData.schema,
+      excludeList: formData.excludeList || [],
       actionList: [],
     },
   };
@@ -117,13 +117,11 @@ export function EDIT_ROW_ON_NEW_PAGE(
 }
 
 export function TableAction_CREATE_ROW_ON_NEW_PAGE(
-  languageData: unknown,
-  formData: TableData,
+  title: string,
   targetLink: string,
 ): TableAction {
-  const cta = `${formData.translationKey}.New`;
   return {
-    cta: (languageData as Record<string, string>)[cta],
+    cta: title,
     type: "NewPage",
     href: targetLink,
   };

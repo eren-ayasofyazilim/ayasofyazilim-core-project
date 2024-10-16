@@ -1,19 +1,13 @@
-"use client";
-import type { TableAction } from "@repo/ayasofyazilim-ui/molecules/tables";
-import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
+"use server";
 import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import TableComponent from "@repo/ui/TableComponent";
 import {
-  AUTO_COLUMNS_DATA,
-  EDIT_ROW_ON_NEW_PAGE,
-  getTableDataServerSide,
-  TableAction_EXPORT_CSV,
-} from "@repo/ui/utils/table/table-utils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+  deleteTableRow,
+  tableDataRequests,
+} from "src/app/[lang]/app/actions/table";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { dataConfigOfParties } from "../../../table-data";
-import type { PartiesResultType, PartyNameType } from "../../../types";
-import { getPartyIndividualTableData } from "../../action";
+import type { PartyNameType } from "../../../types";
 
 function Individual({
   languageData,
@@ -24,50 +18,41 @@ function Individual({
   partyName: Exclude<PartyNameType, "individuals">;
   partyId: string;
 }) {
-  const router = useRouter();
   const formData = dataConfigOfParties[partyName];
-  const [tableData, setTableData] = useState<PartiesResultType>();
-  const [isLoading, setIsLoading] = useState(true);
-  const columnsData = AUTO_COLUMNS_DATA(formData);
-  function getData() {
-    setIsLoading(true);
-    void getTableDataServerSide(async () => {
-      return await getPartyIndividualTableData(partyName, partyId);
-    }).then((result) => {
-      if (result) {
-        setTableData(result);
-      }
-      setIsLoading(false);
-    });
-  }
-
-  columnsData.data.actionList?.push(
-    EDIT_ROW_ON_NEW_PAGE(
-      languageData,
-      `/app/admin/parties/${partyName}`,
-      router,
-    ),
-  );
-
-  const action: TableAction[] = [
-    TableAction_EXPORT_CSV<PartiesResultType | undefined>(
-      tableData,
-      `${partyName}.csv`,
-    ),
-  ];
 
   return (
     <SectionLayoutContent sectionId="individuals">
-      <Dashboard
-        action={action}
-        cards={[]}
-        columnsData={columnsData}
-        data={tableData?.items || []}
-        fetchRequest={getData}
-        isLoading={isLoading}
-        rowCount={tableData?.totalCount || 0}
-        withCards={false}
-        withTable
+      <TableComponent
+        deleteRequest={async (id) => {
+          "use server";
+          const response = await deleteTableRow(partyName, id);
+          return response;
+        }}
+        deleteableRow
+        editOnNewPage
+        editOnNewPageUrl={`/app/admin/parties/${partyName}`}
+        // createOnNewPage
+        // createOnNewPageTitle={languageData[`${formData.subEntityName}.New`]}
+        // createOnNewPageUrl={`/app/admin/parties/individuals/new?parentId=${partyId}&partyName=${partyName}`}
+        fetchRequest={async (page) => {
+          "use server";
+          const requests = await tableDataRequests();
+          const response = await requests[partyName].getIndivuals({
+            id: partyId,
+            maxResultCount: 10,
+            skipCount: page * 10,
+          });
+
+          return {
+            type: "success",
+            data: {
+              items: response.items || [],
+              totalCount: response.totalCount || 0,
+            },
+          };
+        }}
+        languageData={languageData}
+        tableSchema={formData.tableSchema}
       />
     </SectionLayoutContent>
   );

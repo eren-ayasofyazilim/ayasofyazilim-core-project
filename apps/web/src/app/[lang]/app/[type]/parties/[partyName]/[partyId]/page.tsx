@@ -1,11 +1,15 @@
 "use server";
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
+import { notFound } from "next/navigation";
+import {
+  getTableData,
+  getTableDataDetail,
+} from "src/app/[lang]/app/actions/table";
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
 import { dataConfigOfParties } from "../../table-data";
 import type { PartyNameType } from "../../types";
-import { getPartyDetail, getPartyTableData } from "../action";
 import Address from "./address/form";
 import Email from "./email/form";
 import Individual from "./individuals-table/form";
@@ -15,48 +19,53 @@ import OrganizationForm from "./organization/form";
 import PersonalSummariesForm from "./personal-summaries/form";
 import SubCompany from "./subcompanies-table/form";
 import Telephone from "./telephone/form";
+import type { GetPartiesDetailResult } from "./types";
 
 export default async function Page({
   params,
 }: {
   params: {
     partyId: string;
-    partyName: PartyNameType;
+    partyName: Exclude<PartyNameType, "individuals">;
     lang: string;
   };
 }) {
   const { languageData } = await getResourceData(params.lang);
   const formData = dataConfigOfParties[params.partyName];
-  const taxOffices = await getPartyTableData("tax-offices", 0, 100);
 
-  if (params.partyName === "individuals") {
-    return <></>;
+  const partyDetail = await getTableDataDetail(
+    params.partyName,
+    params.partyId,
+  );
+  if (partyDetail.type !== "success" || !partyDetail.data) {
+    notFound();
   }
-
-  const partyDetail = await getPartyDetail(params.partyName, params.partyId);
-  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
-
-  if (
-    partyDetail.type !== "success" ||
-    !partyDetail.data ||
-    cities.type !== "success" ||
-    !("entityInformations" in partyDetail.data) ||
-    taxOffices.type !== "success"
-  ) {
-    return <>Not found</>;
-  }
-
-  const partyDetailData = partyDetail.data;
-
+  const partyDetailData = partyDetail.data as GetPartiesDetailResult;
   const organizationData =
     partyDetailData.entityInformations?.[0]?.organizations?.[0];
-
   const individualData =
     partyDetailData.entityInformations?.[0]?.individuals?.[0];
-
   if (!organizationData && !individualData) {
-    return <>Not found org</>;
+    return notFound();
   }
+
+  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
+  const citiesEnum =
+    (cities.type === "success" &&
+      cities.data.items?.map((item) => ({
+        name: item.name || "",
+        id: item.id || "",
+      }))) ||
+    [];
+
+  const taxOffices = await getTableData("tax-offices", 0);
+  const taxOfficesEnum =
+    (taxOffices.type === "success" &&
+      taxOffices.data.items?.map((item) => ({
+        name: item.name || "",
+        id: item.id || "",
+      }))) ||
+    [];
 
   const sections = [
     { name: languageData.Telephone, id: "telephone" },
@@ -84,17 +93,6 @@ export default async function Page({
       id: "merchant-base",
     });
   }
-
-  const citiesEnum =
-    cities.data.items?.map((item) => ({
-      name: item.name || "",
-      id: item.id || "",
-    })) || [];
-  const taxOfficesEnum =
-    taxOffices.data.items?.map((item) => ({
-      name: item.name || "",
-      id: item.id || "",
-    })) || [];
 
   return (
     <>
