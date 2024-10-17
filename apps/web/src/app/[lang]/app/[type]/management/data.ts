@@ -325,7 +325,7 @@ export const dataConfig: Record<string, any> = {
           name: "GetEditionNames",
           displayName: "Get Edition Name",
           type: "boolean",
-          value: "true",
+          value: "",
         },
         {
           name: "ExpirationDateMin",
@@ -512,25 +512,25 @@ export const dataConfig: Record<string, any> = {
           name: "IsLockedOut",
           displayName: "Is Locked Out",
           type: "boolean",
-          value: "true",
+          value: "",
         },
         {
           name: "NotActive",
           displayName: "Not Active",
           type: "boolean",
-          value: "true",
+          value: "",
         },
         {
           name: "EmailConfirmed",
           displayName: "Email Confirmed",
           type: "boolean",
-          value: "true",
+          value: "",
         },
         {
           name: "IsExternal",
           displayName: "Is External",
           type: "boolean",
-          value: "true",
+          value: "",
         },
         {
           name: "MaxCreationTime",
