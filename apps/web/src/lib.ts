@@ -155,7 +155,7 @@ export interface SuccessServerResponse<T> {
 }
 export interface ApiErrorServerResponse {
   type: "api-error";
-  data: ApiError["message"] | ApiError["cause"];
+  data: ApiError["message"];
 }
 export interface ErrorServerResponse {
   type: "error";
@@ -165,9 +165,22 @@ export interface ErrorServerResponse {
 export function structuredError(error: unknown): ErrorTypes {
   if (isApiError(error)) {
     const body = error.body as Record<string, unknown>;
+    if (
+      "error" in body &&
+      body.error &&
+      typeof body.error === "object" &&
+      "message" in body.error
+    ) {
+      return {
+        type: "api-error",
+        data: body.error.message as string,
+        status: error.status,
+        message: error.statusText,
+      };
+    }
     return {
       type: "api-error",
-      data: body.message || body.cause,
+      data: body.error as string,
       status: error.status,
       message: error.statusText,
     };

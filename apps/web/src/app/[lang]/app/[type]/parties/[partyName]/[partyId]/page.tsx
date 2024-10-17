@@ -11,6 +11,7 @@ import { getCities } from "../../../action";
 import { dataConfigOfParties } from "../../table-data";
 import type { PartyNameType } from "../../types";
 import Address from "./address/form";
+import Contracts from "./contracts/page";
 import Email from "./email/form";
 import Individual from "./individuals-table/form";
 import MerchantForm from "./merchant/form";
@@ -73,6 +74,7 @@ export default async function Page({
     { name: languageData.Email, id: "email" },
     { name: languageData[formData.subEntityName], id: "SubCompany" },
     { name: languageData.Individuals, id: "individuals" },
+    { name: languageData.Contracts, id: "contracts" },
   ];
 
   if (organizationData) {
@@ -167,6 +169,13 @@ export default async function Page({
             partyId={params.partyId}
             partyName={params.partyName}
           />
+          {params.partyName === "merchants" && (
+            <Contracts
+              languageData={languageData}
+              partyId={params.partyId}
+              partyName={params.partyName}
+            />
+          )}
         </SectionLayout>
       </div>
       <div className="hidden" id="page-title">
