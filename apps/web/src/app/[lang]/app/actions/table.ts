@@ -1,6 +1,7 @@
 "use server";
 
 import type { GetApiCrmServiceMerchantsData } from "@ayasofyazilim/saas/CRMService";
+import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { getCRMServiceClient, structuredError } from "src/lib";
 import type {
   GetCustomsDTO,
@@ -160,7 +161,7 @@ export async function getTableData(
   type: TableDataTypes,
   page = 0,
   maxResultCount = 10,
-  filter?: Record<string, string | string[]>,
+  filter?: FilterColumnResult,
 ) {
   try {
     const requests = await tableDataRequests();
