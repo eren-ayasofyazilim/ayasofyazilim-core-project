@@ -73,5 +73,8 @@
   "Individuals.New": "Yeni Birey",
   "Individuals.Description": "Yeni Birey Ekle",
 
-  "Parties.Organization": "Organizasyon"
+  "Parties.Organization": "Organizasyon",
+
+  "Contracts": "Sözleşmeler",
+  "Contracts.New": "Yeni sözleşme"
 }
