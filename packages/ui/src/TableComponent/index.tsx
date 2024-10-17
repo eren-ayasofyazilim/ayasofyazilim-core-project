@@ -48,6 +48,7 @@ export default function TableComponent({
   }>;
   deleteRequest?: (id: string) => Promise<{
     type: string;
+    data?: unknown;
   }>;
   languageData: any;
 }) {
@@ -85,7 +86,7 @@ export default function TableComponent({
           toast.success(languageData["Delete.Success"]);
         } else {
           setIsLoading(false);
-          toast.error(languageData["Delete.Fail"]);
+          toast.error(res.data || languageData["Delete.Fail"]);
         }
       })
       .catch(() => {
