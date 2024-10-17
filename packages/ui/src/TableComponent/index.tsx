@@ -48,7 +48,7 @@ export default function TableComponent({
   }>;
   deleteRequest?: (id: string) => Promise<{
     type: string;
-    data?: string;
+    data?: unknown;
   }>;
   languageData: any;
 }) {
