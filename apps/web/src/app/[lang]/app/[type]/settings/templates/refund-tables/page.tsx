@@ -113,10 +113,14 @@ export default function Page({ params }: { params: { lang: string } }) {
   return (
     <DataTable
       action={action}
+      classNames={{
+        table: {
+          container: "h-auto",
+        },
+      }}
       columnsData={columnsData}
       data={loading ? [] : list?.items || []}
       isLoading={loading}
-      tableClassName="h-auto"
     />
   );
 }
