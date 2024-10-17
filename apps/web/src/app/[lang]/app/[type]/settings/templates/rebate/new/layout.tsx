@@ -7,7 +7,6 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 
 interface LayoutProps {
@@ -17,8 +16,7 @@ interface LayoutProps {
 
 export default function Layout({ children, params }: LayoutProps) {
   const pathname = usePathname();
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+  const languageData = getResourceDataClient(params.lang);
 
   const path = pathname.split("templates/rebate/")[1];
 

@@ -12,7 +12,7 @@ import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
 import { getContractHeadersByMerchantId } from "./action";
 
-export default function Contracts({
+export default function Page({
   languageData,
   partyName,
   partyId,
