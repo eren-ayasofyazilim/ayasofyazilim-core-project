@@ -8,6 +8,7 @@
   "Travellers.New": "Yeni Yolcu Ekle",
   "Travellers.ShowExpired": "Süresi Dolanları Göster",
   "Travellers.TravelDocumentNumber": "Seyahat Belge Numarası",
+  "Travellers.Fail": "Yolcu kaydedilirken bir hata oluştu",
 
   "Form.personalIdentificationCommonDatas.firstName": "Ad",
   "Form.personalIdentificationCommonDatas.lastName": "Soyad",

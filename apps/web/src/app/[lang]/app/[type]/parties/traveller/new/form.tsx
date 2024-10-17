@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
-import { getCities, getCountries } from "../../../action";
 import { createTravellerWithComponents } from "../actions";
 import type { CreateTravellerDTO } from "../data";
 import {
@@ -27,6 +26,10 @@ import {
   formPositions,
   formSubPositions,
 } from "../data";
+import {
+  getCities,
+  getCountries,
+} from "../../../../actions/LocationService/actions";
 
 export default function Form({
   languageData,
@@ -50,7 +53,7 @@ export default function Form({
         setCities(response.data.items || []);
       }
     } catch (error) {
-      toast.error("An error occurred while fetching cities.");
+      toast.error(languageData["Fetch.Fail.City"]);
     }
   };
 
@@ -63,7 +66,7 @@ export default function Form({
         setCountries(response.data.items || []);
       }
     } catch (error) {
-      toast.error("An error occurred while fetching countries.");
+      toast.error(languageData["Fetch.Fail.Country"]);
     }
   };
 
@@ -130,7 +133,7 @@ export default function Form({
         router.push(getBaseLink(`/app/admin/parties/traveller`));
       }
     } catch (error) {
-      toast.error(`An error occurred while saving the Traveller`);
+      toast.error(languageData["Travellers.Fail"]);
     }
   };
 

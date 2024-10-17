@@ -17,6 +17,8 @@
   "Delete.Fail": "An error occurred while deleting data.",
 
   "Fetch.Fail": "An error occurred while getting datas.",
+  "Fetch.Fail.Country": "An error occurred while fetching countries.",
+  "Fetch.Fail.City": "An error occurred while fetching cities.",
 
   "Name": "Name",
   "UserName": "User Name",

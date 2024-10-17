@@ -16,7 +16,9 @@
   "Delete.Success": "Veri başarıyla silindi.",
   "Delete.Fail": "Veri silinirken bir hata oluştu.",
 
-  "Fetch.Fail": "Veriler alırken bir problem oluştu.",
+  "Fetch.Fail": "Veriler alırken bir hata oluştu.",
+  "Fetch.Fail.Country": "Ülkeleri alırken bir hata oluştu.",
+  "Fetch.Fail.City": "Şehirleri alırken bir hata oluştu.",
 
   "Name": "İsim",
   "UserName": "Kullanıcı Adı",

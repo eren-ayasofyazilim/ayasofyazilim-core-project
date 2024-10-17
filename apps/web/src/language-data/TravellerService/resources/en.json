@@ -8,6 +8,7 @@
   "Travellers.New": "New Traveller",
   "Travellers.ShowExpired": "Show Expired",
   "Travellers.TravelDocumentNumber": "Travel Document Number",
+  "Travellers.Fail": "An error occurred while saving the Traveller",
 
   "Form.personalIdentificationCommonDatas.firstName": "First Name",
   "Form.personalIdentificationCommonDatas.lastName": "Last Name",
