@@ -122,6 +122,26 @@ export const dataConfigOfParties = {
     translationKey: "Merchants" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "STORE" as const,
+    detailedFilters: [
+      {
+        name: "typeCodes",
+        displayName: "Type Codes",
+        type: "select-multiple" as const,
+        value: "HEADQUARTER",
+        multiSelectProps: {
+          options: [
+            {
+              label: "HEADQUARTER",
+              value: "HEADQUARTER",
+            },
+            {
+              label: "STORE",
+              value: "STORE",
+            },
+          ],
+        },
+      },
+    ],
     createFormSchema: {
       schema: createScheme(CreateMerchantSchema),
       formPositions: [
@@ -150,6 +170,7 @@ export const dataConfigOfParties = {
     translationKey: "RefundPoints" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "REFUNDPOINT" as const,
+    detailedFilters: [],
     createFormSchema: {
       schema: createScheme(CreateRefundPointSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -170,6 +191,7 @@ export const dataConfigOfParties = {
     translationKey: "Customs" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
+    detailedFilters: [],
     createFormSchema: {
       schema: createScheme(CreateCustomsSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -185,6 +207,7 @@ export const dataConfigOfParties = {
     translationKey: "TaxFree" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
+    detailedFilters: [],
     createFormSchema: {
       schema: createScheme(CreateTaxFreeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -200,6 +223,7 @@ export const dataConfigOfParties = {
     translationKey: "TaxOffices" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "HEADQUARTER" as const,
+    detailedFilters: [],
     createFormSchema: {
       schema: createScheme(CreateTaxOfficeSchema),
       formPositions: ["organization", "telephone", "address", "email"],
@@ -215,6 +239,7 @@ export const dataConfigOfParties = {
     translationKey: "Individuals" as const,
     subEntityName: "Merchants.SubOrganization" as const,
     subEntityType: "STORE" as const,
+    detailedFilters: [],
     createFormSchema: {
       schema: {},
       formPositions: ["telephone", "address", "email"],
