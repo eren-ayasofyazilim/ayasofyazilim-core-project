@@ -41,6 +41,12 @@ export async function tableDataRequests() {
         await client.merchant.deleteApiCrmServiceMerchantsByIdWithComponents({
           id,
         }),
+      getBasicInformation: async (data: { id: string }) =>
+        await client.merchant.getApiCrmServiceMerchantsByIdBasicInformation(
+          data,
+        ),
+      getAdresses: async (data: { id: string }) =>
+        await client.merchant.getApiCrmServiceMerchantsByIdAddresses(data),
     },
     "refund-points": {
       getDetail: async (id: string) =>
