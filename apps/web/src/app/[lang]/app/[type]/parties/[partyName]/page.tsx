@@ -23,10 +23,11 @@ export default async function Page({
         return response;
       }}
       deleteableRow={params.partyName !== "individuals"}
+      detailedFilter={formData.detailedFilters}
       editOnNewPage={params.partyName !== "individuals"}
-      fetchRequest={async (page) => {
+      fetchRequest={async (page, filter) => {
         "use server";
-        const response = await getTableData(params.partyName, page);
+        const response = await getTableData(params.partyName, page, 10, filter);
         if (response.type === "success") {
           const data = response.data;
           return {

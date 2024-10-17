@@ -5,11 +5,14 @@ import type {
   Volo_Abp_Application_Dtos_PagedResultDto_15,
 } from "@ayasofyazilim/saas/TravellerService";
 import { $UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "@ayasofyazilim/saas/TravellerService";
-import type { ColumnFilter } from "@repo/ayasofyazilim-ui/molecules/tables";
+import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
+import type {
+  ColumnFilter,
+  FilterColumnResult,
+} from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import jsonToCsv from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { getTravellers } from "./actions";
@@ -73,14 +76,13 @@ export default function Table({
     },
   ];
 
-  async function fetchTravellerData(page: number, filter: string) {
-    const filters_ = JSON.parse(filter) as DetailedFilter[];
+  async function fetchTravellerData(page: number, filter: FilterColumnResult) {
     setLoading(true);
     try {
       const response = await getTravellers({
         maxResultCount: 10,
         skipCount: page * 10,
-        ...filters_,
+        ...filter,
       });
       if (response.type === "error" || response.type === "api-error") {
         toast.error(

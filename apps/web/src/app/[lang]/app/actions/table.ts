@@ -1,5 +1,7 @@
 "use server";
 
+import type { GetApiCrmServiceMerchantsData } from "@ayasofyazilim/saas/CRMService";
+import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { getCRMServiceClient, structuredError } from "src/lib";
 import type {
   GetCustomsDTO,
@@ -19,7 +21,7 @@ export async function tableDataRequests() {
       getDetail: async (id: string) =>
         (await client.merchant.getApiCrmServiceMerchantsByIdDetail({ id }))
           .merchant,
-      get: async (data: { maxResultCount: number; skipCount: number }) =>
+      get: async (data: GetApiCrmServiceMerchantsData) =>
         (await client.merchant.getApiCrmServiceMerchants(
           data,
         )) as GetMerchantDTO,
@@ -165,6 +167,7 @@ export async function getTableData(
   type: TableDataTypes,
   page = 0,
   maxResultCount = 10,
+  filter?: FilterColumnResult,
 ) {
   try {
     const requests = await tableDataRequests();
@@ -173,6 +176,7 @@ export async function getTableData(
       data: await requests[type].get({
         maxResultCount,
         skipCount: page * 10,
+        ...filter,
       }),
       status: 200,
       message: "",

@@ -3,6 +3,7 @@
 import { toast } from "@repo/ayasofyazilim-ui/atoms/sonner";
 import type {
   ColumnFilter,
+  FilterColumnResult,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
@@ -38,11 +39,14 @@ export default function TableComponent({
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
   detailedFilter?: ColumnFilter[];
-  fetchRequest: (page: number) => Promise<{
+  fetchRequest: (
+    page: number,
+    filter?: FilterColumnResult,
+  ) => Promise<{
     type: string;
     data: { items: unknown[]; totalCount: number };
   }>;
-  deleteRequest: (id: string) => Promise<{
+  deleteRequest?: (id: string) => Promise<{
     type: string;
   }>;
   languageData: any;
@@ -55,9 +59,9 @@ export default function TableComponent({
   const [isLoading, setIsLoading] = useState(true);
   const isWindowExists = typeof window !== "undefined";
 
-  function getData(page: number) {
+  function getData(page: number, filter?: FilterColumnResult) {
     setIsLoading(true);
-    fetchRequest(page)
+    fetchRequest(page, filter)
       .then((res) => {
         if (res.type === "success") {
           setTableData(res?.data);
@@ -72,6 +76,7 @@ export default function TableComponent({
       });
   }
   function deleteRow(row: { id: string }) {
+    if (!deleteRequest) return;
     setIsLoading(true);
     deleteRequest(row.id)
       .then((res) => {

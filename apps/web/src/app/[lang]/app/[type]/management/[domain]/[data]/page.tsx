@@ -1,9 +1,11 @@
 /* eslint-disable no-await-in-loop, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument -- TODO: we need to fix this*/
 "use client";
 import { toast } from "@/components/ui/sonner";
+import type { SchemaType } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import jsonToCSV from "@repo/ayasofyazilim-ui/lib/json-to-csv";
 import type {
   ColumnsType,
+  FilterColumnResult,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import {
@@ -12,10 +14,9 @@ import {
   type AutoFormProps,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
+import type { FormModifier, TableData } from "@repo/ui/utils/table/table-utils";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import type { TableData, FormModifier } from "@repo/ui/utils/table/table-utils";
-import type { SchemaType } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import { getResourceDataClient } from "src/language-data/IdentityService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
@@ -118,9 +119,9 @@ export default function Page({
     setFormData(tempData);
   }
 
-  function getRoles(_page: number, _filter?: string) {
+  function getRoles(_page: number, _filter?: FilterColumnResult) {
     let page = _page;
-    const filter = _filter || "";
+    const filter = JSON.stringify(_filter) || "";
     if (typeof page !== "number") {
       page = 0;
     }
