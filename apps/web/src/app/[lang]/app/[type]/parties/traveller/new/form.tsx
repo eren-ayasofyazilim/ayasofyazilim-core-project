@@ -16,9 +16,9 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
+import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getCities, getCountries } from "../../../action";
 import { createTravellerWithComponents } from "../actions";
 import type { CreateTravellerDTO } from "../data";
@@ -143,7 +143,7 @@ export default function Form({
     renderer: (props: AutoFormInputComponentProps) => (
       <CustomCombobox<UniRefund_LocationService_Countries_CountryDto>
         childrenProps={props}
-        emptyValue={languageData["Travellers.Country.Select"]}
+        emptyValue={languageData["Country.Select"]}
         list={countries}
         selectIdentifier="code2"
         selectLabel="name"
@@ -176,7 +176,7 @@ export default function Form({
             renderer: (props: AutoFormInputComponentProps) => (
               <CustomCombobox<UniRefund_LocationService_Cities_CityDto>
                 childrenProps={props}
-                emptyValue={languageData["Travellers.City.Select"]}
+                emptyValue={languageData["City.Select"]}
                 list={cities}
                 selectIdentifier="id"
                 selectLabel="name"
@@ -187,7 +187,7 @@ export default function Form({
             renderer: (props: AutoFormInputComponentProps) => (
               <CustomCombobox<UniRefund_LocationService_Countries_CountryDto>
                 childrenProps={props}
-                emptyValue={languageData["Travellers.Country.Select"]}
+                emptyValue={languageData["Country.Select"]}
                 list={countries}
                 selectIdentifier="id"
                 selectLabel="name"
@@ -213,7 +213,7 @@ export default function Form({
       stickyChildren
     >
       <AutoFormSubmit className="float-right py-4">
-        {languageData["Travellers.Save"]}
+        {languageData.Save}
       </AutoFormSubmit>
     </AutoForm>
   );
