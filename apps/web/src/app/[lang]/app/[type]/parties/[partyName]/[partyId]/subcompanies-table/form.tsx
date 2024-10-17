@@ -3,8 +3,8 @@ import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-l
 import TableComponent from "@repo/ui/TableComponent";
 import {
   deleteTableRow,
-  tableDataRequests,
-} from "src/app/[lang]/app/actions/table";
+  getApiRequests,
+} from "src/app/[lang]/app/actions/api-requests";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { dataConfigOfParties } from "../../../table-data";
 import type { PartyNameType } from "../../../types";
@@ -36,7 +36,7 @@ function SubCompany({
         editOnNewPageUrl={`/app/admin/parties/${partyName}`}
         fetchRequest={async (page) => {
           "use server";
-          const requests = await tableDataRequests();
+          const requests = await getApiRequests();
           const response = await requests[partyName].getSubCompanies({
             id: partyId,
             maxResultCount: 10,

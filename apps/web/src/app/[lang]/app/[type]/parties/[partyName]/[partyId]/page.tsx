@@ -2,10 +2,8 @@
 
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { notFound } from "next/navigation";
-import {
-  getTableData,
-  getTableDataDetail,
-} from "src/app/[lang]/app/actions/api-requests";
+import { getTableDataDetail } from "src/app/[lang]/app/actions/api-requests";
+import { getTaxOfficesApi } from "src/app/[lang]/app/actions/CrmService/actions";
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
 import { dataConfigOfParties } from "../../table-data";
@@ -59,7 +57,7 @@ export default async function Page({
       }))) ||
     [];
 
-  const taxOffices = await getTableData("tax-offices", 0);
+  const taxOffices = await getTaxOfficesApi();
   const taxOfficesEnum =
     (taxOffices.type === "success" &&
       taxOffices.data.items?.map((item) => ({
