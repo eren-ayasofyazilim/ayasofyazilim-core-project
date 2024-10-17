@@ -20,7 +20,7 @@ import { z } from "zod";
 import {
   getTableData,
   getTableDataDetail,
-} from "src/app/[lang]/app/actions/table";
+} from "src/app/[lang]/app/actions/api-requests";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { createTag } from "../actions";
 

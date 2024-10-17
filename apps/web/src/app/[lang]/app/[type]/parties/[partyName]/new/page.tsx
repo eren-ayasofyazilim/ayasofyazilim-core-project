@@ -1,6 +1,6 @@
 "use server";
 
-import { getTableData } from "src/app/[lang]/app/actions/table";
+import { getTableData } from "src/app/[lang]/app/actions/api-requests";
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
 import type { PartyNameType } from "../../types";

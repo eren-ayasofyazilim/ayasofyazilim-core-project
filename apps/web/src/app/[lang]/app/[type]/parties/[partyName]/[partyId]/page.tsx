@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import {
   getTableData,
   getTableDataDetail,
-} from "src/app/[lang]/app/actions/table";
+} from "src/app/[lang]/app/actions/api-requests";
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
 import { dataConfigOfParties } from "../../table-data";

@@ -11,10 +11,8 @@ import type {
   GetTaxOfficeDTO,
 } from "../[type]/parties/types";
 
-export type TableDataTypes = keyof Awaited<
-  ReturnType<typeof tableDataRequests>
->;
-export async function tableDataRequests() {
+export type TableDataTypes = keyof Awaited<ReturnType<typeof getApiRequests>>;
+export async function getApiRequests() {
   const client = await getCRMServiceClient();
   const tableRequests = {
     merchants: {
@@ -170,7 +168,7 @@ export async function getTableData(
   filter?: FilterColumnResult,
 ) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].get({
@@ -187,7 +185,7 @@ export async function getTableData(
 }
 export async function deleteTableRow(type: TableDataTypes, id: string) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].deleteRow(id),
@@ -200,7 +198,7 @@ export async function deleteTableRow(type: TableDataTypes, id: string) {
 }
 export async function getTableDataDetail(type: TableDataTypes, id: string) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].getDetail(id),
