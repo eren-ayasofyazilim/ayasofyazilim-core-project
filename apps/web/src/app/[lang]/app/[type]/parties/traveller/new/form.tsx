@@ -173,7 +173,7 @@ export default function Form({
         address: {
           className: "row-span-2",
           city: {
-            renderer: (props) => (
+            renderer: (props: AutoFormInputComponentProps) => (
               <CustomCombobox<UniRefund_LocationService_Cities_CityDto>
                 childrenProps={props}
                 emptyValue={languageData["Travellers.City.Select"]}
@@ -184,7 +184,7 @@ export default function Form({
             ),
           },
           country: {
-            renderer: (props) => (
+            renderer: (props: AutoFormInputComponentProps) => (
               <CustomCombobox<UniRefund_LocationService_Countries_CountryDto>
                 childrenProps={props}
                 emptyValue={languageData["Travellers.Country.Select"]}
