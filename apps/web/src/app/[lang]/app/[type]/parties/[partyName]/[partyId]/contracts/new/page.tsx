@@ -1,5 +1,5 @@
 import { getBaseLink } from "src/utils";
-import { tableDataRequests } from "src/app/[lang]/app/actions/table";
+import { getApiRequests } from "src/app/[lang]/app/actions/api-requests";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getResourceData } from "src/language-data/ContractService";
 import ContractHeaderForm from "./form";
@@ -13,7 +13,7 @@ export default async function Page({
     lang: string;
   };
 }) {
-  const req = await tableDataRequests();
+  const req = await getApiRequests();
   const basicInformation = await req[params.partyName].getBasicInformation({
     id: params.partyId,
   });
