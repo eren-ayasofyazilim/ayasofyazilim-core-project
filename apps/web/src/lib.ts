@@ -164,23 +164,11 @@ export interface ErrorServerResponse {
 
 export function structuredError(error: unknown): ErrorTypes {
   if (isApiError(error)) {
-    const body = error.body as Record<string, unknown>;
-    if (
-      "error" in body &&
-      body.error &&
-      typeof body.error === "object" &&
-      "message" in body.error
-    ) {
-      return {
-        type: "api-error",
-        data: body.error.message as string,
-        status: error.status,
-        message: error.statusText,
-      };
-    }
+    const body = error.body as { error: { message: string } };
+
     return {
       type: "api-error",
-      data: body.error as string,
+      data: body.error.message,
       status: error.status,
       message: error.statusText,
     };

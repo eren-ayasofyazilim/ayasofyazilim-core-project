@@ -1,6 +1,6 @@
 "use server";
 
-import { getTableData } from "src/app/[lang]/app/actions/table";
+import { getTaxOfficesApi } from "src/app/[lang]/app/actions/CrmService/actions";
 import { getResourceData } from "src/language-data/CRMService";
 import { getCities } from "../../../action";
 import type { PartyNameType } from "../../types";
@@ -25,7 +25,7 @@ export default async function Page({
       }))) ||
     [];
 
-  const taxOffices = await getTableData("tax-offices", 0);
+  const taxOffices = await getTaxOfficesApi();
   const taxOfficesEnum =
     (taxOffices.type === "success" &&
       taxOffices.data.items?.map((item) => ({

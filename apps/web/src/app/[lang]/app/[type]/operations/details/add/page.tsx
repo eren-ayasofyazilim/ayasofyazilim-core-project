@@ -20,9 +20,8 @@ import { z } from "zod";
 import {
   getTableData,
   getTableDataDetail,
-} from "src/app/[lang]/app/actions/table";
+} from "src/app/[lang]/app/actions/api-requests";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import { useLocale } from "src/providers/locale";
 import { createTag } from "../actions";
 
 interface Payment {
@@ -100,8 +99,7 @@ export default function Page() {
     excludeList: [],
   });
   const customColumns = [...columns, salesColumn];
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, "en");
+  const languageData = getResourceDataClient("en");
   const [paymentData, setPaymentData] = useState<Payment[]>(payments);
 
   const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();

@@ -17,7 +17,6 @@ import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getResourceDataClient } from "src/language-data/ContractService";
-import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
 import {
   getRefundTableHeaders,
@@ -27,8 +26,7 @@ import {
 export default function Page({ params }: { params: { lang: string } }) {
   const router = useRouter();
   const [list, setList] = useState<PagedResultDto_RefundTableHeaderDto>();
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+  const languageData = getResourceDataClient(params.lang);
   const includeList = [
     "name",
     "validFrom",
@@ -115,10 +113,14 @@ export default function Page({ params }: { params: { lang: string } }) {
   return (
     <DataTable
       action={action}
+      classNames={{
+        table: {
+          container: "h-auto",
+        },
+      }}
       columnsData={columnsData}
       data={loading ? [] : list?.items || []}
       isLoading={loading}
-      tableClassName="h-auto"
     />
   );
 }

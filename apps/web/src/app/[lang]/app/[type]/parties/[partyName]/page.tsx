@@ -2,7 +2,7 @@
 
 import TableComponent from "@repo/ui/TableComponent";
 import { getResourceData } from "src/language-data/CRMService";
-import { deleteTableRow, getTableData } from "../../../actions/table";
+import { deleteTableRow, getTableData } from "../../../actions/api-requests";
 import { dataConfigOfParties } from "../table-data";
 import type { PartyNameType } from "../types";
 

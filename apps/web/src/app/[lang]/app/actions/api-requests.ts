@@ -2,6 +2,10 @@
 
 import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
 import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type {
+  GetApiCrmServiceMerchantsData,
+  GetApiCrmServiceTaxOfficesData,
+} from "@ayasofyazilim/saas/CRMService";
 import {
   getCRMServiceClient,
   getTravellersServiceClient,
@@ -15,11 +19,12 @@ import type {
   GetTaxOfficeDTO,
 } from "../[type]/parties/types";
 
-export type TableDataTypes = keyof Awaited<
-  ReturnType<typeof tableDataRequests>
->;
+export type ApiRequestTypes = keyof Awaited<ReturnType<typeof getApiRequests>>;
+export type GetTableDataTypes = ApiRequestTypes;
+export type DeleteTableDataTypes = Exclude<ApiRequestTypes, "travellers">;
+export type GetDetailTableDataTypes = Exclude<ApiRequestTypes, "travellers">;
 
-export async function tableDataRequests() {
+export async function getApiRequests() {
   const crmClient = await getCRMServiceClient();
   const travellerClient = await getTravellersServiceClient();
   const tableRequests = {
@@ -27,7 +32,7 @@ export async function tableDataRequests() {
       getDetail: async (id: string) =>
         (await crmClient.merchant.getApiCrmServiceMerchantsByIdDetail({ id }))
           .merchant,
-      get: async (data: { maxResultCount: number; skipCount: number }) =>
+      get: async (data: GetApiCrmServiceMerchantsData) =>
         (await crmClient.merchant.getApiCrmServiceMerchants(
           data,
         )) as GetMerchantDTO,
@@ -143,7 +148,7 @@ export async function tableDataRequests() {
     "tax-offices": {
       getDetail: async (id: string) =>
         await crmClient.taxOffice.getApiCrmServiceTaxOfficesByIdDetail({ id }),
-      get: async (data: { maxResultCount: number; skipCount: number }) =>
+      get: async (data: GetApiCrmServiceTaxOfficesData = {}) =>
         (await crmClient.taxOffice.getApiCrmServiceTaxOffices(
           data,
         )) as GetTaxOfficeDTO,
@@ -190,18 +195,16 @@ export async function tableDataRequests() {
         await travellerClient.traveller.getApiTravellerServiceTravellers(data),
     },
   };
-
   return tableRequests;
 }
-
 export async function getTableData(
-  type: TableDataTypes,
+  type: GetTableDataTypes,
   page = 0,
   maxResultCount = 10,
   filter?: FilterColumnResult,
 ) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].get({
@@ -216,12 +219,9 @@ export async function getTableData(
     return structuredError(error);
   }
 }
-export async function deleteTableRow(
-  type: Exclude<TableDataTypes, "travellers">,
-  id: string,
-) {
+export async function deleteTableRow(type: DeleteTableDataTypes, id: string) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].deleteRow(id),
@@ -233,11 +233,11 @@ export async function deleteTableRow(
   }
 }
 export async function getTableDataDetail(
-  type: Exclude<TableDataTypes, "travellers">,
+  type: GetDetailTableDataTypes,
   id: string,
 ) {
   try {
-    const requests = await tableDataRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
       data: await requests[type].getDetail(id),

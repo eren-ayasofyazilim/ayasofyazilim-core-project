@@ -4,7 +4,7 @@ import { $UniRefund_TravellerService_Travellers_TravellerListProfileDto } from "
 import type { ColumnFilter } from "@repo/ayasofyazilim-ui/molecules/tables";
 import TableComponent from "@repo/ui/TableComponent";
 import { getResourceData } from "src/language-data/TravellerService";
-import { getTableData } from "../../../actions/table";
+import { getTableData } from "../../../actions/api-requests";
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const { languageData } = await getResourceData(params.lang);

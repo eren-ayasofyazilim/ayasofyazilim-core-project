@@ -12,6 +12,7 @@ import {
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type {
   ColumnsType,
+  FilterColumnResult,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
@@ -72,6 +73,7 @@ export function RefundRules({
     },
     cta: languageData["RefundTables.Details.Create.Title"],
     callback: (formData: RefundTableDetailCreateDto) => {
+      setLoading(true);
       void postRefundTableHeadersDetailById({
         id: params.id,
         requestBody: formData,
@@ -175,6 +177,13 @@ export function RefundRules({
   return (
     <DataTable
       action={createRule}
+      classNames={{
+        container: "h-auto",
+        table: {
+          container: "h-auto",
+          wrapper: "flex-none",
+        },
+      }}
       columnsData={columnsData}
       data={tableData}
       detailedFilter={[
@@ -200,14 +209,11 @@ export function RefundRules({
           ],
         },
       ]}
-      fetchRequest={(page: number, filter: string) => {
-        const parsedFilter: Record<string, string> = JSON.parse(
-          filter,
-        ) as Record<string, string>;
-        if (Object.keys(parsedFilter).length === 0) {
+      fetchRequest={(page: number, filter: FilterColumnResult) => {
+        if (Object.keys(filter).length === 0) {
           setTableData(data);
         } else {
-          Object.keys(parsedFilter).forEach((filterKey: string) => {
+          Object.keys(filter).forEach((filterKey: string) => {
             const filteredTable = data.filter(
               (
                 tableItem: RefundTableDetailDto,
@@ -215,7 +221,7 @@ export function RefundRules({
                 if (
                   tableItem[
                     filterKey as keyof RefundTableDetailDto
-                  ]?.toString() === parsedFilter[filterKey]
+                  ]?.toString() === filter[filterKey]
                 ) {
                   return tableItem;
                 }
@@ -227,7 +233,6 @@ export function RefundRules({
         }
       }}
       isLoading={loading}
-      tableClassName="h-auto"
     />
   );
 }

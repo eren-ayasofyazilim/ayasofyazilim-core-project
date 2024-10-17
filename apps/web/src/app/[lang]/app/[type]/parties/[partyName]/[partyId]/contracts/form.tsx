@@ -18,11 +18,10 @@ export default function Contracts({
   partyId,
 }: {
   languageData: CRMServiceServiceResource;
-  partyName: "merchants" | "refund-points";
+  partyName: "merchants";
   partyId: string;
 }) {
   const router = useRouter();
-
   const [contractsData, setContractsData] =
     useState<PagedResultDto_ContractHeaderDetailForMerchantDto>();
   const [loading, setLoading] = useState(true);
