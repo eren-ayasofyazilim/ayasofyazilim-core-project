@@ -30,7 +30,7 @@ export default function NewRebate({
                 response.message || "New rebate template created successfully",
               );
             } else if (response.type === "api-error") {
-              (response.data)
+              response.data
                 .split("\n")
                 .forEach((error) => error.length > 0 && toast.error(error));
             } else {
