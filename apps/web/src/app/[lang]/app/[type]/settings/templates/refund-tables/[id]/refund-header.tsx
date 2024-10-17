@@ -23,6 +23,7 @@ import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ScrollArea from "@repo/ayasofyazilim-ui/molecules/scroll-area";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import {
@@ -96,106 +97,110 @@ export default function RefundHeader({
       });
   };
   return (
-    <div className="h-full space-y-4 overflow-y-auto">
-      <AutoForm
-        className="grid grid-cols-2 items-start gap-4 space-y-0"
-        fieldConfig={{
-          name: {
-            containerClassName: "block col-span-2",
-          },
-          validFrom: {
-            containerClassName: "h-full bg-red-200",
-            inputProps: {
-              disabled: true,
-              required: false,
+    <ScrollArea>
+      <div className="h-full space-y-4">
+        <AutoForm
+          className="grid grid-cols-2 items-start gap-4 space-y-0"
+          fieldConfig={{
+            name: {
+              containerClassName: "block col-span-2",
             },
-          },
-          validTo: {
-            containerClassName: "h-full bg-red-200",
-            inputProps: {
-              disabled: true,
-              required: false,
+            validFrom: {
+              containerClassName: "h-full bg-red-200",
+              inputProps: {
+                disabled: true,
+                required: false,
+              },
             },
-          },
-          isDefault: { fieldType: "switch" },
-          isBundling: { fieldType: "switch" },
-        }}
-        formClassName="h-max overflow-hidden"
-        formSchema={createZodObject(editSchema, [
-          "name",
-          "validFrom",
-          "validTo",
-          "isDefault",
-          "isBundling",
-          //those line above will be implemented with saas
-        ])}
-        isLoading={loading}
-        onParsedValuesChange={() => {
-          setIsSaveable(true);
-        }}
-        onSubmit={handleRefundTableHeadersEdit}
-        values={details}
-      >
-        <div className="flex w-full items-center justify-end gap-4">
-          {loading ? (
-            <>
-              <Skeleton className="inline-flex h-9 w-28" />
-              <Skeleton className="inline-flex h-9 w-28" />
-            </>
-          ) : (
-            <>
-              <AlertDialog open={dialogOpen}>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    onClick={() => {
-                      setDialogOpen(true);
-                    }}
-                    variant="outline"
-                  >
-                    {languageData["RefundTables.Delete"]}
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      {languageData["RefundTables.Delete.Title"]}
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      {languageData["RefundTables.Delete.Description"]}
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel
+            validTo: {
+              containerClassName: "h-full bg-red-200",
+              inputProps: {
+                disabled: true,
+                required: false,
+              },
+            },
+            isDefault: { fieldType: "switch" },
+            isBundling: { fieldType: "switch" },
+          }}
+          formClassName="h-max overflow-hidden"
+          formSchema={createZodObject(editSchema, [
+            "name",
+            "validFrom",
+            "validTo",
+            "isDefault",
+            "isBundling",
+            //those line above will be implemented with saas
+          ])}
+          isLoading={loading}
+          onParsedValuesChange={() => {
+            setIsSaveable(true);
+          }}
+          onSubmit={handleRefundTableHeadersEdit}
+          values={details}
+        >
+          <div className="flex w-full items-center justify-end gap-4">
+            {loading ? (
+              <>
+                <Skeleton className="inline-flex h-9 w-28" />
+                <Skeleton className="inline-flex h-9 w-28" />
+              </>
+            ) : (
+              <>
+                <AlertDialog open={dialogOpen}>
+                  <AlertDialogTrigger asChild>
+                    <Button
                       onClick={() => {
-                        setDialogOpen(false);
+                        setDialogOpen(true);
                       }}
+                      variant="outline"
                     >
-                      {languageData["RefundTables.Delete.Cancel"]}
-                    </AlertDialogCancel>
-                    <AlertDialogAction onClick={handleRefundTableHeadersDelete}>
-                      {languageData["RefundTables.Delete.Continue"]}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-              <Button
-                disabled={!isSaveable}
-                type="submit"
-                variant={isSaveable ? "default" : "secondary"}
-              >
-                {languageData["RefundTables.Save"]}
-              </Button>
-            </>
-          )}
-        </div>
-      </AutoForm>
-      <RefundRules
-        data={tableData}
-        isLoading={loading}
-        languageData={languageData}
-        params={params}
-        refreshData={getAndSetDetails}
-      />
-    </div>
+                      {languageData["RefundTables.Delete"]}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        {languageData["RefundTables.Delete.Title"]}
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        {languageData["RefundTables.Delete.Description"]}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel
+                        onClick={() => {
+                          setDialogOpen(false);
+                        }}
+                      >
+                        {languageData["RefundTables.Delete.Cancel"]}
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleRefundTableHeadersDelete}
+                      >
+                        {languageData["RefundTables.Delete.Continue"]}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <Button
+                  disabled={!isSaveable}
+                  type="submit"
+                  variant={isSaveable ? "default" : "secondary"}
+                >
+                  {languageData["RefundTables.Save"]}
+                </Button>
+              </>
+            )}
+          </div>
+        </AutoForm>
+        <RefundRules
+          data={tableData}
+          isLoading={loading}
+          languageData={languageData}
+          params={params}
+          refreshData={getAndSetDetails}
+        />
+      </div>
+    </ScrollArea>
   );
 }

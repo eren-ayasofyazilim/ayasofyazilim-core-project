@@ -494,6 +494,11 @@ export default function Rebate({
             <div className="overflow-auto">
               <DataTable
                 Headertable={feesHeaders}
+                classNames={{
+                  table: {
+                    container: "h-auto",
+                  },
+                }}
                 columnsData={{
                   type: "Custom",
                   data: { columns: feescolumns({ languageData }) },
@@ -504,7 +509,6 @@ export default function Rebate({
                   setFeesData(data);
                 }}
                 showView={false}
-                tableClassName="h-auto"
               />
             </div>
           </div>
@@ -521,6 +525,11 @@ export default function Rebate({
             <div className="overflow-auto">
               <DataTable
                 Headertable={setupHeaders}
+                classNames={{
+                  table: {
+                    container: "h-auto",
+                  },
+                }}
                 columnsData={{
                   type: "Custom",
                   data: {
@@ -540,7 +549,6 @@ export default function Rebate({
                   setSetupData(data);
                 }}
                 showView={false}
-                tableClassName="h-auto"
               />
             </div>
           </div>

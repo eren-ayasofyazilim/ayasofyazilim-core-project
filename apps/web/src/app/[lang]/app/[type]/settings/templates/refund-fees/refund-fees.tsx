@@ -96,22 +96,27 @@ export default function RefundFees({
     },
     componentType: "Autoform",
     callback(formData: CreateType) {
+      setLoading(true);
       void postRefundTableFeeHeaders({
         requestBody: formData,
-      }).then((postResponse) => {
-        if (postResponse.type === "success") {
-          toast.success("Refund fee created successfully");
-          router.push(
-            getBaseLink(
-              `app/admin/settings/templates/refund-fees/${postResponse.data.id}`,
-            ),
-          );
-        } else if (postResponse.type === "api-error") {
-          toast.error(postResponse.message || "Refund fee creation failed");
-        } else {
-          toast.error("Fatal error");
-        }
-      });
+      })
+        .then((postResponse) => {
+          if (postResponse.type === "success") {
+            toast.success("Refund fee created successfully");
+            router.push(
+              getBaseLink(
+                `app/admin/settings/templates/refund-fees/${postResponse.data.id}`,
+              ),
+            );
+          } else if (postResponse.type === "api-error") {
+            toast.error(postResponse.message || "Refund fee creation failed");
+          } else {
+            toast.error("Fatal error");
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
     description: languageData["RefundFees.Page.List.Create"],
   };
