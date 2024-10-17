@@ -25,6 +25,8 @@ export interface TravellerServiceResource {
   "Travellers.TravelDocumentNumber": string;
   "Travellers.UserName": string;
   "Travellers.PhoneNumber": string;
+  "Travellers.Country.Select": string;
+  "Travellers.City.Select": string;
 
   "Form.name": string;
   "Form.email": string;
@@ -143,6 +145,14 @@ function getLanguageData(
       resource?.["Travellers.PhoneNumber"] ||
       data[lang]?.["Travellers.PhoneNumber"] ||
       data.en["Travellers.PhoneNumber"],
+    "Travellers.Country.Select":
+      resource?.["Travellers.Country.Select"] ||
+      data[lang]?.["Travellers.Country.Select"] ||
+      data.en["Travellers.Country.Select"],
+    "Travellers.City.Select":
+      resource?.["Travellers.City.Select"] ||
+      data[lang]?.["Travellers.City.Select"] ||
+      data.en["Travellers.City.Select"],
 
     "Form.name":
       resource?.["Form.name"] ||
