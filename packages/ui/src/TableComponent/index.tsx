@@ -31,7 +31,7 @@ export default function TableComponent({
   editOnNewPage,
   editOnNewPageUrl,
   detailedFilter,
-  customDialog,
+  customRowDialog,
   autoformDialog,
   languageData,
 }: {
@@ -42,12 +42,13 @@ export default function TableComponent({
   createOnNewPageUrl?: string;
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
-  customDialog?: [
+  customRowDialog?: [
     {
       title: string;
       content: JSX.Element;
     },
   ];
+
   autoformDialog?: [
     Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
       title: string;
@@ -132,8 +133,8 @@ export default function TableComponent({
     );
   }
 
-  if (customDialog) {
-    customDialog.forEach((dialog) => {
+  if (customRowDialog) {
+    customRowDialog.forEach((dialog) => {
       columnsData.data.actionList?.push({
         type: "Dialog",
         cta: dialog.title,
