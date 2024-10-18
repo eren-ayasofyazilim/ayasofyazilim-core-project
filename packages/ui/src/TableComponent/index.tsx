@@ -34,6 +34,7 @@ export default function TableComponent({
   customRowDialog,
   customTableDialog,
   autoformRowDialog,
+  autoformTableDialog,
   languageData,
 }: {
   tableSchema: FormModifier;
@@ -56,6 +57,14 @@ export default function TableComponent({
     },
   ];
   autoformRowDialog?: [
+    Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
+      title: string;
+      formPositions?: string[];
+      onCallback: (row: any, values: unknown) => void;
+      schema: FormModifier;
+    },
+  ];
+  autoformTableDialog?: [
     Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
       title: string;
       formPositions?: string[];
@@ -203,6 +212,27 @@ export default function TableComponent({
     });
   }
 
+  if (autoformTableDialog) {
+    autoformTableDialog.forEach((dialog) => {
+      const formSchema = convertZod(dialog.schema);
+      action?.push({
+        cta: dialog.title,
+        description: dialog.title,
+        type: "Dialog",
+        componentType: "Autoform",
+        autoFormArgs: {
+          ...dialog,
+          formSchema,
+          submit: {
+            cta: languageData["Save"],
+          },
+        },
+        callback: (data, row) => {
+          dialog.onCallback(data, row);
+        },
+      });
+    });
+  }
   return (
     <Dashboard
       action={action}
