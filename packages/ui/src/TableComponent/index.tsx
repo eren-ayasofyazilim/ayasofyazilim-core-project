@@ -32,6 +32,7 @@ export default function TableComponent({
   editOnNewPageUrl,
   detailedFilter,
   customRowDialog,
+  customTableDialog,
   autoformDialog,
   languageData,
 }: {
@@ -48,7 +49,12 @@ export default function TableComponent({
       content: JSX.Element;
     },
   ];
-
+  customTableDialog?: [
+    {
+      title: string;
+      content: JSX.Element;
+    },
+  ];
   autoformDialog?: [
     Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
       title: string;
@@ -160,6 +166,19 @@ export default function TableComponent({
           (isWindowExists ? `${window.location.href}/new` : ""),
       ),
     );
+  }
+
+  if (customTableDialog) {
+    customTableDialog.forEach((dialog) => {
+      action?.push({
+        type: "Dialog",
+        cta: dialog.title,
+        loadingContent: <>{languageData.Loading}</>,
+        description: dialog.title,
+        componentType: "CustomComponent",
+        content: dialog.content,
+      });
+    });
   }
 
   if (autoformDialog) {
