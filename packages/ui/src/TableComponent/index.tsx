@@ -20,6 +20,23 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+type CustomDialogItem = {
+  type: "row" | "table";
+  title: string;
+  content: JSX.Element;
+};
+
+type AutoFormDialogItem = Pick<
+  AutoFormProps,
+  "values" | "dependencies" | "fieldConfig"
+> & {
+  type: "row" | "table";
+  title: string;
+  formPositions?: string[];
+  onCallback: (row: any, values: unknown) => void;
+  schema: FormModifier;
+};
+
 export default function TableComponent({
   fetchRequest,
   deleteRequest,
@@ -31,10 +48,8 @@ export default function TableComponent({
   editOnNewPage,
   editOnNewPageUrl,
   detailedFilter,
-  customRowDialog,
-  customTableDialog,
-  autoformRowDialog,
-  autoformTableDialog,
+  customDialog,
+  autoFormDialog,
   languageData,
 }: {
   tableSchema: FormModifier;
@@ -44,34 +59,8 @@ export default function TableComponent({
   createOnNewPageUrl?: string;
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
-  customRowDialog?: [
-    {
-      title: string;
-      content: JSX.Element;
-    },
-  ];
-  customTableDialog?: [
-    {
-      title: string;
-      content: JSX.Element;
-    },
-  ];
-  autoformRowDialog?: [
-    Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
-      title: string;
-      formPositions?: string[];
-      onCallback: (row: any, values: unknown) => void;
-      schema: FormModifier;
-    },
-  ];
-  autoformTableDialog?: [
-    Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
-      title: string;
-      formPositions?: string[];
-      onCallback: (row: any, values: unknown) => void;
-      schema: FormModifier;
-    },
-  ];
+  customDialog?: CustomDialogItem[];
+  autoFormDialog?: AutoFormDialogItem[];
   detailedFilter?: ColumnFilter[];
   fetchRequest: (
     page: number,
@@ -148,41 +137,6 @@ export default function TableComponent({
     );
   }
 
-  if (customRowDialog) {
-    customRowDialog.forEach((dialog) => {
-      columnsData.data.actionList?.push({
-        type: "Dialog",
-        cta: dialog.title,
-        loadingContent: <>{languageData.Loading}</>,
-        description: dialog.title,
-        componentType: "CustomComponent",
-        content: dialog.content,
-      });
-    });
-  }
-
-  if (autoformRowDialog) {
-    autoformRowDialog.forEach((dialog) => {
-      const formSchema = convertZod(dialog.schema);
-      columnsData.data.actionList?.push({
-        cta: dialog.title,
-        description: dialog.title,
-        type: "Dialog",
-        componentType: "Autoform",
-        autoFormArgs: {
-          ...dialog,
-          formSchema,
-          submit: {
-            cta: languageData["Save"],
-          },
-        },
-        callback: (data, row) => {
-          dialog.onCallback(data, row);
-        },
-      });
-    });
-  }
-
   const action: TableAction[] = [
     TableAction_EXPORT_CSV<
       { items: unknown[]; totalCount: number } | undefined
@@ -199,23 +153,27 @@ export default function TableComponent({
     );
   }
 
-  if (customTableDialog) {
-    customTableDialog.forEach((dialog) => {
-      action?.push({
+  if (customDialog) {
+    customDialog.forEach((dialog) => {
+      const _action: TableAction = {
         type: "Dialog",
         cta: dialog.title,
         loadingContent: <>{languageData.Loading}</>,
         description: dialog.title,
         componentType: "CustomComponent",
         content: dialog.content,
-      });
+      };
+      if (dialog.type === "row") {
+        columnsData.data.actionList?.push(_action);
+        return;
+      }
+      action?.push(_action);
     });
   }
-
-  if (autoformTableDialog) {
-    autoformTableDialog.forEach((dialog) => {
+  if (autoFormDialog) {
+    autoFormDialog.forEach((dialog) => {
       const formSchema = convertZod(dialog.schema);
-      action?.push({
+      const _action: TableAction = {
         cta: dialog.title,
         description: dialog.title,
         type: "Dialog",
@@ -230,9 +188,15 @@ export default function TableComponent({
         callback: (data, row) => {
           dialog.onCallback(data, row);
         },
-      });
+      };
+      if (dialog.type === "row") {
+        columnsData.data.actionList?.push(_action);
+        return;
+      }
+      action?.push(_action);
     });
   }
+
   return (
     <Dashboard
       action={action}
