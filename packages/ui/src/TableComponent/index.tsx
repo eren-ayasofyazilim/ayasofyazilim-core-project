@@ -33,7 +33,7 @@ export default function TableComponent({
   detailedFilter,
   customRowDialog,
   customTableDialog,
-  autoformDialog,
+  autoformRowDialog,
   languageData,
 }: {
   tableSchema: FormModifier;
@@ -55,7 +55,7 @@ export default function TableComponent({
       content: JSX.Element;
     },
   ];
-  autoformDialog?: [
+  autoformRowDialog?: [
     Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
       title: string;
       formPositions?: string[];
@@ -152,6 +152,28 @@ export default function TableComponent({
     });
   }
 
+  if (autoformRowDialog) {
+    autoformRowDialog.forEach((dialog) => {
+      const formSchema = convertZod(dialog.schema);
+      columnsData.data.actionList?.push({
+        cta: dialog.title,
+        description: dialog.title,
+        type: "Dialog",
+        componentType: "Autoform",
+        autoFormArgs: {
+          ...dialog,
+          formSchema,
+          submit: {
+            cta: languageData["Save"],
+          },
+        },
+        callback: (data, row) => {
+          dialog.onCallback(data, row);
+        },
+      });
+    });
+  }
+
   const action: TableAction[] = [
     TableAction_EXPORT_CSV<
       { items: unknown[]; totalCount: number } | undefined
@@ -181,27 +203,6 @@ export default function TableComponent({
     });
   }
 
-  if (autoformDialog) {
-    autoformDialog.forEach((dialog) => {
-      const formSchema = convertZod(dialog.schema);
-      columnsData.data.actionList?.push({
-        cta: dialog.title,
-        description: dialog.title,
-        type: "Dialog",
-        componentType: "Autoform",
-        autoFormArgs: {
-          ...dialog,
-          formSchema,
-          submit: {
-            cta: languageData["Save"],
-          },
-        },
-        callback: (data, row) => {
-          dialog.onCallback(data, row);
-        },
-      });
-    });
-  }
   return (
     <Dashboard
       action={action}
