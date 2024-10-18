@@ -29,6 +29,7 @@ export default function TableComponent({
   editOnNewPage,
   editOnNewPageUrl,
   detailedFilter,
+  customDialog,
   languageData,
 }: {
   tableSchema: FormModifier;
@@ -38,6 +39,12 @@ export default function TableComponent({
   createOnNewPageUrl?: string;
   createOnNewPageTitle?: string;
   editOnNewPageUrl?: string;
+  customDialog?: [
+    {
+      title: string;
+      content: JSX.Element;
+    },
+  ];
   detailedFilter?: ColumnFilter[];
   fetchRequest: (
     page: number,
@@ -111,6 +118,18 @@ export default function TableComponent({
     columnsData.data.actionList?.push(
       DELETE_ROW_ACTION(languageData, deleteRow),
     );
+  }
+  if (customDialog) {
+    customDialog.forEach((dialog) => {
+      columnsData.data.actionList?.push({
+        type: "Dialog",
+        cta: dialog.title,
+        loadingContent: <>{languageData.Loading}</>,
+        description: dialog.title,
+        componentType: "CustomComponent",
+        content: dialog.content,
+      });
+    });
   }
 
   const action: TableAction[] = [
