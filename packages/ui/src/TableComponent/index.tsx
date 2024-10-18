@@ -6,10 +6,12 @@ import type {
   FilterColumnResult,
   TableAction,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
+import { AutoFormProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import Dashboard from "@repo/ayasofyazilim-ui/templates/dashboard";
 import type { FormModifier } from "@repo/ui/utils/table/table-utils";
 import {
   AUTO_COLUMNS_DATA,
+  convertZod,
   DELETE_ROW_ACTION,
   EDIT_ROW_ON_NEW_PAGE,
   TableAction_CREATE_ROW_ON_NEW_PAGE,
@@ -30,6 +32,7 @@ export default function TableComponent({
   editOnNewPageUrl,
   detailedFilter,
   customDialog,
+  autoformDialog,
   languageData,
 }: {
   tableSchema: FormModifier;
@@ -43,6 +46,14 @@ export default function TableComponent({
     {
       title: string;
       content: JSX.Element;
+    },
+  ];
+  autoformDialog?: [
+    Pick<AutoFormProps, "values" | "dependencies" | "fieldConfig"> & {
+      title: string;
+      formPositions?: string[];
+      onCallback: (row: any, values: unknown) => void;
+      schema: FormModifier;
     },
   ];
   detailedFilter?: ColumnFilter[];
@@ -83,6 +94,7 @@ export default function TableComponent({
         toast.error(languageData["Fetch.Fail"]);
       });
   }
+
   function deleteRow(row: { id: string }) {
     if (!deleteRequest) return;
     setIsLoading(true);
@@ -119,6 +131,7 @@ export default function TableComponent({
       DELETE_ROW_ACTION(languageData, deleteRow),
     );
   }
+
   if (customDialog) {
     customDialog.forEach((dialog) => {
       columnsData.data.actionList?.push({
@@ -148,6 +161,27 @@ export default function TableComponent({
     );
   }
 
+  if (autoformDialog) {
+    autoformDialog.forEach((dialog) => {
+      const formSchema = convertZod(dialog.schema);
+      columnsData.data.actionList?.push({
+        cta: dialog.title,
+        description: dialog.title,
+        type: "Dialog",
+        componentType: "Autoform",
+        autoFormArgs: {
+          ...dialog,
+          formSchema,
+          submit: {
+            cta: languageData["Save"],
+          },
+        },
+        callback: (data, row) => {
+          dialog.onCallback(data, row);
+        },
+      });
+    });
+  }
   return (
     <Dashboard
       action={action}
