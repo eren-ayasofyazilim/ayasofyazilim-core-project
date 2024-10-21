@@ -159,10 +159,7 @@ export default function Page(): JSX.Element {
         if (res.type === "success") {
           setTags(res.data);
         }
-        if (res.type === "error") {
-          toast.error(res.message);
-        }
-        if (res.type === "api-error") {
+        if (res.type === "error" || res.type === "api-error") {
           toast.error(res.message);
         }
       })
