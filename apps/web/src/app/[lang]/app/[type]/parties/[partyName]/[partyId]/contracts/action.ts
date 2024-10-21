@@ -1,6 +1,7 @@
 "use server";
 import type {
   GetApiContractServiceMerchantsByIdContractsContractHeadersData,
+  GetApiContractServiceMerchantsContractsContractHeadersByIdData,
   GetApiContractServiceMerchantsContractsContractHeadersByIdGetMissingStepsData,
   GetApiContractServiceMerchantsContractsContractHeadersByIdGetMissingStepsResponse,
   PagedResultDto_ContractHeaderDetailForMerchantDto,
@@ -11,7 +12,7 @@ import { revalidatePath } from "next/cache";
 import type { ServerResponse } from "src/lib";
 import { getContractServiceClient, structuredError } from "src/lib";
 
-export async function getContractHeadersByMerchantId(
+export async function getMerchantContractHeadersByMerchantId(
   body: GetApiContractServiceMerchantsByIdContractsContractHeadersData,
 ): Promise<ServerResponse<PagedResultDto_ContractHeaderDetailForMerchantDto>> {
   "use server";
@@ -33,7 +34,7 @@ export async function getContractHeadersByMerchantId(
   }
 }
 
-export async function postContractHeadersByMerchantId(
+export async function postMerchantContractHeadersByMerchantId(
   body: PostApiContractServiceMerchantsByIdContractsContractHeadersData,
 ): Promise<
   ServerResponse<UniRefund_ContractService_ContractsForMerchant_ContractHeaders_ContractHeaderForMerchantDto>
@@ -57,7 +58,7 @@ export async function postContractHeadersByMerchantId(
   }
 }
 
-export async function getContractHeaderMissingStepsById(
+export async function getMerchantContractHeaderMissingStepsById(
   body: GetApiContractServiceMerchantsContractsContractHeadersByIdGetMissingStepsData,
 ): Promise<
   ServerResponse<GetApiContractServiceMerchantsContractsContractHeadersByIdGetMissingStepsResponse>
@@ -80,3 +81,26 @@ export async function getContractHeaderMissingStepsById(
     return structuredError(error);
   }
 }
+
+export async function getMerchantContractHeaderById(
+  body: GetApiContractServiceMerchantsContractsContractHeadersByIdData,
+) {
+  "use server";
+  try {
+    const client = await getContractServiceClient();
+    const response =
+      await client.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersById(
+        body,
+      );
+    revalidatePath("/");
+    return {
+      type: "success",
+      data: response,
+      status: 200,
+      message: "Contract header fetched successfully",
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+// Promise<  ServerResponse<UniRefund_ContractService_ContractsForMerchant_ContractHeaders_ContractHeaderDetailForMerchantDto>>

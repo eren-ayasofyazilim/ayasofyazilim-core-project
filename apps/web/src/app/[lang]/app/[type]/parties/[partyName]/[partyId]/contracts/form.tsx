@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
-import { getContractHeadersByMerchantId } from "./action";
+import { getMerchantContractHeadersByMerchantId } from "./action";
 
 export default function Contracts({
   languageData,
@@ -28,7 +28,7 @@ export default function Contracts({
   async function getContractsOfMerchant() {
     setLoading(true);
     try {
-      const response = await getContractHeadersByMerchantId({
+      const response = await getMerchantContractHeadersByMerchantId({
         id: partyId,
       });
       if (response.type === "error" || response.type === "api-error") {
