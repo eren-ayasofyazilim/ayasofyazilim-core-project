@@ -2,6 +2,7 @@
 import type {
   ColumnFilter,
   ColumnsType,
+  FilterColumnResult,
 } from "@repo/ayasofyazilim-ui/molecules/tables";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -151,10 +152,9 @@ export default function Page(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState<GetApiTagServiceTagResponse>();
   const [summary, setSummary] = useState<GetApiTagServiceTagSummaryResponse>();
-  const fetchTags = (page: number, filter: string) => {
-    const filters_ = JSON.parse(filter) as GetApiTagServiceTagData;
+  const fetchTags = (page: number, filter: FilterColumnResult) => {
     setLoading(true);
-    void getTags({ maxResultCount: 10, skipCount: page * 10, ...filters_ })
+    void getTags({ maxResultCount: 10, skipCount: page * 10, ...filter })
       .then((res) => {
         if (res.type === "success") {
           setTags(res.data);
@@ -170,7 +170,7 @@ export default function Page(): JSX.Element {
         setLoading(false);
         // handleFilter(filter);
       });
-    void getSummary({ maxResultCount: 10, skipCount: page * 10, ...filters_ })
+    void getSummary({ maxResultCount: 10, skipCount: page * 10, ...filter })
       .then((res) => {
         if (res.type === "success") {
           setSummary(res.data);
