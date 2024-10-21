@@ -31,8 +31,8 @@ import Rebate from "src/app/[lang]/app/[type]/settings/templates/rebate/rebate";
 import { getRefundTableHeaders } from "src/app/[lang]/app/[type]/settings/templates/refund/action";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import {
-  getContractHeaderMissingStepsById,
-  postContractHeadersByMerchantId,
+  getMerchantContractHeaderMissingStepsById,
+  postMerchantContractHeadersByMerchantId,
 } from "../action";
 
 export default function ContractHeaderForm({
@@ -92,7 +92,7 @@ export default function ContractHeaderForm({
         loading={loading}
         setLoading={setLoading}
       />
-      {/* TODO IMPLEMENT STORES HERE */}
+      {/* <StoresSection /> */}
       <RebateSettingsSection
         languageData={languageData}
         loading={loading}
@@ -127,9 +127,10 @@ function ContractSection({
   async function fetchContractMissingSteps(): Promise<void> {
     setLoading(true);
     try {
-      const missingStepsResponse = await getContractHeaderMissingStepsById({
-        id: partyId,
-      });
+      const missingStepsResponse =
+        await getMerchantContractHeaderMissingStepsById({
+          id: partyId,
+        });
       if (missingStepsResponse.type === "success") {
         setMissingSteps(missingStepsResponse.data);
       } else {
@@ -148,7 +149,7 @@ function ContractSection({
   ): Promise<void> {
     toastOnSubmit(data);
 
-    const postResponse = await postContractHeadersByMerchantId({
+    const postResponse = await postMerchantContractHeadersByMerchantId({
       id: partyId,
       requestBody: data,
     });

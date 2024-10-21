@@ -1,7 +1,11 @@
-import { getBaseLink } from "src/utils";
-import { getApiRequests } from "src/app/[lang]/app/actions/api-requests";
+import { notFound } from "next/navigation";
+import {
+  getAdressesApi,
+  getBasicInformationApi,
+} from "src/app/[lang]/app/actions/CrmService/actions";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getResourceData } from "src/language-data/ContractService";
+import { getBaseLink } from "src/utils";
 import ContractHeaderForm from "./form";
 
 export default async function Page({
@@ -13,26 +17,27 @@ export default async function Page({
     lang: string;
   };
 }) {
-  const req = await getApiRequests();
-  const basicInformation = await req[params.partyName].getBasicInformation({
-    id: params.partyId,
-  });
-  const addresses = await req[params.partyName].getAdresses({
-    id: params.partyId,
-  });
+  const basicInformation = await getBasicInformationApi(
+    params.partyId,
+    params.partyName,
+  );
+  const addresses = await getAdressesApi(params.partyId, params.partyName);
+  if (basicInformation.type !== "success" || addresses.type !== "success") {
+    return notFound();
+  }
   const { languageData } = await getResourceData(params.lang);
   return (
     <>
       <ContractHeaderForm
         languageData={languageData}
         params={params}
-        addresses={addresses}
+        addresses={addresses.data}
         // basicInformation={basicInformation}
       />
       <PageHeader
         languageData={languageData}
         params={params}
-        title={basicInformation.name || params.partyId}
+        title={basicInformation.data.name || params.partyId}
       />
     </>
   );
