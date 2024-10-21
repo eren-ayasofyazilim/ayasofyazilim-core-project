@@ -8,9 +8,9 @@ import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { getMerchantContractHeadersByMerchantIdApi } from "src/app/[lang]/app/actions/ContractService/action";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import { getBaseLink } from "src/utils";
-import { getContractHeadersByMerchantId } from "./action";
 
 export default function Contracts({
   languageData,
@@ -28,7 +28,7 @@ export default function Contracts({
   async function getContractsOfMerchant() {
     setLoading(true);
     try {
-      const response = await getContractHeadersByMerchantId({
+      const response = await getMerchantContractHeadersByMerchantIdApi({
         id: partyId,
       });
       if (response.type === "error" || response.type === "api-error") {

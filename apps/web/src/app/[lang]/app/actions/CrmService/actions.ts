@@ -36,3 +36,38 @@ export async function getTaxOfficesApi(
     return structuredError(error);
   }
 }
+
+export async function getBasicInformationApi(
+  id: string,
+  partyName: "merchants",
+) {
+  try {
+    const requests = getApiRequests();
+    return {
+      type: "success",
+      data: await (
+        await requests
+      )[partyName].getBasicInformation({
+        id,
+      }),
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}
+
+export async function getAdressesApi(id: string, partyName: "merchants") {
+  try {
+    const requests = getApiRequests();
+    return {
+      type: "success",
+      data: await (
+        await requests
+      )[partyName].getAdresses({
+        id,
+      }),
+    };
+  } catch (error) {
+    return structuredError(error);
+  }
+}

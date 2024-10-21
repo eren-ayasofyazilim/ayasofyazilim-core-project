@@ -11,6 +11,10 @@
   "Contracts.Create.Description": "Yeni bir sözleşme oluşturun",
   "Contracts.Create.Submit": "Kaydet",
 
+  "Contracts.Edit.Title": "Sözleşmeyi düzenle",
+  "Contracts.Edit.Description": "Seçili sözleşmeyi düzenle",
+  "Contracts.Edit.Submit": "Güncelle",
+
   "Contracts.Create.ContractHeader": "Sözleşme",
   "Contracts.Create.RebateSettings": "İade ayarları",
   "Contracts.Create.ContractSettings": "Sözleşme ayarları",

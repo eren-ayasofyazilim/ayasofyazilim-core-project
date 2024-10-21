@@ -1,12 +1,17 @@
 "use server";
 
-import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
-import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type {
+  GetApiContractServiceMerchantsContractsContractHeadersByIdData,
+  PostApiContractServiceMerchantsByIdContractsContractHeadersData,
+} from "@ayasofyazilim/saas/ContractService";
 import type {
   GetApiCrmServiceMerchantsData,
   GetApiCrmServiceTaxOfficesData,
 } from "@ayasofyazilim/saas/CRMService";
+import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
+import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
 import {
+  getContractServiceClient,
   getCRMServiceClient,
   getTravellersServiceClient,
   structuredError,
@@ -27,6 +32,7 @@ export type GetDetailTableDataTypes = Exclude<ApiRequestTypes, "travellers">;
 export async function getApiRequests() {
   const crmClient = await getCRMServiceClient();
   const travellerClient = await getTravellersServiceClient();
+  const contractsClient = await getContractServiceClient();
   const tableRequests = {
     merchants: {
       getDetail: async (id: string) =>
@@ -64,6 +70,26 @@ export async function getApiRequests() {
         ),
       getAdresses: async (data: { id: string }) =>
         await crmClient.merchant.getApiCrmServiceMerchantsByIdAddresses(data),
+      getContractHeadersByMerchantId: async (
+        data: GetApiContractServiceMerchantsContractsContractHeadersByIdData,
+      ) =>
+        await contractsClient.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersById(
+          data,
+        ),
+      postContractHeadersById: async (
+        data: PostApiContractServiceMerchantsByIdContractsContractHeadersData,
+      ) =>
+        await contractsClient.contractsMerchant.postApiContractServiceMerchantsByIdContractsContractHeaders(
+          data,
+        ),
+      getContractHeaderMissingStepsById: async (id: string) =>
+        await contractsClient.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersByIdGetMissingSteps(
+          { id },
+        ),
+      getContractHeaderById: async (id: string) =>
+        await contractsClient.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersById(
+          { id },
+        ),
     },
     "refund-points": {
       getDetail: async (id: string) =>
