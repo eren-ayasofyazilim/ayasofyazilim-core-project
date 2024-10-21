@@ -153,10 +153,8 @@ function ContractSection({
       id: partyId,
       requestBody: data,
     });
-    if (postResponse.type !== "success") {
-      if (postResponse.type === "api-error") {
-        toast.error(postResponse.message);
-      }
+    if (postResponse.type === "error" || postResponse.type === "api-error") {
+      toast.error(postResponse.message);
     }
     toast.success(postResponse.message || postResponse.status);
     void fetchContractMissingSteps();
