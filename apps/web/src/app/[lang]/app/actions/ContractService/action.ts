@@ -1,3 +1,4 @@
+"use server";
 import type {
   GetApiContractServiceMerchantsByIdContractsContractHeadersData,
   PagedResultDto_ContractHeaderDetailForMerchantDto,
