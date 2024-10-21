@@ -29,11 +29,11 @@ import type { Dispatch, SetStateAction } from "react";
 import { useEffect, useState } from "react";
 import Rebate from "src/app/[lang]/app/[type]/settings/templates/rebate/rebate";
 import { getRefundTableHeaders } from "src/app/[lang]/app/[type]/settings/templates/refund/action";
-import type { ContractServiceResource } from "src/language-data/ContractService";
 import {
-  getMerchantContractHeaderMissingStepsById,
-  postMerchantContractHeadersByMerchantId,
-} from "../action";
+  getMerchantContractHeaderMissingStepsByIdApi,
+  postMerchantContractHeadersByMerchantIdApi,
+} from "src/app/[lang]/app/actions/ContractService/action";
+import type { ContractServiceResource } from "src/language-data/ContractService";
 
 export default function ContractHeaderForm({
   params,
@@ -128,7 +128,7 @@ function ContractSection({
     setLoading(true);
     try {
       const missingStepsResponse =
-        await getMerchantContractHeaderMissingStepsById({
+        await getMerchantContractHeaderMissingStepsByIdApi({
           id: partyId,
         });
       if (missingStepsResponse.type === "success") {
@@ -149,13 +149,13 @@ function ContractSection({
   ): Promise<void> {
     toastOnSubmit(data);
 
-    const postResponse = await postMerchantContractHeadersByMerchantId({
+    const postResponse = await postMerchantContractHeadersByMerchantIdApi({
       id: partyId,
       requestBody: data,
     });
     if (postResponse.type !== "success") {
       if (postResponse.type === "api-error") {
-        toast.error(postResponse.data);
+        toast.error(postResponse.message);
       }
     }
     toast.success(postResponse.message || postResponse.status);

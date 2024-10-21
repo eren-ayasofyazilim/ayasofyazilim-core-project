@@ -1,6 +1,6 @@
 import { getResourceData } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
-import { getMerchantContractHeaderById } from "../action";
+import { getMerchantContractHeaderByIdApi } from "src/app/[lang]/app/actions/ContractService/action";
 import Details from "./details";
 
 export default async function Page({
@@ -13,9 +13,9 @@ export default async function Page({
     lang: string;
   };
 }) {
-  const contractHeaderDetails = await getMerchantContractHeaderById({
-    id: params.contractId,
-  });
+  const contractHeaderDetails = await getMerchantContractHeaderByIdApi(
+    params.contractId,
+  );
   if (contractHeaderDetails.type !== "success") {
     return <>XS</>;
   }
