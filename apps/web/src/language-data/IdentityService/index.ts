@@ -26,11 +26,20 @@ export interface IdentityServiceResource {
   "Form.password": string;
   "Form.userName": string;
 
+  Claims: string;
   ClaimType: string;
   ClaimTypes: string;
   "ClaimType.New": string;
   "ClaimType.Edit": string;
   "ClaimType.Description": string;
+  "Claim.Add.Description": string;
+  "Claim.Add": string;
+  "Claim.Select": string;
+  "Claim.Empty": string;
+  "Claim.New.Succes": string;
+  "Claim.New.Fail": string;
+  "Claim.Fetch.Fail": string;
+  "Claim.Exist.Fail": string;
   "Form.required": string;
   "Form.Regex": string;
   "Form.regexDescription": string;
@@ -194,6 +203,7 @@ function getLanguageData(
       resource?.["Form.userName"] ||
       data[lang]?.["Form.userName"] ||
       data.en["Form.userName "],
+    Claims: resource?.Claims || data[lang]?.Claims || data.en.Claims,
     ClaimType:
       resource?.ClaimType || data[lang]?.ClaimType || data.en.ClaimType,
     ClaimTypes:
@@ -210,6 +220,38 @@ function getLanguageData(
       resource?.["ClaimType.Description"] ||
       data[lang]?.["ClaimType.Description"] ||
       data.en["ClaimType.Description"],
+    "Claim.Add.Description":
+      resource?.["Claim.Add.Description"] ||
+      data[lang]?.["Claim.Add.Description"] ||
+      data.en["Claim.Add.Description"],
+    "Claim.Add":
+      resource?.["Claim.Add"] ||
+      data[lang]?.["Claim.Add"] ||
+      data.en["Claim.Add"],
+    "Claim.Select":
+      resource?.["Claim.Select"] ||
+      data[lang]?.["Claim.Select"] ||
+      data.en["Claim.Select"],
+    "Claim.Empty":
+      resource?.["Claim.Empty"] ||
+      data[lang]?.["Claim.Empty"] ||
+      data.en["Claim.Empty"],
+    "Claim.New.Succes":
+      resource?.["Claim.New.Succes"] ||
+      data[lang]?.["Claim.New.Succes"] ||
+      data.en["Claim.New.Succes"],
+    "Claim.New.Fail":
+      resource?.["Claim.New.Fail"] ||
+      data[lang]?.["Claim.New.Fail"] ||
+      data.en["Claim.New.Fail"],
+    "Claim.Fetch.Fail":
+      resource?.["Claim.Fetch.Fail"] ||
+      data[lang]?.["Claim.Fetch.Fail"] ||
+      data.en["Claim.Fetch.Fail"],
+    "Claim.Exist.Fail":
+      resource?.["Claim.Exist.Fail"] ||
+      data[lang]?.["Claim.Exist.Fail"] ||
+      data.en["Claim.Exist.Fail"],
     "Form.required":
       resource?.["Form.required"] ||
       data[lang]?.["Form.required"] ||
