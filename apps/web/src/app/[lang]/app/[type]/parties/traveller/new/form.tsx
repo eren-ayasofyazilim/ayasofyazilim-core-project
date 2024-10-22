@@ -16,9 +16,13 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { TravellerServiceResource } from "src/language-data/TravellerService";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
-import type { TravellerServiceResource } from "src/language-data/TravellerService";
+import {
+  getCitiesApi,
+  getCountriesApi,
+} from "../../../../actions/LocationService/actions";
 import { createTravellerWithComponents } from "../actions";
 import type { CreateTravellerDTO } from "../data";
 import {
@@ -26,10 +30,6 @@ import {
   formPositions,
   formSubPositions,
 } from "../data";
-import {
-  getCities,
-  getCountries,
-} from "../../../../actions/LocationService/actions";
 
 export default function Form({
   languageData,
@@ -46,11 +46,11 @@ export default function Form({
 
   const getCity = async () => {
     try {
-      const response = await getCities({ maxResultCount: 1000 });
-      if (response.type === "error" || response.type === "api-error") {
-        toast.error(response.message);
-      } else {
+      const response = await getCitiesApi({ maxResultCount: 1000 });
+      if (response.type === "success") {
         setCities(response.data.items || []);
+      } else {
+        toast.error(response.message);
       }
     } catch (error) {
       toast.error(languageData["Fetch.Fail.City"]);
@@ -59,11 +59,11 @@ export default function Form({
 
   const getCountry = async () => {
     try {
-      const response = await getCountries({ maxResultCount: 1000 });
-      if (response.type === "error" || response.type === "api-error") {
-        toast.error(response.message);
-      } else {
+      const response = await getCountriesApi({ maxResultCount: 1000 });
+      if (response.type === "success") {
         setCountries(response.data.items || []);
+      } else {
+        toast.error(response.message);
       }
     } catch (error) {
       toast.error(languageData["Fetch.Fail.Country"]);

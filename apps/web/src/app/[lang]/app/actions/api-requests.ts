@@ -8,40 +8,43 @@ import type {
   GetApiCrmServiceMerchantsData,
   GetApiCrmServiceTaxOfficesData,
 } from "@ayasofyazilim/saas/CRMService";
+import type {
+  GetApiLocationServiceCitiesData,
+  GetApiLocationServiceCountriesData,
+} from "@ayasofyazilim/saas/LocationService";
 import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
 import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
 import {
   getContractServiceClient,
   getCRMServiceClient,
+  getLocationServiceClient,
   getTravellersServiceClient,
   structuredError,
 } from "src/lib";
-import type {
-  GetCustomsDTO,
-  GetMerchantDTO,
-  GetRefundPointDTO,
-  GetTaxFreeDTO,
-  GetTaxOfficeDTO,
-} from "../[type]/parties/types";
 
 export type ApiRequestTypes = keyof Awaited<ReturnType<typeof getApiRequests>>;
-export type GetTableDataTypes = ApiRequestTypes;
-export type DeleteTableDataTypes = Exclude<ApiRequestTypes, "travellers">;
-export type GetDetailTableDataTypes = Exclude<ApiRequestTypes, "travellers">;
+export type GetTableDataTypes = Exclude<ApiRequestTypes, "locations">;
+export type DeleteTableDataTypes = Exclude<
+  ApiRequestTypes,
+  "travellers" | "locations"
+>;
+export type GetDetailTableDataTypes = Exclude<
+  ApiRequestTypes,
+  "travellers" | "locations"
+>;
 
 export async function getApiRequests() {
   const crmClient = await getCRMServiceClient();
   const travellerClient = await getTravellersServiceClient();
   const contractsClient = await getContractServiceClient();
+  const locationClient = await getLocationServiceClient();
   const tableRequests = {
     merchants: {
       getDetail: async (id: string) =>
         (await crmClient.merchant.getApiCrmServiceMerchantsByIdDetail({ id }))
           .merchant,
       get: async (data: GetApiCrmServiceMerchantsData) =>
-        (await crmClient.merchant.getApiCrmServiceMerchants(
-          data,
-        )) as GetMerchantDTO,
+        await crmClient.merchant.getApiCrmServiceMerchants(data),
       getSubCompanies: async (data: {
         id: string;
         maxResultCount: number;
@@ -97,9 +100,7 @@ export async function getApiRequests() {
           id,
         }),
       get: async (data: { maxResultCount: number; skipCount: number }) =>
-        (await crmClient.refundPoint.getApiCrmServiceRefundPoints(
-          data,
-        )) as GetRefundPointDTO,
+        await crmClient.refundPoint.getApiCrmServiceRefundPoints(data),
       getSubCompanies: async (data: {
         id: string;
         maxResultCount: number;
@@ -127,9 +128,7 @@ export async function getApiRequests() {
       getDetail: async (id: string) =>
         await crmClient.customs.getApiCrmServiceCustomsByIdDetail({ id }),
       get: async (data: { maxResultCount: number; skipCount: number }) =>
-        (await crmClient.customs.getApiCrmServiceCustoms(
-          data,
-        )) as GetCustomsDTO,
+        await crmClient.customs.getApiCrmServiceCustoms(data),
       getSubCompanies: async (data: {
         id: string;
         maxResultCount: number;
@@ -150,9 +149,7 @@ export async function getApiRequests() {
       getDetail: async (id: string) =>
         await crmClient.taxFree.getApiCrmServiceTaxFreesByIdDetail({ id }),
       get: async (data: { maxResultCount: number; skipCount: number }) =>
-        (await crmClient.taxFree.getApiCrmServiceTaxFrees(
-          data,
-        )) as GetTaxFreeDTO,
+        await crmClient.taxFree.getApiCrmServiceTaxFrees(data),
       getSubCompanies: async (data: {
         id: string;
         maxResultCount: number;
@@ -175,9 +172,7 @@ export async function getApiRequests() {
       getDetail: async (id: string) =>
         await crmClient.taxOffice.getApiCrmServiceTaxOfficesByIdDetail({ id }),
       get: async (data: GetApiCrmServiceTaxOfficesData = {}) =>
-        (await crmClient.taxOffice.getApiCrmServiceTaxOffices(
-          data,
-        )) as GetTaxOfficeDTO,
+        await crmClient.taxOffice.getApiCrmServiceTaxOffices(data),
       getSubCompanies: async (data: {
         id: string;
         maxResultCount: number;
@@ -206,9 +201,7 @@ export async function getApiRequests() {
       getDetail: async (id: string) =>
         await crmClient.individual.getApiCrmServiceIndividualsById({ id }),
       get: async (data: { maxResultCount: number; skipCount: number }) =>
-        (await crmClient.individual.getApiCrmServiceIndividuals(
-          data,
-        )) as GetTaxOfficeDTO,
+        await crmClient.individual.getApiCrmServiceIndividuals(data),
       deleteRow: async (id: string) =>
         await crmClient.taxOffice.deleteApiCrmServiceTaxOfficesByIdWithComponents(
           {
@@ -216,6 +209,13 @@ export async function getApiRequests() {
           },
         ),
     },
+    locations: {
+      getCountries: async (data: GetApiLocationServiceCountriesData) =>
+        await locationClient.country.getApiLocationServiceCountries(data),
+      getCities: async (data: GetApiLocationServiceCitiesData) =>
+        await locationClient.city.getApiLocationServiceCities(data),
+    },
+
     travellers: {
       get: async (data: GetApiTravellerServiceTravellersData) =>
         await travellerClient.traveller.getApiTravellerServiceTravellers(data),
