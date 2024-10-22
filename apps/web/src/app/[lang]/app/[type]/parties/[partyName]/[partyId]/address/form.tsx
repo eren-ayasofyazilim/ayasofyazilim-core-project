@@ -13,8 +13,8 @@ import { getEnumId, getEnumName } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import type { PartyNameType } from "../../../types";
-import type { PutAddress } from "../types";
 import { handleUpdateSubmit } from "../utils";
+import type { PutAddress } from "../types";
 
 function Address({
   languageData,
@@ -36,15 +36,15 @@ function Address({
 
   const addressValues = {
     ...organizationData?.contactInformations?.[0]?.addresses?.[0],
-    city: getEnumName(
+    cityId: getEnumName(
       citiesEnum,
-      organizationData?.contactInformations?.[0]?.addresses?.[0]?.city || "",
+      organizationData?.contactInformations?.[0]?.addresses?.[0]?.cityId || "",
     ),
   };
 
   const addressSchema = addressSchemaByData([], citiesEnum, [
-    "country",
-    "terriority",
+    "countryId",
+    "regionId",
   ]).schema;
   return (
     <SectionLayoutContent sectionId="address">
@@ -59,17 +59,17 @@ function Address({
               data: {
                 requestBody: {
                   ...values,
-                  city: getEnumId(citiesEnum, values.city as string),
-                  country:
+                  cityId: getEnumId(citiesEnum, values.cityId as string),
+                  countryId:
                     organizationData?.contactInformations?.[0]?.addresses?.[0]
-                      ?.country || "",
-                  terriority:
+                      ?.countryId || "",
+                  regionId:
                     organizationData?.contactInformations?.[0]?.addresses?.[0]
-                      ?.terriority || "",
-                } as PutAddress["data"]["requestBody"],
+                      ?.regionId || "",
+                },
                 id: partyId,
                 addressId: addressValues.id || "",
-              },
+              } as PutAddress["data"],
             },
             router,
           );

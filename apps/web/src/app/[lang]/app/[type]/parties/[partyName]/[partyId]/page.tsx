@@ -7,7 +7,7 @@ import { getTaxOfficesApi } from "src/app/[lang]/app/actions/CrmService/actions"
 import { getResourceData } from "src/language-data/CRMService";
 import { dataConfigOfParties } from "../../table-data";
 import type { PartyNameType } from "../../types";
-import { getCities } from "../../../../actions/LocationService/actions";
+import { getCitiesApi } from "../../../../actions/LocationService/actions";
 import Address from "./address/form";
 import Contracts from "./contracts/form";
 import Email from "./email/form";
@@ -48,7 +48,7 @@ export default async function Page({
     return notFound();
   }
 
-  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
+  const cities = await getCitiesApi({ maxResultCount: 500, sorting: "name" });
   const citiesEnum =
     (cities.type === "success" &&
       cities.data.items?.map((item) => ({
@@ -177,7 +177,7 @@ export default async function Page({
         </SectionLayout>
       </div>
       <div className="hidden" id="page-title">
-        {`${languageData[formData.translationKey]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name || individualData?.name?.name})`}
+        {`${languageData[formData.translationKey]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name || `${individualData?.name?.firstName} ${individualData?.name?.lastName}`})`}
       </div>
     </>
   );

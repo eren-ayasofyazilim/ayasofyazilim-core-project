@@ -14,15 +14,12 @@ import type {
   PutApiCrmServiceMerchantsByIdIndividualByIndividualIdPersonalSummaryByPersonalSummaryIdData,
   PutApiCrmServiceMerchantsByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceMerchantsByIdTelephonesByTelephoneIdData,
-  PutApiCrmServiceRefundPointsByIdAddressesByAddressIdData,
   PutApiCrmServiceRefundPointsByIdEmailsByEmailIdData,
   PutApiCrmServiceRefundPointsByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceRefundPointsByIdTelephonesByTelephoneIdData,
-  PutApiCrmServiceTaxFreesByIdAddressesByAddressIdData,
   PutApiCrmServiceTaxFreesByIdEmailsByEmailIdData,
   PutApiCrmServiceTaxFreesByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceTaxFreesByIdTelephonesByTelephoneIdData,
-  PutApiCrmServiceTaxOfficesByIdAddressesByAddressIdData,
   PutApiCrmServiceTaxOfficesByIdEmailsByEmailIdData,
   PutApiCrmServiceTaxOfficesByIdOrganizationsByOrganizationIdData,
   PutApiCrmServiceTaxOfficesByIdTelephonesByTelephoneIdData,
@@ -77,23 +74,10 @@ export type PutTelephone =
       data: PutApiCrmServiceRefundPointsByIdTelephonesByTelephoneIdData;
     };
 
-export type PutAddress =
-  | {
-      action: "address";
-      data: PutApiCrmServiceRefundPointsByIdAddressesByAddressIdData;
-    }
-  | {
-      action: "address";
-      data: PutApiCrmServiceTaxOfficesByIdAddressesByAddressIdData;
-    }
-  | {
-      action: "address";
-      data: PutApiCrmServiceTaxFreesByIdAddressesByAddressIdData;
-    }
-  | {
-      action: "address";
-      data: PutApiCrmServiceCustomsByIdAddressesByAddressIdData;
-    };
+export interface PutAddress {
+  action: "address";
+  data: PutApiCrmServiceCustomsByIdAddressesByAddressIdData;
+}
 
 export type PutEmail =
   | {

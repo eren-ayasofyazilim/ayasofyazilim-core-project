@@ -15,7 +15,7 @@ import {
   $UniRefund_SettingService_Vats_VatDetailDto,
 } from "@ayasofyazilim/saas/SettingService";
 import { getBaseLink } from "src/utils";
-import { getCountries } from "../../actions/LocationService/actions";
+import { getCountriesApi } from "../../actions/LocationService/actions";
 
 const settingsCovnertor = {
   unitCode: {
@@ -37,7 +37,7 @@ const settingsCovnertor = {
 };
 
 const getCountriesData = async () => {
-  const result = await getCountries({
+  const result = await getCountriesApi({
     maxResultCount: 500,
     sorting: "name",
   });

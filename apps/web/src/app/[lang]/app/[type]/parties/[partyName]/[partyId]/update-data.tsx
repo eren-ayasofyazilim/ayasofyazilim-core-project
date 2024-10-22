@@ -1,5 +1,4 @@
 import type {
-  UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
   UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
@@ -8,6 +7,7 @@ import {
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
   $UniRefund_CRMService_RefundPoints_UpdateRefundPointOrganizationDto,
 } from "@ayasofyazilim/saas/CRMService";
+import type { UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto } from "@ayasofyazilim/saas/LocationService";
 import {
   CustomsFormSubPositions,
   MerchantsFormSubPositions,
@@ -21,7 +21,7 @@ export interface UpdatePartiesDto {
   taxOfficeId: string;
   organizationSchema: PutOrganization;
   telephone: UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
-  address: UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
+  address: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto;
   email: UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
 }
 

@@ -5,8 +5,6 @@ import {
   $UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-
-// re-usable shorter imports
 export const UpdateOrganizationDto =
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto;
 export const UpdateTelephoneTypeDto =

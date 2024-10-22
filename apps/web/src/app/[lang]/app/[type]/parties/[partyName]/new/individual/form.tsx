@@ -66,8 +66,8 @@ export default function Individual({
     const config = dataConfigOfParties[partyName];
     const schema = createScheme(CreateMerchantSchema);
     const address = addressSchemaByData([], citiesEnum, [
-      "country",
-      "terriority",
+      "countryId",
+      "regionId",
     ]);
 
     const convertors = {
@@ -108,9 +108,9 @@ export default function Individual({
           addresses: [
             {
               ...formData.address,
-              country: formData.address.country || "NULL",
-              terriority: formData.address.terriority || "NULL",
-              city: getEnumId(citiesEnum, formData.address.city),
+              countryId: formData.address.countryId || "NULL",
+              regionId: formData.address.regionId || "NULL",
+              cityId: getEnumId(citiesEnum, formData.address.cityId || ""),
               primaryFlag: true,
             },
           ],
