@@ -15,7 +15,7 @@ import { useLocale } from "src/providers/locale";
 import { getBaseLink } from "src/utils";
 import { isPhoneValid, splitPhone } from "src/utils-phone";
 import { dataDebtors } from "../data";
-import { getCities } from "../../../actions/LocationService/actions";
+import { getCitiesApi } from "../../../actions/LocationService/actions";
 
 export interface CreateOrganizationDto {
   organization: Record<string, string>;
@@ -59,7 +59,7 @@ export default function Form({
     useState<UniRefund_LocationService_Cities_CityDto[]>();
 
   useEffect(() => {
-    void getCities({ maxResultCount: 500, sorting: "name" }).then(
+    void getCitiesApi({ maxResultCount: 500, sorting: "name" }).then(
       (response) => {
         if (response.type === "success") {
           setCities(response.data.items || []);

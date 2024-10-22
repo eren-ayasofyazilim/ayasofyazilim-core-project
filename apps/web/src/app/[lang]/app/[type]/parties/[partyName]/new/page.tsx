@@ -3,7 +3,7 @@
 import { getTaxOfficesApi } from "src/app/[lang]/app/actions/CrmService/actions";
 import { getResourceData } from "src/language-data/CRMService";
 import type { PartyNameType } from "../../types";
-import { getCities } from "../../../../actions/LocationService/actions";
+import { getCitiesApi } from "../../../../actions/LocationService/actions";
 import Form from "./form";
 
 export default async function Page({
@@ -16,7 +16,7 @@ export default async function Page({
 }) {
   const { languageData } = await getResourceData(params.lang);
 
-  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
+  const cities = await getCitiesApi({ maxResultCount: 500, sorting: "name" });
   const citiesEnum =
     (cities.type === "success" &&
       cities.data.items?.map((item) => ({

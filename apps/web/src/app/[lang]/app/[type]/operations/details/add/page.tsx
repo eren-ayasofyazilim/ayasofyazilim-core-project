@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
 import type {
   UniRefund_CRMService_Merchants_MerchantDetailDto as MerchantDetailDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_16 as MerchantPagedListDto,
+  PagedResultDto_MerchantProfileDto,
 } from "@ayasofyazilim/saas/CRMService";
 import DataTable from "@repo/ayasofyazilim-ui/molecules/tables";
 import AutoForm from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -17,10 +17,8 @@ import type { CellContext, ColumnDef } from "@tanstack/react-table";
 import { columnsGenerator } from "node_modules/@repo/ayasofyazilim-ui/src/molecules/tables/columnsGenerator";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import {
-  getTableData,
-  getTableDataDetail,
-} from "src/app/[lang]/app/actions/api-requests";
+import { getTableDataDetail } from "src/app/[lang]/app/actions/api-requests";
+import { getMerchantsApi } from "src/app/[lang]/app/actions/CrmService/actions";
 import { getResourceDataClient } from "src/language-data/ContractService";
 import { createTag } from "../actions";
 
@@ -102,14 +100,15 @@ export default function Page() {
   const languageData = getResourceDataClient("en");
   const [paymentData, setPaymentData] = useState<Payment[]>(payments);
 
-  const [merchantList, setMerchantList] = useState<MerchantPagedListDto>();
+  const [merchantList, setMerchantList] =
+    useState<PagedResultDto_MerchantProfileDto>();
   const [merchantDetails, setMerchantDetails] = useState<MerchantDetailDto>();
   const [selectedMerchant, setSelectedMerchant] = useState<string>("");
   const [traveller, setTraveller] = useState<Record<string, string>>();
   const [travellerNext, setTravellerNext] = useState<boolean>(false);
 
   useEffect(() => {
-    void getTableData("merchants", 0, 100).then((response) => {
+    void getMerchantsApi().then((response) => {
       if (response.type === "success") {
         setMerchantList(response.data);
       } else if (response.type === "api-error") {

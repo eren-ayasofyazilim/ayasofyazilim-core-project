@@ -10,7 +10,6 @@ import {
   $UniRefund_ContractService_ContractsForMerchant_ContractHeaders_ContractHeaderForMerchantCreateDto as $ContractHeaderForMerchantCreateDto,
   $UniRefund_ContractService_ContractsForMerchant_ContractSettings_ContractSettingCreateDto as $ContractSettingCreateDto,
 } from "@ayasofyazilim/saas/ContractService";
-import type { UniRefund_CRMService_AddressTypes_AddressTypeDto as AddressTypeDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type { AutoFormInputComponentProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import AutoForm, {
@@ -27,6 +26,7 @@ import {
 import { toastOnSubmit } from "@repo/ui/toast-on-submit";
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect, useState } from "react";
+import type { UniRefund_LocationService_AddressCommonDatas_AddressCommonDataDto as AddressTypeDto } from "@ayasofyazilim/saas/LocationService";
 import Rebate from "src/app/[lang]/app/[type]/settings/templates/rebate/rebate";
 import { getRefundTableHeaders } from "src/app/[lang]/app/[type]/settings/templates/refund/action";
 import {

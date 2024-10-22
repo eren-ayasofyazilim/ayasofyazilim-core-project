@@ -1,11 +1,11 @@
 import {
-  $UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
   $UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   $UniRefund_CRMService_Merchants_CreateMerchantDto,
   $UniRefund_CRMService_Merchants_MerchantProfileDto,
   $UniRefund_CRMService_Organizations_UpdateOrganizationDto,
   $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto,
 } from "@ayasofyazilim/saas/CRMService";
+import { $UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto } from "@ayasofyazilim/saas/LocationService";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import type { TableData } from "@repo/ui/utils/table/table-utils";
 
@@ -58,7 +58,7 @@ export const organization =
 export const telephone =
   $UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
 export const address =
-  $UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
+  $UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto;
 export const email =
   $UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
 

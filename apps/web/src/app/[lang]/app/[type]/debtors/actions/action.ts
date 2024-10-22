@@ -1,10 +1,7 @@
 "use server";
 import type {
   ApiError,
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
   UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { revalidatePath } from "next/cache";
 import { getCRMServiceClient } from "src/lib";
@@ -55,35 +52,35 @@ export async function updateDebtorDetailServer(
     return error;
   }
 }
-export async function updateDebtorInformationServer(
-  id: string,
-  requestBody:
-    | UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto
-    | UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto
-    | UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-) {
-  "use server";
-  try {
-    const client = await getCRMServiceClient();
-    if ("emailAddress" in requestBody) {
-      await client.emailCommonData.putApiCrmServiceEmailsById({
-        id,
-        requestBody,
-      });
-    } else if ("addressLine" in requestBody) {
-      await client.addressType.putApiCrmServiceAddressesById({
-        id,
-        requestBody,
-      });
-    } else if ("localNumber" in requestBody) {
-      await client.telephoneType.putApiCrmServiceTelephonesById({
-        id,
-        requestBody,
-      });
-    }
-    revalidatePath("/");
-    return true;
-  } catch (error) {
-    return error;
-  }
-}
+// export async function updateDebtorInformationServer(
+//   id: string,
+//   requestBody:
+//     | UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto
+//     | UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto
+//     | UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto,
+// ) {
+//   "use server";
+//   try {
+//     const client = await getCRMServiceClient();
+//     // if ("emailAddress" in requestBody) {
+//     //   await client.emailCommonData.putApiCrmServiceEmailsById({
+//     //     id,
+//     //     requestBody,
+//     //   });
+//     // } else if ("addressLine" in requestBody) {
+//     //   await client.addressType.putApiCrmServiceAddressesById({
+//     //     id,
+//     //     requestBody,
+//     //   });
+//     // } else if ("localNumber" in requestBody) {
+//     //   await client.telephoneType.putApiCrmServiceTelephonesById({
+//     //     id,
+//     //     requestBody,
+//     //   });
+//     // }
+//     revalidatePath("/");
+//     return true;
+//   } catch (error) {
+//     return error;
+//   }
+// }

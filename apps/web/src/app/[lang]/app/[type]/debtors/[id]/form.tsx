@@ -1,11 +1,8 @@
 "use client";
 import { toast } from "@/components/ui/sonner";
 import type {
-  UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto,
-  UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto,
   UniRefund_CRMService_Merchants_MerchantDto,
   UniRefund_CRMService_Organizations_UpdateOrganizationDto,
-  UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto,
 } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
@@ -17,13 +14,9 @@ import {
 } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { getResourceDataClient } from "src/language-data/DebtorsService";
 import { useLocale } from "src/providers/locale";
-import { isPhoneValid, splitPhone } from "src/utils-phone";
-import {
-  updateDebtorDetailServer,
-  updateDebtorInformationServer,
-} from "../actions/action";
-import { address, email, organization, telephone } from "../data";
 import { localNumber } from "../../parties/table-data";
+import { updateDebtorDetailServer } from "../actions/action";
+import { address, email, organization, telephone } from "../data";
 
 export default function Form({
   crmDetailData,
@@ -91,37 +84,37 @@ export default function Form({
       );
       response = "success";
     }
-    if (sectionName === "email") {
-      await updateDebtorInformationServer(emailInfo?.id || "", {
-        ...values,
-        primaryFlag: true,
-      } as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto);
-      response = "success";
-    }
-    if (sectionName === "telephone") {
-      const parsedValues = {
-        ...values,
-        primaryFlag: true,
-      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
-      const isValid = isPhoneValid(parsedValues.localNumber);
-      if (!isValid) {
-        return;
-      }
-      const phoneData = splitPhone(parsedValues.localNumber);
-      await updateDebtorInformationServer(telephoneInfo.id || "", {
-        ...values,
-        primaryFlag: true,
-        ...phoneData,
-      } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
-      response = "success";
-    }
-    if (sectionName === "address") {
-      await updateDebtorInformationServer(addressInfo?.id || "", {
-        ...values,
-        primaryFlag: true,
-      } as UniRefund_CRMService_AddressTypes_UpdateAddressTypeDto);
-      response = "success";
-    }
+    // if (sectionName === "email") {
+    //   await updateDebtorInformationServer(emailInfo?.id || "", {
+    //     ...values,
+    //     primaryFlag: true,
+    //   } as UniRefund_CRMService_EmailCommonDatas_UpdateEmailCommonDataDto);
+    //   response = "success";
+    // }
+    // if (sectionName === "telephone") {
+    //   const parsedValues = {
+    //     ...values,
+    //     primaryFlag: true,
+    //   } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto;
+    //   const isValid = isPhoneValid(parsedValues.localNumber);
+    //   if (!isValid) {
+    //     return;
+    //   }
+    //   const phoneData = splitPhone(parsedValues.localNumber);
+    //   await updateDebtorInformationServer(telephoneInfo.id || "", {
+    //     ...values,
+    //     primaryFlag: true,
+    //     ...phoneData,
+    //   } as UniRefund_CRMService_TelephoneTypes_UpdateTelephoneTypeDto);
+    //   response = "success";
+    // }
+    // if (sectionName === "address") {
+    //   await updateDebtorInformationServer(addressInfo?.id || "", {
+    //     ...values,
+    //     primaryFlag: true,
+    //   } as UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto);
+    //   response = "success";
+    // }
     if (response) {
       toast.success("Updated successfully!");
     }
@@ -193,12 +186,12 @@ export default function Form({
             }}
             values={{
               addressLine: addressInfo?.addressLine,
-              city: addressInfo?.city,
-              country: addressInfo?.country,
+              city: addressInfo?.cityId,
+              country: addressInfo?.countryId,
               fullAddress: addressInfo?.fullAddress,
               postalCode: addressInfo?.postalCode,
-              terriority: addressInfo?.terriority,
-              typeCode: addressInfo?.typeCode,
+              regionId: addressInfo?.regionId,
+              type: addressInfo?.type,
               primaryFlag: addressInfo?.primaryFlag,
             }}
           >

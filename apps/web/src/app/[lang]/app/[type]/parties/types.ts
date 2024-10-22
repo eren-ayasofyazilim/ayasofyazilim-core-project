@@ -6,17 +6,17 @@ import type {
   $UniRefund_CRMService_TaxFrees_CreateTaxFreeDto as CreateTaxFreeSchema,
   $UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto as CreateTaxOfficeSchema,
   UniRefund_CRMService_Customss_CreateCustomsDto,
+  UniRefund_CRMService_Customss_CustomsDto,
   UniRefund_CRMService_Individuals_CreateIndividualDto,
+  UniRefund_CRMService_Individuals_IndividualDto,
   UniRefund_CRMService_Merchants_CreateMerchantDto,
+  UniRefund_CRMService_Merchants_MerchantDto,
   UniRefund_CRMService_RefundPoints_CreateRefundPointDto,
+  UniRefund_CRMService_RefundPoints_RefundPointDto,
   UniRefund_CRMService_TaxFrees_CreateTaxFreeDto,
+  UniRefund_CRMService_TaxFrees_TaxFreeDto,
   UniRefund_CRMService_TaxOffices_CreateTaxOfficeDto,
-  Volo_Abp_Application_Dtos_PagedResultDto_110,
-  Volo_Abp_Application_Dtos_PagedResultDto_13,
-  Volo_Abp_Application_Dtos_PagedResultDto_15,
-  Volo_Abp_Application_Dtos_PagedResultDto_16,
-  Volo_Abp_Application_Dtos_PagedResultDto_17,
-  Volo_Abp_Application_Dtos_PagedResultDto_19,
+  UniRefund_CRMService_TaxOffices_TaxOfficeDto,
 } from "@ayasofyazilim/saas/CRMService";
 
 export type CreateMerchantDTO =
@@ -30,12 +30,13 @@ export type CreateTaxOfficeDTO =
 export type CreateIndividualDTO =
   UniRefund_CRMService_Individuals_CreateIndividualDto;
 
-export type GetMerchantDTO = Volo_Abp_Application_Dtos_PagedResultDto_16;
-export type GetRefundPointDTO = Volo_Abp_Application_Dtos_PagedResultDto_17;
-export type GetCustomsDTO = Volo_Abp_Application_Dtos_PagedResultDto_13;
-export type GetTaxFreeDTO = Volo_Abp_Application_Dtos_PagedResultDto_19;
-export type GetTaxOfficeDTO = Volo_Abp_Application_Dtos_PagedResultDto_110;
-export type GetIndividualDTO = Volo_Abp_Application_Dtos_PagedResultDto_15;
+export type GetMerchantDTO = UniRefund_CRMService_Merchants_MerchantDto;
+export type GetRefundPointDTO =
+  UniRefund_CRMService_RefundPoints_RefundPointDto;
+export type GetCustomsDTO = UniRefund_CRMService_Customss_CustomsDto;
+export type GetTaxFreeDTO = UniRefund_CRMService_TaxFrees_TaxFreeDto;
+export type GetTaxOfficeDTO = UniRefund_CRMService_TaxOffices_TaxOfficeDto;
+export type GetIndividualDTO = UniRefund_CRMService_Individuals_IndividualDto;
 
 export type PartyNameType =
   | "merchants"

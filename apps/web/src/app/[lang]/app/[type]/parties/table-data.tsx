@@ -1,5 +1,5 @@
+import type { UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto } from "@ayasofyazilim/saas/LocationService";
 import type {
-  UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto,
   UniRefund_CRMService_Customss_CreateCustomsOrganizationDto,
   UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto,
   UniRefund_CRMService_Merchants_CreateMerchantOrgnaizationDto,
@@ -38,7 +38,7 @@ export interface CreatePartiesDto {
   name: UniRefund_CRMService_NameCommonDatas_CreateNameCommonDataDto;
   personalSummaries: UniRefund_CRMService_PersonalSummaries_CreatePersonalSummaryDto;
   telephone: UniRefund_CRMService_TelephoneTypes_CreateTelephoneTypeWithComponentsDto;
-  address: UniRefund_CRMService_AddressTypes_CreateAddressTypeWithComponentsDto;
+  address: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataCreateDto;
   email: UniRefund_CRMService_EmailCommonDatas_CreateEmailCommonDataWithComponentsDto;
 }
 

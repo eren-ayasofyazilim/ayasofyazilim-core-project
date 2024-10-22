@@ -3,11 +3,14 @@
 import { SectionLayout } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { notFound } from "next/navigation";
 import { getTableDataDetail } from "src/app/[lang]/app/actions/api-requests";
-import { getTaxOfficesApi } from "src/app/[lang]/app/actions/CrmService/actions";
+import {
+  getMerchantsApi,
+  getTaxOfficesApi,
+} from "src/app/[lang]/app/actions/CrmService/actions";
 import { getResourceData } from "src/language-data/CRMService";
 import { dataConfigOfParties } from "../../table-data";
 import type { PartyNameType } from "../../types";
-import { getCities } from "../../../../actions/LocationService/actions";
+import { getCitiesApi } from "../../../../actions/LocationService/actions";
 import Address from "./address/form";
 import Contracts from "./contracts/form";
 import Email from "./email/form";
@@ -48,21 +51,32 @@ export default async function Page({
     return notFound();
   }
 
-  const cities = await getCities({ maxResultCount: 500, sorting: "name" });
-  const citiesEnum =
+  const cities = await getCitiesApi({ maxResultCount: 500, sorting: "name" });
+  const cityList =
     (cities.type === "success" &&
-      cities.data.items?.map((item) => ({
-        name: item.name || "",
-        id: item.id || "",
+      cities.data.items?.map((city) => ({
+        name: city.name || "",
+        id: city.id || "",
       }))) ||
     [];
 
+  const merchants = await getMerchantsApi();
+  const merchantList =
+    (merchants.type === "success" &&
+      merchants.data.items
+        ?.map((merchant) => ({
+          name: merchant.name || "",
+          id: merchant.id || "",
+        }))
+        .filter((merchant) => merchant.id !== params.partyId)) ||
+    [];
+
   const taxOffices = await getTaxOfficesApi();
-  const taxOfficesEnum =
+  const taxOfficeList =
     (taxOffices.type === "success" &&
-      taxOffices.data.items?.map((item) => ({
-        name: item.name || "",
-        id: item.id || "",
+      taxOffices.data.items?.map((taxOffice) => ({
+        name: taxOffice.name || "",
+        id: taxOffice.id || "",
       }))) ||
     [];
 
@@ -103,9 +117,10 @@ export default async function Page({
               <MerchantForm
                 languageData={languageData}
                 merchantData={partyDetailData}
+                merchantList={merchantList}
                 partyId={params.partyId}
                 partyName={params.partyName}
-                taxOfficesEnum={taxOfficesEnum}
+                taxOfficeList={taxOfficeList}
               />
             )}
 
@@ -144,7 +159,7 @@ export default async function Page({
           />
 
           <Address
-            citiesEnum={citiesEnum}
+            citiesEnum={cityList}
             languageData={languageData}
             organizationData={organizationData || individualData}
             partyId={params.partyId}
@@ -177,7 +192,7 @@ export default async function Page({
         </SectionLayout>
       </div>
       <div className="hidden" id="page-title">
-        {`${languageData[formData.translationKey]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name || individualData?.name?.name})`}
+        {`${languageData[formData.translationKey]} (${partyDetailData.entityInformations?.[0]?.organizations?.[0]?.name || `${individualData?.name?.firstName} ${individualData?.name?.lastName}`})`}
       </div>
     </>
   );
