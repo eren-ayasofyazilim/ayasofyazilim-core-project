@@ -54,9 +54,9 @@ export default async function Page({
   const cities = await getCitiesApi({ maxResultCount: 500, sorting: "name" });
   const cityList =
     (cities.type === "success" &&
-      cities.data.items?.map((item) => ({
-        name: item.name || "",
-        id: item.id || "",
+      cities.data.items?.map((city) => ({
+        name: city.name || "",
+        id: city.id || "",
       }))) ||
     [];
 
@@ -64,19 +64,19 @@ export default async function Page({
   const merchantList =
     (merchants.type === "success" &&
       merchants.data.items
-        ?.map((i) => ({
-          name: i.name || "",
-          id: i.id || "",
+        ?.map((merchant) => ({
+          name: merchant.name || "",
+          id: merchant.id || "",
         }))
-        .filter((i) => i.id !== params.partyId)) ||
+        .filter((merchant) => merchant.id !== params.partyId)) ||
     [];
 
   const taxOffices = await getTaxOfficesApi();
   const taxOfficeList =
     (taxOffices.type === "success" &&
-      taxOffices.data.items?.map((i) => ({
-        name: i.name || "",
-        id: i.id || "",
+      taxOffices.data.items?.map((taxOffice) => ({
+        name: taxOffice.name || "",
+        id: taxOffice.id || "",
       }))) ||
     [];
 
