@@ -14,9 +14,16 @@ import type {
 } from "@ayasofyazilim/saas/LocationService";
 import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
 import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
+import type {
+  GetApiIdentityClaimTypesData,
+  GetApiIdentityRolesByIdClaimsData,
+  GetApiIdentityRolesData,
+  PutApiIdentityRolesByIdClaimsData,
+} from "@ayasofyazilim/saas/IdentityService";
 import {
   getContractServiceClient,
   getCRMServiceClient,
+  getIdentityServiceClient,
   getLocationServiceClient,
   getTravellersServiceClient,
   structuredError,
@@ -26,11 +33,11 @@ export type ApiRequestTypes = keyof Awaited<ReturnType<typeof getApiRequests>>;
 export type GetTableDataTypes = Exclude<ApiRequestTypes, "locations">;
 export type DeleteTableDataTypes = Exclude<
   ApiRequestTypes,
-  "travellers" | "locations"
+  "travellers" | "claims" | "roles" | "locations"
 >;
 export type GetDetailTableDataTypes = Exclude<
   ApiRequestTypes,
-  "travellers" | "locations"
+  "travellers" | "claims" | "roles" | "locations"
 >;
 
 export async function getApiRequests() {
@@ -38,6 +45,7 @@ export async function getApiRequests() {
   const travellerClient = await getTravellersServiceClient();
   const contractsClient = await getContractServiceClient();
   const locationClient = await getLocationServiceClient();
+  const identityClient = await getIdentityServiceClient();
   const tableRequests = {
     merchants: {
       getDetail: async (id: string) =>
@@ -219,6 +227,18 @@ export async function getApiRequests() {
     travellers: {
       get: async (data: GetApiTravellerServiceTravellersData) =>
         await travellerClient.traveller.getApiTravellerServiceTravellers(data),
+    },
+    claims: {
+      get: async (data: GetApiIdentityClaimTypesData) =>
+        await identityClient.claimType.getApiIdentityClaimTypes(data),
+    },
+    roles: {
+      get: async (data: GetApiIdentityRolesData) =>
+        await identityClient.role.getApiIdentityRoles(data),
+      getRoleClaims: async (data: GetApiIdentityRolesByIdClaimsData) =>
+        await identityClient.role.getApiIdentityRolesByIdClaims(data),
+      putClaims: async (data: PutApiIdentityRolesByIdClaimsData) =>
+        await identityClient.role.putApiIdentityRolesByIdClaims(data),
     },
   };
   return tableRequests;
