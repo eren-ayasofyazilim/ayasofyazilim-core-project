@@ -7,6 +7,7 @@ import type {
 import type {
   GetApiCrmServiceMerchantsData,
   GetApiCrmServiceTaxOfficesData,
+  PutApiCrmServiceMerchantsByIdData,
 } from "@ayasofyazilim/saas/CRMService";
 import type {
   GetApiLocationServiceCitiesData,
@@ -93,6 +94,12 @@ export async function getApiRequests() {
         await contractsClient.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersById(
           { id },
         ),
+      putMerchantBase: async (form: PutApiCrmServiceMerchantsByIdData) => {
+        return await crmClient.merchant.putApiCrmServiceMerchantsById({
+          requestBody: form.requestBody,
+          id: form.id,
+        });
+      },
     },
     "refund-points": {
       getDetail: async (id: string) =>
