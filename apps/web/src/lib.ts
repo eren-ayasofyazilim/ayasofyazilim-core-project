@@ -164,12 +164,18 @@ export interface ErrorServerResponse {
 
 export function structuredError(error: unknown): ErrorTypes {
   if (isApiError(error)) {
-    const body = error.body as { error: { message?: string } };
+    const body = error.body as {
+      error: { message?: string; details?: string };
+    };
     return {
       type: "api-error",
       data: body.error.message || error.statusText || "Something went wrong",
       status: error.status,
-      message: body.error.message || error.statusText || "Something went wrong",
+      message:
+        body.error.details ||
+        body.error.message ||
+        error.statusText ||
+        "Something went wrong",
     };
   }
   return {
