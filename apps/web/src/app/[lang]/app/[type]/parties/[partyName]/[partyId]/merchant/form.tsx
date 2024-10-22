@@ -3,16 +3,17 @@
 import type { UniRefund_CRMService_Merchants_UpdateMerchantDto } from "@ayasofyazilim/saas/CRMService";
 import { $UniRefund_CRMService_Merchants_MerchantBaseDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
-import type { DependenciesType } from "@repo/ayasofyazilim-ui/organisms/auto-form";
+import type {
+  AutoFormInputComponentProps,
+  DependenciesType,
+} from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import AutoForm, {
   AutoFormSubmit,
+  CustomCombobox,
   DependencyType,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import { getEnumId, getEnumName } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getMerchantsApi } from "src/app/[lang]/app/actions/CrmService/actions";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import type { PutMerchantBase } from "../types";
 import { handleUpdateSubmit } from "../utils";
@@ -21,33 +22,21 @@ function MerchantForm({
   languageData,
   partyName,
   partyId,
-  taxOfficesEnum,
+  taxOfficeList: taxOfficesEnum,
+  merchantList,
   merchantData: individualData,
 }: {
   languageData: CRMServiceServiceResource;
   partyName: "merchants";
   partyId: string;
-  taxOfficesEnum: { name: string; id: string }[];
+  taxOfficeList: { name: string; id: string }[];
+  merchantList: { name: string; id: string }[];
   merchantData: UniRefund_CRMService_Merchants_UpdateMerchantDto | undefined;
 }) {
-  const [merchants, setMerchants] = useState<
-    { name: string; id: string }[] | undefined
-  >();
   const router = useRouter();
-
   const schema = createZodObject(
     $UniRefund_CRMService_Merchants_MerchantBaseDto,
     ["typeCode", "taxOfficeId", "parentId"],
-    {
-      taxOfficeId: {
-        type: "enum",
-        data: taxOfficesEnum.map((i) => i.name),
-      },
-      parentId: {
-        type: "enum",
-        data: merchants?.map((i) => i.name),
-      },
-    },
   );
   const dependencies: DependenciesType = [
     {
@@ -56,76 +45,66 @@ function MerchantForm({
       targetField: "parentId",
       when: (typeCode: string) => typeCode !== "STORE",
     },
+    {
+      sourceField: "typeCode",
+      type: DependencyType.REQUIRES,
+      targetField: "parentId",
+      when: (typeCode: string) => typeCode === "STORE",
+    },
   ];
 
-  function getMerchantList() {
-    void getMerchantsApi().then((res) => {
-      if (res.type === "success") {
-        setMerchants(
-          res.data.items?.map((item) => ({
-            name: item.name || "",
-            id: item.id || "",
-          })) || [],
-        );
-      }
-    });
+  function handleSubmit(formData: PutMerchantBase["data"]["requestBody"]) {
+    void handleUpdateSubmit(
+      partyName,
+      {
+        action: "merchant-base",
+        data: {
+          requestBody: formData,
+          id: partyId,
+        },
+      },
+      router,
+    );
   }
-  useEffect(() => {
-    if (individualData?.typeCode === "STORE" && !merchants) {
-      getMerchantList();
-    }
-  }, []);
   return (
     <SectionLayoutContent sectionId="merchant-base">
       <AutoForm
         dependencies={dependencies}
+        fieldConfig={{
+          taxOfficeId: {
+            renderer: (props: AutoFormInputComponentProps) => {
+              return (
+                <CustomCombobox<{ name: string; id: string }>
+                  childrenProps={props}
+                  list={taxOfficesEnum}
+                  selectIdentifier="id"
+                  selectLabel="name"
+                />
+              );
+            },
+          },
+          parentId: {
+            renderer: (props: AutoFormInputComponentProps) => {
+              return (
+                <CustomCombobox<{ name: string; id: string }>
+                  childrenProps={props}
+                  list={merchantList}
+                  selectIdentifier="id"
+                  selectLabel="name"
+                />
+              );
+            },
+          },
+        }}
         formClassName="pb-40"
         formSchema={schema}
-        onParsedValuesChange={(values) => {
-          if (values.typeCode === "STORE" && !merchants) {
-            getMerchantList();
-          }
-        }}
         onSubmit={(values: PutMerchantBase["data"]["requestBody"]) => {
           if (values?.typeCode === "STORE" && !values.parentId) {
             return;
           }
-
-          void handleUpdateSubmit(
-            partyName,
-            {
-              action: "merchant-base",
-              data: {
-                requestBody: {
-                  ...values,
-                  taxOfficeId: getEnumId(
-                    taxOfficesEnum,
-                    values?.taxOfficeId || "",
-                  ),
-                  parentId:
-                    (values?.typeCode === "STORE" &&
-                      merchants &&
-                      values.parentId &&
-                      getEnumId(merchants, values.parentId || "")) ||
-                    undefined,
-                },
-                id: partyId,
-              },
-            },
-            router,
-          );
+          handleSubmit(values);
         }}
-        values={{
-          ...individualData,
-          taxOfficeId: getEnumName(
-            taxOfficesEnum,
-            individualData?.taxOfficeId || "",
-          ),
-          parentId:
-            (merchants &&
-              getEnumName(merchants, individualData?.parentId || "")) ||
-            "",
-        }}
+        values={individualData}
       >
         <AutoFormSubmit className="float-right">
           {languageData.Save}
