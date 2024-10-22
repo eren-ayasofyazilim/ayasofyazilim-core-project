@@ -1,6 +1,10 @@
 "use client";
 
-import type { UniRefund_CRMService_Merchants_UpdateMerchantDto } from "@ayasofyazilim/saas/CRMService";
+import type {
+  UniRefund_CRMService_Merchants_MerchantProfileDto,
+  UniRefund_CRMService_Merchants_UpdateMerchantDto,
+  UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto,
+} from "@ayasofyazilim/saas/CRMService";
 import { $UniRefund_CRMService_Merchants_MerchantBaseDto } from "@ayasofyazilim/saas/CRMService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type {
@@ -14,24 +18,23 @@ import AutoForm, {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
 import { useRouter } from "next/navigation";
+import { putMerchantBaseApi } from "src/app/[lang]/app/actions/CrmService/put-actions";
+import { handlePutResponse } from "src/app/[lang]/app/actions/api-utils";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
-import type { PutMerchantBase } from "../types";
-import { handleUpdateSubmit } from "../utils";
 
 function MerchantForm({
   languageData,
-  partyName,
   partyId,
-  taxOfficeList: taxOfficesEnum,
+  taxOfficeList,
   merchantList,
-  merchantData: individualData,
+  merchantBaseData,
 }: {
   languageData: CRMServiceServiceResource;
   partyName: "merchants";
   partyId: string;
-  taxOfficeList: { name: string; id: string }[];
-  merchantList: { name: string; id: string }[];
-  merchantData: UniRefund_CRMService_Merchants_UpdateMerchantDto | undefined;
+  taxOfficeList: UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto[];
+  merchantList: UniRefund_CRMService_Merchants_MerchantProfileDto[];
+  merchantBaseData: UniRefund_CRMService_Merchants_UpdateMerchantDto;
 }) {
   const router = useRouter();
   const schema = createZodObject(
@@ -53,18 +56,15 @@ function MerchantForm({
     },
   ];
 
-  function handleSubmit(formData: PutMerchantBase["data"]["requestBody"]) {
-    void handleUpdateSubmit(
-      partyName,
-      {
-        action: "merchant-base",
-        data: {
-          requestBody: formData,
-          id: partyId,
-        },
-      },
-      router,
-    );
+  function handleSubmit(
+    formData: UniRefund_CRMService_Merchants_UpdateMerchantDto,
+  ) {
+    void putMerchantBaseApi({
+      requestBody: formData,
+      id: partyId,
+    }).then((response) => {
+      handlePutResponse(response, router);
+    });
   }
   return (
     <SectionLayoutContent sectionId="merchant-base">
@@ -74,9 +74,9 @@ function MerchantForm({
           taxOfficeId: {
             renderer: (props: AutoFormInputComponentProps) => {
               return (
-                <CustomCombobox<{ name: string; id: string }>
+                <CustomCombobox<UniRefund_CRMService_TaxOffices_TaxOfficeProfileDto>
                   childrenProps={props}
-                  list={taxOfficesEnum}
+                  list={taxOfficeList}
                   selectIdentifier="id"
                   selectLabel="name"
                 />
@@ -86,7 +86,7 @@ function MerchantForm({
           parentId: {
             renderer: (props: AutoFormInputComponentProps) => {
               return (
-                <CustomCombobox<{ name: string; id: string }>
+                <CustomCombobox<UniRefund_CRMService_Merchants_MerchantProfileDto>
                   childrenProps={props}
                   list={merchantList}
                   selectIdentifier="id"
@@ -98,13 +98,15 @@ function MerchantForm({
         }}
         formClassName="pb-40"
         formSchema={schema}
-        onSubmit={(values: PutMerchantBase["data"]["requestBody"]) => {
-          if (values?.typeCode === "STORE" && !values.parentId) {
+        onSubmit={(
+          values: UniRefund_CRMService_Merchants_UpdateMerchantDto,
+        ) => {
+          if (values.typeCode === "STORE" && !values.parentId) {
             return;
           }
           handleSubmit(values);
         }}
-        values={individualData}
+        values={merchantBaseData}
       >
         <AutoFormSubmit className="float-right">
           {languageData.Save}
