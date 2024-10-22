@@ -32,6 +32,7 @@
   "Claim.Add": "+ Add claim",
   "Claim.Select": "Select claim",
   "Claim.Empty": "No claims found.",
+  "Claim.Empty.Fields": "Please enter claim type and value.",
   "Claim.New.Succes": "Claims added successfully.",
   "Claim.New.Fail": "An error occurred while adding claims.",
   "Claim.Fetch.Fail": "An error occurred while fetching claims.",

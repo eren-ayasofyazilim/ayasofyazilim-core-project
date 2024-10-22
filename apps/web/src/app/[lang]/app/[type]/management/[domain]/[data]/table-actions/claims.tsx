@@ -86,11 +86,16 @@ export default function Claims({
   };
 
   const handleAddClaim = (newClaim: Volo_Abp_Identity_IdentityRoleClaimDto) => {
+    if (!newClaim.claimType || !newClaim.claimValue) {
+      toast.error(languageData["Claim.Empty.Fields"]);
+      return;
+    }
     const exists = claimList.some(
       (claim) =>
         claim.claimType === newClaim.claimType &&
         claim.claimValue === newClaim.claimValue,
     );
+
     if (exists) {
       toast.error(languageData["Claim.Exist.Fail"]);
     } else {
@@ -164,7 +169,7 @@ export default function Claims({
           {/* <Button variant="outline" >
               Cancel
             </Button> */}
-          <Button className="ml-4" onClick={void putRoleClaims}>
+          <Button className="ml-4" onClick={() => void putRoleClaims()}>
             {languageData["Management.Edit.Save"]}
           </Button>
         </div>

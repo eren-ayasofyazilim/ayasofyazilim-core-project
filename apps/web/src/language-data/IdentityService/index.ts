@@ -36,6 +36,7 @@ export interface IdentityServiceResource {
   "Claim.Add": string;
   "Claim.Select": string;
   "Claim.Empty": string;
+  "Claim.Empty.Fields": string;
   "Claim.New.Succes": string;
   "Claim.New.Fail": string;
   "Claim.Fetch.Fail": string;
@@ -236,6 +237,10 @@ function getLanguageData(
       resource?.["Claim.Empty"] ||
       data[lang]?.["Claim.Empty"] ||
       data.en["Claim.Empty"],
+    "Claim.Empty.Fields":
+      resource?.["Claim.Empty.Fields"] ||
+      data[lang]?.["Claim.Empty.Fields"] ||
+      data.en["Claim.Empty.Fields"],
     "Claim.New.Succes":
       resource?.["Claim.New.Succes"] ||
       data[lang]?.["Claim.New.Succes"] ||

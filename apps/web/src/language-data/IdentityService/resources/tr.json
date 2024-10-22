@@ -32,6 +32,7 @@
   "Claim.Add": "+ Talep Ekle",
   "Claim.Select": "Talep seç",
   "Claim.Empty": "Hiç talep bulunamadı.",
+  "Claim.Empty.Fields": "Lütfen talep türünü ve tutarını giriniz.",
   "Claim.New.Succes": "Talepler Basarıyla eklendi.",
   "Claim.New.Fail": "Talepler eklenirken bir hata oluştu.",
   "Claim.Fetch.Fail": "Talepler alınırken bir hata oluştu.",
