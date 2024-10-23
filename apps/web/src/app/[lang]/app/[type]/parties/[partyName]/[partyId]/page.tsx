@@ -52,33 +52,19 @@ export default async function Page({
   }
 
   const cities = await getCitiesApi({ maxResultCount: 500, sorting: "name" });
-  const cityList =
-    (cities.type === "success" &&
-      cities.data.items?.map((city) => ({
-        name: city.name || "",
-        id: city.id || "",
-      }))) ||
-    [];
+  const cityList = (cities.type === "success" && cities.data.items) || [];
 
   const merchants = await getMerchantsApi();
   const merchantList =
     (merchants.type === "success" &&
-      merchants.data.items
-        ?.map((merchant) => ({
-          name: merchant.name || "",
-          id: merchant.id || "",
-        }))
-        .filter((merchant) => merchant.id !== params.partyId)) ||
+      merchants.data.items?.filter(
+        (merchant) => merchant.id !== params.partyId,
+      )) ||
     [];
 
   const taxOffices = await getTaxOfficesApi();
   const taxOfficeList =
-    (taxOffices.type === "success" &&
-      taxOffices.data.items?.map((taxOffice) => ({
-        name: taxOffice.name || "",
-        id: taxOffice.id || "",
-      }))) ||
-    [];
+    (taxOffices.type === "success" && taxOffices.data.items) || [];
 
   const sections = [
     { name: languageData.Telephone, id: "telephone" },
@@ -116,7 +102,7 @@ export default async function Page({
             "taxOfficeId" in partyDetailData && (
               <MerchantForm
                 languageData={languageData}
-                merchantData={partyDetailData}
+                merchantBaseData={partyDetailData}
                 merchantList={merchantList}
                 partyId={params.partyId}
                 partyName={params.partyName}
@@ -159,7 +145,7 @@ export default async function Page({
           />
 
           <Address
-            citiesEnum={cityList}
+            cityList={cityList}
             languageData={languageData}
             organizationData={organizationData || individualData}
             partyId={params.partyId}

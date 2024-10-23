@@ -7,6 +7,8 @@ import type {
 import type {
   GetApiCrmServiceMerchantsData,
   GetApiCrmServiceTaxOfficesData,
+  PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+  PutApiCrmServiceMerchantsByIdData,
 } from "@ayasofyazilim/saas/CRMService";
 import type {
   GetApiLocationServiceCitiesData,
@@ -93,6 +95,19 @@ export async function getApiRequests() {
         await contractsClient.contractsMerchant.getApiContractServiceMerchantsContractsContractHeadersById(
           { id },
         ),
+      putMerchantBase: async (form: PutApiCrmServiceMerchantsByIdData) => {
+        return await crmClient.merchant.putApiCrmServiceMerchantsById({
+          requestBody: form.requestBody,
+          id: form.id,
+        });
+      },
+      putAddress: async (
+        form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+      ) => {
+        return await crmClient.merchant.putApiCrmServiceMerchantsByIdAddressesByAddressId(
+          form,
+        );
+      },
     },
     "refund-points": {
       getDetail: async (id: string) =>
@@ -123,6 +138,13 @@ export async function getApiRequests() {
             id,
           },
         ),
+      putAddress: async (
+        form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+      ) => {
+        return await crmClient.refundPoint.putApiCrmServiceRefundPointsByIdAddressesByAddressId(
+          form,
+        );
+      },
     },
     customs: {
       getDetail: async (id: string) =>
@@ -144,6 +166,13 @@ export async function getApiRequests() {
         await crmClient.customs.deleteApiCrmServiceCustomsByIdWithComponents({
           id,
         }),
+      putAddress: async (
+        form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+      ) => {
+        return await crmClient.customs.putApiCrmServiceCustomsByIdAddressesByAddressId(
+          form,
+        );
+      },
     },
     "tax-free": {
       getDetail: async (id: string) =>
@@ -167,6 +196,13 @@ export async function getApiRequests() {
         await crmClient.taxFree.deleteApiCrmServiceTaxFreesByIdWithComponents({
           id,
         }),
+      putAddress: async (
+        form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+      ) => {
+        return await crmClient.taxFree.putApiCrmServiceTaxFreesByIdAddressesByAddressId(
+          form,
+        );
+      },
     },
     "tax-offices": {
       getDetail: async (id: string) =>
@@ -196,6 +232,13 @@ export async function getApiRequests() {
             id,
           },
         ),
+      putAddress: async (
+        form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
+      ) => {
+        return await crmClient.taxOffice.putApiCrmServiceTaxOfficesByIdAddressesByAddressId(
+          form,
+        );
+      },
     },
     individuals: {
       getDetail: async (id: string) =>
