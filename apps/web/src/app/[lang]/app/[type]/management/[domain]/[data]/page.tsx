@@ -18,9 +18,9 @@ import type { FormModifier, TableData } from "@repo/ui/utils/table/table-utils";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { getResourceDataClient } from "src/language-data/IdentityService";
-import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
 import { dataConfig } from "../../data";
+import Claims from "./table-actions/claims";
 
 async function controlledFetch(
   url: string,
@@ -73,7 +73,6 @@ function convertAsyncField(value: any, ConvertorValue: ConvertorValue) {
   const returnValue = ConvertorValue.data.find((item: any) => {
     return item[ConvertorValue.get] === value;
   });
-
   if (returnValue) {
     return returnValue[ConvertorValue.post];
   }
@@ -84,8 +83,7 @@ export default function Page({
 }: {
   params: { data: string; domain: string; lang: string };
 }): JSX.Element {
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+  const languageData = getResourceDataClient(params.lang);
   const fetchLink = getBaseLink(`/api/admin/${params.data}`);
   const [roles, setRoles] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -195,7 +193,7 @@ export default function Page({
             },
           }),
           submit: {
-            cta: languageData["Management.Save"],
+            cta: languageData.Save,
           },
         },
         callback: (e) => {
@@ -320,7 +318,7 @@ export default function Page({
     cta: languageData.Delete,
     type: "Dialog",
     componentType: "ConfirmationDialog",
-    description: `${languageData["Delete.Confirm"]} ${formData.title}?`,
+    description: `${languageData["Delete.Assurance"]} ${formData.title}?`,
     cancelCTA: languageData.Cancel,
     variant: "destructive",
     callback: (data) => {
@@ -335,7 +333,7 @@ export default function Page({
     autoFormArgs: {
       ...autoformEditArgs,
       submit: {
-        cta: languageData["Management.Edit.Save"],
+        cta: languageData["Edit.Save"],
       },
     },
     callback: (data, row) => {
@@ -343,14 +341,20 @@ export default function Page({
     },
   });
 
-  if (params.data === "scopes") {
+  const claimComponent = async (row: { id: string }) => {
+    await Promise.resolve();
+    return <Claims params={params} rowId={row.id} />;
+  };
+
+  if (params.data === "role" || params.data === "user") {
     columnsData.data.actionList?.push({
       type: "Dialog",
-      cta: "Change History",
+      cta: languageData.Claims,
       loadingContent: <>Loading...</>,
-      description: "Change History",
+      description: languageData["Claim.Add.Description"],
       componentType: "CustomComponent",
-      content: <>No changes.</>,
+      callback: claimComponent,
+      content: <></>,
     });
   }
   return (
