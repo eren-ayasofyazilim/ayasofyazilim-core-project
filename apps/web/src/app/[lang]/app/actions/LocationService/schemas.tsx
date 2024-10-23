@@ -95,14 +95,14 @@ export function handleOnAddressValueChange({
   values,
   selectedFields,
   setSelectedFields,
-  countryList,
+  countryList = [],
   setRegionList,
   setCityList,
 }: {
   values: Record<string, string>;
   setCityList: Dispatch<SetStateAction<CityDto[]>>;
-  setRegionList: Dispatch<SetStateAction<RegionDto[]>>;
-  countryList: CountryDto[];
+  setRegionList?: Dispatch<SetStateAction<RegionDto[]>>;
+  countryList?: CountryDto[];
   selectedFields: SelectedAddressField;
   setSelectedFields: Dispatch<SetStateAction<SelectedAddressField>>;
 }) {
@@ -121,6 +121,8 @@ export function handleOnAddressValueChange({
   }
 
   async function getRegions(countryId: string) {
+    if (!setRegionList) return;
+
     setSelectedFields((current) => ({
       ...current,
       countryId,
@@ -160,10 +162,15 @@ export function handleOnAddressValueChange({
   const val = values as {
     [key in AddressFormFieldsType]: string;
   };
-  if (val.countryId !== selectedFields.countryId) {
+  if (setRegionList && val.countryId !== selectedFields.countryId) {
     void getRegions(val.countryId);
   } else if (val.regionId !== selectedFields.regionId) {
     void getCities(val.regionId);
+  } else if (val.cityId !== selectedFields.cityId) {
+    setSelectedFields((current) => ({
+      ...current,
+      cityId: val.cityId,
+    }));
   }
 }
 export function getAddressSchema(hideFields: AddressFormFieldsType[] = []) {
