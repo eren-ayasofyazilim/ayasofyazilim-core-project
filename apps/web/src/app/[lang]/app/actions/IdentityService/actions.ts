@@ -9,10 +9,10 @@ import { getApiRequests } from "../api-requests";
 
 export async function getClaimsApi(body: GetApiIdentityClaimTypesData = {}) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).claims.get(body),
+      data: await requests.claims.get(body),
       status: 200,
       message: "",
     };
@@ -23,10 +23,10 @@ export async function getClaimsApi(body: GetApiIdentityClaimTypesData = {}) {
 
 export async function putClaimsApi(body: PutApiIdentityRolesByIdClaimsData) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).roles.putClaims(body),
+      data: await requests.roles.putClaims(body),
       status: 200,
       message: "",
     };
@@ -39,10 +39,10 @@ export async function getRoleClaimsApi(
   body: GetApiIdentityRolesByIdClaimsData,
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).roles.getRoleClaims(body),
+      data: await requests.roles.getRoleClaims(body),
       status: 200,
       message: "",
     };
