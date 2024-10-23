@@ -20,7 +20,6 @@ import {
   putClaimsApi,
 } from "src/app/[lang]/app/actions/IdentityService/actions";
 import { getResourceDataClient } from "src/language-data/IdentityService";
-import { useLocale } from "src/providers/locale";
 
 export default function Claims({
   rowId,
@@ -31,8 +30,7 @@ export default function Claims({
     lang: string;
   };
 }) {
-  const { resources } = useLocale();
-  const languageData = getResourceDataClient(resources, params.lang);
+  const languageData = getResourceDataClient(params.lang);
   const [claims, setClaims] = useState<Volo_Abp_Identity_ClaimTypeDto[]>([]);
   const [claimList, setClaimList] = useState<
     Volo_Abp_Identity_IdentityRoleClaimDto[]
@@ -158,7 +156,7 @@ export default function Claims({
               Cancel
             </Button> */}
           <Button className="ml-4" onClick={() => void putRoleClaims()}>
-            {languageData["Management.Edit.Save"]}
+            {languageData["Edit.Save"]}
           </Button>
         </div>
       </div>
