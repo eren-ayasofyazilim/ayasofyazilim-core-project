@@ -35,8 +35,8 @@
   "Form.Regex": "Regex",
   "Form.regexDescription": "Regex Description",
   "Form.valueType": "Value Type",
-  "Form.ClaimType": "Claim Type",
-  "Form.ClaimValue": "Claim Value",
+  "Form.claimType": "Claim Type",
+  "Form.claimValue": "Claim Value",
 
   "SecurityLog": "Security Log",
   "SecurityLogs": "Security Logs",
