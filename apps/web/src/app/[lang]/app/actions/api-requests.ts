@@ -105,11 +105,7 @@ export async function getApiRequests() {
         form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
       ) => {
         return await crmClient.merchant.putApiCrmServiceMerchantsByIdAddressesByAddressId(
-          {
-            requestBody: form.requestBody,
-            addressId: form.addressId,
-            id: form.id,
-          },
+          form,
         );
       },
     },
@@ -146,11 +142,7 @@ export async function getApiRequests() {
         form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
       ) => {
         return await crmClient.refundPoint.putApiCrmServiceRefundPointsByIdAddressesByAddressId(
-          {
-            requestBody: form.requestBody,
-            addressId: form.addressId,
-            id: form.id,
-          },
+          form,
         );
       },
     },
@@ -178,11 +170,7 @@ export async function getApiRequests() {
         form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
       ) => {
         return await crmClient.customs.putApiCrmServiceCustomsByIdAddressesByAddressId(
-          {
-            requestBody: form.requestBody,
-            addressId: form.addressId,
-            id: form.id,
-          },
+          form,
         );
       },
     },
@@ -212,11 +200,7 @@ export async function getApiRequests() {
         form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
       ) => {
         return await crmClient.taxFree.putApiCrmServiceTaxFreesByIdAddressesByAddressId(
-          {
-            requestBody: form.requestBody,
-            addressId: form.addressId,
-            id: form.id,
-          },
+          form,
         );
       },
     },
@@ -252,11 +236,7 @@ export async function getApiRequests() {
         form: PutApiCrmServiceMerchantsByIdAddressesByAddressIdData,
       ) => {
         return await crmClient.taxOffice.putApiCrmServiceTaxOfficesByIdAddressesByAddressId(
-          {
-            requestBody: form.requestBody,
-            addressId: form.addressId,
-            id: form.id,
-          },
+          form,
         );
       },
     },
