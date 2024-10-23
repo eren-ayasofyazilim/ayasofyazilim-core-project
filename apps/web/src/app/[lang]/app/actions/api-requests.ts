@@ -20,7 +20,10 @@ import type {
   GetApiIdentityClaimTypesData,
   GetApiIdentityRolesByIdClaimsData,
   GetApiIdentityRolesData,
+  GetApiIdentityUsersByIdClaimsData,
+  GetApiIdentityUsersData,
   PutApiIdentityRolesByIdClaimsData,
+  PutApiIdentityUsersByIdClaimsData,
 } from "@ayasofyazilim/saas/IdentityService";
 import {
   getContractServiceClient,
@@ -35,11 +38,11 @@ export type ApiRequestTypes = keyof Awaited<ReturnType<typeof getApiRequests>>;
 export type GetTableDataTypes = Exclude<ApiRequestTypes, "locations">;
 export type DeleteTableDataTypes = Exclude<
   ApiRequestTypes,
-  "travellers" | "claims" | "roles" | "locations"
+  "travellers" | "claims" | "roles" | "locations" | "users"
 >;
 export type GetDetailTableDataTypes = Exclude<
   ApiRequestTypes,
-  "travellers" | "claims" | "roles" | "locations"
+  "travellers" | "claims" | "roles" | "locations" | "users"
 >;
 
 export async function getApiRequests() {
@@ -280,8 +283,16 @@ export async function getApiRequests() {
         await identityClient.role.getApiIdentityRoles(data),
       getRoleClaims: async (data: GetApiIdentityRolesByIdClaimsData) =>
         await identityClient.role.getApiIdentityRolesByIdClaims(data),
-      putClaims: async (data: PutApiIdentityRolesByIdClaimsData) =>
+      putRoleClaims: async (data: PutApiIdentityRolesByIdClaimsData) =>
         await identityClient.role.putApiIdentityRolesByIdClaims(data),
+    },
+    users: {
+      get: async (data: GetApiIdentityUsersData) =>
+        await identityClient.user.getApiIdentityUsers(data),
+      getUserClaims: async (data: GetApiIdentityUsersByIdClaimsData) =>
+        await identityClient.user.getApiIdentityUsersByIdClaims(data),
+      putUserClaims: async (data: PutApiIdentityUsersByIdClaimsData) =>
+        await identityClient.user.putApiIdentityUsersByIdClaims(data),
     },
   };
   return tableRequests;

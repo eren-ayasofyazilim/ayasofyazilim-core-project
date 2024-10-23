@@ -346,7 +346,7 @@ export default function Page({
     return <Claims params={params} rowId={row.id} />;
   };
 
-  if (params.data === "role") {
+  if (params.data === "role" || params.data === "user") {
     columnsData.data.actionList?.push({
       type: "Dialog",
       cta: languageData.Claims,

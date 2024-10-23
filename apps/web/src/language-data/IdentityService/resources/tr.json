@@ -35,6 +35,8 @@
   "Form.Regex": "Regex",
   "Form.regexDescription": "Regex Açıklaması",
   "Form.valueType": "Veri Türü",
+  "Form.ClaimType": "Talep Türü",
+  "Form.ClaimValue": "Talep Değeri",
 
   "SecurityLog": "Güvenlik Kaydı",
   "SecurityLogs": "Güvenlik Kayıtları",

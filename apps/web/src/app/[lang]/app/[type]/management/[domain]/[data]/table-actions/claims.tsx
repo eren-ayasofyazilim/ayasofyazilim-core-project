@@ -6,10 +6,15 @@ import { toast } from "@/components/ui/sonner";
 import type {
   Volo_Abp_Identity_ClaimTypeDto,
   Volo_Abp_Identity_IdentityRoleClaimDto,
+  Volo_Abp_Identity_IdentityUserClaimDto,
 } from "@ayasofyazilim/saas/IdentityService";
-import { $Volo_Abp_Identity_IdentityRoleClaimDto } from "@ayasofyazilim/saas/IdentityService";
+import {
+  $Volo_Abp_Identity_IdentityRoleClaimDto,
+  $Volo_Abp_Identity_IdentityUserClaimDto,
+} from "@ayasofyazilim/saas/IdentityService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import AutoForm, {
+  createFieldConfigWithResource,
   CustomCombobox,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { Trash2 } from "lucide-react";
@@ -17,9 +22,15 @@ import { useEffect, useState } from "react";
 import {
   getClaimsApi,
   getRoleClaimsApi,
-  putClaimsApi,
+  getUserClaimsApi,
+  putRoleClaimsApi,
+  putUserClaimsApi,
 } from "src/app/[lang]/app/actions/IdentityService/actions";
 import { getResourceDataClient } from "src/language-data/IdentityService";
+
+type ClaimsProps =
+  | Volo_Abp_Identity_IdentityRoleClaimDto
+  | Volo_Abp_Identity_IdentityUserClaimDto;
 
 export default function Claims({
   rowId,
@@ -28,18 +39,38 @@ export default function Claims({
   rowId: string;
   params: {
     lang: string;
+    data: string;
   };
 }) {
   const languageData = getResourceDataClient(params.lang);
   const [claims, setClaims] = useState<Volo_Abp_Identity_ClaimTypeDto[]>([]);
-  const [claimList, setClaimList] = useState<
-    Volo_Abp_Identity_IdentityRoleClaimDto[]
-  >([]);
+  const [claimList, setClaimList] = useState<ClaimsProps[]>([]);
 
-  const formSchema = createZodObject($Volo_Abp_Identity_IdentityRoleClaimDto, [
-    "claimType",
-    "claimValue",
-  ]);
+  function getFormSchema() {
+    const schema =
+      params.data === "role"
+        ? $Volo_Abp_Identity_IdentityRoleClaimDto
+        : $Volo_Abp_Identity_IdentityUserClaimDto;
+    return createZodObject(schema, ["claimType", "claimValue"]);
+  }
+
+  const translatedForm = createFieldConfigWithResource({
+    schema: $Volo_Abp_Identity_IdentityRoleClaimDto,
+    resources: languageData,
+    extend: {
+      claimType: {
+        renderer: (props) => (
+          <CustomCombobox<Volo_Abp_Identity_ClaimTypeDto>
+            childrenProps={props}
+            emptyValue={languageData["Claim.Select"]}
+            list={claims}
+            selectIdentifier="name"
+            selectLabel="name"
+          />
+        ),
+      },
+    },
+  });
 
   const getClaims = async () => {
     const response = await getClaimsApi();
@@ -50,28 +81,41 @@ export default function Claims({
     }
   };
 
-  const putRoleClaims = async () => {
-    const response = await putClaimsApi({
-      id: rowId,
-      requestBody: claimList,
-    });
-    if (response.type === "success") {
+  const putClaims = async () => {
+    let response;
+    if (params.data === "role") {
+      response = await putRoleClaimsApi({
+        id: rowId,
+        requestBody: claimList,
+      });
+    } else if (params.data === "user") {
+      response = await putUserClaimsApi({
+        id: rowId,
+        requestBody: claimList,
+      });
+    }
+    if (response && response.type === "success") {
       toast.success(languageData["Claim.New.Succes"]);
     } else {
-      toast.error(response.message || languageData["Claim.New.Fail"]);
+      toast.error(response?.message || languageData["Claim.New.Fail"]);
     }
   };
 
-  const getRoleClaims = async (id = rowId) => {
-    const response = await getRoleClaimsApi({ id });
-    if (response.type === "success") {
+  const getRoleUserClaims = async (id = rowId) => {
+    let response;
+    if (params.data === "role") {
+      response = await getRoleClaimsApi({ id });
+    } else if (params.data === "user") {
+      response = await getUserClaimsApi({ id });
+    }
+    if (response && response.type === "success") {
       setClaimList(response.data);
     } else {
-      toast.error(response.message);
+      toast.error(response?.message);
     }
   };
 
-  const handleAddClaim = (newClaim: Volo_Abp_Identity_IdentityRoleClaimDto) => {
+  const handleAddClaim = (newClaim: ClaimsProps) => {
     if (!newClaim.claimType || !newClaim.claimValue) {
       toast.error(languageData["Claim.Empty.Fields"]);
       return;
@@ -81,7 +125,6 @@ export default function Claims({
         claim.claimType === newClaim.claimType &&
         claim.claimValue === newClaim.claimValue,
     );
-
     if (exists) {
       toast.error(languageData["Claim.Exist.Fail"]);
     } else {
@@ -95,27 +138,15 @@ export default function Claims({
 
   useEffect(() => {
     void getClaims();
-    void getRoleClaims();
+    void getRoleUserClaims();
   }, []);
 
   return (
     <div>
       <div className="mb-4">
         <AutoForm
-          fieldConfig={{
-            claimType: {
-              renderer: (props) => (
-                <CustomCombobox<Volo_Abp_Identity_ClaimTypeDto>
-                  childrenProps={props}
-                  emptyValue={languageData["Claim.Select"]}
-                  list={claims}
-                  selectIdentifier="name"
-                  selectLabel="name"
-                />
-              ),
-            },
-          }}
-          formSchema={formSchema}
+          fieldConfig={translatedForm}
+          formSchema={getFormSchema()}
           onSubmit={handleAddClaim}
         >
           <Button className="mb-4 w-full">{languageData["Claim.Add"]}</Button>
@@ -155,7 +186,7 @@ export default function Claims({
           {/* <Button variant="outline" >
               Cancel
             </Button> */}
-          <Button className="ml-4" onClick={() => void putRoleClaims()}>
+          <Button className="ml-4" onClick={() => void putClaims()}>
             {languageData["Edit.Save"]}
           </Button>
         </div>
