@@ -3,9 +3,7 @@
 import type {
   UniRefund_CRMService_Individuals_IndividualDto,
   UniRefund_CRMService_Organizations_OrganizationDto,
-  UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto,
 } from "@ayasofyazilim/saas/CRMService";
-import type { UniRefund_LocationService_Cities_CityDto } from "@ayasofyazilim/saas/LocationService";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -16,6 +14,10 @@ import {
   getAddressFieldConfig,
   getAddressSchema,
 } from "src/app/[lang]/app/actions/LocationService/schemas";
+import type {
+  AddressUpdateDto,
+  CityDto,
+} from "src/app/[lang]/app/actions/LocationService/types";
 import { handlePutResponse } from "src/app/[lang]/app/actions/api-utils";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import type { PartyNameType } from "../../../types";
@@ -34,7 +36,7 @@ function Address({
     | UniRefund_CRMService_Organizations_OrganizationDto
     | UniRefund_CRMService_Individuals_IndividualDto
     | undefined;
-  cityList: UniRefund_LocationService_Cities_CityDto[];
+  cityList: CityDto[];
 }) {
   const router = useRouter();
   const addressValues =
@@ -50,9 +52,7 @@ function Address({
     languageData,
   });
 
-  function handleSubmit(
-    formData: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto,
-  ) {
+  function handleSubmit(formData: AddressUpdateDto) {
     void putCrmAddressApi(partyName, {
       requestBody: formData,
       id: partyId,
@@ -69,11 +69,10 @@ function Address({
         formClassName="pb-40"
         formSchema={addressSchema}
         onSubmit={(values) => {
-          const formData: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto =
-            {
-              ...values,
-              countryId: "08d60112-a93a-b0cb-fbac-3a153b383eaf",
-            } as UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto;
+          const formData = {
+            ...values,
+            countryId: "08d60112-a93a-b0cb-fbac-3a153b383eaf",
+          } as AddressUpdateDto;
           handleSubmit(formData);
         }}
         values={addressValues}
