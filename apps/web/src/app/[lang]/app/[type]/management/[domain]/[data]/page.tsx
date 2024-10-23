@@ -21,6 +21,7 @@ import { getResourceDataClient } from "src/language-data/IdentityService";
 import { useLocale } from "src/providers/locale";
 import { createZodObject, getBaseLink } from "src/utils";
 import { dataConfig } from "../../data";
+import Claims from "./table-actions/claims";
 
 async function controlledFetch(
   url: string,
@@ -343,14 +344,20 @@ export default function Page({
     },
   });
 
-  if (params.data === "scopes") {
+  const claimComponent = async (row: { id: string }) => {
+    await Promise.resolve();
+    return <Claims params={params} rowId={row.id} />;
+  };
+
+  if (params.data === "role") {
     columnsData.data.actionList?.push({
       type: "Dialog",
-      cta: "Change History",
+      cta: languageData.Claims,
       loadingContent: <>Loading...</>,
-      description: "Change History",
+      description: languageData["Claim.Add.Description"],
       componentType: "CustomComponent",
-      content: <>No changes.</>,
+      callback: claimComponent,
+      content: <></>,
     });
   }
   return (
