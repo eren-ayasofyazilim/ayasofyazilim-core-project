@@ -3,25 +3,29 @@
 import type {
   UniRefund_CRMService_Individuals_IndividualDto,
   UniRefund_CRMService_Organizations_OrganizationDto,
+  UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto,
 } from "@ayasofyazilim/saas/CRMService";
+import type { UniRefund_LocationService_Cities_CityDto } from "@ayasofyazilim/saas/LocationService";
 import AutoForm, {
   AutoFormSubmit,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import { SectionLayoutContent } from "@repo/ayasofyazilim-ui/templates/section-layout-v2";
-import { addressSchemaByData } from "@repo/ui/utils/table/form-schemas";
-import { getEnumId, getEnumName } from "@repo/ui/utils/table/table-utils";
 import { useRouter } from "next/navigation";
+import { putCrmAddressApi } from "src/app/[lang]/app/actions/CrmService/put-actions";
+import {
+  getAddressFieldConfig,
+  getAddressSchema,
+} from "src/app/[lang]/app/actions/LocationService/schemas";
+import { handlePutResponse } from "src/app/[lang]/app/actions/api-utils";
 import type { CRMServiceServiceResource } from "src/language-data/CRMService";
 import type { PartyNameType } from "../../../types";
-import { handleUpdateSubmit } from "../utils";
-import type { PutAddress } from "../types";
 
 function Address({
   languageData,
   partyName,
   partyId,
   organizationData,
-  citiesEnum,
+  cityList,
 }: {
   languageData: CRMServiceServiceResource;
   partyName: Exclude<PartyNameType, "individuals">;
@@ -30,49 +34,47 @@ function Address({
     | UniRefund_CRMService_Organizations_OrganizationDto
     | UniRefund_CRMService_Individuals_IndividualDto
     | undefined;
-  citiesEnum: { name: string; id: string }[];
+  cityList: UniRefund_LocationService_Cities_CityDto[];
 }) {
   const router = useRouter();
+  const addressValues =
+    organizationData?.contactInformations?.[0]?.addresses?.[0];
 
-  const addressValues = {
-    ...organizationData?.contactInformations?.[0]?.addresses?.[0],
-    cityId: getEnumName(
-      citiesEnum,
-      organizationData?.contactInformations?.[0]?.addresses?.[0]?.cityId || "",
-    ),
-  };
-
-  const addressSchema = addressSchemaByData([], citiesEnum, [
+  const addressSchema = getAddressSchema([
     "countryId",
     "regionId",
-  ]).schema;
+    "districtId",
+  ]);
+  const addressSchemaFieldConfig = getAddressFieldConfig({
+    cityList,
+    languageData,
+  });
+
+  function handleSubmit(
+    formData: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto,
+  ) {
+    void putCrmAddressApi(partyName, {
+      requestBody: formData,
+      id: partyId,
+      addressId: addressValues?.id || "",
+    }).then((response) => {
+      handlePutResponse(response, router);
+    });
+  }
+
   return (
     <SectionLayoutContent sectionId="address">
       <AutoForm
-        formClassName="pb-40 "
+        fieldConfig={addressSchemaFieldConfig}
+        formClassName="pb-40"
         formSchema={addressSchema}
         onSubmit={(values) => {
-          void handleUpdateSubmit(
-            partyName,
+          const formData: UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto =
             {
-              action: "address",
-              data: {
-                requestBody: {
-                  ...values,
-                  cityId: getEnumId(citiesEnum, values.cityId as string),
-                  countryId:
-                    organizationData?.contactInformations?.[0]?.addresses?.[0]
-                      ?.countryId || "",
-                  regionId:
-                    organizationData?.contactInformations?.[0]?.addresses?.[0]
-                      ?.regionId || "",
-                },
-                id: partyId,
-                addressId: addressValues.id || "",
-              } as PutAddress["data"],
-            },
-            router,
-          );
+              ...values,
+              countryId: "08d60112-a93a-b0cb-fbac-3a153b383eaf",
+            } as UniRefund_LocationService_AddressCommonDatas_AddressCommonDataUpdateDto;
+          handleSubmit(formData);
         }}
         values={addressValues}
       >
