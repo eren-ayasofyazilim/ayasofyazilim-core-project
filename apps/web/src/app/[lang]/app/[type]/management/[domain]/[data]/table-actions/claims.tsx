@@ -183,9 +183,6 @@ export default function Claims({
           ))}
         </div>
         <div className="mt-8 flex justify-end">
-          {/* <Button variant="outline" >
-              Cancel
-            </Button> */}
           <Button className="ml-4" onClick={() => void putClaims()}>
             {languageData["Edit.Save"]}
           </Button>
