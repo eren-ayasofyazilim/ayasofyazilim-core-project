@@ -45,6 +45,8 @@
   "Country.Select": "Select Country",
   "Region.Select": "Select Region",
   "City.Select": "Select City",
+  "District.Select": "Select District",
+
   "PhoneNumber": "Phone Number",
 
   "Form.name": "Full Name",
