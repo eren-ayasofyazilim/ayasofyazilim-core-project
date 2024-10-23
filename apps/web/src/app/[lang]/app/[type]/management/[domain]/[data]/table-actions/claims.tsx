@@ -53,18 +53,14 @@ export default function Claims({
   };
 
   const putRoleClaims = async () => {
-    try {
-      const response = await putClaimsApi({
-        id: rowId,
-        requestBody: claimList,
-      });
-      if (response.type === "success") {
-        toast.success(languageData["Claim.New.Succes"]);
-      } else {
-        toast.error(response.message || languageData["Claim.New.Fail"]);
-      }
-    } catch (error) {
-      toast.error(languageData["Claim.New.Fail"]);
+    const response = await putClaimsApi({
+      id: rowId,
+      requestBody: claimList,
+    });
+    if (response.type === "success") {
+      toast.success(languageData["Claim.New.Succes"]);
+    } else {
+      toast.error(response.message || languageData["Claim.New.Fail"]);
     }
   };
 
