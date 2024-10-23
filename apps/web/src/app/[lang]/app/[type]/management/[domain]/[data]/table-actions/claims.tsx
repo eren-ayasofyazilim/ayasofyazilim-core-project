@@ -44,15 +44,11 @@ export default function Claims({
   ]);
 
   const getClaims = async () => {
-    try {
-      const response = await getClaimsApi();
-      if (response.type === "success") {
-        setClaims(response.data.items || []);
-      } else {
-        toast.error(response.message);
-      }
-    } catch (error) {
-      toast.error(languageData["Claim.Fetch.Fail"]);
+    const response = await getClaimsApi();
+    if (response.type === "success") {
+      setClaims(response.data.items || []);
+    } else {
+      toast.error(response.message);
     }
   };
 
@@ -73,15 +69,11 @@ export default function Claims({
   };
 
   const getRoleClaims = async (id = rowId) => {
-    try {
-      const response = await getRoleClaimsApi({ id });
-      if (response.type === "success") {
-        setClaimList(response.data);
-      } else {
-        toast.error(response.message);
-      }
-    } catch (error) {
-      toast.error(languageData["Claim.Fetch.Fail"]);
+    const response = await getRoleClaimsApi({ id });
+    if (response.type === "success") {
+      setClaimList(response.data);
+    } else {
+      toast.error(response.message);
     }
   };
 
