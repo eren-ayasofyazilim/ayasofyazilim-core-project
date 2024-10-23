@@ -10,10 +10,10 @@ export async function getMerchantsApi(
   data: GetApiCrmServiceMerchantsData = {},
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).merchants.get(data),
+      data: await requests.merchants.get(data),
       status: 200,
       message: "",
     };
@@ -25,10 +25,10 @@ export async function getTaxOfficesApi(
   data: GetApiCrmServiceTaxOfficesData = {},
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests)["tax-offices"].get(data),
+      data: await requests["tax-offices"].get(data),
       status: 200,
       message: "",
     };
@@ -42,12 +42,10 @@ export async function getBasicInformationApi(
   partyName: "merchants",
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (
-        await requests
-      )[partyName].getBasicInformation({
+      data: await requests[partyName].getBasicInformation({
         id,
       }),
     };
@@ -58,12 +56,10 @@ export async function getBasicInformationApi(
 
 export async function getAdressesApi(id: string, partyName: "merchants") {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (
-        await requests
-      )[partyName].getAdresses({
+      data: await requests[partyName].getAdresses({
         id,
       }),
     };
