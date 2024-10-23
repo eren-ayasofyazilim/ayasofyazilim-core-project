@@ -11,10 +11,10 @@ export async function getCountriesApi(
   data: GetApiLocationServiceCountriesData = {},
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).locations.getCountries(data),
+      data: await requests.locations.getCountries(data),
       status: 200,
       message: "",
     };
@@ -25,10 +25,10 @@ export async function getCountriesApi(
 
 export async function getCitiesApi(data: GetApiLocationServiceCitiesData = {}) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).locations.getCities(data),
+      data: await requests.locations.getCities(data),
       status: 200,
       message: "",
     };

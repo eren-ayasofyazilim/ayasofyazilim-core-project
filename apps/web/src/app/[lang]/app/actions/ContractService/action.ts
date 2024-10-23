@@ -12,12 +12,10 @@ export async function getMerchantContractHeadersByMerchantIdApi(
   data: GetApiContractServiceMerchantsByIdContractsContractHeadersData,
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (
-        await requests
-      ).merchants.getContractHeadersByMerchantId(data),
+      data: await requests.merchants.getContractHeadersByMerchantId(data),
       status: 200,
       message: "",
     } as ServerResponse<PagedResultDto_ContractHeaderDetailForMerchantDto>;
@@ -29,12 +27,10 @@ export async function getMerchantContractHeaderMissingStepsByIdApi(
   data: GetApiContractServiceMerchantsByIdContractsContractHeadersData,
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (
-        await requests
-      ).merchants.getContractHeaderMissingStepsById(data.id),
+      data: await requests.merchants.getContractHeaderMissingStepsById(data.id),
       status: 200,
       message: "",
     };
@@ -46,10 +42,10 @@ export async function postMerchantContractHeadersByMerchantIdApi(
   data: PostApiContractServiceMerchantsByIdContractsContractHeadersData,
 ) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).merchants.postContractHeadersById(data),
+      data: await requests.merchants.postContractHeadersById(data),
       status: 200,
       message: "",
     };
@@ -59,10 +55,10 @@ export async function postMerchantContractHeadersByMerchantIdApi(
 }
 export async function getMerchantContractHeaderByIdApi(id: string) {
   try {
-    const requests = getApiRequests();
+    const requests = await getApiRequests();
     return {
       type: "success",
-      data: await (await requests).merchants.getContractHeaderById(id),
+      data: await requests.merchants.getContractHeaderById(id),
       status: 200,
       message: "",
     };
