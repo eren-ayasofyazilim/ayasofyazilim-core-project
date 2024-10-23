@@ -128,7 +128,7 @@ export function handleOnAddressValueChange({
       cityId: "",
     }));
     const selectedCountry = countryList.find(
-      (country) => country.id === val.cityId,
+      (country) => country.id === val.countryId,
     );
     if (selectedCountry?.hasRegion) {
       const regions = await getRegionsByCountryIdApi({
