@@ -1,15 +1,23 @@
 import { $UniRefund_LocationService_AddressCommonDatas_AddressCommonDataDto as AddressDto } from "@ayasofyazilim/saas/LocationService";
-import type {
-  UniRefund_LocationService_Cities_CityDto,
-  UniRefund_LocationService_Countries_CountryDto,
-} from "@ayasofyazilim/saas/LocationService";
+import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type { AutoFormInputComponentProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import {
   createFieldConfigWithResource,
   CustomCombobox,
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
-import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
+import type { Dispatch, SetStateAction } from "react";
 import type { LanguageDataResourceType } from "src/language-data/language-data";
+import {
+  getCitiesByRegionId,
+  getDefaultRegionsByCountryIdApi,
+  getRegionsByCountryIdApi,
+} from "./actions";
+import type {
+  CityDto,
+  CountryDto,
+  RegionDto,
+  SelectedAddressField,
+} from "./types";
 
 const AddressFormFields: AddressFormFieldsType[] = [
   "type",
@@ -34,14 +42,15 @@ type AddressFormFieldsType =
   | "postalCode";
 
 export function getAddressFieldConfig(params: {
-  cityList?: UniRefund_LocationService_Cities_CityDto[];
-  countryList?: UniRefund_LocationService_Countries_CountryDto[];
+  cityList?: CityDto[];
+  regionList?: RegionDto[];
+  countryList?: CountryDto[];
   languageData: LanguageDataResourceType;
 }) {
   const fieldConfig = {
     cityId: {
       renderer: (props: AutoFormInputComponentProps) => (
-        <CustomCombobox<UniRefund_LocationService_Cities_CityDto>
+        <CustomCombobox<CityDto>
           childrenProps={props}
           emptyValue={params.languageData["City.Select"]}
           list={params.cityList}
@@ -52,10 +61,21 @@ export function getAddressFieldConfig(params: {
     },
     countryId: {
       renderer: (props: AutoFormInputComponentProps) => (
-        <CustomCombobox<UniRefund_LocationService_Countries_CountryDto>
+        <CustomCombobox<CountryDto>
           childrenProps={props}
           emptyValue={params.languageData["Country.Select"]}
           list={params.countryList}
+          selectIdentifier="id"
+          selectLabel="name"
+        />
+      ),
+    },
+    regionId: {
+      renderer: (props: AutoFormInputComponentProps) => (
+        <CustomCombobox<RegionDto>
+          childrenProps={props}
+          emptyValue={params.languageData["Region.Select"]}
+          list={params.regionList}
           selectIdentifier="id"
           selectLabel="name"
         />
@@ -70,6 +90,81 @@ export function getAddressFieldConfig(params: {
   });
 
   return translatedForm;
+}
+export function handleOnAddressValueChange({
+  values,
+  selectedFields,
+  setSelectedFields,
+  countryList,
+  setRegionList,
+  setCityList,
+}: {
+  values: Record<string, string>;
+  setCityList: Dispatch<SetStateAction<CityDto[]>>;
+  setRegionList: Dispatch<SetStateAction<RegionDto[]>>;
+  countryList: CountryDto[];
+  selectedFields: SelectedAddressField;
+  setSelectedFields: Dispatch<SetStateAction<SelectedAddressField>>;
+}) {
+  async function getCities(regionId: string) {
+    setSelectedFields((current) => ({
+      ...current,
+      regionId,
+      cityId: "",
+    }));
+    const cities = await getCitiesByRegionId({ regionId });
+    if (cities.type === "success") {
+      setCityList(cities.data);
+      return;
+    }
+    setCityList([]);
+  }
+
+  async function getRegions(countryId: string) {
+    setSelectedFields((current) => ({
+      ...current,
+      countryId,
+      regionId: "",
+      cityId: "",
+    }));
+    const selectedCountry = countryList.find(
+      (country) => country.id === val.cityId,
+    );
+    if (selectedCountry?.hasRegion) {
+      const regions = await getRegionsByCountryIdApi({
+        countryId,
+      });
+      setCityList([]);
+      if (regions.type === "success") {
+        setRegionList(regions.data);
+        return;
+      }
+      setRegionList([]);
+      return;
+    }
+    const regions = await getDefaultRegionsByCountryIdApi({
+      countryId: val.countryId,
+    });
+    if (regions.type === "success") {
+      const regionId = regions.data;
+      setRegionList([]);
+      setSelectedFields((current) => ({
+        ...current,
+        regionId,
+      }));
+      void getCities(regionId);
+      return;
+    }
+    setCityList([]);
+  }
+  const val = values as {
+    [key in AddressFormFieldsType]: string;
+  };
+  if (val.countryId !== selectedFields.countryId) {
+    void getRegions(val.countryId);
+  } else if (val.regionId !== selectedFields.regionId) {
+    void getCities(val.regionId);
+  }
 }
 export function getAddressSchema(hideFields: AddressFormFieldsType[] = []) {
   const fields = AddressFormFields.filter(
