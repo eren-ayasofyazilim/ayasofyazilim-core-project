@@ -4,8 +4,8 @@ import type {
   GetApiContractServiceRebateTablesRebateTableHeadersByIdData,
   GetApiContractServiceRebateTablesRebateTableHeadersTemplatesData,
   PagedResultDto_RebateTableHeaderDto,
-  PostApiContractServiceRebateTablesRebateTableHeadersData,
   PutApiContractServiceRebateTablesRebateTableHeadersByIdData,
+  UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderCreateDto,
   UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderDto,
 } from "@ayasofyazilim/saas/ContractService";
 import { revalidatePath } from "next/cache";
@@ -75,15 +75,15 @@ export async function deleteRebateTablesRebateTableHeadersById(
 } //delete fee details
 /** RebateTable **/
 
-export async function postRebateTablesRebateTableHeaders(
-  body: PostApiContractServiceRebateTablesRebateTableHeadersData,
+export async function postRebateTablesRebateTableHeadersTemplate(
+  body: UniRefund_ContractService_Rebates_RebateTableHeaders_RebateTableHeaderCreateDto,
 ) {
   "use server";
   try {
     const client = await getContractServiceClient();
     const response =
-      await client.rebateTables.postApiContractServiceRebateTablesRebateTableHeaders(
-        body,
+      await client.rebateTables.postApiContractServiceRebateTablesRebateTableHeadersTemplates(
+        { requestBody: body },
       );
     revalidatePath("/");
     return {
