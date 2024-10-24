@@ -1,3 +1,4 @@
+import { toast } from "@/components/ui/sonner";
 import { $UniRefund_LocationService_AddressCommonDatas_AddressCommonDataDto as AddressDto } from "@ayasofyazilim/saas/LocationService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type { AutoFormInputComponentProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -98,6 +99,7 @@ export function handleOnAddressValueChange({
   countryList = [],
   setRegionList,
   setCityList,
+  languageData,
 }: {
   values: Record<string, string>;
   setCityList: Dispatch<SetStateAction<CityDto[]>>;
@@ -105,6 +107,7 @@ export function handleOnAddressValueChange({
   countryList?: CountryDto[];
   selectedFields: SelectedAddressField;
   setSelectedFields: Dispatch<SetStateAction<SelectedAddressField>>;
+  languageData: LanguageDataResourceType;
 }) {
   async function getCities(regionId: string) {
     setSelectedFields((current) => ({
@@ -118,6 +121,7 @@ export function handleOnAddressValueChange({
       return;
     }
     setCityList([]);
+    toast.error(languageData["Fetch.Fail"]);
   }
 
   async function getRegions(countryId: string) {
@@ -142,6 +146,7 @@ export function handleOnAddressValueChange({
         return;
       }
       setRegionList([]);
+      toast.error(languageData["Fetch.Fail"]);
       return;
     }
     const regions = await getDefaultRegionsByCountryIdApi({
@@ -158,6 +163,7 @@ export function handleOnAddressValueChange({
       return;
     }
     setCityList([]);
+    toast.error(languageData["Fetch.Fail"]);
   }
   const val = values as {
     [key in AddressFormFieldsType]: string;
