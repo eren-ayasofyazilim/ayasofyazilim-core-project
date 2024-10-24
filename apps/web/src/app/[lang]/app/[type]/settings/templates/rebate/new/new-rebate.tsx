@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import type { ContractServiceResource } from "src/language-data/ContractService";
 import { getBaseLink } from "src/utils";
 import Rebate from "../rebate";
-import { postRebateTablesRebateTableHeaders } from "../action";
+import { postRebateTablesRebateTableHeadersTemplate } from "../action";
 
 export default function NewRebate({
   languageData,
@@ -18,12 +18,7 @@ export default function NewRebate({
       initialSetupData={[]}
       languageData={languageData}
       onSubmit={(data) => {
-        void postRebateTablesRebateTableHeaders({
-          requestBody: {
-            isTemplate: true, //this is necessary to create as template
-            ...data,
-          },
-        })
+        void postRebateTablesRebateTableHeadersTemplate(data)
           .then((response) => {
             if (response.type === "success") {
               toast.success(
