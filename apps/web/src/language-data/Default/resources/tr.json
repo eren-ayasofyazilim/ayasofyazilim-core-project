@@ -44,7 +44,9 @@
   "FileUploader.YouCanUpload{0}files{1}each": "En fazla {0} dosya yükleyebilirsiniz (her biri en fazla {1})",
   "FileUploader.RemoveFile": "Dosyayı kaldır",
   "Country.Select": "Ülke Seç",
+  "Region.Select": "Bölge Seç",
   "City.Select": "Şehir Seç",
+  "District.Select": "İlçe Seç",
   "PhoneNumber": "Telefon Numarası",
 
   "Form.name": "Tam İsim",
@@ -70,7 +72,7 @@
   "Form.telephone.typeCode.fax": "Faks",
 
   "Form.address.countryId": "Ülke",
-  "Form.address.regionId": "Bolge",
+  "Form.address.regionId": "Bölge",
   "Form.address.cityId": "Şehir",
   "Form.address.postalCode": "Posta Kodu",
   "Form.address.addressLine": "Adres Satırı",
