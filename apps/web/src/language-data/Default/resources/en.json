@@ -44,7 +44,10 @@
   "FileUploader.YouCanUpload{0}files{1}each": "You can upload {0} files (up to {1} each)",
   "FileUploader.RemoveFile": "Remove file",
   "Country.Select": "Select Country",
+  "Region.Select": "Select Region",
   "City.Select": "Select City",
+  "District.Select": "Select District",
+
   "PhoneNumber": "Phone Number",
 
   "Form.name": "Full Name",
@@ -71,7 +74,7 @@
   "Form.telephone.typeCode.fax": "Fax",
 
   "Form.address.countryId": "Country",
-  "Form.address.regionId": "Territory",
+  "Form.address.regionId": "Region",
   "Form.address.cityId": "City",
   "Form.address.postalCode": "Postal Code",
   "Form.address.addressLine": "Street Address",

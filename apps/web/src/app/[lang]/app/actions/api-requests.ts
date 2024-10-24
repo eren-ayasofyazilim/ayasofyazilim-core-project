@@ -12,7 +12,10 @@ import type {
 } from "@ayasofyazilim/saas/CRMService";
 import type {
   GetApiLocationServiceCitiesData,
+  GetApiLocationServiceCitiesGetListByRegionByRegionIdData,
   GetApiLocationServiceCountriesData,
+  GetApiLocationServiceRegionsGetDefaultRegionIdByCountryIdData,
+  GetApiLocationServiceRegionsGetListByCountryByCountryIdData,
 } from "@ayasofyazilim/saas/LocationService";
 import type { GetApiTravellerServiceTravellersData } from "@ayasofyazilim/saas/TravellerService";
 import type { FilterColumnResult } from "@repo/ayasofyazilim-ui/molecules/tables";
@@ -266,8 +269,28 @@ export async function getApiRequests() {
     locations: {
       getCountries: async (data: GetApiLocationServiceCountriesData) =>
         await locationClient.country.getApiLocationServiceCountries(data),
-      getCities: async (data: GetApiLocationServiceCitiesData) =>
-        await locationClient.city.getApiLocationServiceCities(data),
+      getRegionsByCountryId: async (
+        data: GetApiLocationServiceRegionsGetListByCountryByCountryIdData,
+      ) =>
+        await locationClient.region.getApiLocationServiceRegionsGetListByCountryByCountryId(
+          data,
+        ),
+      getDefaultRegionsByCountryId: async (
+        data: GetApiLocationServiceRegionsGetDefaultRegionIdByCountryIdData,
+      ) =>
+        await locationClient.region.getApiLocationServiceRegionsGetDefaultRegionIdByCountryId(
+          data,
+        ),
+      getCitiesByRegionId: async (
+        data: GetApiLocationServiceCitiesGetListByRegionByRegionIdData,
+      ) =>
+        await locationClient.city.getApiLocationServiceCitiesGetListByRegionByRegionId(
+          data,
+        ),
+
+      getCities: async (
+        data: GetApiLocationServiceCitiesData, //this should be removed when the forms updated
+      ) => await locationClient.city.getApiLocationServiceCities(data),
     },
 
     travellers: {
