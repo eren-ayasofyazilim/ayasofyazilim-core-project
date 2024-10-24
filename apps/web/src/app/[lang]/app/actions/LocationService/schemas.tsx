@@ -1,4 +1,4 @@
-import { toast } from "@/components/ui/sonner";
+"use client";
 import { $UniRefund_LocationService_AddressCommonDatas_AddressCommonDataDto as AddressDto } from "@ayasofyazilim/saas/LocationService";
 import { createZodObject } from "@repo/ayasofyazilim-ui/lib/create-zod-object";
 import type { AutoFormInputComponentProps } from "@repo/ayasofyazilim-ui/organisms/auto-form";
@@ -8,17 +8,13 @@ import {
 } from "@repo/ayasofyazilim-ui/organisms/auto-form";
 import type { Dispatch, SetStateAction } from "react";
 import type { LanguageDataResourceType } from "src/language-data/language-data";
-import {
-  getCitiesByRegionId,
-  getDefaultRegionsByCountryIdApi,
-  getRegionsByCountryIdApi,
-} from "./actions";
 import type {
   CityDto,
   CountryDto,
   RegionDto,
   SelectedAddressField,
 } from "./types";
+import { getCity, getRegion } from "./utils";
 
 const AddressFormFields: AddressFormFieldsType[] = [
   "type",
@@ -102,76 +98,41 @@ export function handleOnAddressValueChange({
   languageData,
 }: {
   values: Record<string, string>;
-  setCityList: Dispatch<SetStateAction<CityDto[]>>;
-  setRegionList?: Dispatch<SetStateAction<RegionDto[]>>;
+  setCityList: Dispatch<SetStateAction<CityDto[] | undefined>>;
+  setRegionList?: Dispatch<SetStateAction<RegionDto[] | undefined>>;
   countryList?: CountryDto[];
   selectedFields: SelectedAddressField;
   setSelectedFields: Dispatch<SetStateAction<SelectedAddressField>>;
   languageData: LanguageDataResourceType;
 }) {
-  async function getCities(regionId: string) {
-    setSelectedFields((current) => ({
-      ...current,
-      regionId,
-      cityId: "",
-    }));
-    const cities = await getCitiesByRegionId({ regionId });
-    if (cities.type === "success") {
-      setCityList(cities.data);
-      return;
-    }
-    setCityList([]);
-    toast.error(languageData["Fetch.Fail"]);
-  }
-
-  async function getRegions(countryId: string) {
-    if (!setRegionList) return;
-
-    setSelectedFields((current) => ({
-      ...current,
-      countryId,
-      regionId: "",
-      cityId: "",
-    }));
-    const selectedCountry = countryList.find(
-      (country) => country.id === val.countryId,
-    );
-    if (selectedCountry?.hasRegion) {
-      const regions = await getRegionsByCountryIdApi({
-        countryId,
-      });
-      setCityList([]);
-      if (regions.type === "success") {
-        setRegionList(regions.data);
-        return;
-      }
-      setRegionList([]);
-      toast.error(languageData["Fetch.Fail"]);
-      return;
-    }
-    const regions = await getDefaultRegionsByCountryIdApi({
-      countryId: val.countryId,
-    });
-    if (regions.type === "success") {
-      const regionId = regions.data;
-      setRegionList([]);
-      setSelectedFields((current) => ({
-        ...current,
-        regionId,
-      }));
-      void getCities(regionId);
-      return;
-    }
-    setCityList([]);
-    toast.error(languageData["Fetch.Fail"]);
-  }
   const val = values as {
     [key in AddressFormFieldsType]: string;
   };
+
   if (setRegionList && val.countryId !== selectedFields.countryId) {
-    void getRegions(val.countryId);
+    setSelectedFields((current) => ({
+      ...current,
+      countryId: val.countryId,
+      regionId: "",
+      cityId: "",
+    }));
+    void getRegion({
+      countryList,
+      countryId: val.countryId,
+      setRegionList,
+      languageData,
+    }).then((response) => {
+      if (response) {
+        void getCity({ regionId: response, setCityList, languageData });
+      }
+    });
   } else if (val.regionId !== selectedFields.regionId) {
-    void getCities(val.regionId);
+    setSelectedFields((current) => ({
+      ...current,
+      regionId: val.regionId,
+      cityId: "",
+    }));
+    void getCity({ regionId: val.regionId, setCityList, languageData });
   } else if (val.cityId !== selectedFields.cityId) {
     setSelectedFields((current) => ({
       ...current,
